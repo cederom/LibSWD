@@ -1,0 +1,40 @@
+.TH "swd_context_config_t" 3 "Thu Feb 10 2011" "Version 0.0.1" "libswd" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+swd_context_config_t \- 
+.PP
+Context configuration structure.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <libswd.h>\fP
+.SS "Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "char \fBinitialized\fP"
+.br
+.RI "\fIContext must be initialized prior use. \fP"
+.ti -1c
+.RI "char \fBtrnlen\fP"
+.br
+.RI "\fIHow many CLK cycles will TRN use. \fP"
+.ti -1c
+.RI "int \fBmaxcmdqlen\fP"
+.br
+.RI "\fIHow long command queue can be. \fP"
+.ti -1c
+.RI "\fBswd_loglevel_t\fP \fBloglevel\fP"
+.br
+.RI "\fIHolds Logging Level setting. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+Context configuration structure. 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for libswd from the source code.

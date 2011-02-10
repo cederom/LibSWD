@@ -1,0 +1,54 @@
+.TH "swd_ctx_t" 3 "Thu Feb 10 2011" "Version 0.0.1" "libswd" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+swd_ctx_t \- 
+.PP
+SWD Context Structure definition.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <libswd.h>\fP
+.SS "Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "\fBswd_cmd_t\fP * \fBcmdq\fP"
+.br
+.RI "\fICommand queue, stores all bus operations. \fP"
+.ti -1c
+.RI "\fBswd_context_config_t\fP \fBconfig\fP"
+.br
+.RI "\fITarget specific configuration. \fP"
+.ti -1c
+.RI "\fBswd_driver_t\fP * \fBdriver\fP"
+.br
+.RI "\fIPointer to the interface driver structure. \fP"
+.ti -1c
+.RI "\fBswd_swdp_t\fP \fBmisoswdp\fP"
+.br
+.RI "\fILast known read from the SW-DP register. \fP"
+.ti -1c
+.RI "\fBswd_swdp_t\fP \fBmosiswdp\fP"
+.br
+.RI "\fILast known write to the SW-DP register. \fP"
+.ti -1c
+.RI "\fBswd_ahbap_t\fP \fBmisoahbap\fP"
+.br
+.RI "\fILast known read from AHB-AP register. \fP"
+.ti -1c
+.RI "\fBswd_ahbap_t\fP \fBmosiahbap\fP"
+.br
+.RI "\fILast known write ti the AHB-AP register. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+SWD Context Structure definition. 
+
+It stores all the information about the library, drivers and interface configuration, target status along with DAP/AHBAP data/instruction internal registers, and the command queue. Bus operations are stored on the command queue. There may be more than one context in use by a host software, each one for single interface-target pair. Most of the target operations made with libswd are required to pass \fBswd_ctx_t\fP pointer structure that also remembers last known state of the target's internal registers. 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for libswd from the source code.

@@ -1,0 +1,52 @@
+.TH "swd_swdp_t" 3 "Thu Feb 10 2011" "Version 0.0.1" "libswd" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+swd_swdp_t \- 
+.PP
+Most actual Serial Wire Debug Port Registers.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <libswd.h>\fP
+.SS "Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "char \fBack\fP"
+.br
+.RI "\fILast known state of ACK response. \fP"
+.ti -1c
+.RI "int \fBidcode\fP"
+.br
+.RI "\fITarget's IDCODE register value. \fP"
+.ti -1c
+.RI "int \fBabort\fP"
+.br
+.RI "\fILast known ABORT register value. \fP"
+.ti -1c
+.RI "int \fBctrlstat\fP"
+.br
+.RI "\fILast known CTRLSTAT register value. \fP"
+.ti -1c
+.RI "int \fBwcr\fP"
+.br
+.RI "\fILast known WCR register value. \fP"
+.ti -1c
+.RI "int \fBselect\fP"
+.br
+.RI "\fILast known SELECT register value. \fP"
+.ti -1c
+.RI "int \fBrdbuf\fP"
+.br
+.RI "\fILast known RDBUF register (payload data) value. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+Most actual Serial Wire Debug Port Registers. 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for libswd from the source code.
