@@ -1,1 +1,7 @@
-Makefile.libswd
+CFLAGS=-I./ -I../../include/ -g
+
+all:
+	gcc -o libswdtest libswd.c libswd_drv_dummy.c libswd_test.c $(CFLAGS)
+
+doc:
+	doxygen
