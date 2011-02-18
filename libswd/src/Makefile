@@ -1,4 +1,4 @@
-CFLAGS=-I./ -I../../include/ -g
+CFLAGS=-I./ -g
 
 all:
 	gcc -o libswdtest libswd.c libswd_drv_dummy.c libswd_test.c $(CFLAGS)

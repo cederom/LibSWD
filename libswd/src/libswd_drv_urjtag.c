@@ -39,6 +39,7 @@
 #include <stdlib.h>
 
 int swd_drv_mosi_8(swd_ctx_t *swdctx, char *data, int bits, int nLSBfirst){
+ return 1;
  if (data==NULL) return SWD_ERROR_NULLPOINTER;
  if (bits<0 || bits>8) return SWD_ERROR_PARAM;
  if (nLSBfirst!=0 || nLSBfirst!=1) return SWD_ERROR_PARAM;
@@ -72,6 +73,7 @@ int swd_drv_miso_32(swd_ctx_t *swdctx, int *data, int bits, int direction){
  * Master Output Slave Input - SWD Write operation.
  * bits specify how many clock cycles must be used. */
 int swd_drv_mosi_trn(swd_ctx_t *swdctx, int bits){
+        return 1;
  if (bits<SWD_TURNROUND_MIN || bits>SWD_TURNROUND_MAX)
   return SWD_ERROR_TURNAROUND; 
 
@@ -88,6 +90,7 @@ int swd_drv_mosi_trn(swd_ctx_t *swdctx, int bits){
 }
 
 int swd_drv_miso_trn(swd_ctx_t *swdctx, int bits){
+        return 1;
  if (bits<SWD_TURNROUND_MIN || bits>SWD_TURNROUND_MAX)
   return SWD_ERROR_TURNAROUND; 
 

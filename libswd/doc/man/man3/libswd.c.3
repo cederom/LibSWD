@@ -1,4 +1,4 @@
-.TH "libswd.c" 3 "Thu Feb 10 2011" "Version 0.0.1" "libswd" \" -*- nroff -*-
+.TH "libswd.c" 3 "Fri Feb 18 2011" "Version 0.0.1" "libswd" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -53,131 +53,135 @@ libswd.c \-
 .br
 .RI "\fIBit swap helper function that reverse bit order in int *buffer. \fP"
 .ti -1c
-.RI "int \fBswd_cmd_queue_init\fP (\fBswd_cmd_t\fP *cmdq)"
+.RI "int \fBswd_cmdq_init\fP (\fBswd_cmd_t\fP *cmdq)"
 .br
 .RI "\fIInitialize new queue element in memory that becomes a queue root. \fP"
 .ti -1c
-.RI "\fBswd_cmd_t\fP * \fBswd_cmd_queue_find_root\fP (\fBswd_cmd_t\fP *cmdq)"
+.RI "\fBswd_cmd_t\fP * \fBswd_cmdq_find_root\fP (\fBswd_cmd_t\fP *cmdq)"
 .br
 .RI "\fIFind queue root (first element). \fP"
 .ti -1c
-.RI "\fBswd_cmd_t\fP * \fBswd_cmd_queue_find_tail\fP (\fBswd_cmd_t\fP *cmdq)"
+.RI "\fBswd_cmd_t\fP * \fBswd_cmdq_find_tail\fP (\fBswd_cmd_t\fP *cmdq)"
 .br
 .RI "\fIFind queue tail (last element). \fP"
 .ti -1c
-.RI "int \fBswd_cmd_queue_append\fP (\fBswd_cmd_t\fP *cmdq, \fBswd_cmd_t\fP *cmd)"
+.RI "int \fBswd_cmdq_append\fP (\fBswd_cmd_t\fP *cmdq, \fBswd_cmd_t\fP *cmd)"
 .br
 .RI "\fIAppend element pointed by *cmd at the end of the quque pointed by *cmdq. \fP"
 .ti -1c
-.RI "int \fBswd_cmd_queue_free\fP (\fBswd_cmd_t\fP *cmdq)"
+.RI "int \fBswd_cmdq_free\fP (\fBswd_cmd_t\fP *cmdq)"
 .br
 .RI "\fIFree queue pointed by *cmdq element. \fP"
 .ti -1c
-.RI "int \fBswd_cmd_queue_free_head\fP (\fBswd_cmd_t\fP *cmdq)"
+.RI "int \fBswd_cmdq_free_head\fP (\fBswd_cmd_t\fP *cmdq)"
 .br
 .RI "\fIFree queue head up to *cmdq element. \fP"
 .ti -1c
-.RI "int \fBswd_cmd_queue_free_tail\fP (\fBswd_cmd_t\fP *cmdq)"
+.RI "int \fBswd_cmdq_free_tail\fP (\fBswd_cmd_t\fP *cmdq)"
 .br
 .RI "\fIFree queue tail starting after *cmdq element. \fP"
 .ti -1c
-.RI "int \fBswd_cmd_queue_append_mosi_request\fP (\fBswd_ctx_t\fP *swdctx, char *request)"
+.RI "int \fBswd_cmd_enqueue\fP (\fBswd_ctx_t\fP *swdctx, \fBswd_cmd_t\fP *cmd)"
+.br
+.RI "\fIAppend selected command to a context's command queue. \fP"
+.ti -1c
+.RI "int \fBswd_cmd_enqueue_mosi_request\fP (\fBswd_ctx_t\fP *swdctx, char *request)"
 .br
 .RI "\fIAppends command queue with SWD Request packet header. \fP"
 .ti -1c
-.RI "int \fBswd_cmd_queue_append_mosi_trn\fP (\fBswd_ctx_t\fP *swdctx)"
+.RI "int \fBswd_cmd_enqueue_mosi_trn\fP (\fBswd_ctx_t\fP *swdctx)"
 .br
 .RI "\fIAppend command queue with Turnaround activating MOSI mode. \fP"
 .ti -1c
-.RI "int \fBswd_cmd_queue_append_miso_trn\fP (\fBswd_ctx_t\fP *swdctx)"
+.RI "int \fBswd_cmd_enqueue_miso_trn\fP (\fBswd_ctx_t\fP *swdctx)"
 .br
 .RI "\fIAppend command queue with Turnaround activating MISO mode. \fP"
 .ti -1c
-.RI "int \fBswd_cmd_queue_append_miso_nbit\fP (\fBswd_ctx_t\fP *swdctx, char **data, int count)"
+.RI "int \fBswd_cmd_enqueue_miso_nbit\fP (\fBswd_ctx_t\fP *swdctx, char **data, int count)"
 .br
 .RI "\fIAppend command queue with bus binary read bit-by-bit operation. \fP"
 .ti -1c
-.RI "int \fBswd_cmd_queue_append_mosi_nbit\fP (\fBswd_ctx_t\fP *swdctx, char *data, int count)"
+.RI "int \fBswd_cmd_enqueue_mosi_nbit\fP (\fBswd_ctx_t\fP *swdctx, char *data, int count)"
 .br
 .RI "\fIAppend command queue with bus binary write bit-by-bit operation. \fP"
 .ti -1c
-.RI "int \fBswd_cmd_queue_append_mosi_parity\fP (\fBswd_ctx_t\fP *swdctx, char *parity)"
+.RI "int \fBswd_cmd_enqueue_mosi_parity\fP (\fBswd_ctx_t\fP *swdctx, char *parity)"
 .br
 .RI "\fIAppend command queue with parity bit write. \fP"
 .ti -1c
-.RI "int \fBswd_cmd_queue_append_miso_parity\fP (\fBswd_ctx_t\fP *swdctx, char *parity)"
+.RI "int \fBswd_cmd_enqueue_miso_parity\fP (\fBswd_ctx_t\fP *swdctx, char *parity)"
 .br
 .RI "\fIAppend command queue with parity bit read. \fP"
 .ti -1c
-.RI "int \fBswd_cmd_queue_append_miso_data\fP (\fBswd_ctx_t\fP *swdctx, int *data)"
+.RI "int \fBswd_cmd_enqueue_miso_data\fP (\fBswd_ctx_t\fP *swdctx, int *data)"
 .br
 .RI "\fIAppend command queue with data read. \fP"
 .ti -1c
-.RI "int \fBswd_cmd_queue_append_miso_data_p\fP (\fBswd_ctx_t\fP *swdctx, int *data, char *parity)"
+.RI "int \fBswd_cmd_enqueue_miso_data_p\fP (\fBswd_ctx_t\fP *swdctx, int *data, char *parity)"
 .br
 .RI "\fIAppend command queue with data and parity read. \fP"
 .ti -1c
-.RI "int \fBswd_cmd_queue_append_miso_n_data_p\fP (\fBswd_ctx_t\fP *swdctx, int **data, char **parity, int count)"
+.RI "int \fBswd_cmd_enqueue_miso_n_data_p\fP (\fBswd_ctx_t\fP *swdctx, int **data, char **parity, int count)"
 .br
 .RI "\fIAppend command queue with series of data and parity read. \fP"
 .ti -1c
-.RI "int \fBswd_cmd_queue_append_mosi_data\fP (\fBswd_ctx_t\fP *swdctx, int *data)"
+.RI "int \fBswd_cmd_enqueue_mosi_data\fP (\fBswd_ctx_t\fP *swdctx, int *data)"
 .br
 .RI "\fIAppend command queue with data and parity write. \fP"
 .ti -1c
-.RI "int \fBswd_cmd_queue_append_mosi_data_ap\fP (\fBswd_ctx_t\fP *swdctx, int *data)"
+.RI "int \fBswd_cmd_enqueue_mosi_data_ap\fP (\fBswd_ctx_t\fP *swdctx, int *data)"
 .br
 .RI "\fIAppend command queue with data and automatic parity write. \fP"
 .ti -1c
-.RI "int \fBswd_cmd_queue_append_mosi_data_p\fP (\fBswd_ctx_t\fP *swdctx, int *data, char *parity)"
+.RI "int \fBswd_cmd_enqueue_mosi_data_p\fP (\fBswd_ctx_t\fP *swdctx, int *data, char *parity)"
 .br
 .RI "\fIAppend command queue with data and provided parity write. \fP"
 .ti -1c
-.RI "int \fBswd_cmd_append_mosi_n_data_ap\fP (\fBswd_ctx_t\fP *swdctx, int **data, int count)"
+.RI "int \fBswd_cmd_enqueue_mosi_n_data_ap\fP (\fBswd_ctx_t\fP *swdctx, int **data, int count)"
 .br
 .RI "\fIAppend command queue with series of data and automatic parity writes. \fP"
 .ti -1c
-.RI "int \fBswd_cmd_append_mosi_n_data_p\fP (\fBswd_ctx_t\fP *swdctx, int **data, char **parity, int count)"
+.RI "int \fBswd_cmd_enqueue_mosi_n_data_p\fP (\fBswd_ctx_t\fP *swdctx, int **data, char **parity, int count)"
 .br
 .RI "\fIAppend command queue with series of data and provided parity writes. \fP"
 .ti -1c
-.RI "int \fBswd_cmd_queue_append_miso_ack\fP (\fBswd_ctx_t\fP *swdctx, char *ack)"
+.RI "int \fBswd_cmd_enqueue_miso_ack\fP (\fBswd_ctx_t\fP *swdctx, char *ack)"
 .br
 .RI "\fIAppend queue with ACK read. \fP"
 .ti -1c
-.RI "int \fBswd_cmd_queue_append_mosi_control\fP (\fBswd_ctx_t\fP *swdctx, char *ctlmsg, int len)"
+.RI "int \fBswd_cmd_enqueue_mosi_control\fP (\fBswd_ctx_t\fP *swdctx, char *ctlmsg, int len)"
 .br
 .RI "\fIAppend command queue with len-octet size control seruence. \fP"
 .ti -1c
-.RI "int \fBswd_cmd_queue_append_swdpreset\fP (\fBswd_ctx_t\fP *swdctx)"
+.RI "int \fBswd_cmd_enqueue_mosi_dap_reset\fP (\fBswd_ctx_t\fP *swdctx)"
 .br
 .RI "\fIAppend command queue with SW-DP-RESET sequence. \fP"
 .ti -1c
-.RI "int \fBswd_cmd_queue_append_jtag2swd\fP (\fBswd_ctx_t\fP *swdctx)"
+.RI "int \fBswd_cmd_enqueue_mosi_jtag2swd\fP (\fBswd_ctx_t\fP *swdctx)"
 .br
 .RI "\fIAppend command queue with JTAG-TO-SWD DAP-switch sequence. \fP"
 .ti -1c
-.RI "int \fBswd_cmd_queue_append_swd2jtag\fP (\fBswd_ctx_t\fP *swdctx)"
+.RI "int \fBswd_cmd_enqueue_mosi_swd2jtag\fP (\fBswd_ctx_t\fP *swdctx)"
 .br
 .RI "\fIAppend command queue with SWD-TO-JTAG DAP-switch sequence. \fP"
 .ti -1c
 .RI "int \fBswd_bus_setdir_mosi\fP (\fBswd_ctx_t\fP *swdctx)"
 .br
-.RI "\fIAppend command queue with TRN WRITE/MOSI. \fP"
+.RI "\fIAppend command queue with TRN WRITE/MOSI, if previous command was READ/MISO. \fP"
 .ti -1c
 .RI "int \fBswd_bus_setdir_miso\fP (\fBswd_ctx_t\fP *swdctx)"
 .br
-.RI "\fIAppend command queue with TRN READ/MISO. \fP"
+.RI "\fIAppend command queue with TRN READ/MISO, if previous command was WRITE/MOSI. \fP"
 .ti -1c
-.RI "int \fBswd_bit8_gen_request\fP (\fBswd_ctx_t\fP *swdctx, char *APnDP, char *RnW, char *addr, char *request)"
+.RI "int \fBswd_bitgen8_request\fP (\fBswd_ctx_t\fP *swdctx, char *APnDP, char *RnW, char *addr, char *request)"
 .br
 .RI "\fIGenerate 8-bit SWD-REQUEST packet contents with provided parameters. \fP"
 .ti -1c
-.RI "int \fBswd_transmit\fP (\fBswd_ctx_t\fP *swdctx, \fBswd_cmd_t\fP *cmd)"
+.RI "int \fBswd_bus_transmit\fP (\fBswd_ctx_t\fP *swdctx, \fBswd_cmd_t\fP *cmd)"
 .br
-.RI "\fITransmit selected command to the interface driver. \fP"
+.RI "\fITransmit selected command from the command queue to the interface driver. \fP"
 .ti -1c
-.RI "int \fBswd_cmd_queue_flush\fP (\fBswd_ctx_t\fP *swdctx, \fBswd_operation_t\fP operation)"
+.RI "int \fBswd_cmdq_flush\fP (\fBswd_ctx_t\fP *swdctx, \fBswd_operation_t\fP operation)"
 .br
 .RI "\fIFlush command queue contents into interface driver. \fP"
 .ti -1c
@@ -205,13 +209,25 @@ libswd.c \-
 .br
 .RI "\fISwitch DAP into SW-DP. \fP"
 .ti -1c
-.RI "int \fBswd_jtag2swd\fP (\fBswd_ctx_t\fP *swdctx, \fBswd_operation_t\fP operation)"
+.RI "int \fBswd_mosi_dap_reset\fP (\fBswd_ctx_t\fP *swdctx, \fBswd_operation_t\fP operation)"
 .br
-.RI "\fIActivate SW-DP and deactivate JTAG-DP by sending out JTAG-TO-SWD sequence. \fP"
+.RI "\fIDebug Access Port Reset sends 50 CLK with TMS high that brings both SW-DP and JTAG-DP into reset state. \fP"
 .ti -1c
 .RI "int \fBswd_idcode\fP (\fBswd_ctx_t\fP *swdctx, \fBswd_operation_t\fP operation, int *idcode, char *ack, char *parity)"
 .br
 .RI "\fIRead target's IDCODE register value. \fP"
+.ti -1c
+.RI "int \fBswd_dap_select_swj\fP (\fBswd_ctx_t\fP *swdctx, \fBswd_operation_t\fP operation)"
+.br
+.RI "\fIActivate SW-DP by sending out JTAG-TO-SWD sequence on SWDIOTMS line. \fP"
+.ti -1c
+.RI "int \fBswd_dap_idcode\fP (\fBswd_ctx_t\fP *swdctx, \fBswd_operation_t\fP operation)"
+.br
+.RI "\fIMacro: Read out IDCODE register and return its value on function return. \fP"
+.ti -1c
+.RI "int \fBswd_dap_reset_select_idcode\fP (\fBswd_ctx_t\fP *swdctx, \fBswd_operation_t\fP operation)"
+.br
+.RI "\fIMacro: Reset target DAP, select SW-DP, read out IDCODE. \fP"
 .ti -1c
 .RI "int \fBswd_log\fP (\fBswd_loglevel_t\fP loglevel, char *msg)"
 .br
@@ -317,7 +333,9 @@ swapped bit count (positive) or error code (negative).
 
 .SS "int swd_bin8_parity_even (char * data, char * parity)"
 .PP
-Data parity calculator, calculates even parity on char type. \fBParameters:\fP
+Data parity calculator, calculates even parity on char type. Some comments on the function behavior.
+.PP
+\fBParameters:\fP
 .RS 4
 \fI*data\fP source data pointer. 
 .br
@@ -356,7 +374,7 @@ pointer to the resulting string.
 .RE
 .PP
 
-.SS "int swd_bit8_gen_request (\fBswd_ctx_t\fP * swdctx, char * APnDP, char * RnW, char * addr, char * request)"
+.SS "int swd_bitgen8_request (\fBswd_ctx_t\fP * swdctx, char * APnDP, char * RnW, char * addr, char * request)"
 .PP
 Generate 8-bit SWD-REQUEST packet contents with provided parameters. Note that parity bit value is calculated automatically. 
 .PP
@@ -381,7 +399,7 @@ number of generated packets (1), or SWD_ERROR_CODE on failure.
 
 .SS "int swd_bus_setdir_miso (\fBswd_ctx_t\fP * swdctx)"
 .PP
-Append command queue with TRN READ/MISO. \fBParameters:\fP
+Append command queue with TRN READ/MISO, if previous command was WRITE/MOSI. \fBParameters:\fP
 .RS 4
 \fI*swdctx\fP swd context pointer. 
 .RE
@@ -394,7 +412,7 @@ number of elements appended, or SWD_ERROR_CODE on failure.
 
 .SS "int swd_bus_setdir_mosi (\fBswd_ctx_t\fP * swdctx)"
 .PP
-Append command queue with TRN WRITE/MOSI. \fBParameters:\fP
+Append command queue with TRN WRITE/MOSI, if previous command was READ/MISO. \fBParameters:\fP
 .RS 4
 \fI*swdctx\fP swd context pointer. 
 .RE
@@ -405,71 +423,37 @@ number of elements appended, or SWD_ERROR_CODE on failure.
 .RE
 .PP
 
-.SS "int swd_cmd_append_mosi_n_data_ap (\fBswd_ctx_t\fP * swdctx, int ** data, int count)"
+.SS "int swd_bus_transmit (\fBswd_ctx_t\fP * swdctx, \fBswd_cmd_t\fP * cmd)"
 .PP
-Append command queue with series of data and automatic parity writes. \fBParameters:\fP
+Transmit selected command from the command queue to the interface driver. \fBParameters:\fP
 .RS 4
 \fI*swdctx\fP swd context pointer. 
 .br
-\fI**data\fP data value array pointer. 
-.br
-\fIcount\fP number of (data+parity) elements to read. 
+\fI*cmd\fP pointer to the command to be sent. 
 .RE
 .PP
 \fBReturns:\fP
 .RS 4
-number of elements appended (2*count), or SWD_ERROR_CODE on failure. 
+number of commands transmitted (1), or SWD_ERROR_CODE on failure. 
 .RE
 .PP
 
-.SS "int swd_cmd_append_mosi_n_data_p (\fBswd_ctx_t\fP * swdctx, int ** data, char ** parity, int count)"
+.SS "int swd_cmd_enqueue (\fBswd_ctx_t\fP * swdctx, \fBswd_cmd_t\fP * cmd)"
 .PP
-Append command queue with series of data and provided parity writes. \fBParameters:\fP
+Append selected command to a context's command queue. \fBParameters:\fP
 .RS 4
-\fI*swdctx\fP swd context pointer. 
+\fI*swdctx\fP swd context pointer containing the command queue. 
 .br
-\fI**data\fP data value array pointer. 
-.br
-\fI**parity\fP parity value array pointer. 
-.br
-\fIcount\fP number of (data+parity) elements to read. 
+\fI*cmd\fP command to be appended to the context's command queue. 
 .RE
 .PP
 \fBReturns:\fP
 .RS 4
-number of elements appended (2*count), or SWD_ERROR_CODE on failure. 
+number of elements appended or SWD_ERROR_CODE on failure. 
 .RE
 .PP
 
-.SS "int swd_cmd_queue_append (\fBswd_cmd_t\fP * cmdq, \fBswd_cmd_t\fP * cmd)"
-.PP
-Append element pointed by *cmd at the end of the quque pointed by *cmdq. \fBParameters:\fP
-.RS 4
-\fI*cmdq\fP pointer to any element on command queue 
-.br
-\fI*cmd\fP pointer to the command to be appended 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-number of appended elements (one), SWD_ERROR_CODE on failure 
-.RE
-.PP
-
-.SS "int swd_cmd_queue_append_jtag2swd (\fBswd_ctx_t\fP * swdctx)"
-.PP
-Append command queue with JTAG-TO-SWD DAP-switch sequence. \fBParameters:\fP
-.RS 4
-\fI*swdctx\fP swd context pointer. 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-number of elements appended, or SWD_ERROR_CODE on failure. 
-.RE
-.PP
-
-.SS "int swd_cmd_queue_append_miso_ack (\fBswd_ctx_t\fP * swdctx, char * ack)"
+.SS "int swd_cmd_enqueue_miso_ack (\fBswd_ctx_t\fP * swdctx, char * ack)"
 .PP
 Append queue with ACK read. \fBParameters:\fP
 .RS 4
@@ -484,7 +468,7 @@ number of elements appended (1), or SWD_ERROR_CODE on failure.
 .RE
 .PP
 
-.SS "int swd_cmd_queue_append_miso_data (\fBswd_ctx_t\fP * swdctx, int * data)"
+.SS "int swd_cmd_enqueue_miso_data (\fBswd_ctx_t\fP * swdctx, int * data)"
 .PP
 Append command queue with data read. \fBParameters:\fP
 .RS 4
@@ -499,7 +483,7 @@ of elements appended (1), or SWD_ERROR_CODE on failure.
 .RE
 .PP
 
-.SS "int swd_cmd_queue_append_miso_data_p (\fBswd_ctx_t\fP * swdctx, int * data, char * parity)"
+.SS "int swd_cmd_enqueue_miso_data_p (\fBswd_ctx_t\fP * swdctx, int * data, char * parity)"
 .PP
 Append command queue with data and parity read. \fBParameters:\fP
 .RS 4
@@ -516,7 +500,7 @@ number of elements appended (2), or SWD_ERROR_CODE on failure.
 .RE
 .PP
 
-.SS "int swd_cmd_queue_append_miso_n_data_p (\fBswd_ctx_t\fP * swdctx, int ** data, char ** parity, int count)"
+.SS "int swd_cmd_enqueue_miso_n_data_p (\fBswd_ctx_t\fP * swdctx, int ** data, char ** parity, int count)"
 .PP
 Append command queue with series of data and parity read. \fBParameters:\fP
 .RS 4
@@ -535,7 +519,7 @@ number of elements appended (2*count), or SWD_ERROR_CODE on failure.
 .RE
 .PP
 
-.SS "int swd_cmd_queue_append_miso_nbit (\fBswd_ctx_t\fP * swdctx, char ** data, int count)"
+.SS "int swd_cmd_enqueue_miso_nbit (\fBswd_ctx_t\fP * swdctx, char ** data, int count)"
 .PP
 Append command queue with bus binary read bit-by-bit operation. This function will append command to the queue for each bit, and store one bit into single char array element, so read is not constrained to 8 bits. On error memory is released and apropriate error code is returned. Important: Memory pointed by *data must be allocated prior call! 
 .PP
@@ -554,7 +538,7 @@ number of elements processed, or SWD_ERROR_CODE on failure.
 .RE
 .PP
 
-.SS "int swd_cmd_queue_append_miso_parity (\fBswd_ctx_t\fP * swdctx, char * parity)"
+.SS "int swd_cmd_enqueue_miso_parity (\fBswd_ctx_t\fP * swdctx, char * parity)"
 .PP
 Append command queue with parity bit read. \fBParameters:\fP
 .RS 4
@@ -569,7 +553,7 @@ number of elements appended (1), or SWD_ERROR_CODE on failure.
 .RE
 .PP
 
-.SS "int swd_cmd_queue_append_miso_trn (\fBswd_ctx_t\fP * swdctx)"
+.SS "int swd_cmd_enqueue_miso_trn (\fBswd_ctx_t\fP * swdctx)"
 .PP
 Append command queue with Turnaround activating MISO mode. \fBParameters:\fP
 .RS 4
@@ -582,7 +566,7 @@ return number of elements appended (1), or SWD_ERROR_CODE on failure.
 .RE
 .PP
 
-.SS "int swd_cmd_queue_append_mosi_control (\fBswd_ctx_t\fP * swdctx, char * ctlmsg, int len)"
+.SS "int swd_cmd_enqueue_mosi_control (\fBswd_ctx_t\fP * swdctx, char * ctlmsg, int len)"
 .PP
 Append command queue with len-octet size control seruence. This control sequence can be used for instance to send payload of packets switching DAP between JTAG and SWD mode. 
 .PP
@@ -601,7 +585,20 @@ number of elements appended (len), or SWD_ERROR_CODE on failure.
 .RE
 .PP
 
-.SS "int swd_cmd_queue_append_mosi_data (\fBswd_ctx_t\fP * swdctx, int * data)"
+.SS "int swd_cmd_enqueue_mosi_dap_reset (\fBswd_ctx_t\fP * swdctx)"
+.PP
+Append command queue with SW-DP-RESET sequence. \fBParameters:\fP
+.RS 4
+\fI*swdctx\fP swd context pointer. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+number of elements appended, or SWD_ERROR_CODE on failure. 
+.RE
+.PP
+
+.SS "int swd_cmd_enqueue_mosi_data (\fBswd_ctx_t\fP * swdctx, int * data)"
 .PP
 Append command queue with data and parity write. \fBParameters:\fP
 .RS 4
@@ -616,7 +613,7 @@ number of elements appended (1), or SWD_ERROR_CODE on failure.
 .RE
 .PP
 
-.SS "int swd_cmd_queue_append_mosi_data_ap (\fBswd_ctx_t\fP * swdctx, int * data)"
+.SS "int swd_cmd_enqueue_mosi_data_ap (\fBswd_ctx_t\fP * swdctx, int * data)"
 .PP
 Append command queue with data and automatic parity write. \fBParameters:\fP
 .RS 4
@@ -631,7 +628,7 @@ number of elements appended (2), or SWD_ERROR_CODE on failure.
 .RE
 .PP
 
-.SS "int swd_cmd_queue_append_mosi_data_p (\fBswd_ctx_t\fP * swdctx, int * data, char * parity)"
+.SS "int swd_cmd_enqueue_mosi_data_p (\fBswd_ctx_t\fP * swdctx, int * data, char * parity)"
 .PP
 Append command queue with data and provided parity write. \fBParameters:\fP
 .RS 4
@@ -648,7 +645,56 @@ number of elements appended (2), or SWD_ERROR_CODE on failure.
 .RE
 .PP
 
-.SS "int swd_cmd_queue_append_mosi_nbit (\fBswd_ctx_t\fP * swdctx, char * data, int count)"
+.SS "int swd_cmd_enqueue_mosi_jtag2swd (\fBswd_ctx_t\fP * swdctx)"
+.PP
+Append command queue with JTAG-TO-SWD DAP-switch sequence. \fBParameters:\fP
+.RS 4
+\fI*swdctx\fP swd context pointer. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+number of elements appended, or SWD_ERROR_CODE on failure. 
+.RE
+.PP
+
+.SS "int swd_cmd_enqueue_mosi_n_data_ap (\fBswd_ctx_t\fP * swdctx, int ** data, int count)"
+.PP
+Append command queue with series of data and automatic parity writes. \fBParameters:\fP
+.RS 4
+\fI*swdctx\fP swd context pointer. 
+.br
+\fI**data\fP data value array pointer. 
+.br
+\fIcount\fP number of (data+parity) elements to read. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+number of elements appended (2*count), or SWD_ERROR_CODE on failure. 
+.RE
+.PP
+
+.SS "int swd_cmd_enqueue_mosi_n_data_p (\fBswd_ctx_t\fP * swdctx, int ** data, char ** parity, int count)"
+.PP
+Append command queue with series of data and provided parity writes. \fBParameters:\fP
+.RS 4
+\fI*swdctx\fP swd context pointer. 
+.br
+\fI**data\fP data value array pointer. 
+.br
+\fI**parity\fP parity value array pointer. 
+.br
+\fIcount\fP number of (data+parity) elements to read. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+number of elements appended (2*count), or SWD_ERROR_CODE on failure. 
+.RE
+.PP
+
+.SS "int swd_cmd_enqueue_mosi_nbit (\fBswd_ctx_t\fP * swdctx, char * data, int count)"
 .PP
 Append command queue with bus binary write bit-by-bit operation. This function will append command to the queue for each bit and store one bit into single char array element, so read is not constrained to 8 bits. On error memory is released and apropriate error code is returned. Important: Memory pointed by *data must be allocated prior call! 
 .PP
@@ -667,7 +713,7 @@ number of elements processed, or SWD_ERROR_CODE on failure.
 .RE
 .PP
 
-.SS "int swd_cmd_queue_append_mosi_parity (\fBswd_ctx_t\fP * swdctx, char * parity)"
+.SS "int swd_cmd_enqueue_mosi_parity (\fBswd_ctx_t\fP * swdctx, char * parity)"
 .PP
 Append command queue with parity bit write. \fBParameters:\fP
 .RS 4
@@ -682,7 +728,7 @@ number of elements appended (1), or SWD_ERROR_CODE on failure.
 .RE
 .PP
 
-.SS "int swd_cmd_queue_append_mosi_request (\fBswd_ctx_t\fP * swdctx, char * request)"
+.SS "int swd_cmd_enqueue_mosi_request (\fBswd_ctx_t\fP * swdctx, char * request)"
 .PP
 Appends command queue with SWD Request packet header. Note that contents is not validated, so bad request can be sent as well. 
 .PP
@@ -699,20 +745,7 @@ return number elements appended (1), or SWD_ERROR_CODE on failure.
 .RE
 .PP
 
-.SS "int swd_cmd_queue_append_mosi_trn (\fBswd_ctx_t\fP * swdctx)"
-.PP
-Append command queue with Turnaround activating MOSI mode. \fBParameters:\fP
-.RS 4
-\fI*swdctx\fP swd context pointer. 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-return number elements appended (1), or SWD_ERROR_CODE on failure. 
-.RE
-.PP
-
-.SS "int swd_cmd_queue_append_swd2jtag (\fBswd_ctx_t\fP * swdctx)"
+.SS "int swd_cmd_enqueue_mosi_swd2jtag (\fBswd_ctx_t\fP * swdctx)"
 .PP
 Append command queue with SWD-TO-JTAG DAP-switch sequence. \fBParameters:\fP
 .RS 4
@@ -725,20 +758,37 @@ number of elements appended, or SWD_ERROR_CODE on failure.
 .RE
 .PP
 
-.SS "int swd_cmd_queue_append_swdpreset (\fBswd_ctx_t\fP * swdctx)"
+.SS "int swd_cmd_enqueue_mosi_trn (\fBswd_ctx_t\fP * swdctx)"
 .PP
-Append command queue with SW-DP-RESET sequence. \fBParameters:\fP
+Append command queue with Turnaround activating MOSI mode. \fBParameters:\fP
 .RS 4
 \fI*swdctx\fP swd context pointer. 
 .RE
 .PP
 \fBReturns:\fP
 .RS 4
-number of elements appended, or SWD_ERROR_CODE on failure. 
+return number elements appended (1), or SWD_ERROR_CODE on failure. 
 .RE
 .PP
 
-.SS "\fBswd_cmd_t\fP* swd_cmd_queue_find_root (\fBswd_cmd_t\fP * cmdq)"
+.SS "int swd_cmdq_append (\fBswd_cmd_t\fP * cmdq, \fBswd_cmd_t\fP * cmd)"
+.PP
+Append element pointed by *cmd at the end of the quque pointed by *cmdq. After this operation queue will be pointed by appended element (ie. last element added becomes actual quque pointer to show what was added recently). 
+.PP
+\fBParameters:\fP
+.RS 4
+\fI*cmdq\fP pointer to any element on command queue 
+.br
+\fI*cmd\fP pointer to the command to be appended 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+number of appended elements (one), SWD_ERROR_CODE on failure 
+.RE
+.PP
+
+.SS "\fBswd_cmd_t\fP* swd_cmdq_find_root (\fBswd_cmd_t\fP * cmdq)"
 .PP
 Find queue root (first element). \fBParameters:\fP
 .RS 4
@@ -751,7 +801,7 @@ swd_cmd_t* pointer to the first element (root), NULL on failure
 .RE
 .PP
 
-.SS "\fBswd_cmd_t\fP* swd_cmd_queue_find_tail (\fBswd_cmd_t\fP * cmdq)"
+.SS "\fBswd_cmd_t\fP* swd_cmdq_find_tail (\fBswd_cmd_t\fP * cmdq)"
 .PP
 Find queue tail (last element). \fBParameters:\fP
 .RS 4
@@ -764,7 +814,7 @@ swd_cmd_t* pointer to the last element (tail), NULL on failure
 .RE
 .PP
 
-.SS "int swd_cmd_queue_flush (\fBswd_ctx_t\fP * swdctx, \fBswd_operation_t\fP operation)"
+.SS "int swd_cmdq_flush (\fBswd_ctx_t\fP * swdctx, \fBswd_operation_t\fP operation)"
 .PP
 Flush command queue contents into interface driver. Operation is specified by SWD_OPERATION and can be used to select how to flush the queue, ie. head-only, tail-only, one, all, etc. 
 .PP
@@ -781,7 +831,7 @@ number of commands transmitted, or SWD_ERROR_CODE on failure.
 .RE
 .PP
 
-.SS "int swd_cmd_queue_free (\fBswd_cmd_t\fP * cmdq)"
+.SS "int swd_cmdq_free (\fBswd_cmd_t\fP * cmdq)"
 .PP
 Free queue pointed by *cmdq element. \fBParameters:\fP
 .RS 4
@@ -794,7 +844,7 @@ number of elements destroyed, SWD_ERROR_CODE on failure
 .RE
 .PP
 
-.SS "int swd_cmd_queue_free_head (\fBswd_cmd_t\fP * cmdq)"
+.SS "int swd_cmdq_free_head (\fBswd_cmd_t\fP * cmdq)"
 .PP
 Free queue head up to *cmdq element. \fBParameters:\fP
 .RS 4
@@ -807,7 +857,7 @@ number of elements destroyed, or SWD_ERROR_CODE on failure.
 .RE
 .PP
 
-.SS "int swd_cmd_queue_free_tail (\fBswd_cmd_t\fP * cmdq)"
+.SS "int swd_cmdq_free_tail (\fBswd_cmd_t\fP * cmdq)"
 .PP
 Free queue tail starting after *cmdq element. \fBParameters:\fP
 .RS 4
@@ -820,7 +870,7 @@ number of elements destroyed, or SWD_ERROR_CODE on failure.
 .RE
 .PP
 
-.SS "int swd_cmd_queue_init (\fBswd_cmd_t\fP * cmdq)"
+.SS "int swd_cmdq_init (\fBswd_cmd_t\fP * cmdq)"
 .PP
 Initialize new queue element in memory that becomes a queue root. \fBParameters:\fP
 .RS 4
@@ -830,6 +880,51 @@ Initialize new queue element in memory that becomes a queue root. \fBParameters:
 \fBReturns:\fP
 .RS 4
 SWD_OK on success, SWD_ERROR_CODE code on failure 
+.RE
+.PP
+
+.SS "int swd_dap_idcode (\fBswd_ctx_t\fP * swdctx, \fBswd_operation_t\fP operation)"
+.PP
+Macro: Read out IDCODE register and return its value on function return. \fBParameters:\fP
+.RS 4
+\fI*swdctx\fP swd context pointer. 
+.br
+\fIoperation\fP operation type. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Target's IDCODE value or code error on failure. 
+.RE
+.PP
+
+.SS "int swd_dap_reset_select_idcode (\fBswd_ctx_t\fP * swdctx, \fBswd_operation_t\fP operation)"
+.PP
+Macro: Reset target DAP, select SW-DP, read out IDCODE. This is the proper SW-DP initialization as stated by ARM Information Center. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fI*swdctx\fP swd context pointer. 
+.br
+\fIoperation\fP type (SWD_OPERATION_ENQUEUE or SWD_OPERATION_EXECUTE). 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Target's IDCODE, or error code on failure. 
+.RE
+.PP
+
+.SS "int swd_dap_select_swj (\fBswd_ctx_t\fP * swdctx, \fBswd_operation_t\fP operation)"
+.PP
+Activate SW-DP by sending out JTAG-TO-SWD sequence on SWDIOTMS line. \fBParameters:\fP
+.RS 4
+\fI*swdctx\fP swd context. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+number of control bytes executed, or error code on failre. 
 .RE
 .PP
 
@@ -905,19 +1000,6 @@ pointer to the initialized swd context.
 .RE
 .PP
 
-.SS "int swd_jtag2swd (\fBswd_ctx_t\fP * swdctx, \fBswd_operation_t\fP operation)"
-.PP
-Activate SW-DP and deactivate JTAG-DP by sending out JTAG-TO-SWD sequence. \fBParameters:\fP
-.RS 4
-\fI*swdctx\fP swd context. 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-number of control bytes executed, or error code on failre. 
-.RE
-.PP
-
 .SS "int swd_miso_ack (\fBswd_ctx_t\fP * swdctx, \fBswd_operation_t\fP operation, char * ack)"
 .PP
 Perform ACK read into *ack and verify received data. \fBParameters:\fP
@@ -951,6 +1033,21 @@ Perform (MISO) data read. \fBParameters:\fP
 \fBReturns:\fP
 .RS 4
 number of elements processed, or SWD_ERROR_CODE on failure. 
+.RE
+.PP
+
+.SS "int swd_mosi_dap_reset (\fBswd_ctx_t\fP * swdctx, \fBswd_operation_t\fP operation)"
+.PP
+Debug Access Port Reset sends 50 CLK with TMS high that brings both SW-DP and JTAG-DP into reset state. \fBParameters:\fP
+.RS 4
+\fI*swdctx\fP swd context pointer. 
+.br
+\fIoperation\fP type (SWD_OPERATION_ENQUEUE or SWD_OPERATION_EXECUTE). 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+number of elements processed or SWD_ERROR_CODE code on failure. 
 .RE
 .PP
 
@@ -1011,21 +1108,6 @@ Perform Request. \fBParameters:\fP
 \fBReturns:\fP
 .RS 4
 number of commands processed, or SWD_ERROR_CODE on failure. 
-.RE
-.PP
-
-.SS "int swd_transmit (\fBswd_ctx_t\fP * swdctx, \fBswd_cmd_t\fP * cmd)"
-.PP
-Transmit selected command to the interface driver. \fBParameters:\fP
-.RS 4
-\fI*swdctx\fP swd context pointer. 
-.br
-\fI*cmd\fP pointer to the command to be sent. 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-number of commands transmitted (1), or SWD_ERROR_CODE on failure. 
 .RE
 .PP
 

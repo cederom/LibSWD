@@ -263,18 +263,19 @@ typedef enum SWD_ERROR_CODE {
  SWD_ERROR_BADOPCODE   =-24, ///< Unsupported operation requested.
  SWD_ERROR_NODATACMD   =-25, ///< Command not found on the queue.
  SWD_ERROR_DATAADDR    =-26, ///< Bad DATA result address.
- SWD_ERROR_NOPARITYCMD =-27, ///< Parity command missing or misplaced.
+ SWD_ERROR_NOPARITYCMD =-27, ///< Parity after Data missing or misplaced.
  SWD_ERROR_PARITYADDR  =-28, ///< Bad PARITY command result address.
  SWD_ERROR_NOTDONE     =-29, ///< Could not end selected task.
  SWD_ERROR_QUEUEROOT   =-30, ///< Queue root not found or null.
- SWD_ERROR_BADCMDTYPE  =-31, ///< Unknown command detected.
- SWD_ERROR_BADCMDDATA  =-32, ///< Bad command data.
- SWD_ERROR_TURNAROUND  =-33, ///< Error during turnaround switch.
- SWD_ERROR_DRIVER      =-34, ///< Driver error.
- SWD_ERROR_ACK_WAIT    =-35, ///< Received ACK WAIT.
- SWD_ERROR_ACK_FAULT   =-36, ///< Received ACK FAULT.
- SWD_ERROR_QUEUENOTFREE=-37, ///< Cannot free resources, queue not empty.
- SWD_ERROR_TRANSPORT   =-38  ///< Transport type unknown or undefined.
+ SWD_ERROR_QUEUETAIL   =-31, ///< Queue tail not found or null.
+ SWD_ERROR_BADCMDTYPE  =-32, ///< Unknown command detected.
+ SWD_ERROR_BADCMDDATA  =-33, ///< Bad command data.
+ SWD_ERROR_TURNAROUND  =-34, ///< Error during turnaround switch.
+ SWD_ERROR_DRIVER      =-35, ///< Driver error.
+ SWD_ERROR_ACK_WAIT    =-36, ///< Received ACK WAIT.
+ SWD_ERROR_ACK_FAULT   =-37, ///< Received ACK FAULT.
+ SWD_ERROR_QUEUENOTFREE=-38, ///< Cannot free resources, queue not empty.
+ SWD_ERROR_TRANSPORT   =-39  ///< Transport type unknown or undefined.
 } swd_error_code_t;
 
 /** Logging Level Codes definition */
@@ -334,13 +335,13 @@ typedef enum SWD_SHIFTDIR {
 /** Command Queue operations codes. */
 typedef enum SWD_OPERATION {
  SWD_OPERATION_FIRST         =1, ///< First operation to know its code.
- SWD_OPERATION_QUEUE_APPEND  =1, ///< Append command(s) to the queue.
- SWD_OPERATION_TRANSMIT_HEAD =2, ///< Transmit root..current (head).
- SWD_OPERATION_TRANSMIT_TAIL =3, ///< Transmit current..last (tail).
- SWD_OPERATION_TRANSMIT_ALL  =4, ///< Transmit all commands on the queue.
- SWD_OPERATION_TRANSMIT_ONE  =5, ///< Transmit only current command.
- SWD_OPERATION_TRANSMIT_LAST =6, ///< Transmit last command on the queue.
- SWD_OPERATION_EXECUTE       =7, ///< Queue commands then flush the queue.
+ SWD_OPERATION_ENQUEUE       =1, ///< Append command(s) to the queue.
+ SWD_OPERATION_EXECUTE       =2, ///< Queue commands then flush the queue.
+ SWD_OPERATION_TRANSMIT_HEAD =3, ///< Transmit root..current (head).
+ SWD_OPERATION_TRANSMIT_TAIL =4, ///< Transmit current..last (tail).
+ SWD_OPERATION_TRANSMIT_ALL  =5, ///< Transmit all commands on the queue.
+ SWD_OPERATION_TRANSMIT_ONE  =6, ///< Transmit only current command.
+ SWD_OPERATION_TRANSMIT_LAST =7, ///< Transmit last command on the queue.
  SWD_OPERATION_LAST          =7  ///< Last operation to know its code.
 } swd_operation_t;
 
@@ -363,7 +364,7 @@ typedef struct swd_cmd_t {
   char control;   ///< Control transfer data (one byte).
  };
  char bits;       ///< Payload bit count == clk pulses on the bus.
- char cmdtype;    ///< Command type as defined by swd_cmdtype_t. 
+ swd_cmdtype_t cmdtype;    ///< Command type as defined by swd_cmdtype_t. 
  char done;       ///< Non-zero if operation already executed.
  struct swd_cmd_t *prev, *next; ///< Pointer to the previous/next command.
 } swd_cmd_t;
@@ -432,117 +433,59 @@ typedef struct {
  swd_ahbap_t mosiahbap;       ///< Last known write ti the AHB-AP register.
 } swd_ctx_t;
 
+/** Some comments on the function behavior **/
 
-/* DATA GENERATED BELOW ARE TO BE SHIFTED OUT MSB FIRST, UNLIKE IN JTAG!
- * These functions generate a bistream packets for SWD communications.
- * Bistream is returned in byte array pointed by *buffer parameter.
- * Actual positive byte count is returned by the function.
- * Negative return value means an error. Zero means no data was generated.
- * If you need to swap bit direction, use bitswap functions provided below.
- * All functions name start with "swd_bitgen_" prefix.
- */
-
-/*******************************************************************************
- * \defgroup swd_bin Binary helper functions.
- * @{
- ******************************************************************************/
 int swd_bin8_parity_even(char *data, char *parity);
 int swd_bin32_parity_even(int *data, char *parity);
 int swd_bin8_print(char *data);
 int swd_bin32_print(int *data);
 char *swd_bin8_string(char *data);
 char *swd_bin32_string(int *data);
-
 int swd_bin8_bitswap(unsigned char *buffer, int bitcount);
 int swd_bin32_bitswap(unsigned int *buffer, int bitcount);
-/** @} */
 
-/*******************************************************************************
- * \defgroup swd_cmd_queue Command Queue helper functions
- * @{
- ******************************************************************************/
+int swd_cmdq_init(swd_cmd_t *cmdq);
+swd_cmd_t* swd_cmdq_find_root(swd_cmd_t *cmdq);
+swd_cmd_t* swd_cmdq_find_tail(swd_cmd_t *cmdq);
+int swd_cmdq_append(swd_cmd_t *cmdq, swd_cmd_t *cmd);
+int swd_cmdq_free(swd_cmd_t *cmdq);
+int swd_cmdq_free_head(swd_cmd_t *cmdq);
+int swd_cmdq_free_tail(swd_cmd_t *cmdq);
 
-int swd_cmd_queue_init(swd_cmd_t *cmdq);
-swd_cmd_t* swd_cmd_queue_find_root(swd_cmd_t *cmdq);
-swd_cmd_t* swd_cmd_queue_find_tail(swd_cmd_t *cmdq);
-int swd_cmd_queue_append(swd_cmd_t *cmdq, swd_cmd_t *cmd);
-int swd_cmd_queue_free(swd_cmd_t *cmdq);
-int swd_cmd_queue_free_head(swd_cmd_t *cmdq);
-int swd_cmd_queue_free_tail(swd_cmd_t *cmdq);
-/** @} */
-
-/*******************************************************************************
- * \defgroup SWD Command queue elements generation routines.
- * These command quants are created in memory and can be easily appended
- * to the end of existing queue pointed by *cmdq element.
- * All functions here start with "swd_cmd_queue_append_" prefix.
- * @{
- ******************************************************************************/
-
-
-/*******************************************************************************
- * SWD Commands Queue Elements Generator Routines.
- * These command quants are created in memory and can be easily appended
- * to the end of queue pointed by *cmdq element.
- * All functions here start with "swd_cmd_queue_append_" prefix.
- ******************************************************************************/
-
-int swd_cmd_queue_append_mosi_request(swd_ctx_t *swdctx, char *request);
-int swd_cmd_queue_append_mosi_trn(swd_ctx_t *swdctx);
-int swd_cmd_queue_append_miso_trn(swd_ctx_t *swdctx);
-int swd_cmd_queue_append_miso_nbit(swd_ctx_t *swdctx, char **data, int count);
-int swd_cmd_queue_append_mosi_nbit(swd_ctx_t *swdctx, char *data, int count);
-int swd_cmd_queue_append_mosi_parity(swd_ctx_t *swdctx, char *parity);
-int swd_cmd_queue_append_miso_parity(swd_ctx_t *swdctx, char *parity);
-int swd_cmd_queue_append_miso_data(swd_ctx_t *swdctx, int *data);
-int swd_cmd_queue_append_miso_data_p(swd_ctx_t *swdctx, int *data, char *parity);
-int swd_cmd_queue_append_miso_n_data_p(swd_ctx_t *swdctx, int **data, char **parity, int count);
-int swd_cmd_queue_append_mosi_data(swd_ctx_t *swdctx, int *data);
-int swd_cmd_queue_append_mosi_data_ap(swd_ctx_t *swdctx, int *data);
-int swd_cmd_queue_append_mosi_data_p(swd_ctx_t *swdctx, int *data, char *parity);
-int swd_cmd_append_mosi_n_data_ap(swd_ctx_t *swdctx, int **data, int count);
-int swd_cmd_append_mosi_n_data_p(swd_ctx_t *swdctx, int **data, char **parity, int count);
-int swd_cmd_queue_append_miso_ack(swd_ctx_t *swdctx, char *ack);
-int swd_cmd_queue_append_mosi_control(swd_ctx_t *swdctx, char *ctlmsg, int len);
-int swd_cmd_queue_append_swdpreset(swd_ctx_t *swdctx);
-int swd_cmd_queue_append_jtag2swd(swd_ctx_t *swdctx);
-int swd_cmd_queue_append_swd2jtag(swd_ctx_t *swdctx);
+int swd_cmd_enqueue(swd_ctx_t *swdctx, swd_cmd_t *cmd);
+int swd_cmd_enqueue_mosi_request(swd_ctx_t *swdctx, char *request);
+int swd_cmd_enqueue_mosi_trn(swd_ctx_t *swdctx);
+int swd_cmd_enqueue_miso_trn(swd_ctx_t *swdctx);
+int swd_cmd_enqueue_miso_nbit(swd_ctx_t *swdctx, char **data, int count);
+int swd_cmd_enqueue_mosi_nbit(swd_ctx_t *swdctx, char *data, int count);
+int swd_cmd_enqueue_mosi_parity(swd_ctx_t *swdctx, char *parity);
+int swd_cmd_enqueue_miso_parity(swd_ctx_t *swdctx, char *parity);
+int swd_cmd_enqueue_miso_data(swd_ctx_t *swdctx, int *data);
+int swd_cmd_enqueue_miso_data_p(swd_ctx_t *swdctx, int *data, char *parity);
+int swd_cmd_enqueue_miso_n_data_p(swd_ctx_t *swdctx, int **data, char **parity, int count);
+int swd_cmd_enqueue_mosi_data(swd_ctx_t *swdctx, int *data);
+int swd_cmd_enqueue_mosi_data_ap(swd_ctx_t *swdctx, int *data);
+int swd_cmd_enqueue_mosi_data_p(swd_ctx_t *swdctx, int *data, char *parity);
+int swd_cmd_enqueue_mosi_n_data_ap(swd_ctx_t *swdctx, int **data, int count);
+int swd_cmd_enqueue_mosi_n_data_p(swd_ctx_t *swdctx, int **data, char **parity, int count);
+int swd_cmd_enqueue_miso_ack(swd_ctx_t *swdctx, char *ack);
+int swd_cmd_enqueue_mosi_control(swd_ctx_t *swdctx, char *ctlmsg, int len);
+int swd_cmd_enqueue_mosi_dap_reset(swd_ctx_t *swdctx);
+int swd_cmd_enqueue_mosi_jtag2swd(swd_ctx_t *swdctx);
+int swd_cmd_enqueue_mosi_swd2jtag(swd_ctx_t *swdctx);
 
 int swd_bus_setdir_mosi(swd_ctx_t *swdctx);
 int swd_bus_setdir_miso(swd_ctx_t *swdctx);
-/** @} */
+int swd_bus_transmit(swd_ctx_t *swdctx, swd_cmd_t *cmd);
 
-/*******************************************************************************
- * \defgroup swd_bit_gen Packet generation helper routines.
- * @{
- ******************************************************************************/
+int swd_bitgen8_request(swd_ctx_t *swdctx, char *APnDP, char *RnW, char *addr, char *request);
 
-int swd_bit8_gen_request(swd_ctx_t *swdctx, char *APnDP, char *RnW, char *addr, char *request);
-/** @} */
-
-/*******************************************************************************
- * \defgroup swd_drv SWD Bus and Interface Driver Transfer Functions that
- * executes command queue.
- * @{
- ******************************************************************************/
-
-/*
 extern int swd_drv_mosi_8(swd_ctx_t *swdctx, char *data, int bits, int nLSBfirst);
-extern int swd_drv_mosi_32(int *data, int bits, int nLSBfirst);
-extern int swd_drv_miso_8(char *data, int bits, int nLSBfirst);
-extern int swd_drv_miso_32(int *data, int bits, int nLSBfirst);
-*/
-int swd_transmit(swd_ctx_t *swdctx, swd_cmd_t *cmd);
-int swd_cmd_queue_flush(swd_ctx_t *swdctx, swd_operation_t operation);
-/** @} */
+extern int swd_drv_mosi_32(swd_ctx_t *swdctx, int *data, int bits, int nLSBfirst);
+extern int swd_drv_miso_8(swd_ctx_t *swdctx, char *data, int bits, int nLSBfirst);
+extern int swd_drv_miso_32(swd_ctx_t *swdctx, int *data, int bits, int nLSBfirst);
 
-/*******************************************************************************
- * \defgroup swd_packet SWD Operations Generators: Request, ACK, Data.
- * These functions generate payloads and queue up all elements/commands
- * necessary to perform requested operations on the SWD bus. Depending
- * on operation type, elements can be executed or queued up for future transfer.
- * @{
- ******************************************************************************/
+int swd_cmdq_flush(swd_ctx_t *swdctx, swd_operation_t operation);
 
 int swd_mosi_request
 (swd_ctx_t *swdctx, swd_operation_t operation, char *APnDP, char *RnW, char *addr);
@@ -551,58 +494,22 @@ int swd_mosi_data_p(swd_ctx_t *swdctx, swd_operation_t operation, int *data, cha
 int swd_mosi_data_ap(swd_ctx_t *swdctx, swd_operation_t operation, int *data);
 int swd_miso_data_p(swd_ctx_t *swdctx, swd_operation_t operation, int *data, char *parity);
 int swd_mosi_jtag2swd(swd_ctx_t *swdctx, swd_operation_t operation);
-/** @} */
+int swd_mosi_dap_reset(swd_ctx_t *swdctx, swd_operation_t operation);
 
-/*******************************************************************************
- * \defgroup swd_highlevel High-level SWD operation functions.
- * Operate on pointers, where target data is stored. Operation can be
- * SWD_OPERATION_QUEUE for queueing the command for later execution,
- * or SWD_OPERATION_EXECUTE to obtain results on function return.
- * Return values: negative number on error, data on success.
- ******************************************************************************/
-
-int swd_jtag2swd(swd_ctx_t *swdctx, swd_operation_t operation);
 int swd_idcode(swd_ctx_t *swdctx, swd_operation_t operation, int *idcode, char *ack, char *parity);
-/** @} */
-
-/*******************************************************************************
- * \defgroup swd_log Miscelanous logging functionalities.
- * @{
- ******************************************************************************/
+int swd_dap_select_swj(swd_ctx_t *swdctx, swd_operation_t operation);
+int swd_dap_idcode(swd_ctx_t *swdctx, swd_operation_t operation);
+int swd_dap_reset_select_idcode(swd_ctx_t *swdctx, swd_operation_t operation);
 
 int swd_log(swd_loglevel_t loglevel, char *msg);
-/** @} */
-
-/*******************************************************************************
- * \defgroup swd_error Error handling and information routines.
- * @{
- ******************************************************************************/
-
 char *swd_error_string(swd_error_code_t error);
-/** @} */
-
-/*******************************************************************************
- * \defgroup swd_init Library and Context (de)initialization routines.
- * @{
- ******************************************************************************/
 
 swd_ctx_t *swd_init(void);
 int swd_deinit_ctx(swd_ctx_t *swdctx);
 int swd_deinit_cmdq(swd_ctx_t *swdctx);
 int swd_deinit(swd_ctx_t *swdctx);
-/** @} */
 
-/*******************************************************************************
- * \defgroup swd_drv LibSWD driver bridge functions to drive real hardware.
- * @{
- ******************************************************************************/
-
-int swd_drv_mosi_8(swd_ctx_t *swdctx, char *data, int bits, int direction);
-int swd_drv_mosi_32(swd_ctx_t *swdctx, int *data, int bits, int direction);
-int swd_drv_miso_8(swd_ctx_t *swdctx, char *data, int bits, int direction);
-int swd_drv_miso_32(swd_ctx_t *swdctx, int *data, int bits, int direction);
 int swd_drv_mosi_trn(swd_ctx_t *swdctx, int clks);
 int swd_drv_miso_trn(swd_ctx_t *swdctx, int clks);
-/** @} */
 
 #endif

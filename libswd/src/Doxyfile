@@ -2,7 +2,7 @@
 DOXYFILE_ENCODING      = UTF-8
 PROJECT_NAME           = libswd
 PROJECT_NUMBER         = 0.0.1
-OUTPUT_DIRECTORY       = doc
+OUTPUT_DIRECTORY       = ../doc
 CREATE_SUBDIRS         = NO
 
 # The OUTPUT_LANGUAGE tag is used to specify the language in which all
