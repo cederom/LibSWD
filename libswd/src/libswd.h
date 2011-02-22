@@ -262,9 +262,9 @@ typedef enum SWD_ERROR_CODE {
  SWD_ERROR_ACKORDER    =-23, ///< ACK not in order REQ->TRN->ACK.
  SWD_ERROR_BADOPCODE   =-24, ///< Unsupported operation requested.
  SWD_ERROR_NODATACMD   =-25, ///< Command not found on the queue.
- SWD_ERROR_DATAADDR    =-26, ///< Bad DATA result address.
+ SWD_ERROR_DATAPTR     =-26, ///< Bad DATA pointer address.
  SWD_ERROR_NOPARITYCMD =-27, ///< Parity after Data missing or misplaced.
- SWD_ERROR_PARITYADDR  =-28, ///< Bad PARITY command result address.
+ SWD_ERROR_PARITYPTR   =-28, ///< Bad PARITY pointer address.
  SWD_ERROR_NOTDONE     =-29, ///< Could not end selected task.
  SWD_ERROR_QUEUEROOT   =-30, ///< Queue root not found or null.
  SWD_ERROR_QUEUETAIL   =-31, ///< Queue tail not found or null.
@@ -275,22 +275,21 @@ typedef enum SWD_ERROR_CODE {
  SWD_ERROR_ACK_WAIT    =-36, ///< Received ACK WAIT.
  SWD_ERROR_ACK_FAULT   =-37, ///< Received ACK FAULT.
  SWD_ERROR_QUEUENOTFREE=-38, ///< Cannot free resources, queue not empty.
- SWD_ERROR_TRANSPORT   =-39  ///< Transport type unknown or undefined.
+ SWD_ERROR_TRANSPORT   =-39, ///< Transport type unknown or undefined.
+ SWD_ERROR_DIRECTION   =-40, ///< Direction error (LSb/MSb first).
+ SWD_ERROR_LOGLEVEL    =-41  ///< Invalid loglevel number.
 } swd_error_code_t;
 
 /** Logging Level Codes definition */
 ///Logging Level codes definition, use this to have its name on debugger.
 typedef enum SWD_LOGLEVEL{
- /// Remain silent.       
- SWD_LOGLEVEL_SILENT  = 0,
- /// Log only informational messages.
- SWD_LOGLEVEL_INFO    = 1,
- /// also log warnings.
- SWD_LOGLEVEL_WARNING = 2,
- /// also lod errors.
- SWD_LOGLEVEL_ERROR   = 3,
- /// Log everything including detailed details.
- SWD_LOGLEVEL_DEBUG   = 4
+ SWD_LOGLEVEL_MIN     = 0,
+ SWD_LOGLEVEL_SILENT  = 0, ///< Remain silent.
+ SWD_LOGLEVEL_ERROR   = 1, ///< Log errors only.
+ SWD_LOGLEVEL_WARNING = 2, ///< Log warnings.
+ SWD_LOGLEVEL_INFO    = 3, ///< Log informational messages.
+ SWD_LOGLEVEL_DEBUG   = 4, ///< Log all including debug information.
+ SWD_LOGLEVEL_MAX     = 4
 } swd_loglevel_t;
 
 /** SWD queue and payload data definitions */
@@ -358,10 +357,12 @@ typedef struct swd_cmd_t {
   char ack;       ///< Acknowledge response from target.
   int misodata;   ///< Data read from target (MISO).
   int mosidata;   ///< Data written to target (MOSI).
+  int data32;     ///< Holds "int" data type for inspection.
   char misobit;   ///< Single bit read from target (bit-per-char).
   char mosibit;   ///< Single bit written to target (bit-per-char).
   char parity;    ///< Parity bit for data payload.
   char control;   ///< Control transfer data (one byte).
+  char data8;     ///< Holds "char" data type for inspection.
  };
  char bits;       ///< Payload bit count == clk pulses on the bus.
  swd_cmdtype_t cmdtype;    ///< Command type as defined by swd_cmdtype_t. 
@@ -380,6 +381,7 @@ typedef struct {
 /** Most actual Serial Wire Debug Port Registers */
 typedef struct {
  char ack;     ///< Last known state of ACK response.
+ char parity;  ///< Parity bit of the data transfer.
  int idcode;   ///< Target's IDCODE register value.
  int abort;    ///< Last known ABORT register value.
  int ctrlstat; ///< Last known CTRLSTAT register value.
@@ -427,10 +429,10 @@ typedef struct {
  swd_cmd_t *cmdq;             ///< Command queue, stores all bus operations.
  swd_context_config_t config; ///< Target specific configuration.
  swd_driver_t *driver;        ///< Pointer to the interface driver structure.
- swd_swdp_t misoswdp;         ///< Last known read from the SW-DP register.
- swd_swdp_t mosiswdp;         ///< Last known write to the SW-DP register.
- swd_ahbap_t misoahbap;       ///< Last known read from AHB-AP register.
- swd_ahbap_t mosiahbap;       ///< Last known write ti the AHB-AP register.
+ swd_swdp_t misoswdp;         ///< Last known read from the SW-DP registers.
+ swd_swdp_t mosiswdp;         ///< Last known write to the SW-DP registers.
+ swd_ahbap_t misoahbap;       ///< Last known read from AHB-AP registers.
+ swd_ahbap_t mosiahbap;       ///< Last known write ti the AHB-AP registers.
 } swd_ctx_t;
 
 /** Some comments on the function behavior **/
@@ -474,6 +476,8 @@ int swd_cmd_enqueue_mosi_dap_reset(swd_ctx_t *swdctx);
 int swd_cmd_enqueue_mosi_jtag2swd(swd_ctx_t *swdctx);
 int swd_cmd_enqueue_mosi_swd2jtag(swd_ctx_t *swdctx);
 
+char *swd_cmd_string_cmdtype(swd_cmd_t *cmd);
+
 int swd_bus_setdir_mosi(swd_ctx_t *swdctx);
 int swd_bus_setdir_miso(swd_ctx_t *swdctx);
 int swd_bus_transmit(swd_ctx_t *swdctx, swd_cmd_t *cmd);
@@ -493,15 +497,16 @@ int swd_miso_ack(swd_ctx_t *swdctx, swd_operation_t operation, char *ack);
 int swd_mosi_data_p(swd_ctx_t *swdctx, swd_operation_t operation, int *data, char *parity);
 int swd_mosi_data_ap(swd_ctx_t *swdctx, swd_operation_t operation, int *data);
 int swd_miso_data_p(swd_ctx_t *swdctx, swd_operation_t operation, int *data, char *parity);
+int swd_mosi_control(swd_ctx_t *swdctx, swd_operation_t operation, char *ctlmsg, int len);
 int swd_mosi_jtag2swd(swd_ctx_t *swdctx, swd_operation_t operation);
-int swd_mosi_dap_reset(swd_ctx_t *swdctx, swd_operation_t operation);
+int swd_miso_idcode(swd_ctx_t *swdctx, swd_operation_t operation, int *idcode, char *ack, char *parity);
 
-int swd_idcode(swd_ctx_t *swdctx, swd_operation_t operation, int *idcode, char *ack, char *parity);
+int swd_dap_reset(swd_ctx_t *swdctx, swd_operation_t operation);
 int swd_dap_select_swj(swd_ctx_t *swdctx, swd_operation_t operation);
 int swd_dap_idcode(swd_ctx_t *swdctx, swd_operation_t operation);
 int swd_dap_reset_select_idcode(swd_ctx_t *swdctx, swd_operation_t operation);
 
-int swd_log(swd_loglevel_t loglevel, char *msg);
+int swd_log(swd_ctx_t *swdctx, swd_loglevel_t loglevel, char *msg, ...);
 char *swd_error_string(swd_error_code_t error);
 
 swd_ctx_t *swd_init(void);

@@ -2,7 +2,7 @@
  * $Id$
  *
  * Serial Wire Debug Open Library.
- * External Handlers Definition File.
+ * External Application Driver Interface File.
  *
  * Copyright (C) 2010, Tomasz Boleslaw CEDRO (http://www.tomek.cedro.info)
  * All rights reserved.
@@ -39,16 +39,16 @@
 #include <stdlib.h>
 
 int swd_drv_mosi_8(swd_ctx_t *swdctx, char *data, int bits, int nLSBfirst){
- return 1;
  if (data==NULL) return SWD_ERROR_NULLPOINTER;
- if (bits<0 || bits>8) return SWD_ERROR_PARAM;
- if (nLSBfirst!=0 || nLSBfirst!=1) return SWD_ERROR_PARAM;
+ if (bits<0 && bits>8) return SWD_ERROR_PARAM;
+ if (nLSBfirst!=0 && nLSBfirst!=1) return SWD_ERROR_PARAM;
 
- static int i, res;
+ static unsigned int i;
+ static signed int res;
  static char misodata[8], mosidata[8];
 
  //UrJTAG drivers shift data LSB-First.
- for (i=0;i<8;i++) mosidata[(nLSBfirst)?(i):(7-i)]=(1<<i)&(*data); 
+ for (i=0;i<8;i++) mosidata[(nLSBfirst==SWD_DIR_LSBFIRST)?(i):(7-i)]=((1<<i)&(*data))?1:0; 
  res=urj_tap_cable_transfer((urj_cable_t *)swdctx->driver->device, bits, mosidata, misodata);
  if (res<0) return SWD_ERROR_DRIVER;
  urj_tap_cable_flush((urj_cable_t *)swdctx->driver->device, URJ_TAP_CABLE_COMPLETELY);
@@ -56,15 +56,44 @@ int swd_drv_mosi_8(swd_ctx_t *swdctx, char *data, int bits, int nLSBfirst){
 }
 
 
-int swd_drv_mosi_32(swd_ctx_t *swdctx, int *data, int bits, int direction){
- return SWD_OK;        
+int swd_drv_mosi_32(swd_ctx_t *swdctx, int *data, int bits, int nLSBfirst){
+ if (data==NULL) return SWD_ERROR_NULLPOINTER;
+ if (bits<0 && bits>8) return SWD_ERROR_PARAM;
+ if (nLSBfirst!=0 && nLSBfirst!=1) return SWD_ERROR_PARAM;
+
+ static unsigned int i;
+ static signed int res;
+ static char misodata[32], mosidata[32];
+
+ //UrJTAG drivers shift data LSB-First.
+ for (i=0;i<32;i++) mosidata[(nLSBfirst==SWD_DIR_LSBFIRST)?(i):(32-i)]=((1<<i)&(*data))?1:0; 
+ res=urj_tap_cable_transfer((urj_cable_t *)swdctx->driver->device, bits, mosidata, misodata);
+ if (res<0) return SWD_ERROR_DRIVER;
+ urj_tap_cable_flush((urj_cable_t *)swdctx->driver->device, URJ_TAP_CABLE_COMPLETELY);
+ return 1;
 }
 
-int swd_drv_miso_8(swd_ctx_t *swdctx, char *data, int bits, int direction){
- return SWD_OK;        
+int swd_drv_miso_8(swd_ctx_t *swdctx, char *data, int bits, int nLSBfirst){
+ if (data==NULL) return SWD_ERROR_NULLPOINTER;
+ if (bits<0 && bits>8) return SWD_ERROR_PARAM;
+ if (nLSBfirst!=0 && nLSBfirst!=1) return SWD_ERROR_PARAM;
+
+ static unsigned int i;
+ static signed int res;
+ static char misodata[8], mosidata[8]={0,0,0,0,0,0,0,0};
+
+ //UrJTAG drivers shift data LSB-First.
+ for (i=0;i<bits;i++) mosidata[(nLSBfirst==SWD_DIR_LSBFIRST)?(i):(7-i)]=((1<<i)&(*data))?1:0; 
+ res=urj_tap_cable_transfer((urj_cable_t *)swdctx->driver->device, bits, mosidata, misodata);
+ if (res<0) return SWD_ERROR_DRIVER;
+ urj_tap_cable_flush((urj_cable_t *)swdctx->driver->device, URJ_TAP_CABLE_COMPLETELY);
+ //Now we need to reconstruct the data byte from shifted in LSBfirst byte array.
+ *data=0;
+ for (i=0;i<bits;i++) *data|=(misodata[7-i]?(1<<i):0);
+ return i+1;
 }
 
-int swd_drv_miso_32(swd_ctx_t *swdctx, int *data, int bits, int direction){
+int swd_drv_miso_32(swd_ctx_t *swdctx, int *data, int bits, int nLSBfirst){
  return SWD_OK;        
 }
 
@@ -73,8 +102,7 @@ int swd_drv_miso_32(swd_ctx_t *swdctx, int *data, int bits, int direction){
  * Master Output Slave Input - SWD Write operation.
  * bits specify how many clock cycles must be used. */
 int swd_drv_mosi_trn(swd_ctx_t *swdctx, int bits){
-        return 1;
- if (bits<SWD_TURNROUND_MIN || bits>SWD_TURNROUND_MAX)
+ if (bits<SWD_TURNROUND_MIN && bits>SWD_TURNROUND_MAX)
   return SWD_ERROR_TURNAROUND; 
 
  static int res;
@@ -90,8 +118,7 @@ int swd_drv_mosi_trn(swd_ctx_t *swdctx, int bits){
 }
 
 int swd_drv_miso_trn(swd_ctx_t *swdctx, int bits){
-        return 1;
- if (bits<SWD_TURNROUND_MIN || bits>SWD_TURNROUND_MAX)
+ if (bits<SWD_TURNROUND_MIN && bits>SWD_TURNROUND_MAX)
   return SWD_ERROR_TURNAROUND; 
 
  static int res;

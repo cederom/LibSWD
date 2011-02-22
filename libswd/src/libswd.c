@@ -41,6 +41,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <stdarg.h>
 
 /*******************************************************************************
  * \defgroup swd_bin Binary operations helper functions.
@@ -306,6 +307,8 @@ int swd_cmdq_free_tail(swd_cmd_t *cmdq){
  * in memory and filled with payload, then appended to the queue. If enqueue
  * fails, memory for newly created elements is set free before return.
  * All functions here start with "swd_cmd_queue_append_" prefix.
+ * Functions here are NOT intelligent, they only create payload in memory,
+ * so treat them rather as blocks for high-level functions.
  * @{
  ******************************************************************************/
 
@@ -749,6 +752,34 @@ int swd_bus_setdir_miso(swd_ctx_t *swdctx){
 }
 /** @} */
 
+/*******************************************************************************
+ * \defgroup swd_cmd_string SWD command element to string converters.
+ * @{
+ */
+
+char *swd_cmd_string_cmdtype(swd_cmd_t *cmd){
+ if (cmd==NULL) return NULL;
+ switch (cmd->cmdtype){
+  case SWD_CMDTYPE_MOSI_DATA: return "MOSI_DATA";
+  case SWD_CMDTYPE_MOSI_REQUEST: return "MOSI_REQUEST";
+  case SWD_CMDTYPE_MOSI_TRN:     return "MOSI_TRN";
+  case SWD_CMDTYPE_MOSI_PARITY:  return "MOSI_PARITY";
+  case SWD_CMDTYPE_MOSI_BITBANG: return "MOSI_BITBANG";
+  case SWD_CMDTYPE_MOSI_CONTROL: return "MOSI_CONTROL";
+  case SWD_CMDTYPE_MOSI:         return "MOSI";
+  case SWD_CMDTYPE_UNDEFINED:    return "UNDEFINED";
+  case SWD_CMDTYPE_MISO:         return "MISO";
+  case SWD_CMDTYPE_MISO_ACK:     return "MISO_ACK";
+  case SWD_CMDTYPE_MISO_BITBANG: return "MISO_BITBANG";
+  case SWD_CMDTYPE_MISO_PARITY:  return "MISO_PARITY";
+  case SWD_CMDTYPE_MISO_TRN:     return "MISO_TRN";
+  case SWD_CMDTYPE_MISO_DATA:    return "MISO_DATA";
+  default: return "Unknown command type!";
+ }
+}
+
+/** @} */
+
 
 /*******************************************************************************
  * \defgroup swd_bitgen SWD Bitstream / Packet Payload generation routines.
@@ -800,12 +831,12 @@ int swd_bitgen8_request(swd_ctx_t *swdctx, char *APnDP, char *RnW, char *addr, c
  * @{
  ******************************************************************************/
 
-/*
 extern int swd_drv_mosi_8(swd_ctx_t *swdctx, char *data, int bits, int nLSBfirst);
-extern int swd_drv_mosi_32(int *data, int bits, int nLSBfirst);
-extern int swd_drv_miso_8(char *data, int bits, int nLSBfirst);
-extern int swd_drv_miso_32(int *data, int bits, int nLSBfirst);
-*/
+extern int swd_drv_mosi_32(swd_ctx_t *swdctx, int *data, int bits, int nLSBfirst);
+extern int swd_drv_miso_8(swd_ctx_t *swdctx, char *data, int bits, int nLSBfirst);
+extern int swd_drv_miso_32(swd_ctx_t *swdctx, int *data, int bits, int nLSBfirst);
+extern int swd_drv_mosi_trn(swd_ctx_t *swdctx, int bits);
+extern int swd_drv_miso_trn(swd_ctx_t *swdctx, int bits);
 
 /** Transmit selected command from the command queue to the interface driver.
  * \param *swdctx swd context pointer.
@@ -821,7 +852,7 @@ int swd_bus_transmit(swd_ctx_t *swdctx, swd_cmd_t *cmd){
  switch (cmd->cmdtype){
   case SWD_CMDTYPE_MOSI:
   case SWD_CMDTYPE_MISO:
-   swd_log(SWD_LOGLEVEL_WARNING, "This command does not contain payload.");
+   swd_log(swdctx, SWD_LOGLEVEL_WARNING, "This command does not contain payload.");
    break;
 
   case SWD_CMDTYPE_MOSI_CONTROL:
@@ -844,7 +875,7 @@ int swd_bus_transmit(swd_ctx_t *swdctx, swd_cmd_t *cmd){
 
   case SWD_CMDTYPE_MOSI_TRN:
    // 1..4-bit clock cycle.
-   if (cmd->bits<SWD_TURNROUND_MIN || cmd->bits>SWD_TURNROUND_MAX)
+   if (cmd->bits<SWD_TURNROUND_MIN && cmd->bits>SWD_TURNROUND_MAX)
     return SWD_ERROR_BADCMDDATA;
    res=swd_drv_mosi_trn(swdctx, cmd->bits);
    break;
@@ -881,7 +912,7 @@ int swd_bus_transmit(swd_ctx_t *swdctx, swd_cmd_t *cmd){
 
   case SWD_CMDTYPE_MISO_TRN:
    // 1..4 clock cycles
-   if (cmd->bits<SWD_TURNROUND_MIN || cmd->bits>SWD_TURNROUND_MAX)
+   if (cmd->bits<SWD_TURNROUND_MIN && cmd->bits>SWD_TURNROUND_MAX)
     return SWD_ERROR_BADCMDDATA;
    res=swd_drv_miso_trn(swdctx, cmd->bits);
    break;
@@ -899,6 +930,12 @@ int swd_bus_transmit(swd_ctx_t *swdctx, swd_cmd_t *cmd){
   default:
    return SWD_ERROR_BADCMDTYPE;
  } 
+
+ swd_log(swdctx, SWD_LOGLEVEL_DEBUG,
+  "|swd_bus_transmit() bits=%-2d cmdtype=%-12s returns=%-3d payload=0x%08x (%s)\n",
+  cmd->bits, swd_cmd_string_cmdtype(cmd), res,
+  (cmd->bits>8)?cmd->data32:cmd->data8,
+  (cmd->bits<=8)?swd_bin8_string(&cmd->data8):swd_bin32_string(&cmd->data32));
 
  if (res<0) return res;
  cmd->done=1;
@@ -974,6 +1011,9 @@ int swd_cmdq_flush(swd_ctx_t *swdctx, swd_operation_t operation){
  * SWD_OPERATION_ENQUEUE) or queued and then flushed into hardware driver 
  * (operation == SWD_OPERATION_EXECUTE) for immediate effect on the target.
  * Other operations are not allowed for these functions and will produce error.
+ * This group of functions if intelligent, so they will react on errors.
+ * Functions here are named "mosi" instead of "write" and "miso" instead of
+ * "read", because read/write can cause confusion, where Master/Slave does not.
  * @{
  ******************************************************************************/
 
@@ -1198,14 +1238,49 @@ int swd_miso_data_p(swd_ctx_t *swdctx, swd_operation_t operation, int *data, cha
  /* If command found and executed, verify if data points to correct address. */
  if (tmpcmdq->cmdtype==SWD_CMDTYPE_MISO_DATA && tmpcmdq->done){
   if (tmpcmdq->next->cmdtype==SWD_CMDTYPE_MISO_PARITY && tmpcmdq->next->done){
-   if (data!=&tmpcmdq->misodata) return SWD_ERROR_DATAADDR;
-   if (parity!=&tmpcmdq->next->parity) return SWD_ERROR_PARITYADDR;
+   if (data!=&tmpcmdq->misodata) return SWD_ERROR_DATAPTR;
+   if (parity!=&tmpcmdq->next->parity) return SWD_ERROR_PARITYPTR;
    return qcmdcnt+tcmdcnt; 
   } else return SWD_ERROR_NOTDONE;
  }
  return SWD_OK;
 }
 
+/** Write CONTROL byte to the Target's DAP.
+ * \param *swdctx swd context.
+ * \param operation can be SWD_OPERATION_ENQUEUE or SWD_OPERATION_EXECUTE.
+ * \param *ctlmsg byte/char array that contains control payload.
+ * \param len number of bytes in the *ctlmsg to send.
+ * \return number of bytes sent or SWD_ERROR_CODE on failure. 
+ */
+int swd_mosi_control(swd_ctx_t *swdctx, swd_operation_t operation, char *ctlmsg, int len){
+ if (swdctx==NULL) return SWD_ERROR_NULLCONTEXT;
+ if (operation!=SWD_OPERATION_ENQUEUE && operation!=SWD_OPERATION_EXECUTE)
+  return SWD_ERROR_BADOPCODE;
+ if (ctlmsg==NULL) return SWD_ERROR_NULLPOINTER;
+ if (len<1 && len>swdctx->config.maxcmdqlen) return SWD_ERROR_PARAM;
+
+ int res, qcmdcnt=0, tcmdcnt=0;
+
+ /* Make sure that bus is in MOSI state. */
+ res=swd_bus_setdir_miso(swdctx);
+ if (res<0) return res;
+ qcmdcnt=+res;
+
+ res=swd_cmd_enqueue_mosi_control(swdctx, ctlmsg, len);
+ if (res<0) return res;
+ qcmdcnt=+res;
+
+ if (operation==SWD_OPERATION_ENQUEUE){
+  return qcmdcnt;        
+ } else if (operation==SWD_OPERATION_EXECUTE){
+  res=swd_cmdq_flush(swdctx, operation);
+  if (res<0) return res;
+  tcmdcnt+=res;
+ } else return SWD_ERROR_BADOPCODE;
+ return SWD_OK;
+}
+ 
 /** Switch DAP into SW-DP. According to ARM documentation target's DAP use JTAG
  * transport by default and so JTAG-DP is active after power up. To use SWD
  * user must perform predefined sequence on SWDIO/TMS lines, then read out the
@@ -1232,47 +1307,6 @@ int swd_mosi_jtag2swd(swd_ctx_t *swdctx, swd_operation_t operation){
  } else return SWD_ERROR_BADOPCODE;
 }
 
-/** Debug Access Port Reset sends 50 CLK with TMS high that brings both
- * SW-DP and JTAG-DP into reset state.
- * \param *swdctx swd context pointer.
- * \param operation type (SWD_OPERATION_ENQUEUE or SWD_OPERATION_EXECUTE).
- * \return number of elements processed or SWD_ERROR_CODE code on failure.
- */
-int swd_mosi_dap_reset(swd_ctx_t *swdctx, swd_operation_t operation){
- if (swdctx==NULL) return SWD_ERROR_NULLCONTEXT;
- if (operation!=SWD_OPERATION_ENQUEUE && operation!=SWD_OPERATION_EXECUTE)
-  return SWD_ERROR_BADOPCODE;  
-
- int res, qcmdcnt=0, tcmdcnt=0;
-
- res=swd_cmd_enqueue_mosi_dap_reset(swdctx);
- if (res<1) return res;
- qcmdcnt+=res;
-
- if (operation==SWD_OPERATION_ENQUEUE){
-  return qcmdcnt;
- } else if (operation==SWD_OPERATION_EXECUTE){
-  res=swd_cmdq_flush(swdctx, operation);
-  if (res<0) return res;
-  tcmdcnt+=res;
-  return qcmdcnt+tcmdcnt;
- } else return SWD_ERROR_BADOPCODE;
-}
-
-/** @} */
-
-/*******************************************************************************
- * \defgroup swd_highlevel High-level SWD operation functions.
- * High level functions in general call lower level functions that append
- * queue with specific commands and payload, but also react on received data.
- * They operate on data pointers where target data is being stored.
- * Operation can be SWD_OPERATION_QUEUE_APPEND for queueing only the command
- * for later execution, or SWD_OPERATION_EXECUTE to queue command, flush it
- * into the interface driver (target read/write) and react on its result before
- * function returns.
- * Return values: negative number on error, data on success.
- ******************************************************************************/
-
 /** Read target's IDCODE register value.
  * \param *swdctx swd context pointer.
  * \param operation type of action to perform (queue or execute).
@@ -1281,7 +1315,7 @@ int swd_mosi_dap_reset(swd_ctx_t *swdctx, swd_operation_t operation){
  * \param *parity resulting data parity value pointer.
  * \return number of elements processed on the queue, or SWD_ERROR_CODE on failure.
  */
-int swd_idcode
+int swd_miso_idcode
 (swd_ctx_t *swdctx, swd_operation_t operation, int *idcode, char *ack, char *parity){
  if (swdctx==NULL) return SWD_ERROR_NULLCONTEXT; 
  if (idcode==NULL || ack==NULL || parity==NULL) return SWD_ERROR_NULLPOINTER;
@@ -1291,8 +1325,8 @@ int swd_idcode
  int res, cmdcnt=0;
  char APnDP, RnW, addr, cparity;
 
- APnDP=0;
- RnW=0;
+ APnDP=1;
+ RnW=1;
  addr=SWD_DP_ADDR_IDCODE;
 
  res=swd_mosi_request(swdctx, SWD_OPERATION_ENQUEUE, &APnDP, &RnW, &addr);
@@ -1325,6 +1359,49 @@ int swd_idcode
  } else return SWD_ERROR_BADOPCODE;
 }
 
+/** @} */
+
+/*******************************************************************************
+ * \defgroup swd_highlevel High-level SWD operation functions.
+ * High level functions in general call lower level functions that append
+ * queue with specific commands and payload, but also react on received data.
+ * They operate on data pointers where target data is being stored.
+ * Operation can be SWD_OPERATION_QUEUE_APPEND for queueing only the command
+ * for later execution, or SWD_OPERATION_EXECUTE to queue command, flush it
+ * into the interface driver (target read/write) and react on its result before
+ * function returns.
+ * Return values: negative number on error, data on success.
+ ******************************************************************************/
+
+/** Debug Access Port Reset sends 50 CLK with TMS high that brings both
+ * SW-DP and JTAG-DP into reset state.
+ * \param *swdctx swd context pointer.
+ * \param operation type (SWD_OPERATION_ENQUEUE or SWD_OPERATION_EXECUTE).
+ * \return number of elements processed or SWD_ERROR_CODE code on failure.
+ */
+int swd_dap_reset(swd_ctx_t *swdctx, swd_operation_t operation){
+ if (swdctx==NULL) return SWD_ERROR_NULLCONTEXT;
+ if (operation!=SWD_OPERATION_ENQUEUE && operation!=SWD_OPERATION_EXECUTE)
+  return SWD_ERROR_BADOPCODE;  
+
+ int res, qcmdcnt=0, tcmdcnt=0;
+
+ res=swd_cmd_enqueue_mosi_trn(swdctx);
+ if (res<0) return res;
+ res=swd_cmd_enqueue_mosi_dap_reset(swdctx);
+ if (res<1) return res;
+ qcmdcnt+=res;
+
+ if (operation==SWD_OPERATION_ENQUEUE){
+  return qcmdcnt;
+ } else if (operation==SWD_OPERATION_EXECUTE){
+  res=swd_cmdq_flush(swdctx, operation);
+  if (res<0) return res;
+  tcmdcnt+=res;
+  return qcmdcnt+tcmdcnt;
+ } else return SWD_ERROR_BADOPCODE;
+}
+
 /** Activate SW-DP by sending out JTAG-TO-SWD sequence on SWDIOTMS line.
  * \param *swdctx swd context.
  * \return number of control bytes executed, or error code on failre.
@@ -1339,12 +1416,11 @@ int swd_dap_select_swj(swd_ctx_t *swdctx, swd_operation_t operation){
  * \return Target's IDCODE value or code error on failure.
  */
 int swd_dap_idcode(swd_ctx_t *swdctx, swd_operation_t operation){
- int res, idcode;
- char ack, parity;
- res=swd_idcode(swdctx, operation, &idcode, &ack, &parity);
+ int res;
+ res=swd_miso_idcode(swdctx, operation, &swdctx->misoswdp.idcode, &swdctx->misoswdp.ack, &swdctx->misoswdp.parity);
  if (res<1)
   return res;
- else return idcode;
+ else return swdctx->misoswdp.idcode;
 }
 
 /** Macro: Reset target DAP, select SW-DP, read out IDCODE.
@@ -1353,10 +1429,9 @@ int swd_dap_idcode(swd_ctx_t *swdctx, swd_operation_t operation){
  * \param operation type (SWD_OPERATION_ENQUEUE or SWD_OPERATION_EXECUTE).
  * \return Target's IDCODE, or error code on failure.
  */ 
-
 int swd_dap_reset_select_idcode(swd_ctx_t *swdctx, swd_operation_t operation){
  int res;
- res=swd_mosi_dap_reset(swdctx, operation);
+ res=swd_dap_reset(swdctx, operation);
  if (res<1) return res;
  res=swd_dap_select_swj(swdctx, operation);
  if (res<1) return res;
@@ -1371,9 +1446,26 @@ int swd_dap_reset_select_idcode(swd_ctx_t *swdctx, swd_operation_t operation){
  * @{
  ******************************************************************************/
 
-int swd_log(swd_loglevel_t loglevel, char *msg){
- return fputs(msg, stderr);  
+/** Put a message into swd context log at specified verbosity level.
+ * If specified message's log level is lower than actual context configuration,
+ * message will be omitted. Verbosity level increases from 0 (silent) to 4 (debug).
+ * \param *swdctx swd context.
+ * \param loglevel at which to put selected message.
+ * \param *msg message body with variable arguments as in "printf".
+ * \return number of characters written or error code on failure.
+ */
+int swd_log(swd_ctx_t *swdctx, swd_loglevel_t loglevel, char *msg, ...){
+ if (loglevel<SWD_LOGLEVEL_MIN && loglevel>SWD_LOGLEVEL_MAX)
+  return SWD_ERROR_LOGLEVEL;
+ if (loglevel < swdctx->config.loglevel) return 0;
+ int res;
+ va_list ap;
+ va_start(ap, msg);
+ res=vprintf(msg, ap);  
+ va_end(ap);
+ return res;
 }
+
 
 /** @} */
 
@@ -1408,9 +1500,9 @@ char *swd_error_string(swd_error_code_t error){
   case SWD_ERROR_ACKORDER:     return "[SWD_ERROR_ACKORDER] cmdq not in sequence REQ->TRN->ACK";
   case SWD_ERROR_BADOPCODE:    return "[SWD_ERROR_BADOPCODE] unsupported operation requested";
   case SWD_ERROR_NODATACMD:    return "[SWD_ERROR_NODATACMD] command not found on the queue";
-  case SWD_ERROR_DATAADDR:     return "[SWD_ERROR_DATAADDR] bad data address";
+  case SWD_ERROR_DATAPTR:      return "[SWD_ERROR_DATAPTR] bad data pointer address";
   case SWD_ERROR_NOPARITYCMD:  return "[SWD_ERROR_NOPARITYCMD] parity command missing or misplaced";
-  case SWD_ERROR_PARITYADDR:   return "[SWD_ERROR_PARITYADDR] bad parity command result address";
+  case SWD_ERROR_PARITYPTR:    return "[SWD_ERROR_PARITYPTR] bad parity pointer address";
   case SWD_ERROR_NOTDONE:      return "[SWD_ERROR_NOTDONE] could not end selected task";
   case SWD_ERROR_QUEUEROOT:    return "[SWD_ERROR_QUEUEROOT] queue root not found or null";
   case SWD_ERROR_QUEUETAIL:    return "[SWD_ERROR_QUEUETAIL] queue tail not found or null";
@@ -1420,6 +1512,7 @@ char *swd_error_string(swd_error_code_t error){
   case SWD_ERROR_ACK_FAULT:    return "[SWD_ERROR_ACK_FAULT] got ACK_FAULT response";
   case SWD_ERROR_QUEUENOTFREE: return "[SWD_ERROR_QUEUENOTFREE] cannot free resources, queue not empty";
   case SWD_ERROR_TRANSPORT:    return "[SWD_ERROR_TRANSPORT] transport error or undefined";
+  case SWD_ERROR_DIRECTION:    return "[SWD_ERROR_DIRECTION] MSb/LSb direction error";
   default:                     return "undefined error";
  }
  return "undefined error";
@@ -1441,6 +1534,11 @@ swd_ctx_t *swd_init(void){
  swd_ctx_t *swdctx;
  swdctx=(swd_ctx_t *)calloc(1,sizeof(swd_ctx_t));
  if (swdctx==NULL) return NULL;
+ swdctx->driver=(swd_driver_t *)calloc(1,sizeof(swd_driver_t));
+ if (swdctx->driver==NULL){
+  free(swdctx);
+  return NULL;
+ }
  swdctx->cmdq=(swd_cmd_t *)calloc(1,sizeof(swd_cmd_t));
  if (swdctx->cmdq==NULL) {
   swd_deinit_ctx(swdctx);
@@ -1449,6 +1547,7 @@ swd_ctx_t *swd_init(void){
  swdctx->config.initialized=SWD_TRUE;
  swdctx->config.trnlen=SWD_TURNROUND_DEFAULT;
  swdctx->config.maxcmdqlen=SWD_CMDQLEN_DEFAULT;
+ swdctx->config.loglevel=SWD_LOGLEVEL_DEBUG;
  return swdctx;
 }
 
