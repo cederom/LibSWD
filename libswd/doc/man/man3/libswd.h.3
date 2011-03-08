@@ -1,4 +1,4 @@
-.TH "libswd.h" 3 "Fri Feb 18 2011" "Version 0.0.1" "libswd" \" -*- nroff -*-
+.TH "libswd.h" 3 "Tue Mar 8 2011" "Version 0.0.1" "libswd" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -25,6 +25,10 @@ libswd.h \-
 .RI "struct \fBswd_ahbap_t\fP"
 .br
 .RI "\fIMost actual Advanced High Bandwidth Access Peripherial Bus Reisters. \fP"
+.ti -1c
+.RI "struct \fBswd_transaction_t\fP"
+.br
+.RI "\fIMost actual SWD bus transaction/packet data. \fP"
 .ti -1c
 .RI "struct \fBswd_driver_t\fP"
 .br
@@ -260,26 +264,44 @@ libswd.h \-
 .RI "#define \fBSWD_WCR_BITNUM_TURNROUND\fP   8"
 .br
 .ti -1c
-.RI "#define \fBSWD_TURNROUND_1\fP   0"
+.RI "#define \fBSWD_TURNROUND_1_CODE\fP   0"
 .br
 .RI "\fISW-DP WCR TURNROUND available values. \fP"
 .ti -1c
-.RI "#define \fBSWD_TURNROUND_2\fP   1"
+.RI "#define \fBSWD_TURNROUND_1_VAL\fP   1"
 .br
 .ti -1c
-.RI "#define \fBSWD_TURNROUND_3\fP   2"
+.RI "#define \fBSWD_TURNROUND_2_CODE\fP   1"
 .br
 .ti -1c
-.RI "#define \fBSWD_TURNROUND_4\fP   3"
+.RI "#define \fBSWD_TURNROUNT_2_VAL\fP   2"
 .br
 .ti -1c
-.RI "#define \fBSWD_TURNROUND_MIN\fP   SWD_TURNROUND_1"
+.RI "#define \fBSWD_TURNROUND_3_CODE\fP   2"
 .br
 .ti -1c
-.RI "#define \fBSWD_TURNROUND_MAX\fP   SWD_TURNROUND_4"
+.RI "#define \fBSWD_TURNROUND_3_VAL\fP   3"
 .br
 .ti -1c
-.RI "#define \fBSWD_TURNROUND_DEFAULT\fP   SWD_TURNROUND_1"
+.RI "#define \fBSWD_TURNROUND_4_CODE\fP   3"
+.br
+.ti -1c
+.RI "#define \fBSWD_TURNROUND_4_VAL\fP   4"
+.br
+.ti -1c
+.RI "#define \fBSWD_TURNROUND_MIN_VAL\fP   SWD_TURNROUND_1_VAL"
+.br
+.ti -1c
+.RI "#define \fBSWD_TURNROUND_MIN_CODE\fP   SWD_TURNOUND_1_CODE"
+.br
+.ti -1c
+.RI "#define \fBSWD_TURNROUND_MAX_VAL\fP   SWD_TURNROUND_4_VAL"
+.br
+.ti -1c
+.RI "#define \fBSWD_TURNROUND_MAX_CODE\fP   SWD_TURNROUND_4_CODE"
+.br
+.ti -1c
+.RI "#define \fBSWD_TURNROUND_DEFAULT_VAL\fP   SWD_TURNROUND_1_VAL"
 .br
 .ti -1c
 .RI "#define \fBAHB_AP_CONTROLSTATUS\fP   0x00"
@@ -366,11 +388,11 @@ libswd.h \-
 
 .in +1c
 .ti -1c
-.RI "enum \fBSWD_ERROR_CODE\fP { \fBSWD_OK\fP =  0, \fBSWD_ERROR_GENERAL\fP = -1, \fBSWD_ERROR_NULLPOINTER\fP = -2, \fBSWD_ERROR_NULLQUEUE\fP = -3, \fBSWD_ERROR_NULLTRN\fP = -4, \fBSWD_ERROR_PARAM\fP = -5, \fBSWD_ERROR_OUTOFMEM\fP = -6, \fBSWD_ERROR_RESULT\fP = -7, \fBSWD_ERROR_RANGE\fP = -8, \fBSWD_ERROR_DEFINITION\fP = -9, \fBSWD_ERROR_NULLCONTEXT\fP = -10, \fBSWD_ERROR_QUEUE\fP = -11, \fBSWD_ERROR_ADDR\fP = -12, \fBSWD_ERROR_APnDP\fP = -13, \fBSWD_ERROR_RnW\fP = -14, \fBSWD_ERROR_PARITY\fP = -15, \fBSWD_ERROR_ACK\fP = -16, \fBSWD_ERROR_ACKUNKNOWN\fP = -19, \fBSWD_ERROR_ACKNOTDONE\fP = -20, \fBSWD_ERROR_ACKMISSING\fP = -21, \fBSWD_ERROR_ACKMISMATCH\fP = -22, \fBSWD_ERROR_ACKORDER\fP = -23, \fBSWD_ERROR_BADOPCODE\fP = -24, \fBSWD_ERROR_NODATACMD\fP = -25, \fBSWD_ERROR_DATAADDR\fP = -26, \fBSWD_ERROR_NOPARITYCMD\fP = -27, \fBSWD_ERROR_PARITYADDR\fP = -28, \fBSWD_ERROR_NOTDONE\fP = -29, \fBSWD_ERROR_QUEUEROOT\fP = -30, \fBSWD_ERROR_QUEUETAIL\fP = -31, \fBSWD_ERROR_BADCMDTYPE\fP = -32, \fBSWD_ERROR_BADCMDDATA\fP = -33, \fBSWD_ERROR_TURNAROUND\fP = -34, \fBSWD_ERROR_DRIVER\fP = -35, \fBSWD_ERROR_ACK_WAIT\fP = -36, \fBSWD_ERROR_ACK_FAULT\fP = -37, \fBSWD_ERROR_QUEUENOTFREE\fP = -38, \fBSWD_ERROR_TRANSPORT\fP = -39 }"
+.RI "enum \fBSWD_ERROR_CODE\fP { \fBSWD_OK\fP =  0, \fBSWD_ERROR_GENERAL\fP = -1, \fBSWD_ERROR_NULLPOINTER\fP = -2, \fBSWD_ERROR_NULLQUEUE\fP = -3, \fBSWD_ERROR_NULLTRN\fP = -4, \fBSWD_ERROR_PARAM\fP = -5, \fBSWD_ERROR_OUTOFMEM\fP = -6, \fBSWD_ERROR_RESULT\fP = -7, \fBSWD_ERROR_RANGE\fP = -8, \fBSWD_ERROR_DEFINITION\fP = -9, \fBSWD_ERROR_NULLCONTEXT\fP = -10, \fBSWD_ERROR_QUEUE\fP = -11, \fBSWD_ERROR_ADDR\fP = -12, \fBSWD_ERROR_APnDP\fP = -13, \fBSWD_ERROR_RnW\fP = -14, \fBSWD_ERROR_PARITY\fP = -15, \fBSWD_ERROR_ACK\fP = -16, \fBSWD_ERROR_ACKUNKNOWN\fP = -19, \fBSWD_ERROR_ACKNOTDONE\fP = -20, \fBSWD_ERROR_ACKMISSING\fP = -21, \fBSWD_ERROR_ACKMISMATCH\fP = -22, \fBSWD_ERROR_ACKORDER\fP = -23, \fBSWD_ERROR_BADOPCODE\fP = -24, \fBSWD_ERROR_NODATACMD\fP = -25, \fBSWD_ERROR_DATAPTR\fP = -26, \fBSWD_ERROR_NOPARITYCMD\fP = -27, \fBSWD_ERROR_PARITYPTR\fP = -28, \fBSWD_ERROR_NOTDONE\fP = -29, \fBSWD_ERROR_QUEUEROOT\fP = -30, \fBSWD_ERROR_QUEUETAIL\fP = -31, \fBSWD_ERROR_BADCMDTYPE\fP = -32, \fBSWD_ERROR_BADCMDDATA\fP = -33, \fBSWD_ERROR_TURNAROUND\fP = -34, \fBSWD_ERROR_DRIVER\fP = -35, \fBSWD_ERROR_ACK_WAIT\fP = -36, \fBSWD_ERROR_ACK_FAULT\fP = -37, \fBSWD_ERROR_QUEUENOTFREE\fP = -38, \fBSWD_ERROR_TRANSPORT\fP = -39, \fBSWD_ERROR_DIRECTION\fP = -40, \fBSWD_ERROR_LOGLEVEL\fP = -41 }"
 .br
 .RI "\fIStatus and Error Codes definitions. \fP"
 .ti -1c
-.RI "enum \fBSWD_LOGLEVEL\fP { \fBSWD_LOGLEVEL_SILENT\fP =  0, \fBSWD_LOGLEVEL_INFO\fP =  1, \fBSWD_LOGLEVEL_WARNING\fP =  2, \fBSWD_LOGLEVEL_ERROR\fP =  3, \fBSWD_LOGLEVEL_DEBUG\fP =  4 }"
+.RI "enum \fBSWD_LOGLEVEL\fP { \fBSWD_LOGLEVEL_MIN\fP =  0, \fBSWD_LOGLEVEL_SILENT\fP =  0, \fBSWD_LOGLEVEL_ERROR\fP =  1, \fBSWD_LOGLEVEL_WARNING\fP =  2, \fBSWD_LOGLEVEL_INFO\fP =  3, \fBSWD_LOGLEVEL_DEBUG\fP =  4, \fBSWD_LOGLEVEL_MAX\fP =  4 }"
 .br
 .RI "\fILogging Level Codes definition. \fP"
 .ti -1c
@@ -454,6 +476,10 @@ libswd.h \-
 .br
 .RI "\fIFree queue tail starting after *cmdq element. \fP"
 .ti -1c
+.RI "int \fBswd_cmdq_flush\fP (\fBswd_ctx_t\fP *swdctx, \fBswd_operation_t\fP operation)"
+.br
+.RI "\fIFlush command queue contents into interface driver. \fP"
+.ti -1c
 .RI "int \fBswd_cmd_enqueue\fP (\fBswd_ctx_t\fP *swdctx, \fBswd_cmd_t\fP *cmd)"
 .br
 .RI "\fIAppend selected command to a context's command queue. \fP"
@@ -470,7 +496,7 @@ libswd.h \-
 .br
 .RI "\fIAppend command queue with Turnaround activating MISO mode. \fP"
 .ti -1c
-.RI "int \fBswd_cmd_enqueue_miso_nbit\fP (\fBswd_ctx_t\fP *swdctx, char **data, int count)"
+.RI "int \fBswd_cmd_enqueue_miso_nbit\fP (\fBswd_ctx_t\fP *swdctx, char *data, int count)"
 .br
 .RI "\fIAppend command queue with bus binary read bit-by-bit operation. \fP"
 .ti -1c
@@ -530,6 +556,10 @@ libswd.h \-
 .br
 .RI "\fIAppend command queue with SW-DP-RESET sequence. \fP"
 .ti -1c
+.RI "int \fBswd_cmd_enqueue_mosi_idle\fP (\fBswd_ctx_t\fP *swdctx)"
+.br
+.RI "\fIAppend command queue with idle sequence. \fP"
+.ti -1c
 .RI "int \fBswd_cmd_enqueue_mosi_jtag2swd\fP (\fBswd_ctx_t\fP *swdctx)"
 .br
 .RI "\fIAppend command queue with JTAG-TO-SWD DAP-switch sequence. \fP"
@@ -538,6 +568,9 @@ libswd.h \-
 .br
 .RI "\fIAppend command queue with SWD-TO-JTAG DAP-switch sequence. \fP"
 .ti -1c
+.RI "char * \fBswd_cmd_string_cmdtype\fP (\fBswd_cmd_t\fP *cmd)"
+.br
+.ti -1c
 .RI "int \fBswd_bus_setdir_mosi\fP (\fBswd_ctx_t\fP *swdctx)"
 .br
 .RI "\fIAppend command queue with TRN WRITE/MOSI, if previous command was READ/MISO. \fP"
@@ -545,6 +578,34 @@ libswd.h \-
 .RI "int \fBswd_bus_setdir_miso\fP (\fBswd_ctx_t\fP *swdctx)"
 .br
 .RI "\fIAppend command queue with TRN READ/MISO, if previous command was WRITE/MOSI. \fP"
+.ti -1c
+.RI "int \fBswd_bus_write_request\fP (\fBswd_ctx_t\fP *swdctx, \fBswd_operation_t\fP operation, char *APnDP, char *RnW, char *addr)"
+.br
+.RI "\fIPerform Request. \fP"
+.ti -1c
+.RI "int \fBswd_bus_read_ack\fP (\fBswd_ctx_t\fP *swdctx, \fBswd_operation_t\fP operation, char *ack)"
+.br
+.RI "\fIPerform ACK read into *ack and verify received data. \fP"
+.ti -1c
+.RI "int \fBswd_bus_write_data_p\fP (\fBswd_ctx_t\fP *swdctx, \fBswd_operation_t\fP operation, int *data, char *parity)"
+.br
+.RI "\fIPerform (MOSI) data write with provided parity value. \fP"
+.ti -1c
+.RI "int \fBswd_bus_write_data_ap\fP (\fBswd_ctx_t\fP *swdctx, \fBswd_operation_t\fP operation, int *data)"
+.br
+.RI "\fIPerform (MOSI) data write with automatic parity calculation. \fP"
+.ti -1c
+.RI "int \fBswd_bus_read_data_p\fP (\fBswd_ctx_t\fP *swdctx, \fBswd_operation_t\fP operation, int *data, char *parity)"
+.br
+.RI "\fIPerform (MISO) data read. \fP"
+.ti -1c
+.RI "int \fBswd_bus_write_control\fP (\fBswd_ctx_t\fP *swdctx, \fBswd_operation_t\fP operation, char *ctlmsg, int len)"
+.br
+.RI "\fIWrite CONTROL byte to the Target's DAP. \fP"
+.ti -1c
+.RI "int \fBswd_bus_write_jtag2swd\fP (\fBswd_ctx_t\fP *swdctx, \fBswd_operation_t\fP operation)"
+.br
+.RI "\fISwitch DAP into SW-DP. \fP"
 .ti -1c
 .RI "int \fBswd_bus_transmit\fP (\fBswd_ctx_t\fP *swdctx, \fBswd_cmd_t\fP *cmd)"
 .br
@@ -566,56 +627,25 @@ libswd.h \-
 .RI "int \fBswd_drv_miso_32\fP (\fBswd_ctx_t\fP *swdctx, int *data, int bits, int nLSBfirst)"
 .br
 .ti -1c
-.RI "int \fBswd_cmdq_flush\fP (\fBswd_ctx_t\fP *swdctx, \fBswd_operation_t\fP operation)"
-.br
-.RI "\fIFlush command queue contents into interface driver. \fP"
-.ti -1c
-.RI "int \fBswd_mosi_request\fP (\fBswd_ctx_t\fP *swdctx, \fBswd_operation_t\fP operation, char *APnDP, char *RnW, char *addr)"
-.br
-.RI "\fIPerform Request. \fP"
-.ti -1c
-.RI "int \fBswd_miso_ack\fP (\fBswd_ctx_t\fP *swdctx, \fBswd_operation_t\fP operation, char *ack)"
-.br
-.RI "\fIPerform ACK read into *ack and verify received data. \fP"
-.ti -1c
-.RI "int \fBswd_mosi_data_p\fP (\fBswd_ctx_t\fP *swdctx, \fBswd_operation_t\fP operation, int *data, char *parity)"
-.br
-.RI "\fIPerform (MOSI) data write with provided parity value. \fP"
-.ti -1c
-.RI "int \fBswd_mosi_data_ap\fP (\fBswd_ctx_t\fP *swdctx, \fBswd_operation_t\fP operation, int *data)"
-.br
-.RI "\fIPerform (MOSI) data write with automatic parity calculation. \fP"
-.ti -1c
-.RI "int \fBswd_miso_data_p\fP (\fBswd_ctx_t\fP *swdctx, \fBswd_operation_t\fP operation, int *data, char *parity)"
-.br
-.RI "\fIPerform (MISO) data read. \fP"
-.ti -1c
-.RI "int \fBswd_mosi_jtag2swd\fP (\fBswd_ctx_t\fP *swdctx, \fBswd_operation_t\fP operation)"
-.br
-.RI "\fISwitch DAP into SW-DP. \fP"
-.ti -1c
-.RI "int \fBswd_mosi_dap_reset\fP (\fBswd_ctx_t\fP *swdctx, \fBswd_operation_t\fP operation)"
+.RI "int \fBswd_dp_reset\fP (\fBswd_ctx_t\fP *swdctx, \fBswd_operation_t\fP operation)"
 .br
 .RI "\fIDebug Access Port Reset sends 50 CLK with TMS high that brings both SW-DP and JTAG-DP into reset state. \fP"
 .ti -1c
-.RI "int \fBswd_idcode\fP (\fBswd_ctx_t\fP *swdctx, \fBswd_operation_t\fP operation, int *idcode, char *ack, char *parity)"
+.RI "int \fBswd_dp_activate\fP (\fBswd_ctx_t\fP *swdctx, \fBswd_operation_t\fP operation)"
 .br
-.RI "\fIRead target's IDCODE register value. \fP"
+.RI "\fIActivate SW-DP by sending out RESET and JTAG-TO-SWD sequence on SWDIOTMS line. \fP"
 .ti -1c
-.RI "int \fBswd_dap_select_swj\fP (\fBswd_ctx_t\fP *swdctx, \fBswd_operation_t\fP operation)"
-.br
-.RI "\fIActivate SW-DP by sending out JTAG-TO-SWD sequence on SWDIOTMS line. \fP"
-.ti -1c
-.RI "int \fBswd_dap_idcode\fP (\fBswd_ctx_t\fP *swdctx, \fBswd_operation_t\fP operation)"
+.RI "int \fBswd_dp_read_idcode\fP (\fBswd_ctx_t\fP *swdctx, \fBswd_operation_t\fP operation, int *idcode)"
 .br
 .RI "\fIMacro: Read out IDCODE register and return its value on function return. \fP"
 .ti -1c
-.RI "int \fBswd_dap_reset_select_idcode\fP (\fBswd_ctx_t\fP *swdctx, \fBswd_operation_t\fP operation)"
+.RI "int \fBswd_dp_detect\fP (\fBswd_ctx_t\fP *swdctx, \fBswd_operation_t\fP operation, int *idcode)"
 .br
 .RI "\fIMacro: Reset target DAP, select SW-DP, read out IDCODE. \fP"
 .ti -1c
-.RI "int \fBswd_log\fP (\fBswd_loglevel_t\fP loglevel, char *msg)"
+.RI "int \fBswd_log\fP (\fBswd_ctx_t\fP *swdctx, \fBswd_loglevel_t\fP loglevel, char *msg,...)"
 .br
+.RI "\fIPut a message into swd context log at specified verbosity level. \fP"
 .ti -1c
 .RI "char * \fBswd_error_string\fP (\fBswd_error_code_t\fP error)"
 .br
@@ -692,15 +722,15 @@ SWD Packets Bit Fields and Values. Packet Start bit, always set to 1.
 .SS "#define SWD_SELECT_BITNUM_CTRLSEL   0"
 .PP
 SW-DP SELECT Register map. CTRLSEL bit number. 
-.SS "#define SWD_TURNROUND_1   0"
+.SS "#define SWD_TURNROUND_1_CODE   0"
 .PP
 SW-DP WCR TURNROUND available values. TRN takes one CLK cycle. TRN takes one CLK cycle. 
-.SS "#define SWD_TURNROUND_2   1"TRN takes two CLK cycles. 
-.SS "#define SWD_TURNROUND_3   2"TRN takes three CLK cycles. 
-.SS "#define SWD_TURNROUND_4   3"TRN takes four CLK cycles. ???? 
-.SS "#define SWD_TURNROUND_DEFAULT   SWD_TURNROUND_1"Default TRN length is one CLK. 
-.SS "#define SWD_TURNROUND_MAX   SWD_TURNROUND_4"longest TRN time. 
-.SS "#define SWD_TURNROUND_MIN   SWD_TURNROUND_1"shortest TRN time. 
+.SS "#define SWD_TURNROUND_2_CODE   1"TRN takes two CLK cycles. 
+.SS "#define SWD_TURNROUND_3_CODE   2"TRN takes three CLK cycles. 
+.SS "#define SWD_TURNROUND_4_CODE   3"TRN takes four CLK cycles. ???? 
+.SS "#define SWD_TURNROUND_DEFAULT_VAL   SWD_TURNROUND_1_VAL"Default TRN length is one CLK. 
+.SS "#define SWD_TURNROUND_MAX_VAL   SWD_TURNROUND_4_VAL"longest TRN time. 
+.SS "#define SWD_TURNROUND_MIN_VAL   SWD_TURNROUND_1_VAL"shortest TRN time. 
 .SS "#define SWD_WCR_BITNUM_PRESCALER   0"
 .PP
 SW-DP WCR Register map. PRESCALER bit number. PRESCALER bit number. 
@@ -875,14 +905,14 @@ Unsupported operation requested.
 \fB\fISWD_ERROR_NODATACMD \fP\fP
 Command not found on the queue. 
 .TP
-\fB\fISWD_ERROR_DATAADDR \fP\fP
-Bad DATA result address. 
+\fB\fISWD_ERROR_DATAPTR \fP\fP
+Bad DATA pointer address. 
 .TP
 \fB\fISWD_ERROR_NOPARITYCMD \fP\fP
 Parity after Data missing or misplaced. 
 .TP
-\fB\fISWD_ERROR_PARITYADDR \fP\fP
-Bad PARITY command result address. 
+\fB\fISWD_ERROR_PARITYPTR \fP\fP
+Bad PARITY pointer address. 
 .TP
 \fB\fISWD_ERROR_NOTDONE \fP\fP
 Could not end selected task. 
@@ -916,6 +946,12 @@ Cannot free resources, queue not empty.
 .TP
 \fB\fISWD_ERROR_TRANSPORT \fP\fP
 Transport type unknown or undefined. 
+.TP
+\fB\fISWD_ERROR_DIRECTION \fP\fP
+Direction error (LSb/MSb first). 
+.TP
+\fB\fISWD_ERROR_LOGLEVEL \fP\fP
+Invalid loglevel number. 
 .SS "enum \fBSWD_LOGLEVEL\fP"
 .PP
 Logging Level Codes definition. Logging Level codes definition, use this to have its name on debugger. 
@@ -926,17 +962,17 @@ Logging Level Codes definition. Logging Level codes definition, use this to have
 \fB\fISWD_LOGLEVEL_SILENT \fP\fP
 Remain silent. 
 .TP
-\fB\fISWD_LOGLEVEL_INFO \fP\fP
-Log only informational messages. 
+\fB\fISWD_LOGLEVEL_ERROR \fP\fP
+Log errors only. 
 .TP
 \fB\fISWD_LOGLEVEL_WARNING \fP\fP
-also log warnings. 
+Log warnings. 
 .TP
-\fB\fISWD_LOGLEVEL_ERROR \fP\fP
-also lod errors. 
+\fB\fISWD_LOGLEVEL_INFO \fP\fP
+Log informational messages. 
 .TP
 \fB\fISWD_LOGLEVEL_DEBUG \fP\fP
-Log everything including detailed details. 
+Log all including debug information. 
 .SS "enum \fBSWD_OPERATION\fP"
 .PP
 Command Queue operations codes. 
@@ -1125,6 +1161,42 @@ number of generated packets (1), or SWD_ERROR_CODE on failure.
 .RE
 .PP
 
+.SS "int swd_bus_read_ack (\fBswd_ctx_t\fP * swdctx, \fBswd_operation_t\fP operation, char * ack)"
+.PP
+Perform ACK read into *ack and verify received data. \fBParameters:\fP
+.RS 4
+\fI*swdctx\fP swd context pointer. 
+.br
+\fIoperation\fP type of action to perform with generated request. 
+.br
+\fI*ack\fP pointer to the result location. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+number of commands processed, or SWD_ERROR_CODE on failure. 
+.RE
+.PP
+
+.SS "int swd_bus_read_data_p (\fBswd_ctx_t\fP * swdctx, \fBswd_operation_t\fP operation, int * data, char * parity)"
+.PP
+Perform (MISO) data read. \fBParameters:\fP
+.RS 4
+\fI*swdctx\fP swd context pointer. 
+.br
+\fIoperation\fP type of action to perform on generated command. 
+.br
+\fI*data\fP payload value pointer. 
+.br
+\fI*parity\fP payload parity value pointer. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+number of elements processed, or SWD_ERROR_CODE on failure. 
+.RE
+.PP
+
 .SS "int swd_bus_setdir_miso (\fBswd_ctx_t\fP * swdctx)"
 .PP
 Append command queue with TRN READ/MISO, if previous command was WRITE/MOSI. \fBParameters:\fP
@@ -1163,6 +1235,99 @@ Transmit selected command from the command queue to the interface driver. \fBPar
 \fBReturns:\fP
 .RS 4
 number of commands transmitted (1), or SWD_ERROR_CODE on failure. 
+.RE
+.PP
+
+.SS "int swd_bus_write_control (\fBswd_ctx_t\fP * swdctx, \fBswd_operation_t\fP operation, char * ctlmsg, int len)"
+.PP
+Write CONTROL byte to the Target's DAP. \fBParameters:\fP
+.RS 4
+\fI*swdctx\fP swd context. 
+.br
+\fIoperation\fP can be SWD_OPERATION_ENQUEUE or SWD_OPERATION_EXECUTE. 
+.br
+\fI*ctlmsg\fP byte/char array that contains control payload. 
+.br
+\fIlen\fP number of bytes in the *ctlmsg to send. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+number of bytes sent or SWD_ERROR_CODE on failure. 
+.RE
+.PP
+
+.SS "int swd_bus_write_data_ap (\fBswd_ctx_t\fP * swdctx, \fBswd_operation_t\fP operation, int * data)"
+.PP
+Perform (MOSI) data write with automatic parity calculation. \fBParameters:\fP
+.RS 4
+\fI*swdctx\fP swd context pointer. 
+.br
+\fIoperation\fP type of action to perform on generated command. 
+.br
+\fI*data\fP payload value pointer. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+number of elements processed, or SWD_ERROR_CODE on failure. 
+.RE
+.PP
+
+.SS "int swd_bus_write_data_p (\fBswd_ctx_t\fP * swdctx, \fBswd_operation_t\fP operation, int * data, char * parity)"
+.PP
+Perform (MOSI) data write with provided parity value. \fBParameters:\fP
+.RS 4
+\fI*swdctx\fP swd context pointer. 
+.br
+\fIoperation\fP type of action to perform on generated command. 
+.br
+\fI*data\fP payload value pointer. 
+.br
+\fI*parity\fP payload parity value pointer. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+number of elements processed, or SWD_ERROR_CODE on failure. 
+.RE
+.PP
+
+.SS "int swd_bus_write_jtag2swd (\fBswd_ctx_t\fP * swdctx, \fBswd_operation_t\fP operation)"
+.PP
+Switch DAP into SW-DP. According to ARM documentation target's DAP use JTAG transport by default and so JTAG-DP is active after power up. To use SWD user must perform predefined sequence on SWDIO/TMS lines, then read out the IDCODE to ensure proper SW-DP operation. This function only sends switching sequence. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fI*swdctx\fP swd context. 
+.br
+\fIoperation\fP type, can be ENQEUE or EXECUTE. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+number of elements processed or error code on failure. 
+.RE
+.PP
+
+.SS "int swd_bus_write_request (\fBswd_ctx_t\fP * swdctx, \fBswd_operation_t\fP operation, char * APnDP, char * RnW, char * addr)"
+.PP
+Perform Request. \fBParameters:\fP
+.RS 4
+\fI*swdctx\fP swd context pointer. 
+.br
+\fIoperation\fP type of action to perform with generated request. 
+.br
+\fI*APnDP\fP AccessPort (high) or DebugPort (low) access value pointer. 
+.br
+\fI*RnW\fP Read (high) or Write (low) access value pointer. 
+.br
+\fI*addr\fP target register address value pointer. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+number of commands processed, or SWD_ERROR_CODE on failure. 
 .RE
 .PP
 
@@ -1247,7 +1412,7 @@ number of elements appended (2*count), or SWD_ERROR_CODE on failure.
 .RE
 .PP
 
-.SS "int swd_cmd_enqueue_miso_nbit (\fBswd_ctx_t\fP * swdctx, char ** data, int count)"
+.SS "int swd_cmd_enqueue_miso_nbit (\fBswd_ctx_t\fP * swdctx, char * data, int count)"
 .PP
 Append command queue with bus binary read bit-by-bit operation. This function will append command to the queue for each bit, and store one bit into single char array element, so read is not constrained to 8 bits. On error memory is released and apropriate error code is returned. Important: Memory pointed by *data must be allocated prior call! 
 .PP
@@ -1370,6 +1535,19 @@ Append command queue with data and provided parity write. \fBParameters:\fP
 \fBReturns:\fP
 .RS 4
 number of elements appended (2), or SWD_ERROR_CODE on failure. 
+.RE
+.PP
+
+.SS "int swd_cmd_enqueue_mosi_idle (\fBswd_ctx_t\fP * swdctx)"
+.PP
+Append command queue with idle sequence. \fBParameters:\fP
+.RS 4
+\fI*swdctx\fP swd context pointer. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+number of elements appended, or SWD_ERROR_CODE on failure. 
 .RE
 .PP
 
@@ -1611,51 +1789,6 @@ SWD_OK on success, SWD_ERROR_CODE code on failure
 .RE
 .PP
 
-.SS "int swd_dap_idcode (\fBswd_ctx_t\fP * swdctx, \fBswd_operation_t\fP operation)"
-.PP
-Macro: Read out IDCODE register and return its value on function return. \fBParameters:\fP
-.RS 4
-\fI*swdctx\fP swd context pointer. 
-.br
-\fIoperation\fP operation type. 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-Target's IDCODE value or code error on failure. 
-.RE
-.PP
-
-.SS "int swd_dap_reset_select_idcode (\fBswd_ctx_t\fP * swdctx, \fBswd_operation_t\fP operation)"
-.PP
-Macro: Reset target DAP, select SW-DP, read out IDCODE. This is the proper SW-DP initialization as stated by ARM Information Center. 
-.PP
-\fBParameters:\fP
-.RS 4
-\fI*swdctx\fP swd context pointer. 
-.br
-\fIoperation\fP type (SWD_OPERATION_ENQUEUE or SWD_OPERATION_EXECUTE). 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-Target's IDCODE, or error code on failure. 
-.RE
-.PP
-
-.SS "int swd_dap_select_swj (\fBswd_ctx_t\fP * swdctx, \fBswd_operation_t\fP operation)"
-.PP
-Activate SW-DP by sending out JTAG-TO-SWD sequence on SWDIOTMS line. \fBParameters:\fP
-.RS 4
-\fI*swdctx\fP swd context. 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-number of control bytes executed, or error code on failre. 
-.RE
-.PP
-
 .SS "int swd_deinit (\fBswd_ctx_t\fP * swdctx)"
 .PP
 De-initialize selected swd context and its command queue. \fBParameters:\fP
@@ -1697,74 +1830,52 @@ SWD_OK on success, SWD_ERROR_CODE on failure.
 .RE
 .PP
 
-.SS "int swd_idcode (\fBswd_ctx_t\fP * swdctx, \fBswd_operation_t\fP operation, int * idcode, char * ack, char * parity)"
+.SS "int swd_dp_activate (\fBswd_ctx_t\fP * swdctx, \fBswd_operation_t\fP operation)"
 .PP
-Read target's IDCODE register value. \fBParameters:\fP
+Activate SW-DP by sending out RESET and JTAG-TO-SWD sequence on SWDIOTMS line. \fBParameters:\fP
+.RS 4
+\fI*swdctx\fP swd context. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+number of control bytes executed, or error code on failre. 
+.RE
+.PP
+
+.SS "int swd_dp_detect (\fBswd_ctx_t\fP * swdctx, \fBswd_operation_t\fP operation, int * idcode)"
+.PP
+Macro: Reset target DAP, select SW-DP, read out IDCODE. This is the proper SW-DP initialization as stated by ARM Information Center. 
+.PP
+\fBParameters:\fP
 .RS 4
 \fI*swdctx\fP swd context pointer. 
 .br
-\fIoperation\fP type of action to perform (queue or execute). 
-.br
-\fI*idcode\fP resulting register value pointer. 
-.br
-\fI*ack\fP resulting acknowledge response value pointer. 
-.br
-\fI*parity\fP resulting data parity value pointer. 
+\fIoperation\fP type (SWD_OPERATION_ENQUEUE or SWD_OPERATION_EXECUTE). 
 .RE
 .PP
 \fBReturns:\fP
 .RS 4
-number of elements processed on the queue, or SWD_ERROR_CODE on failure. 
+Target's IDCODE, or error code on failure. 
 .RE
 .PP
 
-.SS "\fBswd_ctx_t\fP* swd_init (void)"
+.SS "int swd_dp_read_idcode (\fBswd_ctx_t\fP * swdctx, \fBswd_operation_t\fP operation, int * idcode)"
 .PP
-LibSWD initialization routine. It should be called prior any operation made with libswd. It initializes command queue and basic parameters for context that is returned as pointer. 
-.PP
-\fBReturns:\fP
-.RS 4
-pointer to the initialized swd context. 
-.RE
-.PP
-
-.SS "int swd_miso_ack (\fBswd_ctx_t\fP * swdctx, \fBswd_operation_t\fP operation, char * ack)"
-.PP
-Perform ACK read into *ack and verify received data. \fBParameters:\fP
+Macro: Read out IDCODE register and return its value on function return. \fBParameters:\fP
 .RS 4
 \fI*swdctx\fP swd context pointer. 
 .br
-\fIoperation\fP type of action to perform with generated request. 
-.br
-\fI*ack\fP pointer to the result location. 
+\fIoperation\fP operation type. 
 .RE
 .PP
 \fBReturns:\fP
 .RS 4
-number of commands processed, or SWD_ERROR_CODE on failure. 
+Target's IDCODE value or code error on failure. 
 .RE
 .PP
 
-.SS "int swd_miso_data_p (\fBswd_ctx_t\fP * swdctx, \fBswd_operation_t\fP operation, int * data, char * parity)"
-.PP
-Perform (MISO) data read. \fBParameters:\fP
-.RS 4
-\fI*swdctx\fP swd context pointer. 
-.br
-\fIoperation\fP type of action to perform on generated command. 
-.br
-\fI*data\fP payload value pointer. 
-.br
-\fI*parity\fP payload parity value pointer. 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-number of elements processed, or SWD_ERROR_CODE on failure. 
-.RE
-.PP
-
-.SS "int swd_mosi_dap_reset (\fBswd_ctx_t\fP * swdctx, \fBswd_operation_t\fP operation)"
+.SS "int swd_dp_reset (\fBswd_ctx_t\fP * swdctx, \fBswd_operation_t\fP operation)"
 .PP
 Debug Access Port Reset sends 50 CLK with TMS high that brings both SW-DP and JTAG-DP into reset state. \fBParameters:\fP
 .RS 4
@@ -1779,63 +1890,32 @@ number of elements processed or SWD_ERROR_CODE code on failure.
 .RE
 .PP
 
-.SS "int swd_mosi_data_ap (\fBswd_ctx_t\fP * swdctx, \fBswd_operation_t\fP operation, int * data)"
+.SS "\fBswd_ctx_t\fP* swd_init (void)"
 .PP
-Perform (MOSI) data write with automatic parity calculation. \fBParameters:\fP
-.RS 4
-\fI*swdctx\fP swd context pointer. 
-.br
-\fIoperation\fP type of action to perform on generated command. 
-.br
-\fI*data\fP payload value pointer. 
-.RE
+LibSWD initialization routine. It should be called prior any operation made with libswd. It initializes command queue and basic parameters for context that is returned as pointer. 
 .PP
 \fBReturns:\fP
 .RS 4
-number of elements processed, or SWD_ERROR_CODE on failure. 
+pointer to the initialized swd context. 
 .RE
 .PP
 
-.SS "int swd_mosi_data_p (\fBswd_ctx_t\fP * swdctx, \fBswd_operation_t\fP operation, int * data, char * parity)"
+.SS "int swd_log (\fBswd_ctx_t\fP * swdctx, \fBswd_loglevel_t\fP loglevel, char * msg,  ...)"
 .PP
-Perform (MOSI) data write with provided parity value. \fBParameters:\fP
+Put a message into swd context log at specified verbosity level. If specified message's log level is lower than actual context configuration, message will be omitted. Verbosity level increases from 0 (silent) to 4 (debug). 
+.PP
+\fBParameters:\fP
 .RS 4
-\fI*swdctx\fP swd context pointer. 
+\fI*swdctx\fP swd context. 
 .br
-\fIoperation\fP type of action to perform on generated command. 
+\fIloglevel\fP at which to put selected message. 
 .br
-\fI*data\fP payload value pointer. 
-.br
-\fI*parity\fP payload parity value pointer. 
+\fI*msg\fP message body with variable arguments as in 'printf'. 
 .RE
 .PP
 \fBReturns:\fP
 .RS 4
-number of elements processed, or SWD_ERROR_CODE on failure. 
-.RE
-.PP
-
-.SS "int swd_mosi_jtag2swd (\fBswd_ctx_t\fP * swdctx, \fBswd_operation_t\fP operation)"
-.PP
-Switch DAP into SW-DP. According to ARM documentation target's DAP use JTAG transport by default and so JTAG-DP is active after power up. To use SWD user must perform predefined sequence on SWDIO/TMS lines, then read out the IDCODE to ensure proper SW-DP operation. 
-.SS "int swd_mosi_request (\fBswd_ctx_t\fP * swdctx, \fBswd_operation_t\fP operation, char * APnDP, char * RnW, char * addr)"
-.PP
-Perform Request. \fBParameters:\fP
-.RS 4
-\fI*swdctx\fP swd context pointer. 
-.br
-\fIoperation\fP type of action to perform with generated request. 
-.br
-\fI*APnDP\fP AccessPort (high) or DebugPort (low) access value pointer. 
-.br
-\fI*RnW\fP Read (high) or Write (low) access value pointer. 
-.br
-\fI*addr\fP target register address value pointer. 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-number of commands processed, or SWD_ERROR_CODE on failure. 
+number of characters written or error code on failure. 
 .RE
 .PP
 

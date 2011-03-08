@@ -71,18 +71,18 @@ Public Attributes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1af708535f1167ac7909e62dbda0296c"></a><!-- doxytag: member="swd_ctx_t::driver" ref="a1af708535f1167ac7909e62dbda0296c" args="" -->
 <a class="el" href="structswd__driver__t.html">swd_driver_t</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structswd__ctx__t.html#a1af708535f1167ac7909e62dbda0296c">driver</a></td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Pointer to the interface driver structure. <br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a791c4c06ec62a165c1b0a4b738379eeb"></a><!-- doxytag: member="swd_ctx_t::misoswdp" ref="a791c4c06ec62a165c1b0a4b738379eeb" args="" -->
-<a class="el" href="structswd__swdp__t.html">swd_swdp_t</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structswd__ctx__t.html#a791c4c06ec62a165c1b0a4b738379eeb">misoswdp</a></td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Last known read from the SW-DP register. <br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a62a8d2f45e4048f2a8b1ea33d9e5ba95"></a><!-- doxytag: member="swd_ctx_t::mosiswdp" ref="a62a8d2f45e4048f2a8b1ea33d9e5ba95" args="" -->
-<a class="el" href="structswd__swdp__t.html">swd_swdp_t</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structswd__ctx__t.html#a62a8d2f45e4048f2a8b1ea33d9e5ba95">mosiswdp</a></td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Last known write to the SW-DP register. <br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="accd678018ec2a881fe6f3ce15f55b76a"></a><!-- doxytag: member="swd_ctx_t::misoahbap" ref="accd678018ec2a881fe6f3ce15f55b76a" args="" -->
-<a class="el" href="structswd__ahbap__t.html">swd_ahbap_t</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structswd__ctx__t.html#accd678018ec2a881fe6f3ce15f55b76a">misoahbap</a></td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Last known read from AHB-AP register. <br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4f23458853a74c2d53f279aed183f111"></a><!-- doxytag: member="swd_ctx_t::mosiahbap" ref="a4f23458853a74c2d53f279aed183f111" args="" -->
-<a class="el" href="structswd__ahbap__t.html">swd_ahbap_t</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structswd__ctx__t.html#a4f23458853a74c2d53f279aed183f111">mosiahbap</a></td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Last known write ti the AHB-AP register. <br/></td></tr>
+<tr><td class="memItemLeft" ><a class="anchor" id="ab2dfb610a0dc0ea3abefd8925e8d6d97"></a><!-- doxytag: member="swd_ctx_t::log" ref="ab2dfb610a0dc0ea3abefd8925e8d6d97" args="" -->
+struct {</td></tr>
+<tr><td class="memItemLeft" >&nbsp;&nbsp;&nbsp;<a class="el" href="structswd__swdp__t.html">swd_swdp_t</a>&nbsp;&nbsp;&nbsp;<a class="el" href="structswd__ctx__t.html#a1695f04290648cb75fe11bf62a5cdbb3">dp_r</a></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Last known read from the SW-DP registers. <br/></td></tr>
+<tr><td class="memItemLeft" >&nbsp;&nbsp;&nbsp;<a class="el" href="structswd__swdp__t.html">swd_swdp_t</a>&nbsp;&nbsp;&nbsp;<a class="el" href="structswd__ctx__t.html#a9057cda4ed4c9a73715417affecc1c61">dp_w</a></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Last known write to the SW-DP registers. <br/></td></tr>
+<tr><td class="memItemLeft" >&nbsp;&nbsp;&nbsp;<a class="el" href="structswd__ahbap__t.html">swd_ahbap_t</a>&nbsp;&nbsp;&nbsp;<a class="el" href="structswd__ctx__t.html#ab89b0a5708ea9bd18d458d4f9f7f23c6">ap_r</a></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Last known read from AHB-AP registers. <br/></td></tr>
+<tr><td class="memItemLeft" >&nbsp;&nbsp;&nbsp;<a class="el" href="structswd__ahbap__t.html">swd_ahbap_t</a>&nbsp;&nbsp;&nbsp;<a class="el" href="structswd__ctx__t.html#a88bc288160b7a7ed4248a3db192dd599">ap_w</a></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Last known write ti the AHB-AP registers. <br/></td></tr>
+<tr><td class="memItemLeft" >&nbsp;&nbsp;&nbsp;<a class="el" href="structswd__transaction__t.html">swd_transaction_t</a>&nbsp;&nbsp;&nbsp;<b>transaction</b></td></tr>
+<tr><td class="memItemLeft" valign="top">}&nbsp;</td><td class="memItemRight" valign="bottom"><b>log</b></td></tr>
 </table>
 <hr/><a name="_details"></a><h2>Detailed Description</h2>
 <p>SWD Context Structure definition. </p>
@@ -105,7 +105,7 @@ Public Attributes</h2></td></tr>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Fri Feb 18 2011 01:10:40 for libswd by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Tue Mar 8 2011 01:58:20 for libswd by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

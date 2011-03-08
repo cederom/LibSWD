@@ -1,4 +1,4 @@
-.TH "swd_cmd_t" 3 "Fri Feb 18 2011" "Version 0.0.1" "libswd" \" -*- nroff -*-
+.TH "swd_cmd_t" 3 "Tue Mar 8 2011" "Version 0.0.1" "libswd" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -38,6 +38,10 @@ SWD Command Element Structure.
 .br
 .RI "\fIData written to target (MOSI). \fP"
 .ti -1c
+.RI "   int \fBdata32\fP"
+.br
+.RI "\fIHolds 'int' data type for inspection. \fP"
+.ti -1c
 .RI "   char \fBmisobit\fP"
 .br
 .RI "\fISingle bit read from target (bit-per-char). \fP"
@@ -53,6 +57,10 @@ SWD Command Element Structure.
 .RI "   char \fBcontrol\fP"
 .br
 .RI "\fIControl transfer data (one byte). \fP"
+.ti -1c
+.RI "   char \fBdata8\fP"
+.br
+.RI "\fIHolds 'char' data type for inspection. \fP"
 .ti -1c
 .RI "}; "
 .br

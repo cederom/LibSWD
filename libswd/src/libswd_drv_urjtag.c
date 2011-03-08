@@ -52,7 +52,7 @@ int swd_drv_mosi_8(swd_ctx_t *swdctx, char *data, int bits, int nLSBfirst){
  res=urj_tap_cable_transfer((urj_cable_t *)swdctx->driver->device, bits, mosidata, misodata);
  if (res<0) return SWD_ERROR_DRIVER;
  urj_tap_cable_flush((urj_cable_t *)swdctx->driver->device, URJ_TAP_CABLE_COMPLETELY);
- return 1;
+ return i;
 }
 
 
@@ -70,7 +70,7 @@ int swd_drv_mosi_32(swd_ctx_t *swdctx, int *data, int bits, int nLSBfirst){
  res=urj_tap_cable_transfer((urj_cable_t *)swdctx->driver->device, bits, mosidata, misodata);
  if (res<0) return SWD_ERROR_DRIVER;
  urj_tap_cable_flush((urj_cable_t *)swdctx->driver->device, URJ_TAP_CABLE_COMPLETELY);
- return 1;
+ return i;
 }
 
 int swd_drv_miso_8(swd_ctx_t *swdctx, char *data, int bits, int nLSBfirst){
@@ -90,45 +90,67 @@ int swd_drv_miso_8(swd_ctx_t *swdctx, char *data, int bits, int nLSBfirst){
  //Now we need to reconstruct the data byte from shifted in LSBfirst byte array.
  *data=0;
  for (i=0;i<bits;i++) *data|=(misodata[7-i]?(1<<i):0);
- return i+1;
+ return i;
 }
 
 int swd_drv_miso_32(swd_ctx_t *swdctx, int *data, int bits, int nLSBfirst){
- return SWD_OK;        
-}
+ if (data==NULL) return SWD_ERROR_NULLPOINTER;
+ if (bits<0 && bits>8) return SWD_ERROR_PARAM;
+ if (nLSBfirst!=0 && nLSBfirst!=1) return SWD_ERROR_PARAM;
+
+ static unsigned int i;
+ static signed int res;
+ static char misodata[32], mosidata[32];
+
+ //UrJTAG drivers shift data LSB-First.
+ for (i=0;i<bits;i++) mosidata[(nLSBfirst==SWD_DIR_LSBFIRST)?(i):(31-i)]=((1<<i)&(*data))?1:0; 
+ res=urj_tap_cable_transfer((urj_cable_t *)swdctx->driver->device, bits, mosidata, misodata);
+ if (res<0) return SWD_ERROR_DRIVER;
+ urj_tap_cable_flush((urj_cable_t *)swdctx->driver->device, URJ_TAP_CABLE_COMPLETELY);
+ //Now we need to reconstruct the data byte from shifted in LSBfirst byte array.
+ *data=0;
+ for (i=0;i<bits;i++) *data|=(misodata[31-i]?(1<<i):0);
+ return i;
+}       
 
 
 /* This function sets interface buffers to MOSI direction.
  * Master Output Slave Input - SWD Write operation.
  * bits specify how many clock cycles must be used. */
 int swd_drv_mosi_trn(swd_ctx_t *swdctx, int bits){
- if (bits<SWD_TURNROUND_MIN && bits>SWD_TURNROUND_MAX)
+ if (bits<SWD_TURNROUND_MIN_VAL && bits>SWD_TURNROUND_MAX_VAL)
   return SWD_ERROR_TURNAROUND; 
 
  static int res;
- static char mosidata[4]={0xff, 0xff, 0xff, 0xff};
+// static char mosidata[4]={0xff, 0xff, 0xff, 0xff};
 
  res=urj_tap_cable_set_signal((urj_cable_t *)swdctx->driver->device, URJ_POD_CS_RnW, 0); 
  if (res<0) return SWD_ERROR_DRIVER;
- res=urj_tap_cable_transfer((urj_cable_t *)swdctx->driver->device, bits, mosidata, NULL); 
- if (res<0) return SWD_ERROR_DRIVER;
- urj_tap_cable_flush((urj_cable_t *)swdctx->driver->device, URJ_TAP_CABLE_COMPLETELY);
+// res=urj_tap_cable_transfer((urj_cable_t *)swdctx->driver->device, bits, mosidata, NULL); 
+// if (res<0) return SWD_ERROR_DRIVER;
+// urj_tap_cable_flush((urj_cable_t *)swdctx->driver->device, URJ_TAP_CABLE_COMPLETELY);
+
+ /* void urj_tap_cable_clock (urj_cable_t *cable, int tms, int tdi, int n); */
+ urj_tap_cable_clock((urj_cable_t *)swdctx->driver->device, 0, 0, bits); 
 
  return SWD_OK;
 }
 
 int swd_drv_miso_trn(swd_ctx_t *swdctx, int bits){
- if (bits<SWD_TURNROUND_MIN && bits>SWD_TURNROUND_MAX)
+ if (bits<SWD_TURNROUND_MIN_VAL && bits>SWD_TURNROUND_MAX_VAL)
   return SWD_ERROR_TURNAROUND; 
 
  static int res;
  static char mosidata[4]={0xff, 0xff, 0xff, 0xff};
 
- res=urj_tap_cable_set_signal((urj_cable_t *)swdctx->driver->device, URJ_POD_CS_RnW, 1); 
+ res=urj_tap_cable_set_signal((urj_cable_t *)swdctx->driver->device, URJ_POD_CS_RnW, URJ_POD_CS_RnW); 
  if (res<0) return SWD_ERROR_DRIVER;
  res=urj_tap_cable_transfer((urj_cable_t *)swdctx->driver->device, bits, mosidata, NULL); 
  if (res<0) return SWD_ERROR_DRIVER;
  urj_tap_cable_flush((urj_cable_t *)swdctx->driver->device, URJ_TAP_CABLE_COMPLETELY);
+
+ /* void urj_tap_cable_clock (urj_cable_t *cable, int tms, int tdi, int n); */
+// urj_tap_cable_clock((urj_cable_t *)swdctx->driver->device, 0, 0, bits); 
  
  return SWD_OK;
 }

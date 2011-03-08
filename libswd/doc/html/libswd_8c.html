@@ -56,6 +56,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <code>#include &lt;string.h&gt;</code><br/>
 <code>#include &lt;stdlib.h&gt;</code><br/>
 <code>#include &lt;stdio.h&gt;</code><br/>
+<code>#include &lt;stdarg.h&gt;</code><br/>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="func-members"></a>
 Functions</h2></td></tr>
@@ -97,8 +98,8 @@ Functions</h2></td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Append command queue with Turnaround activating MOSI mode.  <a href="#adb3044c0cbebdf275aef0898b37c6fa6"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8c.html#a63c0741f58c00faad012ccc9d29ca7c7">swd_cmd_enqueue_miso_trn</a> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Append command queue with Turnaround activating MISO mode.  <a href="#a63c0741f58c00faad012ccc9d29ca7c7"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8c.html#ab74b1e2baff1d3f30c07440bc84b54fe">swd_cmd_enqueue_miso_nbit</a> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, char **data, int count)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Append command queue with bus binary read bit-by-bit operation.  <a href="#ab74b1e2baff1d3f30c07440bc84b54fe"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8c.html#ae35b90d3d862ed4caa9c742133d47f09">swd_cmd_enqueue_miso_nbit</a> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, char *data, int count)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Append command queue with bus binary read bit-by-bit operation.  <a href="#ae35b90d3d862ed4caa9c742133d47f09"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8c.html#a5114809ee4b3f3dbdcef7070e76825cd">swd_cmd_enqueue_mosi_nbit</a> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, char *data, int count)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Append command queue with bus binary write bit-by-bit operation.  <a href="#a5114809ee4b3f3dbdcef7070e76825cd"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8c.html#ac972e99a9d163f30b983ce6ed0d2ed02">swd_cmd_enqueue_mosi_parity</a> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, char *parity)</td></tr>
@@ -127,44 +128,60 @@ Functions</h2></td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Append command queue with len-octet size control seruence.  <a href="#af01d9ef59271c478d8d68f7dde27a77f"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8c.html#a0492d6b4eb2ebaa14fd72a5fa7f57475">swd_cmd_enqueue_mosi_dap_reset</a> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Append command queue with SW-DP-RESET sequence.  <a href="#a0492d6b4eb2ebaa14fd72a5fa7f57475"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8c.html#a11a8ab26aa798f18303be8364ef55f48">swd_cmd_enqueue_mosi_idle</a> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Append command queue with idle sequence.  <a href="#a11a8ab26aa798f18303be8364ef55f48"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8c.html#a314214b78c653c188f51f3324d623913">swd_cmd_enqueue_mosi_jtag2swd</a> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Append command queue with JTAG-TO-SWD DAP-switch sequence.  <a href="#a314214b78c653c188f51f3324d623913"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8c.html#aae11e98541fa6cf8526d59e4ae5bfff9">swd_cmd_enqueue_mosi_swd2jtag</a> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Append command queue with SWD-TO-JTAG DAP-switch sequence.  <a href="#aae11e98541fa6cf8526d59e4ae5bfff9"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8c.html#a342a54175498a1cd4a2668a189977012">swd_bus_setdir_mosi</a> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Append command queue with TRN WRITE/MOSI, if previous command was READ/MISO.  <a href="#a342a54175498a1cd4a2668a189977012"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8c.html#abb32abd798b3b1ffa14573e4f139c079">swd_bus_setdir_miso</a> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Append command queue with TRN READ/MISO, if previous command was WRITE/MOSI.  <a href="#abb32abd798b3b1ffa14573e4f139c079"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2c825a8208192b40b0b3d5d93258dd91"></a><!-- doxytag: member="libswd.c::swd_cmd_string_cmdtype" ref="a2c825a8208192b40b0b3d5d93258dd91" args="(swd_cmd_t *cmd)" -->
+char *&nbsp;</td><td class="memItemRight" valign="bottom"><b>swd_cmd_string_cmdtype</b> (<a class="el" href="structswd__cmd__t.html">swd_cmd_t</a> *cmd)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8c.html#afbae73ccf42657390d11d645fcc456d8">swd_bitgen8_request</a> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, char *APnDP, char *RnW, char *addr, char *request)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Generate 8-bit SWD-REQUEST packet contents with provided parameters.  <a href="#afbae73ccf42657390d11d645fcc456d8"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4d1a5b1d1875044d833fb473f0da4e33"></a><!-- doxytag: member="libswd.c::swd_drv_mosi_8" ref="a4d1a5b1d1875044d833fb473f0da4e33" args="(swd_ctx_t *swdctx, char *data, int bits, int nLSBfirst)" -->
+int&nbsp;</td><td class="memItemRight" valign="bottom"><b>swd_drv_mosi_8</b> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, char *data, int bits, int nLSBfirst)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab11727bfb6a5fe9fe72c91e886d17140"></a><!-- doxytag: member="libswd.c::swd_drv_mosi_32" ref="ab11727bfb6a5fe9fe72c91e886d17140" args="(swd_ctx_t *swdctx, int *data, int bits, int nLSBfirst)" -->
+int&nbsp;</td><td class="memItemRight" valign="bottom"><b>swd_drv_mosi_32</b> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, int *data, int bits, int nLSBfirst)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad9a78d0344f778433be4d4ba0b279d6e"></a><!-- doxytag: member="libswd.c::swd_drv_miso_8" ref="ad9a78d0344f778433be4d4ba0b279d6e" args="(swd_ctx_t *swdctx, char *data, int bits, int nLSBfirst)" -->
+int&nbsp;</td><td class="memItemRight" valign="bottom"><b>swd_drv_miso_8</b> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, char *data, int bits, int nLSBfirst)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac0f7edf48e8fefd811cdab643559dad0"></a><!-- doxytag: member="libswd.c::swd_drv_miso_32" ref="ac0f7edf48e8fefd811cdab643559dad0" args="(swd_ctx_t *swdctx, int *data, int bits, int nLSBfirst)" -->
+int&nbsp;</td><td class="memItemRight" valign="bottom"><b>swd_drv_miso_32</b> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, int *data, int bits, int nLSBfirst)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a94345700108bf12e4aad25cd54fd3b83"></a><!-- doxytag: member="libswd.c::swd_drv_mosi_trn" ref="a94345700108bf12e4aad25cd54fd3b83" args="(swd_ctx_t *swdctx, int bits)" -->
+int&nbsp;</td><td class="memItemRight" valign="bottom"><b>swd_drv_mosi_trn</b> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, int bits)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adb03d22371e2bcde8a5faa8aabf49daa"></a><!-- doxytag: member="libswd.c::swd_drv_miso_trn" ref="adb03d22371e2bcde8a5faa8aabf49daa" args="(swd_ctx_t *swdctx, int bits)" -->
+int&nbsp;</td><td class="memItemRight" valign="bottom"><b>swd_drv_miso_trn</b> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, int bits)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8c.html#ad050506f56639833e7a78bfdff741d6d">swd_bus_transmit</a> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, <a class="el" href="structswd__cmd__t.html">swd_cmd_t</a> *cmd)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Transmit selected command from the command queue to the interface driver.  <a href="#ad050506f56639833e7a78bfdff741d6d"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8c.html#ad53379f5a7756cc91b01e867aaaa489d">swd_cmdq_flush</a> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, <a class="el" href="libswd_8h.html#aa0833ff00c22fe41453f5e9acec488e2">swd_operation_t</a> operation)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Flush command queue contents into interface driver.  <a href="#ad53379f5a7756cc91b01e867aaaa489d"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8c.html#a5b0fa1e12db678a6cbe5a00a6e63ba03">swd_mosi_request</a> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, <a class="el" href="libswd_8h.html#aa0833ff00c22fe41453f5e9acec488e2">swd_operation_t</a> operation, char *APnDP, char *RnW, char *addr)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Perform Request.  <a href="#a5b0fa1e12db678a6cbe5a00a6e63ba03"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8c.html#a9cee6746fd86b41860d4db9cbd1ccef3">swd_miso_ack</a> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, <a class="el" href="libswd_8h.html#aa0833ff00c22fe41453f5e9acec488e2">swd_operation_t</a> operation, char *ack)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Perform ACK read into *ack and verify received data.  <a href="#a9cee6746fd86b41860d4db9cbd1ccef3"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8c.html#ae4960ef683ea7b4ac44b821773ee0167">swd_mosi_data_p</a> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, <a class="el" href="libswd_8h.html#aa0833ff00c22fe41453f5e9acec488e2">swd_operation_t</a> operation, int *data, char *parity)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Perform (MOSI) data write with provided parity value.  <a href="#ae4960ef683ea7b4ac44b821773ee0167"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8c.html#a11c7b1ca1bf2ba57b33ced49586f7b57">swd_mosi_data_ap</a> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, <a class="el" href="libswd_8h.html#aa0833ff00c22fe41453f5e9acec488e2">swd_operation_t</a> operation, int *data)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Perform (MOSI) data write with automatic parity calculation.  <a href="#a11c7b1ca1bf2ba57b33ced49586f7b57"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8c.html#a516cda759588d217e47ec2c57273102d">swd_miso_data_p</a> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, <a class="el" href="libswd_8h.html#aa0833ff00c22fe41453f5e9acec488e2">swd_operation_t</a> operation, int *data, char *parity)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Perform (MISO) data read.  <a href="#a516cda759588d217e47ec2c57273102d"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8c.html#af9a39dd85dde5d777595190fcbd1d801">swd_mosi_jtag2swd</a> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, <a class="el" href="libswd_8h.html#aa0833ff00c22fe41453f5e9acec488e2">swd_operation_t</a> operation)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Switch DAP into SW-DP.  <a href="#af9a39dd85dde5d777595190fcbd1d801"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8c.html#a5f8a3162be114a570543ccc390823623">swd_mosi_dap_reset</a> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, <a class="el" href="libswd_8h.html#aa0833ff00c22fe41453f5e9acec488e2">swd_operation_t</a> operation)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Debug Access Port Reset sends 50 CLK with TMS high that brings both SW-DP and JTAG-DP into reset state.  <a href="#a5f8a3162be114a570543ccc390823623"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8c.html#afcef5de1252553f6867d15a7c5ad9cac">swd_idcode</a> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, <a class="el" href="libswd_8h.html#aa0833ff00c22fe41453f5e9acec488e2">swd_operation_t</a> operation, int *idcode, char *ack, char *parity)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Read target's IDCODE register value.  <a href="#afcef5de1252553f6867d15a7c5ad9cac"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8c.html#ab18ca62974b29bc3c56f2a725f735418">swd_dap_select_swj</a> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, <a class="el" href="libswd_8h.html#aa0833ff00c22fe41453f5e9acec488e2">swd_operation_t</a> operation)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Activate SW-DP by sending out JTAG-TO-SWD sequence on SWDIOTMS line.  <a href="#ab18ca62974b29bc3c56f2a725f735418"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8c.html#aedaf6c3578636e5ce6eb0c14bba98ce8">swd_dap_idcode</a> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, <a class="el" href="libswd_8h.html#aa0833ff00c22fe41453f5e9acec488e2">swd_operation_t</a> operation)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Macro: Read out IDCODE register and return its value on function return.  <a href="#aedaf6c3578636e5ce6eb0c14bba98ce8"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8c.html#a67a55d6576f97861abc3732a804ee4e4">swd_dap_reset_select_idcode</a> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, <a class="el" href="libswd_8h.html#aa0833ff00c22fe41453f5e9acec488e2">swd_operation_t</a> operation)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Macro: Reset target DAP, select SW-DP, read out IDCODE.  <a href="#a67a55d6576f97861abc3732a804ee4e4"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8e750f8d9fad3793e3d631aed5113150"></a><!-- doxytag: member="libswd.c::swd_log" ref="a8e750f8d9fad3793e3d631aed5113150" args="(swd_loglevel_t loglevel, char *msg)" -->
-int&nbsp;</td><td class="memItemRight" valign="bottom"><b>swd_log</b> (<a class="el" href="libswd_8h.html#acb51eaac9226d7aef398d63e2a5db319">swd_loglevel_t</a> loglevel, char *msg)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8c.html#a342a54175498a1cd4a2668a189977012">swd_bus_setdir_mosi</a> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Append command queue with TRN WRITE/MOSI, if previous command was READ/MISO.  <a href="#a342a54175498a1cd4a2668a189977012"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8c.html#abb32abd798b3b1ffa14573e4f139c079">swd_bus_setdir_miso</a> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Append command queue with TRN READ/MISO, if previous command was WRITE/MOSI.  <a href="#abb32abd798b3b1ffa14573e4f139c079"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8c.html#a36141f037b00ea981cf771d6061bdfd6">swd_bus_write_request</a> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, <a class="el" href="libswd_8h.html#aa0833ff00c22fe41453f5e9acec488e2">swd_operation_t</a> operation, char *APnDP, char *RnW, char *addr)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Perform Request.  <a href="#a36141f037b00ea981cf771d6061bdfd6"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8c.html#a45ce070df7884e216484911a654154bf">swd_bus_read_ack</a> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, <a class="el" href="libswd_8h.html#aa0833ff00c22fe41453f5e9acec488e2">swd_operation_t</a> operation, char *ack)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Perform ACK read into *ack and verify received data.  <a href="#a45ce070df7884e216484911a654154bf"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8c.html#ac1948d1f82a3166de4de43dae48b7413">swd_bus_write_data_p</a> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, <a class="el" href="libswd_8h.html#aa0833ff00c22fe41453f5e9acec488e2">swd_operation_t</a> operation, int *data, char *parity)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Perform (MOSI) data write with provided parity value.  <a href="#ac1948d1f82a3166de4de43dae48b7413"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8c.html#a014280b7d9a07a14862f16922827f50a">swd_bus_write_data_ap</a> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, <a class="el" href="libswd_8h.html#aa0833ff00c22fe41453f5e9acec488e2">swd_operation_t</a> operation, int *data)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Perform (MOSI) data write with automatic parity calculation.  <a href="#a014280b7d9a07a14862f16922827f50a"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8c.html#af5d33b0489f4cf34f650ab50e289ada6">swd_bus_read_data_p</a> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, <a class="el" href="libswd_8h.html#aa0833ff00c22fe41453f5e9acec488e2">swd_operation_t</a> operation, int *data, char *parity)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Perform (MISO) data read.  <a href="#af5d33b0489f4cf34f650ab50e289ada6"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8c.html#ad0ae33bb778d9c0bba3fe5f74adc8d22">swd_bus_write_control</a> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, <a class="el" href="libswd_8h.html#aa0833ff00c22fe41453f5e9acec488e2">swd_operation_t</a> operation, char *ctlmsg, int len)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Write CONTROL byte to the Target's DAP.  <a href="#ad0ae33bb778d9c0bba3fe5f74adc8d22"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8c.html#a04314b7ccbde2974946a2e6312a30583">swd_bus_write_jtag2swd</a> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, <a class="el" href="libswd_8h.html#aa0833ff00c22fe41453f5e9acec488e2">swd_operation_t</a> operation)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Switch DAP into SW-DP.  <a href="#a04314b7ccbde2974946a2e6312a30583"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8c.html#a98fbdd25229d0a49f04a061d2fdf28f7">swd_dp_reset</a> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, <a class="el" href="libswd_8h.html#aa0833ff00c22fe41453f5e9acec488e2">swd_operation_t</a> operation)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Debug Access Port Reset sends 50 CLK with TMS high that brings both SW-DP and JTAG-DP into reset state.  <a href="#a98fbdd25229d0a49f04a061d2fdf28f7"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8c.html#a6229cd1e143fb4789660ea91a5f5eb28">swd_dp_activate</a> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, <a class="el" href="libswd_8h.html#aa0833ff00c22fe41453f5e9acec488e2">swd_operation_t</a> operation)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Activate SW-DP by sending out RESET and JTAG-TO-SWD sequence on SWDIOTMS line.  <a href="#a6229cd1e143fb4789660ea91a5f5eb28"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8c.html#a7bd47ae6765b863660c9cf8e4f30a5a4">swd_dp_read_idcode</a> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, <a class="el" href="libswd_8h.html#aa0833ff00c22fe41453f5e9acec488e2">swd_operation_t</a> operation, int *idcode)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Macro: Read out IDCODE register and return its value on function return.  <a href="#a7bd47ae6765b863660c9cf8e4f30a5a4"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8c.html#a12bc98b0bc66ff0b8b658a65eb9b6167">swd_dp_detect</a> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, <a class="el" href="libswd_8h.html#aa0833ff00c22fe41453f5e9acec488e2">swd_operation_t</a> operation, int *idcode)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Macro: Reset target DAP, select SW-DP, read out IDCODE.  <a href="#a12bc98b0bc66ff0b8b658a65eb9b6167"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8c.html#ab2228c114efd81e478ebc00e5bfe4c43">swd_log</a> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, <a class="el" href="libswd_8h.html#acb51eaac9226d7aef398d63e2a5db319">swd_loglevel_t</a> loglevel, char *msg,...)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Put a message into swd context log at specified verbosity level.  <a href="#ab2228c114efd81e478ebc00e5bfe4c43"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5c41206bbf4a593193192d03104a72f5"></a><!-- doxytag: member="libswd.c::swd_error_string" ref="a5c41206bbf4a593193192d03104a72f5" args="(swd_error_code_t error)" -->
 char *&nbsp;</td><td class="memItemRight" valign="bottom"><b>swd_error_string</b> (<a class="el" href="libswd_8h.html#a5f458052e7d0836513de622e91c291a0">swd_error_code_t</a> error)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8c.html#ad4f88acc646c06e6e81fbde8117c21af">swd_init</a> (void)</td></tr>
@@ -496,6 +513,101 @@ char *&nbsp;</td><td class="memItemRight" valign="bottom"><b>swd_error_string</b
 
 </div>
 </div>
+<a class="anchor" id="a45ce070df7884e216484911a654154bf"></a><!-- doxytag: member="libswd.c::swd_bus_read_ack" ref="a45ce070df7884e216484911a654154bf" args="(swd_ctx_t *swdctx, swd_operation_t operation, char *ack)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int swd_bus_read_ack </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *&nbsp;</td>
+          <td class="paramname"> <em>swdctx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="libswd_8h.html#aa0833ff00c22fe41453f5e9acec488e2">swd_operation_t</a>&nbsp;</td>
+          <td class="paramname"> <em>operation</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&nbsp;</td>
+          <td class="paramname"> <em>ack</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Perform ACK read into *ack and verify received data. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>*swdctx</em>&nbsp;</td><td>swd context pointer. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>operation</em>&nbsp;</td><td>type of action to perform with generated request. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>*ack</em>&nbsp;</td><td>pointer to the result location. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>number of commands processed, or SWD_ERROR_CODE on failure. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="af5d33b0489f4cf34f650ab50e289ada6"></a><!-- doxytag: member="libswd.c::swd_bus_read_data_p" ref="af5d33b0489f4cf34f650ab50e289ada6" args="(swd_ctx_t *swdctx, swd_operation_t operation, int *data, char *parity)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int swd_bus_read_data_p </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *&nbsp;</td>
+          <td class="paramname"> <em>swdctx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="libswd_8h.html#aa0833ff00c22fe41453f5e9acec488e2">swd_operation_t</a>&nbsp;</td>
+          <td class="paramname"> <em>operation</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int *&nbsp;</td>
+          <td class="paramname"> <em>data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&nbsp;</td>
+          <td class="paramname"> <em>parity</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Perform (MISO) data read. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>*swdctx</em>&nbsp;</td><td>swd context pointer. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>operation</em>&nbsp;</td><td>type of action to perform on generated command. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>*data</em>&nbsp;</td><td>payload value pointer. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>*parity</em>&nbsp;</td><td>payload parity value pointer. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>number of elements processed, or SWD_ERROR_CODE on failure. </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="abb32abd798b3b1ffa14573e4f139c079"></a><!-- doxytag: member="libswd.c::swd_bus_setdir_miso" ref="abb32abd798b3b1ffa14573e4f139c079" args="(swd_ctx_t *swdctx)" -->
 <div class="memitem">
 <div class="memproto">
@@ -584,6 +696,248 @@ char *&nbsp;</td><td class="memItemRight" valign="bottom"><b>swd_error_string</b
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>number of commands transmitted (1), or SWD_ERROR_CODE on failure. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ad0ae33bb778d9c0bba3fe5f74adc8d22"></a><!-- doxytag: member="libswd.c::swd_bus_write_control" ref="ad0ae33bb778d9c0bba3fe5f74adc8d22" args="(swd_ctx_t *swdctx, swd_operation_t operation, char *ctlmsg, int len)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int swd_bus_write_control </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *&nbsp;</td>
+          <td class="paramname"> <em>swdctx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="libswd_8h.html#aa0833ff00c22fe41453f5e9acec488e2">swd_operation_t</a>&nbsp;</td>
+          <td class="paramname"> <em>operation</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&nbsp;</td>
+          <td class="paramname"> <em>ctlmsg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>len</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Write CONTROL byte to the Target's DAP. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>*swdctx</em>&nbsp;</td><td>swd context. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>operation</em>&nbsp;</td><td>can be SWD_OPERATION_ENQUEUE or SWD_OPERATION_EXECUTE. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>*ctlmsg</em>&nbsp;</td><td>byte/char array that contains control payload. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>len</em>&nbsp;</td><td>number of bytes in the *ctlmsg to send. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>number of bytes sent or SWD_ERROR_CODE on failure. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a014280b7d9a07a14862f16922827f50a"></a><!-- doxytag: member="libswd.c::swd_bus_write_data_ap" ref="a014280b7d9a07a14862f16922827f50a" args="(swd_ctx_t *swdctx, swd_operation_t operation, int *data)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int swd_bus_write_data_ap </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *&nbsp;</td>
+          <td class="paramname"> <em>swdctx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="libswd_8h.html#aa0833ff00c22fe41453f5e9acec488e2">swd_operation_t</a>&nbsp;</td>
+          <td class="paramname"> <em>operation</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int *&nbsp;</td>
+          <td class="paramname"> <em>data</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Perform (MOSI) data write with automatic parity calculation. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>*swdctx</em>&nbsp;</td><td>swd context pointer. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>operation</em>&nbsp;</td><td>type of action to perform on generated command. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>*data</em>&nbsp;</td><td>payload value pointer. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>number of elements processed, or SWD_ERROR_CODE on failure. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ac1948d1f82a3166de4de43dae48b7413"></a><!-- doxytag: member="libswd.c::swd_bus_write_data_p" ref="ac1948d1f82a3166de4de43dae48b7413" args="(swd_ctx_t *swdctx, swd_operation_t operation, int *data, char *parity)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int swd_bus_write_data_p </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *&nbsp;</td>
+          <td class="paramname"> <em>swdctx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="libswd_8h.html#aa0833ff00c22fe41453f5e9acec488e2">swd_operation_t</a>&nbsp;</td>
+          <td class="paramname"> <em>operation</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int *&nbsp;</td>
+          <td class="paramname"> <em>data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&nbsp;</td>
+          <td class="paramname"> <em>parity</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Perform (MOSI) data write with provided parity value. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>*swdctx</em>&nbsp;</td><td>swd context pointer. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>operation</em>&nbsp;</td><td>type of action to perform on generated command. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>*data</em>&nbsp;</td><td>payload value pointer. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>*parity</em>&nbsp;</td><td>payload parity value pointer. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>number of elements processed, or SWD_ERROR_CODE on failure. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a04314b7ccbde2974946a2e6312a30583"></a><!-- doxytag: member="libswd.c::swd_bus_write_jtag2swd" ref="a04314b7ccbde2974946a2e6312a30583" args="(swd_ctx_t *swdctx, swd_operation_t operation)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int swd_bus_write_jtag2swd </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *&nbsp;</td>
+          <td class="paramname"> <em>swdctx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="libswd_8h.html#aa0833ff00c22fe41453f5e9acec488e2">swd_operation_t</a>&nbsp;</td>
+          <td class="paramname"> <em>operation</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Switch DAP into SW-DP. </p>
+<p>According to ARM documentation target's DAP use JTAG transport by default and so JTAG-DP is active after power up. To use SWD user must perform predefined sequence on SWDIO/TMS lines, then read out the IDCODE to ensure proper SW-DP operation. This function only sends switching sequence. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>*swdctx</em>&nbsp;</td><td>swd context. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>operation</em>&nbsp;</td><td>type, can be ENQEUE or EXECUTE. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>number of elements processed or error code on failure. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a36141f037b00ea981cf771d6061bdfd6"></a><!-- doxytag: member="libswd.c::swd_bus_write_request" ref="a36141f037b00ea981cf771d6061bdfd6" args="(swd_ctx_t *swdctx, swd_operation_t operation, char *APnDP, char *RnW, char *addr)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int swd_bus_write_request </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *&nbsp;</td>
+          <td class="paramname"> <em>swdctx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="libswd_8h.html#aa0833ff00c22fe41453f5e9acec488e2">swd_operation_t</a>&nbsp;</td>
+          <td class="paramname"> <em>operation</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&nbsp;</td>
+          <td class="paramname"> <em>APnDP</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&nbsp;</td>
+          <td class="paramname"> <em>RnW</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&nbsp;</td>
+          <td class="paramname"> <em>addr</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Perform Request. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>*swdctx</em>&nbsp;</td><td>swd context pointer. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>operation</em>&nbsp;</td><td>type of action to perform with generated request. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>*APnDP</em>&nbsp;</td><td>AccessPort (high) or DebugPort (low) access value pointer. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>*RnW</em>&nbsp;</td><td>Read (high) or Write (low) access value pointer. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>*addr</em>&nbsp;</td><td>target register address value pointer. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>number of commands processed, or SWD_ERROR_CODE on failure. </dd></dl>
 
 </div>
 </div>
@@ -793,7 +1147,7 @@ char *&nbsp;</td><td class="memItemRight" valign="bottom"><b>swd_error_string</b
 
 </div>
 </div>
-<a class="anchor" id="ab74b1e2baff1d3f30c07440bc84b54fe"></a><!-- doxytag: member="libswd.c::swd_cmd_enqueue_miso_nbit" ref="ab74b1e2baff1d3f30c07440bc84b54fe" args="(swd_ctx_t *swdctx, char **data, int count)" -->
+<a class="anchor" id="ae35b90d3d862ed4caa9c742133d47f09"></a><!-- doxytag: member="libswd.c::swd_cmd_enqueue_miso_nbit" ref="ae35b90d3d862ed4caa9c742133d47f09" args="(swd_ctx_t *swdctx, char *data, int count)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -806,7 +1160,7 @@ char *&nbsp;</td><td class="memItemRight" valign="bottom"><b>swd_error_string</b
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">char **&nbsp;</td>
+          <td class="paramtype">char *&nbsp;</td>
           <td class="paramname"> <em>data</em>, </td>
         </tr>
         <tr>
@@ -1089,6 +1443,33 @@ char *&nbsp;</td><td class="memItemRight" valign="bottom"><b>swd_error_string</b
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>number of elements appended (2), or SWD_ERROR_CODE on failure. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a11a8ab26aa798f18303be8364ef55f48"></a><!-- doxytag: member="libswd.c::swd_cmd_enqueue_mosi_idle" ref="a11a8ab26aa798f18303be8364ef55f48" args="(swd_ctx_t *swdctx)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int swd_cmd_enqueue_mosi_idle </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *&nbsp;</td>
+          <td class="paramname"> <em>swdctx</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Append command queue with idle sequence. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>*swdctx</em>&nbsp;</td><td>swd context pointer. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>number of elements appended, or SWD_ERROR_CODE on failure. </dd></dl>
 
 </div>
 </div>
@@ -1626,117 +2007,6 @@ char *&nbsp;</td><td class="memItemRight" valign="bottom"><b>swd_error_string</b
 
 </div>
 </div>
-<a class="anchor" id="aedaf6c3578636e5ce6eb0c14bba98ce8"></a><!-- doxytag: member="libswd.c::swd_dap_idcode" ref="aedaf6c3578636e5ce6eb0c14bba98ce8" args="(swd_ctx_t *swdctx, swd_operation_t operation)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int swd_dap_idcode </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *&nbsp;</td>
-          <td class="paramname"> <em>swdctx</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="libswd_8h.html#aa0833ff00c22fe41453f5e9acec488e2">swd_operation_t</a>&nbsp;</td>
-          <td class="paramname"> <em>operation</em></td><td>&nbsp;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td><td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Macro: Read out IDCODE register and return its value on function return. </p>
-<dl><dt><b>Parameters:</b></dt><dd>
-  <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>*swdctx</em>&nbsp;</td><td>swd context pointer. </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>operation</em>&nbsp;</td><td>operation type. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>Target's IDCODE value or code error on failure. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="a67a55d6576f97861abc3732a804ee4e4"></a><!-- doxytag: member="libswd.c::swd_dap_reset_select_idcode" ref="a67a55d6576f97861abc3732a804ee4e4" args="(swd_ctx_t *swdctx, swd_operation_t operation)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int swd_dap_reset_select_idcode </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *&nbsp;</td>
-          <td class="paramname"> <em>swdctx</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="libswd_8h.html#aa0833ff00c22fe41453f5e9acec488e2">swd_operation_t</a>&nbsp;</td>
-          <td class="paramname"> <em>operation</em></td><td>&nbsp;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td><td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Macro: Reset target DAP, select SW-DP, read out IDCODE. </p>
-<p>This is the proper SW-DP initialization as stated by ARM Information Center. </p>
-<dl><dt><b>Parameters:</b></dt><dd>
-  <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>*swdctx</em>&nbsp;</td><td>swd context pointer. </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>operation</em>&nbsp;</td><td>type (SWD_OPERATION_ENQUEUE or SWD_OPERATION_EXECUTE). </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>Target's IDCODE, or error code on failure. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ab18ca62974b29bc3c56f2a725f735418"></a><!-- doxytag: member="libswd.c::swd_dap_select_swj" ref="ab18ca62974b29bc3c56f2a725f735418" args="(swd_ctx_t *swdctx, swd_operation_t operation)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int swd_dap_select_swj </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *&nbsp;</td>
-          <td class="paramname"> <em>swdctx</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="libswd_8h.html#aa0833ff00c22fe41453f5e9acec488e2">swd_operation_t</a>&nbsp;</td>
-          <td class="paramname"> <em>operation</em></td><td>&nbsp;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td><td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Activate SW-DP by sending out JTAG-TO-SWD sequence on SWDIOTMS line. </p>
-<dl><dt><b>Parameters:</b></dt><dd>
-  <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>*swdctx</em>&nbsp;</td><td>swd context. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>number of control bytes executed, or error code on failre. </dd></dl>
-
-</div>
-</div>
 <a class="anchor" id="a94b02a9cf4b72e2e76d6a9a34f34f96f"></a><!-- doxytag: member="libswd.c::swd_deinit" ref="a94b02a9cf4b72e2e76d6a9a34f34f96f" args="(swd_ctx_t *swdctx)" -->
 <div class="memitem">
 <div class="memproto">
@@ -1819,12 +2089,48 @@ char *&nbsp;</td><td class="memItemRight" valign="bottom"><b>swd_error_string</b
 
 </div>
 </div>
-<a class="anchor" id="afcef5de1252553f6867d15a7c5ad9cac"></a><!-- doxytag: member="libswd.c::swd_idcode" ref="afcef5de1252553f6867d15a7c5ad9cac" args="(swd_ctx_t *swdctx, swd_operation_t operation, int *idcode, char *ack, char *parity)" -->
+<a class="anchor" id="a6229cd1e143fb4789660ea91a5f5eb28"></a><!-- doxytag: member="libswd.c::swd_dp_activate" ref="a6229cd1e143fb4789660ea91a5f5eb28" args="(swd_ctx_t *swdctx, swd_operation_t operation)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int swd_idcode </td>
+          <td class="memname">int swd_dp_activate </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *&nbsp;</td>
+          <td class="paramname"> <em>swdctx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="libswd_8h.html#aa0833ff00c22fe41453f5e9acec488e2">swd_operation_t</a>&nbsp;</td>
+          <td class="paramname"> <em>operation</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Activate SW-DP by sending out RESET and JTAG-TO-SWD sequence on SWDIOTMS line. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>*swdctx</em>&nbsp;</td><td>swd context. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>number of control bytes executed, or error code on failre. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a12bc98b0bc66ff0b8b658a65eb9b6167"></a><!-- doxytag: member="libswd.c::swd_dp_detect" ref="a12bc98b0bc66ff0b8b658a65eb9b6167" args="(swd_ctx_t *swdctx, swd_operation_t operation, int *idcode)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int swd_dp_detect </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *&nbsp;</td>
           <td class="paramname"> <em>swdctx</em>, </td>
@@ -1839,19 +2145,7 @@ char *&nbsp;</td><td class="memItemRight" valign="bottom"><b>swd_error_string</b
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">int *&nbsp;</td>
-          <td class="paramname"> <em>idcode</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">char *&nbsp;</td>
-          <td class="paramname"> <em>ack</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">char *&nbsp;</td>
-          <td class="paramname"> <em>parity</em></td><td>&nbsp;</td>
+          <td class="paramname"> <em>idcode</em></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -1862,93 +2156,25 @@ char *&nbsp;</td><td class="memItemRight" valign="bottom"><b>swd_error_string</b
 </div>
 <div class="memdoc">
 
-<p>Read target's IDCODE register value. </p>
+<p>Macro: Reset target DAP, select SW-DP, read out IDCODE. </p>
+<p>This is the proper SW-DP initialization as stated by ARM Information Center. </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>*swdctx</em>&nbsp;</td><td>swd context pointer. </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>operation</em>&nbsp;</td><td>type of action to perform (queue or execute). </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>*idcode</em>&nbsp;</td><td>resulting register value pointer. </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>*ack</em>&nbsp;</td><td>resulting acknowledge response value pointer. </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>*parity</em>&nbsp;</td><td>resulting data parity value pointer. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>operation</em>&nbsp;</td><td>type (SWD_OPERATION_ENQUEUE or SWD_OPERATION_EXECUTE). </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>number of elements processed on the queue, or SWD_ERROR_CODE on failure. </dd></dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>Target's IDCODE, or error code on failure. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="ad4f88acc646c06e6e81fbde8117c21af"></a><!-- doxytag: member="libswd.c::swd_init" ref="ad4f88acc646c06e6e81fbde8117c21af" args="(void)" -->
+<a class="anchor" id="a7bd47ae6765b863660c9cf8e4f30a5a4"></a><!-- doxytag: member="libswd.c::swd_dp_read_idcode" ref="a7bd47ae6765b863660c9cf8e4f30a5a4" args="(swd_ctx_t *swdctx, swd_operation_t operation, int *idcode)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structswd__ctx__t.html">swd_ctx_t</a>* swd_init </td>
-          <td>(</td>
-          <td class="paramtype">void&nbsp;</td>
-          <td class="paramname"></td>
-          <td>&nbsp;)&nbsp;</td>
-          <td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>LibSWD initialization routine. </p>
-<p>It should be called prior any operation made with libswd. It initializes command queue and basic parameters for context that is returned as pointer. </p>
-<dl class="return"><dt><b>Returns:</b></dt><dd>pointer to the initialized swd context. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="a9cee6746fd86b41860d4db9cbd1ccef3"></a><!-- doxytag: member="libswd.c::swd_miso_ack" ref="a9cee6746fd86b41860d4db9cbd1ccef3" args="(swd_ctx_t *swdctx, swd_operation_t operation, char *ack)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int swd_miso_ack </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *&nbsp;</td>
-          <td class="paramname"> <em>swdctx</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="libswd_8h.html#aa0833ff00c22fe41453f5e9acec488e2">swd_operation_t</a>&nbsp;</td>
-          <td class="paramname"> <em>operation</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">char *&nbsp;</td>
-          <td class="paramname"> <em>ack</em></td><td>&nbsp;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td><td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Perform ACK read into *ack and verify received data. </p>
-<dl><dt><b>Parameters:</b></dt><dd>
-  <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>*swdctx</em>&nbsp;</td><td>swd context pointer. </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>operation</em>&nbsp;</td><td>type of action to perform with generated request. </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>*ack</em>&nbsp;</td><td>pointer to the result location. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>number of commands processed, or SWD_ERROR_CODE on failure. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="a516cda759588d217e47ec2c57273102d"></a><!-- doxytag: member="libswd.c::swd_miso_data_p" ref="a516cda759588d217e47ec2c57273102d" args="(swd_ctx_t *swdctx, swd_operation_t operation, int *data, char *parity)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int swd_miso_data_p </td>
+          <td class="memname">int swd_dp_read_idcode </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *&nbsp;</td>
           <td class="paramname"> <em>swdctx</em>, </td>
@@ -1963,13 +2189,7 @@ char *&nbsp;</td><td class="memItemRight" valign="bottom"><b>swd_error_string</b
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">int *&nbsp;</td>
-          <td class="paramname"> <em>data</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">char *&nbsp;</td>
-          <td class="paramname"> <em>parity</em></td><td>&nbsp;</td>
+          <td class="paramname"> <em>idcode</em></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -1980,26 +2200,24 @@ char *&nbsp;</td><td class="memItemRight" valign="bottom"><b>swd_error_string</b
 </div>
 <div class="memdoc">
 
-<p>Perform (MISO) data read. </p>
+<p>Macro: Read out IDCODE register and return its value on function return. </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>*swdctx</em>&nbsp;</td><td>swd context pointer. </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>operation</em>&nbsp;</td><td>type of action to perform on generated command. </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>*data</em>&nbsp;</td><td>payload value pointer. </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>*parity</em>&nbsp;</td><td>payload parity value pointer. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>operation</em>&nbsp;</td><td>operation type. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>number of elements processed, or SWD_ERROR_CODE on failure. </dd></dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>Target's IDCODE value or code error on failure. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="a5f8a3162be114a570543ccc390823623"></a><!-- doxytag: member="libswd.c::swd_mosi_dap_reset" ref="a5f8a3162be114a570543ccc390823623" args="(swd_ctx_t *swdctx, swd_operation_t operation)" -->
+<a class="anchor" id="a98fbdd25229d0a49f04a061d2fdf28f7"></a><!-- doxytag: member="libswd.c::swd_dp_reset" ref="a98fbdd25229d0a49f04a061d2fdf28f7" args="(swd_ctx_t *swdctx, swd_operation_t operation)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int swd_mosi_dap_reset </td>
+          <td class="memname">int swd_dp_reset </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *&nbsp;</td>
           <td class="paramname"> <em>swdctx</em>, </td>
@@ -2031,12 +2249,34 @@ char *&nbsp;</td><td class="memItemRight" valign="bottom"><b>swd_error_string</b
 
 </div>
 </div>
-<a class="anchor" id="a11c7b1ca1bf2ba57b33ced49586f7b57"></a><!-- doxytag: member="libswd.c::swd_mosi_data_ap" ref="a11c7b1ca1bf2ba57b33ced49586f7b57" args="(swd_ctx_t *swdctx, swd_operation_t operation, int *data)" -->
+<a class="anchor" id="ad4f88acc646c06e6e81fbde8117c21af"></a><!-- doxytag: member="libswd.c::swd_init" ref="ad4f88acc646c06e6e81fbde8117c21af" args="(void)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int swd_mosi_data_ap </td>
+          <td class="memname"><a class="el" href="structswd__ctx__t.html">swd_ctx_t</a>* swd_init </td>
+          <td>(</td>
+          <td class="paramtype">void&nbsp;</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>LibSWD initialization routine. </p>
+<p>It should be called prior any operation made with libswd. It initializes command queue and basic parameters for context that is returned as pointer. </p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>pointer to the initialized swd context. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ab2228c114efd81e478ebc00e5bfe4c43"></a><!-- doxytag: member="libswd.c::swd_log" ref="ab2228c114efd81e478ebc00e5bfe4c43" args="(swd_ctx_t *swdctx, swd_loglevel_t loglevel, char *msg,...)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int swd_log </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *&nbsp;</td>
           <td class="paramname"> <em>swdctx</em>, </td>
@@ -2044,14 +2284,20 @@ char *&nbsp;</td><td class="memItemRight" valign="bottom"><b>swd_error_string</b
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="libswd_8h.html#aa0833ff00c22fe41453f5e9acec488e2">swd_operation_t</a>&nbsp;</td>
-          <td class="paramname"> <em>operation</em>, </td>
+          <td class="paramtype"><a class="el" href="libswd_8h.html#acb51eaac9226d7aef398d63e2a5db319">swd_loglevel_t</a>&nbsp;</td>
+          <td class="paramname"> <em>loglevel</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">int *&nbsp;</td>
-          <td class="paramname"> <em>data</em></td><td>&nbsp;</td>
+          <td class="paramtype">char *&nbsp;</td>
+          <td class="paramname"> <em>msg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&nbsp;</td>
+          <td class="paramname"> <em>...</em></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -2062,155 +2308,17 @@ char *&nbsp;</td><td class="memItemRight" valign="bottom"><b>swd_error_string</b
 </div>
 <div class="memdoc">
 
-<p>Perform (MOSI) data write with automatic parity calculation. </p>
+<p>Put a message into swd context log at specified verbosity level. </p>
+<p>If specified message's log level is lower than actual context configuration, message will be omitted. Verbosity level increases from 0 (silent) to 4 (debug). </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>*swdctx</em>&nbsp;</td><td>swd context pointer. </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>operation</em>&nbsp;</td><td>type of action to perform on generated command. </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>*data</em>&nbsp;</td><td>payload value pointer. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>*swdctx</em>&nbsp;</td><td>swd context. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>loglevel</em>&nbsp;</td><td>at which to put selected message. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>*msg</em>&nbsp;</td><td>message body with variable arguments as in "printf". </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>number of elements processed, or SWD_ERROR_CODE on failure. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ae4960ef683ea7b4ac44b821773ee0167"></a><!-- doxytag: member="libswd.c::swd_mosi_data_p" ref="ae4960ef683ea7b4ac44b821773ee0167" args="(swd_ctx_t *swdctx, swd_operation_t operation, int *data, char *parity)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int swd_mosi_data_p </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *&nbsp;</td>
-          <td class="paramname"> <em>swdctx</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="libswd_8h.html#aa0833ff00c22fe41453f5e9acec488e2">swd_operation_t</a>&nbsp;</td>
-          <td class="paramname"> <em>operation</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int *&nbsp;</td>
-          <td class="paramname"> <em>data</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">char *&nbsp;</td>
-          <td class="paramname"> <em>parity</em></td><td>&nbsp;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td><td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Perform (MOSI) data write with provided parity value. </p>
-<dl><dt><b>Parameters:</b></dt><dd>
-  <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>*swdctx</em>&nbsp;</td><td>swd context pointer. </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>operation</em>&nbsp;</td><td>type of action to perform on generated command. </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>*data</em>&nbsp;</td><td>payload value pointer. </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>*parity</em>&nbsp;</td><td>payload parity value pointer. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>number of elements processed, or SWD_ERROR_CODE on failure. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="af9a39dd85dde5d777595190fcbd1d801"></a><!-- doxytag: member="libswd.c::swd_mosi_jtag2swd" ref="af9a39dd85dde5d777595190fcbd1d801" args="(swd_ctx_t *swdctx, swd_operation_t operation)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int swd_mosi_jtag2swd </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *&nbsp;</td>
-          <td class="paramname"> <em>swdctx</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="libswd_8h.html#aa0833ff00c22fe41453f5e9acec488e2">swd_operation_t</a>&nbsp;</td>
-          <td class="paramname"> <em>operation</em></td><td>&nbsp;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td><td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Switch DAP into SW-DP. </p>
-<p>According to ARM documentation target's DAP use JTAG transport by default and so JTAG-DP is active after power up. To use SWD user must perform predefined sequence on SWDIO/TMS lines, then read out the IDCODE to ensure proper SW-DP operation. </p>
-
-</div>
-</div>
-<a class="anchor" id="a5b0fa1e12db678a6cbe5a00a6e63ba03"></a><!-- doxytag: member="libswd.c::swd_mosi_request" ref="a5b0fa1e12db678a6cbe5a00a6e63ba03" args="(swd_ctx_t *swdctx, swd_operation_t operation, char *APnDP, char *RnW, char *addr)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int swd_mosi_request </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *&nbsp;</td>
-          <td class="paramname"> <em>swdctx</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="libswd_8h.html#aa0833ff00c22fe41453f5e9acec488e2">swd_operation_t</a>&nbsp;</td>
-          <td class="paramname"> <em>operation</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">char *&nbsp;</td>
-          <td class="paramname"> <em>APnDP</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">char *&nbsp;</td>
-          <td class="paramname"> <em>RnW</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">char *&nbsp;</td>
-          <td class="paramname"> <em>addr</em></td><td>&nbsp;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td><td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Perform Request. </p>
-<dl><dt><b>Parameters:</b></dt><dd>
-  <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>*swdctx</em>&nbsp;</td><td>swd context pointer. </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>operation</em>&nbsp;</td><td>type of action to perform with generated request. </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>*APnDP</em>&nbsp;</td><td>AccessPort (high) or DebugPort (low) access value pointer. </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>*RnW</em>&nbsp;</td><td>Read (high) or Write (low) access value pointer. </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>*addr</em>&nbsp;</td><td>target register address value pointer. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>number of commands processed, or SWD_ERROR_CODE on failure. </dd></dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>number of characters written or error code on failure. </dd></dl>
 
 </div>
 </div>
@@ -2229,7 +2337,7 @@ char *&nbsp;</td><td class="memItemRight" valign="bottom"><b>swd_error_string</b
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Fri Feb 18 2011 01:10:40 for libswd by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Tue Mar 8 2011 01:58:20 for libswd by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>
