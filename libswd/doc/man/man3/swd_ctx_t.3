@@ -30,23 +30,26 @@ SWD Context Structure definition.
 .RI "struct {"
 .br
 .ti -1c
-.RI "   \fBswd_swdp_t\fP \fBdp_r\fP"
+.RI "   \fBswd_swdp_t\fP \fBdp_read\fP"
 .br
 .RI "\fILast known read from the SW-DP registers. \fP"
 .ti -1c
-.RI "   \fBswd_swdp_t\fP \fBdp_w\fP"
+.RI "   \fBswd_swdp_t\fP \fBdp_write\fP"
 .br
 .RI "\fILast known write to the SW-DP registers. \fP"
 .ti -1c
-.RI "   \fBswd_ahbap_t\fP \fBap_r\fP"
+.RI "   \fBswd_ahbap_t\fP \fBap_read\fP"
 .br
 .RI "\fILast known read from AHB-AP registers. \fP"
 .ti -1c
-.RI "   \fBswd_ahbap_t\fP \fBap_w\fP"
+.RI "   \fBswd_ahbap_t\fP \fBap_write\fP"
 .br
 .RI "\fILast known write ti the AHB-AP registers. \fP"
 .ti -1c
-.RI "   \fBswd_transaction_t\fP \fBtransaction\fP"
+.RI "   \fBswd_transaction_t\fP \fBread\fP"
+.br
+.ti -1c
+.RI "   \fBswd_transaction_t\fP \fBwrite\fP"
 .br
 .ti -1c
 .RI "} \fBlog\fP"

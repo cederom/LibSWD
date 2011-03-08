@@ -392,9 +392,8 @@ int swd_cmd_enqueue_miso_trn(swd_ctx_t *swdctx){
  * \param count number of bits to read (also the **data size).
  * \return number of elements processed, or SWD_ERROR_CODE on failure.
  */
-int swd_cmd_enqueue_miso_nbit(swd_ctx_t *swdctx, char *data, int count){
+int swd_cmd_enqueue_miso_nbit(swd_ctx_t *swdctx, char **data, int count){
  if (swdctx==NULL) return SWD_ERROR_NULLCONTEXT;
- if (data==NULL) return SWD_ERROR_NULLPOINTER;
  if (count<=0) return SWD_ERROR_PARAM;
  int res, res2;
  swd_cmd_t *cmd, *oldcmdq=swdctx->cmdq;
@@ -405,8 +404,8 @@ int swd_cmd_enqueue_miso_nbit(swd_ctx_t *swdctx, char *data, int count){
    res=SWD_ERROR_OUTOFMEM;
    break;
   }
-  data[i]=cmd->misobit;
   cmd->bits=1;
+  if (data!=NULL) *data=&cmd->misobit;
   cmd->cmdtype=SWD_CMDTYPE_MISO_BITBANG;
   res=swd_cmd_enqueue(swdctx, cmd);
   if (res<1) break;
@@ -484,14 +483,13 @@ int swd_cmd_enqueue_mosi_parity(swd_ctx_t *swdctx, char *parity){
  * \param *parity parity value pointer.
  * \return number of elements appended (1), or SWD_ERROR_CODE on failure.
  */
-int swd_cmd_enqueue_miso_parity(swd_ctx_t *swdctx, char *parity){
+int swd_cmd_enqueue_miso_parity(swd_ctx_t *swdctx, char **parity){
  if (swdctx==NULL) return SWD_ERROR_NULLCONTEXT;
- if (parity==NULL) return SWD_ERROR_NULLPOINTER;
  int res;
  swd_cmd_t *cmd;
  cmd=(swd_cmd_t *)calloc(1,sizeof(swd_cmd_t));
  if (cmd==NULL) return SWD_ERROR_OUTOFMEM;
- parity=&cmd->parity;
+ if (parity!=NULL) *parity=&cmd->parity;
  cmd->bits=1;
  cmd->cmdtype=SWD_CMDTYPE_MISO_PARITY;
  res=swd_cmd_enqueue(swdctx, cmd);
@@ -504,14 +502,13 @@ int swd_cmd_enqueue_miso_parity(swd_ctx_t *swdctx, char *parity){
  * \param *data data pointer.
  * \return of elements appended (1), or SWD_ERROR_CODE on failure.
  */
-int swd_cmd_enqueue_miso_data(swd_ctx_t *swdctx, int *data){
+int swd_cmd_enqueue_miso_data(swd_ctx_t *swdctx, int **data){
  if (swdctx==NULL) return SWD_ERROR_NULLCONTEXT;
- if (data==NULL) return SWD_ERROR_NULLPOINTER;
  int res;
  swd_cmd_t *cmd;
  cmd=(swd_cmd_t *)calloc(1,sizeof(swd_cmd_t));
  if (cmd==NULL) return SWD_ERROR_OUTOFMEM;
- data=&cmd->misodata;
+ if (data!=NULL) *data=&cmd->misodata;
  cmd->bits=32;
  cmd->cmdtype=SWD_CMDTYPE_MISO_DATA;
  res=swd_cmd_enqueue(swdctx, cmd); // should be 1 on success
@@ -525,10 +522,8 @@ int swd_cmd_enqueue_miso_data(swd_ctx_t *swdctx, int *data){
  * \param *parity parity value pointer.
  * \return number of elements appended (2), or SWD_ERROR_CODE on failure.
  */
-int swd_cmd_enqueue_miso_data_p(swd_ctx_t *swdctx, int *data, char *parity){
+int swd_cmd_enqueue_miso_data_p(swd_ctx_t *swdctx, int **data, char **parity){
  if (swdctx==NULL) return SWD_ERROR_NULLCONTEXT;
- if (data==NULL) return SWD_ERROR_NULLPOINTER;
- if (parity==NULL) return SWD_ERROR_NULLPOINTER;
  int res, cmdcnt=0;
  res=swd_cmd_enqueue_miso_data(swdctx, data);
  if (res<1) return res;
@@ -548,11 +543,10 @@ int swd_cmd_enqueue_miso_data_p(swd_ctx_t *swdctx, int *data, char *parity){
  */
 int swd_cmd_enqueue_miso_n_data_p(swd_ctx_t *swdctx, int **data, char **parity, int count){
  if (swdctx==NULL) return SWD_ERROR_NULLCONTEXT;
- if (data==NULL) return SWD_ERROR_NULLPOINTER;
  if (count<=0) return SWD_ERROR_PARAM;
  int i,res, cmdcnt=0;
  for (i=0;i<=count;i++){
-  res=swd_cmd_enqueue_miso_data_p(swdctx, data[i], parity[i]);
+  res=swd_cmd_enqueue_miso_data_p(swdctx, &data[i], &parity[i]);
   if (res<2) return SWD_ERROR_RESULT;
   cmdcnt=+res;
  }
@@ -663,14 +657,13 @@ int swd_cmd_enqueue_mosi_n_data_p(swd_ctx_t *swdctx, int **data, char **parity, 
  * \param *ack packet value pointer.
  * \return number of elements appended (1), or SWD_ERROR_CODE on failure.
  */
-int swd_cmd_enqueue_miso_ack(swd_ctx_t *swdctx, char *ack){
+int swd_cmd_enqueue_miso_ack(swd_ctx_t *swdctx, char **ack){
  if (swdctx==NULL) return SWD_ERROR_NULLCONTEXT;
- if (ack==NULL) return SWD_ERROR_NULLPOINTER;
  int res;
  swd_cmd_t *cmd;
  cmd=(swd_cmd_t *)calloc(1,sizeof(swd_cmd_t));
  if (cmd==NULL) return SWD_ERROR_OUTOFMEM;
- ack=&cmd->ack;
+ if (ack!=NULL) *ack=&cmd->ack;
  cmd->bits=SWD_ACK_BITLEN;
  cmd->cmdtype=SWD_CMDTYPE_MISO_ACK;
  res=swd_cmd_enqueue(swdctx, cmd); //should be 1 on success
@@ -840,7 +833,7 @@ extern int swd_drv_miso_trn(swd_ctx_t *swdctx, int bits);
  * \param *cmd pointer to the command to be sent.
  * \return number of commands transmitted (1), or SWD_ERROR_CODE on failure.
  */ 
-int swd_bus_transmit(swd_ctx_t *swdctx, swd_cmd_t *cmd){
+int swd_drv_transmit(swd_ctx_t *swdctx, swd_cmd_t *cmd){
  if (swdctx==NULL) return SWD_ERROR_NULLCONTEXT;
  if (cmd==NULL) return SWD_ERROR_NULLPOINTER;
 
@@ -856,18 +849,21 @@ int swd_bus_transmit(swd_ctx_t *swdctx, swd_cmd_t *cmd){
    // 8 clock cycles.
    if (cmd->bits!=8) return SWD_ERROR_BADCMDDATA;
    res=swd_drv_mosi_8(swdctx, &cmd->control, 8, SWD_DIR_MSBFIRST);
+   swdctx->log.write.control=cmd->control;
    break;
 
   case SWD_CMDTYPE_MOSI_BITBANG:
    // 1 clock cycle.
    if (cmd->bits!=1) return SWD_ERROR_BADCMDDATA;
    res=swd_drv_mosi_8(swdctx, &cmd->mosibit, 1, SWD_DIR_LSBFIRST);
+   swdctx->log.write.control=cmd->mosibit;
    break;
 
   case SWD_CMDTYPE_MOSI_PARITY:
    // 1 clock cycle.
    if (cmd->bits!=1) return SWD_ERROR_BADCMDDATA;
    res=swd_drv_mosi_8(swdctx, &cmd->parity, 1, SWD_DIR_LSBFIRST);
+   swdctx->log.write.parity=cmd->parity;
    break;
 
   case SWD_CMDTYPE_MOSI_TRN:
@@ -881,30 +877,35 @@ int swd_bus_transmit(swd_ctx_t *swdctx, swd_cmd_t *cmd){
    // 8 clock cycles.
    if (cmd->bits!=SWD_REQUEST_BITLEN) return SWD_ERROR_BADCMDDATA;
    res=swd_drv_mosi_8(swdctx, &cmd->request, 8, SWD_DIR_MSBFIRST);
+   swdctx->log.write.request=cmd->request;
    break;
 
   case SWD_CMDTYPE_MOSI_DATA:
    // 32 clock cycles.
    if (cmd->bits!=SWD_DATA_BITLEN) return SWD_ERROR_BADCMDDATA; 
    res=swd_drv_mosi_32(swdctx, &cmd->mosidata, 32, SWD_DIR_LSBFIRST);
+   swdctx->log.write.data=cmd->mosidata;
    break;
 
   case SWD_CMDTYPE_MISO_ACK:
    // 3 clock cycles.
    if (cmd->bits!=SWD_ACK_BITLEN) return SWD_ERROR_BADCMDDATA;
    res=swd_drv_miso_8(swdctx, &cmd->ack, cmd->bits, SWD_DIR_LSBFIRST);
+   swdctx->log.read.ack=cmd->ack;
    break;
 
   case SWD_CMDTYPE_MISO_BITBANG:
    // 1 clock cycle.
    if (cmd->bits!=1) return SWD_ERROR_BADCMDDATA;
    res=swd_drv_miso_8(swdctx, &cmd->misobit, 1, SWD_DIR_LSBFIRST);
+   swdctx->log.read.control=cmd->misobit;
    break;
 
   case SWD_CMDTYPE_MISO_PARITY:
    // 1 clock cycle.
    if (cmd->bits!=1) return SWD_ERROR_BADCMDDATA;
    res=swd_drv_miso_8(swdctx, &cmd->parity, 1, SWD_DIR_LSBFIRST);
+   swdctx->log.read.parity=cmd->parity;
    break;
 
   case SWD_CMDTYPE_MISO_TRN:
@@ -918,6 +919,7 @@ int swd_bus_transmit(swd_ctx_t *swdctx, swd_cmd_t *cmd){
    // 32 clock cycles
    if (cmd->bits!=SWD_DATA_BITLEN) return SWD_ERROR_BADCMDDATA;
    res=swd_drv_miso_32(swdctx, &cmd->misodata, cmd->bits, SWD_DIR_LSBFIRST);
+   swdctx->log.read.data=cmd->misodata;
    break;
 
   case SWD_CMDTYPE_UNDEFINED:
@@ -929,7 +931,7 @@ int swd_bus_transmit(swd_ctx_t *swdctx, swd_cmd_t *cmd){
  } 
 
  swd_log(swdctx, SWD_LOGLEVEL_DEBUG,
-  "|swd_bus_transmit() bits=%-2d cmdtype=%-12s returns=%-3d payload=0x%08x (%s)\n",
+  "D: swd_drv_transmit() bits=%-2d cmdtype=%-12s returns=%-3d payload=0x%08x (%s)\n",
   cmd->bits, swd_cmd_string_cmdtype(cmd), res,
   (cmd->bits>8)?cmd->data32:cmd->data8,
   (cmd->bits<=8)?swd_bin8_string(&cmd->data8):swd_bin32_string(&cmd->data32));
@@ -984,11 +986,11 @@ int swd_cmdq_flush(swd_ctx_t *swdctx, swd_operation_t operation){
  if (lastcmd==NULL) return SWD_ERROR_QUEUETAIL;
 
  if (firstcmd==lastcmd)
-  return swd_bus_transmit(swdctx, firstcmd); 
+  return swd_drv_transmit(swdctx, firstcmd); 
 
  for (cmd=firstcmd;;cmd=cmd->next){
   if (cmd->done) continue;
-  res=swd_bus_transmit(swdctx, cmd); 
+  res=swd_drv_transmit(swdctx, cmd); 
   if (res<0) return res;
   cmdcnt=+res;
   if (cmd==lastcmd) break;
@@ -1096,7 +1098,7 @@ int swd_bus_write_request
  * \param *ack pointer to the result location.
  * \return number of commands processed, or SWD_ERROR_CODE on failure. 
  */
-int swd_bus_read_ack(swd_ctx_t *swdctx, swd_operation_t operation, char *ack){
+int swd_bus_read_ack(swd_ctx_t *swdctx, swd_operation_t operation, char **ack){
  if (swdctx==NULL) return SWD_ERROR_NULLCONTEXT;
  if (ack==NULL) return SWD_ERROR_NULLPOINTER;
  if (operation!=SWD_OPERATION_ENQUEUE && operation!=SWD_OPERATION_EXECUTE)
@@ -1146,7 +1148,7 @@ int swd_bus_read_ack(swd_ctx_t *swdctx, swd_operation_t operation, char *ack){
  /* If command was found and executed, read received ACK code, or error code. */
  if (tmpcmdq->cmdtype==SWD_CMDTYPE_MISO_ACK && tmpcmdq->done){
   /* Verify data address found on the queue, with pointer selected before run.*/
-  if (&tmpcmdq->ack!=ack) return SWD_ERROR_ACKMISMATCH;
+  if (&tmpcmdq->ack!=*ack) return SWD_ERROR_ACKMISMATCH;
   return qcmdcnt+tcmdcnt; 
  } else return SWD_ERROR_ACKNOTDONE;
 }
@@ -1225,9 +1227,8 @@ int swd_bus_write_data_ap(swd_ctx_t *swdctx, swd_operation_t operation, int *dat
  * \param *parity payload parity value pointer.
  * \return number of elements processed, or SWD_ERROR_CODE on failure.
  */
-int swd_bus_read_data_p(swd_ctx_t *swdctx, swd_operation_t operation, int *data, char *parity){
+int swd_bus_read_data_p(swd_ctx_t *swdctx, swd_operation_t operation, int **data, char **parity){
  if (swdctx==NULL) return SWD_ERROR_NULLCONTEXT;
- if (data==NULL || parity==NULL) return SWD_ERROR_NULLPOINTER;
  if (operation!=SWD_OPERATION_ENQUEUE && operation!=SWD_OPERATION_EXECUTE)
   return SWD_ERROR_BADOPCODE;
  
@@ -1266,8 +1267,8 @@ int swd_bus_read_data_p(swd_ctx_t *swdctx, swd_operation_t operation, int *data,
  /* If command found and executed, verify if data points to correct address. */
  if (tmpcmdq->cmdtype==SWD_CMDTYPE_MISO_DATA && tmpcmdq->done){
   if (tmpcmdq->next->cmdtype==SWD_CMDTYPE_MISO_PARITY && tmpcmdq->next->done){
-   if (data!=&tmpcmdq->misodata) return SWD_ERROR_DATAPTR;
-   if (parity!=&tmpcmdq->next->parity) return SWD_ERROR_PARITYPTR;
+   if (*data!=&tmpcmdq->misodata) return SWD_ERROR_DATAPTR;
+   if (*parity!=&tmpcmdq->next->parity) return SWD_ERROR_PARITYPTR;
    return qcmdcnt+tcmdcnt; 
   } else return SWD_ERROR_NOTDONE;
  }
@@ -1309,37 +1310,6 @@ int swd_bus_write_control(swd_ctx_t *swdctx, swd_operation_t operation, char *ct
  return SWD_OK;
 }
  
-/** Switch DAP into SW-DP. According to ARM documentation target's DAP use JTAG
- * transport by default and so JTAG-DP is active after power up. To use SWD
- * user must perform predefined sequence on SWDIO/TMS lines, then read out the
- * IDCODE to ensure proper SW-DP operation.  This function only sends switching
- * sequence.
- * \param *swdctx swd context.
- * \param operation type, can be ENQEUE or EXECUTE.
- * \return number of elements processed or error code on failure.
- */
-int swd_bus_write_jtag2swd(swd_ctx_t *swdctx, swd_operation_t operation){
- if (swdctx==NULL) return SWD_ERROR_NULLCONTEXT;
- if (operation!=SWD_OPERATION_ENQUEUE && operation!=SWD_OPERATION_EXECUTE)
-  return SWD_ERROR_BADOPCODE;
-
- int res, qcmdcnt=0, tcmdcnt=0;
-
- res=swd_cmd_enqueue_mosi_trn(swdctx);
- if (res<0) return res;
- res=swd_cmd_enqueue_mosi_jtag2swd(swdctx);
- if (res<0) return res;
- qcmdcnt=res;
-
- if (operation==SWD_OPERATION_ENQUEUE){
-  return qcmdcnt;       
- } else if (operation==SWD_OPERATION_EXECUTE){
-  res=swd_cmdq_flush(swdctx, operation);
-  if (res<0) return res;
-  tcmdcnt=+res;
-  return qcmdcnt+tcmdcnt;
- } else return SWD_ERROR_BADOPCODE;
-}
 
 /** @} */
 
@@ -1368,7 +1338,8 @@ int swd_dp_reset(swd_ctx_t *swdctx, swd_operation_t operation){
 
  int res, qcmdcnt=0, tcmdcnt=0;
 
- res=swd_cmd_enqueue_mosi_trn(swdctx);
+ swd_log(swdctx, SWD_LOGLEVEL_INFO, "I: swd_dp_reset() operation=%s\n", operation==SWD_OPERATION_ENQUEUE?"SWD_OPERATION_ENQUEUE":"SWD_OPERATION_EXECUTE");
+ res=swd_bus_setdir_mosi(swdctx);
  if (res<0) return res;
  res=swd_cmd_enqueue_mosi_dap_reset(swdctx);
  if (res<1) return res;
@@ -1389,7 +1360,27 @@ int swd_dp_reset(swd_ctx_t *swdctx, swd_operation_t operation){
  * \return number of control bytes executed, or error code on failre.
  */
 int swd_dp_activate(swd_ctx_t *swdctx, swd_operation_t operation){
- return swd_bus_write_jtag2swd(swdctx, operation);
+ if (swdctx==NULL) return SWD_ERROR_NULLCONTEXT;
+ if (operation!=SWD_OPERATION_ENQUEUE && operation!=SWD_OPERATION_EXECUTE)
+  return SWD_ERROR_BADOPCODE;
+
+ int res, qcmdcnt=0, tcmdcnt=0;
+
+ swd_log(swdctx, SWD_LOGLEVEL_INFO, "I: swd_dp_activate() operation=%s\n", operation==SWD_OPERATION_ENQUEUE?"SWD_OPERATION_ENQUEUE":"SWD_OPERATION_EXECUTE");
+ res=swd_bus_setdir_mosi(swdctx);
+ if (res<0) return res;
+ res=swd_cmd_enqueue_mosi_jtag2swd(swdctx);
+ if (res<0) return res;
+ qcmdcnt=res;
+
+ if (operation==SWD_OPERATION_ENQUEUE){
+  return qcmdcnt;       
+ } else if (operation==SWD_OPERATION_EXECUTE){
+  res=swd_cmdq_flush(swdctx, operation);
+  if (res<0) return res;
+  tcmdcnt=+res;
+  return qcmdcnt+tcmdcnt;
+ } else return SWD_ERROR_BADOPCODE;
 }
 
 /** Macro: Read out IDCODE register and return its value on function return.
@@ -1397,27 +1388,28 @@ int swd_dp_activate(swd_ctx_t *swdctx, swd_operation_t operation){
  * \param operation operation type.
  * \return Target's IDCODE value or code error on failure.
  */
-int swd_dp_read_idcode(swd_ctx_t *swdctx, swd_operation_t operation, int *idcode){
+int swd_dp_read_idcode(swd_ctx_t *swdctx, swd_operation_t operation, int **idcode){
  if (swdctx==NULL) return SWD_ERROR_NULLCONTEXT; 
  if (operation!=SWD_OPERATION_ENQUEUE && operation!=SWD_OPERATION_EXECUTE)
          return SWD_ERROR_BADOPCODE;
 
  int res, cmdcnt=0;
- char APnDP, RnW, addr, cparity, ack, parity;
+ char APnDP, RnW, addr, cparity, *ack, *parity;
 
  APnDP=0;
  RnW=1;
  addr=SWD_DP_ADDR_IDCODE;
 
+ swd_log(swdctx, SWD_LOGLEVEL_INFO, "I: swd_dp_read_idcode() operation=%s\n", operation==SWD_OPERATION_ENQUEUE?"SWD_OPERATION_ENQUEUE":"SWD_OPERATION_EXECUTE");
  res=swd_bus_write_request(swdctx, SWD_OPERATION_ENQUEUE, &APnDP, &RnW, &addr);
  if (res<1) return res;
  cmdcnt=+res;
 
  if (operation==SWD_OPERATION_ENQUEUE){
-  res=swd_bus_read_ack(swdctx, SWD_OPERATION_ENQUEUE, &swdctx->log.transaction.ack);
+  res=swd_bus_read_ack(swdctx, operation, (char**)&swdctx->log.read.ack);
   if (res<1) return res;
   cmdcnt=+res;
-  res=swd_bus_read_data_p(swdctx, SWD_OPERATION_ENQUEUE, &swdctx->log.transaction.data, &swdctx->log.transaction.parity);
+  res=swd_bus_read_data_p(swdctx, operation, (int**)&swdctx->log.read.data, (char**)&swdctx->log.read.parity);
   if (res<1) return res;
   cmdcnt=+res;
   return cmdcnt;
@@ -1425,20 +1417,22 @@ int swd_dp_read_idcode(swd_ctx_t *swdctx, swd_operation_t operation, int *idcode
  } else if (operation==SWD_OPERATION_EXECUTE){
   res=swd_bus_read_ack(swdctx, operation, &ack);
   if (res<1) return res;
+  //ack=swdctx->log.read.ack;
   cmdcnt+=res;
-//  if (ack!=SWD_ACK_OK_VAL){
-//   if (ack==SWD_ACK_WAIT_VAL) return SWD_ERROR_ACK_WAIT;
-//   if (ack==SWD_ACK_FAULT_VAL) return SWD_ERROR_ACK_FAULT; 
-//   return SWD_ERROR_ACK;
-//  }
+  if (*ack!=SWD_ACK_OK_VAL){
+   if (*ack==SWD_ACK_WAIT_VAL) return SWD_ERROR_ACK_WAIT;
+   if (*ack==SWD_ACK_FAULT_VAL) return SWD_ERROR_ACK_FAULT; 
+   return SWD_ERROR_ACK;
+  }
   res=swd_bus_read_data_p(swdctx, operation, idcode, &parity);
   if (res<0) return res;
   cmdcnt+=res;
-  res=swd_bin32_parity_even(idcode, &cparity); 
+  res=swd_bin32_parity_even(*idcode, &cparity); 
   if (res<0) return res;
   cmdcnt+=res;
-  if (cparity!=parity) return SWD_ERROR_PARITY;
-  swdctx->log.dp_r.idcode=*idcode;
+  if (cparity!=*parity) return SWD_ERROR_PARITY;
+  swdctx->log.dp_read.idcode=**idcode;
+  swd_log(swdctx, SWD_LOGLEVEL_INFO, "I: swd_dp_read_idcode() gives IDCODE=%X (%s)\n", **idcode, swd_bin32_string(*idcode));
   return cmdcnt;
  } else return SWD_ERROR_BADOPCODE;
 }
@@ -1449,7 +1443,7 @@ int swd_dp_read_idcode(swd_ctx_t *swdctx, swd_operation_t operation, int *idcode
  * \param operation type (SWD_OPERATION_ENQUEUE or SWD_OPERATION_EXECUTE).
  * \return Target's IDCODE, or error code on failure.
  */ 
-int swd_dp_detect(swd_ctx_t *swdctx, swd_operation_t operation, int *idcode){
+int swd_dp_detect(swd_ctx_t *swdctx, swd_operation_t operation, int **idcode){
  int res;
  res=swd_dp_activate(swdctx, operation);
  if (res<1) return res;
@@ -1477,7 +1471,7 @@ int swd_dp_detect(swd_ctx_t *swdctx, swd_operation_t operation, int *idcode){
 int swd_log(swd_ctx_t *swdctx, swd_loglevel_t loglevel, char *msg, ...){
  if (loglevel<SWD_LOGLEVEL_MIN && loglevel>SWD_LOGLEVEL_MAX)
   return SWD_ERROR_LOGLEVEL;
- if (loglevel < swdctx->config.loglevel) return 0;
+ if (loglevel > swdctx->config.loglevel) return 0;
  int res;
  va_list ap;
  va_start(ap, msg);

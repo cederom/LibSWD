@@ -66,7 +66,7 @@ int swd_drv_mosi_32(swd_ctx_t *swdctx, int *data, int bits, int nLSBfirst){
  static char misodata[32], mosidata[32];
 
  //UrJTAG drivers shift data LSB-First.
- for (i=0;i<32;i++) mosidata[(nLSBfirst==SWD_DIR_LSBFIRST)?(i):(32-i)]=((1<<i)&(*data))?1:0; 
+ for (i=0;i<32;i++) mosidata[(nLSBfirst==SWD_DIR_LSBFIRST)?(i):(31-i)]=((1<<i)&(*data))?1:0; 
  res=urj_tap_cable_transfer((urj_cable_t *)swdctx->driver->device, bits, mosidata, misodata);
  if (res<0) return SWD_ERROR_DRIVER;
  urj_tap_cable_flush((urj_cable_t *)swdctx->driver->device, URJ_TAP_CABLE_COMPLETELY);
@@ -80,16 +80,14 @@ int swd_drv_miso_8(swd_ctx_t *swdctx, char *data, int bits, int nLSBfirst){
 
  static unsigned int i;
  static signed int res;
- static char misodata[8], mosidata[8]={0,0,0,0,0,0,0,0};
+ static char misodata[8], mosidata[8];
 
- //UrJTAG drivers shift data LSB-First.
- for (i=0;i<bits;i++) mosidata[(nLSBfirst==SWD_DIR_LSBFIRST)?(i):(7-i)]=((1<<i)&(*data))?1:0; 
  res=urj_tap_cable_transfer((urj_cable_t *)swdctx->driver->device, bits, mosidata, misodata);
  if (res<0) return SWD_ERROR_DRIVER;
  urj_tap_cable_flush((urj_cable_t *)swdctx->driver->device, URJ_TAP_CABLE_COMPLETELY);
  //Now we need to reconstruct the data byte from shifted in LSBfirst byte array.
  *data=0;
- for (i=0;i<bits;i++) *data|=(misodata[7-i]?(1<<i):0);
+ for (i=0;i<bits;i++) *data|=(misodata[(nLSBfirst==SWD_DIR_LSBFIRST)?(bits-1-i):(i)]?(1<<i):0);
  return i;
 }
 
@@ -102,14 +100,12 @@ int swd_drv_miso_32(swd_ctx_t *swdctx, int *data, int bits, int nLSBfirst){
  static signed int res;
  static char misodata[32], mosidata[32];
 
- //UrJTAG drivers shift data LSB-First.
- for (i=0;i<bits;i++) mosidata[(nLSBfirst==SWD_DIR_LSBFIRST)?(i):(31-i)]=((1<<i)&(*data))?1:0; 
  res=urj_tap_cable_transfer((urj_cable_t *)swdctx->driver->device, bits, mosidata, misodata);
  if (res<0) return SWD_ERROR_DRIVER;
  urj_tap_cable_flush((urj_cable_t *)swdctx->driver->device, URJ_TAP_CABLE_COMPLETELY);
  //Now we need to reconstruct the data byte from shifted in LSBfirst byte array.
  *data=0;
- for (i=0;i<bits;i++) *data|=(misodata[31-i]?(1<<i):0);
+ for (i=0;i<bits;i++) *data|=(misodata[(nLSBfirst==SWD_DIR_LSBFIRST)?(bits-1-i):(i)]?(1<<i):0);
  return i;
 }       
 

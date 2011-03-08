@@ -293,10 +293,10 @@ typedef enum SWD_ERROR_CODE {
 typedef enum SWD_LOGLEVEL{
  SWD_LOGLEVEL_MIN     = 0,
  SWD_LOGLEVEL_SILENT  = 0, ///< Remain silent.
- SWD_LOGLEVEL_ERROR   = 1, ///< Log errors only.
- SWD_LOGLEVEL_WARNING = 2, ///< Log warnings.
- SWD_LOGLEVEL_INFO    = 3, ///< Log informational messages.
- SWD_LOGLEVEL_DEBUG   = 4, ///< Log all including debug information.
+ SWD_LOGLEVEL_ERROR   = 1, ///< Show errors.
+ SWD_LOGLEVEL_WARNING = 2, ///< Show warnings.
+ SWD_LOGLEVEL_INFO    = 3, ///< Show messages.
+ SWD_LOGLEVEL_DEBUG   = 4, ///< Show all including debug information.
  SWD_LOGLEVEL_MAX     = 4
 } swd_loglevel_t;
 
@@ -417,6 +417,7 @@ typedef struct {
  char request;      ///< Last known request on the bus.
  char ack;          ///< Last known ack on the bus.
  int data;          ///< Last known data on the bus.
+ int control;       ///< Last known control data on the bus.
  char parity;       ///< Last known parity on the bus.
 } swd_transaction_t;
 
@@ -447,11 +448,12 @@ typedef struct {
  swd_context_config_t config; ///< Target specific configuration.
  swd_driver_t *driver;        ///< Pointer to the interface driver structure.
  struct {
-  swd_swdp_t dp_r;         ///< Last known read from the SW-DP registers.
-  swd_swdp_t dp_w;         ///< Last known write to the SW-DP registers.
-  swd_ahbap_t ap_r;       ///< Last known read from AHB-AP registers.
-  swd_ahbap_t ap_w;       ///< Last known write ti the AHB-AP registers.
-  swd_transaction_t transaction;
+  swd_swdp_t dp_read;         ///< Last known read from the SW-DP registers.
+  swd_swdp_t dp_write;        ///< Last known write to the SW-DP registers.
+  swd_ahbap_t ap_read;        ///< Last known read from AHB-AP registers.
+  swd_ahbap_t ap_write;       ///< Last known write ti the AHB-AP registers.
+  swd_transaction_t read;
+  swd_transaction_t write;
  } log;
 } swd_ctx_t;
 
@@ -479,19 +481,19 @@ int swd_cmd_enqueue(swd_ctx_t *swdctx, swd_cmd_t *cmd);
 int swd_cmd_enqueue_mosi_request(swd_ctx_t *swdctx, char *request);
 int swd_cmd_enqueue_mosi_trn(swd_ctx_t *swdctx);
 int swd_cmd_enqueue_miso_trn(swd_ctx_t *swdctx);
-int swd_cmd_enqueue_miso_nbit(swd_ctx_t *swdctx, char *data, int count);
+int swd_cmd_enqueue_miso_nbit(swd_ctx_t *swdctx, char **data, int count);
 int swd_cmd_enqueue_mosi_nbit(swd_ctx_t *swdctx, char *data, int count);
 int swd_cmd_enqueue_mosi_parity(swd_ctx_t *swdctx, char *parity);
-int swd_cmd_enqueue_miso_parity(swd_ctx_t *swdctx, char *parity);
-int swd_cmd_enqueue_miso_data(swd_ctx_t *swdctx, int *data);
-int swd_cmd_enqueue_miso_data_p(swd_ctx_t *swdctx, int *data, char *parity);
+int swd_cmd_enqueue_miso_parity(swd_ctx_t *swdctx, char **parity);
+int swd_cmd_enqueue_miso_data(swd_ctx_t *swdctx, int **data);
+int swd_cmd_enqueue_miso_data_p(swd_ctx_t *swdctx, int **data, char **parity);
 int swd_cmd_enqueue_miso_n_data_p(swd_ctx_t *swdctx, int **data, char **parity, int count);
 int swd_cmd_enqueue_mosi_data(swd_ctx_t *swdctx, int *data);
 int swd_cmd_enqueue_mosi_data_ap(swd_ctx_t *swdctx, int *data);
 int swd_cmd_enqueue_mosi_data_p(swd_ctx_t *swdctx, int *data, char *parity);
 int swd_cmd_enqueue_mosi_n_data_ap(swd_ctx_t *swdctx, int **data, int count);
 int swd_cmd_enqueue_mosi_n_data_p(swd_ctx_t *swdctx, int **data, char **parity, int count);
-int swd_cmd_enqueue_miso_ack(swd_ctx_t *swdctx, char *ack);
+int swd_cmd_enqueue_miso_ack(swd_ctx_t *swdctx, char **ack);
 int swd_cmd_enqueue_mosi_control(swd_ctx_t *swdctx, char *ctlmsg, int len);
 int swd_cmd_enqueue_mosi_dap_reset(swd_ctx_t *swdctx);
 int swd_cmd_enqueue_mosi_idle(swd_ctx_t *swdctx);
@@ -504,16 +506,16 @@ int swd_bus_setdir_mosi(swd_ctx_t *swdctx);
 int swd_bus_setdir_miso(swd_ctx_t *swdctx);
 int swd_bus_write_request
 (swd_ctx_t *swdctx, swd_operation_t operation, char *APnDP, char *RnW, char *addr);
-int swd_bus_read_ack(swd_ctx_t *swdctx, swd_operation_t operation, char *ack);
+int swd_bus_read_ack(swd_ctx_t *swdctx, swd_operation_t operation, char **ack);
 int swd_bus_write_data_p(swd_ctx_t *swdctx, swd_operation_t operation, int *data, char *parity);
 int swd_bus_write_data_ap(swd_ctx_t *swdctx, swd_operation_t operation, int *data);
-int swd_bus_read_data_p(swd_ctx_t *swdctx, swd_operation_t operation, int *data, char *parity);
+int swd_bus_read_data_p(swd_ctx_t *swdctx, swd_operation_t operation, int **data, char **parity);
 int swd_bus_write_control(swd_ctx_t *swdctx, swd_operation_t operation, char *ctlmsg, int len);
 int swd_bus_write_jtag2swd(swd_ctx_t *swdctx, swd_operation_t operation);
-int swd_bus_transmit(swd_ctx_t *swdctx, swd_cmd_t *cmd);
 
 int swd_bitgen8_request(swd_ctx_t *swdctx, char *APnDP, char *RnW, char *addr, char *request);
 
+int swd_drv_transmit(swd_ctx_t *swdctx, swd_cmd_t *cmd);
 extern int swd_drv_mosi_8(swd_ctx_t *swdctx, char *data, int bits, int nLSBfirst);
 extern int swd_drv_mosi_32(swd_ctx_t *swdctx, int *data, int bits, int nLSBfirst);
 extern int swd_drv_miso_8(swd_ctx_t *swdctx, char *data, int bits, int nLSBfirst);
@@ -521,8 +523,8 @@ extern int swd_drv_miso_32(swd_ctx_t *swdctx, int *data, int bits, int nLSBfirst
 
 int swd_dp_reset(swd_ctx_t *swdctx, swd_operation_t operation);
 int swd_dp_activate(swd_ctx_t *swdctx, swd_operation_t operation);
-int swd_dp_read_idcode(swd_ctx_t *swdctx, swd_operation_t operation, int *idcode);
-int swd_dp_detect(swd_ctx_t *swdctx, swd_operation_t operation, int *idcode);
+int swd_dp_read_idcode(swd_ctx_t *swdctx, swd_operation_t operation, int **idcode);
+int swd_dp_detect(swd_ctx_t *swdctx, swd_operation_t operation, int **idcode);
 
 int swd_log(swd_ctx_t *swdctx, swd_loglevel_t loglevel, char *msg, ...);
 char *swd_error_string(swd_error_code_t error);
