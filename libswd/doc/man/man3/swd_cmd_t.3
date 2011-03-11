@@ -1,4 +1,4 @@
-.TH "swd_cmd_t" 3 "Tue Mar 8 2011" "Version 0.0.1" "libswd" \" -*- nroff -*-
+.TH "swd_cmd_t" 3 "Fri Mar 11 2011" "Version 0.0.1" "libswd" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -20,7 +20,7 @@ SWD Command Element Structure.
 .ti -1c
 .RI "   char \fBTRNnMOSI\fP"
 .br
-.RI "\fI< Payload data union. \fP"
+.RI "\fIHolds/sets bus direction: MOSI when zero, MISO for others. \fP"
 .ti -1c
 .RI "   char \fBrequest\fP"
 .br
@@ -79,21 +79,17 @@ SWD Command Element Structure.
 .ti -1c
 .RI "struct \fBswd_cmd_t\fP * \fBprev\fP"
 .br
+.RI "\fIPointer to the previous command. \fP"
 .ti -1c
 .RI "struct \fBswd_cmd_t\fP * \fBnext\fP"
 .br
-.RI "\fIPointer to the previous/next command. \fP"
+.RI "\fIPointer to the next command. \fP"
 .in -1c
 .SH "Detailed Description"
 .PP 
 SWD Command Element Structure. 
 
 In libswd each operation is split into separate commands (request, trn, ack, data, parity) that can be appended to the command queue and later executed. This organization allows better granularity for tracing bugs and makes possible to compose complete bus/target operations made of simple commands. 
-.SH "Member Data Documentation"
-.PP 
-.SS "char \fBswd_cmd_t::TRNnMOSI\fP"
-.PP
-< Payload data union. Holds/sets bus direction: MOSI when zero, MISO for other. 
 
 .SH "Author"
 .PP 

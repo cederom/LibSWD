@@ -1,4 +1,4 @@
-.TH "libswd.h" 3 "Tue Mar 8 2011" "Version 0.0.1" "libswd" \" -*- nroff -*-
+.TH "libswd.h" 3 "Fri Mar 11 2011" "Version 0.0.1" "libswd" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -360,26 +360,6 @@ libswd.h \-
 
 .in +1c
 .ti -1c
-.RI "typedef enum \fBSWD_ERROR_CODE\fP \fBswd_error_code_t\fP"
-.br
-.RI "\fIStatus and Error Codes definitions. \fP"
-.ti -1c
-.RI "typedef enum \fBSWD_LOGLEVEL\fP \fBswd_loglevel_t\fP"
-.br
-.RI "\fILogging Level Codes definition. \fP"
-.ti -1c
-.RI "typedef enum \fBSWD_CMDTYPE\fP \fBswd_cmdtype_t\fP"
-.br
-.RI "\fISWD Command Codes definitions. \fP"
-.ti -1c
-.RI "typedef enum \fBSWD_SHIFTDIR\fP \fBswd_shiftdir_t\fP"
-.br
-.RI "\fIWhat is the shift direction LSB-first or MSB-first. \fP"
-.ti -1c
-.RI "typedef enum \fBSWD_OPERATION\fP \fBswd_operation_t\fP"
-.br
-.RI "\fICommand Queue operations codes. \fP"
-.ti -1c
 .RI "typedef struct \fBswd_cmd_t\fP \fBswd_cmd_t\fP"
 .br
 .RI "\fISWD Command Element Structure. \fP"
@@ -388,23 +368,23 @@ libswd.h \-
 
 .in +1c
 .ti -1c
-.RI "enum \fBSWD_ERROR_CODE\fP { \fBSWD_OK\fP =  0, \fBSWD_ERROR_GENERAL\fP = -1, \fBSWD_ERROR_NULLPOINTER\fP = -2, \fBSWD_ERROR_NULLQUEUE\fP = -3, \fBSWD_ERROR_NULLTRN\fP = -4, \fBSWD_ERROR_PARAM\fP = -5, \fBSWD_ERROR_OUTOFMEM\fP = -6, \fBSWD_ERROR_RESULT\fP = -7, \fBSWD_ERROR_RANGE\fP = -8, \fBSWD_ERROR_DEFINITION\fP = -9, \fBSWD_ERROR_NULLCONTEXT\fP = -10, \fBSWD_ERROR_QUEUE\fP = -11, \fBSWD_ERROR_ADDR\fP = -12, \fBSWD_ERROR_APnDP\fP = -13, \fBSWD_ERROR_RnW\fP = -14, \fBSWD_ERROR_PARITY\fP = -15, \fBSWD_ERROR_ACK\fP = -16, \fBSWD_ERROR_ACKUNKNOWN\fP = -19, \fBSWD_ERROR_ACKNOTDONE\fP = -20, \fBSWD_ERROR_ACKMISSING\fP = -21, \fBSWD_ERROR_ACKMISMATCH\fP = -22, \fBSWD_ERROR_ACKORDER\fP = -23, \fBSWD_ERROR_BADOPCODE\fP = -24, \fBSWD_ERROR_NODATACMD\fP = -25, \fBSWD_ERROR_DATAPTR\fP = -26, \fBSWD_ERROR_NOPARITYCMD\fP = -27, \fBSWD_ERROR_PARITYPTR\fP = -28, \fBSWD_ERROR_NOTDONE\fP = -29, \fBSWD_ERROR_QUEUEROOT\fP = -30, \fBSWD_ERROR_QUEUETAIL\fP = -31, \fBSWD_ERROR_BADCMDTYPE\fP = -32, \fBSWD_ERROR_BADCMDDATA\fP = -33, \fBSWD_ERROR_TURNAROUND\fP = -34, \fBSWD_ERROR_DRIVER\fP = -35, \fBSWD_ERROR_ACK_WAIT\fP = -36, \fBSWD_ERROR_ACK_FAULT\fP = -37, \fBSWD_ERROR_QUEUENOTFREE\fP = -38, \fBSWD_ERROR_TRANSPORT\fP = -39, \fBSWD_ERROR_DIRECTION\fP = -40, \fBSWD_ERROR_LOGLEVEL\fP = -41 }"
+.RI "enum \fBswd_error_code_t\fP { \fBSWD_OK\fP =  0, \fBSWD_ERROR_GENERAL\fP = -1, \fBSWD_ERROR_NULLPOINTER\fP = -2, \fBSWD_ERROR_NULLQUEUE\fP = -3, \fBSWD_ERROR_NULLTRN\fP = -4, \fBSWD_ERROR_PARAM\fP = -5, \fBSWD_ERROR_OUTOFMEM\fP = -6, \fBSWD_ERROR_RESULT\fP = -7, \fBSWD_ERROR_RANGE\fP = -8, \fBSWD_ERROR_DEFINITION\fP = -9, \fBSWD_ERROR_NULLCONTEXT\fP = -10, \fBSWD_ERROR_QUEUE\fP = -11, \fBSWD_ERROR_ADDR\fP = -12, \fBSWD_ERROR_APnDP\fP = -13, \fBSWD_ERROR_RnW\fP = -14, \fBSWD_ERROR_PARITY\fP = -15, \fBSWD_ERROR_ACK\fP = -16, \fBSWD_ERROR_ACKUNKNOWN\fP = -19, \fBSWD_ERROR_ACKNOTDONE\fP = -20, \fBSWD_ERROR_ACKMISSING\fP = -21, \fBSWD_ERROR_ACKMISMATCH\fP = -22, \fBSWD_ERROR_ACKORDER\fP = -23, \fBSWD_ERROR_BADOPCODE\fP = -24, \fBSWD_ERROR_NODATACMD\fP = -25, \fBSWD_ERROR_DATAPTR\fP = -26, \fBSWD_ERROR_NOPARITYCMD\fP = -27, \fBSWD_ERROR_PARITYPTR\fP = -28, \fBSWD_ERROR_NOTDONE\fP = -29, \fBSWD_ERROR_QUEUEROOT\fP = -30, \fBSWD_ERROR_QUEUETAIL\fP = -31, \fBSWD_ERROR_BADCMDTYPE\fP = -32, \fBSWD_ERROR_BADCMDDATA\fP = -33, \fBSWD_ERROR_TURNAROUND\fP = -34, \fBSWD_ERROR_DRIVER\fP = -35, \fBSWD_ERROR_ACK_WAIT\fP = -36, \fBSWD_ERROR_ACK_FAULT\fP = -37, \fBSWD_ERROR_QUEUENOTFREE\fP = -38, \fBSWD_ERROR_TRANSPORT\fP = -39, \fBSWD_ERROR_DIRECTION\fP = -40, \fBSWD_ERROR_LOGLEVEL\fP = -41 }"
 .br
 .RI "\fIStatus and Error Codes definitions. \fP"
 .ti -1c
-.RI "enum \fBSWD_LOGLEVEL\fP { \fBSWD_LOGLEVEL_MIN\fP =  0, \fBSWD_LOGLEVEL_SILENT\fP =  0, \fBSWD_LOGLEVEL_ERROR\fP =  1, \fBSWD_LOGLEVEL_WARNING\fP =  2, \fBSWD_LOGLEVEL_INFO\fP =  3, \fBSWD_LOGLEVEL_DEBUG\fP =  4, \fBSWD_LOGLEVEL_MAX\fP =  4 }"
+.RI "enum \fBswd_loglevel_t\fP { \fBSWD_LOGLEVEL_MIN\fP =  0, \fBSWD_LOGLEVEL_SILENT\fP =  0, \fBSWD_LOGLEVEL_ERROR\fP =  1, \fBSWD_LOGLEVEL_WARNING\fP =  2, \fBSWD_LOGLEVEL_NORMAL\fP =  3, \fBSWD_LOGLEVEL_INFO\fP =  4, \fBSWD_LOGLEVEL_DEBUG\fP =  5, \fBSWD_LOGLEVEL_MAX\fP =  5 }"
 .br
 .RI "\fILogging Level Codes definition. \fP"
 .ti -1c
-.RI "enum \fBSWD_CMDTYPE\fP { \fBSWD_CMDTYPE_MOSI_DATA\fP = -7, \fBSWD_CMDTYPE_MOSI_REQUEST\fP = -6, \fBSWD_CMDTYPE_MOSI_TRN\fP = -5, \fBSWD_CMDTYPE_MOSI_PARITY\fP = -4, \fBSWD_CMDTYPE_MOSI_BITBANG\fP = -3, \fBSWD_CMDTYPE_MOSI_CONTROL\fP = -2, \fBSWD_CMDTYPE_MOSI\fP = -1, \fBSWD_CMDTYPE_UNDEFINED\fP = 0, \fBSWD_CMDTYPE_MISO\fP = 1, \fBSWD_CMDTYPE_MISO_ACK\fP = 2, \fBSWD_CMDTYPE_MISO_BITBANG\fP = 3, \fBSWD_CMDTYPE_MISO_PARITY\fP = 4, \fBSWD_CMDTYPE_MISO_TRN\fP = 5, \fBSWD_CMDTYPE_MISO_DATA\fP = 6 }"
+.RI "enum \fBswd_cmdtype_t\fP { \fBSWD_CMDTYPE_MOSI_DATA\fP = -7, \fBSWD_CMDTYPE_MOSI_REQUEST\fP = -6, \fBSWD_CMDTYPE_MOSI_TRN\fP = -5, \fBSWD_CMDTYPE_MOSI_PARITY\fP = -4, \fBSWD_CMDTYPE_MOSI_BITBANG\fP = -3, \fBSWD_CMDTYPE_MOSI_CONTROL\fP = -2, \fBSWD_CMDTYPE_MOSI\fP = -1, \fBSWD_CMDTYPE_UNDEFINED\fP = 0, \fBSWD_CMDTYPE_MISO\fP = 1, \fBSWD_CMDTYPE_MISO_ACK\fP = 2, \fBSWD_CMDTYPE_MISO_BITBANG\fP = 3, \fBSWD_CMDTYPE_MISO_PARITY\fP = 4, \fBSWD_CMDTYPE_MISO_TRN\fP = 5, \fBSWD_CMDTYPE_MISO_DATA\fP = 6 }"
 .br
 .RI "\fISWD Command Codes definitions. \fP"
 .ti -1c
-.RI "enum \fBSWD_SHIFTDIR\fP { \fBSWD_DIR_LSBFIRST\fP = 0, \fBSWD_DIR_MSBFIRST\fP = 1 }"
+.RI "enum \fBswd_shiftdir_t\fP { \fBSWD_DIR_LSBFIRST\fP = 0, \fBSWD_DIR_MSBFIRST\fP = 1 }"
 .br
 .RI "\fIWhat is the shift direction LSB-first or MSB-first. \fP"
 .ti -1c
-.RI "enum \fBSWD_OPERATION\fP { \fBSWD_OPERATION_FIRST\fP = 1, \fBSWD_OPERATION_ENQUEUE\fP = 1, \fBSWD_OPERATION_EXECUTE\fP = 2, \fBSWD_OPERATION_TRANSMIT_HEAD\fP = 3, \fBSWD_OPERATION_TRANSMIT_TAIL\fP = 4, \fBSWD_OPERATION_TRANSMIT_ALL\fP = 5, \fBSWD_OPERATION_TRANSMIT_ONE\fP = 6, \fBSWD_OPERATION_TRANSMIT_LAST\fP = 7, \fBSWD_OPERATION_LAST\fP = 7 }"
+.RI "enum \fBswd_operation_t\fP { \fBSWD_OPERATION_FIRST\fP = 1, \fBSWD_OPERATION_ENQUEUE\fP = 1, \fBSWD_OPERATION_EXECUTE\fP = 2, \fBSWD_OPERATION_TRANSMIT_HEAD\fP = 3, \fBSWD_OPERATION_TRANSMIT_TAIL\fP = 4, \fBSWD_OPERATION_TRANSMIT_ALL\fP = 5, \fBSWD_OPERATION_TRANSMIT_ONE\fP = 6, \fBSWD_OPERATION_TRANSMIT_LAST\fP = 7, \fBSWD_OPERATION_LAST\fP = 7 }"
 .br
 .RI "\fICommand Queue operations codes. \fP"
 .ti -1c
@@ -603,9 +583,6 @@ libswd.h \-
 .br
 .RI "\fIWrite CONTROL byte to the Target's DAP. \fP"
 .ti -1c
-.RI "int \fBswd_bus_write_jtag2swd\fP (\fBswd_ctx_t\fP *swdctx, \fBswd_operation_t\fP operation)"
-.br
-.ti -1c
 .RI "int \fBswd_bitgen8_request\fP (\fBswd_ctx_t\fP *swdctx, char *APnDP, char *RnW, char *addr, char *request)"
 .br
 .RI "\fIGenerate 8-bit SWD-REQUEST packet contents with provided parameters. \fP"
@@ -626,25 +603,32 @@ libswd.h \-
 .RI "int \fBswd_drv_miso_32\fP (\fBswd_ctx_t\fP *swdctx, int *data, int bits, int nLSBfirst)"
 .br
 .ti -1c
-.RI "int \fBswd_dp_reset\fP (\fBswd_ctx_t\fP *swdctx, \fBswd_operation_t\fP operation)"
+.RI "int \fBswd_dap_reset\fP (\fBswd_ctx_t\fP *swdctx, \fBswd_operation_t\fP operation)"
 .br
 .RI "\fIDebug Access Port Reset sends 50 CLK with TMS high that brings both SW-DP and JTAG-DP into reset state. \fP"
 .ti -1c
-.RI "int \fBswd_dp_activate\fP (\fBswd_ctx_t\fP *swdctx, \fBswd_operation_t\fP operation)"
+.RI "int \fBswd_dap_select\fP (\fBswd_ctx_t\fP *swdctx, \fBswd_operation_t\fP operation)"
 .br
 .RI "\fIActivate SW-DP by sending out RESET and JTAG-TO-SWD sequence on SWDIOTMS line. \fP"
+.ti -1c
+.RI "int \fBswd_dap_detect\fP (\fBswd_ctx_t\fP *swdctx, \fBswd_operation_t\fP operation, int **idcode)"
+.br
+.RI "\fIMacro: Reset target DAP, select SW-DP, read out IDCODE. \fP"
 .ti -1c
 .RI "int \fBswd_dp_read_idcode\fP (\fBswd_ctx_t\fP *swdctx, \fBswd_operation_t\fP operation, int **idcode)"
 .br
 .RI "\fIMacro: Read out IDCODE register and return its value on function return. \fP"
 .ti -1c
-.RI "int \fBswd_dp_detect\fP (\fBswd_ctx_t\fP *swdctx, \fBswd_operation_t\fP operation, int **idcode)"
-.br
-.RI "\fIMacro: Reset target DAP, select SW-DP, read out IDCODE. \fP"
-.ti -1c
 .RI "int \fBswd_log\fP (\fBswd_ctx_t\fP *swdctx, \fBswd_loglevel_t\fP loglevel, char *msg,...)"
 .br
 .RI "\fIPut a message into swd context log at specified verbosity level. \fP"
+.ti -1c
+.RI "int \fBswd_log_level_set\fP (\fBswd_ctx_t\fP *swdctx, \fBswd_loglevel_t\fP loglevel)"
+.br
+.RI "\fIChange log level to increase or decrease verbosity level. \fP"
+.ti -1c
+.RI "int \fBswd_log_level_inherit\fP (\fBswd_ctx_t\fP *swdctx, int loglevel)"
+.br
 .ti -1c
 .RI "char * \fBswd_error_string\fP (\fBswd_error_code_t\fP error)"
 .br
@@ -740,25 +724,6 @@ SW-DP WCR Register map. PRESCALER bit number. PRESCALER bit number.
 .SS "typedef struct \fBswd_cmd_t\fP  \fBswd_cmd_t\fP"
 .PP
 SWD Command Element Structure. In libswd each operation is split into separate commands (request, trn, ack, data, parity) that can be appended to the command queue and later executed. This organization allows better granularity for tracing bugs and makes possible to compose complete bus/target operations made of simple commands. 
-.SS "typedef enum \fBSWD_CMDTYPE\fP  \fBswd_cmdtype_t\fP"
-.PP
-SWD Command Codes definitions. Available values: MISO>0, MOSI<0, undefined=0. To check command direction (read/write) multiply tested value with one of the MOSI or MISO commands
-.IP "\(bu" 2
-result is positive for equal direction and negative if direction differs. Command Type codes definition, use this to see names in debugger. 
-.PP
-
-.SS "typedef enum \fBSWD_ERROR_CODE\fP  \fBswd_error_code_t\fP"
-.PP
-Status and Error Codes definitions. Error Codes definition, use this to have its name on debugger. 
-.SS "typedef enum \fBSWD_LOGLEVEL\fP  \fBswd_loglevel_t\fP"
-.PP
-Logging Level Codes definition. Logging Level codes definition, use this to have its name on debugger. 
-.SS "typedef enum \fBSWD_OPERATION\fP  \fBswd_operation_t\fP"
-.PP
-Command Queue operations codes. 
-.SS "typedef enum \fBSWD_SHIFTDIR\fP  \fBswd_shiftdir_t\fP"
-.PP
-What is the shift direction LSB-first or MSB-first. 
 .SH "Enumeration Type Documentation"
 .PP 
 .SS "enum \fBswd_bool_t\fP"
@@ -773,7 +738,7 @@ False is 0.
 .TP
 \fB\fISWD_TRUE \fP\fP
 True is 1. 
-.SS "enum \fBSWD_CMDTYPE\fP"
+.SS "enum \fBswd_cmdtype_t\fP"
 .PP
 SWD Command Codes definitions. Available values: MISO>0, MOSI<0, undefined=0. To check command direction (read/write) multiply tested value with one of the MOSI or MISO commands
 .IP "\(bu" 2
@@ -800,7 +765,7 @@ Contains MOSI data parity.
 Allows MOSI operation bit-by-bit. 
 .TP
 \fB\fISWD_CMDTYPE_MOSI_CONTROL \fP\fP
-MOSI control sequence (ie. sw-dp reset). 
+MOSI control sequence (ie. sw-dp reset, idle). 
 .TP
 \fB\fISWD_CMDTYPE_MOSI \fP\fP
 Master Output Slave Input direction. 
@@ -825,7 +790,7 @@ Bus will switch into MISO mode.
 .TP
 \fB\fISWD_CMDTYPE_MISO_DATA \fP\fP
 Contains MISO data (from target). 
-.SS "enum \fBSWD_ERROR_CODE\fP"
+.SS "enum \fBswd_error_code_t\fP"
 .PP
 Status and Error Codes definitions. Error Codes definition, use this to have its name on debugger. 
 .PP
@@ -951,7 +916,7 @@ Direction error (LSb/MSb first).
 .TP
 \fB\fISWD_ERROR_LOGLEVEL \fP\fP
 Invalid loglevel number. 
-.SS "enum \fBSWD_LOGLEVEL\fP"
+.SS "enum \fBswd_loglevel_t\fP"
 .PP
 Logging Level Codes definition. Logging Level codes definition, use this to have its name on debugger. 
 .PP
@@ -967,12 +932,15 @@ Show errors.
 \fB\fISWD_LOGLEVEL_WARNING \fP\fP
 Show warnings. 
 .TP
+\fB\fISWD_LOGLEVEL_NORMAL \fP\fP
+Normal verbosity. 
+.TP
 \fB\fISWD_LOGLEVEL_INFO \fP\fP
 Show messages. 
 .TP
 \fB\fISWD_LOGLEVEL_DEBUG \fP\fP
 Show all including debug information. 
-.SS "enum \fBSWD_OPERATION\fP"
+.SS "enum \fBswd_operation_t\fP"
 .PP
 Command Queue operations codes. 
 .PP
@@ -1005,7 +973,7 @@ Transmit last command on the queue.
 .TP
 \fB\fISWD_OPERATION_LAST \fP\fP
 Last operation to know its code. 
-.SS "enum \fBSWD_SHIFTDIR\fP"
+.SS "enum \fBswd_shiftdir_t\fP"
 .PP
 What is the shift direction LSB-first or MSB-first. 
 .PP
@@ -1756,6 +1724,51 @@ SWD_OK on success, SWD_ERROR_CODE code on failure
 .RE
 .PP
 
+.SS "int swd_dap_detect (\fBswd_ctx_t\fP * swdctx, \fBswd_operation_t\fP operation, int ** idcode)"
+.PP
+Macro: Reset target DAP, select SW-DP, read out IDCODE. This is the proper SW-DP initialization as stated by ARM Information Center. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fI*swdctx\fP swd context pointer. 
+.br
+\fIoperation\fP type (SWD_OPERATION_ENQUEUE or SWD_OPERATION_EXECUTE). 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Target's IDCODE, or error code on failure. 
+.RE
+.PP
+
+.SS "int swd_dap_reset (\fBswd_ctx_t\fP * swdctx, \fBswd_operation_t\fP operation)"
+.PP
+Debug Access Port Reset sends 50 CLK with TMS high that brings both SW-DP and JTAG-DP into reset state. \fBParameters:\fP
+.RS 4
+\fI*swdctx\fP swd context pointer. 
+.br
+\fIoperation\fP type (SWD_OPERATION_ENQUEUE or SWD_OPERATION_EXECUTE). 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+number of elements processed or SWD_ERROR_CODE code on failure. 
+.RE
+.PP
+
+.SS "int swd_dap_select (\fBswd_ctx_t\fP * swdctx, \fBswd_operation_t\fP operation)"
+.PP
+Activate SW-DP by sending out RESET and JTAG-TO-SWD sequence on SWDIOTMS line. \fBParameters:\fP
+.RS 4
+\fI*swdctx\fP swd context. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+number of control bytes executed, or error code on failre. 
+.RE
+.PP
+
 .SS "int swd_deinit (\fBswd_ctx_t\fP * swdctx)"
 .PP
 De-initialize selected swd context and its command queue. \fBParameters:\fP
@@ -1797,36 +1810,6 @@ SWD_OK on success, SWD_ERROR_CODE on failure.
 .RE
 .PP
 
-.SS "int swd_dp_activate (\fBswd_ctx_t\fP * swdctx, \fBswd_operation_t\fP operation)"
-.PP
-Activate SW-DP by sending out RESET and JTAG-TO-SWD sequence on SWDIOTMS line. \fBParameters:\fP
-.RS 4
-\fI*swdctx\fP swd context. 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-number of control bytes executed, or error code on failre. 
-.RE
-.PP
-
-.SS "int swd_dp_detect (\fBswd_ctx_t\fP * swdctx, \fBswd_operation_t\fP operation, int ** idcode)"
-.PP
-Macro: Reset target DAP, select SW-DP, read out IDCODE. This is the proper SW-DP initialization as stated by ARM Information Center. 
-.PP
-\fBParameters:\fP
-.RS 4
-\fI*swdctx\fP swd context pointer. 
-.br
-\fIoperation\fP type (SWD_OPERATION_ENQUEUE or SWD_OPERATION_EXECUTE). 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-Target's IDCODE, or error code on failure. 
-.RE
-.PP
-
 .SS "int swd_dp_read_idcode (\fBswd_ctx_t\fP * swdctx, \fBswd_operation_t\fP operation, int ** idcode)"
 .PP
 Macro: Read out IDCODE register and return its value on function return. \fBParameters:\fP
@@ -1839,21 +1822,6 @@ Macro: Read out IDCODE register and return its value on function return. \fBPara
 \fBReturns:\fP
 .RS 4
 Target's IDCODE value or code error on failure. 
-.RE
-.PP
-
-.SS "int swd_dp_reset (\fBswd_ctx_t\fP * swdctx, \fBswd_operation_t\fP operation)"
-.PP
-Debug Access Port Reset sends 50 CLK with TMS high that brings both SW-DP and JTAG-DP into reset state. \fBParameters:\fP
-.RS 4
-\fI*swdctx\fP swd context pointer. 
-.br
-\fIoperation\fP type (SWD_OPERATION_ENQUEUE or SWD_OPERATION_EXECUTE). 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-number of elements processed or SWD_ERROR_CODE code on failure. 
 .RE
 .PP
 
@@ -1898,6 +1866,21 @@ Put a message into swd context log at specified verbosity level. If specified me
 \fBReturns:\fP
 .RS 4
 number of characters written or error code on failure. 
+.RE
+.PP
+
+.SS "int swd_log_level_set (\fBswd_ctx_t\fP * swdctx, \fBswd_loglevel_t\fP loglevel)"
+.PP
+Change log level to increase or decrease verbosity level. \fBParameters:\fP
+.RS 4
+\fI*swdctx\fP swd context. 
+.br
+\fIloglevel\fP is the target verbosity level to be set. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+SWD_OK on success or error code. 
 .RE
 .PP
 

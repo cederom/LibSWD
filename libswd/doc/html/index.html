@@ -43,13 +43,45 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <h1>Serial Wire Debug Open Library. </h1>  </div>
 </div>
 <div class="contents">
-<h3 class="version">0.0.1 </h3><h2><a class="anchor" id="Introduction"></a>
+<h3 class="version">0.0.1 </h3><h2><a class="anchor" id="doc_introduction"></a>
 Introduction</h2>
-<p>Welcome to the source code documentation repository. LibSWD is an Open-Source framework to deal with with Serial Wire Debug. It is released under 3-clause BSD license. For more information please visit project website at <a href="http://libswd.sf.net">http://libswd.sf.net</a> </p>
-<h2><a class="anchor" id="brief"></a>
+<p>LibSWD is an Open-Source framework to deal with with Serial Wire Debug Port in accordance to ADI (Arm Debug Interface, version 5.0 at the moment) specification. It is released under 3-clause BSD license. For more information please visit project website at <a href="http://libswd.sf.net">http://libswd.sf.net</a> </p>
+<h2><a class="anchor" id="doc_brief"></a>
 What is this about</h2>
-<p>Serial Wire Debug is an alternative to JTAG (IEEE1149.1) transport layer to access Debug Access Port in ARM-Cortex's based devices. LibSWD provides both bitstream generation and high/low level bus operations. Every bus operation such as request, turnaround, acknowledge, data and parity packet is represented by a <a class="el" href="structswd__cmd__t.html" title="SWD Command Element Structure.">swd_cmd_t</a> element that can extend command queue (a standard bidirectional queue) that later can be flushed into real hardware using simple set of interface-specific driver functions. This way LibSWD is almost standalone and can be easily integrated into existing utilities for low-level access and only requires in return to define drivers that controls the interface interconnecting host and target. Such drivers are application specific therefore located in external file crafted for that application and its hardware. </p>
-</div>
+<p>Serial Wire Debug is an alternative to JTAG (IEEE1149.1) transport layer for accessing the Debug Access Port in ARM-Cortex based devices. LibSWD provides methods for bitstream generation on the wire using simple but flexible API that can reuse capabilities of existing applications for easier integration. Every bus operation such as control, request, turnaround, acknowledge, data and parity packet is named a "command" represented by a <a class="el" href="structswd__cmd__t.html" title="SWD Command Element Structure.">swd_cmd_t</a> data type that builds up the queue that later can be flushed into real hardware using standard set of (application-specific) driver functions. This way LibSWD is almost standalone and can be easily integrated into existing utilities for low-level access and only requires in return to define driver bridge that controls the physical interface interconnecting host and target. Drivers and other application-specific functions are "extern" and located in external file crafted for that application and its hardware. LibSWD is therefore best way to make your application SWD aware.</p>
+<h2><a class="anchor" id="doc_details"></a>
+How it works</h2>
+<h3><a class="anchor" id="doc_context"></a>
+SWD Context</h3>
+<p>The most important data type in LibSWD is <a class="el" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> structure, a context that represents logical entity of the swd bus (transport layer between host and target) with all its parameters, configuration and command queue. Context is being created with <a class="el" href="libswd_8h.html#ad4f88acc646c06e6e81fbde8117c21af" title="LibSWD initialization routine.">swd_init()</a> function that returns pointer to allocated virgin structure, and it can be destroyed with <a class="el" href="libswd_8h.html#a94b02a9cf4b72e2e76d6a9a34f34f96f" title="De-initialize selected swd context and its command queue.">swd_deinit()</a> function taking the pointer as argument. Context can be set only for one interface-target pair, but there might be many different contexts in use if necessary, so amount of devices in use is not limited.</p>
+<h3><a class="anchor" id="doc_functions"></a>
+Functions</h3>
+<p>All functions in general operates on pointer type and returns number of processed elements on success or negative value with swd_error_code_t on failure. Functions are grouped by functionality that is denoted by function name prefix (ie. swd_bin* are for binary operations, swd_cmdq* deals with command queue, swd_cmd_enqueue* deals with creating commands and attaching them to queue, swd_bus* performs operation on the swd transport system, swd_drv* are the interface drivers, etc).</p>
+<p>Standard end-users are encouraged to only use high level functions (swd_bus*, swd_dap*, swd_dp*) to perform operations on the swd transport layer and the target's DAP (Debug Access Port) and its components such as DP (Debug Port) and the AP (Access Port). More advanced users however may use low level functions (swd_cmd*, swd_cmdq*) to group them into new high-level functions that automates some tasks (such as high-level functions does). Functions of type "extern" are the ones to implement in external file by developers that want to incorporate LibSWD into their application. Context structure also has void pointer in the <a class="el" href="structswd__driver__t.html" title="Interface Driver structure.">swd_driver_t</a> structure that can hold address of the external driver structure to be passed into internal swd drivers (extern swd_drv* functions) that wouldn't be accessible otherwise.</p>
+<h3><a class="anchor" id="doc_commands"></a>
+Commands</h3>
+<p>Bus operations are split into "commands" represented by <a class="el" href="structswd__cmd__t.html" title="SWD Command Element Structure.">swd_cmd_t</a> data type. They form a bidirectional command queue that is part of <a class="el" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> structure. Command type, and so its payload, can be one of: control (user defined 8-bit payload), request (according to the standard), ack, data, parity (data and parity are separate commands!), trn, bitbang and idle (equals to control with zero data). Command type is defined by swd_cmdtype_t and its code can be negative (for MOSI operations) or positive (for MISO operations) - this way bus direction can be easily calculated by multiplying two operation codes (when the result is negative bus will have to change direction), so the libswd "knows" when to put additional TRN command of proper type between enqueued commands.</p>
+<p>Payload is stored within union type and its data can be accessed according to payload name, or simply with data8 (char) and data32 (int) fields. Payload for write (MOSI) operations is stored on command creation, but payload for read (MISO) operations becomes available only after command is executed by the interface driver. There are 3 methods of accessing read data - flushing the queue into driver then reading queue directly, single stepping queue execution (flush one-by-one) then reading context log of last executed command results (there are separate fields of type <a class="el" href="structswd__transaction__t.html" title="Most actual SWD bus transaction/packet data.">swd_transaction_t</a> in swd_ctx_t's log structure for read and write operations), or providing a double pointer on command creation to have constant access to its data after execution.</p>
+<p>After all commands are enqueued with swd_cmd_enqueue* function set, it is time to send them into physical device with <a class="el" href="libswd_8h.html#ad53379f5a7756cc91b01e867aaaa489d" title="Flush command queue contents into interface driver.">swd_cmdq_flush()</a> funtion. According to the swd_operation_t parameter commands can be flushed one-by-one, all of them, only to the selected command or only after selected command. For low level functions all of these options are available, but for high-level functions only two of them can be used - SWD_OPERATION_ENQUEUE (but not send to the driver) and SWD_OPERATION_EXECUTE (all unexecuted commands on the queue are executed by the driver sequentially) - that makes it possible to perform bus operations one after another having their result just at function return, or compose more advanced sequences leading to preferred result at execution time. Because high-level functions provide simple and elegant manner to get the operation result, it is advised to use them instead dealing with low-level functions (implementing memory management, data allocation and queue operation) that exist only to make high-level functions possible.</p>
+<h2><a class="anchor" id="doc_example"></a>
+Example</h2>
+<div class="fragment"><pre class="fragment"><span class="preprocessor">  #include &lt;libswd/libswd.h&gt;</span>
+  <span class="keywordtype">int</span> main(){
+   <a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx;
+   <span class="keywordtype">int</span> res, idcode;
+   swdctx=<a class="code" href="libswd_8h.html#ad4f88acc646c06e6e81fbde8117c21af" title="LibSWD initialization routine.">swd_init</a>();
+   <span class="keywordflow">if</span> (swdctx==NULL) <span class="keywordflow">return</span> -1;
+   <span class="comment">//we might need to pass external driver structure to swd_drv* functions </span>
+   <span class="comment">//swdctx-&gt;driver-&gt;device=...</span>
+   res=<a class="code" href="libswd_8h.html#a6758b95d2adfbfb9b95198f9b0b5462c" title="Macro: Reset target DAP, select SW-DP, read out IDCODE.">swd_dap_detect</a>(swdctx, <a class="code" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070a56d19aa6e805b636d0c679df01a83bf1" title="Queue commands then flush the queue.">SWD_OPERATION_EXECUTE</a>, &amp;idcode);
+   <span class="keywordflow">if</span> (res&lt;0){
+    printf(<span class="stringliteral">&quot;ERROR: %s\n&quot;</span>, swd_error_string(res));
+    <span class="keywordflow">return</span> res;
+   } <span class="keywordflow">else</span> printf(<span class="stringliteral">&quot;IDCODE: 0x%X\n&quot;</span>, idcode);
+   <a class="code" href="libswd_8h.html#a94b02a9cf4b72e2e76d6a9a34f34f96f" title="De-initialize selected swd context and its command queue.">swd_deinit</a>(swdctx);
+   <span class="keywordflow">return</span> idcode;
+  }
+</pre></div> </div>
 <!--- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -64,7 +96,7 @@ What is this about</h2>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Tue Mar 8 2011 05:44:09 for libswd by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Fri Mar 11 2011 17:25:08 for libswd by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

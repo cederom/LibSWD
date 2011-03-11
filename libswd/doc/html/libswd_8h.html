@@ -285,130 +285,121 @@ Defines</h2></td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">How long is the command queue by default. <br/></td></tr>
 <tr><td colspan="2"><h2><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="libswd_8h.html#a27fab5915116e3880c16af35ba425fa8">SWD_ERROR_CODE</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8h.html#a5f458052e7d0836513de622e91c291a0">swd_error_code_t</a></td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Status and Error Codes definitions.  <a href="#a5f458052e7d0836513de622e91c291a0"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="libswd_8h.html#a5a7e21454b327f96ca82a916f5c02810">SWD_LOGLEVEL</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8h.html#acb51eaac9226d7aef398d63e2a5db319">swd_loglevel_t</a></td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Logging Level Codes definition.  <a href="#acb51eaac9226d7aef398d63e2a5db319"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="libswd_8h.html#acd080697f0ba041ad61439fc058c8516">SWD_CMDTYPE</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8h.html#a6e085f87c01f67880528f5915576bd8f">swd_cmdtype_t</a></td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">SWD Command Codes definitions.  <a href="#a6e085f87c01f67880528f5915576bd8f"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="libswd_8h.html#a7fbfdd0305df10658af08b4b2c0e8f4c">SWD_SHIFTDIR</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8h.html#ad6f30223e1e29d68c0bef8a483afe931">swd_shiftdir_t</a></td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">What is the shift direction LSB-first or MSB-first.  <a href="#ad6f30223e1e29d68c0bef8a483afe931"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="libswd_8h.html#a348e10c76c02b1223ac1456c36d69518">SWD_OPERATION</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8h.html#aa0833ff00c22fe41453f5e9acec488e2">swd_operation_t</a></td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Command Queue operations codes.  <a href="#aa0833ff00c22fe41453f5e9acec488e2"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="structswd__cmd__t.html">swd_cmd_t</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8h.html#aff5db76ebc3422cef1d7dce92f7284e4">swd_cmd_t</a></td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">SWD Command Element Structure.  <a href="#aff5db76ebc3422cef1d7dce92f7284e4"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">enum &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8h.html#a27fab5915116e3880c16af35ba425fa8">SWD_ERROR_CODE</a> { <br/>
-&nbsp;&nbsp;<a class="el" href="libswd_8h.html#a27fab5915116e3880c16af35ba425fa8af5a1ef7dd83c34b0cc42beb5984bfb01">SWD_OK</a> =  0, 
-<a class="el" href="libswd_8h.html#a27fab5915116e3880c16af35ba425fa8a7acb88c6941a8ec9f104078ee8b3e02c">SWD_ERROR_GENERAL</a> = -1, 
-<a class="el" href="libswd_8h.html#a27fab5915116e3880c16af35ba425fa8aedb8a7cbf26095284eb5976cd8663494">SWD_ERROR_NULLPOINTER</a> = -2, 
-<a class="el" href="libswd_8h.html#a27fab5915116e3880c16af35ba425fa8a4476f371364f6c7bb0e8396120e4c4cd">SWD_ERROR_NULLQUEUE</a> = -3, 
+<tr><td class="memItemLeft" align="right" valign="top">enum &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77">swd_error_code_t</a> { <br/>
+&nbsp;&nbsp;<a class="el" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77af5a1ef7dd83c34b0cc42beb5984bfb01">SWD_OK</a> =  0, 
+<a class="el" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a7acb88c6941a8ec9f104078ee8b3e02c">SWD_ERROR_GENERAL</a> = -1, 
+<a class="el" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77aedb8a7cbf26095284eb5976cd8663494">SWD_ERROR_NULLPOINTER</a> = -2, 
+<a class="el" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a4476f371364f6c7bb0e8396120e4c4cd">SWD_ERROR_NULLQUEUE</a> = -3, 
 <br/>
-&nbsp;&nbsp;<a class="el" href="libswd_8h.html#a27fab5915116e3880c16af35ba425fa8a22f5e6d0a9f72397595cc71b6e11411d">SWD_ERROR_NULLTRN</a> = -4, 
-<a class="el" href="libswd_8h.html#a27fab5915116e3880c16af35ba425fa8aa3b8e6239ccc5999d6d75b5da2133d1a">SWD_ERROR_PARAM</a> = -5, 
-<a class="el" href="libswd_8h.html#a27fab5915116e3880c16af35ba425fa8aeecf32fa72e3b4e8a55fda56852ed0a3">SWD_ERROR_OUTOFMEM</a> = -6, 
-<a class="el" href="libswd_8h.html#a27fab5915116e3880c16af35ba425fa8aaac3da0a3341d405f70349763f526772">SWD_ERROR_RESULT</a> = -7, 
+&nbsp;&nbsp;<a class="el" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a22f5e6d0a9f72397595cc71b6e11411d">SWD_ERROR_NULLTRN</a> = -4, 
+<a class="el" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77aa3b8e6239ccc5999d6d75b5da2133d1a">SWD_ERROR_PARAM</a> = -5, 
+<a class="el" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77aeecf32fa72e3b4e8a55fda56852ed0a3">SWD_ERROR_OUTOFMEM</a> = -6, 
+<a class="el" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77aaac3da0a3341d405f70349763f526772">SWD_ERROR_RESULT</a> = -7, 
 <br/>
-&nbsp;&nbsp;<a class="el" href="libswd_8h.html#a27fab5915116e3880c16af35ba425fa8abe4b62286d73462a18726261e432503e">SWD_ERROR_RANGE</a> = -8, 
-<a class="el" href="libswd_8h.html#a27fab5915116e3880c16af35ba425fa8ab8707f66c87d67231a1df117d176499f">SWD_ERROR_DEFINITION</a> = -9, 
-<a class="el" href="libswd_8h.html#a27fab5915116e3880c16af35ba425fa8aef273147c6f034db3ac7c1340ccaa455">SWD_ERROR_NULLCONTEXT</a> = -10, 
-<a class="el" href="libswd_8h.html#a27fab5915116e3880c16af35ba425fa8a829d12144ebfc2cf1e4c30eae4327e58">SWD_ERROR_QUEUE</a> = -11, 
+&nbsp;&nbsp;<a class="el" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77abe4b62286d73462a18726261e432503e">SWD_ERROR_RANGE</a> = -8, 
+<a class="el" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77ab8707f66c87d67231a1df117d176499f">SWD_ERROR_DEFINITION</a> = -9, 
+<a class="el" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77aef273147c6f034db3ac7c1340ccaa455">SWD_ERROR_NULLCONTEXT</a> = -10, 
+<a class="el" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a829d12144ebfc2cf1e4c30eae4327e58">SWD_ERROR_QUEUE</a> = -11, 
 <br/>
-&nbsp;&nbsp;<a class="el" href="libswd_8h.html#a27fab5915116e3880c16af35ba425fa8a3f107ea05e8a08eeb6db8055db47b6af">SWD_ERROR_ADDR</a> = -12, 
-<a class="el" href="libswd_8h.html#a27fab5915116e3880c16af35ba425fa8aac13275631d7325134021f3409e1bbf0">SWD_ERROR_APnDP</a> = -13, 
-<a class="el" href="libswd_8h.html#a27fab5915116e3880c16af35ba425fa8a0dce436eb6d60b5c935780e38d317272">SWD_ERROR_RnW</a> = -14, 
-<a class="el" href="libswd_8h.html#a27fab5915116e3880c16af35ba425fa8a05931ecd3c4d34ad773d31ee573cefdd">SWD_ERROR_PARITY</a> = -15, 
+&nbsp;&nbsp;<a class="el" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a3f107ea05e8a08eeb6db8055db47b6af">SWD_ERROR_ADDR</a> = -12, 
+<a class="el" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77aac13275631d7325134021f3409e1bbf0">SWD_ERROR_APnDP</a> = -13, 
+<a class="el" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a0dce436eb6d60b5c935780e38d317272">SWD_ERROR_RnW</a> = -14, 
+<a class="el" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a05931ecd3c4d34ad773d31ee573cefdd">SWD_ERROR_PARITY</a> = -15, 
 <br/>
-&nbsp;&nbsp;<a class="el" href="libswd_8h.html#a27fab5915116e3880c16af35ba425fa8ac462fccae009d83aab5d394eba7e4665">SWD_ERROR_ACK</a> = -16, 
-<a class="el" href="libswd_8h.html#a27fab5915116e3880c16af35ba425fa8a3f3dbe4095052628978962830f80cbeb">SWD_ERROR_ACKUNKNOWN</a> = -19, 
-<a class="el" href="libswd_8h.html#a27fab5915116e3880c16af35ba425fa8a8ba17527e1f8596b1e6c644d651a75f2">SWD_ERROR_ACKNOTDONE</a> = -20, 
-<a class="el" href="libswd_8h.html#a27fab5915116e3880c16af35ba425fa8aaf9a4ffb312df6c0d6a2ad5f26236ed2">SWD_ERROR_ACKMISSING</a> = -21, 
+&nbsp;&nbsp;<a class="el" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77ac462fccae009d83aab5d394eba7e4665">SWD_ERROR_ACK</a> = -16, 
+<a class="el" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a3f3dbe4095052628978962830f80cbeb">SWD_ERROR_ACKUNKNOWN</a> = -19, 
+<a class="el" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a8ba17527e1f8596b1e6c644d651a75f2">SWD_ERROR_ACKNOTDONE</a> = -20, 
+<a class="el" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77aaf9a4ffb312df6c0d6a2ad5f26236ed2">SWD_ERROR_ACKMISSING</a> = -21, 
 <br/>
-&nbsp;&nbsp;<a class="el" href="libswd_8h.html#a27fab5915116e3880c16af35ba425fa8aa99a0d1fa79837de68da0abf82950083">SWD_ERROR_ACKMISMATCH</a> = -22, 
-<a class="el" href="libswd_8h.html#a27fab5915116e3880c16af35ba425fa8a0a76fb9ee32976ef62ffff3d766d2ef1">SWD_ERROR_ACKORDER</a> = -23, 
-<a class="el" href="libswd_8h.html#a27fab5915116e3880c16af35ba425fa8a154bc92f783335bf75933cbbcf477d4c">SWD_ERROR_BADOPCODE</a> = -24, 
-<a class="el" href="libswd_8h.html#a27fab5915116e3880c16af35ba425fa8a3a4a9b00904529e4368120e9e7b05c77">SWD_ERROR_NODATACMD</a> = -25, 
+&nbsp;&nbsp;<a class="el" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77aa99a0d1fa79837de68da0abf82950083">SWD_ERROR_ACKMISMATCH</a> = -22, 
+<a class="el" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a0a76fb9ee32976ef62ffff3d766d2ef1">SWD_ERROR_ACKORDER</a> = -23, 
+<a class="el" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a154bc92f783335bf75933cbbcf477d4c">SWD_ERROR_BADOPCODE</a> = -24, 
+<a class="el" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a3a4a9b00904529e4368120e9e7b05c77">SWD_ERROR_NODATACMD</a> = -25, 
 <br/>
-&nbsp;&nbsp;<a class="el" href="libswd_8h.html#a27fab5915116e3880c16af35ba425fa8af41fe1c260478be2da86daded693def0">SWD_ERROR_DATAPTR</a> = -26, 
-<a class="el" href="libswd_8h.html#a27fab5915116e3880c16af35ba425fa8a7960e949fb577cb55f27213364246983">SWD_ERROR_NOPARITYCMD</a> = -27, 
-<a class="el" href="libswd_8h.html#a27fab5915116e3880c16af35ba425fa8aaa64317e7fcfbc135103e92e0d7461d0">SWD_ERROR_PARITYPTR</a> = -28, 
-<a class="el" href="libswd_8h.html#a27fab5915116e3880c16af35ba425fa8aa09e4f36fe516704701f016e7cf08c08">SWD_ERROR_NOTDONE</a> = -29, 
+&nbsp;&nbsp;<a class="el" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77af41fe1c260478be2da86daded693def0">SWD_ERROR_DATAPTR</a> = -26, 
+<a class="el" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a7960e949fb577cb55f27213364246983">SWD_ERROR_NOPARITYCMD</a> = -27, 
+<a class="el" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77aaa64317e7fcfbc135103e92e0d7461d0">SWD_ERROR_PARITYPTR</a> = -28, 
+<a class="el" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77aa09e4f36fe516704701f016e7cf08c08">SWD_ERROR_NOTDONE</a> = -29, 
 <br/>
-&nbsp;&nbsp;<a class="el" href="libswd_8h.html#a27fab5915116e3880c16af35ba425fa8a8e6636f921f5856ece06915d2c2eeabf">SWD_ERROR_QUEUEROOT</a> = -30, 
-<a class="el" href="libswd_8h.html#a27fab5915116e3880c16af35ba425fa8ad631db57f3edc4461e7deef3f7108e78">SWD_ERROR_QUEUETAIL</a> = -31, 
-<a class="el" href="libswd_8h.html#a27fab5915116e3880c16af35ba425fa8a8b59d867a0320335aebfd5a503b3d331">SWD_ERROR_BADCMDTYPE</a> = -32, 
-<a class="el" href="libswd_8h.html#a27fab5915116e3880c16af35ba425fa8af0ce348ad2c0dc96642814d5b40013a5">SWD_ERROR_BADCMDDATA</a> = -33, 
+&nbsp;&nbsp;<a class="el" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a8e6636f921f5856ece06915d2c2eeabf">SWD_ERROR_QUEUEROOT</a> = -30, 
+<a class="el" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77ad631db57f3edc4461e7deef3f7108e78">SWD_ERROR_QUEUETAIL</a> = -31, 
+<a class="el" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a8b59d867a0320335aebfd5a503b3d331">SWD_ERROR_BADCMDTYPE</a> = -32, 
+<a class="el" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77af0ce348ad2c0dc96642814d5b40013a5">SWD_ERROR_BADCMDDATA</a> = -33, 
 <br/>
-&nbsp;&nbsp;<a class="el" href="libswd_8h.html#a27fab5915116e3880c16af35ba425fa8a662935dd4a8fa01620b62dd4bb879c10">SWD_ERROR_TURNAROUND</a> = -34, 
-<a class="el" href="libswd_8h.html#a27fab5915116e3880c16af35ba425fa8a186d948f46f62e6ed2a35a06ac8d61a2">SWD_ERROR_DRIVER</a> = -35, 
-<a class="el" href="libswd_8h.html#a27fab5915116e3880c16af35ba425fa8a4de5da0a220537161b83db14cb02882e">SWD_ERROR_ACK_WAIT</a> = -36, 
-<a class="el" href="libswd_8h.html#a27fab5915116e3880c16af35ba425fa8a562d12325f42609d3548848d0012e668">SWD_ERROR_ACK_FAULT</a> = -37, 
+&nbsp;&nbsp;<a class="el" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a662935dd4a8fa01620b62dd4bb879c10">SWD_ERROR_TURNAROUND</a> = -34, 
+<a class="el" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a186d948f46f62e6ed2a35a06ac8d61a2">SWD_ERROR_DRIVER</a> = -35, 
+<a class="el" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a4de5da0a220537161b83db14cb02882e">SWD_ERROR_ACK_WAIT</a> = -36, 
+<a class="el" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a562d12325f42609d3548848d0012e668">SWD_ERROR_ACK_FAULT</a> = -37, 
 <br/>
-&nbsp;&nbsp;<a class="el" href="libswd_8h.html#a27fab5915116e3880c16af35ba425fa8a6221955153e8a1486c6ba1885fad260d">SWD_ERROR_QUEUENOTFREE</a> = -38, 
-<a class="el" href="libswd_8h.html#a27fab5915116e3880c16af35ba425fa8a278660e87edcaef6a52b604c1fdda9d7">SWD_ERROR_TRANSPORT</a> = -39, 
-<a class="el" href="libswd_8h.html#a27fab5915116e3880c16af35ba425fa8ad7b25e37bdd661e4146a201c01aba3e2">SWD_ERROR_DIRECTION</a> = -40, 
-<a class="el" href="libswd_8h.html#a27fab5915116e3880c16af35ba425fa8a3409780dd844cd0a9ec85fab65ead058">SWD_ERROR_LOGLEVEL</a> = -41
+&nbsp;&nbsp;<a class="el" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a6221955153e8a1486c6ba1885fad260d">SWD_ERROR_QUEUENOTFREE</a> = -38, 
+<a class="el" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a278660e87edcaef6a52b604c1fdda9d7">SWD_ERROR_TRANSPORT</a> = -39, 
+<a class="el" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77ad7b25e37bdd661e4146a201c01aba3e2">SWD_ERROR_DIRECTION</a> = -40, 
+<a class="el" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a3409780dd844cd0a9ec85fab65ead058">SWD_ERROR_LOGLEVEL</a> = -41
 <br/>
  }</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight"><p>Status and Error Codes definitions. </p>
- <a href="libswd_8h.html#a27fab5915116e3880c16af35ba425fa8">More...</a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">enum &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8h.html#a5a7e21454b327f96ca82a916f5c02810">SWD_LOGLEVEL</a> { <br/>
+ <a href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77">More...</a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">enum &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8h.html#ab68cbcef79d602fc0fe70cb65c43e898">swd_loglevel_t</a> { <br/>
 &nbsp;&nbsp;<b>SWD_LOGLEVEL_MIN</b> =  0, 
-<a class="el" href="libswd_8h.html#a5a7e21454b327f96ca82a916f5c02810aae6717e99b0a1bb52faddc723ccf4c8a">SWD_LOGLEVEL_SILENT</a> =  0, 
-<a class="el" href="libswd_8h.html#a5a7e21454b327f96ca82a916f5c02810aec966870ed80a0b7995871924db678f1">SWD_LOGLEVEL_ERROR</a> =  1, 
-<a class="el" href="libswd_8h.html#a5a7e21454b327f96ca82a916f5c02810a207bbe4a21ac547c5d7613cfa198e9ca">SWD_LOGLEVEL_WARNING</a> =  2, 
+<a class="el" href="libswd_8h.html#ab68cbcef79d602fc0fe70cb65c43e898aae6717e99b0a1bb52faddc723ccf4c8a">SWD_LOGLEVEL_SILENT</a> =  0, 
+<a class="el" href="libswd_8h.html#ab68cbcef79d602fc0fe70cb65c43e898aec966870ed80a0b7995871924db678f1">SWD_LOGLEVEL_ERROR</a> =  1, 
+<a class="el" href="libswd_8h.html#ab68cbcef79d602fc0fe70cb65c43e898a207bbe4a21ac547c5d7613cfa198e9ca">SWD_LOGLEVEL_WARNING</a> =  2, 
 <br/>
-&nbsp;&nbsp;<a class="el" href="libswd_8h.html#a5a7e21454b327f96ca82a916f5c02810ae80dd8ea77c8e8121c806150cf55495c">SWD_LOGLEVEL_INFO</a> =  3, 
-<a class="el" href="libswd_8h.html#a5a7e21454b327f96ca82a916f5c02810a911a4892f6c846b089c1d999214e0ee8">SWD_LOGLEVEL_DEBUG</a> =  4, 
-<b>SWD_LOGLEVEL_MAX</b> =  4
+&nbsp;&nbsp;<a class="el" href="libswd_8h.html#ab68cbcef79d602fc0fe70cb65c43e898ad06e455a696693b2226f49e6cec64146">SWD_LOGLEVEL_NORMAL</a> =  3, 
+<a class="el" href="libswd_8h.html#ab68cbcef79d602fc0fe70cb65c43e898ae80dd8ea77c8e8121c806150cf55495c">SWD_LOGLEVEL_INFO</a> =  4, 
+<a class="el" href="libswd_8h.html#ab68cbcef79d602fc0fe70cb65c43e898a911a4892f6c846b089c1d999214e0ee8">SWD_LOGLEVEL_DEBUG</a> =  5, 
+<b>SWD_LOGLEVEL_MAX</b> =  5
 <br/>
  }</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight"><p>Logging Level Codes definition. </p>
- <a href="libswd_8h.html#a5a7e21454b327f96ca82a916f5c02810">More...</a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">enum &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8h.html#acd080697f0ba041ad61439fc058c8516">SWD_CMDTYPE</a> { <br/>
-&nbsp;&nbsp;<a class="el" href="libswd_8h.html#acd080697f0ba041ad61439fc058c8516a62c40fbeaf26e6daded916edd77bc21d">SWD_CMDTYPE_MOSI_DATA</a> = -7, 
-<a class="el" href="libswd_8h.html#acd080697f0ba041ad61439fc058c8516a826701bb4e07deb5c5f5c33665688c6b">SWD_CMDTYPE_MOSI_REQUEST</a> = -6, 
-<a class="el" href="libswd_8h.html#acd080697f0ba041ad61439fc058c8516a6da6cde9944c71a26444c97bee9b59d0">SWD_CMDTYPE_MOSI_TRN</a> = -5, 
-<a class="el" href="libswd_8h.html#acd080697f0ba041ad61439fc058c8516ab3726bd22bf211c773b091cf70bec9f1">SWD_CMDTYPE_MOSI_PARITY</a> = -4, 
+ <a href="libswd_8h.html#ab68cbcef79d602fc0fe70cb65c43e898">More...</a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">enum &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8h.html#a18e16544fabdef0ef0e531cc6b4d4b7c">swd_cmdtype_t</a> { <br/>
+&nbsp;&nbsp;<a class="el" href="libswd_8h.html#a18e16544fabdef0ef0e531cc6b4d4b7ca62c40fbeaf26e6daded916edd77bc21d">SWD_CMDTYPE_MOSI_DATA</a> = -7, 
+<a class="el" href="libswd_8h.html#a18e16544fabdef0ef0e531cc6b4d4b7ca826701bb4e07deb5c5f5c33665688c6b">SWD_CMDTYPE_MOSI_REQUEST</a> = -6, 
+<a class="el" href="libswd_8h.html#a18e16544fabdef0ef0e531cc6b4d4b7ca6da6cde9944c71a26444c97bee9b59d0">SWD_CMDTYPE_MOSI_TRN</a> = -5, 
+<a class="el" href="libswd_8h.html#a18e16544fabdef0ef0e531cc6b4d4b7cab3726bd22bf211c773b091cf70bec9f1">SWD_CMDTYPE_MOSI_PARITY</a> = -4, 
 <br/>
-&nbsp;&nbsp;<a class="el" href="libswd_8h.html#acd080697f0ba041ad61439fc058c8516af951c4a4ebb960641f074785a6174a5a">SWD_CMDTYPE_MOSI_BITBANG</a> = -3, 
-<a class="el" href="libswd_8h.html#acd080697f0ba041ad61439fc058c8516a2bd240d136f2e7f661ad14bd355053a6">SWD_CMDTYPE_MOSI_CONTROL</a> = -2, 
-<a class="el" href="libswd_8h.html#acd080697f0ba041ad61439fc058c8516aceec6c2784b149355b019cbda0623fe0">SWD_CMDTYPE_MOSI</a> = -1, 
-<a class="el" href="libswd_8h.html#acd080697f0ba041ad61439fc058c8516aa61ae4ec60ecffb3df34f3e485090586">SWD_CMDTYPE_UNDEFINED</a> = 0, 
+&nbsp;&nbsp;<a class="el" href="libswd_8h.html#a18e16544fabdef0ef0e531cc6b4d4b7caf951c4a4ebb960641f074785a6174a5a">SWD_CMDTYPE_MOSI_BITBANG</a> = -3, 
+<a class="el" href="libswd_8h.html#a18e16544fabdef0ef0e531cc6b4d4b7ca2bd240d136f2e7f661ad14bd355053a6">SWD_CMDTYPE_MOSI_CONTROL</a> = -2, 
+<a class="el" href="libswd_8h.html#a18e16544fabdef0ef0e531cc6b4d4b7caceec6c2784b149355b019cbda0623fe0">SWD_CMDTYPE_MOSI</a> = -1, 
+<a class="el" href="libswd_8h.html#a18e16544fabdef0ef0e531cc6b4d4b7caa61ae4ec60ecffb3df34f3e485090586">SWD_CMDTYPE_UNDEFINED</a> = 0, 
 <br/>
-&nbsp;&nbsp;<a class="el" href="libswd_8h.html#acd080697f0ba041ad61439fc058c8516a4d019a00cc772982e7d1ac52aac5d4e0">SWD_CMDTYPE_MISO</a> = 1, 
-<a class="el" href="libswd_8h.html#acd080697f0ba041ad61439fc058c8516a59eade15cc1d2430434c0e4174dc3e07">SWD_CMDTYPE_MISO_ACK</a> = 2, 
-<a class="el" href="libswd_8h.html#acd080697f0ba041ad61439fc058c8516ab4260670a401ed63adec72c0753f915f">SWD_CMDTYPE_MISO_BITBANG</a> = 3, 
-<a class="el" href="libswd_8h.html#acd080697f0ba041ad61439fc058c8516a5d23ed26796e30ae787d3de869ef9359">SWD_CMDTYPE_MISO_PARITY</a> = 4, 
+&nbsp;&nbsp;<a class="el" href="libswd_8h.html#a18e16544fabdef0ef0e531cc6b4d4b7ca4d019a00cc772982e7d1ac52aac5d4e0">SWD_CMDTYPE_MISO</a> = 1, 
+<a class="el" href="libswd_8h.html#a18e16544fabdef0ef0e531cc6b4d4b7ca59eade15cc1d2430434c0e4174dc3e07">SWD_CMDTYPE_MISO_ACK</a> = 2, 
+<a class="el" href="libswd_8h.html#a18e16544fabdef0ef0e531cc6b4d4b7cab4260670a401ed63adec72c0753f915f">SWD_CMDTYPE_MISO_BITBANG</a> = 3, 
+<a class="el" href="libswd_8h.html#a18e16544fabdef0ef0e531cc6b4d4b7ca5d23ed26796e30ae787d3de869ef9359">SWD_CMDTYPE_MISO_PARITY</a> = 4, 
 <br/>
-&nbsp;&nbsp;<a class="el" href="libswd_8h.html#acd080697f0ba041ad61439fc058c8516a8ce670cc9c3d3f2d77c83f13c589978f">SWD_CMDTYPE_MISO_TRN</a> = 5, 
-<a class="el" href="libswd_8h.html#acd080697f0ba041ad61439fc058c8516a2c17157db3f21117cac24fa17793a576">SWD_CMDTYPE_MISO_DATA</a> = 6
+&nbsp;&nbsp;<a class="el" href="libswd_8h.html#a18e16544fabdef0ef0e531cc6b4d4b7ca8ce670cc9c3d3f2d77c83f13c589978f">SWD_CMDTYPE_MISO_TRN</a> = 5, 
+<a class="el" href="libswd_8h.html#a18e16544fabdef0ef0e531cc6b4d4b7ca2c17157db3f21117cac24fa17793a576">SWD_CMDTYPE_MISO_DATA</a> = 6
 <br/>
  }</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight"><p>SWD Command Codes definitions. </p>
- <a href="libswd_8h.html#acd080697f0ba041ad61439fc058c8516">More...</a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">enum &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8h.html#a7fbfdd0305df10658af08b4b2c0e8f4c">SWD_SHIFTDIR</a> { <a class="el" href="libswd_8h.html#a7fbfdd0305df10658af08b4b2c0e8f4ca0b9f6301b086569d5a62e49d7a2ebdf0">SWD_DIR_LSBFIRST</a> = 0, 
-<a class="el" href="libswd_8h.html#a7fbfdd0305df10658af08b4b2c0e8f4ca76bc9b4b4ac1e47f4602576ed500a07c">SWD_DIR_MSBFIRST</a> = 1
+ <a href="libswd_8h.html#a18e16544fabdef0ef0e531cc6b4d4b7c">More...</a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">enum &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8h.html#a7262ed71e0d9c40d2ede6c0aa44209df">swd_shiftdir_t</a> { <a class="el" href="libswd_8h.html#a7262ed71e0d9c40d2ede6c0aa44209dfa0b9f6301b086569d5a62e49d7a2ebdf0">SWD_DIR_LSBFIRST</a> = 0, 
+<a class="el" href="libswd_8h.html#a7262ed71e0d9c40d2ede6c0aa44209dfa76bc9b4b4ac1e47f4602576ed500a07c">SWD_DIR_MSBFIRST</a> = 1
  }</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight"><p>What is the shift direction LSB-first or MSB-first. </p>
- <a href="libswd_8h.html#a7fbfdd0305df10658af08b4b2c0e8f4c">More...</a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">enum &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8h.html#a348e10c76c02b1223ac1456c36d69518">SWD_OPERATION</a> { <br/>
-&nbsp;&nbsp;<a class="el" href="libswd_8h.html#a348e10c76c02b1223ac1456c36d69518a3072b746192012364ca0986dfbd048bf">SWD_OPERATION_FIRST</a> = 1, 
-<a class="el" href="libswd_8h.html#a348e10c76c02b1223ac1456c36d69518a9fe0514a56fa43763b83c16a168dc3e5">SWD_OPERATION_ENQUEUE</a> = 1, 
-<a class="el" href="libswd_8h.html#a348e10c76c02b1223ac1456c36d69518a56d19aa6e805b636d0c679df01a83bf1">SWD_OPERATION_EXECUTE</a> = 2, 
-<a class="el" href="libswd_8h.html#a348e10c76c02b1223ac1456c36d69518aff0c4b9c2b732437df67e41f3dde5b41">SWD_OPERATION_TRANSMIT_HEAD</a> = 3, 
+ <a href="libswd_8h.html#a7262ed71e0d9c40d2ede6c0aa44209df">More...</a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">enum &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070">swd_operation_t</a> { <br/>
+&nbsp;&nbsp;<a class="el" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070a3072b746192012364ca0986dfbd048bf">SWD_OPERATION_FIRST</a> = 1, 
+<a class="el" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070a9fe0514a56fa43763b83c16a168dc3e5">SWD_OPERATION_ENQUEUE</a> = 1, 
+<a class="el" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070a56d19aa6e805b636d0c679df01a83bf1">SWD_OPERATION_EXECUTE</a> = 2, 
+<a class="el" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070aff0c4b9c2b732437df67e41f3dde5b41">SWD_OPERATION_TRANSMIT_HEAD</a> = 3, 
 <br/>
-&nbsp;&nbsp;<a class="el" href="libswd_8h.html#a348e10c76c02b1223ac1456c36d69518a2f8b579789e424e73b147b14b910f9c0">SWD_OPERATION_TRANSMIT_TAIL</a> = 4, 
-<a class="el" href="libswd_8h.html#a348e10c76c02b1223ac1456c36d69518ac38a2a8469f357620b62255215119eba">SWD_OPERATION_TRANSMIT_ALL</a> = 5, 
-<a class="el" href="libswd_8h.html#a348e10c76c02b1223ac1456c36d69518a1b313c50018796ad8d5049a005c164dd">SWD_OPERATION_TRANSMIT_ONE</a> = 6, 
-<a class="el" href="libswd_8h.html#a348e10c76c02b1223ac1456c36d69518ada451b56cf1fa088d3f36c84930054dd">SWD_OPERATION_TRANSMIT_LAST</a> = 7, 
+&nbsp;&nbsp;<a class="el" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070a2f8b579789e424e73b147b14b910f9c0">SWD_OPERATION_TRANSMIT_TAIL</a> = 4, 
+<a class="el" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070ac38a2a8469f357620b62255215119eba">SWD_OPERATION_TRANSMIT_ALL</a> = 5, 
+<a class="el" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070a1b313c50018796ad8d5049a005c164dd">SWD_OPERATION_TRANSMIT_ONE</a> = 6, 
+<a class="el" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070ada451b56cf1fa088d3f36c84930054dd">SWD_OPERATION_TRANSMIT_LAST</a> = 7, 
 <br/>
-&nbsp;&nbsp;<a class="el" href="libswd_8h.html#a348e10c76c02b1223ac1456c36d69518a2b0a3a85cda93ab617d1f49273a3cc3b">SWD_OPERATION_LAST</a> = 7
+&nbsp;&nbsp;<a class="el" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070a2b0a3a85cda93ab617d1f49273a3cc3b">SWD_OPERATION_LAST</a> = 7
 <br/>
  }</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight"><p>Command Queue operations codes. </p>
- <a href="libswd_8h.html#a348e10c76c02b1223ac1456c36d69518">More...</a><br/></td></tr>
+ <a href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070">More...</a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">enum &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8h.html#aa690e0849a7ecb626ac82d4dd5d11bf4">swd_bool_t</a> { <a class="el" href="libswd_8h.html#aa690e0849a7ecb626ac82d4dd5d11bf4aeebb63e10fa0119c843fa9e78c69451d">SWD_FALSE</a> = 0, 
 <a class="el" href="libswd_8h.html#aa690e0849a7ecb626ac82d4dd5d11bf4a17a0a3b4c146af7e8675da450e8a2213">SWD_TRUE</a> = 1
  }</td></tr>
@@ -446,7 +437,7 @@ Functions</h2></td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Free queue head up to *cmdq element.  <a href="#a583240dd9735d3192a6a895f4cefd89c"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8h.html#a968846e75ffdbceafd2f4a3bd7f314b1">swd_cmdq_free_tail</a> (<a class="el" href="structswd__cmd__t.html">swd_cmd_t</a> *cmdq)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Free queue tail starting after *cmdq element.  <a href="#a968846e75ffdbceafd2f4a3bd7f314b1"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8h.html#ad53379f5a7756cc91b01e867aaaa489d">swd_cmdq_flush</a> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, <a class="el" href="libswd_8h.html#aa0833ff00c22fe41453f5e9acec488e2">swd_operation_t</a> operation)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8h.html#ad53379f5a7756cc91b01e867aaaa489d">swd_cmdq_flush</a> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, <a class="el" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070">swd_operation_t</a> operation)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Flush command queue contents into interface driver.  <a href="#ad53379f5a7756cc91b01e867aaaa489d"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8h.html#a3bc721b722709fda46962cbbe6f289a6">swd_cmd_enqueue</a> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, <a class="el" href="structswd__cmd__t.html">swd_cmd_t</a> *cmd)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Append selected command to a context's command queue.  <a href="#a3bc721b722709fda46962cbbe6f289a6"></a><br/></td></tr>
@@ -498,20 +489,18 @@ char *&nbsp;</td><td class="memItemRight" valign="bottom"><b>swd_cmd_string_cmdt
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Append command queue with TRN WRITE/MOSI, if previous command was READ/MISO.  <a href="#a342a54175498a1cd4a2668a189977012"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8h.html#abb32abd798b3b1ffa14573e4f139c079">swd_bus_setdir_miso</a> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Append command queue with TRN READ/MISO, if previous command was WRITE/MOSI.  <a href="#abb32abd798b3b1ffa14573e4f139c079"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8h.html#a36141f037b00ea981cf771d6061bdfd6">swd_bus_write_request</a> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, <a class="el" href="libswd_8h.html#aa0833ff00c22fe41453f5e9acec488e2">swd_operation_t</a> operation, char *APnDP, char *RnW, char *addr)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8h.html#a36141f037b00ea981cf771d6061bdfd6">swd_bus_write_request</a> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, <a class="el" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070">swd_operation_t</a> operation, char *APnDP, char *RnW, char *addr)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Perform Request.  <a href="#a36141f037b00ea981cf771d6061bdfd6"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8h.html#aae7d6660b4fd10d0d1105d74257b8ac7">swd_bus_read_ack</a> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, <a class="el" href="libswd_8h.html#aa0833ff00c22fe41453f5e9acec488e2">swd_operation_t</a> operation, char **ack)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8h.html#aae7d6660b4fd10d0d1105d74257b8ac7">swd_bus_read_ack</a> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, <a class="el" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070">swd_operation_t</a> operation, char **ack)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Perform ACK read into *ack and verify received data.  <a href="#aae7d6660b4fd10d0d1105d74257b8ac7"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8h.html#ac1948d1f82a3166de4de43dae48b7413">swd_bus_write_data_p</a> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, <a class="el" href="libswd_8h.html#aa0833ff00c22fe41453f5e9acec488e2">swd_operation_t</a> operation, int *data, char *parity)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8h.html#ac1948d1f82a3166de4de43dae48b7413">swd_bus_write_data_p</a> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, <a class="el" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070">swd_operation_t</a> operation, int *data, char *parity)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Perform (MOSI) data write with provided parity value.  <a href="#ac1948d1f82a3166de4de43dae48b7413"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8h.html#a014280b7d9a07a14862f16922827f50a">swd_bus_write_data_ap</a> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, <a class="el" href="libswd_8h.html#aa0833ff00c22fe41453f5e9acec488e2">swd_operation_t</a> operation, int *data)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8h.html#a014280b7d9a07a14862f16922827f50a">swd_bus_write_data_ap</a> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, <a class="el" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070">swd_operation_t</a> operation, int *data)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Perform (MOSI) data write with automatic parity calculation.  <a href="#a014280b7d9a07a14862f16922827f50a"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8h.html#a45c79a01998ae0e845ee425c432e181d">swd_bus_read_data_p</a> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, <a class="el" href="libswd_8h.html#aa0833ff00c22fe41453f5e9acec488e2">swd_operation_t</a> operation, int **data, char **parity)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8h.html#a45c79a01998ae0e845ee425c432e181d">swd_bus_read_data_p</a> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, <a class="el" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070">swd_operation_t</a> operation, int **data, char **parity)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Perform (MISO) data read.  <a href="#a45c79a01998ae0e845ee425c432e181d"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8h.html#ad0ae33bb778d9c0bba3fe5f74adc8d22">swd_bus_write_control</a> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, <a class="el" href="libswd_8h.html#aa0833ff00c22fe41453f5e9acec488e2">swd_operation_t</a> operation, char *ctlmsg, int len)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8h.html#ad0ae33bb778d9c0bba3fe5f74adc8d22">swd_bus_write_control</a> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, <a class="el" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070">swd_operation_t</a> operation, char *ctlmsg, int len)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Write CONTROL byte to the Target's DAP.  <a href="#ad0ae33bb778d9c0bba3fe5f74adc8d22"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a04314b7ccbde2974946a2e6312a30583"></a><!-- doxytag: member="libswd.h::swd_bus_write_jtag2swd" ref="a04314b7ccbde2974946a2e6312a30583" args="(swd_ctx_t *swdctx, swd_operation_t operation)" -->
-int&nbsp;</td><td class="memItemRight" valign="bottom"><b>swd_bus_write_jtag2swd</b> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, <a class="el" href="libswd_8h.html#aa0833ff00c22fe41453f5e9acec488e2">swd_operation_t</a> operation)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8h.html#afbae73ccf42657390d11d645fcc456d8">swd_bitgen8_request</a> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, char *APnDP, char *RnW, char *addr, char *request)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Generate 8-bit SWD-REQUEST packet contents with provided parameters.  <a href="#afbae73ccf42657390d11d645fcc456d8"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8h.html#a2891df407bc8178e3ca45bd508822327">swd_drv_transmit</a> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, <a class="el" href="structswd__cmd__t.html">swd_cmd_t</a> *cmd)</td></tr>
@@ -524,18 +513,22 @@ int&nbsp;</td><td class="memItemRight" valign="bottom"><b>swd_drv_mosi_32</b> (<
 int&nbsp;</td><td class="memItemRight" valign="bottom"><b>swd_drv_miso_8</b> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, char *data, int bits, int nLSBfirst)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac0f7edf48e8fefd811cdab643559dad0"></a><!-- doxytag: member="libswd.h::swd_drv_miso_32" ref="ac0f7edf48e8fefd811cdab643559dad0" args="(swd_ctx_t *swdctx, int *data, int bits, int nLSBfirst)" -->
 int&nbsp;</td><td class="memItemRight" valign="bottom"><b>swd_drv_miso_32</b> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, int *data, int bits, int nLSBfirst)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8h.html#a98fbdd25229d0a49f04a061d2fdf28f7">swd_dp_reset</a> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, <a class="el" href="libswd_8h.html#aa0833ff00c22fe41453f5e9acec488e2">swd_operation_t</a> operation)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Debug Access Port Reset sends 50 CLK with TMS high that brings both SW-DP and JTAG-DP into reset state.  <a href="#a98fbdd25229d0a49f04a061d2fdf28f7"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8h.html#a6229cd1e143fb4789660ea91a5f5eb28">swd_dp_activate</a> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, <a class="el" href="libswd_8h.html#aa0833ff00c22fe41453f5e9acec488e2">swd_operation_t</a> operation)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Activate SW-DP by sending out RESET and JTAG-TO-SWD sequence on SWDIOTMS line.  <a href="#a6229cd1e143fb4789660ea91a5f5eb28"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8h.html#a0a40c90253f99da07eae5e237be187b1">swd_dp_read_idcode</a> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, <a class="el" href="libswd_8h.html#aa0833ff00c22fe41453f5e9acec488e2">swd_operation_t</a> operation, int **idcode)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8h.html#ae53937afaa64ce0b28bef3d8d093f65a">swd_dap_reset</a> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, <a class="el" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070">swd_operation_t</a> operation)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Debug Access Port Reset sends 50 CLK with TMS high that brings both SW-DP and JTAG-DP into reset state.  <a href="#ae53937afaa64ce0b28bef3d8d093f65a"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8h.html#a0ffa1e7b48180a7c4bf05f2906a9cbb1">swd_dap_select</a> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, <a class="el" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070">swd_operation_t</a> operation)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Activate SW-DP by sending out RESET and JTAG-TO-SWD sequence on SWDIOTMS line.  <a href="#a0ffa1e7b48180a7c4bf05f2906a9cbb1"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8h.html#a6758b95d2adfbfb9b95198f9b0b5462c">swd_dap_detect</a> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, <a class="el" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070">swd_operation_t</a> operation, int **idcode)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Macro: Reset target DAP, select SW-DP, read out IDCODE.  <a href="#a6758b95d2adfbfb9b95198f9b0b5462c"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8h.html#a0a40c90253f99da07eae5e237be187b1">swd_dp_read_idcode</a> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, <a class="el" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070">swd_operation_t</a> operation, int **idcode)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Macro: Read out IDCODE register and return its value on function return.  <a href="#a0a40c90253f99da07eae5e237be187b1"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8h.html#a01125bcff3fe193e889b5afa6d811ac7">swd_dp_detect</a> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, <a class="el" href="libswd_8h.html#aa0833ff00c22fe41453f5e9acec488e2">swd_operation_t</a> operation, int **idcode)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Macro: Reset target DAP, select SW-DP, read out IDCODE.  <a href="#a01125bcff3fe193e889b5afa6d811ac7"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8h.html#ab2228c114efd81e478ebc00e5bfe4c43">swd_log</a> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, <a class="el" href="libswd_8h.html#acb51eaac9226d7aef398d63e2a5db319">swd_loglevel_t</a> loglevel, char *msg,...)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8h.html#ab2228c114efd81e478ebc00e5bfe4c43">swd_log</a> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, <a class="el" href="libswd_8h.html#ab68cbcef79d602fc0fe70cb65c43e898">swd_loglevel_t</a> loglevel, char *msg,...)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Put a message into swd context log at specified verbosity level.  <a href="#ab2228c114efd81e478ebc00e5bfe4c43"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8h.html#af30788d001ca964f2889f0d70e2eae8f">swd_log_level_set</a> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, <a class="el" href="libswd_8h.html#ab68cbcef79d602fc0fe70cb65c43e898">swd_loglevel_t</a> loglevel)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Change log level to increase or decrease verbosity level.  <a href="#af30788d001ca964f2889f0d70e2eae8f"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4732d2c94a22605a8bc60c455889fe1b"></a><!-- doxytag: member="libswd.h::swd_log_level_inherit" ref="a4732d2c94a22605a8bc60c455889fe1b" args="(swd_ctx_t *swdctx, int loglevel)" -->
+int&nbsp;</td><td class="memItemRight" valign="bottom"><b>swd_log_level_inherit</b> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, int loglevel)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5c41206bbf4a593193192d03104a72f5"></a><!-- doxytag: member="libswd.h::swd_error_string" ref="a5c41206bbf4a593193192d03104a72f5" args="(swd_error_code_t error)" -->
-char *&nbsp;</td><td class="memItemRight" valign="bottom"><b>swd_error_string</b> (<a class="el" href="libswd_8h.html#a5f458052e7d0836513de622e91c291a0">swd_error_code_t</a> error)</td></tr>
+char *&nbsp;</td><td class="memItemRight" valign="bottom"><b>swd_error_string</b> (<a class="el" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77">swd_error_code_t</a> error)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8h.html#ad4f88acc646c06e6e81fbde8117c21af">swd_init</a> (void)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">LibSWD initialization routine.  <a href="#ad4f88acc646c06e6e81fbde8117c21af"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8h.html#ac53e7440e6d3c277df4e715665d1986d">swd_deinit_ctx</a> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx)</td></tr>
@@ -952,87 +945,6 @@ int&nbsp;</td><td class="memItemRight" valign="bottom"><b>swd_drv_miso_trn</b> (
 
 </div>
 </div>
-<a class="anchor" id="a6e085f87c01f67880528f5915576bd8f"></a><!-- doxytag: member="libswd.h::swd_cmdtype_t" ref="a6e085f87c01f67880528f5915576bd8f" args="" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef enum <a class="el" href="libswd_8h.html#acd080697f0ba041ad61439fc058c8516">SWD_CMDTYPE</a>  <a class="el" href="libswd_8h.html#a6e085f87c01f67880528f5915576bd8f">swd_cmdtype_t</a></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>SWD Command Codes definitions. </p>
-<p>Available values: MISO&gt;0, MOSI&lt;0, undefined=0. To check command direction (read/write) multiply tested value with one of the MOSI or MISO commands</p>
-<ul>
-<li>result is positive for equal direction and negative if direction differs. Command Type codes definition, use this to see names in debugger. </li>
-</ul>
-
-</div>
-</div>
-<a class="anchor" id="a5f458052e7d0836513de622e91c291a0"></a><!-- doxytag: member="libswd.h::swd_error_code_t" ref="a5f458052e7d0836513de622e91c291a0" args="" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef enum <a class="el" href="libswd_8h.html#a27fab5915116e3880c16af35ba425fa8">SWD_ERROR_CODE</a>  <a class="el" href="libswd_8h.html#a5f458052e7d0836513de622e91c291a0">swd_error_code_t</a></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Status and Error Codes definitions. </p>
-<p>Error Codes definition, use this to have its name on debugger. </p>
-
-</div>
-</div>
-<a class="anchor" id="acb51eaac9226d7aef398d63e2a5db319"></a><!-- doxytag: member="libswd.h::swd_loglevel_t" ref="acb51eaac9226d7aef398d63e2a5db319" args="" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef enum <a class="el" href="libswd_8h.html#a5a7e21454b327f96ca82a916f5c02810">SWD_LOGLEVEL</a>  <a class="el" href="libswd_8h.html#acb51eaac9226d7aef398d63e2a5db319">swd_loglevel_t</a></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Logging Level Codes definition. </p>
-<p>Logging Level codes definition, use this to have its name on debugger. </p>
-
-</div>
-</div>
-<a class="anchor" id="aa0833ff00c22fe41453f5e9acec488e2"></a><!-- doxytag: member="libswd.h::swd_operation_t" ref="aa0833ff00c22fe41453f5e9acec488e2" args="" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef enum <a class="el" href="libswd_8h.html#a348e10c76c02b1223ac1456c36d69518">SWD_OPERATION</a>  <a class="el" href="libswd_8h.html#aa0833ff00c22fe41453f5e9acec488e2">swd_operation_t</a></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Command Queue operations codes. </p>
-
-</div>
-</div>
-<a class="anchor" id="ad6f30223e1e29d68c0bef8a483afe931"></a><!-- doxytag: member="libswd.h::swd_shiftdir_t" ref="ad6f30223e1e29d68c0bef8a483afe931" args="" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef enum <a class="el" href="libswd_8h.html#a7fbfdd0305df10658af08b4b2c0e8f4c">SWD_SHIFTDIR</a>  <a class="el" href="libswd_8h.html#ad6f30223e1e29d68c0bef8a483afe931">swd_shiftdir_t</a></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>What is the shift direction LSB-first or MSB-first. </p>
-
-</div>
-</div>
 <hr/><h2>Enumeration Type Documentation</h2>
 <a class="anchor" id="aa690e0849a7ecb626ac82d4dd5d11bf4"></a><!-- doxytag: member="libswd.h::swd_bool_t" ref="aa690e0849a7ecb626ac82d4dd5d11bf4" args="" -->
 <div class="memitem">
@@ -1059,12 +971,12 @@ int&nbsp;</td><td class="memItemRight" valign="bottom"><b>swd_drv_miso_trn</b> (
 
 </div>
 </div>
-<a class="anchor" id="acd080697f0ba041ad61439fc058c8516"></a><!-- doxytag: member="libswd.h::SWD_CMDTYPE" ref="acd080697f0ba041ad61439fc058c8516" args="" -->
+<a class="anchor" id="a18e16544fabdef0ef0e531cc6b4d4b7c"></a><!-- doxytag: member="libswd.h::swd_cmdtype_t" ref="a18e16544fabdef0ef0e531cc6b4d4b7c" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="libswd_8h.html#acd080697f0ba041ad61439fc058c8516">SWD_CMDTYPE</a></td>
+          <td class="memname">enum <a class="el" href="libswd_8h.html#a18e16544fabdef0ef0e531cc6b4d4b7c">swd_cmdtype_t</a></td>
         </tr>
       </table>
 </div>
@@ -1076,46 +988,46 @@ int&nbsp;</td><td class="memItemRight" valign="bottom"><b>swd_drv_miso_trn</b> (
 <li>result is positive for equal direction and negative if direction differs. Command Type codes definition, use this to see names in debugger. </li>
 </ul>
 <dl><dt><b>Enumerator: </b></dt><dd><table border="0" cellspacing="2" cellpadding="0">
-<tr><td valign="top"><em><a class="anchor" id="acd080697f0ba041ad61439fc058c8516a62c40fbeaf26e6daded916edd77bc21d"></a><!-- doxytag: member="SWD_CMDTYPE_MOSI_DATA" ref="acd080697f0ba041ad61439fc058c8516a62c40fbeaf26e6daded916edd77bc21d" args="" -->SWD_CMDTYPE_MOSI_DATA</em>&nbsp;</td><td>
+<tr><td valign="top"><em><a class="anchor" id="a18e16544fabdef0ef0e531cc6b4d4b7ca62c40fbeaf26e6daded916edd77bc21d"></a><!-- doxytag: member="SWD_CMDTYPE_MOSI_DATA" ref="a18e16544fabdef0ef0e531cc6b4d4b7ca62c40fbeaf26e6daded916edd77bc21d" args="" -->SWD_CMDTYPE_MOSI_DATA</em>&nbsp;</td><td>
 <p>Contains MOSI data (from host). </p>
 </td></tr>
-<tr><td valign="top"><em><a class="anchor" id="acd080697f0ba041ad61439fc058c8516a826701bb4e07deb5c5f5c33665688c6b"></a><!-- doxytag: member="SWD_CMDTYPE_MOSI_REQUEST" ref="acd080697f0ba041ad61439fc058c8516a826701bb4e07deb5c5f5c33665688c6b" args="" -->SWD_CMDTYPE_MOSI_REQUEST</em>&nbsp;</td><td>
+<tr><td valign="top"><em><a class="anchor" id="a18e16544fabdef0ef0e531cc6b4d4b7ca826701bb4e07deb5c5f5c33665688c6b"></a><!-- doxytag: member="SWD_CMDTYPE_MOSI_REQUEST" ref="a18e16544fabdef0ef0e531cc6b4d4b7ca826701bb4e07deb5c5f5c33665688c6b" args="" -->SWD_CMDTYPE_MOSI_REQUEST</em>&nbsp;</td><td>
 <p>Contains MOSI request packet. </p>
 </td></tr>
-<tr><td valign="top"><em><a class="anchor" id="acd080697f0ba041ad61439fc058c8516a6da6cde9944c71a26444c97bee9b59d0"></a><!-- doxytag: member="SWD_CMDTYPE_MOSI_TRN" ref="acd080697f0ba041ad61439fc058c8516a6da6cde9944c71a26444c97bee9b59d0" args="" -->SWD_CMDTYPE_MOSI_TRN</em>&nbsp;</td><td>
+<tr><td valign="top"><em><a class="anchor" id="a18e16544fabdef0ef0e531cc6b4d4b7ca6da6cde9944c71a26444c97bee9b59d0"></a><!-- doxytag: member="SWD_CMDTYPE_MOSI_TRN" ref="a18e16544fabdef0ef0e531cc6b4d4b7ca6da6cde9944c71a26444c97bee9b59d0" args="" -->SWD_CMDTYPE_MOSI_TRN</em>&nbsp;</td><td>
 <p>Bus will switch into MOSI mode. </p>
 </td></tr>
-<tr><td valign="top"><em><a class="anchor" id="acd080697f0ba041ad61439fc058c8516ab3726bd22bf211c773b091cf70bec9f1"></a><!-- doxytag: member="SWD_CMDTYPE_MOSI_PARITY" ref="acd080697f0ba041ad61439fc058c8516ab3726bd22bf211c773b091cf70bec9f1" args="" -->SWD_CMDTYPE_MOSI_PARITY</em>&nbsp;</td><td>
+<tr><td valign="top"><em><a class="anchor" id="a18e16544fabdef0ef0e531cc6b4d4b7cab3726bd22bf211c773b091cf70bec9f1"></a><!-- doxytag: member="SWD_CMDTYPE_MOSI_PARITY" ref="a18e16544fabdef0ef0e531cc6b4d4b7cab3726bd22bf211c773b091cf70bec9f1" args="" -->SWD_CMDTYPE_MOSI_PARITY</em>&nbsp;</td><td>
 <p>Contains MOSI data parity. </p>
 </td></tr>
-<tr><td valign="top"><em><a class="anchor" id="acd080697f0ba041ad61439fc058c8516af951c4a4ebb960641f074785a6174a5a"></a><!-- doxytag: member="SWD_CMDTYPE_MOSI_BITBANG" ref="acd080697f0ba041ad61439fc058c8516af951c4a4ebb960641f074785a6174a5a" args="" -->SWD_CMDTYPE_MOSI_BITBANG</em>&nbsp;</td><td>
+<tr><td valign="top"><em><a class="anchor" id="a18e16544fabdef0ef0e531cc6b4d4b7caf951c4a4ebb960641f074785a6174a5a"></a><!-- doxytag: member="SWD_CMDTYPE_MOSI_BITBANG" ref="a18e16544fabdef0ef0e531cc6b4d4b7caf951c4a4ebb960641f074785a6174a5a" args="" -->SWD_CMDTYPE_MOSI_BITBANG</em>&nbsp;</td><td>
 <p>Allows MOSI operation bit-by-bit. </p>
 </td></tr>
-<tr><td valign="top"><em><a class="anchor" id="acd080697f0ba041ad61439fc058c8516a2bd240d136f2e7f661ad14bd355053a6"></a><!-- doxytag: member="SWD_CMDTYPE_MOSI_CONTROL" ref="acd080697f0ba041ad61439fc058c8516a2bd240d136f2e7f661ad14bd355053a6" args="" -->SWD_CMDTYPE_MOSI_CONTROL</em>&nbsp;</td><td>
-<p>MOSI control sequence (ie. sw-dp reset). </p>
+<tr><td valign="top"><em><a class="anchor" id="a18e16544fabdef0ef0e531cc6b4d4b7ca2bd240d136f2e7f661ad14bd355053a6"></a><!-- doxytag: member="SWD_CMDTYPE_MOSI_CONTROL" ref="a18e16544fabdef0ef0e531cc6b4d4b7ca2bd240d136f2e7f661ad14bd355053a6" args="" -->SWD_CMDTYPE_MOSI_CONTROL</em>&nbsp;</td><td>
+<p>MOSI control sequence (ie. sw-dp reset, idle). </p>
 </td></tr>
-<tr><td valign="top"><em><a class="anchor" id="acd080697f0ba041ad61439fc058c8516aceec6c2784b149355b019cbda0623fe0"></a><!-- doxytag: member="SWD_CMDTYPE_MOSI" ref="acd080697f0ba041ad61439fc058c8516aceec6c2784b149355b019cbda0623fe0" args="" -->SWD_CMDTYPE_MOSI</em>&nbsp;</td><td>
+<tr><td valign="top"><em><a class="anchor" id="a18e16544fabdef0ef0e531cc6b4d4b7caceec6c2784b149355b019cbda0623fe0"></a><!-- doxytag: member="SWD_CMDTYPE_MOSI" ref="a18e16544fabdef0ef0e531cc6b4d4b7caceec6c2784b149355b019cbda0623fe0" args="" -->SWD_CMDTYPE_MOSI</em>&nbsp;</td><td>
 <p>Master Output Slave Input direction. </p>
 </td></tr>
-<tr><td valign="top"><em><a class="anchor" id="acd080697f0ba041ad61439fc058c8516aa61ae4ec60ecffb3df34f3e485090586"></a><!-- doxytag: member="SWD_CMDTYPE_UNDEFINED" ref="acd080697f0ba041ad61439fc058c8516aa61ae4ec60ecffb3df34f3e485090586" args="" -->SWD_CMDTYPE_UNDEFINED</em>&nbsp;</td><td>
+<tr><td valign="top"><em><a class="anchor" id="a18e16544fabdef0ef0e531cc6b4d4b7caa61ae4ec60ecffb3df34f3e485090586"></a><!-- doxytag: member="SWD_CMDTYPE_UNDEFINED" ref="a18e16544fabdef0ef0e531cc6b4d4b7caa61ae4ec60ecffb3df34f3e485090586" args="" -->SWD_CMDTYPE_UNDEFINED</em>&nbsp;</td><td>
 <p>undefined command, not transmitted. </p>
 </td></tr>
-<tr><td valign="top"><em><a class="anchor" id="acd080697f0ba041ad61439fc058c8516a4d019a00cc772982e7d1ac52aac5d4e0"></a><!-- doxytag: member="SWD_CMDTYPE_MISO" ref="acd080697f0ba041ad61439fc058c8516a4d019a00cc772982e7d1ac52aac5d4e0" args="" -->SWD_CMDTYPE_MISO</em>&nbsp;</td><td>
+<tr><td valign="top"><em><a class="anchor" id="a18e16544fabdef0ef0e531cc6b4d4b7ca4d019a00cc772982e7d1ac52aac5d4e0"></a><!-- doxytag: member="SWD_CMDTYPE_MISO" ref="a18e16544fabdef0ef0e531cc6b4d4b7ca4d019a00cc772982e7d1ac52aac5d4e0" args="" -->SWD_CMDTYPE_MISO</em>&nbsp;</td><td>
 <p>Master Input Slave Output direction. </p>
 </td></tr>
-<tr><td valign="top"><em><a class="anchor" id="acd080697f0ba041ad61439fc058c8516a59eade15cc1d2430434c0e4174dc3e07"></a><!-- doxytag: member="SWD_CMDTYPE_MISO_ACK" ref="acd080697f0ba041ad61439fc058c8516a59eade15cc1d2430434c0e4174dc3e07" args="" -->SWD_CMDTYPE_MISO_ACK</em>&nbsp;</td><td>
+<tr><td valign="top"><em><a class="anchor" id="a18e16544fabdef0ef0e531cc6b4d4b7ca59eade15cc1d2430434c0e4174dc3e07"></a><!-- doxytag: member="SWD_CMDTYPE_MISO_ACK" ref="a18e16544fabdef0ef0e531cc6b4d4b7ca59eade15cc1d2430434c0e4174dc3e07" args="" -->SWD_CMDTYPE_MISO_ACK</em>&nbsp;</td><td>
 <p>Contains ACK data from target. </p>
 </td></tr>
-<tr><td valign="top"><em><a class="anchor" id="acd080697f0ba041ad61439fc058c8516ab4260670a401ed63adec72c0753f915f"></a><!-- doxytag: member="SWD_CMDTYPE_MISO_BITBANG" ref="acd080697f0ba041ad61439fc058c8516ab4260670a401ed63adec72c0753f915f" args="" -->SWD_CMDTYPE_MISO_BITBANG</em>&nbsp;</td><td>
+<tr><td valign="top"><em><a class="anchor" id="a18e16544fabdef0ef0e531cc6b4d4b7cab4260670a401ed63adec72c0753f915f"></a><!-- doxytag: member="SWD_CMDTYPE_MISO_BITBANG" ref="a18e16544fabdef0ef0e531cc6b4d4b7cab4260670a401ed63adec72c0753f915f" args="" -->SWD_CMDTYPE_MISO_BITBANG</em>&nbsp;</td><td>
 <p>Allows MISO operation bit-by-bit. </p>
 </td></tr>
-<tr><td valign="top"><em><a class="anchor" id="acd080697f0ba041ad61439fc058c8516a5d23ed26796e30ae787d3de869ef9359"></a><!-- doxytag: member="SWD_CMDTYPE_MISO_PARITY" ref="acd080697f0ba041ad61439fc058c8516a5d23ed26796e30ae787d3de869ef9359" args="" -->SWD_CMDTYPE_MISO_PARITY</em>&nbsp;</td><td>
+<tr><td valign="top"><em><a class="anchor" id="a18e16544fabdef0ef0e531cc6b4d4b7ca5d23ed26796e30ae787d3de869ef9359"></a><!-- doxytag: member="SWD_CMDTYPE_MISO_PARITY" ref="a18e16544fabdef0ef0e531cc6b4d4b7ca5d23ed26796e30ae787d3de869ef9359" args="" -->SWD_CMDTYPE_MISO_PARITY</em>&nbsp;</td><td>
 <p>Contains MISO data parity. </p>
 </td></tr>
-<tr><td valign="top"><em><a class="anchor" id="acd080697f0ba041ad61439fc058c8516a8ce670cc9c3d3f2d77c83f13c589978f"></a><!-- doxytag: member="SWD_CMDTYPE_MISO_TRN" ref="acd080697f0ba041ad61439fc058c8516a8ce670cc9c3d3f2d77c83f13c589978f" args="" -->SWD_CMDTYPE_MISO_TRN</em>&nbsp;</td><td>
+<tr><td valign="top"><em><a class="anchor" id="a18e16544fabdef0ef0e531cc6b4d4b7ca8ce670cc9c3d3f2d77c83f13c589978f"></a><!-- doxytag: member="SWD_CMDTYPE_MISO_TRN" ref="a18e16544fabdef0ef0e531cc6b4d4b7ca8ce670cc9c3d3f2d77c83f13c589978f" args="" -->SWD_CMDTYPE_MISO_TRN</em>&nbsp;</td><td>
 <p>Bus will switch into MISO mode. </p>
 </td></tr>
-<tr><td valign="top"><em><a class="anchor" id="acd080697f0ba041ad61439fc058c8516a2c17157db3f21117cac24fa17793a576"></a><!-- doxytag: member="SWD_CMDTYPE_MISO_DATA" ref="acd080697f0ba041ad61439fc058c8516a2c17157db3f21117cac24fa17793a576" args="" -->SWD_CMDTYPE_MISO_DATA</em>&nbsp;</td><td>
+<tr><td valign="top"><em><a class="anchor" id="a18e16544fabdef0ef0e531cc6b4d4b7ca2c17157db3f21117cac24fa17793a576"></a><!-- doxytag: member="SWD_CMDTYPE_MISO_DATA" ref="a18e16544fabdef0ef0e531cc6b4d4b7ca2c17157db3f21117cac24fa17793a576" args="" -->SWD_CMDTYPE_MISO_DATA</em>&nbsp;</td><td>
 <p>Contains MISO data (from target). </p>
 </td></tr>
 </table>
@@ -1124,12 +1036,12 @@ int&nbsp;</td><td class="memItemRight" valign="bottom"><b>swd_drv_miso_trn</b> (
 
 </div>
 </div>
-<a class="anchor" id="a27fab5915116e3880c16af35ba425fa8"></a><!-- doxytag: member="libswd.h::SWD_ERROR_CODE" ref="a27fab5915116e3880c16af35ba425fa8" args="" -->
+<a class="anchor" id="aeb409c8f8007baa9bf15efce6491ad77"></a><!-- doxytag: member="libswd.h::swd_error_code_t" ref="aeb409c8f8007baa9bf15efce6491ad77" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="libswd_8h.html#a27fab5915116e3880c16af35ba425fa8">SWD_ERROR_CODE</a></td>
+          <td class="memname">enum <a class="el" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77">swd_error_code_t</a></td>
         </tr>
       </table>
 </div>
@@ -1138,124 +1050,124 @@ int&nbsp;</td><td class="memItemRight" valign="bottom"><b>swd_drv_miso_trn</b> (
 <p>Status and Error Codes definitions. </p>
 <p>Error Codes definition, use this to have its name on debugger. </p>
 <dl><dt><b>Enumerator: </b></dt><dd><table border="0" cellspacing="2" cellpadding="0">
-<tr><td valign="top"><em><a class="anchor" id="a27fab5915116e3880c16af35ba425fa8af5a1ef7dd83c34b0cc42beb5984bfb01"></a><!-- doxytag: member="SWD_OK" ref="a27fab5915116e3880c16af35ba425fa8af5a1ef7dd83c34b0cc42beb5984bfb01" args="" -->SWD_OK</em>&nbsp;</td><td>
+<tr><td valign="top"><em><a class="anchor" id="aeb409c8f8007baa9bf15efce6491ad77af5a1ef7dd83c34b0cc42beb5984bfb01"></a><!-- doxytag: member="SWD_OK" ref="aeb409c8f8007baa9bf15efce6491ad77af5a1ef7dd83c34b0cc42beb5984bfb01" args="" -->SWD_OK</em>&nbsp;</td><td>
 <p>No error. </p>
 </td></tr>
-<tr><td valign="top"><em><a class="anchor" id="a27fab5915116e3880c16af35ba425fa8a7acb88c6941a8ec9f104078ee8b3e02c"></a><!-- doxytag: member="SWD_ERROR_GENERAL" ref="a27fab5915116e3880c16af35ba425fa8a7acb88c6941a8ec9f104078ee8b3e02c" args="" -->SWD_ERROR_GENERAL</em>&nbsp;</td><td>
+<tr><td valign="top"><em><a class="anchor" id="aeb409c8f8007baa9bf15efce6491ad77a7acb88c6941a8ec9f104078ee8b3e02c"></a><!-- doxytag: member="SWD_ERROR_GENERAL" ref="aeb409c8f8007baa9bf15efce6491ad77a7acb88c6941a8ec9f104078ee8b3e02c" args="" -->SWD_ERROR_GENERAL</em>&nbsp;</td><td>
 <p>General error. </p>
 </td></tr>
-<tr><td valign="top"><em><a class="anchor" id="a27fab5915116e3880c16af35ba425fa8aedb8a7cbf26095284eb5976cd8663494"></a><!-- doxytag: member="SWD_ERROR_NULLPOINTER" ref="a27fab5915116e3880c16af35ba425fa8aedb8a7cbf26095284eb5976cd8663494" args="" -->SWD_ERROR_NULLPOINTER</em>&nbsp;</td><td>
+<tr><td valign="top"><em><a class="anchor" id="aeb409c8f8007baa9bf15efce6491ad77aedb8a7cbf26095284eb5976cd8663494"></a><!-- doxytag: member="SWD_ERROR_NULLPOINTER" ref="aeb409c8f8007baa9bf15efce6491ad77aedb8a7cbf26095284eb5976cd8663494" args="" -->SWD_ERROR_NULLPOINTER</em>&nbsp;</td><td>
 <p>Null pointer. </p>
 </td></tr>
-<tr><td valign="top"><em><a class="anchor" id="a27fab5915116e3880c16af35ba425fa8a4476f371364f6c7bb0e8396120e4c4cd"></a><!-- doxytag: member="SWD_ERROR_NULLQUEUE" ref="a27fab5915116e3880c16af35ba425fa8a4476f371364f6c7bb0e8396120e4c4cd" args="" -->SWD_ERROR_NULLQUEUE</em>&nbsp;</td><td>
+<tr><td valign="top"><em><a class="anchor" id="aeb409c8f8007baa9bf15efce6491ad77a4476f371364f6c7bb0e8396120e4c4cd"></a><!-- doxytag: member="SWD_ERROR_NULLQUEUE" ref="aeb409c8f8007baa9bf15efce6491ad77a4476f371364f6c7bb0e8396120e4c4cd" args="" -->SWD_ERROR_NULLQUEUE</em>&nbsp;</td><td>
 <p>Null queue pointer. </p>
 </td></tr>
-<tr><td valign="top"><em><a class="anchor" id="a27fab5915116e3880c16af35ba425fa8a22f5e6d0a9f72397595cc71b6e11411d"></a><!-- doxytag: member="SWD_ERROR_NULLTRN" ref="a27fab5915116e3880c16af35ba425fa8a22f5e6d0a9f72397595cc71b6e11411d" args="" -->SWD_ERROR_NULLTRN</em>&nbsp;</td><td>
+<tr><td valign="top"><em><a class="anchor" id="aeb409c8f8007baa9bf15efce6491ad77a22f5e6d0a9f72397595cc71b6e11411d"></a><!-- doxytag: member="SWD_ERROR_NULLTRN" ref="aeb409c8f8007baa9bf15efce6491ad77a22f5e6d0a9f72397595cc71b6e11411d" args="" -->SWD_ERROR_NULLTRN</em>&nbsp;</td><td>
 <p>Null TurnaRouNd pointer. </p>
 </td></tr>
-<tr><td valign="top"><em><a class="anchor" id="a27fab5915116e3880c16af35ba425fa8aa3b8e6239ccc5999d6d75b5da2133d1a"></a><!-- doxytag: member="SWD_ERROR_PARAM" ref="a27fab5915116e3880c16af35ba425fa8aa3b8e6239ccc5999d6d75b5da2133d1a" args="" -->SWD_ERROR_PARAM</em>&nbsp;</td><td>
+<tr><td valign="top"><em><a class="anchor" id="aeb409c8f8007baa9bf15efce6491ad77aa3b8e6239ccc5999d6d75b5da2133d1a"></a><!-- doxytag: member="SWD_ERROR_PARAM" ref="aeb409c8f8007baa9bf15efce6491ad77aa3b8e6239ccc5999d6d75b5da2133d1a" args="" -->SWD_ERROR_PARAM</em>&nbsp;</td><td>
 <p>Bad parameter. </p>
 </td></tr>
-<tr><td valign="top"><em><a class="anchor" id="a27fab5915116e3880c16af35ba425fa8aeecf32fa72e3b4e8a55fda56852ed0a3"></a><!-- doxytag: member="SWD_ERROR_OUTOFMEM" ref="a27fab5915116e3880c16af35ba425fa8aeecf32fa72e3b4e8a55fda56852ed0a3" args="" -->SWD_ERROR_OUTOFMEM</em>&nbsp;</td><td>
+<tr><td valign="top"><em><a class="anchor" id="aeb409c8f8007baa9bf15efce6491ad77aeecf32fa72e3b4e8a55fda56852ed0a3"></a><!-- doxytag: member="SWD_ERROR_OUTOFMEM" ref="aeb409c8f8007baa9bf15efce6491ad77aeecf32fa72e3b4e8a55fda56852ed0a3" args="" -->SWD_ERROR_OUTOFMEM</em>&nbsp;</td><td>
 <p>Out of memory. </p>
 </td></tr>
-<tr><td valign="top"><em><a class="anchor" id="a27fab5915116e3880c16af35ba425fa8aaac3da0a3341d405f70349763f526772"></a><!-- doxytag: member="SWD_ERROR_RESULT" ref="a27fab5915116e3880c16af35ba425fa8aaac3da0a3341d405f70349763f526772" args="" -->SWD_ERROR_RESULT</em>&nbsp;</td><td>
+<tr><td valign="top"><em><a class="anchor" id="aeb409c8f8007baa9bf15efce6491ad77aaac3da0a3341d405f70349763f526772"></a><!-- doxytag: member="SWD_ERROR_RESULT" ref="aeb409c8f8007baa9bf15efce6491ad77aaac3da0a3341d405f70349763f526772" args="" -->SWD_ERROR_RESULT</em>&nbsp;</td><td>
 <p>Bad result. </p>
 </td></tr>
-<tr><td valign="top"><em><a class="anchor" id="a27fab5915116e3880c16af35ba425fa8abe4b62286d73462a18726261e432503e"></a><!-- doxytag: member="SWD_ERROR_RANGE" ref="a27fab5915116e3880c16af35ba425fa8abe4b62286d73462a18726261e432503e" args="" -->SWD_ERROR_RANGE</em>&nbsp;</td><td>
+<tr><td valign="top"><em><a class="anchor" id="aeb409c8f8007baa9bf15efce6491ad77abe4b62286d73462a18726261e432503e"></a><!-- doxytag: member="SWD_ERROR_RANGE" ref="aeb409c8f8007baa9bf15efce6491ad77abe4b62286d73462a18726261e432503e" args="" -->SWD_ERROR_RANGE</em>&nbsp;</td><td>
 <p>Out of range. </p>
 </td></tr>
-<tr><td valign="top"><em><a class="anchor" id="a27fab5915116e3880c16af35ba425fa8ab8707f66c87d67231a1df117d176499f"></a><!-- doxytag: member="SWD_ERROR_DEFINITION" ref="a27fab5915116e3880c16af35ba425fa8ab8707f66c87d67231a1df117d176499f" args="" -->SWD_ERROR_DEFINITION</em>&nbsp;</td><td>
+<tr><td valign="top"><em><a class="anchor" id="aeb409c8f8007baa9bf15efce6491ad77ab8707f66c87d67231a1df117d176499f"></a><!-- doxytag: member="SWD_ERROR_DEFINITION" ref="aeb409c8f8007baa9bf15efce6491ad77ab8707f66c87d67231a1df117d176499f" args="" -->SWD_ERROR_DEFINITION</em>&nbsp;</td><td>
 <p>Definition (internal) error. </p>
 </td></tr>
-<tr><td valign="top"><em><a class="anchor" id="a27fab5915116e3880c16af35ba425fa8aef273147c6f034db3ac7c1340ccaa455"></a><!-- doxytag: member="SWD_ERROR_NULLCONTEXT" ref="a27fab5915116e3880c16af35ba425fa8aef273147c6f034db3ac7c1340ccaa455" args="" -->SWD_ERROR_NULLCONTEXT</em>&nbsp;</td><td>
+<tr><td valign="top"><em><a class="anchor" id="aeb409c8f8007baa9bf15efce6491ad77aef273147c6f034db3ac7c1340ccaa455"></a><!-- doxytag: member="SWD_ERROR_NULLCONTEXT" ref="aeb409c8f8007baa9bf15efce6491ad77aef273147c6f034db3ac7c1340ccaa455" args="" -->SWD_ERROR_NULLCONTEXT</em>&nbsp;</td><td>
 <p>Null context pointer. </p>
 </td></tr>
-<tr><td valign="top"><em><a class="anchor" id="a27fab5915116e3880c16af35ba425fa8a829d12144ebfc2cf1e4c30eae4327e58"></a><!-- doxytag: member="SWD_ERROR_QUEUE" ref="a27fab5915116e3880c16af35ba425fa8a829d12144ebfc2cf1e4c30eae4327e58" args="" -->SWD_ERROR_QUEUE</em>&nbsp;</td><td>
+<tr><td valign="top"><em><a class="anchor" id="aeb409c8f8007baa9bf15efce6491ad77a829d12144ebfc2cf1e4c30eae4327e58"></a><!-- doxytag: member="SWD_ERROR_QUEUE" ref="aeb409c8f8007baa9bf15efce6491ad77a829d12144ebfc2cf1e4c30eae4327e58" args="" -->SWD_ERROR_QUEUE</em>&nbsp;</td><td>
 <p>Queue error. </p>
 </td></tr>
-<tr><td valign="top"><em><a class="anchor" id="a27fab5915116e3880c16af35ba425fa8a3f107ea05e8a08eeb6db8055db47b6af"></a><!-- doxytag: member="SWD_ERROR_ADDR" ref="a27fab5915116e3880c16af35ba425fa8a3f107ea05e8a08eeb6db8055db47b6af" args="" -->SWD_ERROR_ADDR</em>&nbsp;</td><td>
+<tr><td valign="top"><em><a class="anchor" id="aeb409c8f8007baa9bf15efce6491ad77a3f107ea05e8a08eeb6db8055db47b6af"></a><!-- doxytag: member="SWD_ERROR_ADDR" ref="aeb409c8f8007baa9bf15efce6491ad77a3f107ea05e8a08eeb6db8055db47b6af" args="" -->SWD_ERROR_ADDR</em>&nbsp;</td><td>
 <p>Addressing error. </p>
 </td></tr>
-<tr><td valign="top"><em><a class="anchor" id="a27fab5915116e3880c16af35ba425fa8aac13275631d7325134021f3409e1bbf0"></a><!-- doxytag: member="SWD_ERROR_APnDP" ref="a27fab5915116e3880c16af35ba425fa8aac13275631d7325134021f3409e1bbf0" args="" -->SWD_ERROR_APnDP</em>&nbsp;</td><td>
+<tr><td valign="top"><em><a class="anchor" id="aeb409c8f8007baa9bf15efce6491ad77aac13275631d7325134021f3409e1bbf0"></a><!-- doxytag: member="SWD_ERROR_APnDP" ref="aeb409c8f8007baa9bf15efce6491ad77aac13275631d7325134021f3409e1bbf0" args="" -->SWD_ERROR_APnDP</em>&nbsp;</td><td>
 <p>Bad APnDP value. </p>
 </td></tr>
-<tr><td valign="top"><em><a class="anchor" id="a27fab5915116e3880c16af35ba425fa8a0dce436eb6d60b5c935780e38d317272"></a><!-- doxytag: member="SWD_ERROR_RnW" ref="a27fab5915116e3880c16af35ba425fa8a0dce436eb6d60b5c935780e38d317272" args="" -->SWD_ERROR_RnW</em>&nbsp;</td><td>
+<tr><td valign="top"><em><a class="anchor" id="aeb409c8f8007baa9bf15efce6491ad77a0dce436eb6d60b5c935780e38d317272"></a><!-- doxytag: member="SWD_ERROR_RnW" ref="aeb409c8f8007baa9bf15efce6491ad77a0dce436eb6d60b5c935780e38d317272" args="" -->SWD_ERROR_RnW</em>&nbsp;</td><td>
 <p>Bad RnW value. </p>
 </td></tr>
-<tr><td valign="top"><em><a class="anchor" id="a27fab5915116e3880c16af35ba425fa8a05931ecd3c4d34ad773d31ee573cefdd"></a><!-- doxytag: member="SWD_ERROR_PARITY" ref="a27fab5915116e3880c16af35ba425fa8a05931ecd3c4d34ad773d31ee573cefdd" args="" -->SWD_ERROR_PARITY</em>&nbsp;</td><td>
+<tr><td valign="top"><em><a class="anchor" id="aeb409c8f8007baa9bf15efce6491ad77a05931ecd3c4d34ad773d31ee573cefdd"></a><!-- doxytag: member="SWD_ERROR_PARITY" ref="aeb409c8f8007baa9bf15efce6491ad77a05931ecd3c4d34ad773d31ee573cefdd" args="" -->SWD_ERROR_PARITY</em>&nbsp;</td><td>
 <p>Parity error. </p>
 </td></tr>
-<tr><td valign="top"><em><a class="anchor" id="a27fab5915116e3880c16af35ba425fa8ac462fccae009d83aab5d394eba7e4665"></a><!-- doxytag: member="SWD_ERROR_ACK" ref="a27fab5915116e3880c16af35ba425fa8ac462fccae009d83aab5d394eba7e4665" args="" -->SWD_ERROR_ACK</em>&nbsp;</td><td>
+<tr><td valign="top"><em><a class="anchor" id="aeb409c8f8007baa9bf15efce6491ad77ac462fccae009d83aab5d394eba7e4665"></a><!-- doxytag: member="SWD_ERROR_ACK" ref="aeb409c8f8007baa9bf15efce6491ad77ac462fccae009d83aab5d394eba7e4665" args="" -->SWD_ERROR_ACK</em>&nbsp;</td><td>
 <p>Acknowledge error. </p>
 </td></tr>
-<tr><td valign="top"><em><a class="anchor" id="a27fab5915116e3880c16af35ba425fa8a3f3dbe4095052628978962830f80cbeb"></a><!-- doxytag: member="SWD_ERROR_ACKUNKNOWN" ref="a27fab5915116e3880c16af35ba425fa8a3f3dbe4095052628978962830f80cbeb" args="" -->SWD_ERROR_ACKUNKNOWN</em>&nbsp;</td><td>
+<tr><td valign="top"><em><a class="anchor" id="aeb409c8f8007baa9bf15efce6491ad77a3f3dbe4095052628978962830f80cbeb"></a><!-- doxytag: member="SWD_ERROR_ACKUNKNOWN" ref="aeb409c8f8007baa9bf15efce6491ad77a3f3dbe4095052628978962830f80cbeb" args="" -->SWD_ERROR_ACKUNKNOWN</em>&nbsp;</td><td>
 <p>Unknown ACK value. </p>
 </td></tr>
-<tr><td valign="top"><em><a class="anchor" id="a27fab5915116e3880c16af35ba425fa8a8ba17527e1f8596b1e6c644d651a75f2"></a><!-- doxytag: member="SWD_ERROR_ACKNOTDONE" ref="a27fab5915116e3880c16af35ba425fa8a8ba17527e1f8596b1e6c644d651a75f2" args="" -->SWD_ERROR_ACKNOTDONE</em>&nbsp;</td><td>
+<tr><td valign="top"><em><a class="anchor" id="aeb409c8f8007baa9bf15efce6491ad77a8ba17527e1f8596b1e6c644d651a75f2"></a><!-- doxytag: member="SWD_ERROR_ACKNOTDONE" ref="aeb409c8f8007baa9bf15efce6491ad77a8ba17527e1f8596b1e6c644d651a75f2" args="" -->SWD_ERROR_ACKNOTDONE</em>&nbsp;</td><td>
 <p>ACK not yet executed on target. </p>
 </td></tr>
-<tr><td valign="top"><em><a class="anchor" id="a27fab5915116e3880c16af35ba425fa8aaf9a4ffb312df6c0d6a2ad5f26236ed2"></a><!-- doxytag: member="SWD_ERROR_ACKMISSING" ref="a27fab5915116e3880c16af35ba425fa8aaf9a4ffb312df6c0d6a2ad5f26236ed2" args="" -->SWD_ERROR_ACKMISSING</em>&nbsp;</td><td>
+<tr><td valign="top"><em><a class="anchor" id="aeb409c8f8007baa9bf15efce6491ad77aaf9a4ffb312df6c0d6a2ad5f26236ed2"></a><!-- doxytag: member="SWD_ERROR_ACKMISSING" ref="aeb409c8f8007baa9bf15efce6491ad77aaf9a4ffb312df6c0d6a2ad5f26236ed2" args="" -->SWD_ERROR_ACKMISSING</em>&nbsp;</td><td>
 <p>ACK command not found on the queue. </p>
 </td></tr>
-<tr><td valign="top"><em><a class="anchor" id="a27fab5915116e3880c16af35ba425fa8aa99a0d1fa79837de68da0abf82950083"></a><!-- doxytag: member="SWD_ERROR_ACKMISMATCH" ref="a27fab5915116e3880c16af35ba425fa8aa99a0d1fa79837de68da0abf82950083" args="" -->SWD_ERROR_ACKMISMATCH</em>&nbsp;</td><td>
+<tr><td valign="top"><em><a class="anchor" id="aeb409c8f8007baa9bf15efce6491ad77aa99a0d1fa79837de68da0abf82950083"></a><!-- doxytag: member="SWD_ERROR_ACKMISMATCH" ref="aeb409c8f8007baa9bf15efce6491ad77aa99a0d1fa79837de68da0abf82950083" args="" -->SWD_ERROR_ACKMISMATCH</em>&nbsp;</td><td>
 <p>Bad ACK result address. </p>
 </td></tr>
-<tr><td valign="top"><em><a class="anchor" id="a27fab5915116e3880c16af35ba425fa8a0a76fb9ee32976ef62ffff3d766d2ef1"></a><!-- doxytag: member="SWD_ERROR_ACKORDER" ref="a27fab5915116e3880c16af35ba425fa8a0a76fb9ee32976ef62ffff3d766d2ef1" args="" -->SWD_ERROR_ACKORDER</em>&nbsp;</td><td>
+<tr><td valign="top"><em><a class="anchor" id="aeb409c8f8007baa9bf15efce6491ad77a0a76fb9ee32976ef62ffff3d766d2ef1"></a><!-- doxytag: member="SWD_ERROR_ACKORDER" ref="aeb409c8f8007baa9bf15efce6491ad77a0a76fb9ee32976ef62ffff3d766d2ef1" args="" -->SWD_ERROR_ACKORDER</em>&nbsp;</td><td>
 <p>ACK not in order REQ-&gt;TRN-&gt;ACK. </p>
 </td></tr>
-<tr><td valign="top"><em><a class="anchor" id="a27fab5915116e3880c16af35ba425fa8a154bc92f783335bf75933cbbcf477d4c"></a><!-- doxytag: member="SWD_ERROR_BADOPCODE" ref="a27fab5915116e3880c16af35ba425fa8a154bc92f783335bf75933cbbcf477d4c" args="" -->SWD_ERROR_BADOPCODE</em>&nbsp;</td><td>
+<tr><td valign="top"><em><a class="anchor" id="aeb409c8f8007baa9bf15efce6491ad77a154bc92f783335bf75933cbbcf477d4c"></a><!-- doxytag: member="SWD_ERROR_BADOPCODE" ref="aeb409c8f8007baa9bf15efce6491ad77a154bc92f783335bf75933cbbcf477d4c" args="" -->SWD_ERROR_BADOPCODE</em>&nbsp;</td><td>
 <p>Unsupported operation requested. </p>
 </td></tr>
-<tr><td valign="top"><em><a class="anchor" id="a27fab5915116e3880c16af35ba425fa8a3a4a9b00904529e4368120e9e7b05c77"></a><!-- doxytag: member="SWD_ERROR_NODATACMD" ref="a27fab5915116e3880c16af35ba425fa8a3a4a9b00904529e4368120e9e7b05c77" args="" -->SWD_ERROR_NODATACMD</em>&nbsp;</td><td>
+<tr><td valign="top"><em><a class="anchor" id="aeb409c8f8007baa9bf15efce6491ad77a3a4a9b00904529e4368120e9e7b05c77"></a><!-- doxytag: member="SWD_ERROR_NODATACMD" ref="aeb409c8f8007baa9bf15efce6491ad77a3a4a9b00904529e4368120e9e7b05c77" args="" -->SWD_ERROR_NODATACMD</em>&nbsp;</td><td>
 <p>Command not found on the queue. </p>
 </td></tr>
-<tr><td valign="top"><em><a class="anchor" id="a27fab5915116e3880c16af35ba425fa8af41fe1c260478be2da86daded693def0"></a><!-- doxytag: member="SWD_ERROR_DATAPTR" ref="a27fab5915116e3880c16af35ba425fa8af41fe1c260478be2da86daded693def0" args="" -->SWD_ERROR_DATAPTR</em>&nbsp;</td><td>
+<tr><td valign="top"><em><a class="anchor" id="aeb409c8f8007baa9bf15efce6491ad77af41fe1c260478be2da86daded693def0"></a><!-- doxytag: member="SWD_ERROR_DATAPTR" ref="aeb409c8f8007baa9bf15efce6491ad77af41fe1c260478be2da86daded693def0" args="" -->SWD_ERROR_DATAPTR</em>&nbsp;</td><td>
 <p>Bad DATA pointer address. </p>
 </td></tr>
-<tr><td valign="top"><em><a class="anchor" id="a27fab5915116e3880c16af35ba425fa8a7960e949fb577cb55f27213364246983"></a><!-- doxytag: member="SWD_ERROR_NOPARITYCMD" ref="a27fab5915116e3880c16af35ba425fa8a7960e949fb577cb55f27213364246983" args="" -->SWD_ERROR_NOPARITYCMD</em>&nbsp;</td><td>
+<tr><td valign="top"><em><a class="anchor" id="aeb409c8f8007baa9bf15efce6491ad77a7960e949fb577cb55f27213364246983"></a><!-- doxytag: member="SWD_ERROR_NOPARITYCMD" ref="aeb409c8f8007baa9bf15efce6491ad77a7960e949fb577cb55f27213364246983" args="" -->SWD_ERROR_NOPARITYCMD</em>&nbsp;</td><td>
 <p>Parity after Data missing or misplaced. </p>
 </td></tr>
-<tr><td valign="top"><em><a class="anchor" id="a27fab5915116e3880c16af35ba425fa8aaa64317e7fcfbc135103e92e0d7461d0"></a><!-- doxytag: member="SWD_ERROR_PARITYPTR" ref="a27fab5915116e3880c16af35ba425fa8aaa64317e7fcfbc135103e92e0d7461d0" args="" -->SWD_ERROR_PARITYPTR</em>&nbsp;</td><td>
+<tr><td valign="top"><em><a class="anchor" id="aeb409c8f8007baa9bf15efce6491ad77aaa64317e7fcfbc135103e92e0d7461d0"></a><!-- doxytag: member="SWD_ERROR_PARITYPTR" ref="aeb409c8f8007baa9bf15efce6491ad77aaa64317e7fcfbc135103e92e0d7461d0" args="" -->SWD_ERROR_PARITYPTR</em>&nbsp;</td><td>
 <p>Bad PARITY pointer address. </p>
 </td></tr>
-<tr><td valign="top"><em><a class="anchor" id="a27fab5915116e3880c16af35ba425fa8aa09e4f36fe516704701f016e7cf08c08"></a><!-- doxytag: member="SWD_ERROR_NOTDONE" ref="a27fab5915116e3880c16af35ba425fa8aa09e4f36fe516704701f016e7cf08c08" args="" -->SWD_ERROR_NOTDONE</em>&nbsp;</td><td>
+<tr><td valign="top"><em><a class="anchor" id="aeb409c8f8007baa9bf15efce6491ad77aa09e4f36fe516704701f016e7cf08c08"></a><!-- doxytag: member="SWD_ERROR_NOTDONE" ref="aeb409c8f8007baa9bf15efce6491ad77aa09e4f36fe516704701f016e7cf08c08" args="" -->SWD_ERROR_NOTDONE</em>&nbsp;</td><td>
 <p>Could not end selected task. </p>
 </td></tr>
-<tr><td valign="top"><em><a class="anchor" id="a27fab5915116e3880c16af35ba425fa8a8e6636f921f5856ece06915d2c2eeabf"></a><!-- doxytag: member="SWD_ERROR_QUEUEROOT" ref="a27fab5915116e3880c16af35ba425fa8a8e6636f921f5856ece06915d2c2eeabf" args="" -->SWD_ERROR_QUEUEROOT</em>&nbsp;</td><td>
+<tr><td valign="top"><em><a class="anchor" id="aeb409c8f8007baa9bf15efce6491ad77a8e6636f921f5856ece06915d2c2eeabf"></a><!-- doxytag: member="SWD_ERROR_QUEUEROOT" ref="aeb409c8f8007baa9bf15efce6491ad77a8e6636f921f5856ece06915d2c2eeabf" args="" -->SWD_ERROR_QUEUEROOT</em>&nbsp;</td><td>
 <p>Queue root not found or null. </p>
 </td></tr>
-<tr><td valign="top"><em><a class="anchor" id="a27fab5915116e3880c16af35ba425fa8ad631db57f3edc4461e7deef3f7108e78"></a><!-- doxytag: member="SWD_ERROR_QUEUETAIL" ref="a27fab5915116e3880c16af35ba425fa8ad631db57f3edc4461e7deef3f7108e78" args="" -->SWD_ERROR_QUEUETAIL</em>&nbsp;</td><td>
+<tr><td valign="top"><em><a class="anchor" id="aeb409c8f8007baa9bf15efce6491ad77ad631db57f3edc4461e7deef3f7108e78"></a><!-- doxytag: member="SWD_ERROR_QUEUETAIL" ref="aeb409c8f8007baa9bf15efce6491ad77ad631db57f3edc4461e7deef3f7108e78" args="" -->SWD_ERROR_QUEUETAIL</em>&nbsp;</td><td>
 <p>Queue tail not found or null. </p>
 </td></tr>
-<tr><td valign="top"><em><a class="anchor" id="a27fab5915116e3880c16af35ba425fa8a8b59d867a0320335aebfd5a503b3d331"></a><!-- doxytag: member="SWD_ERROR_BADCMDTYPE" ref="a27fab5915116e3880c16af35ba425fa8a8b59d867a0320335aebfd5a503b3d331" args="" -->SWD_ERROR_BADCMDTYPE</em>&nbsp;</td><td>
+<tr><td valign="top"><em><a class="anchor" id="aeb409c8f8007baa9bf15efce6491ad77a8b59d867a0320335aebfd5a503b3d331"></a><!-- doxytag: member="SWD_ERROR_BADCMDTYPE" ref="aeb409c8f8007baa9bf15efce6491ad77a8b59d867a0320335aebfd5a503b3d331" args="" -->SWD_ERROR_BADCMDTYPE</em>&nbsp;</td><td>
 <p>Unknown command detected. </p>
 </td></tr>
-<tr><td valign="top"><em><a class="anchor" id="a27fab5915116e3880c16af35ba425fa8af0ce348ad2c0dc96642814d5b40013a5"></a><!-- doxytag: member="SWD_ERROR_BADCMDDATA" ref="a27fab5915116e3880c16af35ba425fa8af0ce348ad2c0dc96642814d5b40013a5" args="" -->SWD_ERROR_BADCMDDATA</em>&nbsp;</td><td>
+<tr><td valign="top"><em><a class="anchor" id="aeb409c8f8007baa9bf15efce6491ad77af0ce348ad2c0dc96642814d5b40013a5"></a><!-- doxytag: member="SWD_ERROR_BADCMDDATA" ref="aeb409c8f8007baa9bf15efce6491ad77af0ce348ad2c0dc96642814d5b40013a5" args="" -->SWD_ERROR_BADCMDDATA</em>&nbsp;</td><td>
 <p>Bad command data. </p>
 </td></tr>
-<tr><td valign="top"><em><a class="anchor" id="a27fab5915116e3880c16af35ba425fa8a662935dd4a8fa01620b62dd4bb879c10"></a><!-- doxytag: member="SWD_ERROR_TURNAROUND" ref="a27fab5915116e3880c16af35ba425fa8a662935dd4a8fa01620b62dd4bb879c10" args="" -->SWD_ERROR_TURNAROUND</em>&nbsp;</td><td>
+<tr><td valign="top"><em><a class="anchor" id="aeb409c8f8007baa9bf15efce6491ad77a662935dd4a8fa01620b62dd4bb879c10"></a><!-- doxytag: member="SWD_ERROR_TURNAROUND" ref="aeb409c8f8007baa9bf15efce6491ad77a662935dd4a8fa01620b62dd4bb879c10" args="" -->SWD_ERROR_TURNAROUND</em>&nbsp;</td><td>
 <p>Error during turnaround switch. </p>
 </td></tr>
-<tr><td valign="top"><em><a class="anchor" id="a27fab5915116e3880c16af35ba425fa8a186d948f46f62e6ed2a35a06ac8d61a2"></a><!-- doxytag: member="SWD_ERROR_DRIVER" ref="a27fab5915116e3880c16af35ba425fa8a186d948f46f62e6ed2a35a06ac8d61a2" args="" -->SWD_ERROR_DRIVER</em>&nbsp;</td><td>
+<tr><td valign="top"><em><a class="anchor" id="aeb409c8f8007baa9bf15efce6491ad77a186d948f46f62e6ed2a35a06ac8d61a2"></a><!-- doxytag: member="SWD_ERROR_DRIVER" ref="aeb409c8f8007baa9bf15efce6491ad77a186d948f46f62e6ed2a35a06ac8d61a2" args="" -->SWD_ERROR_DRIVER</em>&nbsp;</td><td>
 <p>Driver error. </p>
 </td></tr>
-<tr><td valign="top"><em><a class="anchor" id="a27fab5915116e3880c16af35ba425fa8a4de5da0a220537161b83db14cb02882e"></a><!-- doxytag: member="SWD_ERROR_ACK_WAIT" ref="a27fab5915116e3880c16af35ba425fa8a4de5da0a220537161b83db14cb02882e" args="" -->SWD_ERROR_ACK_WAIT</em>&nbsp;</td><td>
+<tr><td valign="top"><em><a class="anchor" id="aeb409c8f8007baa9bf15efce6491ad77a4de5da0a220537161b83db14cb02882e"></a><!-- doxytag: member="SWD_ERROR_ACK_WAIT" ref="aeb409c8f8007baa9bf15efce6491ad77a4de5da0a220537161b83db14cb02882e" args="" -->SWD_ERROR_ACK_WAIT</em>&nbsp;</td><td>
 <p>Received ACK WAIT. </p>
 </td></tr>
-<tr><td valign="top"><em><a class="anchor" id="a27fab5915116e3880c16af35ba425fa8a562d12325f42609d3548848d0012e668"></a><!-- doxytag: member="SWD_ERROR_ACK_FAULT" ref="a27fab5915116e3880c16af35ba425fa8a562d12325f42609d3548848d0012e668" args="" -->SWD_ERROR_ACK_FAULT</em>&nbsp;</td><td>
+<tr><td valign="top"><em><a class="anchor" id="aeb409c8f8007baa9bf15efce6491ad77a562d12325f42609d3548848d0012e668"></a><!-- doxytag: member="SWD_ERROR_ACK_FAULT" ref="aeb409c8f8007baa9bf15efce6491ad77a562d12325f42609d3548848d0012e668" args="" -->SWD_ERROR_ACK_FAULT</em>&nbsp;</td><td>
 <p>Received ACK FAULT. </p>
 </td></tr>
-<tr><td valign="top"><em><a class="anchor" id="a27fab5915116e3880c16af35ba425fa8a6221955153e8a1486c6ba1885fad260d"></a><!-- doxytag: member="SWD_ERROR_QUEUENOTFREE" ref="a27fab5915116e3880c16af35ba425fa8a6221955153e8a1486c6ba1885fad260d" args="" -->SWD_ERROR_QUEUENOTFREE</em>&nbsp;</td><td>
+<tr><td valign="top"><em><a class="anchor" id="aeb409c8f8007baa9bf15efce6491ad77a6221955153e8a1486c6ba1885fad260d"></a><!-- doxytag: member="SWD_ERROR_QUEUENOTFREE" ref="aeb409c8f8007baa9bf15efce6491ad77a6221955153e8a1486c6ba1885fad260d" args="" -->SWD_ERROR_QUEUENOTFREE</em>&nbsp;</td><td>
 <p>Cannot free resources, queue not empty. </p>
 </td></tr>
-<tr><td valign="top"><em><a class="anchor" id="a27fab5915116e3880c16af35ba425fa8a278660e87edcaef6a52b604c1fdda9d7"></a><!-- doxytag: member="SWD_ERROR_TRANSPORT" ref="a27fab5915116e3880c16af35ba425fa8a278660e87edcaef6a52b604c1fdda9d7" args="" -->SWD_ERROR_TRANSPORT</em>&nbsp;</td><td>
+<tr><td valign="top"><em><a class="anchor" id="aeb409c8f8007baa9bf15efce6491ad77a278660e87edcaef6a52b604c1fdda9d7"></a><!-- doxytag: member="SWD_ERROR_TRANSPORT" ref="aeb409c8f8007baa9bf15efce6491ad77a278660e87edcaef6a52b604c1fdda9d7" args="" -->SWD_ERROR_TRANSPORT</em>&nbsp;</td><td>
 <p>Transport type unknown or undefined. </p>
 </td></tr>
-<tr><td valign="top"><em><a class="anchor" id="a27fab5915116e3880c16af35ba425fa8ad7b25e37bdd661e4146a201c01aba3e2"></a><!-- doxytag: member="SWD_ERROR_DIRECTION" ref="a27fab5915116e3880c16af35ba425fa8ad7b25e37bdd661e4146a201c01aba3e2" args="" -->SWD_ERROR_DIRECTION</em>&nbsp;</td><td>
+<tr><td valign="top"><em><a class="anchor" id="aeb409c8f8007baa9bf15efce6491ad77ad7b25e37bdd661e4146a201c01aba3e2"></a><!-- doxytag: member="SWD_ERROR_DIRECTION" ref="aeb409c8f8007baa9bf15efce6491ad77ad7b25e37bdd661e4146a201c01aba3e2" args="" -->SWD_ERROR_DIRECTION</em>&nbsp;</td><td>
 <p>Direction error (LSb/MSb first). </p>
 </td></tr>
-<tr><td valign="top"><em><a class="anchor" id="a27fab5915116e3880c16af35ba425fa8a3409780dd844cd0a9ec85fab65ead058"></a><!-- doxytag: member="SWD_ERROR_LOGLEVEL" ref="a27fab5915116e3880c16af35ba425fa8a3409780dd844cd0a9ec85fab65ead058" args="" -->SWD_ERROR_LOGLEVEL</em>&nbsp;</td><td>
+<tr><td valign="top"><em><a class="anchor" id="aeb409c8f8007baa9bf15efce6491ad77a3409780dd844cd0a9ec85fab65ead058"></a><!-- doxytag: member="SWD_ERROR_LOGLEVEL" ref="aeb409c8f8007baa9bf15efce6491ad77a3409780dd844cd0a9ec85fab65ead058" args="" -->SWD_ERROR_LOGLEVEL</em>&nbsp;</td><td>
 <p>Invalid loglevel number. </p>
 </td></tr>
 </table>
@@ -1264,12 +1176,12 @@ int&nbsp;</td><td class="memItemRight" valign="bottom"><b>swd_drv_miso_trn</b> (
 
 </div>
 </div>
-<a class="anchor" id="a5a7e21454b327f96ca82a916f5c02810"></a><!-- doxytag: member="libswd.h::SWD_LOGLEVEL" ref="a5a7e21454b327f96ca82a916f5c02810" args="" -->
+<a class="anchor" id="ab68cbcef79d602fc0fe70cb65c43e898"></a><!-- doxytag: member="libswd.h::swd_loglevel_t" ref="ab68cbcef79d602fc0fe70cb65c43e898" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="libswd_8h.html#a5a7e21454b327f96ca82a916f5c02810">SWD_LOGLEVEL</a></td>
+          <td class="memname">enum <a class="el" href="libswd_8h.html#ab68cbcef79d602fc0fe70cb65c43e898">swd_loglevel_t</a></td>
         </tr>
       </table>
 </div>
@@ -1278,19 +1190,22 @@ int&nbsp;</td><td class="memItemRight" valign="bottom"><b>swd_drv_miso_trn</b> (
 <p>Logging Level Codes definition. </p>
 <p>Logging Level codes definition, use this to have its name on debugger. </p>
 <dl><dt><b>Enumerator: </b></dt><dd><table border="0" cellspacing="2" cellpadding="0">
-<tr><td valign="top"><em><a class="anchor" id="a5a7e21454b327f96ca82a916f5c02810aae6717e99b0a1bb52faddc723ccf4c8a"></a><!-- doxytag: member="SWD_LOGLEVEL_SILENT" ref="a5a7e21454b327f96ca82a916f5c02810aae6717e99b0a1bb52faddc723ccf4c8a" args="" -->SWD_LOGLEVEL_SILENT</em>&nbsp;</td><td>
+<tr><td valign="top"><em><a class="anchor" id="ab68cbcef79d602fc0fe70cb65c43e898aae6717e99b0a1bb52faddc723ccf4c8a"></a><!-- doxytag: member="SWD_LOGLEVEL_SILENT" ref="ab68cbcef79d602fc0fe70cb65c43e898aae6717e99b0a1bb52faddc723ccf4c8a" args="" -->SWD_LOGLEVEL_SILENT</em>&nbsp;</td><td>
 <p>Remain silent. </p>
 </td></tr>
-<tr><td valign="top"><em><a class="anchor" id="a5a7e21454b327f96ca82a916f5c02810aec966870ed80a0b7995871924db678f1"></a><!-- doxytag: member="SWD_LOGLEVEL_ERROR" ref="a5a7e21454b327f96ca82a916f5c02810aec966870ed80a0b7995871924db678f1" args="" -->SWD_LOGLEVEL_ERROR</em>&nbsp;</td><td>
+<tr><td valign="top"><em><a class="anchor" id="ab68cbcef79d602fc0fe70cb65c43e898aec966870ed80a0b7995871924db678f1"></a><!-- doxytag: member="SWD_LOGLEVEL_ERROR" ref="ab68cbcef79d602fc0fe70cb65c43e898aec966870ed80a0b7995871924db678f1" args="" -->SWD_LOGLEVEL_ERROR</em>&nbsp;</td><td>
 <p>Show errors. </p>
 </td></tr>
-<tr><td valign="top"><em><a class="anchor" id="a5a7e21454b327f96ca82a916f5c02810a207bbe4a21ac547c5d7613cfa198e9ca"></a><!-- doxytag: member="SWD_LOGLEVEL_WARNING" ref="a5a7e21454b327f96ca82a916f5c02810a207bbe4a21ac547c5d7613cfa198e9ca" args="" -->SWD_LOGLEVEL_WARNING</em>&nbsp;</td><td>
+<tr><td valign="top"><em><a class="anchor" id="ab68cbcef79d602fc0fe70cb65c43e898a207bbe4a21ac547c5d7613cfa198e9ca"></a><!-- doxytag: member="SWD_LOGLEVEL_WARNING" ref="ab68cbcef79d602fc0fe70cb65c43e898a207bbe4a21ac547c5d7613cfa198e9ca" args="" -->SWD_LOGLEVEL_WARNING</em>&nbsp;</td><td>
 <p>Show warnings. </p>
 </td></tr>
-<tr><td valign="top"><em><a class="anchor" id="a5a7e21454b327f96ca82a916f5c02810ae80dd8ea77c8e8121c806150cf55495c"></a><!-- doxytag: member="SWD_LOGLEVEL_INFO" ref="a5a7e21454b327f96ca82a916f5c02810ae80dd8ea77c8e8121c806150cf55495c" args="" -->SWD_LOGLEVEL_INFO</em>&nbsp;</td><td>
+<tr><td valign="top"><em><a class="anchor" id="ab68cbcef79d602fc0fe70cb65c43e898ad06e455a696693b2226f49e6cec64146"></a><!-- doxytag: member="SWD_LOGLEVEL_NORMAL" ref="ab68cbcef79d602fc0fe70cb65c43e898ad06e455a696693b2226f49e6cec64146" args="" -->SWD_LOGLEVEL_NORMAL</em>&nbsp;</td><td>
+<p>Normal verbosity. </p>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="ab68cbcef79d602fc0fe70cb65c43e898ae80dd8ea77c8e8121c806150cf55495c"></a><!-- doxytag: member="SWD_LOGLEVEL_INFO" ref="ab68cbcef79d602fc0fe70cb65c43e898ae80dd8ea77c8e8121c806150cf55495c" args="" -->SWD_LOGLEVEL_INFO</em>&nbsp;</td><td>
 <p>Show messages. </p>
 </td></tr>
-<tr><td valign="top"><em><a class="anchor" id="a5a7e21454b327f96ca82a916f5c02810a911a4892f6c846b089c1d999214e0ee8"></a><!-- doxytag: member="SWD_LOGLEVEL_DEBUG" ref="a5a7e21454b327f96ca82a916f5c02810a911a4892f6c846b089c1d999214e0ee8" args="" -->SWD_LOGLEVEL_DEBUG</em>&nbsp;</td><td>
+<tr><td valign="top"><em><a class="anchor" id="ab68cbcef79d602fc0fe70cb65c43e898a911a4892f6c846b089c1d999214e0ee8"></a><!-- doxytag: member="SWD_LOGLEVEL_DEBUG" ref="ab68cbcef79d602fc0fe70cb65c43e898a911a4892f6c846b089c1d999214e0ee8" args="" -->SWD_LOGLEVEL_DEBUG</em>&nbsp;</td><td>
 <p>Show all including debug information. </p>
 </td></tr>
 </table>
@@ -1299,12 +1214,12 @@ int&nbsp;</td><td class="memItemRight" valign="bottom"><b>swd_drv_miso_trn</b> (
 
 </div>
 </div>
-<a class="anchor" id="a348e10c76c02b1223ac1456c36d69518"></a><!-- doxytag: member="libswd.h::SWD_OPERATION" ref="a348e10c76c02b1223ac1456c36d69518" args="" -->
+<a class="anchor" id="a35ca817603eaed3d5ce753c37a1db070"></a><!-- doxytag: member="libswd.h::swd_operation_t" ref="a35ca817603eaed3d5ce753c37a1db070" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="libswd_8h.html#a348e10c76c02b1223ac1456c36d69518">SWD_OPERATION</a></td>
+          <td class="memname">enum <a class="el" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070">swd_operation_t</a></td>
         </tr>
       </table>
 </div>
@@ -1312,31 +1227,31 @@ int&nbsp;</td><td class="memItemRight" valign="bottom"><b>swd_drv_miso_trn</b> (
 
 <p>Command Queue operations codes. </p>
 <dl><dt><b>Enumerator: </b></dt><dd><table border="0" cellspacing="2" cellpadding="0">
-<tr><td valign="top"><em><a class="anchor" id="a348e10c76c02b1223ac1456c36d69518a3072b746192012364ca0986dfbd048bf"></a><!-- doxytag: member="SWD_OPERATION_FIRST" ref="a348e10c76c02b1223ac1456c36d69518a3072b746192012364ca0986dfbd048bf" args="" -->SWD_OPERATION_FIRST</em>&nbsp;</td><td>
+<tr><td valign="top"><em><a class="anchor" id="a35ca817603eaed3d5ce753c37a1db070a3072b746192012364ca0986dfbd048bf"></a><!-- doxytag: member="SWD_OPERATION_FIRST" ref="a35ca817603eaed3d5ce753c37a1db070a3072b746192012364ca0986dfbd048bf" args="" -->SWD_OPERATION_FIRST</em>&nbsp;</td><td>
 <p>First operation to know its code. </p>
 </td></tr>
-<tr><td valign="top"><em><a class="anchor" id="a348e10c76c02b1223ac1456c36d69518a9fe0514a56fa43763b83c16a168dc3e5"></a><!-- doxytag: member="SWD_OPERATION_ENQUEUE" ref="a348e10c76c02b1223ac1456c36d69518a9fe0514a56fa43763b83c16a168dc3e5" args="" -->SWD_OPERATION_ENQUEUE</em>&nbsp;</td><td>
+<tr><td valign="top"><em><a class="anchor" id="a35ca817603eaed3d5ce753c37a1db070a9fe0514a56fa43763b83c16a168dc3e5"></a><!-- doxytag: member="SWD_OPERATION_ENQUEUE" ref="a35ca817603eaed3d5ce753c37a1db070a9fe0514a56fa43763b83c16a168dc3e5" args="" -->SWD_OPERATION_ENQUEUE</em>&nbsp;</td><td>
 <p>Append command(s) to the queue. </p>
 </td></tr>
-<tr><td valign="top"><em><a class="anchor" id="a348e10c76c02b1223ac1456c36d69518a56d19aa6e805b636d0c679df01a83bf1"></a><!-- doxytag: member="SWD_OPERATION_EXECUTE" ref="a348e10c76c02b1223ac1456c36d69518a56d19aa6e805b636d0c679df01a83bf1" args="" -->SWD_OPERATION_EXECUTE</em>&nbsp;</td><td>
+<tr><td valign="top"><em><a class="anchor" id="a35ca817603eaed3d5ce753c37a1db070a56d19aa6e805b636d0c679df01a83bf1"></a><!-- doxytag: member="SWD_OPERATION_EXECUTE" ref="a35ca817603eaed3d5ce753c37a1db070a56d19aa6e805b636d0c679df01a83bf1" args="" -->SWD_OPERATION_EXECUTE</em>&nbsp;</td><td>
 <p>Queue commands then flush the queue. </p>
 </td></tr>
-<tr><td valign="top"><em><a class="anchor" id="a348e10c76c02b1223ac1456c36d69518aff0c4b9c2b732437df67e41f3dde5b41"></a><!-- doxytag: member="SWD_OPERATION_TRANSMIT_HEAD" ref="a348e10c76c02b1223ac1456c36d69518aff0c4b9c2b732437df67e41f3dde5b41" args="" -->SWD_OPERATION_TRANSMIT_HEAD</em>&nbsp;</td><td>
+<tr><td valign="top"><em><a class="anchor" id="a35ca817603eaed3d5ce753c37a1db070aff0c4b9c2b732437df67e41f3dde5b41"></a><!-- doxytag: member="SWD_OPERATION_TRANSMIT_HEAD" ref="a35ca817603eaed3d5ce753c37a1db070aff0c4b9c2b732437df67e41f3dde5b41" args="" -->SWD_OPERATION_TRANSMIT_HEAD</em>&nbsp;</td><td>
 <p>Transmit root..current (head). </p>
 </td></tr>
-<tr><td valign="top"><em><a class="anchor" id="a348e10c76c02b1223ac1456c36d69518a2f8b579789e424e73b147b14b910f9c0"></a><!-- doxytag: member="SWD_OPERATION_TRANSMIT_TAIL" ref="a348e10c76c02b1223ac1456c36d69518a2f8b579789e424e73b147b14b910f9c0" args="" -->SWD_OPERATION_TRANSMIT_TAIL</em>&nbsp;</td><td>
+<tr><td valign="top"><em><a class="anchor" id="a35ca817603eaed3d5ce753c37a1db070a2f8b579789e424e73b147b14b910f9c0"></a><!-- doxytag: member="SWD_OPERATION_TRANSMIT_TAIL" ref="a35ca817603eaed3d5ce753c37a1db070a2f8b579789e424e73b147b14b910f9c0" args="" -->SWD_OPERATION_TRANSMIT_TAIL</em>&nbsp;</td><td>
 <p>Transmit current..last (tail). </p>
 </td></tr>
-<tr><td valign="top"><em><a class="anchor" id="a348e10c76c02b1223ac1456c36d69518ac38a2a8469f357620b62255215119eba"></a><!-- doxytag: member="SWD_OPERATION_TRANSMIT_ALL" ref="a348e10c76c02b1223ac1456c36d69518ac38a2a8469f357620b62255215119eba" args="" -->SWD_OPERATION_TRANSMIT_ALL</em>&nbsp;</td><td>
+<tr><td valign="top"><em><a class="anchor" id="a35ca817603eaed3d5ce753c37a1db070ac38a2a8469f357620b62255215119eba"></a><!-- doxytag: member="SWD_OPERATION_TRANSMIT_ALL" ref="a35ca817603eaed3d5ce753c37a1db070ac38a2a8469f357620b62255215119eba" args="" -->SWD_OPERATION_TRANSMIT_ALL</em>&nbsp;</td><td>
 <p>Transmit all commands on the queue. </p>
 </td></tr>
-<tr><td valign="top"><em><a class="anchor" id="a348e10c76c02b1223ac1456c36d69518a1b313c50018796ad8d5049a005c164dd"></a><!-- doxytag: member="SWD_OPERATION_TRANSMIT_ONE" ref="a348e10c76c02b1223ac1456c36d69518a1b313c50018796ad8d5049a005c164dd" args="" -->SWD_OPERATION_TRANSMIT_ONE</em>&nbsp;</td><td>
+<tr><td valign="top"><em><a class="anchor" id="a35ca817603eaed3d5ce753c37a1db070a1b313c50018796ad8d5049a005c164dd"></a><!-- doxytag: member="SWD_OPERATION_TRANSMIT_ONE" ref="a35ca817603eaed3d5ce753c37a1db070a1b313c50018796ad8d5049a005c164dd" args="" -->SWD_OPERATION_TRANSMIT_ONE</em>&nbsp;</td><td>
 <p>Transmit only current command. </p>
 </td></tr>
-<tr><td valign="top"><em><a class="anchor" id="a348e10c76c02b1223ac1456c36d69518ada451b56cf1fa088d3f36c84930054dd"></a><!-- doxytag: member="SWD_OPERATION_TRANSMIT_LAST" ref="a348e10c76c02b1223ac1456c36d69518ada451b56cf1fa088d3f36c84930054dd" args="" -->SWD_OPERATION_TRANSMIT_LAST</em>&nbsp;</td><td>
+<tr><td valign="top"><em><a class="anchor" id="a35ca817603eaed3d5ce753c37a1db070ada451b56cf1fa088d3f36c84930054dd"></a><!-- doxytag: member="SWD_OPERATION_TRANSMIT_LAST" ref="a35ca817603eaed3d5ce753c37a1db070ada451b56cf1fa088d3f36c84930054dd" args="" -->SWD_OPERATION_TRANSMIT_LAST</em>&nbsp;</td><td>
 <p>Transmit last command on the queue. </p>
 </td></tr>
-<tr><td valign="top"><em><a class="anchor" id="a348e10c76c02b1223ac1456c36d69518a2b0a3a85cda93ab617d1f49273a3cc3b"></a><!-- doxytag: member="SWD_OPERATION_LAST" ref="a348e10c76c02b1223ac1456c36d69518a2b0a3a85cda93ab617d1f49273a3cc3b" args="" -->SWD_OPERATION_LAST</em>&nbsp;</td><td>
+<tr><td valign="top"><em><a class="anchor" id="a35ca817603eaed3d5ce753c37a1db070a2b0a3a85cda93ab617d1f49273a3cc3b"></a><!-- doxytag: member="SWD_OPERATION_LAST" ref="a35ca817603eaed3d5ce753c37a1db070a2b0a3a85cda93ab617d1f49273a3cc3b" args="" -->SWD_OPERATION_LAST</em>&nbsp;</td><td>
 <p>Last operation to know its code. </p>
 </td></tr>
 </table>
@@ -1345,12 +1260,12 @@ int&nbsp;</td><td class="memItemRight" valign="bottom"><b>swd_drv_miso_trn</b> (
 
 </div>
 </div>
-<a class="anchor" id="a7fbfdd0305df10658af08b4b2c0e8f4c"></a><!-- doxytag: member="libswd.h::SWD_SHIFTDIR" ref="a7fbfdd0305df10658af08b4b2c0e8f4c" args="" -->
+<a class="anchor" id="a7262ed71e0d9c40d2ede6c0aa44209df"></a><!-- doxytag: member="libswd.h::swd_shiftdir_t" ref="a7262ed71e0d9c40d2ede6c0aa44209df" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="libswd_8h.html#a7fbfdd0305df10658af08b4b2c0e8f4c">SWD_SHIFTDIR</a></td>
+          <td class="memname">enum <a class="el" href="libswd_8h.html#a7262ed71e0d9c40d2ede6c0aa44209df">swd_shiftdir_t</a></td>
         </tr>
       </table>
 </div>
@@ -1358,10 +1273,10 @@ int&nbsp;</td><td class="memItemRight" valign="bottom"><b>swd_drv_miso_trn</b> (
 
 <p>What is the shift direction LSB-first or MSB-first. </p>
 <dl><dt><b>Enumerator: </b></dt><dd><table border="0" cellspacing="2" cellpadding="0">
-<tr><td valign="top"><em><a class="anchor" id="a7fbfdd0305df10658af08b4b2c0e8f4ca0b9f6301b086569d5a62e49d7a2ebdf0"></a><!-- doxytag: member="SWD_DIR_LSBFIRST" ref="a7fbfdd0305df10658af08b4b2c0e8f4ca0b9f6301b086569d5a62e49d7a2ebdf0" args="" -->SWD_DIR_LSBFIRST</em>&nbsp;</td><td>
+<tr><td valign="top"><em><a class="anchor" id="a7262ed71e0d9c40d2ede6c0aa44209dfa0b9f6301b086569d5a62e49d7a2ebdf0"></a><!-- doxytag: member="SWD_DIR_LSBFIRST" ref="a7262ed71e0d9c40d2ede6c0aa44209dfa0b9f6301b086569d5a62e49d7a2ebdf0" args="" -->SWD_DIR_LSBFIRST</em>&nbsp;</td><td>
 <p>Data is shifted in/out right (LSB-first). </p>
 </td></tr>
-<tr><td valign="top"><em><a class="anchor" id="a7fbfdd0305df10658af08b4b2c0e8f4ca76bc9b4b4ac1e47f4602576ed500a07c"></a><!-- doxytag: member="SWD_DIR_MSBFIRST" ref="a7fbfdd0305df10658af08b4b2c0e8f4ca76bc9b4b4ac1e47f4602576ed500a07c" args="" -->SWD_DIR_MSBFIRST</em>&nbsp;</td><td>
+<tr><td valign="top"><em><a class="anchor" id="a7262ed71e0d9c40d2ede6c0aa44209dfa76bc9b4b4ac1e47f4602576ed500a07c"></a><!-- doxytag: member="SWD_DIR_MSBFIRST" ref="a7262ed71e0d9c40d2ede6c0aa44209dfa76bc9b4b4ac1e47f4602576ed500a07c" args="" -->SWD_DIR_MSBFIRST</em>&nbsp;</td><td>
 <p>Data is shifted in/out left (MSB-first). </p>
 </td></tr>
 </table>
@@ -1702,7 +1617,7 @@ int&nbsp;</td><td class="memItemRight" valign="bottom"><b>swd_drv_miso_trn</b> (
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="libswd_8h.html#aa0833ff00c22fe41453f5e9acec488e2">swd_operation_t</a>&nbsp;</td>
+          <td class="paramtype"><a class="el" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070">swd_operation_t</a>&nbsp;</td>
           <td class="paramname"> <em>operation</em>, </td>
         </tr>
         <tr>
@@ -1746,7 +1661,7 @@ int&nbsp;</td><td class="memItemRight" valign="bottom"><b>swd_drv_miso_trn</b> (
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="libswd_8h.html#aa0833ff00c22fe41453f5e9acec488e2">swd_operation_t</a>&nbsp;</td>
+          <td class="paramtype"><a class="el" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070">swd_operation_t</a>&nbsp;</td>
           <td class="paramname"> <em>operation</em>, </td>
         </tr>
         <tr>
@@ -1851,7 +1766,7 @@ int&nbsp;</td><td class="memItemRight" valign="bottom"><b>swd_drv_miso_trn</b> (
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="libswd_8h.html#aa0833ff00c22fe41453f5e9acec488e2">swd_operation_t</a>&nbsp;</td>
+          <td class="paramtype"><a class="el" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070">swd_operation_t</a>&nbsp;</td>
           <td class="paramname"> <em>operation</em>, </td>
         </tr>
         <tr>
@@ -1902,7 +1817,7 @@ int&nbsp;</td><td class="memItemRight" valign="bottom"><b>swd_drv_miso_trn</b> (
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="libswd_8h.html#aa0833ff00c22fe41453f5e9acec488e2">swd_operation_t</a>&nbsp;</td>
+          <td class="paramtype"><a class="el" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070">swd_operation_t</a>&nbsp;</td>
           <td class="paramname"> <em>operation</em>, </td>
         </tr>
         <tr>
@@ -1946,7 +1861,7 @@ int&nbsp;</td><td class="memItemRight" valign="bottom"><b>swd_drv_miso_trn</b> (
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="libswd_8h.html#aa0833ff00c22fe41453f5e9acec488e2">swd_operation_t</a>&nbsp;</td>
+          <td class="paramtype"><a class="el" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070">swd_operation_t</a>&nbsp;</td>
           <td class="paramname"> <em>operation</em>, </td>
         </tr>
         <tr>
@@ -1997,7 +1912,7 @@ int&nbsp;</td><td class="memItemRight" valign="bottom"><b>swd_drv_miso_trn</b> (
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="libswd_8h.html#aa0833ff00c22fe41453f5e9acec488e2">swd_operation_t</a>&nbsp;</td>
+          <td class="paramtype"><a class="el" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070">swd_operation_t</a>&nbsp;</td>
           <td class="paramname"> <em>operation</em>, </td>
         </tr>
         <tr>
@@ -2975,7 +2890,7 @@ int&nbsp;</td><td class="memItemRight" valign="bottom"><b>swd_drv_miso_trn</b> (
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="libswd_8h.html#aa0833ff00c22fe41453f5e9acec488e2">swd_operation_t</a>&nbsp;</td>
+          <td class="paramtype"><a class="el" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070">swd_operation_t</a>&nbsp;</td>
           <td class="paramname"> <em>operation</em></td><td>&nbsp;</td>
         </tr>
         <tr>
@@ -3108,6 +3023,123 @@ int&nbsp;</td><td class="memItemRight" valign="bottom"><b>swd_drv_miso_trn</b> (
 
 </div>
 </div>
+<a class="anchor" id="a6758b95d2adfbfb9b95198f9b0b5462c"></a><!-- doxytag: member="libswd.h::swd_dap_detect" ref="a6758b95d2adfbfb9b95198f9b0b5462c" args="(swd_ctx_t *swdctx, swd_operation_t operation, int **idcode)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int swd_dap_detect </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *&nbsp;</td>
+          <td class="paramname"> <em>swdctx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070">swd_operation_t</a>&nbsp;</td>
+          <td class="paramname"> <em>operation</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int **&nbsp;</td>
+          <td class="paramname"> <em>idcode</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Macro: Reset target DAP, select SW-DP, read out IDCODE. </p>
+<p>This is the proper SW-DP initialization as stated by ARM Information Center. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>*swdctx</em>&nbsp;</td><td>swd context pointer. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>operation</em>&nbsp;</td><td>type (SWD_OPERATION_ENQUEUE or SWD_OPERATION_EXECUTE). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>Target's IDCODE, or error code on failure. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ae53937afaa64ce0b28bef3d8d093f65a"></a><!-- doxytag: member="libswd.h::swd_dap_reset" ref="ae53937afaa64ce0b28bef3d8d093f65a" args="(swd_ctx_t *swdctx, swd_operation_t operation)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int swd_dap_reset </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *&nbsp;</td>
+          <td class="paramname"> <em>swdctx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070">swd_operation_t</a>&nbsp;</td>
+          <td class="paramname"> <em>operation</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Debug Access Port Reset sends 50 CLK with TMS high that brings both SW-DP and JTAG-DP into reset state. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>*swdctx</em>&nbsp;</td><td>swd context pointer. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>operation</em>&nbsp;</td><td>type (SWD_OPERATION_ENQUEUE or SWD_OPERATION_EXECUTE). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>number of elements processed or SWD_ERROR_CODE code on failure. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a0ffa1e7b48180a7c4bf05f2906a9cbb1"></a><!-- doxytag: member="libswd.h::swd_dap_select" ref="a0ffa1e7b48180a7c4bf05f2906a9cbb1" args="(swd_ctx_t *swdctx, swd_operation_t operation)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int swd_dap_select </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *&nbsp;</td>
+          <td class="paramname"> <em>swdctx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070">swd_operation_t</a>&nbsp;</td>
+          <td class="paramname"> <em>operation</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Activate SW-DP by sending out RESET and JTAG-TO-SWD sequence on SWDIOTMS line. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>*swdctx</em>&nbsp;</td><td>swd context. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>number of control bytes executed, or error code on failre. </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="a94b02a9cf4b72e2e76d6a9a34f34f96f"></a><!-- doxytag: member="libswd.h::swd_deinit" ref="a94b02a9cf4b72e2e76d6a9a34f34f96f" args="(swd_ctx_t *swdctx)" -->
 <div class="memitem">
 <div class="memproto">
@@ -3190,86 +3222,6 @@ int&nbsp;</td><td class="memItemRight" valign="bottom"><b>swd_drv_miso_trn</b> (
 
 </div>
 </div>
-<a class="anchor" id="a6229cd1e143fb4789660ea91a5f5eb28"></a><!-- doxytag: member="libswd.h::swd_dp_activate" ref="a6229cd1e143fb4789660ea91a5f5eb28" args="(swd_ctx_t *swdctx, swd_operation_t operation)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int swd_dp_activate </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *&nbsp;</td>
-          <td class="paramname"> <em>swdctx</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="libswd_8h.html#aa0833ff00c22fe41453f5e9acec488e2">swd_operation_t</a>&nbsp;</td>
-          <td class="paramname"> <em>operation</em></td><td>&nbsp;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td><td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Activate SW-DP by sending out RESET and JTAG-TO-SWD sequence on SWDIOTMS line. </p>
-<dl><dt><b>Parameters:</b></dt><dd>
-  <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>*swdctx</em>&nbsp;</td><td>swd context. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>number of control bytes executed, or error code on failre. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="a01125bcff3fe193e889b5afa6d811ac7"></a><!-- doxytag: member="libswd.h::swd_dp_detect" ref="a01125bcff3fe193e889b5afa6d811ac7" args="(swd_ctx_t *swdctx, swd_operation_t operation, int **idcode)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int swd_dp_detect </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *&nbsp;</td>
-          <td class="paramname"> <em>swdctx</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="libswd_8h.html#aa0833ff00c22fe41453f5e9acec488e2">swd_operation_t</a>&nbsp;</td>
-          <td class="paramname"> <em>operation</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int **&nbsp;</td>
-          <td class="paramname"> <em>idcode</em></td><td>&nbsp;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td><td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Macro: Reset target DAP, select SW-DP, read out IDCODE. </p>
-<p>This is the proper SW-DP initialization as stated by ARM Information Center. </p>
-<dl><dt><b>Parameters:</b></dt><dd>
-  <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>*swdctx</em>&nbsp;</td><td>swd context pointer. </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>operation</em>&nbsp;</td><td>type (SWD_OPERATION_ENQUEUE or SWD_OPERATION_EXECUTE). </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>Target's IDCODE, or error code on failure. </dd></dl>
-
-</div>
-</div>
 <a class="anchor" id="a0a40c90253f99da07eae5e237be187b1"></a><!-- doxytag: member="libswd.h::swd_dp_read_idcode" ref="a0a40c90253f99da07eae5e237be187b1" args="(swd_ctx_t *swdctx, swd_operation_t operation, int **idcode)" -->
 <div class="memitem">
 <div class="memproto">
@@ -3283,7 +3235,7 @@ int&nbsp;</td><td class="memItemRight" valign="bottom"><b>swd_drv_miso_trn</b> (
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="libswd_8h.html#aa0833ff00c22fe41453f5e9acec488e2">swd_operation_t</a>&nbsp;</td>
+          <td class="paramtype"><a class="el" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070">swd_operation_t</a>&nbsp;</td>
           <td class="paramname"> <em>operation</em>, </td>
         </tr>
         <tr>
@@ -3310,43 +3262,6 @@ int&nbsp;</td><td class="memItemRight" valign="bottom"><b>swd_drv_miso_trn</b> (
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>Target's IDCODE value or code error on failure. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="a98fbdd25229d0a49f04a061d2fdf28f7"></a><!-- doxytag: member="libswd.h::swd_dp_reset" ref="a98fbdd25229d0a49f04a061d2fdf28f7" args="(swd_ctx_t *swdctx, swd_operation_t operation)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int swd_dp_reset </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *&nbsp;</td>
-          <td class="paramname"> <em>swdctx</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="libswd_8h.html#aa0833ff00c22fe41453f5e9acec488e2">swd_operation_t</a>&nbsp;</td>
-          <td class="paramname"> <em>operation</em></td><td>&nbsp;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td><td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Debug Access Port Reset sends 50 CLK with TMS high that brings both SW-DP and JTAG-DP into reset state. </p>
-<dl><dt><b>Parameters:</b></dt><dd>
-  <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>*swdctx</em>&nbsp;</td><td>swd context pointer. </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>operation</em>&nbsp;</td><td>type (SWD_OPERATION_ENQUEUE or SWD_OPERATION_EXECUTE). </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>number of elements processed or SWD_ERROR_CODE code on failure. </dd></dl>
 
 </div>
 </div>
@@ -3422,7 +3337,7 @@ int&nbsp;</td><td class="memItemRight" valign="bottom"><b>swd_drv_miso_trn</b> (
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="libswd_8h.html#acb51eaac9226d7aef398d63e2a5db319">swd_loglevel_t</a>&nbsp;</td>
+          <td class="paramtype"><a class="el" href="libswd_8h.html#ab68cbcef79d602fc0fe70cb65c43e898">swd_loglevel_t</a>&nbsp;</td>
           <td class="paramname"> <em>loglevel</em>, </td>
         </tr>
         <tr>
@@ -3460,6 +3375,43 @@ int&nbsp;</td><td class="memItemRight" valign="bottom"><b>swd_drv_miso_trn</b> (
 
 </div>
 </div>
+<a class="anchor" id="af30788d001ca964f2889f0d70e2eae8f"></a><!-- doxytag: member="libswd.h::swd_log_level_set" ref="af30788d001ca964f2889f0d70e2eae8f" args="(swd_ctx_t *swdctx, swd_loglevel_t loglevel)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int swd_log_level_set </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *&nbsp;</td>
+          <td class="paramname"> <em>swdctx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="libswd_8h.html#ab68cbcef79d602fc0fe70cb65c43e898">swd_loglevel_t</a>&nbsp;</td>
+          <td class="paramname"> <em>loglevel</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Change log level to increase or decrease verbosity level. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>*swdctx</em>&nbsp;</td><td>swd context. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>loglevel</em>&nbsp;</td><td>is the target verbosity level to be set. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>SWD_OK on success or error code. </dd></dl>
+
+</div>
+</div>
 </div>
 <!--- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -3475,7 +3427,7 @@ int&nbsp;</td><td class="memItemRight" valign="bottom"><b>swd_drv_miso_trn</b> (
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Tue Mar 8 2011 05:44:10 for libswd by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Fri Mar 11 2011 17:25:09 for libswd by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

@@ -65,7 +65,7 @@ Public Attributes</h2></td></tr>
 <tr><td class="memItemLeft" ><a class="anchor" id="a6ffacafbf5e1160e81a4ae1e650c724f"></a><!-- doxytag: member="swd_cmd_t::@1" ref="a6ffacafbf5e1160e81a4ae1e650c724f" args="" -->
 union {</td></tr>
 <tr><td class="memItemLeft" >&nbsp;&nbsp;&nbsp;char&nbsp;&nbsp;&nbsp;<a class="el" href="structswd__cmd__t.html#ad5990fe329230159af56a95378b206ef">TRNnMOSI</a></td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">&lt; Payload data union.  <a href="#a52120bd45d1be4ba810cae1630b0fe6d"></a><br/></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Holds/sets bus direction: MOSI when zero, MISO for others. <br/></td></tr>
 <tr><td class="memItemLeft" >&nbsp;&nbsp;&nbsp;char&nbsp;&nbsp;&nbsp;<a class="el" href="structswd__cmd__t.html#a78267c4aaaed43ef5d38617cd0632135">request</a></td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Request header data. <br/></td></tr>
 <tr><td class="memItemLeft" >&nbsp;&nbsp;&nbsp;char&nbsp;&nbsp;&nbsp;<a class="el" href="structswd__cmd__t.html#a564daefcae1870dc3110fe1ef2d2fb02">ack</a></td></tr>
@@ -91,37 +91,21 @@ union {</td></tr>
 char&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structswd__cmd__t.html#ad356acda4d21961df30b3091a27ab13b">bits</a></td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Payload bit count == clk pulses on the bus. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7039d3b72c01b8cfe8d3bcd428343059"></a><!-- doxytag: member="swd_cmd_t::cmdtype" ref="a7039d3b72c01b8cfe8d3bcd428343059" args="" -->
-<a class="el" href="libswd_8h.html#a6e085f87c01f67880528f5915576bd8f">swd_cmdtype_t</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structswd__cmd__t.html#a7039d3b72c01b8cfe8d3bcd428343059">cmdtype</a></td></tr>
+<a class="el" href="libswd_8h.html#a18e16544fabdef0ef0e531cc6b4d4b7c">swd_cmdtype_t</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structswd__cmd__t.html#a7039d3b72c01b8cfe8d3bcd428343059">cmdtype</a></td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Command type as defined by swd_cmdtype_t. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a617e4adc0aaf469af0fdab5efd93174c"></a><!-- doxytag: member="swd_cmd_t::done" ref="a617e4adc0aaf469af0fdab5efd93174c" args="" -->
 char&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structswd__cmd__t.html#a617e4adc0aaf469af0fdab5efd93174c">done</a></td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Non-zero if operation already executed. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a51ad4da25e6438e20fafd9e44b901d49"></a><!-- doxytag: member="swd_cmd_t::prev" ref="a51ad4da25e6438e20fafd9e44b901d49" args="" -->
-struct <a class="el" href="structswd__cmd__t.html">swd_cmd_t</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><b>prev</b></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a173ed688b79789d2336500b2cb9a8436"></a><!-- doxytag: member="swd_cmd_t::next" ref="a173ed688b79789d2336500b2cb9a8436" args="" -->
-struct <a class="el" href="structswd__cmd__t.html">swd_cmd_t</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structswd__cmd__t.html#a173ed688b79789d2336500b2cb9a8436">next</a></td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Pointer to the previous/next command. <br/></td></tr>
+struct <a class="el" href="structswd__cmd__t.html">swd_cmd_t</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structswd__cmd__t.html#a51ad4da25e6438e20fafd9e44b901d49">prev</a></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Pointer to the previous command. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaf05bcb291fe2ecdf38a9168315db405"></a><!-- doxytag: member="swd_cmd_t::next" ref="aaf05bcb291fe2ecdf38a9168315db405" args="" -->
+struct <a class="el" href="structswd__cmd__t.html">swd_cmd_t</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structswd__cmd__t.html#aaf05bcb291fe2ecdf38a9168315db405">next</a></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Pointer to the next command. <br/></td></tr>
 </table>
 <hr/><a name="_details"></a><h2>Detailed Description</h2>
 <p>SWD Command Element Structure. </p>
 <p>In libswd each operation is split into separate commands (request, trn, ack, data, parity) that can be appended to the command queue and later executed. This organization allows better granularity for tracing bugs and makes possible to compose complete bus/target operations made of simple commands. </p>
-<hr/><h2>Member Data Documentation</h2>
-<a class="anchor" id="ad5990fe329230159af56a95378b206ef"></a><!-- doxytag: member="swd_cmd_t::TRNnMOSI" ref="ad5990fe329230159af56a95378b206ef" args="" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">char <a class="el" href="structswd__cmd__t.html#ad5990fe329230159af56a95378b206ef">swd_cmd_t::TRNnMOSI</a></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>&lt; Payload data union. </p>
-<p>Holds/sets bus direction: MOSI when zero, MISO for other. </p>
-
-</div>
-</div>
 <hr/>The documentation for this struct was generated from the following file:<ul>
 <li><a class="el" href="libswd_8h_source.html">libswd.h</a></li>
 </ul>
@@ -140,7 +124,7 @@ struct <a class="el" href="structswd__cmd__t.html">swd_cmd_t</a> *&nbsp;</td><td
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Tue Mar 8 2011 05:44:10 for libswd by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Fri Mar 11 2011 17:25:09 for libswd by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

@@ -1,4 +1,4 @@
-.TH "libswd.c" 3 "Tue Mar 8 2011" "Version 0.0.1" "libswd" \" -*- nroff -*-
+.TH "libswd.c" 3 "Fri Mar 11 2011" "Version 0.0.1" "libswd" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -6,9 +6,7 @@ libswd.c \-
 .SH SYNOPSIS
 .br
 .PP
-\fC#include <libswd.h>\fP
-.br
-\fC#include <urjtag/libswd.h>\fP
+\fC#include <libswd/libswd.h>\fP
 .br
 \fC#include <string.h>\fP
 .br
@@ -236,11 +234,11 @@ libswd.c \-
 .br
 .RI "\fIWrite CONTROL byte to the Target's DAP. \fP"
 .ti -1c
-.RI "int \fBswd_dp_reset\fP (\fBswd_ctx_t\fP *swdctx, \fBswd_operation_t\fP operation)"
+.RI "int \fBswd_dap_reset\fP (\fBswd_ctx_t\fP *swdctx, \fBswd_operation_t\fP operation)"
 .br
 .RI "\fIDebug Access Port Reset sends 50 CLK with TMS high that brings both SW-DP and JTAG-DP into reset state. \fP"
 .ti -1c
-.RI "int \fBswd_dp_activate\fP (\fBswd_ctx_t\fP *swdctx, \fBswd_operation_t\fP operation)"
+.RI "int \fBswd_dap_select\fP (\fBswd_ctx_t\fP *swdctx, \fBswd_operation_t\fP operation)"
 .br
 .RI "\fIActivate SW-DP by sending out RESET and JTAG-TO-SWD sequence on SWDIOTMS line. \fP"
 .ti -1c
@@ -248,13 +246,17 @@ libswd.c \-
 .br
 .RI "\fIMacro: Read out IDCODE register and return its value on function return. \fP"
 .ti -1c
-.RI "int \fBswd_dp_detect\fP (\fBswd_ctx_t\fP *swdctx, \fBswd_operation_t\fP operation, int **idcode)"
+.RI "int \fBswd_dap_detect\fP (\fBswd_ctx_t\fP *swdctx, \fBswd_operation_t\fP operation, int **idcode)"
 .br
 .RI "\fIMacro: Reset target DAP, select SW-DP, read out IDCODE. \fP"
 .ti -1c
 .RI "int \fBswd_log\fP (\fBswd_ctx_t\fP *swdctx, \fBswd_loglevel_t\fP loglevel, char *msg,...)"
 .br
 .RI "\fIPut a message into swd context log at specified verbosity level. \fP"
+.ti -1c
+.RI "int \fBswd_log_level_set\fP (\fBswd_ctx_t\fP *swdctx, \fBswd_loglevel_t\fP loglevel)"
+.br
+.RI "\fIChange log level to increase or decrease verbosity level. \fP"
 .ti -1c
 .RI "char * \fBswd_error_string\fP (\fBswd_error_code_t\fP error)"
 .br
@@ -1017,6 +1019,51 @@ SWD_OK on success, SWD_ERROR_CODE code on failure
 .RE
 .PP
 
+.SS "int swd_dap_detect (\fBswd_ctx_t\fP * swdctx, \fBswd_operation_t\fP operation, int ** idcode)"
+.PP
+Macro: Reset target DAP, select SW-DP, read out IDCODE. This is the proper SW-DP initialization as stated by ARM Information Center. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fI*swdctx\fP swd context pointer. 
+.br
+\fIoperation\fP type (SWD_OPERATION_ENQUEUE or SWD_OPERATION_EXECUTE). 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Target's IDCODE, or error code on failure. 
+.RE
+.PP
+
+.SS "int swd_dap_reset (\fBswd_ctx_t\fP * swdctx, \fBswd_operation_t\fP operation)"
+.PP
+Debug Access Port Reset sends 50 CLK with TMS high that brings both SW-DP and JTAG-DP into reset state. \fBParameters:\fP
+.RS 4
+\fI*swdctx\fP swd context pointer. 
+.br
+\fIoperation\fP type (SWD_OPERATION_ENQUEUE or SWD_OPERATION_EXECUTE). 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+number of elements processed or SWD_ERROR_CODE code on failure. 
+.RE
+.PP
+
+.SS "int swd_dap_select (\fBswd_ctx_t\fP * swdctx, \fBswd_operation_t\fP operation)"
+.PP
+Activate SW-DP by sending out RESET and JTAG-TO-SWD sequence on SWDIOTMS line. \fBParameters:\fP
+.RS 4
+\fI*swdctx\fP swd context. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+number of control bytes executed, or error code on failre. 
+.RE
+.PP
+
 .SS "int swd_deinit (\fBswd_ctx_t\fP * swdctx)"
 .PP
 De-initialize selected swd context and its command queue. \fBParameters:\fP
@@ -1058,36 +1105,6 @@ SWD_OK on success, SWD_ERROR_CODE on failure.
 .RE
 .PP
 
-.SS "int swd_dp_activate (\fBswd_ctx_t\fP * swdctx, \fBswd_operation_t\fP operation)"
-.PP
-Activate SW-DP by sending out RESET and JTAG-TO-SWD sequence on SWDIOTMS line. \fBParameters:\fP
-.RS 4
-\fI*swdctx\fP swd context. 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-number of control bytes executed, or error code on failre. 
-.RE
-.PP
-
-.SS "int swd_dp_detect (\fBswd_ctx_t\fP * swdctx, \fBswd_operation_t\fP operation, int ** idcode)"
-.PP
-Macro: Reset target DAP, select SW-DP, read out IDCODE. This is the proper SW-DP initialization as stated by ARM Information Center. 
-.PP
-\fBParameters:\fP
-.RS 4
-\fI*swdctx\fP swd context pointer. 
-.br
-\fIoperation\fP type (SWD_OPERATION_ENQUEUE or SWD_OPERATION_EXECUTE). 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-Target's IDCODE, or error code on failure. 
-.RE
-.PP
-
 .SS "int swd_dp_read_idcode (\fBswd_ctx_t\fP * swdctx, \fBswd_operation_t\fP operation, int ** idcode)"
 .PP
 Macro: Read out IDCODE register and return its value on function return. \fBParameters:\fP
@@ -1100,21 +1117,6 @@ Macro: Read out IDCODE register and return its value on function return. \fBPara
 \fBReturns:\fP
 .RS 4
 Target's IDCODE value or code error on failure. 
-.RE
-.PP
-
-.SS "int swd_dp_reset (\fBswd_ctx_t\fP * swdctx, \fBswd_operation_t\fP operation)"
-.PP
-Debug Access Port Reset sends 50 CLK with TMS high that brings both SW-DP and JTAG-DP into reset state. \fBParameters:\fP
-.RS 4
-\fI*swdctx\fP swd context pointer. 
-.br
-\fIoperation\fP type (SWD_OPERATION_ENQUEUE or SWD_OPERATION_EXECUTE). 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-number of elements processed or SWD_ERROR_CODE code on failure. 
 .RE
 .PP
 
@@ -1159,6 +1161,21 @@ Put a message into swd context log at specified verbosity level. If specified me
 \fBReturns:\fP
 .RS 4
 number of characters written or error code on failure. 
+.RE
+.PP
+
+.SS "int swd_log_level_set (\fBswd_ctx_t\fP * swdctx, \fBswd_loglevel_t\fP loglevel)"
+.PP
+Change log level to increase or decrease verbosity level. \fBParameters:\fP
+.RS 4
+\fI*swdctx\fP swd context. 
+.br
+\fIloglevel\fP is the target verbosity level to be set. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+SWD_OK on success or error code. 
 .RE
 .PP
 
