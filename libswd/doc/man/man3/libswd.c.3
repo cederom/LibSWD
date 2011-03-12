@@ -1,4 +1,4 @@
-.TH "libswd.c" 3 "Fri Mar 11 2011" "Version 0.0.1" "libswd" \" -*- nroff -*-
+.TH "libswd.c" 3 "Sat Mar 12 2011" "Version 0.0.1" "libswd" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -176,16 +176,16 @@ libswd.c \-
 .br
 .RI "\fIGenerate 8-bit SWD-REQUEST packet contents with provided parameters. \fP"
 .ti -1c
-.RI "int \fBswd_drv_mosi_8\fP (\fBswd_ctx_t\fP *swdctx, char *data, int bits, int nLSBfirst)"
+.RI "int \fBswd_drv_mosi_8\fP (\fBswd_ctx_t\fP *swdctx, \fBswd_cmd_t\fP *cmd, char *data, int bits, int nLSBfirst)"
 .br
 .ti -1c
-.RI "int \fBswd_drv_mosi_32\fP (\fBswd_ctx_t\fP *swdctx, int *data, int bits, int nLSBfirst)"
+.RI "int \fBswd_drv_mosi_32\fP (\fBswd_ctx_t\fP *swdctx, \fBswd_cmd_t\fP *cmd, int *data, int bits, int nLSBfirst)"
 .br
 .ti -1c
-.RI "int \fBswd_drv_miso_8\fP (\fBswd_ctx_t\fP *swdctx, char *data, int bits, int nLSBfirst)"
+.RI "int \fBswd_drv_miso_8\fP (\fBswd_ctx_t\fP *swdctx, \fBswd_cmd_t\fP *cmd, char *data, int bits, int nLSBfirst)"
 .br
 .ti -1c
-.RI "int \fBswd_drv_miso_32\fP (\fBswd_ctx_t\fP *swdctx, int *data, int bits, int nLSBfirst)"
+.RI "int \fBswd_drv_miso_32\fP (\fBswd_ctx_t\fP *swdctx, \fBswd_cmd_t\fP *cmd, int *data, int bits, int nLSBfirst)"
 .br
 .ti -1c
 .RI "int \fBswd_drv_mosi_trn\fP (\fBswd_ctx_t\fP *swdctx, int bits)"

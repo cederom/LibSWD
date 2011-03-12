@@ -37,25 +37,53 @@
 /** \file libswd.h */
 
 /** \mainpage Serial Wire Debug Open Library.
- * \section Introduction
- * Welcome to the source code documentation repository.
- * LibSWD is an Open-Source framework to deal with with Serial Wire Debug. 
- * It is released under 3-clause BSD license.
- * For more information please visit project website at http://libswd.sf.net
- * \section brief What is this about
- * Serial Wire Debug is an alternative to JTAG (IEEE1149.1) transport layer
- * to access Debug Access Port in ARM-Cortex's based devices.
- * LibSWD provides both bitstream generation and high/low level bus operations.
- * Every bus operation such as request, turnaround, acknowledge, data
- * and parity packet is represented by a swd_cmd_t element that can extend
- * command queue (a standard bidirectional queue) that later can be flushed into
- * real hardware using simple set of interface-specific driver functions.
- * This way LibSWD is almost standalone and can be easily integrated into
- * existing utilities for low-level access and only requires in return to define
- * drivers that controls the interface interconnecting host and target.
- * Such drivers are application specific therefore located in external file
- * crafted for that application and its hardware.
  *
+ * \section doc_introduction Introduction
+ * LibSWD is an Open-Source framework to deal with with Serial Wire Debug Port in accordance to ADI (Arm Debug Interface, version 5.0 at the moment) specification. It is released under 3-clause BSD license. For more information please visit project website at http://libswd.sf.net
+ * \section doc_brief What is this about
+ * Serial Wire Debug is an alternative to JTAG (IEEE1149.1) transport layer for accessing the Debug Access Port in ARM-Cortex based devices. LibSWD provides methods for bitstream generation on the wire using simple but flexible API that can reuse capabilities of existing applications for easier integration.
+ * Every bus operation such as control, request, turnaround, acknowledge, data and parity packet is named a "command" represented by a swd_cmd_t data type that builds up the queue that later can be flushed into real hardware using standard set of (application-specific) driver functions.
+ * This way LibSWD is almost standalone and can be easily integrated into existing utilities for low-level access and only requires in return to define driver bridge that controls the physical interface interconnecting host and target.
+ * Drivers and other application-specific functions are "extern" and located in external file crafted for that application and its hardware. LibSWD is therefore best way to make your application SWD aware.
+ *
+ * \section doc_details How it works
+ * \subsection doc_context SWD Context
+ * The most important data type in LibSWD is swd_ctx_t structure, a context that represents logical entity of the swd bus (transport layer between host and target) with all its parameters, configuration and command queue. Context is being created with swd_init() function that returns pointer to allocated virgin structure, and it can be destroyed with swd_deinit() function taking the pointer as argument. Context can be set only for one interface-target pair, but there might be many different contexts in use if necessary, so amount of devices in use is not limited. 
+ *
+ * \subsection doc_functions Functions
+ * All functions in general operates on pointer type and returns number of processed elements on success or negative value with swd_error_code_t on failure. Functions are grouped by functionality that is denoted by function name prefix (ie. swd_bin* are for binary operations, swd_cmdq* deals with command queue, swd_cmd_enqueue* deals with creating commands and attaching them to queue, swd_bus* performs operation on the swd transport system, swd_drv* are the interface drivers, etc).
+ *
+ * Standard end-users are encouraged to only use high level functions (swd_bus*, swd_dap*, swd_dp*) to perform operations on the swd transport layer and the target's DAP (Debug Access Port) and its components such as DP (Debug Port) and the AP (Access Port). More advanced users however may use low level functions (swd_cmd*, swd_cmdq*) to group them into new high-level functions that automates some tasks (such as high-level functions does). Functions of type "extern" are the ones to implement in external file by developers that want to incorporate LibSWD into their application. Context structure also has void pointer in the swd_driver_t structure that can hold address of the external driver structure to be passed into internal swd drivers (extern swd_drv* functions) that wouldn't be accessible otherwise.
+ *
+ * \subsection doc_commands Commands
+ * Bus operations are split into "commands" represented by swd_cmd_t data type. They form a bidirectional command queue that is part of swd_ctx_t structure. Command type, and so its payload, can be one of: control (user defined 8-bit payload), request (according to the standard), ack, data, parity (data and parity are separate commands!), trn, bitbang and idle (equals to control with zero data). Command type is defined by swd_cmdtype_t and its code can be negative (for MOSI operations) or positive (for MISO operations) - this way bus direction can be easily calculated by multiplying two operation codes (when the result is negative bus will have to change direction), so the libswd "knows" when to put additional TRN command of proper type between enqueued commands.
+ *
+ * Payload is stored within union type and its data can be accessed according to payload name, or simply with data8 (char) and data32 (int) fields. Payload for write (MOSI) operations is stored on command creation, but payload for read (MISO) operations becomes available only after command is executed by the interface driver. There are 3 methods of accessing read data - flushing the queue into driver then reading queue directly, single stepping queue execution (flush one-by-one) then reading context log of last executed command results (there are separate fields of type swd_transaction_t in swd_ctx_t's log structure for read and write operations), or  providing a double pointer on command creation to have constant access to its data after execution.
+ *
+ * After all commands are enqueued with swd_cmd_enqueue* function set, it is time to send them into physical device with swd_cmdq_flush() funtion. According to the swd_operation_t parameter commands can be flushed one-by-one, all of them, only to the selected command or only after selected command. For low level functions all of these options are available, but for high-level functions only two of them can be used - SWD_OPERATION_ENQUEUE (but not send to the driver) and SWD_OPERATION_EXECUTE (all unexecuted commands on the queue are executed by the driver sequentially) - that makes it possible to perform bus operations one after another having their result just at function return, or compose more advanced sequences leading to preferred result at execution time. Because high-level functions provide simple and elegant manner to get the operation result, it is advised to use them instead dealing with low-level functions (implementing memory management, data allocation and queue operation) that exist only to make high-level functions possible. 
+ *
+ * \section doc_drivers Drivers
+ * Calling the swd_cmdq_flush() function leads to execution of not yet executed commands from the queue (in a manner specified by the operation parameter) on the SWD bus (transport layer between interface and target, not the bus of the target itself) by swd_drv_transmit() function that use application specific "extern" functions defined in external file (ie. libswd_urjtag.c) to operate on a real hardware using drivers from existing application. LibSWD use only swd_drv_{mosi,miso}_{8,32} (separate for 8-bit char and 32-bit int data cast type) and swd_drv_{mosi,miso}_trn functions to interact with drivers, so it is possible to easily reuse low-level and high-level devices for communications, as they have all information necessary to perform exact actions - number of bits, payload, command type, shift direction and bus direction. It is even possible to send raw bytes on the bus (control command) or bitbang the bus (bitbang command) if necessary. MOSI (Master Output Slave Input) and MISO (Master Input Slave Output) was used to clearly distinguish transfer direction (from master-interface to target-slave), as opposed to ambiguous read/write statements, so after swd_drv_mosi_trn() master should have its buffers set to output and target inputs active. Drivers, as most of the LibSWD functions, works on data pointers instead data copy and returns number of elements processed (bits in this case) or negative error code on failure.
+ *
+ * \section doc_example Example
+ * \code
+ *  #include <libswd/libswd.h>
+ *  int main(){
+ *   swd_ctx_t *swdctx;
+ *   int res, idcode;
+ *   swdctx=swd_init();
+ *   if (swdctx==NULL) return -1;
+ *   //we might need to pass external driver structure to swd_drv* functions 
+ *   //swdctx->driver->device=...
+ *   res=swd_dap_detect(swdctx, SWD_OPERATION_EXECUTE, &idcode);
+ *   if (res<0){
+ *    printf("ERROR: %s\n", swd_error_string(res));
+ *    return res;
+ *   } else printf("IDCODE: 0x%X\n", idcode);
+ *   swd_deinit(swdctx);
+ *   return idcode;
+ *  }
+ * \endcode
  */
 
 
@@ -245,7 +273,7 @@ static const char SWD_CMD_IDLE[] = {0x00};
 
 /** Status and Error Codes definitions */
 /// Error Codes definition, use this to have its name on debugger.
-typedef enum SWD_ERROR_CODE {
+typedef enum {
  SWD_OK                = 0,  ///< No error.
  SWD_ERROR_GENERAL     =-1,  ///< General error.
  SWD_ERROR_NULLPOINTER =-2,  ///< Null pointer.
@@ -290,14 +318,15 @@ typedef enum SWD_ERROR_CODE {
 
 /** Logging Level Codes definition */
 ///Logging Level codes definition, use this to have its name on debugger.
-typedef enum SWD_LOGLEVEL{
+typedef enum {
  SWD_LOGLEVEL_MIN     = 0,
  SWD_LOGLEVEL_SILENT  = 0, ///< Remain silent.
  SWD_LOGLEVEL_ERROR   = 1, ///< Show errors.
  SWD_LOGLEVEL_WARNING = 2, ///< Show warnings.
- SWD_LOGLEVEL_INFO    = 3, ///< Show messages.
- SWD_LOGLEVEL_DEBUG   = 4, ///< Show all including debug information.
- SWD_LOGLEVEL_MAX     = 4
+ SWD_LOGLEVEL_NORMAL  = 3, ///< Normal verbosity.
+ SWD_LOGLEVEL_INFO    = 4, ///< Show messages.
+ SWD_LOGLEVEL_DEBUG   = 5, ///< Show all including debug information.
+ SWD_LOGLEVEL_MAX     = 5
 } swd_loglevel_t;
 
 /** SWD queue and payload data definitions */
@@ -316,13 +345,13 @@ typedef enum SWD_LOGLEVEL{
  * - result is positive for equal direction and negative if direction differs.
  */
 /// Command Type codes definition, use this to see names in debugger.
-typedef enum SWD_CMDTYPE {
+typedef enum {
  SWD_CMDTYPE_MOSI_DATA    =-7, ///< Contains MOSI data (from host).
  SWD_CMDTYPE_MOSI_REQUEST =-6, ///< Contains MOSI request packet.
  SWD_CMDTYPE_MOSI_TRN     =-5, ///< Bus will switch into MOSI mode.
  SWD_CMDTYPE_MOSI_PARITY  =-4, ///< Contains MOSI data parity.
  SWD_CMDTYPE_MOSI_BITBANG =-3, ///< Allows MOSI operation bit-by-bit.
- SWD_CMDTYPE_MOSI_CONTROL =-2, ///< MOSI control sequence (ie. sw-dp reset).
+ SWD_CMDTYPE_MOSI_CONTROL =-2, ///< MOSI control sequence (ie. sw-dp reset, idle).
  SWD_CMDTYPE_MOSI         =-1, ///< Master Output Slave Input direction.
  SWD_CMDTYPE_UNDEFINED    =0,  ///< undefined command, not transmitted.
  SWD_CMDTYPE_MISO         =1,  ///< Master Input Slave Output direction.
@@ -334,13 +363,13 @@ typedef enum SWD_CMDTYPE {
 } swd_cmdtype_t;
 
 /** What is the shift direction LSB-first or MSB-first. */
-typedef enum SWD_SHIFTDIR {
+typedef enum {
  SWD_DIR_LSBFIRST =0, ///< Data is shifted in/out right (LSB-first).
  SWD_DIR_MSBFIRST =1  ///< Data is shifted in/out left (MSB-first).
 } swd_shiftdir_t;
 
 /** Command Queue operations codes. */
-typedef enum SWD_OPERATION {
+typedef enum {
  SWD_OPERATION_FIRST         =1, ///< First operation to know its code.
  SWD_OPERATION_ENQUEUE       =1, ///< Append command(s) to the queue.
  SWD_OPERATION_EXECUTE       =2, ///< Queue commands then flush the queue.
@@ -359,8 +388,8 @@ typedef enum SWD_OPERATION {
  * possible to compose complete bus/target operations made of simple commands.
  */
 typedef struct swd_cmd_t {
- union {          ///< Payload data union.
-  char TRNnMOSI;  ///< Holds/sets bus direction: MOSI when zero, MISO for other.
+ union {
+  char TRNnMOSI;  ///< Holds/sets bus direction: MOSI when zero, MISO for others.
   char request;   ///< Request header data.
   char ack;       ///< Acknowledge response from target.
   int misodata;   ///< Data read from target (MISO).
@@ -373,9 +402,10 @@ typedef struct swd_cmd_t {
   char data8;     ///< Holds "char" data type for inspection.
  };
  char bits;       ///< Payload bit count == clk pulses on the bus.
- swd_cmdtype_t cmdtype;    ///< Command type as defined by swd_cmdtype_t. 
+ swd_cmdtype_t cmdtype; ///< Command type as defined by swd_cmdtype_t. 
  char done;       ///< Non-zero if operation already executed.
- struct swd_cmd_t *prev, *next; ///< Pointer to the previous/next command.
+ struct swd_cmd_t *prev; ///< Pointer to the previous command.
+ struct swd_cmd_t *next; ///< Pointer to the next command.
 } swd_cmd_t;
 
 /** Context configuration structure */
@@ -511,30 +541,31 @@ int swd_bus_write_data_p(swd_ctx_t *swdctx, swd_operation_t operation, int *data
 int swd_bus_write_data_ap(swd_ctx_t *swdctx, swd_operation_t operation, int *data);
 int swd_bus_read_data_p(swd_ctx_t *swdctx, swd_operation_t operation, int **data, char **parity);
 int swd_bus_write_control(swd_ctx_t *swdctx, swd_operation_t operation, char *ctlmsg, int len);
-int swd_bus_write_jtag2swd(swd_ctx_t *swdctx, swd_operation_t operation);
 
 int swd_bitgen8_request(swd_ctx_t *swdctx, char *APnDP, char *RnW, char *addr, char *request);
 
 int swd_drv_transmit(swd_ctx_t *swdctx, swd_cmd_t *cmd);
-extern int swd_drv_mosi_8(swd_ctx_t *swdctx, char *data, int bits, int nLSBfirst);
-extern int swd_drv_mosi_32(swd_ctx_t *swdctx, int *data, int bits, int nLSBfirst);
-extern int swd_drv_miso_8(swd_ctx_t *swdctx, char *data, int bits, int nLSBfirst);
-extern int swd_drv_miso_32(swd_ctx_t *swdctx, int *data, int bits, int nLSBfirst);
+extern int swd_drv_mosi_8(swd_ctx_t *swdctx, swd_cmd_t *cmd, char *data, int bits, int nLSBfirst);
+extern int swd_drv_mosi_32(swd_ctx_t *swdctx, swd_cmd_t *cmd, int *data, int bits, int nLSBfirst);
+extern int swd_drv_miso_8(swd_ctx_t *swdctx, swd_cmd_t *cmd, char *data, int bits, int nLSBfirst);
+extern int swd_drv_miso_32(swd_ctx_t *swdctx, swd_cmd_t *cmd, int *data, int bits, int nLSBfirst);
+extern int swd_drv_mosi_trn(swd_ctx_t *swdctx, int clks);
+extern int swd_drv_miso_trn(swd_ctx_t *swdctx, int clks);
 
-int swd_dp_reset(swd_ctx_t *swdctx, swd_operation_t operation);
-int swd_dp_activate(swd_ctx_t *swdctx, swd_operation_t operation);
+int swd_dap_reset(swd_ctx_t *swdctx, swd_operation_t operation);
+int swd_dap_select(swd_ctx_t *swdctx, swd_operation_t operation);
+int swd_dap_detect(swd_ctx_t *swdctx, swd_operation_t operation, int **idcode);
+
 int swd_dp_read_idcode(swd_ctx_t *swdctx, swd_operation_t operation, int **idcode);
-int swd_dp_detect(swd_ctx_t *swdctx, swd_operation_t operation, int **idcode);
 
 int swd_log(swd_ctx_t *swdctx, swd_loglevel_t loglevel, char *msg, ...);
+int swd_log_level_set(swd_ctx_t *swdctx, swd_loglevel_t loglevel);
+extern int swd_log_level_inherit(swd_ctx_t *swdctx, int loglevel);
 char *swd_error_string(swd_error_code_t error);
 
 swd_ctx_t *swd_init(void);
 int swd_deinit_ctx(swd_ctx_t *swdctx);
 int swd_deinit_cmdq(swd_ctx_t *swdctx);
 int swd_deinit(swd_ctx_t *swdctx);
-
-int swd_drv_mosi_trn(swd_ctx_t *swdctx, int clks);
-int swd_drv_miso_trn(swd_ctx_t *swdctx, int clks);
 
 #endif

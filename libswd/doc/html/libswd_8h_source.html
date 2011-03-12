@@ -84,439 +84,438 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00034"></a>00034 <span class="comment"> *</span>
 <a name="l00035"></a>00035 <span class="comment"> */</span>
 <a name="l00036"></a>00036 
-<a name="l00088"></a>00088 <span class="preprocessor">#ifndef __LIBSWD_H__</span>
-<a name="l00089"></a>00089 <span class="preprocessor"></span><span class="preprocessor">#define __LIBSWD_H__</span>
-<a name="l00090"></a>00090 <span class="preprocessor"></span>
-<a name="l00091"></a>00091 
-<a name="l00092"></a>00092 
+<a name="l00091"></a>00091 <span class="preprocessor">#ifndef __LIBSWD_H__</span>
+<a name="l00092"></a>00092 <span class="preprocessor"></span><span class="preprocessor">#define __LIBSWD_H__</span>
+<a name="l00093"></a>00093 <span class="preprocessor"></span>
 <a name="l00094"></a>00094 
-<a name="l00095"></a><a class="code" href="libswd_8h.html#ac474e773617eb679af343ba2817383b4">00095</a> <span class="preprocessor">#define SWD_REQUEST_START_BITNUM  7</span>
-<a name="l00096"></a>00096 <span class="preprocessor"></span>
-<a name="l00097"></a><a class="code" href="libswd_8h.html#a8c34d00c0f59df88597f3f75356fed97">00097</a> <span class="preprocessor">#define SWD_REQUEST_APnDP_BITNUM  6</span>
-<a name="l00098"></a>00098 <span class="preprocessor"></span>
-<a name="l00099"></a><a class="code" href="libswd_8h.html#a3c869f546ca8ec33824a294563e4ff19">00099</a> <span class="preprocessor">#define SWD_REQUEST_RnW_BITNUM    5</span>
-<a name="l00100"></a>00100 <span class="preprocessor"></span>
-<a name="l00101"></a><a class="code" href="libswd_8h.html#af1adb8770193e85801ff4ddb97a02060">00101</a> <span class="preprocessor">#define SWD_REQUEST_ADDR_BITNUM   4</span>
-<a name="l00102"></a>00102 <span class="preprocessor"></span>
-<a name="l00103"></a><a class="code" href="libswd_8h.html#a43a27090f914857ac4af74432543453b">00103</a> <span class="preprocessor">#define SWD_REQUEST_A2_BITNUM     4</span>
-<a name="l00104"></a>00104 <span class="preprocessor"></span>
-<a name="l00105"></a><a class="code" href="libswd_8h.html#a8bb9b86bd091368f31e5a8729c7a1a26">00105</a> <span class="preprocessor">#define SWD_REQUEST_A3_BITNUM     3</span>
-<a name="l00106"></a>00106 <span class="preprocessor"></span>
-<a name="l00107"></a><a class="code" href="libswd_8h.html#a5d9d053b4b7eda2dd9e26788d89b3760">00107</a> <span class="preprocessor">#define SWD_REQUEST_PARITY_BITNUM 2</span>
-<a name="l00108"></a>00108 <span class="preprocessor"></span>
-<a name="l00109"></a><a class="code" href="libswd_8h.html#a35b28e283c15d8de5f1552fdee44c0ad">00109</a> <span class="preprocessor">#define SWD_REQUEST_STOP_BITNUM   1</span>
-<a name="l00110"></a>00110 <span class="preprocessor"></span>
-<a name="l00111"></a><a class="code" href="libswd_8h.html#a24a5a587964fa6f493e18bb65c762c13">00111</a> <span class="preprocessor">#define SWD_REQUEST_PARK_BITNUM   0</span>
-<a name="l00112"></a>00112 <span class="preprocessor"></span>
-<a name="l00114"></a><a class="code" href="libswd_8h.html#aafbb05b1e10b907418a597f7c7e11324">00114</a> <span class="preprocessor">#define SWD_REQUEST_START_VAL     1</span>
+<a name="l00095"></a>00095 
+<a name="l00097"></a>00097 
+<a name="l00098"></a><a class="code" href="libswd_8h.html#ac474e773617eb679af343ba2817383b4">00098</a> <span class="preprocessor">#define SWD_REQUEST_START_BITNUM  7</span>
+<a name="l00099"></a>00099 <span class="preprocessor"></span>
+<a name="l00100"></a><a class="code" href="libswd_8h.html#a8c34d00c0f59df88597f3f75356fed97">00100</a> <span class="preprocessor">#define SWD_REQUEST_APnDP_BITNUM  6</span>
+<a name="l00101"></a>00101 <span class="preprocessor"></span>
+<a name="l00102"></a><a class="code" href="libswd_8h.html#a3c869f546ca8ec33824a294563e4ff19">00102</a> <span class="preprocessor">#define SWD_REQUEST_RnW_BITNUM    5</span>
+<a name="l00103"></a>00103 <span class="preprocessor"></span>
+<a name="l00104"></a><a class="code" href="libswd_8h.html#af1adb8770193e85801ff4ddb97a02060">00104</a> <span class="preprocessor">#define SWD_REQUEST_ADDR_BITNUM   4</span>
+<a name="l00105"></a>00105 <span class="preprocessor"></span>
+<a name="l00106"></a><a class="code" href="libswd_8h.html#a43a27090f914857ac4af74432543453b">00106</a> <span class="preprocessor">#define SWD_REQUEST_A2_BITNUM     4</span>
+<a name="l00107"></a>00107 <span class="preprocessor"></span>
+<a name="l00108"></a><a class="code" href="libswd_8h.html#a8bb9b86bd091368f31e5a8729c7a1a26">00108</a> <span class="preprocessor">#define SWD_REQUEST_A3_BITNUM     3</span>
+<a name="l00109"></a>00109 <span class="preprocessor"></span>
+<a name="l00110"></a><a class="code" href="libswd_8h.html#a5d9d053b4b7eda2dd9e26788d89b3760">00110</a> <span class="preprocessor">#define SWD_REQUEST_PARITY_BITNUM 2</span>
+<a name="l00111"></a>00111 <span class="preprocessor"></span>
+<a name="l00112"></a><a class="code" href="libswd_8h.html#a35b28e283c15d8de5f1552fdee44c0ad">00112</a> <span class="preprocessor">#define SWD_REQUEST_STOP_BITNUM   1</span>
+<a name="l00113"></a>00113 <span class="preprocessor"></span>
+<a name="l00114"></a><a class="code" href="libswd_8h.html#a24a5a587964fa6f493e18bb65c762c13">00114</a> <span class="preprocessor">#define SWD_REQUEST_PARK_BITNUM   0</span>
 <a name="l00115"></a>00115 <span class="preprocessor"></span>
-<a name="l00116"></a><a class="code" href="libswd_8h.html#afba35c8ae901e6011f63d81030688d8a">00116</a> <span class="preprocessor">#define SWD_REQUEST_STOP_VAL      0</span>
-<a name="l00117"></a>00117 <span class="preprocessor"></span>
-<a name="l00118"></a><a class="code" href="libswd_8h.html#a062ea6af124bcd42f7a1e73a66f4576d">00118</a> <span class="preprocessor">#define SWD_REQUEST_PARK_VAL      1</span>
-<a name="l00119"></a>00119 <span class="preprocessor"></span>
-<a name="l00120"></a><a class="code" href="libswd_8h.html#af39e016f542c2bd93d88969a68a27ed1">00120</a> <span class="preprocessor">#define SWD_REQUEST_BITLEN        8</span>
-<a name="l00121"></a>00121 <span class="preprocessor"></span>
-<a name="l00123"></a><a class="code" href="libswd_8h.html#a2622cfc328de21fffd40668837a4300b">00123</a> <span class="preprocessor">#define SWD_ADDR_MINVAL       0</span>
+<a name="l00117"></a><a class="code" href="libswd_8h.html#aafbb05b1e10b907418a597f7c7e11324">00117</a> <span class="preprocessor">#define SWD_REQUEST_START_VAL     1</span>
+<a name="l00118"></a>00118 <span class="preprocessor"></span>
+<a name="l00119"></a><a class="code" href="libswd_8h.html#afba35c8ae901e6011f63d81030688d8a">00119</a> <span class="preprocessor">#define SWD_REQUEST_STOP_VAL      0</span>
+<a name="l00120"></a>00120 <span class="preprocessor"></span>
+<a name="l00121"></a><a class="code" href="libswd_8h.html#a062ea6af124bcd42f7a1e73a66f4576d">00121</a> <span class="preprocessor">#define SWD_REQUEST_PARK_VAL      1</span>
+<a name="l00122"></a>00122 <span class="preprocessor"></span>
+<a name="l00123"></a><a class="code" href="libswd_8h.html#af39e016f542c2bd93d88969a68a27ed1">00123</a> <span class="preprocessor">#define SWD_REQUEST_BITLEN        8</span>
 <a name="l00124"></a>00124 <span class="preprocessor"></span>
-<a name="l00125"></a><a class="code" href="libswd_8h.html#a5ca0b49499bc1b23eaef6a23a92e901c">00125</a> <span class="preprocessor">#define SWD_ADDR_MAXVAL       3</span>
-<a name="l00126"></a>00126 <span class="preprocessor"></span>
-<a name="l00128"></a><a class="code" href="libswd_8h.html#a358517296797c8f74d361673a9a6b11f">00128</a> <span class="preprocessor">#define SWD_ACK_BITLEN        3</span>
+<a name="l00126"></a><a class="code" href="libswd_8h.html#a2622cfc328de21fffd40668837a4300b">00126</a> <span class="preprocessor">#define SWD_ADDR_MINVAL       0</span>
+<a name="l00127"></a>00127 <span class="preprocessor"></span>
+<a name="l00128"></a><a class="code" href="libswd_8h.html#a5ca0b49499bc1b23eaef6a23a92e901c">00128</a> <span class="preprocessor">#define SWD_ADDR_MAXVAL       3</span>
 <a name="l00129"></a>00129 <span class="preprocessor"></span>
-<a name="l00130"></a><a class="code" href="libswd_8h.html#af4ba22b861b2fb85796d1e110d46b888">00130</a> <span class="preprocessor">#define SWD_ACK_OK_VAL        4</span>
-<a name="l00131"></a>00131 <span class="preprocessor"></span>
-<a name="l00132"></a><a class="code" href="libswd_8h.html#ab726fd8d88df8f5b3b33054c94d3dcff">00132</a> <span class="preprocessor">#define SWD_ACK_WAIT_VAL      2</span>
-<a name="l00133"></a>00133 <span class="preprocessor"></span>
-<a name="l00134"></a><a class="code" href="libswd_8h.html#a470853223a88aac26b485b4396fe754b">00134</a> <span class="preprocessor">#define SWD_ACK_FAULT_VAL     1</span>
-<a name="l00135"></a>00135 <span class="preprocessor"></span>
-<a name="l00137"></a><a class="code" href="libswd_8h.html#a00b4ff0b6f8405e9fe7f4a2ebf765dcc">00137</a> <span class="preprocessor">#define SWD_DP_ADDR_IDCODE    0</span>
+<a name="l00131"></a><a class="code" href="libswd_8h.html#a358517296797c8f74d361673a9a6b11f">00131</a> <span class="preprocessor">#define SWD_ACK_BITLEN        3</span>
+<a name="l00132"></a>00132 <span class="preprocessor"></span>
+<a name="l00133"></a><a class="code" href="libswd_8h.html#af4ba22b861b2fb85796d1e110d46b888">00133</a> <span class="preprocessor">#define SWD_ACK_OK_VAL        4</span>
+<a name="l00134"></a>00134 <span class="preprocessor"></span>
+<a name="l00135"></a><a class="code" href="libswd_8h.html#ab726fd8d88df8f5b3b33054c94d3dcff">00135</a> <span class="preprocessor">#define SWD_ACK_WAIT_VAL      2</span>
+<a name="l00136"></a>00136 <span class="preprocessor"></span>
+<a name="l00137"></a><a class="code" href="libswd_8h.html#a470853223a88aac26b485b4396fe754b">00137</a> <span class="preprocessor">#define SWD_ACK_FAULT_VAL     1</span>
 <a name="l00138"></a>00138 <span class="preprocessor"></span>
-<a name="l00139"></a><a class="code" href="libswd_8h.html#ae8c24f3d96acc7d77a15d21a9973160d">00139</a> <span class="preprocessor">#define SWD_DP_ADDR_ABORT     0</span>
-<a name="l00140"></a>00140 <span class="preprocessor"></span>
-<a name="l00141"></a><a class="code" href="libswd_8h.html#a7e23ea47b75007bbcd637d8be9049d63">00141</a> <span class="preprocessor">#define SWD_DP_ADDR_CTRLSTAT  1</span>
-<a name="l00142"></a>00142 <span class="preprocessor"></span>
-<a name="l00143"></a><a class="code" href="libswd_8h.html#ad89174579e1ff4a5cbd62ff11696f8da">00143</a> <span class="preprocessor">#define SWD_DP_ADDR_WCR       1</span>
-<a name="l00144"></a>00144 <span class="preprocessor"></span>
-<a name="l00145"></a><a class="code" href="libswd_8h.html#a0f8df0e88c22b1cc0f96b1aafbd1ec68">00145</a> <span class="preprocessor">#define SWD_DP_ADDR_RESEND    2</span>
-<a name="l00146"></a>00146 <span class="preprocessor"></span>
-<a name="l00147"></a><a class="code" href="libswd_8h.html#a0b30dc02ee1c4fa2475728e767cbbceb">00147</a> <span class="preprocessor">#define SWD_DP_ADDR_SELECT    2</span>
-<a name="l00148"></a>00148 <span class="preprocessor"></span>
-<a name="l00149"></a><a class="code" href="libswd_8h.html#a00bb9eb469b9f4b019a043de67c48149">00149</a> <span class="preprocessor">#define SWD_DP_ADDR_RDBUF     3</span>
-<a name="l00150"></a>00150 <span class="preprocessor"></span>
-<a name="l00152"></a>00152 
-<a name="l00153"></a><a class="code" href="libswd_8h.html#a54431383e120685259ebf96a8c973b90">00153</a> <span class="preprocessor">#define SWD_ABORT_BITNUM_DAPABORT    0</span>
-<a name="l00154"></a>00154 <span class="preprocessor"></span>
-<a name="l00155"></a><a class="code" href="libswd_8h.html#ac08c7cc8e5845c0b0f500ab7bc14eef4">00155</a> <span class="preprocessor">#define SWD_ABORT_BITNUM_DSTKCMPCLR  1</span>
-<a name="l00156"></a>00156 <span class="preprocessor"></span>
-<a name="l00157"></a><a class="code" href="libswd_8h.html#afcca91b09e8cb5e1500e628fdb509c7a">00157</a> <span class="preprocessor">#define SWD_ABORT_BITNUM_DSTKERRCLR  2</span>
-<a name="l00158"></a>00158 <span class="preprocessor"></span>
-<a name="l00159"></a><a class="code" href="libswd_8h.html#a7aaa6592a78fc8fb205890dfd99adc70">00159</a> <span class="preprocessor">#define SWD_ABORT_BITNUM_DWDERRCLR   3</span>
-<a name="l00160"></a>00160 <span class="preprocessor"></span>
-<a name="l00161"></a><a class="code" href="libswd_8h.html#a54869d5b403d40fd33fd7273e5b65635">00161</a> <span class="preprocessor">#define SWD_ABORT_BITNUM_DORUNERRCLR 4</span>
-<a name="l00162"></a>00162 <span class="preprocessor"></span>
-<a name="l00164"></a>00164 
-<a name="l00165"></a><a class="code" href="libswd_8h.html#ae1778a14ecf1f9d2194d60e67e91454d">00165</a> <span class="preprocessor">#define SWD_CTRLSTAT_BITNUM_ORUNDETECT    0</span>
-<a name="l00166"></a>00166 <span class="preprocessor"></span>
-<a name="l00167"></a><a class="code" href="libswd_8h.html#ad65a85c3f5fbe2e47163ac7d924a7fd8">00167</a> <span class="preprocessor">#define SWD_CTRLSTAT_BITNUM_OSTICKYORUN   1</span>
-<a name="l00168"></a>00168 <span class="preprocessor"></span>
-<a name="l00169"></a><a class="code" href="libswd_8h.html#acfef2d796f3a94ed8dca3eda9dd41d0b">00169</a> <span class="preprocessor">#define SWD_CTRLSTAT_BITNUM_OTRNMODE      2</span>
-<a name="l00170"></a>00170 <span class="preprocessor"></span>
-<a name="l00171"></a><a class="code" href="libswd_8h.html#a859dceb2257af181357c72c365dd340a">00171</a> <span class="preprocessor">#define SWD_CTRLSTAT_BITNUM_OSTICKYCMP    4</span>
-<a name="l00172"></a>00172 <span class="preprocessor"></span>
-<a name="l00173"></a><a class="code" href="libswd_8h.html#a0b3124736b42431d69dfa040d7b450c6">00173</a> <span class="preprocessor">#define SWD_CTRLSTAT_BITNUM_OSTICKYERR    5</span>
-<a name="l00174"></a>00174 <span class="preprocessor"></span>
-<a name="l00175"></a><a class="code" href="libswd_8h.html#a6f21f4c7b1191f68cbb9ffb6dab4a6f8">00175</a> <span class="preprocessor">#define SWD_CTRLSTAT_BITNUM_OREADOK       6</span>
-<a name="l00176"></a>00176 <span class="preprocessor"></span>
-<a name="l00177"></a><a class="code" href="libswd_8h.html#ab320b768f690d50fcf4fe96cad1c014e">00177</a> <span class="preprocessor">#define SWD_CTRLSTAT_BITNUM_OWDATAERR     7</span>
-<a name="l00178"></a>00178 <span class="preprocessor"></span>
-<a name="l00179"></a><a class="code" href="libswd_8h.html#a9bb5dfc77a8f58f7ca9da7aab5039f52">00179</a> <span class="preprocessor">#define SWD_CTRLSTAT_BITNUM_OMASKLANE     8</span>
-<a name="l00180"></a>00180 <span class="preprocessor"></span>
-<a name="l00181"></a><a class="code" href="libswd_8h.html#ad91d2568264cb40d45de58a4b288114f">00181</a> <span class="preprocessor">#define SWD_CTRLSTAT_BITNUM_OTRNCNT       12</span>
-<a name="l00182"></a>00182 <span class="preprocessor"></span>
-<a name="l00183"></a><a class="code" href="libswd_8h.html#aa3008d25bfe009868ca3fb1f5e67dc23">00183</a> <span class="preprocessor">#define SWD_CTRLSTAT_BITNUM_OCDBGRSTREQ   26</span>
-<a name="l00184"></a>00184 <span class="preprocessor"></span>
-<a name="l00185"></a><a class="code" href="libswd_8h.html#aeee81b62c86d7db500c1668a37645c7a">00185</a> <span class="preprocessor">#define SWD_CTRLSTAT_BITNUM_OCDBGRSTACK   27</span>
-<a name="l00186"></a>00186 <span class="preprocessor"></span>
-<a name="l00187"></a><a class="code" href="libswd_8h.html#ae84436bf55af3d555cdec5c14dbe6f3c">00187</a> <span class="preprocessor">#define SWD_CTRLSTAT_BITNUM_OCDBGPWRUPREQ 28</span>
-<a name="l00188"></a>00188 <span class="preprocessor"></span>
-<a name="l00189"></a><a class="code" href="libswd_8h.html#aa832d69aa5bad55ad3567ae1901d2c57">00189</a> <span class="preprocessor">#define SWD_CTRLSTAT_BITNUM_OCDBGPWRUPACK 29</span>
-<a name="l00190"></a>00190 <span class="preprocessor"></span>
-<a name="l00191"></a><a class="code" href="libswd_8h.html#a28b72a5e3f6b5adaf4df3fc1b932c872">00191</a> <span class="preprocessor">#define SWD_CTRLSTAT_BITNUM_OCSYSPWRUPREQ 30</span>
-<a name="l00192"></a>00192 <span class="preprocessor"></span>
-<a name="l00193"></a><a class="code" href="libswd_8h.html#a1e82a6c452e860f63c0dbbb875523b68">00193</a> <span class="preprocessor">#define SWD_CTRLSTAT_BITNUM_OCSYSPWRUPACK 31</span>
-<a name="l00194"></a>00194 <span class="preprocessor"></span>
-<a name="l00195"></a>00195 
-<a name="l00196"></a><a class="code" href="libswd_8h.html#a936042b0d86463b714c7a108574f1405">00196</a> <span class="preprocessor">#define SWD_MASKLANE_0 0b0001</span>
+<a name="l00140"></a><a class="code" href="libswd_8h.html#a00b4ff0b6f8405e9fe7f4a2ebf765dcc">00140</a> <span class="preprocessor">#define SWD_DP_ADDR_IDCODE    0</span>
+<a name="l00141"></a>00141 <span class="preprocessor"></span>
+<a name="l00142"></a><a class="code" href="libswd_8h.html#ae8c24f3d96acc7d77a15d21a9973160d">00142</a> <span class="preprocessor">#define SWD_DP_ADDR_ABORT     0</span>
+<a name="l00143"></a>00143 <span class="preprocessor"></span>
+<a name="l00144"></a><a class="code" href="libswd_8h.html#a7e23ea47b75007bbcd637d8be9049d63">00144</a> <span class="preprocessor">#define SWD_DP_ADDR_CTRLSTAT  1</span>
+<a name="l00145"></a>00145 <span class="preprocessor"></span>
+<a name="l00146"></a><a class="code" href="libswd_8h.html#ad89174579e1ff4a5cbd62ff11696f8da">00146</a> <span class="preprocessor">#define SWD_DP_ADDR_WCR       1</span>
+<a name="l00147"></a>00147 <span class="preprocessor"></span>
+<a name="l00148"></a><a class="code" href="libswd_8h.html#a0f8df0e88c22b1cc0f96b1aafbd1ec68">00148</a> <span class="preprocessor">#define SWD_DP_ADDR_RESEND    2</span>
+<a name="l00149"></a>00149 <span class="preprocessor"></span>
+<a name="l00150"></a><a class="code" href="libswd_8h.html#a0b30dc02ee1c4fa2475728e767cbbceb">00150</a> <span class="preprocessor">#define SWD_DP_ADDR_SELECT    2</span>
+<a name="l00151"></a>00151 <span class="preprocessor"></span>
+<a name="l00152"></a><a class="code" href="libswd_8h.html#a00bb9eb469b9f4b019a043de67c48149">00152</a> <span class="preprocessor">#define SWD_DP_ADDR_RDBUF     3</span>
+<a name="l00153"></a>00153 <span class="preprocessor"></span>
+<a name="l00155"></a>00155 
+<a name="l00156"></a><a class="code" href="libswd_8h.html#a54431383e120685259ebf96a8c973b90">00156</a> <span class="preprocessor">#define SWD_ABORT_BITNUM_DAPABORT    0</span>
+<a name="l00157"></a>00157 <span class="preprocessor"></span>
+<a name="l00158"></a><a class="code" href="libswd_8h.html#ac08c7cc8e5845c0b0f500ab7bc14eef4">00158</a> <span class="preprocessor">#define SWD_ABORT_BITNUM_DSTKCMPCLR  1</span>
+<a name="l00159"></a>00159 <span class="preprocessor"></span>
+<a name="l00160"></a><a class="code" href="libswd_8h.html#afcca91b09e8cb5e1500e628fdb509c7a">00160</a> <span class="preprocessor">#define SWD_ABORT_BITNUM_DSTKERRCLR  2</span>
+<a name="l00161"></a>00161 <span class="preprocessor"></span>
+<a name="l00162"></a><a class="code" href="libswd_8h.html#a7aaa6592a78fc8fb205890dfd99adc70">00162</a> <span class="preprocessor">#define SWD_ABORT_BITNUM_DWDERRCLR   3</span>
+<a name="l00163"></a>00163 <span class="preprocessor"></span>
+<a name="l00164"></a><a class="code" href="libswd_8h.html#a54869d5b403d40fd33fd7273e5b65635">00164</a> <span class="preprocessor">#define SWD_ABORT_BITNUM_DORUNERRCLR 4</span>
+<a name="l00165"></a>00165 <span class="preprocessor"></span>
+<a name="l00167"></a>00167 
+<a name="l00168"></a><a class="code" href="libswd_8h.html#ae1778a14ecf1f9d2194d60e67e91454d">00168</a> <span class="preprocessor">#define SWD_CTRLSTAT_BITNUM_ORUNDETECT    0</span>
+<a name="l00169"></a>00169 <span class="preprocessor"></span>
+<a name="l00170"></a><a class="code" href="libswd_8h.html#ad65a85c3f5fbe2e47163ac7d924a7fd8">00170</a> <span class="preprocessor">#define SWD_CTRLSTAT_BITNUM_OSTICKYORUN   1</span>
+<a name="l00171"></a>00171 <span class="preprocessor"></span>
+<a name="l00172"></a><a class="code" href="libswd_8h.html#acfef2d796f3a94ed8dca3eda9dd41d0b">00172</a> <span class="preprocessor">#define SWD_CTRLSTAT_BITNUM_OTRNMODE      2</span>
+<a name="l00173"></a>00173 <span class="preprocessor"></span>
+<a name="l00174"></a><a class="code" href="libswd_8h.html#a859dceb2257af181357c72c365dd340a">00174</a> <span class="preprocessor">#define SWD_CTRLSTAT_BITNUM_OSTICKYCMP    4</span>
+<a name="l00175"></a>00175 <span class="preprocessor"></span>
+<a name="l00176"></a><a class="code" href="libswd_8h.html#a0b3124736b42431d69dfa040d7b450c6">00176</a> <span class="preprocessor">#define SWD_CTRLSTAT_BITNUM_OSTICKYERR    5</span>
+<a name="l00177"></a>00177 <span class="preprocessor"></span>
+<a name="l00178"></a><a class="code" href="libswd_8h.html#a6f21f4c7b1191f68cbb9ffb6dab4a6f8">00178</a> <span class="preprocessor">#define SWD_CTRLSTAT_BITNUM_OREADOK       6</span>
+<a name="l00179"></a>00179 <span class="preprocessor"></span>
+<a name="l00180"></a><a class="code" href="libswd_8h.html#ab320b768f690d50fcf4fe96cad1c014e">00180</a> <span class="preprocessor">#define SWD_CTRLSTAT_BITNUM_OWDATAERR     7</span>
+<a name="l00181"></a>00181 <span class="preprocessor"></span>
+<a name="l00182"></a><a class="code" href="libswd_8h.html#a9bb5dfc77a8f58f7ca9da7aab5039f52">00182</a> <span class="preprocessor">#define SWD_CTRLSTAT_BITNUM_OMASKLANE     8</span>
+<a name="l00183"></a>00183 <span class="preprocessor"></span>
+<a name="l00184"></a><a class="code" href="libswd_8h.html#ad91d2568264cb40d45de58a4b288114f">00184</a> <span class="preprocessor">#define SWD_CTRLSTAT_BITNUM_OTRNCNT       12</span>
+<a name="l00185"></a>00185 <span class="preprocessor"></span>
+<a name="l00186"></a><a class="code" href="libswd_8h.html#aa3008d25bfe009868ca3fb1f5e67dc23">00186</a> <span class="preprocessor">#define SWD_CTRLSTAT_BITNUM_OCDBGRSTREQ   26</span>
+<a name="l00187"></a>00187 <span class="preprocessor"></span>
+<a name="l00188"></a><a class="code" href="libswd_8h.html#aeee81b62c86d7db500c1668a37645c7a">00188</a> <span class="preprocessor">#define SWD_CTRLSTAT_BITNUM_OCDBGRSTACK   27</span>
+<a name="l00189"></a>00189 <span class="preprocessor"></span>
+<a name="l00190"></a><a class="code" href="libswd_8h.html#ae84436bf55af3d555cdec5c14dbe6f3c">00190</a> <span class="preprocessor">#define SWD_CTRLSTAT_BITNUM_OCDBGPWRUPREQ 28</span>
+<a name="l00191"></a>00191 <span class="preprocessor"></span>
+<a name="l00192"></a><a class="code" href="libswd_8h.html#aa832d69aa5bad55ad3567ae1901d2c57">00192</a> <span class="preprocessor">#define SWD_CTRLSTAT_BITNUM_OCDBGPWRUPACK 29</span>
+<a name="l00193"></a>00193 <span class="preprocessor"></span>
+<a name="l00194"></a><a class="code" href="libswd_8h.html#a28b72a5e3f6b5adaf4df3fc1b932c872">00194</a> <span class="preprocessor">#define SWD_CTRLSTAT_BITNUM_OCSYSPWRUPREQ 30</span>
+<a name="l00195"></a>00195 <span class="preprocessor"></span>
+<a name="l00196"></a><a class="code" href="libswd_8h.html#a1e82a6c452e860f63c0dbbb875523b68">00196</a> <span class="preprocessor">#define SWD_CTRLSTAT_BITNUM_OCSYSPWRUPACK 31</span>
 <a name="l00197"></a>00197 <span class="preprocessor"></span>
-<a name="l00198"></a><a class="code" href="libswd_8h.html#a1a41a6ec8ccbf6dcb15139807bf1ed8d">00198</a> <span class="preprocessor">#define SWD_MASKLANE_1 0b0010</span>
-<a name="l00199"></a>00199 <span class="preprocessor"></span>
-<a name="l00200"></a><a class="code" href="libswd_8h.html#a20637cba92bca14c917c9d80009c54b3">00200</a> <span class="preprocessor">#define SWD_MASKLANE_2 0b0100</span>
-<a name="l00201"></a>00201 <span class="preprocessor"></span>
-<a name="l00202"></a><a class="code" href="libswd_8h.html#a671550aab3cde8bd1b7d31a76d3c35ae">00202</a> <span class="preprocessor">#define SWD_MASKLANE_3 0b1000</span>
-<a name="l00203"></a>00203 <span class="preprocessor"></span>
-<a name="l00205"></a>00205 
-<a name="l00206"></a><a class="code" href="libswd_8h.html#aef0db05edf88e92b701db221ed43ee80">00206</a> <span class="preprocessor">#define SWD_SELECT_BITNUM_CTRLSEL   0</span>
-<a name="l00207"></a>00207 <span class="preprocessor"></span>
-<a name="l00208"></a><a class="code" href="libswd_8h.html#ac0b8d1985223f514730f8b97df4365d0">00208</a> <span class="preprocessor">#define SWD_SELECT_BITNUM_APBANKSEL 4</span>
-<a name="l00209"></a>00209 <span class="preprocessor"></span>
-<a name="l00210"></a><a class="code" href="libswd_8h.html#af8720a3b41ed7613c64b39888c41f29e">00210</a> <span class="preprocessor">#define SWD_SELECT_BITNUM_APSEL     24</span>
-<a name="l00211"></a>00211 <span class="preprocessor"></span>
-<a name="l00213"></a>00213 
-<a name="l00214"></a><a class="code" href="libswd_8h.html#a29771dc9ab321378e535614dcbafcd62">00214</a> <span class="preprocessor">#define SWD_WCR_BITNUM_PRESCALER  0          ///&lt; PRESCALER bit number.</span>
-<a name="l00215"></a>00215 <span class="preprocessor"></span>
-<a name="l00216"></a><a class="code" href="libswd_8h.html#a99082086e8feb058464ce722e262c9f3">00216</a> <span class="preprocessor">#define SWD_WCR_BITNUM_WIREMODE   6          ///&lt; WIREMODE bit number.</span>
-<a name="l00217"></a>00217 <span class="preprocessor"></span>
-<a name="l00218"></a><a class="code" href="libswd_8h.html#a231971f7d925947de58c09a34b57567c">00218</a> <span class="preprocessor">#define SWD_WCR_BITNUM_TURNROUND  8          ///&lt; TURNROUND bit number.</span>
-<a name="l00219"></a>00219 <span class="preprocessor"></span>
-<a name="l00220"></a>00220 
-<a name="l00221"></a><a class="code" href="libswd_8h.html#a36c45dc73dc9ffb403ce8a72e81c58a3">00221</a> <span class="preprocessor">#define SWD_TURNROUND_1_CODE  0              ///&lt; TRN takes one CLK cycle. </span>
-<a name="l00222"></a>00222 <span class="preprocessor"></span><span class="preprocessor">#define SWD_TURNROUND_1_VAL   1</span>
-<a name="l00223"></a>00223 <span class="preprocessor"></span>
-<a name="l00224"></a><a class="code" href="libswd_8h.html#a172b3570304b445c5bba6e0fed06a0fc">00224</a> <span class="preprocessor">#define SWD_TURNROUND_2_CODE  1                    ///&lt; TRN takes two CLK cycles.</span>
-<a name="l00225"></a>00225 <span class="preprocessor"></span><span class="preprocessor">#define SWD_TURNROUNT_2_VAL   2</span>
+<a name="l00198"></a>00198 
+<a name="l00199"></a><a class="code" href="libswd_8h.html#a936042b0d86463b714c7a108574f1405">00199</a> <span class="preprocessor">#define SWD_MASKLANE_0 0b0001</span>
+<a name="l00200"></a>00200 <span class="preprocessor"></span>
+<a name="l00201"></a><a class="code" href="libswd_8h.html#a1a41a6ec8ccbf6dcb15139807bf1ed8d">00201</a> <span class="preprocessor">#define SWD_MASKLANE_1 0b0010</span>
+<a name="l00202"></a>00202 <span class="preprocessor"></span>
+<a name="l00203"></a><a class="code" href="libswd_8h.html#a20637cba92bca14c917c9d80009c54b3">00203</a> <span class="preprocessor">#define SWD_MASKLANE_2 0b0100</span>
+<a name="l00204"></a>00204 <span class="preprocessor"></span>
+<a name="l00205"></a><a class="code" href="libswd_8h.html#a671550aab3cde8bd1b7d31a76d3c35ae">00205</a> <span class="preprocessor">#define SWD_MASKLANE_3 0b1000</span>
+<a name="l00206"></a>00206 <span class="preprocessor"></span>
+<a name="l00208"></a>00208 
+<a name="l00209"></a><a class="code" href="libswd_8h.html#aef0db05edf88e92b701db221ed43ee80">00209</a> <span class="preprocessor">#define SWD_SELECT_BITNUM_CTRLSEL   0</span>
+<a name="l00210"></a>00210 <span class="preprocessor"></span>
+<a name="l00211"></a><a class="code" href="libswd_8h.html#ac0b8d1985223f514730f8b97df4365d0">00211</a> <span class="preprocessor">#define SWD_SELECT_BITNUM_APBANKSEL 4</span>
+<a name="l00212"></a>00212 <span class="preprocessor"></span>
+<a name="l00213"></a><a class="code" href="libswd_8h.html#af8720a3b41ed7613c64b39888c41f29e">00213</a> <span class="preprocessor">#define SWD_SELECT_BITNUM_APSEL     24</span>
+<a name="l00214"></a>00214 <span class="preprocessor"></span>
+<a name="l00216"></a>00216 
+<a name="l00217"></a><a class="code" href="libswd_8h.html#a29771dc9ab321378e535614dcbafcd62">00217</a> <span class="preprocessor">#define SWD_WCR_BITNUM_PRESCALER  0          ///&lt; PRESCALER bit number.</span>
+<a name="l00218"></a>00218 <span class="preprocessor"></span>
+<a name="l00219"></a><a class="code" href="libswd_8h.html#a99082086e8feb058464ce722e262c9f3">00219</a> <span class="preprocessor">#define SWD_WCR_BITNUM_WIREMODE   6          ///&lt; WIREMODE bit number.</span>
+<a name="l00220"></a>00220 <span class="preprocessor"></span>
+<a name="l00221"></a><a class="code" href="libswd_8h.html#a231971f7d925947de58c09a34b57567c">00221</a> <span class="preprocessor">#define SWD_WCR_BITNUM_TURNROUND  8          ///&lt; TURNROUND bit number.</span>
+<a name="l00222"></a>00222 <span class="preprocessor"></span>
+<a name="l00223"></a>00223 
+<a name="l00224"></a><a class="code" href="libswd_8h.html#a36c45dc73dc9ffb403ce8a72e81c58a3">00224</a> <span class="preprocessor">#define SWD_TURNROUND_1_CODE  0              ///&lt; TRN takes one CLK cycle. </span>
+<a name="l00225"></a>00225 <span class="preprocessor"></span><span class="preprocessor">#define SWD_TURNROUND_1_VAL   1</span>
 <a name="l00226"></a>00226 <span class="preprocessor"></span>
-<a name="l00227"></a><a class="code" href="libswd_8h.html#a76d9cedc16e3016d847215ddce07a0d7">00227</a> <span class="preprocessor">#define SWD_TURNROUND_3_CODE  2                    ///&lt; TRN takes three CLK cycles.</span>
-<a name="l00228"></a>00228 <span class="preprocessor"></span><span class="preprocessor">#define SWD_TURNROUND_3_VAL   3</span>
+<a name="l00227"></a><a class="code" href="libswd_8h.html#a172b3570304b445c5bba6e0fed06a0fc">00227</a> <span class="preprocessor">#define SWD_TURNROUND_2_CODE  1                    ///&lt; TRN takes two CLK cycles.</span>
+<a name="l00228"></a>00228 <span class="preprocessor"></span><span class="preprocessor">#define SWD_TURNROUNT_2_VAL   2</span>
 <a name="l00229"></a>00229 <span class="preprocessor"></span>
-<a name="l00230"></a><a class="code" href="libswd_8h.html#a05086991ae21fa2a386788bacb45b92f">00230</a> <span class="preprocessor">#define SWD_TURNROUND_4_CODE  3                    ///&lt; TRN takes four CLK cycles. ????</span>
-<a name="l00231"></a>00231 <span class="preprocessor"></span><span class="preprocessor">#define SWD_TURNROUND_4_VAL   4</span>
+<a name="l00230"></a><a class="code" href="libswd_8h.html#a76d9cedc16e3016d847215ddce07a0d7">00230</a> <span class="preprocessor">#define SWD_TURNROUND_3_CODE  2                    ///&lt; TRN takes three CLK cycles.</span>
+<a name="l00231"></a>00231 <span class="preprocessor"></span><span class="preprocessor">#define SWD_TURNROUND_3_VAL   3</span>
 <a name="l00232"></a>00232 <span class="preprocessor"></span>
-<a name="l00233"></a><a class="code" href="libswd_8h.html#ab9d625d2c5b4087db26e387b60773247">00233</a> <span class="preprocessor">#define SWD_TURNROUND_MIN_VAL SWD_TURNROUND_1_VAL    ///&lt; shortest TRN time.</span>
-<a name="l00234"></a>00234 <span class="preprocessor"></span><span class="preprocessor">#define SWD_TURNROUND_MIN_CODE SWD_TURNOUND_1_CODE</span>
+<a name="l00233"></a><a class="code" href="libswd_8h.html#a05086991ae21fa2a386788bacb45b92f">00233</a> <span class="preprocessor">#define SWD_TURNROUND_4_CODE  3                    ///&lt; TRN takes four CLK cycles. ????</span>
+<a name="l00234"></a>00234 <span class="preprocessor"></span><span class="preprocessor">#define SWD_TURNROUND_4_VAL   4</span>
 <a name="l00235"></a>00235 <span class="preprocessor"></span>
-<a name="l00236"></a><a class="code" href="libswd_8h.html#a2dc3da13c68cd8470c080ca63c7d2904">00236</a> <span class="preprocessor">#define SWD_TURNROUND_MAX_VAL SWD_TURNROUND_4_VAL    ///&lt; longest TRN time.</span>
-<a name="l00237"></a>00237 <span class="preprocessor"></span><span class="preprocessor">#define SWD_TURNROUND_MAX_CODE SWD_TURNROUND_4_CODE</span>
+<a name="l00236"></a><a class="code" href="libswd_8h.html#ab9d625d2c5b4087db26e387b60773247">00236</a> <span class="preprocessor">#define SWD_TURNROUND_MIN_VAL SWD_TURNROUND_1_VAL    ///&lt; shortest TRN time.</span>
+<a name="l00237"></a>00237 <span class="preprocessor"></span><span class="preprocessor">#define SWD_TURNROUND_MIN_CODE SWD_TURNOUND_1_CODE</span>
 <a name="l00238"></a>00238 <span class="preprocessor"></span>
-<a name="l00239"></a><a class="code" href="libswd_8h.html#a4638bb61fa7ca7f4e2cdf177b8aa2485">00239</a> <span class="preprocessor">#define SWD_TURNROUND_DEFAULT_VAL SWD_TURNROUND_1_VAL ///&lt; Default TRN length is one CLK.</span>
-<a name="l00240"></a>00240 <span class="preprocessor"></span>
-<a name="l00242"></a>00242 
-<a name="l00243"></a><a class="code" href="libswd_8h.html#a6d541fabb5e5a1e6a30657a97747f3ff">00243</a> <span class="preprocessor">#define AHB_AP_CONTROLSTATUS 0x00  ///&lt; R/W, 32bit, reset value: 0x43800042 </span>
-<a name="l00244"></a>00244 <span class="preprocessor"></span>
-<a name="l00245"></a><a class="code" href="libswd_8h.html#a1cbe7e4c68e923e1cef6d7dc621c1069">00245</a> <span class="preprocessor">#define AHB_AP_TAR           0x04  ///&lt; R/W, 32bit, reset value: 0x00000000</span>
-<a name="l00246"></a>00246 <span class="preprocessor"></span>
-<a name="l00247"></a><a class="code" href="libswd_8h.html#aafb32eec9bde5241aaf8f6f356685212">00247</a> <span class="preprocessor">#define AHB_AP_DRW           0x0C  ///&lt; R/W, 32bit</span>
-<a name="l00248"></a>00248 <span class="preprocessor"></span>
-<a name="l00249"></a><a class="code" href="libswd_8h.html#a79005218ec350d48873794d0428f5c9a">00249</a> <span class="preprocessor">#define AHB_AP_BD0           0x10  ///&lt; R/W, 32bit</span>
-<a name="l00250"></a>00250 <span class="preprocessor"></span>
-<a name="l00251"></a><a class="code" href="libswd_8h.html#afac7c5f3dcf06444b70f8e3b3729fb0c">00251</a> <span class="preprocessor">#define AHB_AP_BD1           0x14  ///&lt; R/W, 32bit</span>
-<a name="l00252"></a>00252 <span class="preprocessor"></span>
-<a name="l00253"></a><a class="code" href="libswd_8h.html#a62d95594c6aeaaf2ca65b37ffd785938">00253</a> <span class="preprocessor">#define AHB_AP_BD2           0x18  ///&lt; R/W, 32bit</span>
-<a name="l00254"></a>00254 <span class="preprocessor"></span>
-<a name="l00255"></a><a class="code" href="libswd_8h.html#adbbab2130f80262813ec34c5ef76931e">00255</a> <span class="preprocessor">#define AHB_AP_BD3           0x1C  ///&lt; R/W, 32bit</span>
-<a name="l00256"></a>00256 <span class="preprocessor"></span>
-<a name="l00257"></a><a class="code" href="libswd_8h.html#a29ea3a30e284147969a33f6fccd61fc3">00257</a> <span class="preprocessor">#define AHB_AP_DROMT         0xF8  ///&lt; RO, 32bit, reset value: 0xE00FF000</span>
-<a name="l00258"></a>00258 <span class="preprocessor"></span>
-<a name="l00259"></a><a class="code" href="libswd_8h.html#a2830d02e5dad227abf3316b8e3d05fff">00259</a> <span class="preprocessor">#define AHB_AP_IDR           0xFC  ///&lt; RO, 32bit, reset value: 0x24770001</span>
-<a name="l00260"></a>00260 <span class="preprocessor"></span>
-<a name="l00262"></a>00262 
-<a name="l00263"></a>00263 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">char</span> SWD_CMD_SWDPRESET[] = {0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0x00}; 
-<a name="l00265"></a>00265 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">char</span> SWD_CMD_JTAG2SWD[]  = {0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0x79, 0xe7};
-<a name="l00267"></a>00267 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">char</span> SWD_CMD_SWD2JTAG[]  = {0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0x3c, 0xe7};
-<a name="l00269"></a>00269 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">char</span> SWD_CMD_IDLE[] = {0x00};
-<a name="l00270"></a>00270 
-<a name="l00272"></a>00272 
-<a name="l00273"></a><a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77">00273</a> <span class="keyword">typedef</span> <span class="keyword">enum</span> {
-<a name="l00274"></a><a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77af5a1ef7dd83c34b0cc42beb5984bfb01">00274</a>  <a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77af5a1ef7dd83c34b0cc42beb5984bfb01" title="No error.">SWD_OK</a>                = 0,  
-<a name="l00275"></a><a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a7acb88c6941a8ec9f104078ee8b3e02c">00275</a>  <a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a7acb88c6941a8ec9f104078ee8b3e02c" title="General error.">SWD_ERROR_GENERAL</a>     =-1,  
-<a name="l00276"></a><a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77aedb8a7cbf26095284eb5976cd8663494">00276</a>  <a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77aedb8a7cbf26095284eb5976cd8663494" title="Null pointer.">SWD_ERROR_NULLPOINTER</a> =-2,  
-<a name="l00277"></a><a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a4476f371364f6c7bb0e8396120e4c4cd">00277</a>  <a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a4476f371364f6c7bb0e8396120e4c4cd" title="Null queue pointer.">SWD_ERROR_NULLQUEUE</a>   =-3,  
-<a name="l00278"></a><a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a22f5e6d0a9f72397595cc71b6e11411d">00278</a>  <a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a22f5e6d0a9f72397595cc71b6e11411d" title="Null TurnaRouNd pointer.">SWD_ERROR_NULLTRN</a>     =-4,  
-<a name="l00279"></a><a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77aa3b8e6239ccc5999d6d75b5da2133d1a">00279</a>  <a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77aa3b8e6239ccc5999d6d75b5da2133d1a" title="Bad parameter.">SWD_ERROR_PARAM</a>       =-5,  
-<a name="l00280"></a><a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77aeecf32fa72e3b4e8a55fda56852ed0a3">00280</a>  <a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77aeecf32fa72e3b4e8a55fda56852ed0a3" title="Out of memory.">SWD_ERROR_OUTOFMEM</a>    =-6,  
-<a name="l00281"></a><a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77aaac3da0a3341d405f70349763f526772">00281</a>  <a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77aaac3da0a3341d405f70349763f526772" title="Bad result.">SWD_ERROR_RESULT</a>      =-7,  
-<a name="l00282"></a><a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77abe4b62286d73462a18726261e432503e">00282</a>  <a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77abe4b62286d73462a18726261e432503e" title="Out of range.">SWD_ERROR_RANGE</a>       =-8,  
-<a name="l00283"></a><a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77ab8707f66c87d67231a1df117d176499f">00283</a>  <a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77ab8707f66c87d67231a1df117d176499f" title="Definition (internal) error.">SWD_ERROR_DEFINITION</a>  =-9,  
-<a name="l00284"></a><a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77aef273147c6f034db3ac7c1340ccaa455">00284</a>  <a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77aef273147c6f034db3ac7c1340ccaa455" title="Null context pointer.">SWD_ERROR_NULLCONTEXT</a> =-10, 
-<a name="l00285"></a><a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a829d12144ebfc2cf1e4c30eae4327e58">00285</a>  <a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a829d12144ebfc2cf1e4c30eae4327e58" title="Queue error.">SWD_ERROR_QUEUE</a>       =-11, 
-<a name="l00286"></a><a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a3f107ea05e8a08eeb6db8055db47b6af">00286</a>  <a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a3f107ea05e8a08eeb6db8055db47b6af" title="Addressing error.">SWD_ERROR_ADDR</a>        =-12, 
-<a name="l00287"></a><a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77aac13275631d7325134021f3409e1bbf0">00287</a>  <a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77aac13275631d7325134021f3409e1bbf0" title="Bad APnDP value.">SWD_ERROR_APnDP</a>       =-13, 
-<a name="l00288"></a><a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a0dce436eb6d60b5c935780e38d317272">00288</a>  <a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a0dce436eb6d60b5c935780e38d317272" title="Bad RnW value.">SWD_ERROR_RnW</a>         =-14, 
-<a name="l00289"></a><a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a05931ecd3c4d34ad773d31ee573cefdd">00289</a>  <a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a05931ecd3c4d34ad773d31ee573cefdd" title="Parity error.">SWD_ERROR_PARITY</a>      =-15, 
-<a name="l00290"></a><a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77ac462fccae009d83aab5d394eba7e4665">00290</a>  <a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77ac462fccae009d83aab5d394eba7e4665" title="Acknowledge error.">SWD_ERROR_ACK</a>         =-16, 
-<a name="l00291"></a><a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a3f3dbe4095052628978962830f80cbeb">00291</a>  <a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a3f3dbe4095052628978962830f80cbeb" title="Unknown ACK value.">SWD_ERROR_ACKUNKNOWN</a>  =-19, 
-<a name="l00292"></a><a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a8ba17527e1f8596b1e6c644d651a75f2">00292</a>  <a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a8ba17527e1f8596b1e6c644d651a75f2" title="ACK not yet executed on target.">SWD_ERROR_ACKNOTDONE</a>  =-20, 
-<a name="l00293"></a><a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77aaf9a4ffb312df6c0d6a2ad5f26236ed2">00293</a>  <a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77aaf9a4ffb312df6c0d6a2ad5f26236ed2" title="ACK command not found on the queue.">SWD_ERROR_ACKMISSING</a>  =-21, 
-<a name="l00294"></a><a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77aa99a0d1fa79837de68da0abf82950083">00294</a>  <a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77aa99a0d1fa79837de68da0abf82950083" title="Bad ACK result address.">SWD_ERROR_ACKMISMATCH</a> =-22, 
-<a name="l00295"></a><a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a0a76fb9ee32976ef62ffff3d766d2ef1">00295</a>  <a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a0a76fb9ee32976ef62ffff3d766d2ef1" title="ACK not in order REQ-&amp;gt;TRN-&amp;gt;ACK.">SWD_ERROR_ACKORDER</a>    =-23, 
-<a name="l00296"></a><a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a154bc92f783335bf75933cbbcf477d4c">00296</a>  <a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a154bc92f783335bf75933cbbcf477d4c" title="Unsupported operation requested.">SWD_ERROR_BADOPCODE</a>   =-24, 
-<a name="l00297"></a><a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a3a4a9b00904529e4368120e9e7b05c77">00297</a>  <a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a3a4a9b00904529e4368120e9e7b05c77" title="Command not found on the queue.">SWD_ERROR_NODATACMD</a>   =-25, 
-<a name="l00298"></a><a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77af41fe1c260478be2da86daded693def0">00298</a>  <a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77af41fe1c260478be2da86daded693def0" title="Bad DATA pointer address.">SWD_ERROR_DATAPTR</a>     =-26, 
-<a name="l00299"></a><a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a7960e949fb577cb55f27213364246983">00299</a>  <a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a7960e949fb577cb55f27213364246983" title="Parity after Data missing or misplaced.">SWD_ERROR_NOPARITYCMD</a> =-27, 
-<a name="l00300"></a><a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77aaa64317e7fcfbc135103e92e0d7461d0">00300</a>  <a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77aaa64317e7fcfbc135103e92e0d7461d0" title="Bad PARITY pointer address.">SWD_ERROR_PARITYPTR</a>   =-28, 
-<a name="l00301"></a><a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77aa09e4f36fe516704701f016e7cf08c08">00301</a>  <a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77aa09e4f36fe516704701f016e7cf08c08" title="Could not end selected task.">SWD_ERROR_NOTDONE</a>     =-29, 
-<a name="l00302"></a><a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a8e6636f921f5856ece06915d2c2eeabf">00302</a>  <a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a8e6636f921f5856ece06915d2c2eeabf" title="Queue root not found or null.">SWD_ERROR_QUEUEROOT</a>   =-30, 
-<a name="l00303"></a><a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77ad631db57f3edc4461e7deef3f7108e78">00303</a>  <a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77ad631db57f3edc4461e7deef3f7108e78" title="Queue tail not found or null.">SWD_ERROR_QUEUETAIL</a>   =-31, 
-<a name="l00304"></a><a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a8b59d867a0320335aebfd5a503b3d331">00304</a>  <a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a8b59d867a0320335aebfd5a503b3d331" title="Unknown command detected.">SWD_ERROR_BADCMDTYPE</a>  =-32, 
-<a name="l00305"></a><a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77af0ce348ad2c0dc96642814d5b40013a5">00305</a>  <a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77af0ce348ad2c0dc96642814d5b40013a5" title="Bad command data.">SWD_ERROR_BADCMDDATA</a>  =-33, 
-<a name="l00306"></a><a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a662935dd4a8fa01620b62dd4bb879c10">00306</a>  <a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a662935dd4a8fa01620b62dd4bb879c10" title="Error during turnaround switch.">SWD_ERROR_TURNAROUND</a>  =-34, 
-<a name="l00307"></a><a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a186d948f46f62e6ed2a35a06ac8d61a2">00307</a>  <a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a186d948f46f62e6ed2a35a06ac8d61a2" title="Driver error.">SWD_ERROR_DRIVER</a>      =-35, 
-<a name="l00308"></a><a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a4de5da0a220537161b83db14cb02882e">00308</a>  <a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a4de5da0a220537161b83db14cb02882e" title="Received ACK WAIT.">SWD_ERROR_ACK_WAIT</a>    =-36, 
-<a name="l00309"></a><a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a562d12325f42609d3548848d0012e668">00309</a>  <a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a562d12325f42609d3548848d0012e668" title="Received ACK FAULT.">SWD_ERROR_ACK_FAULT</a>   =-37, 
-<a name="l00310"></a><a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a6221955153e8a1486c6ba1885fad260d">00310</a>  <a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a6221955153e8a1486c6ba1885fad260d" title="Cannot free resources, queue not empty.">SWD_ERROR_QUEUENOTFREE</a>=-38, 
-<a name="l00311"></a><a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a278660e87edcaef6a52b604c1fdda9d7">00311</a>  <a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a278660e87edcaef6a52b604c1fdda9d7" title="Transport type unknown or undefined.">SWD_ERROR_TRANSPORT</a>   =-39, 
-<a name="l00312"></a><a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77ad7b25e37bdd661e4146a201c01aba3e2">00312</a>  <a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77ad7b25e37bdd661e4146a201c01aba3e2" title="Direction error (LSb/MSb first).">SWD_ERROR_DIRECTION</a>   =-40, 
-<a name="l00313"></a><a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a3409780dd844cd0a9ec85fab65ead058">00313</a>  <a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a3409780dd844cd0a9ec85fab65ead058" title="Invalid loglevel number.">SWD_ERROR_LOGLEVEL</a>    =-41  
-<a name="l00314"></a>00314 } swd_error_code_t;
-<a name="l00315"></a>00315 
-<a name="l00317"></a>00317 
-<a name="l00318"></a><a class="code" href="libswd_8h.html#ab68cbcef79d602fc0fe70cb65c43e898">00318</a> <span class="keyword">typedef</span> <span class="keyword">enum</span> {
-<a name="l00319"></a>00319  SWD_LOGLEVEL_MIN     = 0,
-<a name="l00320"></a><a class="code" href="libswd_8h.html#ab68cbcef79d602fc0fe70cb65c43e898aae6717e99b0a1bb52faddc723ccf4c8a">00320</a>  <a class="code" href="libswd_8h.html#ab68cbcef79d602fc0fe70cb65c43e898aae6717e99b0a1bb52faddc723ccf4c8a" title="Remain silent.">SWD_LOGLEVEL_SILENT</a>  = 0, 
-<a name="l00321"></a><a class="code" href="libswd_8h.html#ab68cbcef79d602fc0fe70cb65c43e898aec966870ed80a0b7995871924db678f1">00321</a>  <a class="code" href="libswd_8h.html#ab68cbcef79d602fc0fe70cb65c43e898aec966870ed80a0b7995871924db678f1" title="Show errors.">SWD_LOGLEVEL_ERROR</a>   = 1, 
-<a name="l00322"></a><a class="code" href="libswd_8h.html#ab68cbcef79d602fc0fe70cb65c43e898a207bbe4a21ac547c5d7613cfa198e9ca">00322</a>  <a class="code" href="libswd_8h.html#ab68cbcef79d602fc0fe70cb65c43e898a207bbe4a21ac547c5d7613cfa198e9ca" title="Show warnings.">SWD_LOGLEVEL_WARNING</a> = 2, 
-<a name="l00323"></a><a class="code" href="libswd_8h.html#ab68cbcef79d602fc0fe70cb65c43e898ad06e455a696693b2226f49e6cec64146">00323</a>  <a class="code" href="libswd_8h.html#ab68cbcef79d602fc0fe70cb65c43e898ad06e455a696693b2226f49e6cec64146" title="Normal verbosity.">SWD_LOGLEVEL_NORMAL</a>  = 3, 
-<a name="l00324"></a><a class="code" href="libswd_8h.html#ab68cbcef79d602fc0fe70cb65c43e898ae80dd8ea77c8e8121c806150cf55495c">00324</a>  <a class="code" href="libswd_8h.html#ab68cbcef79d602fc0fe70cb65c43e898ae80dd8ea77c8e8121c806150cf55495c" title="Show messages.">SWD_LOGLEVEL_INFO</a>    = 4, 
-<a name="l00325"></a><a class="code" href="libswd_8h.html#ab68cbcef79d602fc0fe70cb65c43e898a911a4892f6c846b089c1d999214e0ee8">00325</a>  <a class="code" href="libswd_8h.html#ab68cbcef79d602fc0fe70cb65c43e898a911a4892f6c846b089c1d999214e0ee8" title="Show all including debug information.">SWD_LOGLEVEL_DEBUG</a>   = 5, 
-<a name="l00326"></a>00326  SWD_LOGLEVEL_MAX     = 5
-<a name="l00327"></a>00327 } swd_loglevel_t;
-<a name="l00328"></a>00328 
-<a name="l00330"></a>00330 
-<a name="l00331"></a><a class="code" href="libswd_8h.html#a26692de1bd0ae7c18636700e4dc429fb">00331</a> <span class="preprocessor">#define SWD_DATA_MAXBITCOUNT   32</span>
-<a name="l00332"></a>00332 <span class="preprocessor"></span>
-<a name="l00333"></a><a class="code" href="libswd_8h.html#acd193c9b1286337094c58e1d8d69cb6d">00333</a> <span class="preprocessor">#define SWD_DATA_BYTESIZE      8</span>
-<a name="l00334"></a>00334 <span class="preprocessor"></span>
-<a name="l00335"></a><a class="code" href="libswd_8h.html#a5c498f851df4c94c32bb57c6648cb878">00335</a> <span class="preprocessor">#define SWD_DATA_BITLEN        32</span>
-<a name="l00336"></a>00336 <span class="preprocessor"></span>
-<a name="l00337"></a><a class="code" href="libswd_8h.html#a312d07081ec8386b65154eeb02badf66">00337</a> <span class="preprocessor">#define SWD_CMDQLEN_DEFAULT  1024;</span>
-<a name="l00338"></a>00338 <span class="preprocessor"></span>
-<a name="l00344"></a>00344 
-<a name="l00345"></a><a class="code" href="libswd_8h.html#a18e16544fabdef0ef0e531cc6b4d4b7c">00345</a> <span class="keyword">typedef</span> <span class="keyword">enum</span> {
-<a name="l00346"></a><a class="code" href="libswd_8h.html#a18e16544fabdef0ef0e531cc6b4d4b7ca62c40fbeaf26e6daded916edd77bc21d">00346</a>  <a class="code" href="libswd_8h.html#a18e16544fabdef0ef0e531cc6b4d4b7ca62c40fbeaf26e6daded916edd77bc21d" title="Contains MOSI data (from host).">SWD_CMDTYPE_MOSI_DATA</a>    =-7, 
-<a name="l00347"></a><a class="code" href="libswd_8h.html#a18e16544fabdef0ef0e531cc6b4d4b7ca826701bb4e07deb5c5f5c33665688c6b">00347</a>  <a class="code" href="libswd_8h.html#a18e16544fabdef0ef0e531cc6b4d4b7ca826701bb4e07deb5c5f5c33665688c6b" title="Contains MOSI request packet.">SWD_CMDTYPE_MOSI_REQUEST</a> =-6, 
-<a name="l00348"></a><a class="code" href="libswd_8h.html#a18e16544fabdef0ef0e531cc6b4d4b7ca6da6cde9944c71a26444c97bee9b59d0">00348</a>  <a class="code" href="libswd_8h.html#a18e16544fabdef0ef0e531cc6b4d4b7ca6da6cde9944c71a26444c97bee9b59d0" title="Bus will switch into MOSI mode.">SWD_CMDTYPE_MOSI_TRN</a>     =-5, 
-<a name="l00349"></a><a class="code" href="libswd_8h.html#a18e16544fabdef0ef0e531cc6b4d4b7cab3726bd22bf211c773b091cf70bec9f1">00349</a>  <a class="code" href="libswd_8h.html#a18e16544fabdef0ef0e531cc6b4d4b7cab3726bd22bf211c773b091cf70bec9f1" title="Contains MOSI data parity.">SWD_CMDTYPE_MOSI_PARITY</a>  =-4, 
-<a name="l00350"></a><a class="code" href="libswd_8h.html#a18e16544fabdef0ef0e531cc6b4d4b7caf951c4a4ebb960641f074785a6174a5a">00350</a>  <a class="code" href="libswd_8h.html#a18e16544fabdef0ef0e531cc6b4d4b7caf951c4a4ebb960641f074785a6174a5a" title="Allows MOSI operation bit-by-bit.">SWD_CMDTYPE_MOSI_BITBANG</a> =-3, 
-<a name="l00351"></a><a class="code" href="libswd_8h.html#a18e16544fabdef0ef0e531cc6b4d4b7ca2bd240d136f2e7f661ad14bd355053a6">00351</a>  <a class="code" href="libswd_8h.html#a18e16544fabdef0ef0e531cc6b4d4b7ca2bd240d136f2e7f661ad14bd355053a6" title="MOSI control sequence (ie. sw-dp reset, idle).">SWD_CMDTYPE_MOSI_CONTROL</a> =-2, 
-<a name="l00352"></a><a class="code" href="libswd_8h.html#a18e16544fabdef0ef0e531cc6b4d4b7caceec6c2784b149355b019cbda0623fe0">00352</a>  <a class="code" href="libswd_8h.html#a18e16544fabdef0ef0e531cc6b4d4b7caceec6c2784b149355b019cbda0623fe0" title="Master Output Slave Input direction.">SWD_CMDTYPE_MOSI</a>         =-1, 
-<a name="l00353"></a><a class="code" href="libswd_8h.html#a18e16544fabdef0ef0e531cc6b4d4b7caa61ae4ec60ecffb3df34f3e485090586">00353</a>  <a class="code" href="libswd_8h.html#a18e16544fabdef0ef0e531cc6b4d4b7caa61ae4ec60ecffb3df34f3e485090586" title="undefined command, not transmitted.">SWD_CMDTYPE_UNDEFINED</a>    =0,  
-<a name="l00354"></a><a class="code" href="libswd_8h.html#a18e16544fabdef0ef0e531cc6b4d4b7ca4d019a00cc772982e7d1ac52aac5d4e0">00354</a>  <a class="code" href="libswd_8h.html#a18e16544fabdef0ef0e531cc6b4d4b7ca4d019a00cc772982e7d1ac52aac5d4e0" title="Master Input Slave Output direction.">SWD_CMDTYPE_MISO</a>         =1,  
-<a name="l00355"></a><a class="code" href="libswd_8h.html#a18e16544fabdef0ef0e531cc6b4d4b7ca59eade15cc1d2430434c0e4174dc3e07">00355</a>  <a class="code" href="libswd_8h.html#a18e16544fabdef0ef0e531cc6b4d4b7ca59eade15cc1d2430434c0e4174dc3e07" title="Contains ACK data from target.">SWD_CMDTYPE_MISO_ACK</a>     =2,  
-<a name="l00356"></a><a class="code" href="libswd_8h.html#a18e16544fabdef0ef0e531cc6b4d4b7cab4260670a401ed63adec72c0753f915f">00356</a>  <a class="code" href="libswd_8h.html#a18e16544fabdef0ef0e531cc6b4d4b7cab4260670a401ed63adec72c0753f915f" title="Allows MISO operation bit-by-bit.">SWD_CMDTYPE_MISO_BITBANG</a> =3,  
-<a name="l00357"></a><a class="code" href="libswd_8h.html#a18e16544fabdef0ef0e531cc6b4d4b7ca5d23ed26796e30ae787d3de869ef9359">00357</a>  <a class="code" href="libswd_8h.html#a18e16544fabdef0ef0e531cc6b4d4b7ca5d23ed26796e30ae787d3de869ef9359" title="Contains MISO data parity.">SWD_CMDTYPE_MISO_PARITY</a>  =4,  
-<a name="l00358"></a><a class="code" href="libswd_8h.html#a18e16544fabdef0ef0e531cc6b4d4b7ca8ce670cc9c3d3f2d77c83f13c589978f">00358</a>  <a class="code" href="libswd_8h.html#a18e16544fabdef0ef0e531cc6b4d4b7ca8ce670cc9c3d3f2d77c83f13c589978f" title="Bus will switch into MISO mode.">SWD_CMDTYPE_MISO_TRN</a>     =5,  
-<a name="l00359"></a><a class="code" href="libswd_8h.html#a18e16544fabdef0ef0e531cc6b4d4b7ca2c17157db3f21117cac24fa17793a576">00359</a>  <a class="code" href="libswd_8h.html#a18e16544fabdef0ef0e531cc6b4d4b7ca2c17157db3f21117cac24fa17793a576" title="Contains MISO data (from target).">SWD_CMDTYPE_MISO_DATA</a>    =6   
-<a name="l00360"></a>00360 } swd_cmdtype_t;
-<a name="l00361"></a>00361 
-<a name="l00363"></a><a class="code" href="libswd_8h.html#a7262ed71e0d9c40d2ede6c0aa44209df">00363</a> <span class="keyword">typedef</span> <span class="keyword">enum</span> {
-<a name="l00364"></a><a class="code" href="libswd_8h.html#a7262ed71e0d9c40d2ede6c0aa44209dfa0b9f6301b086569d5a62e49d7a2ebdf0">00364</a>  <a class="code" href="libswd_8h.html#a7262ed71e0d9c40d2ede6c0aa44209dfa0b9f6301b086569d5a62e49d7a2ebdf0" title="Data is shifted in/out right (LSB-first).">SWD_DIR_LSBFIRST</a> =0, 
-<a name="l00365"></a><a class="code" href="libswd_8h.html#a7262ed71e0d9c40d2ede6c0aa44209dfa76bc9b4b4ac1e47f4602576ed500a07c">00365</a>  <a class="code" href="libswd_8h.html#a7262ed71e0d9c40d2ede6c0aa44209dfa76bc9b4b4ac1e47f4602576ed500a07c" title="Data is shifted in/out left (MSB-first).">SWD_DIR_MSBFIRST</a> =1  
-<a name="l00366"></a>00366 } swd_shiftdir_t;
-<a name="l00367"></a>00367 
-<a name="l00369"></a><a class="code" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070">00369</a> <span class="keyword">typedef</span> <span class="keyword">enum</span> {
-<a name="l00370"></a><a class="code" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070a3072b746192012364ca0986dfbd048bf">00370</a>  <a class="code" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070a3072b746192012364ca0986dfbd048bf" title="First operation to know its code.">SWD_OPERATION_FIRST</a>         =1, 
-<a name="l00371"></a><a class="code" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070a9fe0514a56fa43763b83c16a168dc3e5">00371</a>  <a class="code" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070a9fe0514a56fa43763b83c16a168dc3e5" title="Append command(s) to the queue.">SWD_OPERATION_ENQUEUE</a>       =1, 
-<a name="l00372"></a><a class="code" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070a56d19aa6e805b636d0c679df01a83bf1">00372</a>  <a class="code" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070a56d19aa6e805b636d0c679df01a83bf1" title="Queue commands then flush the queue.">SWD_OPERATION_EXECUTE</a>       =2, 
-<a name="l00373"></a><a class="code" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070aff0c4b9c2b732437df67e41f3dde5b41">00373</a>  <a class="code" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070aff0c4b9c2b732437df67e41f3dde5b41" title="Transmit root..current (head).">SWD_OPERATION_TRANSMIT_HEAD</a> =3, 
-<a name="l00374"></a><a class="code" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070a2f8b579789e424e73b147b14b910f9c0">00374</a>  <a class="code" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070a2f8b579789e424e73b147b14b910f9c0" title="Transmit current..last (tail).">SWD_OPERATION_TRANSMIT_TAIL</a> =4, 
-<a name="l00375"></a><a class="code" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070ac38a2a8469f357620b62255215119eba">00375</a>  <a class="code" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070ac38a2a8469f357620b62255215119eba" title="Transmit all commands on the queue.">SWD_OPERATION_TRANSMIT_ALL</a>  =5, 
-<a name="l00376"></a><a class="code" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070a1b313c50018796ad8d5049a005c164dd">00376</a>  <a class="code" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070a1b313c50018796ad8d5049a005c164dd" title="Transmit only current command.">SWD_OPERATION_TRANSMIT_ONE</a>  =6, 
-<a name="l00377"></a><a class="code" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070ada451b56cf1fa088d3f36c84930054dd">00377</a>  <a class="code" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070ada451b56cf1fa088d3f36c84930054dd" title="Transmit last command on the queue.">SWD_OPERATION_TRANSMIT_LAST</a> =7, 
-<a name="l00378"></a><a class="code" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070a2b0a3a85cda93ab617d1f49273a3cc3b">00378</a>  <a class="code" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070a2b0a3a85cda93ab617d1f49273a3cc3b" title="Last operation to know its code.">SWD_OPERATION_LAST</a>          =7  
-<a name="l00379"></a>00379 } swd_operation_t;
-<a name="l00380"></a>00380 
-<a name="l00387"></a><a class="code" href="structswd__cmd__t.html">00387</a> <span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structswd__cmd__t.html" title="SWD Command Element Structure.">swd_cmd_t</a> {
-<a name="l00388"></a>00388  <span class="keyword">union </span>{
-<a name="l00389"></a><a class="code" href="structswd__cmd__t.html#ad5990fe329230159af56a95378b206ef">00389</a>   <span class="keywordtype">char</span> <a class="code" href="structswd__cmd__t.html#ad5990fe329230159af56a95378b206ef" title="Holds/sets bus direction: MOSI when zero, MISO for others.">TRNnMOSI</a>;  
-<a name="l00390"></a><a class="code" href="structswd__cmd__t.html#a78267c4aaaed43ef5d38617cd0632135">00390</a>   <span class="keywordtype">char</span> <a class="code" href="structswd__cmd__t.html#a78267c4aaaed43ef5d38617cd0632135" title="Request header data.">request</a>;   
-<a name="l00391"></a><a class="code" href="structswd__cmd__t.html#a564daefcae1870dc3110fe1ef2d2fb02">00391</a>   <span class="keywordtype">char</span> <a class="code" href="structswd__cmd__t.html#a564daefcae1870dc3110fe1ef2d2fb02" title="Acknowledge response from target.">ack</a>;       
-<a name="l00392"></a><a class="code" href="structswd__cmd__t.html#ab4bdc51a77d6beb63af8cb9d466e731f">00392</a>   <span class="keywordtype">int</span> <a class="code" href="structswd__cmd__t.html#ab4bdc51a77d6beb63af8cb9d466e731f" title="Data read from target (MISO).">misodata</a>;   
-<a name="l00393"></a><a class="code" href="structswd__cmd__t.html#a35f88591bec4b8aa2e3e93e289ef3ee1">00393</a>   <span class="keywordtype">int</span> <a class="code" href="structswd__cmd__t.html#a35f88591bec4b8aa2e3e93e289ef3ee1" title="Data written to target (MOSI).">mosidata</a>;   
-<a name="l00394"></a><a class="code" href="structswd__cmd__t.html#ad2bab20a395056e71fb45c3ede25418e">00394</a>   <span class="keywordtype">int</span> <a class="code" href="structswd__cmd__t.html#ad2bab20a395056e71fb45c3ede25418e" title="Holds &amp;quot;int&amp;quot; data type for inspection.">data32</a>;     
-<a name="l00395"></a><a class="code" href="structswd__cmd__t.html#aad2959ff43a559dd230664cce4c62289">00395</a>   <span class="keywordtype">char</span> <a class="code" href="structswd__cmd__t.html#aad2959ff43a559dd230664cce4c62289" title="Single bit read from target (bit-per-char).">misobit</a>;   
-<a name="l00396"></a><a class="code" href="structswd__cmd__t.html#abb4d4c34e0559fa73e849a887ef2e29f">00396</a>   <span class="keywordtype">char</span> <a class="code" href="structswd__cmd__t.html#abb4d4c34e0559fa73e849a887ef2e29f" title="Single bit written to target (bit-per-char).">mosibit</a>;   
-<a name="l00397"></a><a class="code" href="structswd__cmd__t.html#a6616cbca6e9254be1d3e949ec5d774ca">00397</a>   <span class="keywordtype">char</span> <a class="code" href="structswd__cmd__t.html#a6616cbca6e9254be1d3e949ec5d774ca" title="Parity bit for data payload.">parity</a>;    
-<a name="l00398"></a><a class="code" href="structswd__cmd__t.html#aa2c59bcceeba9a700d8cd3965ec17da3">00398</a>   <span class="keywordtype">char</span> <a class="code" href="structswd__cmd__t.html#aa2c59bcceeba9a700d8cd3965ec17da3" title="Control transfer data (one byte).">control</a>;   
-<a name="l00399"></a><a class="code" href="structswd__cmd__t.html#a01b050d371e7625c7ba0a404472db377">00399</a>   <span class="keywordtype">char</span> <a class="code" href="structswd__cmd__t.html#a01b050d371e7625c7ba0a404472db377" title="Holds &amp;quot;char&amp;quot; data type for inspection.">data8</a>;     
-<a name="l00400"></a>00400  };
-<a name="l00401"></a><a class="code" href="structswd__cmd__t.html#ad356acda4d21961df30b3091a27ab13b">00401</a>  <span class="keywordtype">char</span> <a class="code" href="structswd__cmd__t.html#ad356acda4d21961df30b3091a27ab13b" title="Payload bit count == clk pulses on the bus.">bits</a>;       
-<a name="l00402"></a><a class="code" href="structswd__cmd__t.html#a7039d3b72c01b8cfe8d3bcd428343059">00402</a>  <a class="code" href="libswd_8h.html#a18e16544fabdef0ef0e531cc6b4d4b7c" title="SWD Command Codes definitions.">swd_cmdtype_t</a> <a class="code" href="structswd__cmd__t.html#a7039d3b72c01b8cfe8d3bcd428343059" title="Command type as defined by swd_cmdtype_t.">cmdtype</a>; 
-<a name="l00403"></a><a class="code" href="structswd__cmd__t.html#a617e4adc0aaf469af0fdab5efd93174c">00403</a>  <span class="keywordtype">char</span> <a class="code" href="structswd__cmd__t.html#a617e4adc0aaf469af0fdab5efd93174c" title="Non-zero if operation already executed.">done</a>;       
-<a name="l00404"></a><a class="code" href="structswd__cmd__t.html#a51ad4da25e6438e20fafd9e44b901d49">00404</a>  <span class="keyword">struct </span><a class="code" href="structswd__cmd__t.html" title="SWD Command Element Structure.">swd_cmd_t</a> *<a class="code" href="structswd__cmd__t.html#a51ad4da25e6438e20fafd9e44b901d49" title="Pointer to the previous command.">prev</a>; 
-<a name="l00405"></a><a class="code" href="structswd__cmd__t.html#aaf05bcb291fe2ecdf38a9168315db405">00405</a>  <span class="keyword">struct </span><a class="code" href="structswd__cmd__t.html" title="SWD Command Element Structure.">swd_cmd_t</a> *<a class="code" href="structswd__cmd__t.html#aaf05bcb291fe2ecdf38a9168315db405" title="Pointer to the next command.">next</a>; 
-<a name="l00406"></a>00406 } <a class="code" href="structswd__cmd__t.html" title="SWD Command Element Structure.">swd_cmd_t</a>;
-<a name="l00407"></a>00407 
-<a name="l00409"></a><a class="code" href="structswd__context__config__t.html">00409</a> <span class="keyword">typedef</span> <span class="keyword">struct </span>{
-<a name="l00410"></a><a class="code" href="structswd__context__config__t.html#aace7f48f97b84859691957f86f81afba">00410</a>  <span class="keywordtype">char</span> initialized;        
-<a name="l00411"></a><a class="code" href="structswd__context__config__t.html#ada3e484ab916767e16dcfcae5300c0f8">00411</a>  <span class="keywordtype">char</span> trnlen;             
-<a name="l00412"></a><a class="code" href="structswd__context__config__t.html#abbee7e8722672bd5f38d6f151f608f14">00412</a>  <span class="keywordtype">int</span>  maxcmdqlen;         
-<a name="l00413"></a><a class="code" href="structswd__context__config__t.html#a2f3509f25cc8bc80b263a0569afafe1d">00413</a>  <a class="code" href="libswd_8h.html#ab68cbcef79d602fc0fe70cb65c43e898" title="Logging Level Codes definition.">swd_loglevel_t</a> loglevel; 
-<a name="l00414"></a>00414 } <a class="code" href="structswd__context__config__t.html" title="Context configuration structure.">swd_context_config_t</a>;
-<a name="l00415"></a>00415 
-<a name="l00417"></a><a class="code" href="structswd__swdp__t.html">00417</a> <span class="keyword">typedef</span> <span class="keyword">struct </span>{
-<a name="l00418"></a><a class="code" href="structswd__swdp__t.html#a070bf19c81fcf7467cf56b25d0e5a4cf">00418</a>  <span class="keywordtype">char</span> ack;     
-<a name="l00419"></a><a class="code" href="structswd__swdp__t.html#ad2b92d409367acae0566fbd5be7a8ea5">00419</a>  <span class="keywordtype">char</span> parity;  
-<a name="l00420"></a><a class="code" href="structswd__swdp__t.html#a59d78f5e5b3b2576a1ea04720bafb310">00420</a>  <span class="keywordtype">int</span> idcode;   
-<a name="l00421"></a><a class="code" href="structswd__swdp__t.html#a25c097b84323315a910294429e579e2c">00421</a>  <span class="keywordtype">int</span> abort;    
-<a name="l00422"></a><a class="code" href="structswd__swdp__t.html#ab238faa3bad9500c235d38818dc04b80">00422</a>  <span class="keywordtype">int</span> ctrlstat; 
-<a name="l00423"></a><a class="code" href="structswd__swdp__t.html#a7dd5a91a546abcda7167c24ce263239c">00423</a>  <span class="keywordtype">int</span> wcr;      
-<a name="l00424"></a><a class="code" href="structswd__swdp__t.html#a046581282ce74322ca8f8da0272e3d02">00424</a>  <span class="keywordtype">int</span> select;   
-<a name="l00425"></a><a class="code" href="structswd__swdp__t.html#aff754afb02e53923f876c29f2ccc5495">00425</a>  <span class="keywordtype">int</span> rdbuf;    
-<a name="l00426"></a>00426 } <a class="code" href="structswd__swdp__t.html" title="Most actual Serial Wire Debug Port Registers.">swd_swdp_t</a>;
-<a name="l00427"></a>00427 
-<a name="l00429"></a><a class="code" href="structswd__ahbap__t.html">00429</a> <span class="keyword">typedef</span> <span class="keyword">struct </span>{
-<a name="l00430"></a><a class="code" href="structswd__ahbap__t.html#ae97d8053bdd7942ad7d9f0190ba2b553">00430</a>  <span class="keywordtype">char</span> ack;     
-<a name="l00431"></a><a class="code" href="structswd__ahbap__t.html#ad399a57e76fa9c7a61c17ab498954f8c">00431</a>  <span class="keywordtype">int</span> controlstatus; 
-<a name="l00432"></a><a class="code" href="structswd__ahbap__t.html#a15b6ffdd7329ff0b7b275ecc1367d8be">00432</a>  <span class="keywordtype">int</span> tar;           
-<a name="l00433"></a><a class="code" href="structswd__ahbap__t.html#a5c92da82c3524b8a129d3f6c500e8d74">00433</a>  <span class="keywordtype">int</span> drw;           
-<a name="l00434"></a><a class="code" href="structswd__ahbap__t.html#a81f6033edfa6629de80ca38e193b6a81">00434</a>  <span class="keywordtype">int</span> bd0;           
-<a name="l00435"></a><a class="code" href="structswd__ahbap__t.html#ae39d2f7176aa148e8c131ace1b344b25">00435</a>  <span class="keywordtype">int</span> bd1;           
-<a name="l00436"></a><a class="code" href="structswd__ahbap__t.html#a796565ff346d356e8d9f71c0afb997fe">00436</a>  <span class="keywordtype">int</span> bd2;           
-<a name="l00437"></a><a class="code" href="structswd__ahbap__t.html#a39c45198b95ddb259f4e81a64c86a037">00437</a>  <span class="keywordtype">int</span> bd3;           
-<a name="l00438"></a><a class="code" href="structswd__ahbap__t.html#ac1b6edb031cb32723c9691678228c786">00438</a>  <span class="keywordtype">int</span> dromt;         
-<a name="l00439"></a><a class="code" href="structswd__ahbap__t.html#abdf7f34a1a4948fbc6bd4b60b798db2c">00439</a>  <span class="keywordtype">int</span> idr;           
-<a name="l00440"></a>00440 } <a class="code" href="structswd__ahbap__t.html" title="Most actual Advanced High Bandwidth Access Peripherial Bus Reisters.">swd_ahbap_t</a>;
-<a name="l00441"></a>00441 
-<a name="l00443"></a><a class="code" href="structswd__transaction__t.html">00443</a> <span class="keyword">typedef</span> <span class="keyword">struct </span>{
-<a name="l00444"></a><a class="code" href="structswd__transaction__t.html#a849a80b513e3f0d7ce08a0d61889fdfd">00444</a>  <span class="keywordtype">char</span> request;      
-<a name="l00445"></a><a class="code" href="structswd__transaction__t.html#a1668fca38e27020249a6a7ed19862ff1">00445</a>  <span class="keywordtype">char</span> ack;          
-<a name="l00446"></a><a class="code" href="structswd__transaction__t.html#a2d489d2b0435cc1afa8021516473e633">00446</a>  <span class="keywordtype">int</span> data;          
-<a name="l00447"></a><a class="code" href="structswd__transaction__t.html#a68616ca79fc2120e89e9dd1e363f4763">00447</a>  <span class="keywordtype">int</span> control;       
-<a name="l00448"></a><a class="code" href="structswd__transaction__t.html#ac363d294a58239cea083ade02842fb13">00448</a>  <span class="keywordtype">char</span> parity;       
-<a name="l00449"></a>00449 } <a class="code" href="structswd__transaction__t.html" title="Most actual SWD bus transaction/packet data.">swd_transaction_t</a>;
-<a name="l00450"></a>00450 
-<a name="l00454"></a><a class="code" href="structswd__driver__t.html">00454</a> <span class="keyword">typedef</span> <span class="keyword">struct </span>{
-<a name="l00455"></a>00455  <span class="keywordtype">void</span> *device;
-<a name="l00456"></a>00456 } <a class="code" href="structswd__driver__t.html" title="Interface Driver structure.">swd_driver_t</a>;
-<a name="l00457"></a>00457 
-<a name="l00459"></a><a class="code" href="libswd_8h.html#aa690e0849a7ecb626ac82d4dd5d11bf4">00459</a> <span class="keyword">typedef</span> <span class="keyword">enum</span> {
-<a name="l00460"></a><a class="code" href="libswd_8h.html#aa690e0849a7ecb626ac82d4dd5d11bf4aeebb63e10fa0119c843fa9e78c69451d">00460</a>  <a class="code" href="libswd_8h.html#aa690e0849a7ecb626ac82d4dd5d11bf4aeebb63e10fa0119c843fa9e78c69451d" title="False is 0.">SWD_FALSE</a>=0, 
-<a name="l00461"></a><a class="code" href="libswd_8h.html#aa690e0849a7ecb626ac82d4dd5d11bf4a17a0a3b4c146af7e8675da450e8a2213">00461</a>  <a class="code" href="libswd_8h.html#aa690e0849a7ecb626ac82d4dd5d11bf4a17a0a3b4c146af7e8675da450e8a2213" title="True is 1.">SWD_TRUE</a>=1   
-<a name="l00462"></a>00462 } swd_bool_t;
-<a name="l00463"></a>00463 
-<a name="l00473"></a><a class="code" href="structswd__ctx__t.html">00473</a> <span class="keyword">typedef</span> <span class="keyword">struct </span>{
-<a name="l00474"></a><a class="code" href="structswd__ctx__t.html#abbf4c96d5d0cfde93e6441906161c433">00474</a>  <a class="code" href="structswd__cmd__t.html" title="SWD Command Element Structure.">swd_cmd_t</a> *cmdq;             
-<a name="l00475"></a><a class="code" href="structswd__ctx__t.html#a6398e41baed39e1c051396cf7079f35e">00475</a>  <a class="code" href="structswd__context__config__t.html" title="Context configuration structure.">swd_context_config_t</a> config; 
-<a name="l00476"></a><a class="code" href="structswd__ctx__t.html#a1af708535f1167ac7909e62dbda0296c">00476</a>  <a class="code" href="structswd__driver__t.html" title="Interface Driver structure.">swd_driver_t</a> *driver;        
-<a name="l00477"></a>00477  <span class="keyword">struct </span>{
-<a name="l00478"></a><a class="code" href="structswd__ctx__t.html#a97f9093e16939fc44a2d46d328474454">00478</a>   <a class="code" href="structswd__swdp__t.html" title="Most actual Serial Wire Debug Port Registers.">swd_swdp_t</a> dp_read;         
-<a name="l00479"></a><a class="code" href="structswd__ctx__t.html#a20ecbfb255b8c8b0b1ef92648c1d9825">00479</a>   <a class="code" href="structswd__swdp__t.html" title="Most actual Serial Wire Debug Port Registers.">swd_swdp_t</a> dp_write;        
-<a name="l00480"></a><a class="code" href="structswd__ctx__t.html#a5e33de2e34bfff7936ff02e6a388f003">00480</a>   <a class="code" href="structswd__ahbap__t.html" title="Most actual Advanced High Bandwidth Access Peripherial Bus Reisters.">swd_ahbap_t</a> ap_read;        
-<a name="l00481"></a><a class="code" href="structswd__ctx__t.html#a40c8ded9b946c7c851cd43dc52a289ea">00481</a>   <a class="code" href="structswd__ahbap__t.html" title="Most actual Advanced High Bandwidth Access Peripherial Bus Reisters.">swd_ahbap_t</a> ap_write;       
-<a name="l00482"></a>00482   <a class="code" href="structswd__transaction__t.html" title="Most actual SWD bus transaction/packet data.">swd_transaction_t</a> read;
-<a name="l00483"></a>00483   <a class="code" href="structswd__transaction__t.html" title="Most actual SWD bus transaction/packet data.">swd_transaction_t</a> write;
-<a name="l00484"></a>00484  } log;
-<a name="l00485"></a>00485 } <a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a>;
-<a name="l00486"></a>00486 
-<a name="l00489"></a>00489 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#adadd09e0dcd8877a99e7983d5d98e882" title="Some comments on the function behavior.">swd_bin8_parity_even</a>(<span class="keywordtype">char</span> *data, <span class="keywordtype">char</span> *parity);
-<a name="l00490"></a>00490 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#a6d93a36876e62c9a05171cebcdb4b446" title="Data parity calculator, calculates even parity on integer type.">swd_bin32_parity_even</a>(<span class="keywordtype">int</span> *data, <span class="keywordtype">char</span> *parity);
-<a name="l00491"></a>00491 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#aa245c280d14d50118fa1ce5e090a596b" title="Prints binary data of a char value on the screen.">swd_bin8_print</a>(<span class="keywordtype">char</span> *data);
-<a name="l00492"></a>00492 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#a5ca7ae0d5ceab442348c9a03e58d54eb" title="Prints binary data of an integer value on the screen.">swd_bin32_print</a>(<span class="keywordtype">int</span> *data);
-<a name="l00493"></a>00493 <span class="keywordtype">char</span> *<a class="code" href="libswd_8h.html#a3570e6b4032cde907cb137892697bac9" title="Generates string containing binary data of a char value.">swd_bin8_string</a>(<span class="keywordtype">char</span> *data);
-<a name="l00494"></a>00494 <span class="keywordtype">char</span> *<a class="code" href="libswd_8h.html#a271c7fcdfe6cf9d5177bd2fca4e02497" title="Generates string containing binary data of an integer value.">swd_bin32_string</a>(<span class="keywordtype">int</span> *data);
-<a name="l00495"></a>00495 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#a6e7db0da4ca2f2649b826e68ef5b3caa" title="Bit swap helper function that reverse bit order in char *buffer.">swd_bin8_bitswap</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> *buffer, <span class="keywordtype">int</span> bitcount);
-<a name="l00496"></a>00496 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#a62fe3d826d2f575dd1b446263d1c451c" title="Bit swap helper function that reverse bit order in int *buffer.">swd_bin32_bitswap</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> *buffer, <span class="keywordtype">int</span> bitcount);
-<a name="l00497"></a>00497 
-<a name="l00498"></a>00498 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#a185aba078d1c57df6331fd07fcf5630c" title="Initialize new queue element in memory that becomes a queue root.">swd_cmdq_init</a>(<a class="code" href="structswd__cmd__t.html" title="SWD Command Element Structure.">swd_cmd_t</a> *cmdq);
-<a name="l00499"></a>00499 <a class="code" href="structswd__cmd__t.html" title="SWD Command Element Structure.">swd_cmd_t</a>* <a class="code" href="libswd_8h.html#a431d401d67e26e8b983c6ead8c1b93eb" title="Find queue root (first element).">swd_cmdq_find_root</a>(<a class="code" href="structswd__cmd__t.html" title="SWD Command Element Structure.">swd_cmd_t</a> *cmdq);
-<a name="l00500"></a>00500 <a class="code" href="structswd__cmd__t.html" title="SWD Command Element Structure.">swd_cmd_t</a>* <a class="code" href="libswd_8h.html#a66578e5c847f74079f2e13f3bd753d58" title="Find queue tail (last element).">swd_cmdq_find_tail</a>(<a class="code" href="structswd__cmd__t.html" title="SWD Command Element Structure.">swd_cmd_t</a> *cmdq);
-<a name="l00501"></a>00501 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#a966a561f341217ecc56d31ed61c7758e" title="Append element pointed by *cmd at the end of the quque pointed by *cmdq.">swd_cmdq_append</a>(<a class="code" href="structswd__cmd__t.html" title="SWD Command Element Structure.">swd_cmd_t</a> *cmdq, <a class="code" href="structswd__cmd__t.html" title="SWD Command Element Structure.">swd_cmd_t</a> *cmd);
-<a name="l00502"></a>00502 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#ab205547a46a4e87e040478cc230463d6" title="Free queue pointed by *cmdq element.">swd_cmdq_free</a>(<a class="code" href="structswd__cmd__t.html" title="SWD Command Element Structure.">swd_cmd_t</a> *cmdq);
-<a name="l00503"></a>00503 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#a583240dd9735d3192a6a895f4cefd89c" title="Free queue head up to *cmdq element.">swd_cmdq_free_head</a>(<a class="code" href="structswd__cmd__t.html" title="SWD Command Element Structure.">swd_cmd_t</a> *cmdq);
-<a name="l00504"></a>00504 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#a968846e75ffdbceafd2f4a3bd7f314b1" title="Free queue tail starting after *cmdq element.">swd_cmdq_free_tail</a>(<a class="code" href="structswd__cmd__t.html" title="SWD Command Element Structure.">swd_cmd_t</a> *cmdq);
-<a name="l00505"></a>00505 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#ad53379f5a7756cc91b01e867aaaa489d" title="Flush command queue contents into interface driver.">swd_cmdq_flush</a>(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx, <a class="code" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070" title="Command Queue operations codes.">swd_operation_t</a> operation);
-<a name="l00506"></a>00506 
-<a name="l00507"></a>00507 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#a3bc721b722709fda46962cbbe6f289a6" title="Append selected command to a context&amp;#39;s command queue.">swd_cmd_enqueue</a>(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx, <a class="code" href="structswd__cmd__t.html" title="SWD Command Element Structure.">swd_cmd_t</a> *cmd);
-<a name="l00508"></a>00508 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#a71bb2c003e1e1fb873ee70d4df04e651" title="Appends command queue with SWD Request packet header.">swd_cmd_enqueue_mosi_request</a>(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx, <span class="keywordtype">char</span> *request);
-<a name="l00509"></a>00509 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#adb3044c0cbebdf275aef0898b37c6fa6" title="Append command queue with Turnaround activating MOSI mode.">swd_cmd_enqueue_mosi_trn</a>(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx);
-<a name="l00510"></a>00510 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#a63c0741f58c00faad012ccc9d29ca7c7" title="Append command queue with Turnaround activating MISO mode.">swd_cmd_enqueue_miso_trn</a>(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx);
-<a name="l00511"></a>00511 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#ab74b1e2baff1d3f30c07440bc84b54fe" title="Append command queue with bus binary read bit-by-bit operation.">swd_cmd_enqueue_miso_nbit</a>(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx, <span class="keywordtype">char</span> **data, <span class="keywordtype">int</span> count);
-<a name="l00512"></a>00512 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#a5114809ee4b3f3dbdcef7070e76825cd" title="Append command queue with bus binary write bit-by-bit operation.">swd_cmd_enqueue_mosi_nbit</a>(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx, <span class="keywordtype">char</span> *data, <span class="keywordtype">int</span> count);
-<a name="l00513"></a>00513 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#ac972e99a9d163f30b983ce6ed0d2ed02" title="Append command queue with parity bit write.">swd_cmd_enqueue_mosi_parity</a>(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx, <span class="keywordtype">char</span> *parity);
-<a name="l00514"></a>00514 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#aea2f9fdb22f5f6364f005eab9425a060" title="Append command queue with parity bit read.">swd_cmd_enqueue_miso_parity</a>(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx, <span class="keywordtype">char</span> **parity);
-<a name="l00515"></a>00515 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#aa3a012555652c27c0e375097b392534b" title="Append command queue with data read.">swd_cmd_enqueue_miso_data</a>(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx, <span class="keywordtype">int</span> **data);
-<a name="l00516"></a>00516 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#a1afca108b064601dfeb517327b0bb275" title="Append command queue with data and parity read.">swd_cmd_enqueue_miso_data_p</a>(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx, <span class="keywordtype">int</span> **data, <span class="keywordtype">char</span> **parity);
-<a name="l00517"></a>00517 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#a1e7330acb5e3b8c7f41a82121e26decc" title="Append command queue with series of data and parity read.">swd_cmd_enqueue_miso_n_data_p</a>(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx, <span class="keywordtype">int</span> **data, <span class="keywordtype">char</span> **parity, <span class="keywordtype">int</span> count);
-<a name="l00518"></a>00518 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#a02b06ae68b6e2a7b50f233c695b45548" title="Append command queue with data and parity write.">swd_cmd_enqueue_mosi_data</a>(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx, <span class="keywordtype">int</span> *data);
-<a name="l00519"></a>00519 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#a22a5c50a280f62a84597f71b7f468a99" title="Append command queue with data and automatic parity write.">swd_cmd_enqueue_mosi_data_ap</a>(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx, <span class="keywordtype">int</span> *data);
-<a name="l00520"></a>00520 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#a25048650d706a8ae26793489acb46f5a" title="Append command queue with data and provided parity write.">swd_cmd_enqueue_mosi_data_p</a>(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx, <span class="keywordtype">int</span> *data, <span class="keywordtype">char</span> *parity);
-<a name="l00521"></a>00521 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#adadb812d15558c6db4b9aa753b60e15c" title="Append command queue with series of data and automatic parity writes.">swd_cmd_enqueue_mosi_n_data_ap</a>(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx, <span class="keywordtype">int</span> **data, <span class="keywordtype">int</span> count);
-<a name="l00522"></a>00522 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#afd4f9d8e098dee2708c4b3cc1e2775e6" title="Append command queue with series of data and provided parity writes.">swd_cmd_enqueue_mosi_n_data_p</a>(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx, <span class="keywordtype">int</span> **data, <span class="keywordtype">char</span> **parity, <span class="keywordtype">int</span> count);
-<a name="l00523"></a>00523 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#a4d9e77e67b6167185b86f76df9b15cbd" title="Append queue with ACK read.">swd_cmd_enqueue_miso_ack</a>(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx, <span class="keywordtype">char</span> **ack);
-<a name="l00524"></a>00524 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#af01d9ef59271c478d8d68f7dde27a77f" title="Append command queue with len-octet size control seruence.">swd_cmd_enqueue_mosi_control</a>(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx, <span class="keywordtype">char</span> *ctlmsg, <span class="keywordtype">int</span> len);
-<a name="l00525"></a>00525 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#a0492d6b4eb2ebaa14fd72a5fa7f57475" title="Append command queue with SW-DP-RESET sequence.">swd_cmd_enqueue_mosi_dap_reset</a>(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx);
-<a name="l00526"></a>00526 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#a11a8ab26aa798f18303be8364ef55f48" title="Append command queue with idle sequence.">swd_cmd_enqueue_mosi_idle</a>(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx);
-<a name="l00527"></a>00527 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#a314214b78c653c188f51f3324d623913" title="Append command queue with JTAG-TO-SWD DAP-switch sequence.">swd_cmd_enqueue_mosi_jtag2swd</a>(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx);
-<a name="l00528"></a>00528 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#aae11e98541fa6cf8526d59e4ae5bfff9" title="Append command queue with SWD-TO-JTAG DAP-switch sequence.">swd_cmd_enqueue_mosi_swd2jtag</a>(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx);
-<a name="l00529"></a>00529 
-<a name="l00530"></a>00530 <span class="keywordtype">char</span> *swd_cmd_string_cmdtype(<a class="code" href="structswd__cmd__t.html" title="SWD Command Element Structure.">swd_cmd_t</a> *cmd);
-<a name="l00531"></a>00531 
-<a name="l00532"></a>00532 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#a342a54175498a1cd4a2668a189977012" title="Append command queue with TRN WRITE/MOSI, if previous command was READ/MISO.">swd_bus_setdir_mosi</a>(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx);
-<a name="l00533"></a>00533 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#abb32abd798b3b1ffa14573e4f139c079" title="Append command queue with TRN READ/MISO, if previous command was WRITE/MOSI.">swd_bus_setdir_miso</a>(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx);
-<a name="l00534"></a>00534 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#a36141f037b00ea981cf771d6061bdfd6" title="Perform Request.">swd_bus_write_request</a>
-<a name="l00535"></a>00535 (<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx, <a class="code" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070" title="Command Queue operations codes.">swd_operation_t</a> operation, <span class="keywordtype">char</span> *APnDP, <span class="keywordtype">char</span> *RnW, <span class="keywordtype">char</span> *addr);
-<a name="l00536"></a>00536 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#aae7d6660b4fd10d0d1105d74257b8ac7" title="Perform ACK read into *ack and verify received data.">swd_bus_read_ack</a>(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx, <a class="code" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070" title="Command Queue operations codes.">swd_operation_t</a> operation, <span class="keywordtype">char</span> **ack);
-<a name="l00537"></a>00537 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#ac1948d1f82a3166de4de43dae48b7413" title="Perform (MOSI) data write with provided parity value.">swd_bus_write_data_p</a>(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx, <a class="code" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070" title="Command Queue operations codes.">swd_operation_t</a> operation, <span class="keywordtype">int</span> *data, <span class="keywordtype">char</span> *parity);
-<a name="l00538"></a>00538 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#a014280b7d9a07a14862f16922827f50a" title="Perform (MOSI) data write with automatic parity calculation.">swd_bus_write_data_ap</a>(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx, <a class="code" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070" title="Command Queue operations codes.">swd_operation_t</a> operation, <span class="keywordtype">int</span> *data);
-<a name="l00539"></a>00539 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#a45c79a01998ae0e845ee425c432e181d" title="Perform (MISO) data read.">swd_bus_read_data_p</a>(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx, <a class="code" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070" title="Command Queue operations codes.">swd_operation_t</a> operation, <span class="keywordtype">int</span> **data, <span class="keywordtype">char</span> **parity);
-<a name="l00540"></a>00540 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#ad0ae33bb778d9c0bba3fe5f74adc8d22" title="Write CONTROL byte to the Target&amp;#39;s DAP.">swd_bus_write_control</a>(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx, <a class="code" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070" title="Command Queue operations codes.">swd_operation_t</a> operation, <span class="keywordtype">char</span> *ctlmsg, <span class="keywordtype">int</span> len);
-<a name="l00541"></a>00541 
-<a name="l00542"></a>00542 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#afbae73ccf42657390d11d645fcc456d8" title="Generate 8-bit SWD-REQUEST packet contents with provided parameters.">swd_bitgen8_request</a>(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx, <span class="keywordtype">char</span> *APnDP, <span class="keywordtype">char</span> *RnW, <span class="keywordtype">char</span> *addr, <span class="keywordtype">char</span> *request);
-<a name="l00543"></a>00543 
-<a name="l00544"></a>00544 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#a2891df407bc8178e3ca45bd508822327" title="Transmit selected command from the command queue to the interface driver.">swd_drv_transmit</a>(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx, <a class="code" href="structswd__cmd__t.html" title="SWD Command Element Structure.">swd_cmd_t</a> *cmd);
-<a name="l00545"></a>00545 <span class="keyword">extern</span> <span class="keywordtype">int</span> swd_drv_mosi_8(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx, <span class="keywordtype">char</span> *data, <span class="keywordtype">int</span> bits, <span class="keywordtype">int</span> nLSBfirst);
-<a name="l00546"></a>00546 <span class="keyword">extern</span> <span class="keywordtype">int</span> swd_drv_mosi_32(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx, <span class="keywordtype">int</span> *data, <span class="keywordtype">int</span> bits, <span class="keywordtype">int</span> nLSBfirst);
-<a name="l00547"></a>00547 <span class="keyword">extern</span> <span class="keywordtype">int</span> swd_drv_miso_8(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx, <span class="keywordtype">char</span> *data, <span class="keywordtype">int</span> bits, <span class="keywordtype">int</span> nLSBfirst);
-<a name="l00548"></a>00548 <span class="keyword">extern</span> <span class="keywordtype">int</span> swd_drv_miso_32(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx, <span class="keywordtype">int</span> *data, <span class="keywordtype">int</span> bits, <span class="keywordtype">int</span> nLSBfirst);
-<a name="l00549"></a>00549 
-<a name="l00550"></a>00550 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#ae53937afaa64ce0b28bef3d8d093f65a" title="Debug Access Port Reset sends 50 CLK with TMS high that brings both SW-DP and JTAG-DP into reset stat...">swd_dap_reset</a>(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx, <a class="code" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070" title="Command Queue operations codes.">swd_operation_t</a> operation);
-<a name="l00551"></a>00551 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#a0ffa1e7b48180a7c4bf05f2906a9cbb1" title="Activate SW-DP by sending out RESET and JTAG-TO-SWD sequence on SWDIOTMS line.">swd_dap_select</a>(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx, <a class="code" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070" title="Command Queue operations codes.">swd_operation_t</a> operation);
-<a name="l00552"></a>00552 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#a6758b95d2adfbfb9b95198f9b0b5462c" title="Macro: Reset target DAP, select SW-DP, read out IDCODE.">swd_dap_detect</a>(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx, <a class="code" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070" title="Command Queue operations codes.">swd_operation_t</a> operation, <span class="keywordtype">int</span> **idcode);
-<a name="l00553"></a>00553 
-<a name="l00554"></a>00554 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#a0a40c90253f99da07eae5e237be187b1" title="Macro: Read out IDCODE register and return its value on function return.">swd_dp_read_idcode</a>(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx, <a class="code" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070" title="Command Queue operations codes.">swd_operation_t</a> operation, <span class="keywordtype">int</span> **idcode);
-<a name="l00555"></a>00555 
-<a name="l00556"></a>00556 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#ab2228c114efd81e478ebc00e5bfe4c43" title="Put a message into swd context log at specified verbosity level.">swd_log</a>(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx, <a class="code" href="libswd_8h.html#ab68cbcef79d602fc0fe70cb65c43e898" title="Logging Level Codes definition.">swd_loglevel_t</a> loglevel, <span class="keywordtype">char</span> *msg, ...);
-<a name="l00557"></a>00557 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#af30788d001ca964f2889f0d70e2eae8f" title="Change log level to increase or decrease verbosity level.">swd_log_level_set</a>(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx, <a class="code" href="libswd_8h.html#ab68cbcef79d602fc0fe70cb65c43e898" title="Logging Level Codes definition.">swd_loglevel_t</a> loglevel);
-<a name="l00558"></a>00558 <span class="keyword">extern</span> <span class="keywordtype">int</span> swd_log_level_inherit(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx, <span class="keywordtype">int</span> loglevel);
-<a name="l00559"></a>00559 <span class="keywordtype">char</span> *swd_error_string(<a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77" title="Status and Error Codes definitions.">swd_error_code_t</a> error);
+<a name="l00239"></a><a class="code" href="libswd_8h.html#a2dc3da13c68cd8470c080ca63c7d2904">00239</a> <span class="preprocessor">#define SWD_TURNROUND_MAX_VAL SWD_TURNROUND_4_VAL    ///&lt; longest TRN time.</span>
+<a name="l00240"></a>00240 <span class="preprocessor"></span><span class="preprocessor">#define SWD_TURNROUND_MAX_CODE SWD_TURNROUND_4_CODE</span>
+<a name="l00241"></a>00241 <span class="preprocessor"></span>
+<a name="l00242"></a><a class="code" href="libswd_8h.html#a4638bb61fa7ca7f4e2cdf177b8aa2485">00242</a> <span class="preprocessor">#define SWD_TURNROUND_DEFAULT_VAL SWD_TURNROUND_1_VAL ///&lt; Default TRN length is one CLK.</span>
+<a name="l00243"></a>00243 <span class="preprocessor"></span>
+<a name="l00245"></a>00245 
+<a name="l00246"></a><a class="code" href="libswd_8h.html#a6d541fabb5e5a1e6a30657a97747f3ff">00246</a> <span class="preprocessor">#define AHB_AP_CONTROLSTATUS 0x00  ///&lt; R/W, 32bit, reset value: 0x43800042 </span>
+<a name="l00247"></a>00247 <span class="preprocessor"></span>
+<a name="l00248"></a><a class="code" href="libswd_8h.html#a1cbe7e4c68e923e1cef6d7dc621c1069">00248</a> <span class="preprocessor">#define AHB_AP_TAR           0x04  ///&lt; R/W, 32bit, reset value: 0x00000000</span>
+<a name="l00249"></a>00249 <span class="preprocessor"></span>
+<a name="l00250"></a><a class="code" href="libswd_8h.html#aafb32eec9bde5241aaf8f6f356685212">00250</a> <span class="preprocessor">#define AHB_AP_DRW           0x0C  ///&lt; R/W, 32bit</span>
+<a name="l00251"></a>00251 <span class="preprocessor"></span>
+<a name="l00252"></a><a class="code" href="libswd_8h.html#a79005218ec350d48873794d0428f5c9a">00252</a> <span class="preprocessor">#define AHB_AP_BD0           0x10  ///&lt; R/W, 32bit</span>
+<a name="l00253"></a>00253 <span class="preprocessor"></span>
+<a name="l00254"></a><a class="code" href="libswd_8h.html#afac7c5f3dcf06444b70f8e3b3729fb0c">00254</a> <span class="preprocessor">#define AHB_AP_BD1           0x14  ///&lt; R/W, 32bit</span>
+<a name="l00255"></a>00255 <span class="preprocessor"></span>
+<a name="l00256"></a><a class="code" href="libswd_8h.html#a62d95594c6aeaaf2ca65b37ffd785938">00256</a> <span class="preprocessor">#define AHB_AP_BD2           0x18  ///&lt; R/W, 32bit</span>
+<a name="l00257"></a>00257 <span class="preprocessor"></span>
+<a name="l00258"></a><a class="code" href="libswd_8h.html#adbbab2130f80262813ec34c5ef76931e">00258</a> <span class="preprocessor">#define AHB_AP_BD3           0x1C  ///&lt; R/W, 32bit</span>
+<a name="l00259"></a>00259 <span class="preprocessor"></span>
+<a name="l00260"></a><a class="code" href="libswd_8h.html#a29ea3a30e284147969a33f6fccd61fc3">00260</a> <span class="preprocessor">#define AHB_AP_DROMT         0xF8  ///&lt; RO, 32bit, reset value: 0xE00FF000</span>
+<a name="l00261"></a>00261 <span class="preprocessor"></span>
+<a name="l00262"></a><a class="code" href="libswd_8h.html#a2830d02e5dad227abf3316b8e3d05fff">00262</a> <span class="preprocessor">#define AHB_AP_IDR           0xFC  ///&lt; RO, 32bit, reset value: 0x24770001</span>
+<a name="l00263"></a>00263 <span class="preprocessor"></span>
+<a name="l00265"></a>00265 
+<a name="l00266"></a>00266 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">char</span> SWD_CMD_SWDPRESET[] = {0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0x00}; 
+<a name="l00268"></a>00268 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">char</span> SWD_CMD_JTAG2SWD[]  = {0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0x79, 0xe7};
+<a name="l00270"></a>00270 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">char</span> SWD_CMD_SWD2JTAG[]  = {0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0x3c, 0xe7};
+<a name="l00272"></a>00272 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">char</span> SWD_CMD_IDLE[] = {0x00};
+<a name="l00273"></a>00273 
+<a name="l00275"></a>00275 
+<a name="l00276"></a><a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77">00276</a> <span class="keyword">typedef</span> <span class="keyword">enum</span> {
+<a name="l00277"></a><a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77af5a1ef7dd83c34b0cc42beb5984bfb01">00277</a>  <a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77af5a1ef7dd83c34b0cc42beb5984bfb01" title="No error.">SWD_OK</a>                = 0,  
+<a name="l00278"></a><a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a7acb88c6941a8ec9f104078ee8b3e02c">00278</a>  <a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a7acb88c6941a8ec9f104078ee8b3e02c" title="General error.">SWD_ERROR_GENERAL</a>     =-1,  
+<a name="l00279"></a><a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77aedb8a7cbf26095284eb5976cd8663494">00279</a>  <a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77aedb8a7cbf26095284eb5976cd8663494" title="Null pointer.">SWD_ERROR_NULLPOINTER</a> =-2,  
+<a name="l00280"></a><a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a4476f371364f6c7bb0e8396120e4c4cd">00280</a>  <a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a4476f371364f6c7bb0e8396120e4c4cd" title="Null queue pointer.">SWD_ERROR_NULLQUEUE</a>   =-3,  
+<a name="l00281"></a><a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a22f5e6d0a9f72397595cc71b6e11411d">00281</a>  <a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a22f5e6d0a9f72397595cc71b6e11411d" title="Null TurnaRouNd pointer.">SWD_ERROR_NULLTRN</a>     =-4,  
+<a name="l00282"></a><a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77aa3b8e6239ccc5999d6d75b5da2133d1a">00282</a>  <a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77aa3b8e6239ccc5999d6d75b5da2133d1a" title="Bad parameter.">SWD_ERROR_PARAM</a>       =-5,  
+<a name="l00283"></a><a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77aeecf32fa72e3b4e8a55fda56852ed0a3">00283</a>  <a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77aeecf32fa72e3b4e8a55fda56852ed0a3" title="Out of memory.">SWD_ERROR_OUTOFMEM</a>    =-6,  
+<a name="l00284"></a><a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77aaac3da0a3341d405f70349763f526772">00284</a>  <a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77aaac3da0a3341d405f70349763f526772" title="Bad result.">SWD_ERROR_RESULT</a>      =-7,  
+<a name="l00285"></a><a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77abe4b62286d73462a18726261e432503e">00285</a>  <a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77abe4b62286d73462a18726261e432503e" title="Out of range.">SWD_ERROR_RANGE</a>       =-8,  
+<a name="l00286"></a><a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77ab8707f66c87d67231a1df117d176499f">00286</a>  <a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77ab8707f66c87d67231a1df117d176499f" title="Definition (internal) error.">SWD_ERROR_DEFINITION</a>  =-9,  
+<a name="l00287"></a><a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77aef273147c6f034db3ac7c1340ccaa455">00287</a>  <a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77aef273147c6f034db3ac7c1340ccaa455" title="Null context pointer.">SWD_ERROR_NULLCONTEXT</a> =-10, 
+<a name="l00288"></a><a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a829d12144ebfc2cf1e4c30eae4327e58">00288</a>  <a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a829d12144ebfc2cf1e4c30eae4327e58" title="Queue error.">SWD_ERROR_QUEUE</a>       =-11, 
+<a name="l00289"></a><a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a3f107ea05e8a08eeb6db8055db47b6af">00289</a>  <a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a3f107ea05e8a08eeb6db8055db47b6af" title="Addressing error.">SWD_ERROR_ADDR</a>        =-12, 
+<a name="l00290"></a><a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77aac13275631d7325134021f3409e1bbf0">00290</a>  <a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77aac13275631d7325134021f3409e1bbf0" title="Bad APnDP value.">SWD_ERROR_APnDP</a>       =-13, 
+<a name="l00291"></a><a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a0dce436eb6d60b5c935780e38d317272">00291</a>  <a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a0dce436eb6d60b5c935780e38d317272" title="Bad RnW value.">SWD_ERROR_RnW</a>         =-14, 
+<a name="l00292"></a><a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a05931ecd3c4d34ad773d31ee573cefdd">00292</a>  <a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a05931ecd3c4d34ad773d31ee573cefdd" title="Parity error.">SWD_ERROR_PARITY</a>      =-15, 
+<a name="l00293"></a><a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77ac462fccae009d83aab5d394eba7e4665">00293</a>  <a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77ac462fccae009d83aab5d394eba7e4665" title="Acknowledge error.">SWD_ERROR_ACK</a>         =-16, 
+<a name="l00294"></a><a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a3f3dbe4095052628978962830f80cbeb">00294</a>  <a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a3f3dbe4095052628978962830f80cbeb" title="Unknown ACK value.">SWD_ERROR_ACKUNKNOWN</a>  =-19, 
+<a name="l00295"></a><a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a8ba17527e1f8596b1e6c644d651a75f2">00295</a>  <a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a8ba17527e1f8596b1e6c644d651a75f2" title="ACK not yet executed on target.">SWD_ERROR_ACKNOTDONE</a>  =-20, 
+<a name="l00296"></a><a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77aaf9a4ffb312df6c0d6a2ad5f26236ed2">00296</a>  <a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77aaf9a4ffb312df6c0d6a2ad5f26236ed2" title="ACK command not found on the queue.">SWD_ERROR_ACKMISSING</a>  =-21, 
+<a name="l00297"></a><a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77aa99a0d1fa79837de68da0abf82950083">00297</a>  <a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77aa99a0d1fa79837de68da0abf82950083" title="Bad ACK result address.">SWD_ERROR_ACKMISMATCH</a> =-22, 
+<a name="l00298"></a><a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a0a76fb9ee32976ef62ffff3d766d2ef1">00298</a>  <a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a0a76fb9ee32976ef62ffff3d766d2ef1" title="ACK not in order REQ-&amp;gt;TRN-&amp;gt;ACK.">SWD_ERROR_ACKORDER</a>    =-23, 
+<a name="l00299"></a><a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a154bc92f783335bf75933cbbcf477d4c">00299</a>  <a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a154bc92f783335bf75933cbbcf477d4c" title="Unsupported operation requested.">SWD_ERROR_BADOPCODE</a>   =-24, 
+<a name="l00300"></a><a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a3a4a9b00904529e4368120e9e7b05c77">00300</a>  <a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a3a4a9b00904529e4368120e9e7b05c77" title="Command not found on the queue.">SWD_ERROR_NODATACMD</a>   =-25, 
+<a name="l00301"></a><a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77af41fe1c260478be2da86daded693def0">00301</a>  <a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77af41fe1c260478be2da86daded693def0" title="Bad DATA pointer address.">SWD_ERROR_DATAPTR</a>     =-26, 
+<a name="l00302"></a><a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a7960e949fb577cb55f27213364246983">00302</a>  <a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a7960e949fb577cb55f27213364246983" title="Parity after Data missing or misplaced.">SWD_ERROR_NOPARITYCMD</a> =-27, 
+<a name="l00303"></a><a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77aaa64317e7fcfbc135103e92e0d7461d0">00303</a>  <a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77aaa64317e7fcfbc135103e92e0d7461d0" title="Bad PARITY pointer address.">SWD_ERROR_PARITYPTR</a>   =-28, 
+<a name="l00304"></a><a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77aa09e4f36fe516704701f016e7cf08c08">00304</a>  <a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77aa09e4f36fe516704701f016e7cf08c08" title="Could not end selected task.">SWD_ERROR_NOTDONE</a>     =-29, 
+<a name="l00305"></a><a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a8e6636f921f5856ece06915d2c2eeabf">00305</a>  <a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a8e6636f921f5856ece06915d2c2eeabf" title="Queue root not found or null.">SWD_ERROR_QUEUEROOT</a>   =-30, 
+<a name="l00306"></a><a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77ad631db57f3edc4461e7deef3f7108e78">00306</a>  <a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77ad631db57f3edc4461e7deef3f7108e78" title="Queue tail not found or null.">SWD_ERROR_QUEUETAIL</a>   =-31, 
+<a name="l00307"></a><a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a8b59d867a0320335aebfd5a503b3d331">00307</a>  <a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a8b59d867a0320335aebfd5a503b3d331" title="Unknown command detected.">SWD_ERROR_BADCMDTYPE</a>  =-32, 
+<a name="l00308"></a><a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77af0ce348ad2c0dc96642814d5b40013a5">00308</a>  <a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77af0ce348ad2c0dc96642814d5b40013a5" title="Bad command data.">SWD_ERROR_BADCMDDATA</a>  =-33, 
+<a name="l00309"></a><a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a662935dd4a8fa01620b62dd4bb879c10">00309</a>  <a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a662935dd4a8fa01620b62dd4bb879c10" title="Error during turnaround switch.">SWD_ERROR_TURNAROUND</a>  =-34, 
+<a name="l00310"></a><a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a186d948f46f62e6ed2a35a06ac8d61a2">00310</a>  <a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a186d948f46f62e6ed2a35a06ac8d61a2" title="Driver error.">SWD_ERROR_DRIVER</a>      =-35, 
+<a name="l00311"></a><a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a4de5da0a220537161b83db14cb02882e">00311</a>  <a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a4de5da0a220537161b83db14cb02882e" title="Received ACK WAIT.">SWD_ERROR_ACK_WAIT</a>    =-36, 
+<a name="l00312"></a><a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a562d12325f42609d3548848d0012e668">00312</a>  <a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a562d12325f42609d3548848d0012e668" title="Received ACK FAULT.">SWD_ERROR_ACK_FAULT</a>   =-37, 
+<a name="l00313"></a><a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a6221955153e8a1486c6ba1885fad260d">00313</a>  <a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a6221955153e8a1486c6ba1885fad260d" title="Cannot free resources, queue not empty.">SWD_ERROR_QUEUENOTFREE</a>=-38, 
+<a name="l00314"></a><a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a278660e87edcaef6a52b604c1fdda9d7">00314</a>  <a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a278660e87edcaef6a52b604c1fdda9d7" title="Transport type unknown or undefined.">SWD_ERROR_TRANSPORT</a>   =-39, 
+<a name="l00315"></a><a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77ad7b25e37bdd661e4146a201c01aba3e2">00315</a>  <a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77ad7b25e37bdd661e4146a201c01aba3e2" title="Direction error (LSb/MSb first).">SWD_ERROR_DIRECTION</a>   =-40, 
+<a name="l00316"></a><a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a3409780dd844cd0a9ec85fab65ead058">00316</a>  <a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77a3409780dd844cd0a9ec85fab65ead058" title="Invalid loglevel number.">SWD_ERROR_LOGLEVEL</a>    =-41  
+<a name="l00317"></a>00317 } swd_error_code_t;
+<a name="l00318"></a>00318 
+<a name="l00320"></a>00320 
+<a name="l00321"></a><a class="code" href="libswd_8h.html#ab68cbcef79d602fc0fe70cb65c43e898">00321</a> <span class="keyword">typedef</span> <span class="keyword">enum</span> {
+<a name="l00322"></a>00322  SWD_LOGLEVEL_MIN     = 0,
+<a name="l00323"></a><a class="code" href="libswd_8h.html#ab68cbcef79d602fc0fe70cb65c43e898aae6717e99b0a1bb52faddc723ccf4c8a">00323</a>  <a class="code" href="libswd_8h.html#ab68cbcef79d602fc0fe70cb65c43e898aae6717e99b0a1bb52faddc723ccf4c8a" title="Remain silent.">SWD_LOGLEVEL_SILENT</a>  = 0, 
+<a name="l00324"></a><a class="code" href="libswd_8h.html#ab68cbcef79d602fc0fe70cb65c43e898aec966870ed80a0b7995871924db678f1">00324</a>  <a class="code" href="libswd_8h.html#ab68cbcef79d602fc0fe70cb65c43e898aec966870ed80a0b7995871924db678f1" title="Show errors.">SWD_LOGLEVEL_ERROR</a>   = 1, 
+<a name="l00325"></a><a class="code" href="libswd_8h.html#ab68cbcef79d602fc0fe70cb65c43e898a207bbe4a21ac547c5d7613cfa198e9ca">00325</a>  <a class="code" href="libswd_8h.html#ab68cbcef79d602fc0fe70cb65c43e898a207bbe4a21ac547c5d7613cfa198e9ca" title="Show warnings.">SWD_LOGLEVEL_WARNING</a> = 2, 
+<a name="l00326"></a><a class="code" href="libswd_8h.html#ab68cbcef79d602fc0fe70cb65c43e898ad06e455a696693b2226f49e6cec64146">00326</a>  <a class="code" href="libswd_8h.html#ab68cbcef79d602fc0fe70cb65c43e898ad06e455a696693b2226f49e6cec64146" title="Normal verbosity.">SWD_LOGLEVEL_NORMAL</a>  = 3, 
+<a name="l00327"></a><a class="code" href="libswd_8h.html#ab68cbcef79d602fc0fe70cb65c43e898ae80dd8ea77c8e8121c806150cf55495c">00327</a>  <a class="code" href="libswd_8h.html#ab68cbcef79d602fc0fe70cb65c43e898ae80dd8ea77c8e8121c806150cf55495c" title="Show messages.">SWD_LOGLEVEL_INFO</a>    = 4, 
+<a name="l00328"></a><a class="code" href="libswd_8h.html#ab68cbcef79d602fc0fe70cb65c43e898a911a4892f6c846b089c1d999214e0ee8">00328</a>  <a class="code" href="libswd_8h.html#ab68cbcef79d602fc0fe70cb65c43e898a911a4892f6c846b089c1d999214e0ee8" title="Show all including debug information.">SWD_LOGLEVEL_DEBUG</a>   = 5, 
+<a name="l00329"></a>00329  SWD_LOGLEVEL_MAX     = 5
+<a name="l00330"></a>00330 } swd_loglevel_t;
+<a name="l00331"></a>00331 
+<a name="l00333"></a>00333 
+<a name="l00334"></a><a class="code" href="libswd_8h.html#a26692de1bd0ae7c18636700e4dc429fb">00334</a> <span class="preprocessor">#define SWD_DATA_MAXBITCOUNT   32</span>
+<a name="l00335"></a>00335 <span class="preprocessor"></span>
+<a name="l00336"></a><a class="code" href="libswd_8h.html#acd193c9b1286337094c58e1d8d69cb6d">00336</a> <span class="preprocessor">#define SWD_DATA_BYTESIZE      8</span>
+<a name="l00337"></a>00337 <span class="preprocessor"></span>
+<a name="l00338"></a><a class="code" href="libswd_8h.html#a5c498f851df4c94c32bb57c6648cb878">00338</a> <span class="preprocessor">#define SWD_DATA_BITLEN        32</span>
+<a name="l00339"></a>00339 <span class="preprocessor"></span>
+<a name="l00340"></a><a class="code" href="libswd_8h.html#a312d07081ec8386b65154eeb02badf66">00340</a> <span class="preprocessor">#define SWD_CMDQLEN_DEFAULT  1024;</span>
+<a name="l00341"></a>00341 <span class="preprocessor"></span>
+<a name="l00347"></a>00347 
+<a name="l00348"></a><a class="code" href="libswd_8h.html#a18e16544fabdef0ef0e531cc6b4d4b7c">00348</a> <span class="keyword">typedef</span> <span class="keyword">enum</span> {
+<a name="l00349"></a><a class="code" href="libswd_8h.html#a18e16544fabdef0ef0e531cc6b4d4b7ca62c40fbeaf26e6daded916edd77bc21d">00349</a>  <a class="code" href="libswd_8h.html#a18e16544fabdef0ef0e531cc6b4d4b7ca62c40fbeaf26e6daded916edd77bc21d" title="Contains MOSI data (from host).">SWD_CMDTYPE_MOSI_DATA</a>    =-7, 
+<a name="l00350"></a><a class="code" href="libswd_8h.html#a18e16544fabdef0ef0e531cc6b4d4b7ca826701bb4e07deb5c5f5c33665688c6b">00350</a>  <a class="code" href="libswd_8h.html#a18e16544fabdef0ef0e531cc6b4d4b7ca826701bb4e07deb5c5f5c33665688c6b" title="Contains MOSI request packet.">SWD_CMDTYPE_MOSI_REQUEST</a> =-6, 
+<a name="l00351"></a><a class="code" href="libswd_8h.html#a18e16544fabdef0ef0e531cc6b4d4b7ca6da6cde9944c71a26444c97bee9b59d0">00351</a>  <a class="code" href="libswd_8h.html#a18e16544fabdef0ef0e531cc6b4d4b7ca6da6cde9944c71a26444c97bee9b59d0" title="Bus will switch into MOSI mode.">SWD_CMDTYPE_MOSI_TRN</a>     =-5, 
+<a name="l00352"></a><a class="code" href="libswd_8h.html#a18e16544fabdef0ef0e531cc6b4d4b7cab3726bd22bf211c773b091cf70bec9f1">00352</a>  <a class="code" href="libswd_8h.html#a18e16544fabdef0ef0e531cc6b4d4b7cab3726bd22bf211c773b091cf70bec9f1" title="Contains MOSI data parity.">SWD_CMDTYPE_MOSI_PARITY</a>  =-4, 
+<a name="l00353"></a><a class="code" href="libswd_8h.html#a18e16544fabdef0ef0e531cc6b4d4b7caf951c4a4ebb960641f074785a6174a5a">00353</a>  <a class="code" href="libswd_8h.html#a18e16544fabdef0ef0e531cc6b4d4b7caf951c4a4ebb960641f074785a6174a5a" title="Allows MOSI operation bit-by-bit.">SWD_CMDTYPE_MOSI_BITBANG</a> =-3, 
+<a name="l00354"></a><a class="code" href="libswd_8h.html#a18e16544fabdef0ef0e531cc6b4d4b7ca2bd240d136f2e7f661ad14bd355053a6">00354</a>  <a class="code" href="libswd_8h.html#a18e16544fabdef0ef0e531cc6b4d4b7ca2bd240d136f2e7f661ad14bd355053a6" title="MOSI control sequence (ie. sw-dp reset, idle).">SWD_CMDTYPE_MOSI_CONTROL</a> =-2, 
+<a name="l00355"></a><a class="code" href="libswd_8h.html#a18e16544fabdef0ef0e531cc6b4d4b7caceec6c2784b149355b019cbda0623fe0">00355</a>  <a class="code" href="libswd_8h.html#a18e16544fabdef0ef0e531cc6b4d4b7caceec6c2784b149355b019cbda0623fe0" title="Master Output Slave Input direction.">SWD_CMDTYPE_MOSI</a>         =-1, 
+<a name="l00356"></a><a class="code" href="libswd_8h.html#a18e16544fabdef0ef0e531cc6b4d4b7caa61ae4ec60ecffb3df34f3e485090586">00356</a>  <a class="code" href="libswd_8h.html#a18e16544fabdef0ef0e531cc6b4d4b7caa61ae4ec60ecffb3df34f3e485090586" title="undefined command, not transmitted.">SWD_CMDTYPE_UNDEFINED</a>    =0,  
+<a name="l00357"></a><a class="code" href="libswd_8h.html#a18e16544fabdef0ef0e531cc6b4d4b7ca4d019a00cc772982e7d1ac52aac5d4e0">00357</a>  <a class="code" href="libswd_8h.html#a18e16544fabdef0ef0e531cc6b4d4b7ca4d019a00cc772982e7d1ac52aac5d4e0" title="Master Input Slave Output direction.">SWD_CMDTYPE_MISO</a>         =1,  
+<a name="l00358"></a><a class="code" href="libswd_8h.html#a18e16544fabdef0ef0e531cc6b4d4b7ca59eade15cc1d2430434c0e4174dc3e07">00358</a>  <a class="code" href="libswd_8h.html#a18e16544fabdef0ef0e531cc6b4d4b7ca59eade15cc1d2430434c0e4174dc3e07" title="Contains ACK data from target.">SWD_CMDTYPE_MISO_ACK</a>     =2,  
+<a name="l00359"></a><a class="code" href="libswd_8h.html#a18e16544fabdef0ef0e531cc6b4d4b7cab4260670a401ed63adec72c0753f915f">00359</a>  <a class="code" href="libswd_8h.html#a18e16544fabdef0ef0e531cc6b4d4b7cab4260670a401ed63adec72c0753f915f" title="Allows MISO operation bit-by-bit.">SWD_CMDTYPE_MISO_BITBANG</a> =3,  
+<a name="l00360"></a><a class="code" href="libswd_8h.html#a18e16544fabdef0ef0e531cc6b4d4b7ca5d23ed26796e30ae787d3de869ef9359">00360</a>  <a class="code" href="libswd_8h.html#a18e16544fabdef0ef0e531cc6b4d4b7ca5d23ed26796e30ae787d3de869ef9359" title="Contains MISO data parity.">SWD_CMDTYPE_MISO_PARITY</a>  =4,  
+<a name="l00361"></a><a class="code" href="libswd_8h.html#a18e16544fabdef0ef0e531cc6b4d4b7ca8ce670cc9c3d3f2d77c83f13c589978f">00361</a>  <a class="code" href="libswd_8h.html#a18e16544fabdef0ef0e531cc6b4d4b7ca8ce670cc9c3d3f2d77c83f13c589978f" title="Bus will switch into MISO mode.">SWD_CMDTYPE_MISO_TRN</a>     =5,  
+<a name="l00362"></a><a class="code" href="libswd_8h.html#a18e16544fabdef0ef0e531cc6b4d4b7ca2c17157db3f21117cac24fa17793a576">00362</a>  <a class="code" href="libswd_8h.html#a18e16544fabdef0ef0e531cc6b4d4b7ca2c17157db3f21117cac24fa17793a576" title="Contains MISO data (from target).">SWD_CMDTYPE_MISO_DATA</a>    =6   
+<a name="l00363"></a>00363 } swd_cmdtype_t;
+<a name="l00364"></a>00364 
+<a name="l00366"></a><a class="code" href="libswd_8h.html#a7262ed71e0d9c40d2ede6c0aa44209df">00366</a> <span class="keyword">typedef</span> <span class="keyword">enum</span> {
+<a name="l00367"></a><a class="code" href="libswd_8h.html#a7262ed71e0d9c40d2ede6c0aa44209dfa0b9f6301b086569d5a62e49d7a2ebdf0">00367</a>  <a class="code" href="libswd_8h.html#a7262ed71e0d9c40d2ede6c0aa44209dfa0b9f6301b086569d5a62e49d7a2ebdf0" title="Data is shifted in/out right (LSB-first).">SWD_DIR_LSBFIRST</a> =0, 
+<a name="l00368"></a><a class="code" href="libswd_8h.html#a7262ed71e0d9c40d2ede6c0aa44209dfa76bc9b4b4ac1e47f4602576ed500a07c">00368</a>  <a class="code" href="libswd_8h.html#a7262ed71e0d9c40d2ede6c0aa44209dfa76bc9b4b4ac1e47f4602576ed500a07c" title="Data is shifted in/out left (MSB-first).">SWD_DIR_MSBFIRST</a> =1  
+<a name="l00369"></a>00369 } swd_shiftdir_t;
+<a name="l00370"></a>00370 
+<a name="l00372"></a><a class="code" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070">00372</a> <span class="keyword">typedef</span> <span class="keyword">enum</span> {
+<a name="l00373"></a><a class="code" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070a3072b746192012364ca0986dfbd048bf">00373</a>  <a class="code" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070a3072b746192012364ca0986dfbd048bf" title="First operation to know its code.">SWD_OPERATION_FIRST</a>         =1, 
+<a name="l00374"></a><a class="code" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070a9fe0514a56fa43763b83c16a168dc3e5">00374</a>  <a class="code" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070a9fe0514a56fa43763b83c16a168dc3e5" title="Append command(s) to the queue.">SWD_OPERATION_ENQUEUE</a>       =1, 
+<a name="l00375"></a><a class="code" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070a56d19aa6e805b636d0c679df01a83bf1">00375</a>  <a class="code" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070a56d19aa6e805b636d0c679df01a83bf1" title="Queue commands then flush the queue.">SWD_OPERATION_EXECUTE</a>       =2, 
+<a name="l00376"></a><a class="code" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070aff0c4b9c2b732437df67e41f3dde5b41">00376</a>  <a class="code" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070aff0c4b9c2b732437df67e41f3dde5b41" title="Transmit root..current (head).">SWD_OPERATION_TRANSMIT_HEAD</a> =3, 
+<a name="l00377"></a><a class="code" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070a2f8b579789e424e73b147b14b910f9c0">00377</a>  <a class="code" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070a2f8b579789e424e73b147b14b910f9c0" title="Transmit current..last (tail).">SWD_OPERATION_TRANSMIT_TAIL</a> =4, 
+<a name="l00378"></a><a class="code" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070ac38a2a8469f357620b62255215119eba">00378</a>  <a class="code" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070ac38a2a8469f357620b62255215119eba" title="Transmit all commands on the queue.">SWD_OPERATION_TRANSMIT_ALL</a>  =5, 
+<a name="l00379"></a><a class="code" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070a1b313c50018796ad8d5049a005c164dd">00379</a>  <a class="code" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070a1b313c50018796ad8d5049a005c164dd" title="Transmit only current command.">SWD_OPERATION_TRANSMIT_ONE</a>  =6, 
+<a name="l00380"></a><a class="code" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070ada451b56cf1fa088d3f36c84930054dd">00380</a>  <a class="code" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070ada451b56cf1fa088d3f36c84930054dd" title="Transmit last command on the queue.">SWD_OPERATION_TRANSMIT_LAST</a> =7, 
+<a name="l00381"></a><a class="code" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070a2b0a3a85cda93ab617d1f49273a3cc3b">00381</a>  <a class="code" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070a2b0a3a85cda93ab617d1f49273a3cc3b" title="Last operation to know its code.">SWD_OPERATION_LAST</a>          =7  
+<a name="l00382"></a>00382 } swd_operation_t;
+<a name="l00383"></a>00383 
+<a name="l00390"></a><a class="code" href="structswd__cmd__t.html">00390</a> <span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structswd__cmd__t.html" title="SWD Command Element Structure.">swd_cmd_t</a> {
+<a name="l00391"></a>00391  <span class="keyword">union </span>{
+<a name="l00392"></a><a class="code" href="structswd__cmd__t.html#ad5990fe329230159af56a95378b206ef">00392</a>   <span class="keywordtype">char</span> <a class="code" href="structswd__cmd__t.html#ad5990fe329230159af56a95378b206ef" title="Holds/sets bus direction: MOSI when zero, MISO for others.">TRNnMOSI</a>;  
+<a name="l00393"></a><a class="code" href="structswd__cmd__t.html#a78267c4aaaed43ef5d38617cd0632135">00393</a>   <span class="keywordtype">char</span> <a class="code" href="structswd__cmd__t.html#a78267c4aaaed43ef5d38617cd0632135" title="Request header data.">request</a>;   
+<a name="l00394"></a><a class="code" href="structswd__cmd__t.html#a564daefcae1870dc3110fe1ef2d2fb02">00394</a>   <span class="keywordtype">char</span> <a class="code" href="structswd__cmd__t.html#a564daefcae1870dc3110fe1ef2d2fb02" title="Acknowledge response from target.">ack</a>;       
+<a name="l00395"></a><a class="code" href="structswd__cmd__t.html#ab4bdc51a77d6beb63af8cb9d466e731f">00395</a>   <span class="keywordtype">int</span> <a class="code" href="structswd__cmd__t.html#ab4bdc51a77d6beb63af8cb9d466e731f" title="Data read from target (MISO).">misodata</a>;   
+<a name="l00396"></a><a class="code" href="structswd__cmd__t.html#a35f88591bec4b8aa2e3e93e289ef3ee1">00396</a>   <span class="keywordtype">int</span> <a class="code" href="structswd__cmd__t.html#a35f88591bec4b8aa2e3e93e289ef3ee1" title="Data written to target (MOSI).">mosidata</a>;   
+<a name="l00397"></a><a class="code" href="structswd__cmd__t.html#ad2bab20a395056e71fb45c3ede25418e">00397</a>   <span class="keywordtype">int</span> <a class="code" href="structswd__cmd__t.html#ad2bab20a395056e71fb45c3ede25418e" title="Holds &amp;quot;int&amp;quot; data type for inspection.">data32</a>;     
+<a name="l00398"></a><a class="code" href="structswd__cmd__t.html#aad2959ff43a559dd230664cce4c62289">00398</a>   <span class="keywordtype">char</span> <a class="code" href="structswd__cmd__t.html#aad2959ff43a559dd230664cce4c62289" title="Single bit read from target (bit-per-char).">misobit</a>;   
+<a name="l00399"></a><a class="code" href="structswd__cmd__t.html#abb4d4c34e0559fa73e849a887ef2e29f">00399</a>   <span class="keywordtype">char</span> <a class="code" href="structswd__cmd__t.html#abb4d4c34e0559fa73e849a887ef2e29f" title="Single bit written to target (bit-per-char).">mosibit</a>;   
+<a name="l00400"></a><a class="code" href="structswd__cmd__t.html#a6616cbca6e9254be1d3e949ec5d774ca">00400</a>   <span class="keywordtype">char</span> <a class="code" href="structswd__cmd__t.html#a6616cbca6e9254be1d3e949ec5d774ca" title="Parity bit for data payload.">parity</a>;    
+<a name="l00401"></a><a class="code" href="structswd__cmd__t.html#aa2c59bcceeba9a700d8cd3965ec17da3">00401</a>   <span class="keywordtype">char</span> <a class="code" href="structswd__cmd__t.html#aa2c59bcceeba9a700d8cd3965ec17da3" title="Control transfer data (one byte).">control</a>;   
+<a name="l00402"></a><a class="code" href="structswd__cmd__t.html#a01b050d371e7625c7ba0a404472db377">00402</a>   <span class="keywordtype">char</span> <a class="code" href="structswd__cmd__t.html#a01b050d371e7625c7ba0a404472db377" title="Holds &amp;quot;char&amp;quot; data type for inspection.">data8</a>;     
+<a name="l00403"></a>00403  };
+<a name="l00404"></a><a class="code" href="structswd__cmd__t.html#ad356acda4d21961df30b3091a27ab13b">00404</a>  <span class="keywordtype">char</span> <a class="code" href="structswd__cmd__t.html#ad356acda4d21961df30b3091a27ab13b" title="Payload bit count == clk pulses on the bus.">bits</a>;       
+<a name="l00405"></a><a class="code" href="structswd__cmd__t.html#a7039d3b72c01b8cfe8d3bcd428343059">00405</a>  <a class="code" href="libswd_8h.html#a18e16544fabdef0ef0e531cc6b4d4b7c" title="SWD Command Codes definitions.">swd_cmdtype_t</a> <a class="code" href="structswd__cmd__t.html#a7039d3b72c01b8cfe8d3bcd428343059" title="Command type as defined by swd_cmdtype_t.">cmdtype</a>; 
+<a name="l00406"></a><a class="code" href="structswd__cmd__t.html#a617e4adc0aaf469af0fdab5efd93174c">00406</a>  <span class="keywordtype">char</span> <a class="code" href="structswd__cmd__t.html#a617e4adc0aaf469af0fdab5efd93174c" title="Non-zero if operation already executed.">done</a>;       
+<a name="l00407"></a><a class="code" href="structswd__cmd__t.html#a51ad4da25e6438e20fafd9e44b901d49">00407</a>  <span class="keyword">struct </span><a class="code" href="structswd__cmd__t.html" title="SWD Command Element Structure.">swd_cmd_t</a> *<a class="code" href="structswd__cmd__t.html#a51ad4da25e6438e20fafd9e44b901d49" title="Pointer to the previous command.">prev</a>; 
+<a name="l00408"></a><a class="code" href="structswd__cmd__t.html#aaf05bcb291fe2ecdf38a9168315db405">00408</a>  <span class="keyword">struct </span><a class="code" href="structswd__cmd__t.html" title="SWD Command Element Structure.">swd_cmd_t</a> *<a class="code" href="structswd__cmd__t.html#aaf05bcb291fe2ecdf38a9168315db405" title="Pointer to the next command.">next</a>; 
+<a name="l00409"></a>00409 } <a class="code" href="structswd__cmd__t.html" title="SWD Command Element Structure.">swd_cmd_t</a>;
+<a name="l00410"></a>00410 
+<a name="l00412"></a><a class="code" href="structswd__context__config__t.html">00412</a> <span class="keyword">typedef</span> <span class="keyword">struct </span>{
+<a name="l00413"></a><a class="code" href="structswd__context__config__t.html#aace7f48f97b84859691957f86f81afba">00413</a>  <span class="keywordtype">char</span> initialized;        
+<a name="l00414"></a><a class="code" href="structswd__context__config__t.html#ada3e484ab916767e16dcfcae5300c0f8">00414</a>  <span class="keywordtype">char</span> trnlen;             
+<a name="l00415"></a><a class="code" href="structswd__context__config__t.html#abbee7e8722672bd5f38d6f151f608f14">00415</a>  <span class="keywordtype">int</span>  maxcmdqlen;         
+<a name="l00416"></a><a class="code" href="structswd__context__config__t.html#a2f3509f25cc8bc80b263a0569afafe1d">00416</a>  <a class="code" href="libswd_8h.html#ab68cbcef79d602fc0fe70cb65c43e898" title="Logging Level Codes definition.">swd_loglevel_t</a> loglevel; 
+<a name="l00417"></a>00417 } <a class="code" href="structswd__context__config__t.html" title="Context configuration structure.">swd_context_config_t</a>;
+<a name="l00418"></a>00418 
+<a name="l00420"></a><a class="code" href="structswd__swdp__t.html">00420</a> <span class="keyword">typedef</span> <span class="keyword">struct </span>{
+<a name="l00421"></a><a class="code" href="structswd__swdp__t.html#a070bf19c81fcf7467cf56b25d0e5a4cf">00421</a>  <span class="keywordtype">char</span> ack;     
+<a name="l00422"></a><a class="code" href="structswd__swdp__t.html#ad2b92d409367acae0566fbd5be7a8ea5">00422</a>  <span class="keywordtype">char</span> parity;  
+<a name="l00423"></a><a class="code" href="structswd__swdp__t.html#a59d78f5e5b3b2576a1ea04720bafb310">00423</a>  <span class="keywordtype">int</span> idcode;   
+<a name="l00424"></a><a class="code" href="structswd__swdp__t.html#a25c097b84323315a910294429e579e2c">00424</a>  <span class="keywordtype">int</span> abort;    
+<a name="l00425"></a><a class="code" href="structswd__swdp__t.html#ab238faa3bad9500c235d38818dc04b80">00425</a>  <span class="keywordtype">int</span> ctrlstat; 
+<a name="l00426"></a><a class="code" href="structswd__swdp__t.html#a7dd5a91a546abcda7167c24ce263239c">00426</a>  <span class="keywordtype">int</span> wcr;      
+<a name="l00427"></a><a class="code" href="structswd__swdp__t.html#a046581282ce74322ca8f8da0272e3d02">00427</a>  <span class="keywordtype">int</span> select;   
+<a name="l00428"></a><a class="code" href="structswd__swdp__t.html#aff754afb02e53923f876c29f2ccc5495">00428</a>  <span class="keywordtype">int</span> rdbuf;    
+<a name="l00429"></a>00429 } <a class="code" href="structswd__swdp__t.html" title="Most actual Serial Wire Debug Port Registers.">swd_swdp_t</a>;
+<a name="l00430"></a>00430 
+<a name="l00432"></a><a class="code" href="structswd__ahbap__t.html">00432</a> <span class="keyword">typedef</span> <span class="keyword">struct </span>{
+<a name="l00433"></a><a class="code" href="structswd__ahbap__t.html#ae97d8053bdd7942ad7d9f0190ba2b553">00433</a>  <span class="keywordtype">char</span> ack;     
+<a name="l00434"></a><a class="code" href="structswd__ahbap__t.html#ad399a57e76fa9c7a61c17ab498954f8c">00434</a>  <span class="keywordtype">int</span> controlstatus; 
+<a name="l00435"></a><a class="code" href="structswd__ahbap__t.html#a15b6ffdd7329ff0b7b275ecc1367d8be">00435</a>  <span class="keywordtype">int</span> tar;           
+<a name="l00436"></a><a class="code" href="structswd__ahbap__t.html#a5c92da82c3524b8a129d3f6c500e8d74">00436</a>  <span class="keywordtype">int</span> drw;           
+<a name="l00437"></a><a class="code" href="structswd__ahbap__t.html#a81f6033edfa6629de80ca38e193b6a81">00437</a>  <span class="keywordtype">int</span> bd0;           
+<a name="l00438"></a><a class="code" href="structswd__ahbap__t.html#ae39d2f7176aa148e8c131ace1b344b25">00438</a>  <span class="keywordtype">int</span> bd1;           
+<a name="l00439"></a><a class="code" href="structswd__ahbap__t.html#a796565ff346d356e8d9f71c0afb997fe">00439</a>  <span class="keywordtype">int</span> bd2;           
+<a name="l00440"></a><a class="code" href="structswd__ahbap__t.html#a39c45198b95ddb259f4e81a64c86a037">00440</a>  <span class="keywordtype">int</span> bd3;           
+<a name="l00441"></a><a class="code" href="structswd__ahbap__t.html#ac1b6edb031cb32723c9691678228c786">00441</a>  <span class="keywordtype">int</span> dromt;         
+<a name="l00442"></a><a class="code" href="structswd__ahbap__t.html#abdf7f34a1a4948fbc6bd4b60b798db2c">00442</a>  <span class="keywordtype">int</span> idr;           
+<a name="l00443"></a>00443 } <a class="code" href="structswd__ahbap__t.html" title="Most actual Advanced High Bandwidth Access Peripherial Bus Reisters.">swd_ahbap_t</a>;
+<a name="l00444"></a>00444 
+<a name="l00446"></a><a class="code" href="structswd__transaction__t.html">00446</a> <span class="keyword">typedef</span> <span class="keyword">struct </span>{
+<a name="l00447"></a><a class="code" href="structswd__transaction__t.html#a849a80b513e3f0d7ce08a0d61889fdfd">00447</a>  <span class="keywordtype">char</span> request;      
+<a name="l00448"></a><a class="code" href="structswd__transaction__t.html#a1668fca38e27020249a6a7ed19862ff1">00448</a>  <span class="keywordtype">char</span> ack;          
+<a name="l00449"></a><a class="code" href="structswd__transaction__t.html#a2d489d2b0435cc1afa8021516473e633">00449</a>  <span class="keywordtype">int</span> data;          
+<a name="l00450"></a><a class="code" href="structswd__transaction__t.html#a68616ca79fc2120e89e9dd1e363f4763">00450</a>  <span class="keywordtype">int</span> control;       
+<a name="l00451"></a><a class="code" href="structswd__transaction__t.html#ac363d294a58239cea083ade02842fb13">00451</a>  <span class="keywordtype">char</span> parity;       
+<a name="l00452"></a>00452 } <a class="code" href="structswd__transaction__t.html" title="Most actual SWD bus transaction/packet data.">swd_transaction_t</a>;
+<a name="l00453"></a>00453 
+<a name="l00457"></a><a class="code" href="structswd__driver__t.html">00457</a> <span class="keyword">typedef</span> <span class="keyword">struct </span>{
+<a name="l00458"></a>00458  <span class="keywordtype">void</span> *device;
+<a name="l00459"></a>00459 } <a class="code" href="structswd__driver__t.html" title="Interface Driver structure.">swd_driver_t</a>;
+<a name="l00460"></a>00460 
+<a name="l00462"></a><a class="code" href="libswd_8h.html#aa690e0849a7ecb626ac82d4dd5d11bf4">00462</a> <span class="keyword">typedef</span> <span class="keyword">enum</span> {
+<a name="l00463"></a><a class="code" href="libswd_8h.html#aa690e0849a7ecb626ac82d4dd5d11bf4aeebb63e10fa0119c843fa9e78c69451d">00463</a>  <a class="code" href="libswd_8h.html#aa690e0849a7ecb626ac82d4dd5d11bf4aeebb63e10fa0119c843fa9e78c69451d" title="False is 0.">SWD_FALSE</a>=0, 
+<a name="l00464"></a><a class="code" href="libswd_8h.html#aa690e0849a7ecb626ac82d4dd5d11bf4a17a0a3b4c146af7e8675da450e8a2213">00464</a>  <a class="code" href="libswd_8h.html#aa690e0849a7ecb626ac82d4dd5d11bf4a17a0a3b4c146af7e8675da450e8a2213" title="True is 1.">SWD_TRUE</a>=1   
+<a name="l00465"></a>00465 } swd_bool_t;
+<a name="l00466"></a>00466 
+<a name="l00476"></a><a class="code" href="structswd__ctx__t.html">00476</a> <span class="keyword">typedef</span> <span class="keyword">struct </span>{
+<a name="l00477"></a><a class="code" href="structswd__ctx__t.html#abbf4c96d5d0cfde93e6441906161c433">00477</a>  <a class="code" href="structswd__cmd__t.html" title="SWD Command Element Structure.">swd_cmd_t</a> *cmdq;             
+<a name="l00478"></a><a class="code" href="structswd__ctx__t.html#a6398e41baed39e1c051396cf7079f35e">00478</a>  <a class="code" href="structswd__context__config__t.html" title="Context configuration structure.">swd_context_config_t</a> config; 
+<a name="l00479"></a><a class="code" href="structswd__ctx__t.html#a1af708535f1167ac7909e62dbda0296c">00479</a>  <a class="code" href="structswd__driver__t.html" title="Interface Driver structure.">swd_driver_t</a> *driver;        
+<a name="l00480"></a>00480  <span class="keyword">struct </span>{
+<a name="l00481"></a><a class="code" href="structswd__ctx__t.html#a97f9093e16939fc44a2d46d328474454">00481</a>   <a class="code" href="structswd__swdp__t.html" title="Most actual Serial Wire Debug Port Registers.">swd_swdp_t</a> dp_read;         
+<a name="l00482"></a><a class="code" href="structswd__ctx__t.html#a20ecbfb255b8c8b0b1ef92648c1d9825">00482</a>   <a class="code" href="structswd__swdp__t.html" title="Most actual Serial Wire Debug Port Registers.">swd_swdp_t</a> dp_write;        
+<a name="l00483"></a><a class="code" href="structswd__ctx__t.html#a5e33de2e34bfff7936ff02e6a388f003">00483</a>   <a class="code" href="structswd__ahbap__t.html" title="Most actual Advanced High Bandwidth Access Peripherial Bus Reisters.">swd_ahbap_t</a> ap_read;        
+<a name="l00484"></a><a class="code" href="structswd__ctx__t.html#a40c8ded9b946c7c851cd43dc52a289ea">00484</a>   <a class="code" href="structswd__ahbap__t.html" title="Most actual Advanced High Bandwidth Access Peripherial Bus Reisters.">swd_ahbap_t</a> ap_write;       
+<a name="l00485"></a>00485   <a class="code" href="structswd__transaction__t.html" title="Most actual SWD bus transaction/packet data.">swd_transaction_t</a> read;
+<a name="l00486"></a>00486   <a class="code" href="structswd__transaction__t.html" title="Most actual SWD bus transaction/packet data.">swd_transaction_t</a> write;
+<a name="l00487"></a>00487  } log;
+<a name="l00488"></a>00488 } <a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a>;
+<a name="l00489"></a>00489 
+<a name="l00492"></a>00492 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#adadd09e0dcd8877a99e7983d5d98e882" title="Some comments on the function behavior.">swd_bin8_parity_even</a>(<span class="keywordtype">char</span> *data, <span class="keywordtype">char</span> *parity);
+<a name="l00493"></a>00493 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#a6d93a36876e62c9a05171cebcdb4b446" title="Data parity calculator, calculates even parity on integer type.">swd_bin32_parity_even</a>(<span class="keywordtype">int</span> *data, <span class="keywordtype">char</span> *parity);
+<a name="l00494"></a>00494 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#aa245c280d14d50118fa1ce5e090a596b" title="Prints binary data of a char value on the screen.">swd_bin8_print</a>(<span class="keywordtype">char</span> *data);
+<a name="l00495"></a>00495 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#a5ca7ae0d5ceab442348c9a03e58d54eb" title="Prints binary data of an integer value on the screen.">swd_bin32_print</a>(<span class="keywordtype">int</span> *data);
+<a name="l00496"></a>00496 <span class="keywordtype">char</span> *<a class="code" href="libswd_8h.html#a3570e6b4032cde907cb137892697bac9" title="Generates string containing binary data of a char value.">swd_bin8_string</a>(<span class="keywordtype">char</span> *data);
+<a name="l00497"></a>00497 <span class="keywordtype">char</span> *<a class="code" href="libswd_8h.html#a271c7fcdfe6cf9d5177bd2fca4e02497" title="Generates string containing binary data of an integer value.">swd_bin32_string</a>(<span class="keywordtype">int</span> *data);
+<a name="l00498"></a>00498 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#a6e7db0da4ca2f2649b826e68ef5b3caa" title="Bit swap helper function that reverse bit order in char *buffer.">swd_bin8_bitswap</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> *buffer, <span class="keywordtype">int</span> bitcount);
+<a name="l00499"></a>00499 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#a62fe3d826d2f575dd1b446263d1c451c" title="Bit swap helper function that reverse bit order in int *buffer.">swd_bin32_bitswap</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> *buffer, <span class="keywordtype">int</span> bitcount);
+<a name="l00500"></a>00500 
+<a name="l00501"></a>00501 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#a185aba078d1c57df6331fd07fcf5630c" title="Initialize new queue element in memory that becomes a queue root.">swd_cmdq_init</a>(<a class="code" href="structswd__cmd__t.html" title="SWD Command Element Structure.">swd_cmd_t</a> *cmdq);
+<a name="l00502"></a>00502 <a class="code" href="structswd__cmd__t.html" title="SWD Command Element Structure.">swd_cmd_t</a>* <a class="code" href="libswd_8h.html#a431d401d67e26e8b983c6ead8c1b93eb" title="Find queue root (first element).">swd_cmdq_find_root</a>(<a class="code" href="structswd__cmd__t.html" title="SWD Command Element Structure.">swd_cmd_t</a> *cmdq);
+<a name="l00503"></a>00503 <a class="code" href="structswd__cmd__t.html" title="SWD Command Element Structure.">swd_cmd_t</a>* <a class="code" href="libswd_8h.html#a66578e5c847f74079f2e13f3bd753d58" title="Find queue tail (last element).">swd_cmdq_find_tail</a>(<a class="code" href="structswd__cmd__t.html" title="SWD Command Element Structure.">swd_cmd_t</a> *cmdq);
+<a name="l00504"></a>00504 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#a966a561f341217ecc56d31ed61c7758e" title="Append element pointed by *cmd at the end of the quque pointed by *cmdq.">swd_cmdq_append</a>(<a class="code" href="structswd__cmd__t.html" title="SWD Command Element Structure.">swd_cmd_t</a> *cmdq, <a class="code" href="structswd__cmd__t.html" title="SWD Command Element Structure.">swd_cmd_t</a> *cmd);
+<a name="l00505"></a>00505 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#ab205547a46a4e87e040478cc230463d6" title="Free queue pointed by *cmdq element.">swd_cmdq_free</a>(<a class="code" href="structswd__cmd__t.html" title="SWD Command Element Structure.">swd_cmd_t</a> *cmdq);
+<a name="l00506"></a>00506 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#a583240dd9735d3192a6a895f4cefd89c" title="Free queue head up to *cmdq element.">swd_cmdq_free_head</a>(<a class="code" href="structswd__cmd__t.html" title="SWD Command Element Structure.">swd_cmd_t</a> *cmdq);
+<a name="l00507"></a>00507 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#a968846e75ffdbceafd2f4a3bd7f314b1" title="Free queue tail starting after *cmdq element.">swd_cmdq_free_tail</a>(<a class="code" href="structswd__cmd__t.html" title="SWD Command Element Structure.">swd_cmd_t</a> *cmdq);
+<a name="l00508"></a>00508 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#ad53379f5a7756cc91b01e867aaaa489d" title="Flush command queue contents into interface driver.">swd_cmdq_flush</a>(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx, <a class="code" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070" title="Command Queue operations codes.">swd_operation_t</a> operation);
+<a name="l00509"></a>00509 
+<a name="l00510"></a>00510 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#a3bc721b722709fda46962cbbe6f289a6" title="Append selected command to a context&amp;#39;s command queue.">swd_cmd_enqueue</a>(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx, <a class="code" href="structswd__cmd__t.html" title="SWD Command Element Structure.">swd_cmd_t</a> *cmd);
+<a name="l00511"></a>00511 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#a71bb2c003e1e1fb873ee70d4df04e651" title="Appends command queue with SWD Request packet header.">swd_cmd_enqueue_mosi_request</a>(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx, <span class="keywordtype">char</span> *request);
+<a name="l00512"></a>00512 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#adb3044c0cbebdf275aef0898b37c6fa6" title="Append command queue with Turnaround activating MOSI mode.">swd_cmd_enqueue_mosi_trn</a>(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx);
+<a name="l00513"></a>00513 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#a63c0741f58c00faad012ccc9d29ca7c7" title="Append command queue with Turnaround activating MISO mode.">swd_cmd_enqueue_miso_trn</a>(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx);
+<a name="l00514"></a>00514 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#ab74b1e2baff1d3f30c07440bc84b54fe" title="Append command queue with bus binary read bit-by-bit operation.">swd_cmd_enqueue_miso_nbit</a>(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx, <span class="keywordtype">char</span> **data, <span class="keywordtype">int</span> count);
+<a name="l00515"></a>00515 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#a5114809ee4b3f3dbdcef7070e76825cd" title="Append command queue with bus binary write bit-by-bit operation.">swd_cmd_enqueue_mosi_nbit</a>(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx, <span class="keywordtype">char</span> *data, <span class="keywordtype">int</span> count);
+<a name="l00516"></a>00516 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#ac972e99a9d163f30b983ce6ed0d2ed02" title="Append command queue with parity bit write.">swd_cmd_enqueue_mosi_parity</a>(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx, <span class="keywordtype">char</span> *parity);
+<a name="l00517"></a>00517 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#aea2f9fdb22f5f6364f005eab9425a060" title="Append command queue with parity bit read.">swd_cmd_enqueue_miso_parity</a>(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx, <span class="keywordtype">char</span> **parity);
+<a name="l00518"></a>00518 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#aa3a012555652c27c0e375097b392534b" title="Append command queue with data read.">swd_cmd_enqueue_miso_data</a>(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx, <span class="keywordtype">int</span> **data);
+<a name="l00519"></a>00519 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#a1afca108b064601dfeb517327b0bb275" title="Append command queue with data and parity read.">swd_cmd_enqueue_miso_data_p</a>(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx, <span class="keywordtype">int</span> **data, <span class="keywordtype">char</span> **parity);
+<a name="l00520"></a>00520 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#a1e7330acb5e3b8c7f41a82121e26decc" title="Append command queue with series of data and parity read.">swd_cmd_enqueue_miso_n_data_p</a>(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx, <span class="keywordtype">int</span> **data, <span class="keywordtype">char</span> **parity, <span class="keywordtype">int</span> count);
+<a name="l00521"></a>00521 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#a02b06ae68b6e2a7b50f233c695b45548" title="Append command queue with data and parity write.">swd_cmd_enqueue_mosi_data</a>(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx, <span class="keywordtype">int</span> *data);
+<a name="l00522"></a>00522 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#a22a5c50a280f62a84597f71b7f468a99" title="Append command queue with data and automatic parity write.">swd_cmd_enqueue_mosi_data_ap</a>(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx, <span class="keywordtype">int</span> *data);
+<a name="l00523"></a>00523 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#a25048650d706a8ae26793489acb46f5a" title="Append command queue with data and provided parity write.">swd_cmd_enqueue_mosi_data_p</a>(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx, <span class="keywordtype">int</span> *data, <span class="keywordtype">char</span> *parity);
+<a name="l00524"></a>00524 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#adadb812d15558c6db4b9aa753b60e15c" title="Append command queue with series of data and automatic parity writes.">swd_cmd_enqueue_mosi_n_data_ap</a>(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx, <span class="keywordtype">int</span> **data, <span class="keywordtype">int</span> count);
+<a name="l00525"></a>00525 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#afd4f9d8e098dee2708c4b3cc1e2775e6" title="Append command queue with series of data and provided parity writes.">swd_cmd_enqueue_mosi_n_data_p</a>(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx, <span class="keywordtype">int</span> **data, <span class="keywordtype">char</span> **parity, <span class="keywordtype">int</span> count);
+<a name="l00526"></a>00526 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#a4d9e77e67b6167185b86f76df9b15cbd" title="Append queue with ACK read.">swd_cmd_enqueue_miso_ack</a>(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx, <span class="keywordtype">char</span> **ack);
+<a name="l00527"></a>00527 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#af01d9ef59271c478d8d68f7dde27a77f" title="Append command queue with len-octet size control seruence.">swd_cmd_enqueue_mosi_control</a>(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx, <span class="keywordtype">char</span> *ctlmsg, <span class="keywordtype">int</span> len);
+<a name="l00528"></a>00528 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#a0492d6b4eb2ebaa14fd72a5fa7f57475" title="Append command queue with SW-DP-RESET sequence.">swd_cmd_enqueue_mosi_dap_reset</a>(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx);
+<a name="l00529"></a>00529 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#a11a8ab26aa798f18303be8364ef55f48" title="Append command queue with idle sequence.">swd_cmd_enqueue_mosi_idle</a>(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx);
+<a name="l00530"></a>00530 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#a314214b78c653c188f51f3324d623913" title="Append command queue with JTAG-TO-SWD DAP-switch sequence.">swd_cmd_enqueue_mosi_jtag2swd</a>(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx);
+<a name="l00531"></a>00531 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#aae11e98541fa6cf8526d59e4ae5bfff9" title="Append command queue with SWD-TO-JTAG DAP-switch sequence.">swd_cmd_enqueue_mosi_swd2jtag</a>(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx);
+<a name="l00532"></a>00532 
+<a name="l00533"></a>00533 <span class="keywordtype">char</span> *swd_cmd_string_cmdtype(<a class="code" href="structswd__cmd__t.html" title="SWD Command Element Structure.">swd_cmd_t</a> *cmd);
+<a name="l00534"></a>00534 
+<a name="l00535"></a>00535 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#a342a54175498a1cd4a2668a189977012" title="Append command queue with TRN WRITE/MOSI, if previous command was READ/MISO.">swd_bus_setdir_mosi</a>(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx);
+<a name="l00536"></a>00536 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#abb32abd798b3b1ffa14573e4f139c079" title="Append command queue with TRN READ/MISO, if previous command was WRITE/MOSI.">swd_bus_setdir_miso</a>(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx);
+<a name="l00537"></a>00537 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#a36141f037b00ea981cf771d6061bdfd6" title="Perform Request.">swd_bus_write_request</a>
+<a name="l00538"></a>00538 (<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx, <a class="code" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070" title="Command Queue operations codes.">swd_operation_t</a> operation, <span class="keywordtype">char</span> *APnDP, <span class="keywordtype">char</span> *RnW, <span class="keywordtype">char</span> *addr);
+<a name="l00539"></a>00539 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#aae7d6660b4fd10d0d1105d74257b8ac7" title="Perform ACK read into *ack and verify received data.">swd_bus_read_ack</a>(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx, <a class="code" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070" title="Command Queue operations codes.">swd_operation_t</a> operation, <span class="keywordtype">char</span> **ack);
+<a name="l00540"></a>00540 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#ac1948d1f82a3166de4de43dae48b7413" title="Perform (MOSI) data write with provided parity value.">swd_bus_write_data_p</a>(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx, <a class="code" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070" title="Command Queue operations codes.">swd_operation_t</a> operation, <span class="keywordtype">int</span> *data, <span class="keywordtype">char</span> *parity);
+<a name="l00541"></a>00541 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#a014280b7d9a07a14862f16922827f50a" title="Perform (MOSI) data write with automatic parity calculation.">swd_bus_write_data_ap</a>(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx, <a class="code" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070" title="Command Queue operations codes.">swd_operation_t</a> operation, <span class="keywordtype">int</span> *data);
+<a name="l00542"></a>00542 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#a45c79a01998ae0e845ee425c432e181d" title="Perform (MISO) data read.">swd_bus_read_data_p</a>(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx, <a class="code" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070" title="Command Queue operations codes.">swd_operation_t</a> operation, <span class="keywordtype">int</span> **data, <span class="keywordtype">char</span> **parity);
+<a name="l00543"></a>00543 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#ad0ae33bb778d9c0bba3fe5f74adc8d22" title="Write CONTROL byte to the Target&amp;#39;s DAP.">swd_bus_write_control</a>(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx, <a class="code" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070" title="Command Queue operations codes.">swd_operation_t</a> operation, <span class="keywordtype">char</span> *ctlmsg, <span class="keywordtype">int</span> len);
+<a name="l00544"></a>00544 
+<a name="l00545"></a>00545 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#afbae73ccf42657390d11d645fcc456d8" title="Generate 8-bit SWD-REQUEST packet contents with provided parameters.">swd_bitgen8_request</a>(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx, <span class="keywordtype">char</span> *APnDP, <span class="keywordtype">char</span> *RnW, <span class="keywordtype">char</span> *addr, <span class="keywordtype">char</span> *request);
+<a name="l00546"></a>00546 
+<a name="l00547"></a>00547 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#a2891df407bc8178e3ca45bd508822327" title="Transmit selected command from the command queue to the interface driver.">swd_drv_transmit</a>(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx, <a class="code" href="structswd__cmd__t.html" title="SWD Command Element Structure.">swd_cmd_t</a> *cmd);
+<a name="l00548"></a>00548 <span class="keyword">extern</span> <span class="keywordtype">int</span> swd_drv_mosi_8(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx, <a class="code" href="structswd__cmd__t.html" title="SWD Command Element Structure.">swd_cmd_t</a> *cmd, <span class="keywordtype">char</span> *data, <span class="keywordtype">int</span> bits, <span class="keywordtype">int</span> nLSBfirst);
+<a name="l00549"></a>00549 <span class="keyword">extern</span> <span class="keywordtype">int</span> swd_drv_mosi_32(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx, <a class="code" href="structswd__cmd__t.html" title="SWD Command Element Structure.">swd_cmd_t</a> *cmd, <span class="keywordtype">int</span> *data, <span class="keywordtype">int</span> bits, <span class="keywordtype">int</span> nLSBfirst);
+<a name="l00550"></a>00550 <span class="keyword">extern</span> <span class="keywordtype">int</span> swd_drv_miso_8(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx, <a class="code" href="structswd__cmd__t.html" title="SWD Command Element Structure.">swd_cmd_t</a> *cmd, <span class="keywordtype">char</span> *data, <span class="keywordtype">int</span> bits, <span class="keywordtype">int</span> nLSBfirst);
+<a name="l00551"></a>00551 <span class="keyword">extern</span> <span class="keywordtype">int</span> swd_drv_miso_32(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx, <a class="code" href="structswd__cmd__t.html" title="SWD Command Element Structure.">swd_cmd_t</a> *cmd, <span class="keywordtype">int</span> *data, <span class="keywordtype">int</span> bits, <span class="keywordtype">int</span> nLSBfirst);
+<a name="l00552"></a>00552 <span class="keyword">extern</span> <span class="keywordtype">int</span> swd_drv_mosi_trn(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx, <span class="keywordtype">int</span> clks);
+<a name="l00553"></a>00553 <span class="keyword">extern</span> <span class="keywordtype">int</span> swd_drv_miso_trn(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx, <span class="keywordtype">int</span> clks);
+<a name="l00554"></a>00554 
+<a name="l00555"></a>00555 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#ae53937afaa64ce0b28bef3d8d093f65a" title="Debug Access Port Reset sends 50 CLK with TMS high that brings both SW-DP and JTAG-DP into reset stat...">swd_dap_reset</a>(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx, <a class="code" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070" title="Command Queue operations codes.">swd_operation_t</a> operation);
+<a name="l00556"></a>00556 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#a0ffa1e7b48180a7c4bf05f2906a9cbb1" title="Activate SW-DP by sending out RESET and JTAG-TO-SWD sequence on SWDIOTMS line.">swd_dap_select</a>(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx, <a class="code" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070" title="Command Queue operations codes.">swd_operation_t</a> operation);
+<a name="l00557"></a>00557 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#a6758b95d2adfbfb9b95198f9b0b5462c" title="Macro: Reset target DAP, select SW-DP, read out IDCODE.">swd_dap_detect</a>(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx, <a class="code" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070" title="Command Queue operations codes.">swd_operation_t</a> operation, <span class="keywordtype">int</span> **idcode);
+<a name="l00558"></a>00558 
+<a name="l00559"></a>00559 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#a0a40c90253f99da07eae5e237be187b1" title="Macro: Read out IDCODE register and return its value on function return.">swd_dp_read_idcode</a>(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx, <a class="code" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070" title="Command Queue operations codes.">swd_operation_t</a> operation, <span class="keywordtype">int</span> **idcode);
 <a name="l00560"></a>00560 
-<a name="l00561"></a>00561 <a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *<a class="code" href="libswd_8h.html#ad4f88acc646c06e6e81fbde8117c21af" title="LibSWD initialization routine.">swd_init</a>(<span class="keywordtype">void</span>);
-<a name="l00562"></a>00562 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#ac53e7440e6d3c277df4e715665d1986d" title="De-initialize selected swd context and free its memory.">swd_deinit_ctx</a>(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx);
-<a name="l00563"></a>00563 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#a0426ebebbebec92cc5c8342d1746f58c" title="De-initialize command queue and free its memory on selected swd context.">swd_deinit_cmdq</a>(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx);
-<a name="l00564"></a>00564 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#a94b02a9cf4b72e2e76d6a9a34f34f96f" title="De-initialize selected swd context and its command queue.">swd_deinit</a>(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx);
+<a name="l00561"></a>00561 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#ab2228c114efd81e478ebc00e5bfe4c43" title="Put a message into swd context log at specified verbosity level.">swd_log</a>(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx, <a class="code" href="libswd_8h.html#ab68cbcef79d602fc0fe70cb65c43e898" title="Logging Level Codes definition.">swd_loglevel_t</a> loglevel, <span class="keywordtype">char</span> *msg, ...);
+<a name="l00562"></a>00562 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#af30788d001ca964f2889f0d70e2eae8f" title="Change log level to increase or decrease verbosity level.">swd_log_level_set</a>(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx, <a class="code" href="libswd_8h.html#ab68cbcef79d602fc0fe70cb65c43e898" title="Logging Level Codes definition.">swd_loglevel_t</a> loglevel);
+<a name="l00563"></a>00563 <span class="keyword">extern</span> <span class="keywordtype">int</span> swd_log_level_inherit(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx, <span class="keywordtype">int</span> loglevel);
+<a name="l00564"></a>00564 <span class="keywordtype">char</span> *swd_error_string(<a class="code" href="libswd_8h.html#aeb409c8f8007baa9bf15efce6491ad77" title="Status and Error Codes definitions.">swd_error_code_t</a> error);
 <a name="l00565"></a>00565 
-<a name="l00566"></a>00566 <span class="keywordtype">int</span> swd_drv_mosi_trn(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx, <span class="keywordtype">int</span> clks);
-<a name="l00567"></a>00567 <span class="keywordtype">int</span> swd_drv_miso_trn(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx, <span class="keywordtype">int</span> clks);
-<a name="l00568"></a>00568 
-<a name="l00569"></a>00569 <span class="preprocessor">#endif</span>
+<a name="l00566"></a>00566 <a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *<a class="code" href="libswd_8h.html#ad4f88acc646c06e6e81fbde8117c21af" title="LibSWD initialization routine.">swd_init</a>(<span class="keywordtype">void</span>);
+<a name="l00567"></a>00567 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#ac53e7440e6d3c277df4e715665d1986d" title="De-initialize selected swd context and free its memory.">swd_deinit_ctx</a>(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx);
+<a name="l00568"></a>00568 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#a0426ebebbebec92cc5c8342d1746f58c" title="De-initialize command queue and free its memory on selected swd context.">swd_deinit_cmdq</a>(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx);
+<a name="l00569"></a>00569 <span class="keywordtype">int</span> <a class="code" href="libswd_8h.html#a94b02a9cf4b72e2e76d6a9a34f34f96f" title="De-initialize selected swd context and its command queue.">swd_deinit</a>(<a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx);
+<a name="l00570"></a>00570 
+<a name="l00571"></a>00571 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
 <!--- window showing the filter options -->
@@ -533,7 +532,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Fri Mar 11 2011 17:25:08 for libswd by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Sat Mar 12 2011 20:16:31 for libswd by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

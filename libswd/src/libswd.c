@@ -36,8 +36,7 @@
 
 /** \file libswd.c */
 
-#include <libswd.h>
-#include <urjtag/libswd.h>
+#include <libswd/libswd.h>
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -821,10 +820,10 @@ int swd_bitgen8_request(swd_ctx_t *swdctx, char *APnDP, char *RnW, char *addr, c
  * @{
  ******************************************************************************/
 
-extern int swd_drv_mosi_8(swd_ctx_t *swdctx, char *data, int bits, int nLSBfirst);
-extern int swd_drv_mosi_32(swd_ctx_t *swdctx, int *data, int bits, int nLSBfirst);
-extern int swd_drv_miso_8(swd_ctx_t *swdctx, char *data, int bits, int nLSBfirst);
-extern int swd_drv_miso_32(swd_ctx_t *swdctx, int *data, int bits, int nLSBfirst);
+extern int swd_drv_mosi_8(swd_ctx_t *swdctx, swd_cmd_t *cmd, char *data, int bits, int nLSBfirst);
+extern int swd_drv_mosi_32(swd_ctx_t *swdctx, swd_cmd_t *cmd, int *data, int bits, int nLSBfirst);
+extern int swd_drv_miso_8(swd_ctx_t *swdctx, swd_cmd_t *cmd, char *data, int bits, int nLSBfirst);
+extern int swd_drv_miso_32(swd_ctx_t *swdctx, swd_cmd_t *cmd, int *data, int bits, int nLSBfirst);
 extern int swd_drv_mosi_trn(swd_ctx_t *swdctx, int bits);
 extern int swd_drv_miso_trn(swd_ctx_t *swdctx, int bits);
 
@@ -836,7 +835,7 @@ extern int swd_drv_miso_trn(swd_ctx_t *swdctx, int bits);
 int swd_drv_transmit(swd_ctx_t *swdctx, swd_cmd_t *cmd){
  if (swdctx==NULL) return SWD_ERROR_NULLCONTEXT;
  if (cmd==NULL) return SWD_ERROR_NULLPOINTER;
-
+  
  int res=SWD_ERROR_BADCMDTYPE;
 
  switch (cmd->cmdtype){
@@ -848,21 +847,21 @@ int swd_drv_transmit(swd_ctx_t *swdctx, swd_cmd_t *cmd){
   case SWD_CMDTYPE_MOSI_CONTROL:
    // 8 clock cycles.
    if (cmd->bits!=8) return SWD_ERROR_BADCMDDATA;
-   res=swd_drv_mosi_8(swdctx, &cmd->control, 8, SWD_DIR_MSBFIRST);
+   res=swd_drv_mosi_8(swdctx, cmd, &cmd->control, 8, SWD_DIR_MSBFIRST);
    swdctx->log.write.control=cmd->control;
    break;
 
   case SWD_CMDTYPE_MOSI_BITBANG:
    // 1 clock cycle.
    if (cmd->bits!=1) return SWD_ERROR_BADCMDDATA;
-   res=swd_drv_mosi_8(swdctx, &cmd->mosibit, 1, SWD_DIR_LSBFIRST);
+   res=swd_drv_mosi_8(swdctx, cmd, &cmd->mosibit, 1, SWD_DIR_LSBFIRST);
    swdctx->log.write.control=cmd->mosibit;
    break;
 
   case SWD_CMDTYPE_MOSI_PARITY:
    // 1 clock cycle.
    if (cmd->bits!=1) return SWD_ERROR_BADCMDDATA;
-   res=swd_drv_mosi_8(swdctx, &cmd->parity, 1, SWD_DIR_LSBFIRST);
+   res=swd_drv_mosi_8(swdctx, cmd, &cmd->parity, 1, SWD_DIR_LSBFIRST);
    swdctx->log.write.parity=cmd->parity;
    break;
 
@@ -876,35 +875,35 @@ int swd_drv_transmit(swd_ctx_t *swdctx, swd_cmd_t *cmd){
   case SWD_CMDTYPE_MOSI_REQUEST:
    // 8 clock cycles.
    if (cmd->bits!=SWD_REQUEST_BITLEN) return SWD_ERROR_BADCMDDATA;
-   res=swd_drv_mosi_8(swdctx, &cmd->request, 8, SWD_DIR_MSBFIRST);
+   res=swd_drv_mosi_8(swdctx, cmd, &cmd->request, 8, SWD_DIR_MSBFIRST);
    swdctx->log.write.request=cmd->request;
    break;
 
   case SWD_CMDTYPE_MOSI_DATA:
    // 32 clock cycles.
    if (cmd->bits!=SWD_DATA_BITLEN) return SWD_ERROR_BADCMDDATA; 
-   res=swd_drv_mosi_32(swdctx, &cmd->mosidata, 32, SWD_DIR_LSBFIRST);
+   res=swd_drv_mosi_32(swdctx, cmd, &cmd->mosidata, 32, SWD_DIR_LSBFIRST);
    swdctx->log.write.data=cmd->mosidata;
    break;
 
   case SWD_CMDTYPE_MISO_ACK:
    // 3 clock cycles.
    if (cmd->bits!=SWD_ACK_BITLEN) return SWD_ERROR_BADCMDDATA;
-   res=swd_drv_miso_8(swdctx, &cmd->ack, cmd->bits, SWD_DIR_LSBFIRST);
+   res=swd_drv_miso_8(swdctx, cmd, &cmd->ack, cmd->bits, SWD_DIR_LSBFIRST);
    swdctx->log.read.ack=cmd->ack;
    break;
 
   case SWD_CMDTYPE_MISO_BITBANG:
    // 1 clock cycle.
    if (cmd->bits!=1) return SWD_ERROR_BADCMDDATA;
-   res=swd_drv_miso_8(swdctx, &cmd->misobit, 1, SWD_DIR_LSBFIRST);
+   res=swd_drv_miso_8(swdctx, cmd, &cmd->misobit, 1, SWD_DIR_LSBFIRST);
    swdctx->log.read.control=cmd->misobit;
    break;
 
   case SWD_CMDTYPE_MISO_PARITY:
    // 1 clock cycle.
    if (cmd->bits!=1) return SWD_ERROR_BADCMDDATA;
-   res=swd_drv_miso_8(swdctx, &cmd->parity, 1, SWD_DIR_LSBFIRST);
+   res=swd_drv_miso_8(swdctx, cmd, &cmd->parity, 1, SWD_DIR_LSBFIRST);
    swdctx->log.read.parity=cmd->parity;
    break;
 
@@ -918,7 +917,7 @@ int swd_drv_transmit(swd_ctx_t *swdctx, swd_cmd_t *cmd){
   case SWD_CMDTYPE_MISO_DATA:
    // 32 clock cycles
    if (cmd->bits!=SWD_DATA_BITLEN) return SWD_ERROR_BADCMDDATA;
-   res=swd_drv_miso_32(swdctx, &cmd->misodata, cmd->bits, SWD_DIR_LSBFIRST);
+   res=swd_drv_miso_32(swdctx, cmd, &cmd->misodata, cmd->bits, SWD_DIR_LSBFIRST);
    swdctx->log.read.data=cmd->misodata;
    break;
 
@@ -931,8 +930,8 @@ int swd_drv_transmit(swd_ctx_t *swdctx, swd_cmd_t *cmd){
  } 
 
  swd_log(swdctx, SWD_LOGLEVEL_DEBUG,
-  "D: swd_drv_transmit() bits=%-2d cmdtype=%-12s returns=%-3d payload=0x%08x (%s)\n",
-  cmd->bits, swd_cmd_string_cmdtype(cmd), res,
+  "SWD_D: swd_drv_transmit(0x%x, 0x%x) bits=%-2d cmdtype=%-12s returns=%-3d payload=0x%08x (%s)\n",
+  swdctx, cmd, cmd->bits, swd_cmd_string_cmdtype(cmd), res,
   (cmd->bits>8)?cmd->data32:cmd->data8,
   (cmd->bits<=8)?swd_bin8_string(&cmd->data8):swd_bin32_string(&cmd->data32));
 
@@ -1331,14 +1330,14 @@ int swd_bus_write_control(swd_ctx_t *swdctx, swd_operation_t operation, char *ct
  * \param operation type (SWD_OPERATION_ENQUEUE or SWD_OPERATION_EXECUTE).
  * \return number of elements processed or SWD_ERROR_CODE code on failure.
  */
-int swd_dp_reset(swd_ctx_t *swdctx, swd_operation_t operation){
+int swd_dap_reset(swd_ctx_t *swdctx, swd_operation_t operation){
+ swd_log(swdctx, SWD_LOGLEVEL_INFO, "SWD_I: Executing swd_dap_reset(0x%x, %s)\n", swdctx, operation==SWD_OPERATION_ENQUEUE?"SWD_OPERATION_ENQUEUE":"SWD_OPERATION_EXECUTE");
+
  if (swdctx==NULL) return SWD_ERROR_NULLCONTEXT;
  if (operation!=SWD_OPERATION_ENQUEUE && operation!=SWD_OPERATION_EXECUTE)
   return SWD_ERROR_BADOPCODE;  
 
  int res, qcmdcnt=0, tcmdcnt=0;
-
- swd_log(swdctx, SWD_LOGLEVEL_INFO, "I: swd_dp_reset() operation=%s\n", operation==SWD_OPERATION_ENQUEUE?"SWD_OPERATION_ENQUEUE":"SWD_OPERATION_EXECUTE");
  res=swd_bus_setdir_mosi(swdctx);
  if (res<0) return res;
  res=swd_cmd_enqueue_mosi_dap_reset(swdctx);
@@ -1359,14 +1358,14 @@ int swd_dp_reset(swd_ctx_t *swdctx, swd_operation_t operation){
  * \param *swdctx swd context.
  * \return number of control bytes executed, or error code on failre.
  */
-int swd_dp_activate(swd_ctx_t *swdctx, swd_operation_t operation){
+int swd_dap_select(swd_ctx_t *swdctx, swd_operation_t operation){
+ swd_log(swdctx, SWD_LOGLEVEL_INFO, "SWD_I: Executing swd_dap_activate(0x%x, %s)\n", swdctx, operation==SWD_OPERATION_ENQUEUE?"SWD_OPERATION_ENQUEUE":"SWD_OPERATION_EXECUTE");
+
  if (swdctx==NULL) return SWD_ERROR_NULLCONTEXT;
  if (operation!=SWD_OPERATION_ENQUEUE && operation!=SWD_OPERATION_EXECUTE)
   return SWD_ERROR_BADOPCODE;
 
  int res, qcmdcnt=0, tcmdcnt=0;
-
- swd_log(swdctx, SWD_LOGLEVEL_INFO, "I: swd_dp_activate() operation=%s\n", operation==SWD_OPERATION_ENQUEUE?"SWD_OPERATION_ENQUEUE":"SWD_OPERATION_EXECUTE");
  res=swd_bus_setdir_mosi(swdctx);
  if (res<0) return res;
  res=swd_cmd_enqueue_mosi_jtag2swd(swdctx);
@@ -1389,6 +1388,8 @@ int swd_dp_activate(swd_ctx_t *swdctx, swd_operation_t operation){
  * \return Target's IDCODE value or code error on failure.
  */
 int swd_dp_read_idcode(swd_ctx_t *swdctx, swd_operation_t operation, int **idcode){
+ swd_log(swdctx, SWD_LOGLEVEL_INFO, "SWD_I: Executing swd_dp_read_idcode(0x%x, %s)\n", swdctx, operation==SWD_OPERATION_ENQUEUE?"SWD_OPERATION_ENQUEUE":"SWD_OPERATION_EXECUTE");
+
  if (swdctx==NULL) return SWD_ERROR_NULLCONTEXT; 
  if (operation!=SWD_OPERATION_ENQUEUE && operation!=SWD_OPERATION_EXECUTE)
          return SWD_ERROR_BADOPCODE;
@@ -1400,7 +1401,6 @@ int swd_dp_read_idcode(swd_ctx_t *swdctx, swd_operation_t operation, int **idcod
  RnW=1;
  addr=SWD_DP_ADDR_IDCODE;
 
- swd_log(swdctx, SWD_LOGLEVEL_INFO, "I: swd_dp_read_idcode() operation=%s\n", operation==SWD_OPERATION_ENQUEUE?"SWD_OPERATION_ENQUEUE":"SWD_OPERATION_EXECUTE");
  res=swd_bus_write_request(swdctx, SWD_OPERATION_ENQUEUE, &APnDP, &RnW, &addr);
  if (res<1) return res;
  cmdcnt=+res;
@@ -1432,7 +1432,7 @@ int swd_dp_read_idcode(swd_ctx_t *swdctx, swd_operation_t operation, int **idcod
   cmdcnt+=res;
   if (cparity!=*parity) return SWD_ERROR_PARITY;
   swdctx->log.dp_read.idcode=**idcode;
-  swd_log(swdctx, SWD_LOGLEVEL_INFO, "I: swd_dp_read_idcode() gives IDCODE=%X (%s)\n", **idcode, swd_bin32_string(*idcode));
+  swd_log(swdctx, SWD_LOGLEVEL_INFO, "SWD_I: swd_dp_read_idcode() succeeds, IDCODE=%X (%s)\n", **idcode, swd_bin32_string(*idcode));
   return cmdcnt;
  } else return SWD_ERROR_BADOPCODE;
 }
@@ -1443,14 +1443,15 @@ int swd_dp_read_idcode(swd_ctx_t *swdctx, swd_operation_t operation, int **idcod
  * \param operation type (SWD_OPERATION_ENQUEUE or SWD_OPERATION_EXECUTE).
  * \return Target's IDCODE, or error code on failure.
  */ 
-int swd_dp_detect(swd_ctx_t *swdctx, swd_operation_t operation, int **idcode){
+int swd_dap_detect(swd_ctx_t *swdctx, swd_operation_t operation, int **idcode){
  int res;
- res=swd_dp_activate(swdctx, operation);
+ res=swd_dap_select(swdctx, operation);
  if (res<1) return res;
- res=swd_dp_reset(swdctx, operation);
+ res=swd_dap_reset(swdctx, operation);
  if (res<1) return res;
  res=swd_dp_read_idcode(swdctx, operation, idcode);
- return res;
+ if (res<0) return res;
+ return SWD_OK;
 }
 
 /** @} */
@@ -1471,7 +1472,7 @@ int swd_dp_detect(swd_ctx_t *swdctx, swd_operation_t operation, int **idcode){
 int swd_log(swd_ctx_t *swdctx, swd_loglevel_t loglevel, char *msg, ...){
  if (loglevel<SWD_LOGLEVEL_MIN && loglevel>SWD_LOGLEVEL_MAX)
   return SWD_ERROR_LOGLEVEL;
- if (loglevel > swdctx->config.loglevel) return 0;
+ if (loglevel > swdctx->config.loglevel) return SWD_OK;
  int res;
  va_list ap;
  va_start(ap, msg);
@@ -1480,6 +1481,20 @@ int swd_log(swd_ctx_t *swdctx, swd_loglevel_t loglevel, char *msg, ...){
  return res;
 }
 
+/** Change log level to increase or decrease verbosity level.
+ * \param *swdctx swd context.
+ * \param loglevel is the target verbosity level to be set.
+ * \return SWD_OK on success or error code.
+ */
+
+int swd_log_level_set(swd_ctx_t *swdctx, swd_loglevel_t loglevel){
+ if (swdctx==NULL) return SWD_ERROR_NULLCONTEXT;
+ if (loglevel<SWD_LOGLEVEL_MIN && loglevel>SWD_LOGLEVEL_MAX)
+  return SWD_ERROR_LOGLEVEL;
+
+ swdctx->config.loglevel=loglevel;
+ return SWD_OK;
+}
 
 /** @} */
 
@@ -1561,7 +1576,7 @@ swd_ctx_t *swd_init(void){
  swdctx->config.initialized=SWD_TRUE;
  swdctx->config.trnlen=SWD_TURNROUND_DEFAULT_VAL;
  swdctx->config.maxcmdqlen=SWD_CMDQLEN_DEFAULT;
- swdctx->config.loglevel=SWD_LOGLEVEL_DEBUG;
+ swdctx->config.loglevel=SWD_LOGLEVEL_NORMAL;
  return swdctx;
 }
 

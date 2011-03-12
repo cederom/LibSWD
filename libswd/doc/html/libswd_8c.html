@@ -137,14 +137,14 @@ Functions</h2></td></tr>
 char *&nbsp;</td><td class="memItemRight" valign="bottom"><b>swd_cmd_string_cmdtype</b> (<a class="el" href="structswd__cmd__t.html">swd_cmd_t</a> *cmd)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8c.html#afbae73ccf42657390d11d645fcc456d8">swd_bitgen8_request</a> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, char *APnDP, char *RnW, char *addr, char *request)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Generate 8-bit SWD-REQUEST packet contents with provided parameters.  <a href="#afbae73ccf42657390d11d645fcc456d8"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4d1a5b1d1875044d833fb473f0da4e33"></a><!-- doxytag: member="libswd.c::swd_drv_mosi_8" ref="a4d1a5b1d1875044d833fb473f0da4e33" args="(swd_ctx_t *swdctx, char *data, int bits, int nLSBfirst)" -->
-int&nbsp;</td><td class="memItemRight" valign="bottom"><b>swd_drv_mosi_8</b> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, char *data, int bits, int nLSBfirst)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab11727bfb6a5fe9fe72c91e886d17140"></a><!-- doxytag: member="libswd.c::swd_drv_mosi_32" ref="ab11727bfb6a5fe9fe72c91e886d17140" args="(swd_ctx_t *swdctx, int *data, int bits, int nLSBfirst)" -->
-int&nbsp;</td><td class="memItemRight" valign="bottom"><b>swd_drv_mosi_32</b> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, int *data, int bits, int nLSBfirst)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad9a78d0344f778433be4d4ba0b279d6e"></a><!-- doxytag: member="libswd.c::swd_drv_miso_8" ref="ad9a78d0344f778433be4d4ba0b279d6e" args="(swd_ctx_t *swdctx, char *data, int bits, int nLSBfirst)" -->
-int&nbsp;</td><td class="memItemRight" valign="bottom"><b>swd_drv_miso_8</b> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, char *data, int bits, int nLSBfirst)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac0f7edf48e8fefd811cdab643559dad0"></a><!-- doxytag: member="libswd.c::swd_drv_miso_32" ref="ac0f7edf48e8fefd811cdab643559dad0" args="(swd_ctx_t *swdctx, int *data, int bits, int nLSBfirst)" -->
-int&nbsp;</td><td class="memItemRight" valign="bottom"><b>swd_drv_miso_32</b> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, int *data, int bits, int nLSBfirst)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a32e3642168a4fe782f9bafb7b7e1cef2"></a><!-- doxytag: member="libswd.c::swd_drv_mosi_8" ref="a32e3642168a4fe782f9bafb7b7e1cef2" args="(swd_ctx_t *swdctx, swd_cmd_t *cmd, char *data, int bits, int nLSBfirst)" -->
+int&nbsp;</td><td class="memItemRight" valign="bottom"><b>swd_drv_mosi_8</b> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, <a class="el" href="structswd__cmd__t.html">swd_cmd_t</a> *cmd, char *data, int bits, int nLSBfirst)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a18bfb4968ed95eb580a3b970a7d5b339"></a><!-- doxytag: member="libswd.c::swd_drv_mosi_32" ref="a18bfb4968ed95eb580a3b970a7d5b339" args="(swd_ctx_t *swdctx, swd_cmd_t *cmd, int *data, int bits, int nLSBfirst)" -->
+int&nbsp;</td><td class="memItemRight" valign="bottom"><b>swd_drv_mosi_32</b> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, <a class="el" href="structswd__cmd__t.html">swd_cmd_t</a> *cmd, int *data, int bits, int nLSBfirst)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4aa9199caa538c5c58c8db41c4f39dc9"></a><!-- doxytag: member="libswd.c::swd_drv_miso_8" ref="a4aa9199caa538c5c58c8db41c4f39dc9" args="(swd_ctx_t *swdctx, swd_cmd_t *cmd, char *data, int bits, int nLSBfirst)" -->
+int&nbsp;</td><td class="memItemRight" valign="bottom"><b>swd_drv_miso_8</b> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, <a class="el" href="structswd__cmd__t.html">swd_cmd_t</a> *cmd, char *data, int bits, int nLSBfirst)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ada8ec8d0bb1aa156768afe67f9162e4a"></a><!-- doxytag: member="libswd.c::swd_drv_miso_32" ref="ada8ec8d0bb1aa156768afe67f9162e4a" args="(swd_ctx_t *swdctx, swd_cmd_t *cmd, int *data, int bits, int nLSBfirst)" -->
+int&nbsp;</td><td class="memItemRight" valign="bottom"><b>swd_drv_miso_32</b> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, <a class="el" href="structswd__cmd__t.html">swd_cmd_t</a> *cmd, int *data, int bits, int nLSBfirst)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a94345700108bf12e4aad25cd54fd3b83"></a><!-- doxytag: member="libswd.c::swd_drv_mosi_trn" ref="a94345700108bf12e4aad25cd54fd3b83" args="(swd_ctx_t *swdctx, int bits)" -->
 int&nbsp;</td><td class="memItemRight" valign="bottom"><b>swd_drv_mosi_trn</b> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, int bits)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adb03d22371e2bcde8a5faa8aabf49daa"></a><!-- doxytag: member="libswd.c::swd_drv_miso_trn" ref="adb03d22371e2bcde8a5faa8aabf49daa" args="(swd_ctx_t *swdctx, int bits)" -->
@@ -2335,7 +2335,7 @@ char *&nbsp;</td><td class="memItemRight" valign="bottom"><b>swd_error_string</b
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Fri Mar 11 2011 17:25:08 for libswd by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Sat Mar 12 2011 20:16:31 for libswd by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

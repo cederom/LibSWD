@@ -1,4 +1,4 @@
-.TH "libswd.h" 3 "Fri Mar 11 2011" "Version 0.0.1" "libswd" \" -*- nroff -*-
+.TH "libswd.h" 3 "Sat Mar 12 2011" "Version 0.0.1" "libswd" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -591,16 +591,22 @@ libswd.h \-
 .br
 .RI "\fITransmit selected command from the command queue to the interface driver. \fP"
 .ti -1c
-.RI "int \fBswd_drv_mosi_8\fP (\fBswd_ctx_t\fP *swdctx, char *data, int bits, int nLSBfirst)"
+.RI "int \fBswd_drv_mosi_8\fP (\fBswd_ctx_t\fP *swdctx, \fBswd_cmd_t\fP *cmd, char *data, int bits, int nLSBfirst)"
 .br
 .ti -1c
-.RI "int \fBswd_drv_mosi_32\fP (\fBswd_ctx_t\fP *swdctx, int *data, int bits, int nLSBfirst)"
+.RI "int \fBswd_drv_mosi_32\fP (\fBswd_ctx_t\fP *swdctx, \fBswd_cmd_t\fP *cmd, int *data, int bits, int nLSBfirst)"
 .br
 .ti -1c
-.RI "int \fBswd_drv_miso_8\fP (\fBswd_ctx_t\fP *swdctx, char *data, int bits, int nLSBfirst)"
+.RI "int \fBswd_drv_miso_8\fP (\fBswd_ctx_t\fP *swdctx, \fBswd_cmd_t\fP *cmd, char *data, int bits, int nLSBfirst)"
 .br
 .ti -1c
-.RI "int \fBswd_drv_miso_32\fP (\fBswd_ctx_t\fP *swdctx, int *data, int bits, int nLSBfirst)"
+.RI "int \fBswd_drv_miso_32\fP (\fBswd_ctx_t\fP *swdctx, \fBswd_cmd_t\fP *cmd, int *data, int bits, int nLSBfirst)"
+.br
+.ti -1c
+.RI "int \fBswd_drv_mosi_trn\fP (\fBswd_ctx_t\fP *swdctx, int clks)"
+.br
+.ti -1c
+.RI "int \fBswd_drv_miso_trn\fP (\fBswd_ctx_t\fP *swdctx, int clks)"
 .br
 .ti -1c
 .RI "int \fBswd_dap_reset\fP (\fBswd_ctx_t\fP *swdctx, \fBswd_operation_t\fP operation)"
@@ -648,12 +654,6 @@ libswd.h \-
 .RI "int \fBswd_deinit\fP (\fBswd_ctx_t\fP *swdctx)"
 .br
 .RI "\fIDe-initialize selected swd context and its command queue. \fP"
-.ti -1c
-.RI "int \fBswd_drv_mosi_trn\fP (\fBswd_ctx_t\fP *swdctx, int clks)"
-.br
-.ti -1c
-.RI "int \fBswd_drv_miso_trn\fP (\fBswd_ctx_t\fP *swdctx, int clks)"
-.br
 .in -1c
 .SH "Detailed Description"
 .PP 
