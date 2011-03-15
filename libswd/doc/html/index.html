@@ -71,7 +71,7 @@ Example</h2>
 <div class="fragment"><pre class="fragment"><span class="preprocessor">  #include &lt;libswd/libswd.h&gt;</span>
   <span class="keywordtype">int</span> main(){
    <a class="code" href="structswd__ctx__t.html" title="SWD Context Structure definition.">swd_ctx_t</a> *swdctx;
-   <span class="keywordtype">int</span> res, idcode;
+   <span class="keywordtype">int</span> res, *idcode;
    swdctx=<a class="code" href="libswd_8h.html#ad4f88acc646c06e6e81fbde8117c21af" title="LibSWD initialization routine.">swd_init</a>();
    <span class="keywordflow">if</span> (swdctx==NULL) <span class="keywordflow">return</span> -1;
    <span class="comment">//we might need to pass external driver structure to swd_drv* functions </span>
@@ -80,7 +80,7 @@ Example</h2>
    <span class="keywordflow">if</span> (res&lt;0){
     printf(<span class="stringliteral">&quot;ERROR: %s\n&quot;</span>, swd_error_string(res));
     <span class="keywordflow">return</span> res;
-   } <span class="keywordflow">else</span> printf(<span class="stringliteral">&quot;IDCODE: 0x%X\n&quot;</span>, idcode);
+   } <span class="keywordflow">else</span> printf(<span class="stringliteral">&quot;IDCODE: 0x%X (%s)\n&quot;</span>, *idcode, <a class="code" href="libswd_8h.html#a271c7fcdfe6cf9d5177bd2fca4e02497" title="Generates string containing binary data of an integer value.">swd_bin32_string</a>(*idcode));
    <a class="code" href="libswd_8h.html#a94b02a9cf4b72e2e76d6a9a34f34f96f" title="De-initialize selected swd context and its command queue.">swd_deinit</a>(swdctx);
    <span class="keywordflow">return</span> idcode;
   }
@@ -99,7 +99,7 @@ Example</h2>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sat Mar 12 2011 20:16:31 for libswd by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Tue Mar 15 2011 01:49:37 for libswd by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

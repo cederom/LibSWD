@@ -70,7 +70,7 @@
  *  #include <libswd/libswd.h>
  *  int main(){
  *   swd_ctx_t *swdctx;
- *   int res, idcode;
+ *   int res, *idcode;
  *   swdctx=swd_init();
  *   if (swdctx==NULL) return -1;
  *   //we might need to pass external driver structure to swd_drv* functions 
@@ -79,7 +79,7 @@
  *   if (res<0){
  *    printf("ERROR: %s\n", swd_error_string(res));
  *    return res;
- *   } else printf("IDCODE: 0x%X\n", idcode);
+ *   } else printf("IDCODE: 0x%X (%s)\n", *idcode, swd_bin32_string(*idcode));
  *   swd_deinit(swdctx);
  *   return idcode;
  *  }
