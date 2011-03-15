@@ -2,9 +2,9 @@
  * $Id$
  *
  * Serial Wire Debug Open Library.
- * External Application Driver Interface File.
+ * External Handlers Definition File.
  *
- * Copyright (C) 2010, Tomasz Boleslaw CEDRO (http://www.tomek.cedro.info)
+ * Copyright (C) 2010-2011, Tomasz Boleslaw CEDRO (http://www.tomek.cedro.info)
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -30,15 +30,15 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.*
  *
- * Written by Tomasz Boleslaw CEDRO <tomek.cedro@gmail.com>, 2010;
+ * Written by Tomasz Boleslaw CEDRO <tomek.cedro@gmail.com>, 2010-2011;
  *
  */
 
-#include <libswd.h>
+#include <libswd/libswd.h>
 #include <urjtag/urjtag.h>
 #include <stdlib.h>
 
-int swd_drv_mosi_8(swd_ctx_t *swdctx, char *data, int bits, int nLSBfirst){
+int swd_drv_mosi_8(swd_ctx_t *swdctx, swd_cmd_t *cmd, char *data, int bits, int nLSBfirst){
  if (data==NULL) return SWD_ERROR_NULLPOINTER;
  if (bits<0 && bits>8) return SWD_ERROR_PARAM;
  if (nLSBfirst!=0 && nLSBfirst!=1) return SWD_ERROR_PARAM;
@@ -56,7 +56,7 @@ int swd_drv_mosi_8(swd_ctx_t *swdctx, char *data, int bits, int nLSBfirst){
 }
 
 
-int swd_drv_mosi_32(swd_ctx_t *swdctx, int *data, int bits, int nLSBfirst){
+int swd_drv_mosi_32(swd_ctx_t *swdctx, swd_cmd_t *cmd, int *data, int bits, int nLSBfirst){
  if (data==NULL) return SWD_ERROR_NULLPOINTER;
  if (bits<0 && bits>8) return SWD_ERROR_PARAM;
  if (nLSBfirst!=0 && nLSBfirst!=1) return SWD_ERROR_PARAM;
@@ -73,7 +73,7 @@ int swd_drv_mosi_32(swd_ctx_t *swdctx, int *data, int bits, int nLSBfirst){
  return i;
 }
 
-int swd_drv_miso_8(swd_ctx_t *swdctx, char *data, int bits, int nLSBfirst){
+int swd_drv_miso_8(swd_ctx_t *swdctx, swd_cmd_t *cmd, char *data, int bits, int nLSBfirst){
  if (data==NULL) return SWD_ERROR_NULLPOINTER;
  if (bits<0 && bits>8) return SWD_ERROR_PARAM;
  if (nLSBfirst!=0 && nLSBfirst!=1) return SWD_ERROR_PARAM;
@@ -91,7 +91,7 @@ int swd_drv_miso_8(swd_ctx_t *swdctx, char *data, int bits, int nLSBfirst){
  return i;
 }
 
-int swd_drv_miso_32(swd_ctx_t *swdctx, int *data, int bits, int nLSBfirst){
+int swd_drv_miso_32(swd_ctx_t *swdctx, swd_cmd_t *cmd, int *data, int bits, int nLSBfirst){
  if (data==NULL) return SWD_ERROR_NULLPOINTER;
  if (bits<0 && bits>8) return SWD_ERROR_PARAM;
  if (nLSBfirst!=0 && nLSBfirst!=1) return SWD_ERROR_PARAM;
@@ -117,19 +117,13 @@ int swd_drv_mosi_trn(swd_ctx_t *swdctx, int bits){
  if (bits<SWD_TURNROUND_MIN_VAL && bits>SWD_TURNROUND_MAX_VAL)
   return SWD_ERROR_TURNAROUND; 
 
- static int res;
-// static char mosidata[4]={0xff, 0xff, 0xff, 0xff};
-
+ int res;
  res=urj_tap_cable_set_signal((urj_cable_t *)swdctx->driver->device, URJ_POD_CS_RnW, 0); 
  if (res<0) return SWD_ERROR_DRIVER;
-// res=urj_tap_cable_transfer((urj_cable_t *)swdctx->driver->device, bits, mosidata, NULL); 
-// if (res<0) return SWD_ERROR_DRIVER;
-// urj_tap_cable_flush((urj_cable_t *)swdctx->driver->device, URJ_TAP_CABLE_COMPLETELY);
-
  /* void urj_tap_cable_clock (urj_cable_t *cable, int tms, int tdi, int n); */
- urj_tap_cable_clock((urj_cable_t *)swdctx->driver->device, 0, 0, bits); 
+ urj_tap_cable_clock((urj_cable_t *)swdctx->driver->device, 1, 1, bits); 
 
- return SWD_OK;
+ return bits;
 }
 
 int swd_drv_miso_trn(swd_ctx_t *swdctx, int bits){
@@ -137,20 +131,56 @@ int swd_drv_miso_trn(swd_ctx_t *swdctx, int bits){
   return SWD_ERROR_TURNAROUND; 
 
  static int res;
- static char mosidata[4]={0xff, 0xff, 0xff, 0xff};
 
  res=urj_tap_cable_set_signal((urj_cable_t *)swdctx->driver->device, URJ_POD_CS_RnW, URJ_POD_CS_RnW); 
  if (res<0) return SWD_ERROR_DRIVER;
- res=urj_tap_cable_transfer((urj_cable_t *)swdctx->driver->device, bits, mosidata, NULL); 
- if (res<0) return SWD_ERROR_DRIVER;
- urj_tap_cable_flush((urj_cable_t *)swdctx->driver->device, URJ_TAP_CABLE_COMPLETELY);
 
  /* void urj_tap_cable_clock (urj_cable_t *cable, int tms, int tdi, int n); */
-// urj_tap_cable_clock((urj_cable_t *)swdctx->driver->device, 0, 0, bits); 
+ urj_tap_cable_clock((urj_cable_t *)swdctx->driver->device, 1, 1, bits); 
  
- return SWD_OK;
+ return bits;
 }
 
 
+/** Set debug level according to UrJTAG settings.
+ */
+int swd_log_level_inherit(swd_ctx_t *swdctx, int loglevel){
+ if (swdctx==NULL){
+  urj_log(URJ_LOG_LEVEL_DEBUG, "swd_log_level_inherit(): SWD Context not (yet) initialized...\n");
+  return SWD_OK;
+ }
+
+ swd_loglevel_t new_swdlevel;
+ switch (loglevel){
+  case URJ_LOG_LEVEL_ALL:
+  case URJ_LOG_LEVEL_COMM:
+  case URJ_LOG_LEVEL_DEBUG:
+   new_swdlevel=SWD_LOGLEVEL_DEBUG;
+   break;
+  case URJ_LOG_LEVEL_DETAIL:
+   new_swdlevel=SWD_LOGLEVEL_INFO;
+   break;
+  case URJ_LOG_LEVEL_NORMAL:
+   new_swdlevel=SWD_LOGLEVEL_NORMAL;
+   break;
+  case URJ_LOG_LEVEL_WARNING:
+   new_swdlevel=SWD_LOGLEVEL_WARNING;
+   break;
+  case URJ_LOG_LEVEL_ERROR:
+   new_swdlevel=SWD_LOGLEVEL_ERROR;
+   break;
+  case URJ_LOG_LEVEL_SILENT:
+   new_swdlevel=SWD_LOGLEVEL_SILENT;
+   break;
+  default:
+   new_swdlevel=SWD_LOGLEVEL_NORMAL;
+ }
+                                
+ int res=swd_log_level_set(swdctx, new_swdlevel);
+ if (res<0) {
+  urj_log(URJ_LOG_LEVEL_ERROR, "swd_log_level_set() failed (%s)\n", swd_error_string(res));
+  return URJ_ERROR_SYNTAX;
+ } else return SWD_OK;
+}
 
 
