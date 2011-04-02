@@ -4,7 +4,7 @@
  * Serial Wire Debug Open Library.
  * Library Body File.
  *
- * Copyright (C) 2010, Tomasz Boleslaw CEDRO (http://www.tomek.cedro.info)
+ * Copyright (C) 2010-2011, Tomasz Boleslaw CEDRO (http://www.tomek.cedro.info)
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -30,13 +30,13 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.*
  *
- * Written by Tomasz Boleslaw CEDRO <tomek.cedro@gmail.com>, 2010;
+ * Written by Tomasz Boleslaw CEDRO <tomek@cedro.info>, 2010-2011;
  *
  */
 
 /** \file libswd.c */
 
-#include <libswd/libswd.h>
+#include <libswd.h>
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>

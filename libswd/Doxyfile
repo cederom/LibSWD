@@ -1,8 +1,8 @@
 # Doxyfile 1.7.1
 DOXYFILE_ENCODING      = UTF-8
-PROJECT_NAME           = libswd
-PROJECT_NUMBER         = 0.0.1
-OUTPUT_DIRECTORY       = ../doc
+PROJECT_NAME           = "Serial Wire Debug Open Library"
+PROJECT_NUMBER         = $(PROJECT)-$(VERSION)
+OUTPUT_DIRECTORY       = doxygen-doc
 CREATE_SUBDIRS         = NO
 
 # The OUTPUT_LANGUAGE tag is used to specify the language in which all
@@ -537,7 +537,8 @@ WARN_LOGFILE           =
 # directories like "/usr/src/myproject". Separate the files or directories
 # with spaces.
 
-INPUT                  = libswd.h libswd.c libswd_drv_dummy.c
+#INPUT                  = libswd.h libswd.c libswd_drv_dummy.c
+INPUT                   = src/
 
 # This tag can be used to specify the character encoding of the source files
 # that doxygen parses. Internally doxygen uses the UTF-8 encoding, which is
@@ -1169,7 +1170,7 @@ RTF_EXTENSIONS_FILE    =
 # If the GENERATE_MAN tag is set to YES (the default) Doxygen will
 # generate man pages
 
-GENERATE_MAN           = YES
+GENERATE_MAN           = NO
 
 # The MAN_OUTPUT tag is used to specify where the man pages will be put.
 # If a relative path is entered the value of OUTPUT_DIRECTORY will be

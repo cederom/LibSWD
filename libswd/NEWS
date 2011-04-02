@@ -1,0 +1,26 @@
+2011-04-02:
+-----------
+ * LibSWD initial version 0.1 released to the public.
+
+2011-03-23:
+-----------
+ * Integration with UrJTAG complete. Source code sent to developers.
+ * Functionality verification complete. Updated work in progress description
+   at http://stm32primer2swd.sourceforge.net/
+
+2011-02-09:
+-----------
+ * Remote source code repository (SVN) started.
+
+2010-12-29:
+-----------
+ * Official LibSWD project website launched at http://libswd.sf.net
+
+2010-11-23:
+-----------
+ * Decision to implement SWD API as standalone library.
+
+2010-10-21:
+-----------
+ * Work to create open swd implementation has begun.
+ * Website with progress log launched at http://stm32primer2swd.sourceforge.net/.

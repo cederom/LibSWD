@@ -30,11 +30,12 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.*
  *
- * Written by Tomasz Boleslaw CEDRO <tomek.cedro@gmail.com>, 2010-2011;
+ * Written by Tomasz Boleslaw CEDRO <tomek@cedro.info>, 2010-2011;
  *
  */
 
-#include <libswd/libswd.h>
+#include <libswd.h>
+#include <stdlib.h>
 
 int swd_drv_mosi_8(swd_ctx_t *swdctx, swd_cmd_t *cmd, char *data, int bits, int nLSBfirst){
  if (data==NULL) return SWD_ERROR_NULLPOINTER;

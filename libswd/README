@@ -1,0 +1,43 @@
+ Serial Wire Debug Open Library Readme File
+
+ 1. General information.
+ 2. How to build and install.
+
+----------------------
+1. General information
+
+Serial Wire Debug Open Library is first open solution for accessing the SW-DP (Serial Wire Debug Port) on ARM Cortex CPU based embedded systems. Library is available under "new" 3 clause BSD License. This project was started by Tomek Cedro to create and document Free and Open-Source SWD (Serial Wire Debug) access to new ARM-Cortex CPU cores. SWD is an alternative to JTAG method for accessing the DAP that allows low-level access to system resources such as system bus, memory, IO, even single stepping the code execution - a must-have for an embedded systems developer. 
+
+SWD works on both simple and advanced devices from the ARM Cortex family. By default Cortex CPU or FPGA'a IP Core is both JTAG and SWD capable, so the common name for this transport method is SWJ (Serial Wire and JTAG). It is the application requirement and designer choice if a final product supports JTAG, SWD, or both (SWJ).
+
+LibSWD can be considered almost standalone to be easily integrated into third party software with minimal impact on existing program structure. LibSWD implements all utilities necessary to generate bit stream and queue bus operations on both high (operation) and low (bit) abstraction level. High level functions can be called from external application to generate queue that represent bus operations or simply produce a bitstream that can be later flushed into real hardware with simple set of functions (these functions can utilise existing cable drivers already implemented in external software). 
+
+The first approach and practical tests were performed on simple STM32Primer development kits using UrJTAG and OpenOCD utilities as described on the http://stm32primer2.sf.net project webstie. Major parts of this research were conducted as a cooperation between Orange Labs Warsaw and Orange Labs Paris, and some additionally by Cybernetic Research Student Group from Warsaw University of Technology in Poland that I am founder and member.
+
+For more information please visit project website at http://libswd.sf.net.
+
+
+----------------------------
+2. How to build and install.
+
+To obtain the latest release visit project website at http://libswd.sf.net. LibSWD use Autotools so the build and install procedure is pretty straightforward:
+
+ tar xjvf libswd-<version>.tar.bz2
+ cd libswd-<version>
+ ./configure <optional parameters>
+ make install clean
+
+It is possible to build the documentation in html, pdf or both formats. Note that you need to have Doxygen installed for this to work. Additionally you need to have LaTeX installed to build the PDF. 
+
+ make doxygen-pdf
+ make doxygen-html
+ make doxygen-doc
+
+To create package file for distribution type:
+
+ make distcheck
+
+To uninstall the library type:
+
+ make uninstall
+

@@ -30,7 +30,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.*
  *
- * Written by Tomasz Boleslaw CEDRO <tomek.cedro@gmail.com>, 2010-2011;
+ * Written by Tomasz Boleslaw CEDRO <tomek@cedro.info>, 2010-2011;
  *
  */
 
@@ -81,7 +81,7 @@
  *    return res;
  *   } else printf("IDCODE: 0x%X (%s)\n", *idcode, swd_bin32_string(*idcode));
  *   swd_deinit(swdctx);
- *   return idcode;
+ *   return *idcode;
  *  }
  * \endcode
  */
