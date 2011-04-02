@@ -1,0 +1,64 @@
+\hypertarget{structswd__swdp__t}{
+\section{swd\_\-swdp\_\-t Struct Reference}
+\label{structswd__swdp__t}\index{swd\_\-swdp\_\-t@{swd\_\-swdp\_\-t}}
+}
+
+
+Most actual Serial Wire Debug Port Registers.  
+
+
+
+
+{\ttfamily \#include $<$libswd.h$>$}
+
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{structswd__swdp__t_a070bf19c81fcf7467cf56b25d0e5a4cf}{
+char \hyperlink{structswd__swdp__t_a070bf19c81fcf7467cf56b25d0e5a4cf}{ack}}
+\label{structswd__swdp__t_a070bf19c81fcf7467cf56b25d0e5a4cf}
+
+\begin{DoxyCompactList}\small\item\em Last known state of ACK response. \item\end{DoxyCompactList}\item 
+\hypertarget{structswd__swdp__t_ad2b92d409367acae0566fbd5be7a8ea5}{
+char \hyperlink{structswd__swdp__t_ad2b92d409367acae0566fbd5be7a8ea5}{parity}}
+\label{structswd__swdp__t_ad2b92d409367acae0566fbd5be7a8ea5}
+
+\begin{DoxyCompactList}\small\item\em Parity bit of the data transfer. \item\end{DoxyCompactList}\item 
+\hypertarget{structswd__swdp__t_a59d78f5e5b3b2576a1ea04720bafb310}{
+int \hyperlink{structswd__swdp__t_a59d78f5e5b3b2576a1ea04720bafb310}{idcode}}
+\label{structswd__swdp__t_a59d78f5e5b3b2576a1ea04720bafb310}
+
+\begin{DoxyCompactList}\small\item\em Target's IDCODE register value. \item\end{DoxyCompactList}\item 
+\hypertarget{structswd__swdp__t_a25c097b84323315a910294429e579e2c}{
+int \hyperlink{structswd__swdp__t_a25c097b84323315a910294429e579e2c}{abort}}
+\label{structswd__swdp__t_a25c097b84323315a910294429e579e2c}
+
+\begin{DoxyCompactList}\small\item\em Last known ABORT register value. \item\end{DoxyCompactList}\item 
+\hypertarget{structswd__swdp__t_ab238faa3bad9500c235d38818dc04b80}{
+int \hyperlink{structswd__swdp__t_ab238faa3bad9500c235d38818dc04b80}{ctrlstat}}
+\label{structswd__swdp__t_ab238faa3bad9500c235d38818dc04b80}
+
+\begin{DoxyCompactList}\small\item\em Last known CTRLSTAT register value. \item\end{DoxyCompactList}\item 
+\hypertarget{structswd__swdp__t_a7dd5a91a546abcda7167c24ce263239c}{
+int \hyperlink{structswd__swdp__t_a7dd5a91a546abcda7167c24ce263239c}{wcr}}
+\label{structswd__swdp__t_a7dd5a91a546abcda7167c24ce263239c}
+
+\begin{DoxyCompactList}\small\item\em Last known WCR register value. \item\end{DoxyCompactList}\item 
+\hypertarget{structswd__swdp__t_a046581282ce74322ca8f8da0272e3d02}{
+int \hyperlink{structswd__swdp__t_a046581282ce74322ca8f8da0272e3d02}{select}}
+\label{structswd__swdp__t_a046581282ce74322ca8f8da0272e3d02}
+
+\begin{DoxyCompactList}\small\item\em Last known SELECT register value. \item\end{DoxyCompactList}\item 
+\hypertarget{structswd__swdp__t_aff754afb02e53923f876c29f2ccc5495}{
+int \hyperlink{structswd__swdp__t_aff754afb02e53923f876c29f2ccc5495}{rdbuf}}
+\label{structswd__swdp__t_aff754afb02e53923f876c29f2ccc5495}
+
+\begin{DoxyCompactList}\small\item\em Last known RDBUF register (payload data) value. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Most actual Serial Wire Debug Port Registers. 
+
+The documentation for this struct was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+src/\hyperlink{libswd_8h}{libswd.h}\end{DoxyCompactItemize}

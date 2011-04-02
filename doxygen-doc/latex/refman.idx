@@ -1,0 +1,453 @@
+\indexentry{swd\_\discretionary {-}{}{}ahbap\_\discretionary {-}{}{}t@{swd\_\discretionary {-}{}{}ahbap\_\discretionary {-}{}{}t}|hyperpage}{9}
+\indexentry{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}t@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}t}|hyperpage}{10}
+\indexentry{swd\_\discretionary {-}{}{}context\_\discretionary {-}{}{}config\_\discretionary {-}{}{}t@{swd\_\discretionary {-}{}{}context\_\discretionary {-}{}{}config\_\discretionary {-}{}{}t}|hyperpage}{11}
+\indexentry{swd\_\discretionary {-}{}{}ctx\_\discretionary {-}{}{}t@{swd\_\discretionary {-}{}{}ctx\_\discretionary {-}{}{}t}|hyperpage}{12}
+\indexentry{swd\_\discretionary {-}{}{}driver\_\discretionary {-}{}{}t@{swd\_\discretionary {-}{}{}driver\_\discretionary {-}{}{}t}|hyperpage}{12}
+\indexentry{swd\_\discretionary {-}{}{}swdp\_\discretionary {-}{}{}t@{swd\_\discretionary {-}{}{}swdp\_\discretionary {-}{}{}t}|hyperpage}{13}
+\indexentry{swd\_\discretionary {-}{}{}transaction\_\discretionary {-}{}{}t@{swd\_\discretionary {-}{}{}transaction\_\discretionary {-}{}{}t}|hyperpage}{14}
+\indexentry{src/libswd.c@{src/libswd.c}|hyperpage}{15}
+\indexentry{libswd.c@{libswd.c}!swd\_\discretionary {-}{}{}bin32\_\discretionary {-}{}{}bitswap@{swd\_\discretionary {-}{}{}bin32\_\discretionary {-}{}{}bitswap}|hyperpage}{19}
+\indexentry{swd\_\discretionary {-}{}{}bin32\_\discretionary {-}{}{}bitswap@{swd\_\discretionary {-}{}{}bin32\_\discretionary {-}{}{}bitswap}!libswd.c@{libswd.c}|hyperpage}{19}
+\indexentry{libswd.c@{libswd.c}!swd\_\discretionary {-}{}{}bin32\_\discretionary {-}{}{}parity\_\discretionary {-}{}{}even@{swd\_\discretionary {-}{}{}bin32\_\discretionary {-}{}{}parity\_\discretionary {-}{}{}even}|hyperpage}{19}
+\indexentry{swd\_\discretionary {-}{}{}bin32\_\discretionary {-}{}{}parity\_\discretionary {-}{}{}even@{swd\_\discretionary {-}{}{}bin32\_\discretionary {-}{}{}parity\_\discretionary {-}{}{}even}!libswd.c@{libswd.c}|hyperpage}{19}
+\indexentry{libswd.c@{libswd.c}!swd\_\discretionary {-}{}{}bin32\_\discretionary {-}{}{}print@{swd\_\discretionary {-}{}{}bin32\_\discretionary {-}{}{}print}|hyperpage}{19}
+\indexentry{swd\_\discretionary {-}{}{}bin32\_\discretionary {-}{}{}print@{swd\_\discretionary {-}{}{}bin32\_\discretionary {-}{}{}print}!libswd.c@{libswd.c}|hyperpage}{19}
+\indexentry{libswd.c@{libswd.c}!swd\_\discretionary {-}{}{}bin32\_\discretionary {-}{}{}string@{swd\_\discretionary {-}{}{}bin32\_\discretionary {-}{}{}string}|hyperpage}{20}
+\indexentry{swd\_\discretionary {-}{}{}bin32\_\discretionary {-}{}{}string@{swd\_\discretionary {-}{}{}bin32\_\discretionary {-}{}{}string}!libswd.c@{libswd.c}|hyperpage}{20}
+\indexentry{libswd.c@{libswd.c}!swd\_\discretionary {-}{}{}bin8\_\discretionary {-}{}{}bitswap@{swd\_\discretionary {-}{}{}bin8\_\discretionary {-}{}{}bitswap}|hyperpage}{20}
+\indexentry{swd\_\discretionary {-}{}{}bin8\_\discretionary {-}{}{}bitswap@{swd\_\discretionary {-}{}{}bin8\_\discretionary {-}{}{}bitswap}!libswd.c@{libswd.c}|hyperpage}{20}
+\indexentry{libswd.c@{libswd.c}!swd\_\discretionary {-}{}{}bin8\_\discretionary {-}{}{}parity\_\discretionary {-}{}{}even@{swd\_\discretionary {-}{}{}bin8\_\discretionary {-}{}{}parity\_\discretionary {-}{}{}even}|hyperpage}{20}
+\indexentry{swd\_\discretionary {-}{}{}bin8\_\discretionary {-}{}{}parity\_\discretionary {-}{}{}even@{swd\_\discretionary {-}{}{}bin8\_\discretionary {-}{}{}parity\_\discretionary {-}{}{}even}!libswd.c@{libswd.c}|hyperpage}{20}
+\indexentry{libswd.c@{libswd.c}!swd\_\discretionary {-}{}{}bin8\_\discretionary {-}{}{}print@{swd\_\discretionary {-}{}{}bin8\_\discretionary {-}{}{}print}|hyperpage}{20}
+\indexentry{swd\_\discretionary {-}{}{}bin8\_\discretionary {-}{}{}print@{swd\_\discretionary {-}{}{}bin8\_\discretionary {-}{}{}print}!libswd.c@{libswd.c}|hyperpage}{20}
+\indexentry{libswd.c@{libswd.c}!swd\_\discretionary {-}{}{}bin8\_\discretionary {-}{}{}string@{swd\_\discretionary {-}{}{}bin8\_\discretionary {-}{}{}string}|hyperpage}{21}
+\indexentry{swd\_\discretionary {-}{}{}bin8\_\discretionary {-}{}{}string@{swd\_\discretionary {-}{}{}bin8\_\discretionary {-}{}{}string}!libswd.c@{libswd.c}|hyperpage}{21}
+\indexentry{libswd.c@{libswd.c}!swd\_\discretionary {-}{}{}bitgen8\_\discretionary {-}{}{}request@{swd\_\discretionary {-}{}{}bitgen8\_\discretionary {-}{}{}request}|hyperpage}{21}
+\indexentry{swd\_\discretionary {-}{}{}bitgen8\_\discretionary {-}{}{}request@{swd\_\discretionary {-}{}{}bitgen8\_\discretionary {-}{}{}request}!libswd.c@{libswd.c}|hyperpage}{21}
+\indexentry{libswd.c@{libswd.c}!swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}read\_\discretionary {-}{}{}ack@{swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}read\_\discretionary {-}{}{}ack}|hyperpage}{21}
+\indexentry{swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}read\_\discretionary {-}{}{}ack@{swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}read\_\discretionary {-}{}{}ack}!libswd.c@{libswd.c}|hyperpage}{21}
+\indexentry{libswd.c@{libswd.c}!swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}read\_\discretionary {-}{}{}data\_\discretionary {-}{}{}p@{swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}read\_\discretionary {-}{}{}data\_\discretionary {-}{}{}p}|hyperpage}{22}
+\indexentry{swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}read\_\discretionary {-}{}{}data\_\discretionary {-}{}{}p@{swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}read\_\discretionary {-}{}{}data\_\discretionary {-}{}{}p}!libswd.c@{libswd.c}|hyperpage}{22}
+\indexentry{libswd.c@{libswd.c}!swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}setdir\_\discretionary {-}{}{}miso@{swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}setdir\_\discretionary {-}{}{}miso}|hyperpage}{22}
+\indexentry{swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}setdir\_\discretionary {-}{}{}miso@{swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}setdir\_\discretionary {-}{}{}miso}!libswd.c@{libswd.c}|hyperpage}{22}
+\indexentry{libswd.c@{libswd.c}!swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}setdir\_\discretionary {-}{}{}mosi@{swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}setdir\_\discretionary {-}{}{}mosi}|hyperpage}{22}
+\indexentry{swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}setdir\_\discretionary {-}{}{}mosi@{swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}setdir\_\discretionary {-}{}{}mosi}!libswd.c@{libswd.c}|hyperpage}{22}
+\indexentry{libswd.c@{libswd.c}!swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}write\_\discretionary {-}{}{}control@{swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}write\_\discretionary {-}{}{}control}|hyperpage}{22}
+\indexentry{swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}write\_\discretionary {-}{}{}control@{swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}write\_\discretionary {-}{}{}control}!libswd.c@{libswd.c}|hyperpage}{22}
+\indexentry{libswd.c@{libswd.c}!swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}write\_\discretionary {-}{}{}data\_\discretionary {-}{}{}ap@{swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}write\_\discretionary {-}{}{}data\_\discretionary {-}{}{}ap}|hyperpage}{23}
+\indexentry{swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}write\_\discretionary {-}{}{}data\_\discretionary {-}{}{}ap@{swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}write\_\discretionary {-}{}{}data\_\discretionary {-}{}{}ap}!libswd.c@{libswd.c}|hyperpage}{23}
+\indexentry{libswd.c@{libswd.c}!swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}write\_\discretionary {-}{}{}data\_\discretionary {-}{}{}p@{swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}write\_\discretionary {-}{}{}data\_\discretionary {-}{}{}p}|hyperpage}{23}
+\indexentry{swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}write\_\discretionary {-}{}{}data\_\discretionary {-}{}{}p@{swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}write\_\discretionary {-}{}{}data\_\discretionary {-}{}{}p}!libswd.c@{libswd.c}|hyperpage}{23}
+\indexentry{libswd.c@{libswd.c}!swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}write\_\discretionary {-}{}{}request@{swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}write\_\discretionary {-}{}{}request}|hyperpage}{23}
+\indexentry{swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}write\_\discretionary {-}{}{}request@{swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}write\_\discretionary {-}{}{}request}!libswd.c@{libswd.c}|hyperpage}{23}
+\indexentry{libswd.c@{libswd.c}!swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue}|hyperpage}{24}
+\indexentry{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue}!libswd.c@{libswd.c}|hyperpage}{24}
+\indexentry{libswd.c@{libswd.c}!swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}ack@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}ack}|hyperpage}{24}
+\indexentry{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}ack@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}ack}!libswd.c@{libswd.c}|hyperpage}{24}
+\indexentry{libswd.c@{libswd.c}!swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}data@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}data}|hyperpage}{24}
+\indexentry{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}data@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}data}!libswd.c@{libswd.c}|hyperpage}{24}
+\indexentry{libswd.c@{libswd.c}!swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}data\_\discretionary {-}{}{}p@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}data\_\discretionary {-}{}{}p}|hyperpage}{24}
+\indexentry{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}data\_\discretionary {-}{}{}p@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}data\_\discretionary {-}{}{}p}!libswd.c@{libswd.c}|hyperpage}{24}
+\indexentry{libswd.c@{libswd.c}!swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}n\_\discretionary {-}{}{}data\_\discretionary {-}{}{}p@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}n\_\discretionary {-}{}{}data\_\discretionary {-}{}{}p}|hyperpage}{25}
+\indexentry{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}n\_\discretionary {-}{}{}data\_\discretionary {-}{}{}p@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}n\_\discretionary {-}{}{}data\_\discretionary {-}{}{}p}!libswd.c@{libswd.c}|hyperpage}{25}
+\indexentry{libswd.c@{libswd.c}!swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}nbit@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}nbit}|hyperpage}{25}
+\indexentry{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}nbit@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}nbit}!libswd.c@{libswd.c}|hyperpage}{25}
+\indexentry{libswd.c@{libswd.c}!swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}parity@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}parity}|hyperpage}{25}
+\indexentry{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}parity@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}parity}!libswd.c@{libswd.c}|hyperpage}{25}
+\indexentry{libswd.c@{libswd.c}!swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}trn@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}trn}|hyperpage}{26}
+\indexentry{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}trn@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}trn}!libswd.c@{libswd.c}|hyperpage}{26}
+\indexentry{libswd.c@{libswd.c}!swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}control@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}control}|hyperpage}{26}
+\indexentry{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}control@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}control}!libswd.c@{libswd.c}|hyperpage}{26}
+\indexentry{libswd.c@{libswd.c}!swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}dap\_\discretionary {-}{}{}reset@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}dap\_\discretionary {-}{}{}reset}|hyperpage}{26}
+\indexentry{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}dap\_\discretionary {-}{}{}reset@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}dap\_\discretionary {-}{}{}reset}!libswd.c@{libswd.c}|hyperpage}{26}
+\indexentry{libswd.c@{libswd.c}!swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}data@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}data}|hyperpage}{26}
+\indexentry{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}data@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}data}!libswd.c@{libswd.c}|hyperpage}{26}
+\indexentry{libswd.c@{libswd.c}!swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}data\_\discretionary {-}{}{}ap@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}data\_\discretionary {-}{}{}ap}|hyperpage}{27}
+\indexentry{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}data\_\discretionary {-}{}{}ap@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}data\_\discretionary {-}{}{}ap}!libswd.c@{libswd.c}|hyperpage}{27}
+\indexentry{libswd.c@{libswd.c}!swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}data\_\discretionary {-}{}{}p@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}data\_\discretionary {-}{}{}p}|hyperpage}{27}
+\indexentry{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}data\_\discretionary {-}{}{}p@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}data\_\discretionary {-}{}{}p}!libswd.c@{libswd.c}|hyperpage}{27}
+\indexentry{libswd.c@{libswd.c}!swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}idle@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}idle}|hyperpage}{27}
+\indexentry{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}idle@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}idle}!libswd.c@{libswd.c}|hyperpage}{27}
+\indexentry{libswd.c@{libswd.c}!swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}jtag2swd@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}jtag2swd}|hyperpage}{27}
+\indexentry{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}jtag2swd@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}jtag2swd}!libswd.c@{libswd.c}|hyperpage}{27}
+\indexentry{libswd.c@{libswd.c}!swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}n\_\discretionary {-}{}{}data\_\discretionary {-}{}{}ap@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}n\_\discretionary {-}{}{}data\_\discretionary {-}{}{}ap}|hyperpage}{28}
+\indexentry{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}n\_\discretionary {-}{}{}data\_\discretionary {-}{}{}ap@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}n\_\discretionary {-}{}{}data\_\discretionary {-}{}{}ap}!libswd.c@{libswd.c}|hyperpage}{28}
+\indexentry{libswd.c@{libswd.c}!swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}n\_\discretionary {-}{}{}data\_\discretionary {-}{}{}p@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}n\_\discretionary {-}{}{}data\_\discretionary {-}{}{}p}|hyperpage}{28}
+\indexentry{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}n\_\discretionary {-}{}{}data\_\discretionary {-}{}{}p@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}n\_\discretionary {-}{}{}data\_\discretionary {-}{}{}p}!libswd.c@{libswd.c}|hyperpage}{28}
+\indexentry{libswd.c@{libswd.c}!swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}nbit@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}nbit}|hyperpage}{28}
+\indexentry{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}nbit@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}nbit}!libswd.c@{libswd.c}|hyperpage}{28}
+\indexentry{libswd.c@{libswd.c}!swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}parity@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}parity}|hyperpage}{29}
+\indexentry{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}parity@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}parity}!libswd.c@{libswd.c}|hyperpage}{29}
+\indexentry{libswd.c@{libswd.c}!swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}request@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}request}|hyperpage}{29}
+\indexentry{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}request@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}request}!libswd.c@{libswd.c}|hyperpage}{29}
+\indexentry{libswd.c@{libswd.c}!swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}swd2jtag@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}swd2jtag}|hyperpage}{29}
+\indexentry{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}swd2jtag@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}swd2jtag}!libswd.c@{libswd.c}|hyperpage}{29}
+\indexentry{libswd.c@{libswd.c}!swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}trn@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}trn}|hyperpage}{29}
+\indexentry{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}trn@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}trn}!libswd.c@{libswd.c}|hyperpage}{29}
+\indexentry{libswd.c@{libswd.c}!swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}append@{swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}append}|hyperpage}{30}
+\indexentry{swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}append@{swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}append}!libswd.c@{libswd.c}|hyperpage}{30}
+\indexentry{libswd.c@{libswd.c}!swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}find\_\discretionary {-}{}{}root@{swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}find\_\discretionary {-}{}{}root}|hyperpage}{30}
+\indexentry{swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}find\_\discretionary {-}{}{}root@{swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}find\_\discretionary {-}{}{}root}!libswd.c@{libswd.c}|hyperpage}{30}
+\indexentry{libswd.c@{libswd.c}!swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}find\_\discretionary {-}{}{}tail@{swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}find\_\discretionary {-}{}{}tail}|hyperpage}{30}
+\indexentry{swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}find\_\discretionary {-}{}{}tail@{swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}find\_\discretionary {-}{}{}tail}!libswd.c@{libswd.c}|hyperpage}{30}
+\indexentry{libswd.c@{libswd.c}!swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}flush@{swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}flush}|hyperpage}{30}
+\indexentry{swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}flush@{swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}flush}!libswd.c@{libswd.c}|hyperpage}{30}
+\indexentry{libswd.c@{libswd.c}!swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}free@{swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}free}|hyperpage}{31}
+\indexentry{swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}free@{swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}free}!libswd.c@{libswd.c}|hyperpage}{31}
+\indexentry{libswd.c@{libswd.c}!swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}free\_\discretionary {-}{}{}head@{swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}free\_\discretionary {-}{}{}head}|hyperpage}{31}
+\indexentry{swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}free\_\discretionary {-}{}{}head@{swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}free\_\discretionary {-}{}{}head}!libswd.c@{libswd.c}|hyperpage}{31}
+\indexentry{libswd.c@{libswd.c}!swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}free\_\discretionary {-}{}{}tail@{swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}free\_\discretionary {-}{}{}tail}|hyperpage}{31}
+\indexentry{swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}free\_\discretionary {-}{}{}tail@{swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}free\_\discretionary {-}{}{}tail}!libswd.c@{libswd.c}|hyperpage}{31}
+\indexentry{libswd.c@{libswd.c}!swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}init@{swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}init}|hyperpage}{31}
+\indexentry{swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}init@{swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}init}!libswd.c@{libswd.c}|hyperpage}{31}
+\indexentry{libswd.c@{libswd.c}!swd\_\discretionary {-}{}{}dap\_\discretionary {-}{}{}detect@{swd\_\discretionary {-}{}{}dap\_\discretionary {-}{}{}detect}|hyperpage}{32}
+\indexentry{swd\_\discretionary {-}{}{}dap\_\discretionary {-}{}{}detect@{swd\_\discretionary {-}{}{}dap\_\discretionary {-}{}{}detect}!libswd.c@{libswd.c}|hyperpage}{32}
+\indexentry{libswd.c@{libswd.c}!swd\_\discretionary {-}{}{}dap\_\discretionary {-}{}{}reset@{swd\_\discretionary {-}{}{}dap\_\discretionary {-}{}{}reset}|hyperpage}{32}
+\indexentry{swd\_\discretionary {-}{}{}dap\_\discretionary {-}{}{}reset@{swd\_\discretionary {-}{}{}dap\_\discretionary {-}{}{}reset}!libswd.c@{libswd.c}|hyperpage}{32}
+\indexentry{libswd.c@{libswd.c}!swd\_\discretionary {-}{}{}dap\_\discretionary {-}{}{}select@{swd\_\discretionary {-}{}{}dap\_\discretionary {-}{}{}select}|hyperpage}{32}
+\indexentry{swd\_\discretionary {-}{}{}dap\_\discretionary {-}{}{}select@{swd\_\discretionary {-}{}{}dap\_\discretionary {-}{}{}select}!libswd.c@{libswd.c}|hyperpage}{32}
+\indexentry{libswd.c@{libswd.c}!swd\_\discretionary {-}{}{}deinit@{swd\_\discretionary {-}{}{}deinit}|hyperpage}{32}
+\indexentry{swd\_\discretionary {-}{}{}deinit@{swd\_\discretionary {-}{}{}deinit}!libswd.c@{libswd.c}|hyperpage}{32}
+\indexentry{libswd.c@{libswd.c}!swd\_\discretionary {-}{}{}deinit\_\discretionary {-}{}{}cmdq@{swd\_\discretionary {-}{}{}deinit\_\discretionary {-}{}{}cmdq}|hyperpage}{33}
+\indexentry{swd\_\discretionary {-}{}{}deinit\_\discretionary {-}{}{}cmdq@{swd\_\discretionary {-}{}{}deinit\_\discretionary {-}{}{}cmdq}!libswd.c@{libswd.c}|hyperpage}{33}
+\indexentry{libswd.c@{libswd.c}!swd\_\discretionary {-}{}{}deinit\_\discretionary {-}{}{}ctx@{swd\_\discretionary {-}{}{}deinit\_\discretionary {-}{}{}ctx}|hyperpage}{33}
+\indexentry{swd\_\discretionary {-}{}{}deinit\_\discretionary {-}{}{}ctx@{swd\_\discretionary {-}{}{}deinit\_\discretionary {-}{}{}ctx}!libswd.c@{libswd.c}|hyperpage}{33}
+\indexentry{libswd.c@{libswd.c}!swd\_\discretionary {-}{}{}dp\_\discretionary {-}{}{}read\_\discretionary {-}{}{}idcode@{swd\_\discretionary {-}{}{}dp\_\discretionary {-}{}{}read\_\discretionary {-}{}{}idcode}|hyperpage}{33}
+\indexentry{swd\_\discretionary {-}{}{}dp\_\discretionary {-}{}{}read\_\discretionary {-}{}{}idcode@{swd\_\discretionary {-}{}{}dp\_\discretionary {-}{}{}read\_\discretionary {-}{}{}idcode}!libswd.c@{libswd.c}|hyperpage}{33}
+\indexentry{libswd.c@{libswd.c}!swd\_\discretionary {-}{}{}drv\_\discretionary {-}{}{}transmit@{swd\_\discretionary {-}{}{}drv\_\discretionary {-}{}{}transmit}|hyperpage}{33}
+\indexentry{swd\_\discretionary {-}{}{}drv\_\discretionary {-}{}{}transmit@{swd\_\discretionary {-}{}{}drv\_\discretionary {-}{}{}transmit}!libswd.c@{libswd.c}|hyperpage}{33}
+\indexentry{libswd.c@{libswd.c}!swd\_\discretionary {-}{}{}init@{swd\_\discretionary {-}{}{}init}|hyperpage}{34}
+\indexentry{swd\_\discretionary {-}{}{}init@{swd\_\discretionary {-}{}{}init}!libswd.c@{libswd.c}|hyperpage}{34}
+\indexentry{libswd.c@{libswd.c}!swd\_\discretionary {-}{}{}log@{swd\_\discretionary {-}{}{}log}|hyperpage}{34}
+\indexentry{swd\_\discretionary {-}{}{}log@{swd\_\discretionary {-}{}{}log}!libswd.c@{libswd.c}|hyperpage}{34}
+\indexentry{libswd.c@{libswd.c}!swd\_\discretionary {-}{}{}log\_\discretionary {-}{}{}level\_\discretionary {-}{}{}set@{swd\_\discretionary {-}{}{}log\_\discretionary {-}{}{}level\_\discretionary {-}{}{}set}|hyperpage}{34}
+\indexentry{swd\_\discretionary {-}{}{}log\_\discretionary {-}{}{}level\_\discretionary {-}{}{}set@{swd\_\discretionary {-}{}{}log\_\discretionary {-}{}{}level\_\discretionary {-}{}{}set}!libswd.c@{libswd.c}|hyperpage}{34}
+\indexentry{src/libswd.h@{src/libswd.h}|hyperpage}{35}
+\indexentry{libswd.h@{libswd.h}!AHB\_\discretionary {-}{}{}AP\_\discretionary {-}{}{}BD0@{AHB\_\discretionary {-}{}{}AP\_\discretionary {-}{}{}BD0}|hyperpage}{45}
+\indexentry{AHB\_\discretionary {-}{}{}AP\_\discretionary {-}{}{}BD0@{AHB\_\discretionary {-}{}{}AP\_\discretionary {-}{}{}BD0}!libswd.h@{libswd.h}|hyperpage}{45}
+\indexentry{libswd.h@{libswd.h}!AHB\_\discretionary {-}{}{}AP\_\discretionary {-}{}{}BD1@{AHB\_\discretionary {-}{}{}AP\_\discretionary {-}{}{}BD1}|hyperpage}{45}
+\indexentry{AHB\_\discretionary {-}{}{}AP\_\discretionary {-}{}{}BD1@{AHB\_\discretionary {-}{}{}AP\_\discretionary {-}{}{}BD1}!libswd.h@{libswd.h}|hyperpage}{45}
+\indexentry{libswd.h@{libswd.h}!AHB\_\discretionary {-}{}{}AP\_\discretionary {-}{}{}BD2@{AHB\_\discretionary {-}{}{}AP\_\discretionary {-}{}{}BD2}|hyperpage}{45}
+\indexentry{AHB\_\discretionary {-}{}{}AP\_\discretionary {-}{}{}BD2@{AHB\_\discretionary {-}{}{}AP\_\discretionary {-}{}{}BD2}!libswd.h@{libswd.h}|hyperpage}{45}
+\indexentry{libswd.h@{libswd.h}!AHB\_\discretionary {-}{}{}AP\_\discretionary {-}{}{}BD3@{AHB\_\discretionary {-}{}{}AP\_\discretionary {-}{}{}BD3}|hyperpage}{45}
+\indexentry{AHB\_\discretionary {-}{}{}AP\_\discretionary {-}{}{}BD3@{AHB\_\discretionary {-}{}{}AP\_\discretionary {-}{}{}BD3}!libswd.h@{libswd.h}|hyperpage}{45}
+\indexentry{libswd.h@{libswd.h}!AHB\_\discretionary {-}{}{}AP\_\discretionary {-}{}{}CONTROLSTATUS@{AHB\_\discretionary {-}{}{}AP\_\discretionary {-}{}{}CONTROLSTATUS}|hyperpage}{45}
+\indexentry{AHB\_\discretionary {-}{}{}AP\_\discretionary {-}{}{}CONTROLSTATUS@{AHB\_\discretionary {-}{}{}AP\_\discretionary {-}{}{}CONTROLSTATUS}!libswd.h@{libswd.h}|hyperpage}{45}
+\indexentry{libswd.h@{libswd.h}!AHB\_\discretionary {-}{}{}AP\_\discretionary {-}{}{}DROMT@{AHB\_\discretionary {-}{}{}AP\_\discretionary {-}{}{}DROMT}|hyperpage}{45}
+\indexentry{AHB\_\discretionary {-}{}{}AP\_\discretionary {-}{}{}DROMT@{AHB\_\discretionary {-}{}{}AP\_\discretionary {-}{}{}DROMT}!libswd.h@{libswd.h}|hyperpage}{45}
+\indexentry{libswd.h@{libswd.h}!AHB\_\discretionary {-}{}{}AP\_\discretionary {-}{}{}DRW@{AHB\_\discretionary {-}{}{}AP\_\discretionary {-}{}{}DRW}|hyperpage}{45}
+\indexentry{AHB\_\discretionary {-}{}{}AP\_\discretionary {-}{}{}DRW@{AHB\_\discretionary {-}{}{}AP\_\discretionary {-}{}{}DRW}!libswd.h@{libswd.h}|hyperpage}{45}
+\indexentry{libswd.h@{libswd.h}!AHB\_\discretionary {-}{}{}AP\_\discretionary {-}{}{}IDR@{AHB\_\discretionary {-}{}{}AP\_\discretionary {-}{}{}IDR}|hyperpage}{46}
+\indexentry{AHB\_\discretionary {-}{}{}AP\_\discretionary {-}{}{}IDR@{AHB\_\discretionary {-}{}{}AP\_\discretionary {-}{}{}IDR}!libswd.h@{libswd.h}|hyperpage}{46}
+\indexentry{libswd.h@{libswd.h}!AHB\_\discretionary {-}{}{}AP\_\discretionary {-}{}{}TAR@{AHB\_\discretionary {-}{}{}AP\_\discretionary {-}{}{}TAR}|hyperpage}{46}
+\indexentry{AHB\_\discretionary {-}{}{}AP\_\discretionary {-}{}{}TAR@{AHB\_\discretionary {-}{}{}AP\_\discretionary {-}{}{}TAR}!libswd.h@{libswd.h}|hyperpage}{46}
+\indexentry{libswd.h@{libswd.h}!SWD\_\discretionary {-}{}{}ABORT\_\discretionary {-}{}{}BITNUM\_\discretionary {-}{}{}DAPABORT@{SWD\_\discretionary {-}{}{}ABORT\_\discretionary {-}{}{}BITNUM\_\discretionary {-}{}{}DAPABORT}|hyperpage}{46}
+\indexentry{SWD\_\discretionary {-}{}{}ABORT\_\discretionary {-}{}{}BITNUM\_\discretionary {-}{}{}DAPABORT@{SWD\_\discretionary {-}{}{}ABORT\_\discretionary {-}{}{}BITNUM\_\discretionary {-}{}{}DAPABORT}!libswd.h@{libswd.h}|hyperpage}{46}
+\indexentry{libswd.h@{libswd.h}!SWD\_\discretionary {-}{}{}CTRLSTAT\_\discretionary {-}{}{}BITNUM\_\discretionary {-}{}{}ORUNDETECT@{SWD\_\discretionary {-}{}{}CTRLSTAT\_\discretionary {-}{}{}BITNUM\_\discretionary {-}{}{}ORUNDETECT}|hyperpage}{46}
+\indexentry{SWD\_\discretionary {-}{}{}CTRLSTAT\_\discretionary {-}{}{}BITNUM\_\discretionary {-}{}{}ORUNDETECT@{SWD\_\discretionary {-}{}{}CTRLSTAT\_\discretionary {-}{}{}BITNUM\_\discretionary {-}{}{}ORUNDETECT}!libswd.h@{libswd.h}|hyperpage}{46}
+\indexentry{libswd.h@{libswd.h}!SWD\_\discretionary {-}{}{}DATA\_\discretionary {-}{}{}MAXBITCOUNT@{SWD\_\discretionary {-}{}{}DATA\_\discretionary {-}{}{}MAXBITCOUNT}|hyperpage}{46}
+\indexentry{SWD\_\discretionary {-}{}{}DATA\_\discretionary {-}{}{}MAXBITCOUNT@{SWD\_\discretionary {-}{}{}DATA\_\discretionary {-}{}{}MAXBITCOUNT}!libswd.h@{libswd.h}|hyperpage}{46}
+\indexentry{libswd.h@{libswd.h}!SWD\_\discretionary {-}{}{}MASKLANE\_\discretionary {-}{}{}0@{SWD\_\discretionary {-}{}{}MASKLANE\_\discretionary {-}{}{}0}|hyperpage}{46}
+\indexentry{SWD\_\discretionary {-}{}{}MASKLANE\_\discretionary {-}{}{}0@{SWD\_\discretionary {-}{}{}MASKLANE\_\discretionary {-}{}{}0}!libswd.h@{libswd.h}|hyperpage}{46}
+\indexentry{libswd.h@{libswd.h}!SWD\_\discretionary {-}{}{}REQUEST\_\discretionary {-}{}{}START\_\discretionary {-}{}{}BITNUM@{SWD\_\discretionary {-}{}{}REQUEST\_\discretionary {-}{}{}START\_\discretionary {-}{}{}BITNUM}|hyperpage}{46}
+\indexentry{SWD\_\discretionary {-}{}{}REQUEST\_\discretionary {-}{}{}START\_\discretionary {-}{}{}BITNUM@{SWD\_\discretionary {-}{}{}REQUEST\_\discretionary {-}{}{}START\_\discretionary {-}{}{}BITNUM}!libswd.h@{libswd.h}|hyperpage}{46}
+\indexentry{libswd.h@{libswd.h}!SWD\_\discretionary {-}{}{}SELECT\_\discretionary {-}{}{}BITNUM\_\discretionary {-}{}{}CTRLSEL@{SWD\_\discretionary {-}{}{}SELECT\_\discretionary {-}{}{}BITNUM\_\discretionary {-}{}{}CTRLSEL}|hyperpage}{46}
+\indexentry{SWD\_\discretionary {-}{}{}SELECT\_\discretionary {-}{}{}BITNUM\_\discretionary {-}{}{}CTRLSEL@{SWD\_\discretionary {-}{}{}SELECT\_\discretionary {-}{}{}BITNUM\_\discretionary {-}{}{}CTRLSEL}!libswd.h@{libswd.h}|hyperpage}{46}
+\indexentry{libswd.h@{libswd.h}!SWD\_\discretionary {-}{}{}TURNROUND\_\discretionary {-}{}{}1\_\discretionary {-}{}{}CODE@{SWD\_\discretionary {-}{}{}TURNROUND\_\discretionary {-}{}{}1\_\discretionary {-}{}{}CODE}|hyperpage}{46}
+\indexentry{SWD\_\discretionary {-}{}{}TURNROUND\_\discretionary {-}{}{}1\_\discretionary {-}{}{}CODE@{SWD\_\discretionary {-}{}{}TURNROUND\_\discretionary {-}{}{}1\_\discretionary {-}{}{}CODE}!libswd.h@{libswd.h}|hyperpage}{46}
+\indexentry{libswd.h@{libswd.h}!SWD\_\discretionary {-}{}{}TURNROUND\_\discretionary {-}{}{}2\_\discretionary {-}{}{}CODE@{SWD\_\discretionary {-}{}{}TURNROUND\_\discretionary {-}{}{}2\_\discretionary {-}{}{}CODE}|hyperpage}{47}
+\indexentry{SWD\_\discretionary {-}{}{}TURNROUND\_\discretionary {-}{}{}2\_\discretionary {-}{}{}CODE@{SWD\_\discretionary {-}{}{}TURNROUND\_\discretionary {-}{}{}2\_\discretionary {-}{}{}CODE}!libswd.h@{libswd.h}|hyperpage}{47}
+\indexentry{libswd.h@{libswd.h}!SWD\_\discretionary {-}{}{}TURNROUND\_\discretionary {-}{}{}3\_\discretionary {-}{}{}CODE@{SWD\_\discretionary {-}{}{}TURNROUND\_\discretionary {-}{}{}3\_\discretionary {-}{}{}CODE}|hyperpage}{47}
+\indexentry{SWD\_\discretionary {-}{}{}TURNROUND\_\discretionary {-}{}{}3\_\discretionary {-}{}{}CODE@{SWD\_\discretionary {-}{}{}TURNROUND\_\discretionary {-}{}{}3\_\discretionary {-}{}{}CODE}!libswd.h@{libswd.h}|hyperpage}{47}
+\indexentry{libswd.h@{libswd.h}!SWD\_\discretionary {-}{}{}TURNROUND\_\discretionary {-}{}{}4\_\discretionary {-}{}{}CODE@{SWD\_\discretionary {-}{}{}TURNROUND\_\discretionary {-}{}{}4\_\discretionary {-}{}{}CODE}|hyperpage}{47}
+\indexentry{SWD\_\discretionary {-}{}{}TURNROUND\_\discretionary {-}{}{}4\_\discretionary {-}{}{}CODE@{SWD\_\discretionary {-}{}{}TURNROUND\_\discretionary {-}{}{}4\_\discretionary {-}{}{}CODE}!libswd.h@{libswd.h}|hyperpage}{47}
+\indexentry{libswd.h@{libswd.h}!SWD\_\discretionary {-}{}{}TURNROUND\_\discretionary {-}{}{}DEFAULT\_\discretionary {-}{}{}VAL@{SWD\_\discretionary {-}{}{}TURNROUND\_\discretionary {-}{}{}DEFAULT\_\discretionary {-}{}{}VAL}|hyperpage}{47}
+\indexentry{SWD\_\discretionary {-}{}{}TURNROUND\_\discretionary {-}{}{}DEFAULT\_\discretionary {-}{}{}VAL@{SWD\_\discretionary {-}{}{}TURNROUND\_\discretionary {-}{}{}DEFAULT\_\discretionary {-}{}{}VAL}!libswd.h@{libswd.h}|hyperpage}{47}
+\indexentry{libswd.h@{libswd.h}!SWD\_\discretionary {-}{}{}TURNROUND\_\discretionary {-}{}{}MAX\_\discretionary {-}{}{}VAL@{SWD\_\discretionary {-}{}{}TURNROUND\_\discretionary {-}{}{}MAX\_\discretionary {-}{}{}VAL}|hyperpage}{47}
+\indexentry{SWD\_\discretionary {-}{}{}TURNROUND\_\discretionary {-}{}{}MAX\_\discretionary {-}{}{}VAL@{SWD\_\discretionary {-}{}{}TURNROUND\_\discretionary {-}{}{}MAX\_\discretionary {-}{}{}VAL}!libswd.h@{libswd.h}|hyperpage}{47}
+\indexentry{libswd.h@{libswd.h}!SWD\_\discretionary {-}{}{}TURNROUND\_\discretionary {-}{}{}MIN\_\discretionary {-}{}{}VAL@{SWD\_\discretionary {-}{}{}TURNROUND\_\discretionary {-}{}{}MIN\_\discretionary {-}{}{}VAL}|hyperpage}{47}
+\indexentry{SWD\_\discretionary {-}{}{}TURNROUND\_\discretionary {-}{}{}MIN\_\discretionary {-}{}{}VAL@{SWD\_\discretionary {-}{}{}TURNROUND\_\discretionary {-}{}{}MIN\_\discretionary {-}{}{}VAL}!libswd.h@{libswd.h}|hyperpage}{47}
+\indexentry{libswd.h@{libswd.h}!SWD\_\discretionary {-}{}{}WCR\_\discretionary {-}{}{}BITNUM\_\discretionary {-}{}{}PRESCALER@{SWD\_\discretionary {-}{}{}WCR\_\discretionary {-}{}{}BITNUM\_\discretionary {-}{}{}PRESCALER}|hyperpage}{47}
+\indexentry{SWD\_\discretionary {-}{}{}WCR\_\discretionary {-}{}{}BITNUM\_\discretionary {-}{}{}PRESCALER@{SWD\_\discretionary {-}{}{}WCR\_\discretionary {-}{}{}BITNUM\_\discretionary {-}{}{}PRESCALER}!libswd.h@{libswd.h}|hyperpage}{47}
+\indexentry{libswd.h@{libswd.h}!SWD\_\discretionary {-}{}{}WCR\_\discretionary {-}{}{}BITNUM\_\discretionary {-}{}{}TURNROUND@{SWD\_\discretionary {-}{}{}WCR\_\discretionary {-}{}{}BITNUM\_\discretionary {-}{}{}TURNROUND}|hyperpage}{47}
+\indexentry{SWD\_\discretionary {-}{}{}WCR\_\discretionary {-}{}{}BITNUM\_\discretionary {-}{}{}TURNROUND@{SWD\_\discretionary {-}{}{}WCR\_\discretionary {-}{}{}BITNUM\_\discretionary {-}{}{}TURNROUND}!libswd.h@{libswd.h}|hyperpage}{47}
+\indexentry{libswd.h@{libswd.h}!SWD\_\discretionary {-}{}{}WCR\_\discretionary {-}{}{}BITNUM\_\discretionary {-}{}{}WIREMODE@{SWD\_\discretionary {-}{}{}WCR\_\discretionary {-}{}{}BITNUM\_\discretionary {-}{}{}WIREMODE}|hyperpage}{47}
+\indexentry{SWD\_\discretionary {-}{}{}WCR\_\discretionary {-}{}{}BITNUM\_\discretionary {-}{}{}WIREMODE@{SWD\_\discretionary {-}{}{}WCR\_\discretionary {-}{}{}BITNUM\_\discretionary {-}{}{}WIREMODE}!libswd.h@{libswd.h}|hyperpage}{47}
+\indexentry{libswd.h@{libswd.h}!swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}t@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}t}|hyperpage}{48}
+\indexentry{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}t@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}t}!libswd.h@{libswd.h}|hyperpage}{48}
+\indexentry{libswd.h@{libswd.h}!swd\_\discretionary {-}{}{}bool\_\discretionary {-}{}{}t@{swd\_\discretionary {-}{}{}bool\_\discretionary {-}{}{}t}|hyperpage}{48}
+\indexentry{swd\_\discretionary {-}{}{}bool\_\discretionary {-}{}{}t@{swd\_\discretionary {-}{}{}bool\_\discretionary {-}{}{}t}!libswd.h@{libswd.h}|hyperpage}{48}
+\indexentry{SWD\_\-FALSE@{SWD\_\-FALSE}!libswd.h@{libswd.h}|hyperpage}{48}
+\indexentry{libswd.h@{libswd.h}!SWD\_\-FALSE@{SWD\_\-FALSE}|hyperpage}{48}
+\indexentry{SWD\_\-TRUE@{SWD\_\-TRUE}!libswd.h@{libswd.h}|hyperpage}{48}
+\indexentry{libswd.h@{libswd.h}!SWD\_\-TRUE@{SWD\_\-TRUE}|hyperpage}{48}
+\indexentry{libswd.h@{libswd.h}!swd\_\discretionary {-}{}{}cmdtype\_\discretionary {-}{}{}t@{swd\_\discretionary {-}{}{}cmdtype\_\discretionary {-}{}{}t}|hyperpage}{48}
+\indexentry{swd\_\discretionary {-}{}{}cmdtype\_\discretionary {-}{}{}t@{swd\_\discretionary {-}{}{}cmdtype\_\discretionary {-}{}{}t}!libswd.h@{libswd.h}|hyperpage}{48}
+\indexentry{SWD\_\-CMDTYPE\_\-MOSI\_\-DATA@{SWD\_\-CMDTYPE\_\-MOSI\_\-DATA}!libswd.h@{libswd.h}|hyperpage}{48}
+\indexentry{libswd.h@{libswd.h}!SWD\_\-CMDTYPE\_\-MOSI\_\-DATA@{SWD\_\-CMDTYPE\_\-MOSI\_\-DATA}|hyperpage}{48}
+\indexentry{SWD\_\-CMDTYPE\_\-MOSI\_\-REQUEST@{SWD\_\-CMDTYPE\_\-MOSI\_\-REQUEST}!libswd.h@{libswd.h}|hyperpage}{48}
+\indexentry{libswd.h@{libswd.h}!SWD\_\-CMDTYPE\_\-MOSI\_\-REQUEST@{SWD\_\-CMDTYPE\_\-MOSI\_\-REQUEST}|hyperpage}{48}
+\indexentry{SWD\_\-CMDTYPE\_\-MOSI\_\-TRN@{SWD\_\-CMDTYPE\_\-MOSI\_\-TRN}!libswd.h@{libswd.h}|hyperpage}{48}
+\indexentry{libswd.h@{libswd.h}!SWD\_\-CMDTYPE\_\-MOSI\_\-TRN@{SWD\_\-CMDTYPE\_\-MOSI\_\-TRN}|hyperpage}{48}
+\indexentry{SWD\_\-CMDTYPE\_\-MOSI\_\-PARITY@{SWD\_\-CMDTYPE\_\-MOSI\_\-PARITY}!libswd.h@{libswd.h}|hyperpage}{48}
+\indexentry{libswd.h@{libswd.h}!SWD\_\-CMDTYPE\_\-MOSI\_\-PARITY@{SWD\_\-CMDTYPE\_\-MOSI\_\-PARITY}|hyperpage}{48}
+\indexentry{SWD\_\-CMDTYPE\_\-MOSI\_\-BITBANG@{SWD\_\-CMDTYPE\_\-MOSI\_\-BITBANG}!libswd.h@{libswd.h}|hyperpage}{48}
+\indexentry{libswd.h@{libswd.h}!SWD\_\-CMDTYPE\_\-MOSI\_\-BITBANG@{SWD\_\-CMDTYPE\_\-MOSI\_\-BITBANG}|hyperpage}{48}
+\indexentry{SWD\_\-CMDTYPE\_\-MOSI\_\-CONTROL@{SWD\_\-CMDTYPE\_\-MOSI\_\-CONTROL}!libswd.h@{libswd.h}|hyperpage}{48}
+\indexentry{libswd.h@{libswd.h}!SWD\_\-CMDTYPE\_\-MOSI\_\-CONTROL@{SWD\_\-CMDTYPE\_\-MOSI\_\-CONTROL}|hyperpage}{48}
+\indexentry{SWD\_\-CMDTYPE\_\-MOSI@{SWD\_\-CMDTYPE\_\-MOSI}!libswd.h@{libswd.h}|hyperpage}{48}
+\indexentry{libswd.h@{libswd.h}!SWD\_\-CMDTYPE\_\-MOSI@{SWD\_\-CMDTYPE\_\-MOSI}|hyperpage}{48}
+\indexentry{SWD\_\-CMDTYPE\_\-UNDEFINED@{SWD\_\-CMDTYPE\_\-UNDEFINED}!libswd.h@{libswd.h}|hyperpage}{48}
+\indexentry{libswd.h@{libswd.h}!SWD\_\-CMDTYPE\_\-UNDEFINED@{SWD\_\-CMDTYPE\_\-UNDEFINED}|hyperpage}{48}
+\indexentry{SWD\_\-CMDTYPE\_\-MISO@{SWD\_\-CMDTYPE\_\-MISO}!libswd.h@{libswd.h}|hyperpage}{48}
+\indexentry{libswd.h@{libswd.h}!SWD\_\-CMDTYPE\_\-MISO@{SWD\_\-CMDTYPE\_\-MISO}|hyperpage}{48}
+\indexentry{SWD\_\-CMDTYPE\_\-MISO\_\-ACK@{SWD\_\-CMDTYPE\_\-MISO\_\-ACK}!libswd.h@{libswd.h}|hyperpage}{48}
+\indexentry{libswd.h@{libswd.h}!SWD\_\-CMDTYPE\_\-MISO\_\-ACK@{SWD\_\-CMDTYPE\_\-MISO\_\-ACK}|hyperpage}{48}
+\indexentry{SWD\_\-CMDTYPE\_\-MISO\_\-BITBANG@{SWD\_\-CMDTYPE\_\-MISO\_\-BITBANG}!libswd.h@{libswd.h}|hyperpage}{48}
+\indexentry{libswd.h@{libswd.h}!SWD\_\-CMDTYPE\_\-MISO\_\-BITBANG@{SWD\_\-CMDTYPE\_\-MISO\_\-BITBANG}|hyperpage}{48}
+\indexentry{SWD\_\-CMDTYPE\_\-MISO\_\-PARITY@{SWD\_\-CMDTYPE\_\-MISO\_\-PARITY}!libswd.h@{libswd.h}|hyperpage}{48}
+\indexentry{libswd.h@{libswd.h}!SWD\_\-CMDTYPE\_\-MISO\_\-PARITY@{SWD\_\-CMDTYPE\_\-MISO\_\-PARITY}|hyperpage}{48}
+\indexentry{SWD\_\-CMDTYPE\_\-MISO\_\-TRN@{SWD\_\-CMDTYPE\_\-MISO\_\-TRN}!libswd.h@{libswd.h}|hyperpage}{48}
+\indexentry{libswd.h@{libswd.h}!SWD\_\-CMDTYPE\_\-MISO\_\-TRN@{SWD\_\-CMDTYPE\_\-MISO\_\-TRN}|hyperpage}{48}
+\indexentry{SWD\_\-CMDTYPE\_\-MISO\_\-DATA@{SWD\_\-CMDTYPE\_\-MISO\_\-DATA}!libswd.h@{libswd.h}|hyperpage}{48}
+\indexentry{libswd.h@{libswd.h}!SWD\_\-CMDTYPE\_\-MISO\_\-DATA@{SWD\_\-CMDTYPE\_\-MISO\_\-DATA}|hyperpage}{48}
+\indexentry{libswd.h@{libswd.h}!swd\_\discretionary {-}{}{}error\_\discretionary {-}{}{}code\_\discretionary {-}{}{}t@{swd\_\discretionary {-}{}{}error\_\discretionary {-}{}{}code\_\discretionary {-}{}{}t}|hyperpage}{48}
+\indexentry{swd\_\discretionary {-}{}{}error\_\discretionary {-}{}{}code\_\discretionary {-}{}{}t@{swd\_\discretionary {-}{}{}error\_\discretionary {-}{}{}code\_\discretionary {-}{}{}t}!libswd.h@{libswd.h}|hyperpage}{48}
+\indexentry{SWD\_\-OK@{SWD\_\-OK}!libswd.h@{libswd.h}|hyperpage}{49}
+\indexentry{libswd.h@{libswd.h}!SWD\_\-OK@{SWD\_\-OK}|hyperpage}{49}
+\indexentry{SWD\_\-ERROR\_\-GENERAL@{SWD\_\-ERROR\_\-GENERAL}!libswd.h@{libswd.h}|hyperpage}{49}
+\indexentry{libswd.h@{libswd.h}!SWD\_\-ERROR\_\-GENERAL@{SWD\_\-ERROR\_\-GENERAL}|hyperpage}{49}
+\indexentry{SWD\_\-ERROR\_\-NULLPOINTER@{SWD\_\-ERROR\_\-NULLPOINTER}!libswd.h@{libswd.h}|hyperpage}{49}
+\indexentry{libswd.h@{libswd.h}!SWD\_\-ERROR\_\-NULLPOINTER@{SWD\_\-ERROR\_\-NULLPOINTER}|hyperpage}{49}
+\indexentry{SWD\_\-ERROR\_\-NULLQUEUE@{SWD\_\-ERROR\_\-NULLQUEUE}!libswd.h@{libswd.h}|hyperpage}{49}
+\indexentry{libswd.h@{libswd.h}!SWD\_\-ERROR\_\-NULLQUEUE@{SWD\_\-ERROR\_\-NULLQUEUE}|hyperpage}{49}
+\indexentry{SWD\_\-ERROR\_\-NULLTRN@{SWD\_\-ERROR\_\-NULLTRN}!libswd.h@{libswd.h}|hyperpage}{49}
+\indexentry{libswd.h@{libswd.h}!SWD\_\-ERROR\_\-NULLTRN@{SWD\_\-ERROR\_\-NULLTRN}|hyperpage}{49}
+\indexentry{SWD\_\-ERROR\_\-PARAM@{SWD\_\-ERROR\_\-PARAM}!libswd.h@{libswd.h}|hyperpage}{49}
+\indexentry{libswd.h@{libswd.h}!SWD\_\-ERROR\_\-PARAM@{SWD\_\-ERROR\_\-PARAM}|hyperpage}{49}
+\indexentry{SWD\_\-ERROR\_\-OUTOFMEM@{SWD\_\-ERROR\_\-OUTOFMEM}!libswd.h@{libswd.h}|hyperpage}{49}
+\indexentry{libswd.h@{libswd.h}!SWD\_\-ERROR\_\-OUTOFMEM@{SWD\_\-ERROR\_\-OUTOFMEM}|hyperpage}{49}
+\indexentry{SWD\_\-ERROR\_\-RESULT@{SWD\_\-ERROR\_\-RESULT}!libswd.h@{libswd.h}|hyperpage}{49}
+\indexentry{libswd.h@{libswd.h}!SWD\_\-ERROR\_\-RESULT@{SWD\_\-ERROR\_\-RESULT}|hyperpage}{49}
+\indexentry{SWD\_\-ERROR\_\-RANGE@{SWD\_\-ERROR\_\-RANGE}!libswd.h@{libswd.h}|hyperpage}{49}
+\indexentry{libswd.h@{libswd.h}!SWD\_\-ERROR\_\-RANGE@{SWD\_\-ERROR\_\-RANGE}|hyperpage}{49}
+\indexentry{SWD\_\-ERROR\_\-DEFINITION@{SWD\_\-ERROR\_\-DEFINITION}!libswd.h@{libswd.h}|hyperpage}{49}
+\indexentry{libswd.h@{libswd.h}!SWD\_\-ERROR\_\-DEFINITION@{SWD\_\-ERROR\_\-DEFINITION}|hyperpage}{49}
+\indexentry{SWD\_\-ERROR\_\-NULLCONTEXT@{SWD\_\-ERROR\_\-NULLCONTEXT}!libswd.h@{libswd.h}|hyperpage}{49}
+\indexentry{libswd.h@{libswd.h}!SWD\_\-ERROR\_\-NULLCONTEXT@{SWD\_\-ERROR\_\-NULLCONTEXT}|hyperpage}{49}
+\indexentry{SWD\_\-ERROR\_\-QUEUE@{SWD\_\-ERROR\_\-QUEUE}!libswd.h@{libswd.h}|hyperpage}{49}
+\indexentry{libswd.h@{libswd.h}!SWD\_\-ERROR\_\-QUEUE@{SWD\_\-ERROR\_\-QUEUE}|hyperpage}{49}
+\indexentry{SWD\_\-ERROR\_\-ADDR@{SWD\_\-ERROR\_\-ADDR}!libswd.h@{libswd.h}|hyperpage}{49}
+\indexentry{libswd.h@{libswd.h}!SWD\_\-ERROR\_\-ADDR@{SWD\_\-ERROR\_\-ADDR}|hyperpage}{49}
+\indexentry{SWD\_\-ERROR\_\-APnDP@{SWD\_\-ERROR\_\-APnDP}!libswd.h@{libswd.h}|hyperpage}{49}
+\indexentry{libswd.h@{libswd.h}!SWD\_\-ERROR\_\-APnDP@{SWD\_\-ERROR\_\-APnDP}|hyperpage}{49}
+\indexentry{SWD\_\-ERROR\_\-RnW@{SWD\_\-ERROR\_\-RnW}!libswd.h@{libswd.h}|hyperpage}{49}
+\indexentry{libswd.h@{libswd.h}!SWD\_\-ERROR\_\-RnW@{SWD\_\-ERROR\_\-RnW}|hyperpage}{49}
+\indexentry{SWD\_\-ERROR\_\-PARITY@{SWD\_\-ERROR\_\-PARITY}!libswd.h@{libswd.h}|hyperpage}{49}
+\indexentry{libswd.h@{libswd.h}!SWD\_\-ERROR\_\-PARITY@{SWD\_\-ERROR\_\-PARITY}|hyperpage}{49}
+\indexentry{SWD\_\-ERROR\_\-ACK@{SWD\_\-ERROR\_\-ACK}!libswd.h@{libswd.h}|hyperpage}{49}
+\indexentry{libswd.h@{libswd.h}!SWD\_\-ERROR\_\-ACK@{SWD\_\-ERROR\_\-ACK}|hyperpage}{49}
+\indexentry{SWD\_\-ERROR\_\-ACKUNKNOWN@{SWD\_\-ERROR\_\-ACKUNKNOWN}!libswd.h@{libswd.h}|hyperpage}{49}
+\indexentry{libswd.h@{libswd.h}!SWD\_\-ERROR\_\-ACKUNKNOWN@{SWD\_\-ERROR\_\-ACKUNKNOWN}|hyperpage}{49}
+\indexentry{SWD\_\-ERROR\_\-ACKNOTDONE@{SWD\_\-ERROR\_\-ACKNOTDONE}!libswd.h@{libswd.h}|hyperpage}{49}
+\indexentry{libswd.h@{libswd.h}!SWD\_\-ERROR\_\-ACKNOTDONE@{SWD\_\-ERROR\_\-ACKNOTDONE}|hyperpage}{49}
+\indexentry{SWD\_\-ERROR\_\-ACKMISSING@{SWD\_\-ERROR\_\-ACKMISSING}!libswd.h@{libswd.h}|hyperpage}{49}
+\indexentry{libswd.h@{libswd.h}!SWD\_\-ERROR\_\-ACKMISSING@{SWD\_\-ERROR\_\-ACKMISSING}|hyperpage}{49}
+\indexentry{SWD\_\-ERROR\_\-ACKMISMATCH@{SWD\_\-ERROR\_\-ACKMISMATCH}!libswd.h@{libswd.h}|hyperpage}{49}
+\indexentry{libswd.h@{libswd.h}!SWD\_\-ERROR\_\-ACKMISMATCH@{SWD\_\-ERROR\_\-ACKMISMATCH}|hyperpage}{49}
+\indexentry{SWD\_\-ERROR\_\-ACKORDER@{SWD\_\-ERROR\_\-ACKORDER}!libswd.h@{libswd.h}|hyperpage}{49}
+\indexentry{libswd.h@{libswd.h}!SWD\_\-ERROR\_\-ACKORDER@{SWD\_\-ERROR\_\-ACKORDER}|hyperpage}{49}
+\indexentry{SWD\_\-ERROR\_\-BADOPCODE@{SWD\_\-ERROR\_\-BADOPCODE}!libswd.h@{libswd.h}|hyperpage}{49}
+\indexentry{libswd.h@{libswd.h}!SWD\_\-ERROR\_\-BADOPCODE@{SWD\_\-ERROR\_\-BADOPCODE}|hyperpage}{49}
+\indexentry{SWD\_\-ERROR\_\-NODATACMD@{SWD\_\-ERROR\_\-NODATACMD}!libswd.h@{libswd.h}|hyperpage}{49}
+\indexentry{libswd.h@{libswd.h}!SWD\_\-ERROR\_\-NODATACMD@{SWD\_\-ERROR\_\-NODATACMD}|hyperpage}{49}
+\indexentry{SWD\_\-ERROR\_\-DATAPTR@{SWD\_\-ERROR\_\-DATAPTR}!libswd.h@{libswd.h}|hyperpage}{49}
+\indexentry{libswd.h@{libswd.h}!SWD\_\-ERROR\_\-DATAPTR@{SWD\_\-ERROR\_\-DATAPTR}|hyperpage}{49}
+\indexentry{SWD\_\-ERROR\_\-NOPARITYCMD@{SWD\_\-ERROR\_\-NOPARITYCMD}!libswd.h@{libswd.h}|hyperpage}{49}
+\indexentry{libswd.h@{libswd.h}!SWD\_\-ERROR\_\-NOPARITYCMD@{SWD\_\-ERROR\_\-NOPARITYCMD}|hyperpage}{49}
+\indexentry{SWD\_\-ERROR\_\-PARITYPTR@{SWD\_\-ERROR\_\-PARITYPTR}!libswd.h@{libswd.h}|hyperpage}{49}
+\indexentry{libswd.h@{libswd.h}!SWD\_\-ERROR\_\-PARITYPTR@{SWD\_\-ERROR\_\-PARITYPTR}|hyperpage}{49}
+\indexentry{SWD\_\-ERROR\_\-NOTDONE@{SWD\_\-ERROR\_\-NOTDONE}!libswd.h@{libswd.h}|hyperpage}{49}
+\indexentry{libswd.h@{libswd.h}!SWD\_\-ERROR\_\-NOTDONE@{SWD\_\-ERROR\_\-NOTDONE}|hyperpage}{49}
+\indexentry{SWD\_\-ERROR\_\-QUEUEROOT@{SWD\_\-ERROR\_\-QUEUEROOT}!libswd.h@{libswd.h}|hyperpage}{49}
+\indexentry{libswd.h@{libswd.h}!SWD\_\-ERROR\_\-QUEUEROOT@{SWD\_\-ERROR\_\-QUEUEROOT}|hyperpage}{49}
+\indexentry{SWD\_\-ERROR\_\-QUEUETAIL@{SWD\_\-ERROR\_\-QUEUETAIL}!libswd.h@{libswd.h}|hyperpage}{49}
+\indexentry{libswd.h@{libswd.h}!SWD\_\-ERROR\_\-QUEUETAIL@{SWD\_\-ERROR\_\-QUEUETAIL}|hyperpage}{49}
+\indexentry{SWD\_\-ERROR\_\-BADCMDTYPE@{SWD\_\-ERROR\_\-BADCMDTYPE}!libswd.h@{libswd.h}|hyperpage}{49}
+\indexentry{libswd.h@{libswd.h}!SWD\_\-ERROR\_\-BADCMDTYPE@{SWD\_\-ERROR\_\-BADCMDTYPE}|hyperpage}{49}
+\indexentry{SWD\_\-ERROR\_\-BADCMDDATA@{SWD\_\-ERROR\_\-BADCMDDATA}!libswd.h@{libswd.h}|hyperpage}{49}
+\indexentry{libswd.h@{libswd.h}!SWD\_\-ERROR\_\-BADCMDDATA@{SWD\_\-ERROR\_\-BADCMDDATA}|hyperpage}{49}
+\indexentry{SWD\_\-ERROR\_\-TURNAROUND@{SWD\_\-ERROR\_\-TURNAROUND}!libswd.h@{libswd.h}|hyperpage}{49}
+\indexentry{libswd.h@{libswd.h}!SWD\_\-ERROR\_\-TURNAROUND@{SWD\_\-ERROR\_\-TURNAROUND}|hyperpage}{49}
+\indexentry{SWD\_\-ERROR\_\-DRIVER@{SWD\_\-ERROR\_\-DRIVER}!libswd.h@{libswd.h}|hyperpage}{49}
+\indexentry{libswd.h@{libswd.h}!SWD\_\-ERROR\_\-DRIVER@{SWD\_\-ERROR\_\-DRIVER}|hyperpage}{49}
+\indexentry{SWD\_\-ERROR\_\-ACK\_\-WAIT@{SWD\_\-ERROR\_\-ACK\_\-WAIT}!libswd.h@{libswd.h}|hyperpage}{49}
+\indexentry{libswd.h@{libswd.h}!SWD\_\-ERROR\_\-ACK\_\-WAIT@{SWD\_\-ERROR\_\-ACK\_\-WAIT}|hyperpage}{49}
+\indexentry{SWD\_\-ERROR\_\-ACK\_\-FAULT@{SWD\_\-ERROR\_\-ACK\_\-FAULT}!libswd.h@{libswd.h}|hyperpage}{49}
+\indexentry{libswd.h@{libswd.h}!SWD\_\-ERROR\_\-ACK\_\-FAULT@{SWD\_\-ERROR\_\-ACK\_\-FAULT}|hyperpage}{49}
+\indexentry{SWD\_\-ERROR\_\-QUEUENOTFREE@{SWD\_\-ERROR\_\-QUEUENOTFREE}!libswd.h@{libswd.h}|hyperpage}{49}
+\indexentry{libswd.h@{libswd.h}!SWD\_\-ERROR\_\-QUEUENOTFREE@{SWD\_\-ERROR\_\-QUEUENOTFREE}|hyperpage}{49}
+\indexentry{SWD\_\-ERROR\_\-TRANSPORT@{SWD\_\-ERROR\_\-TRANSPORT}!libswd.h@{libswd.h}|hyperpage}{49}
+\indexentry{libswd.h@{libswd.h}!SWD\_\-ERROR\_\-TRANSPORT@{SWD\_\-ERROR\_\-TRANSPORT}|hyperpage}{49}
+\indexentry{SWD\_\-ERROR\_\-DIRECTION@{SWD\_\-ERROR\_\-DIRECTION}!libswd.h@{libswd.h}|hyperpage}{49}
+\indexentry{libswd.h@{libswd.h}!SWD\_\-ERROR\_\-DIRECTION@{SWD\_\-ERROR\_\-DIRECTION}|hyperpage}{49}
+\indexentry{SWD\_\-ERROR\_\-LOGLEVEL@{SWD\_\-ERROR\_\-LOGLEVEL}!libswd.h@{libswd.h}|hyperpage}{49}
+\indexentry{libswd.h@{libswd.h}!SWD\_\-ERROR\_\-LOGLEVEL@{SWD\_\-ERROR\_\-LOGLEVEL}|hyperpage}{49}
+\indexentry{libswd.h@{libswd.h}!swd\_\discretionary {-}{}{}loglevel\_\discretionary {-}{}{}t@{swd\_\discretionary {-}{}{}loglevel\_\discretionary {-}{}{}t}|hyperpage}{49}
+\indexentry{swd\_\discretionary {-}{}{}loglevel\_\discretionary {-}{}{}t@{swd\_\discretionary {-}{}{}loglevel\_\discretionary {-}{}{}t}!libswd.h@{libswd.h}|hyperpage}{49}
+\indexentry{SWD\_\-LOGLEVEL\_\-SILENT@{SWD\_\-LOGLEVEL\_\-SILENT}!libswd.h@{libswd.h}|hyperpage}{50}
+\indexentry{libswd.h@{libswd.h}!SWD\_\-LOGLEVEL\_\-SILENT@{SWD\_\-LOGLEVEL\_\-SILENT}|hyperpage}{50}
+\indexentry{SWD\_\-LOGLEVEL\_\-ERROR@{SWD\_\-LOGLEVEL\_\-ERROR}!libswd.h@{libswd.h}|hyperpage}{50}
+\indexentry{libswd.h@{libswd.h}!SWD\_\-LOGLEVEL\_\-ERROR@{SWD\_\-LOGLEVEL\_\-ERROR}|hyperpage}{50}
+\indexentry{SWD\_\-LOGLEVEL\_\-WARNING@{SWD\_\-LOGLEVEL\_\-WARNING}!libswd.h@{libswd.h}|hyperpage}{50}
+\indexentry{libswd.h@{libswd.h}!SWD\_\-LOGLEVEL\_\-WARNING@{SWD\_\-LOGLEVEL\_\-WARNING}|hyperpage}{50}
+\indexentry{SWD\_\-LOGLEVEL\_\-NORMAL@{SWD\_\-LOGLEVEL\_\-NORMAL}!libswd.h@{libswd.h}|hyperpage}{50}
+\indexentry{libswd.h@{libswd.h}!SWD\_\-LOGLEVEL\_\-NORMAL@{SWD\_\-LOGLEVEL\_\-NORMAL}|hyperpage}{50}
+\indexentry{SWD\_\-LOGLEVEL\_\-INFO@{SWD\_\-LOGLEVEL\_\-INFO}!libswd.h@{libswd.h}|hyperpage}{50}
+\indexentry{libswd.h@{libswd.h}!SWD\_\-LOGLEVEL\_\-INFO@{SWD\_\-LOGLEVEL\_\-INFO}|hyperpage}{50}
+\indexentry{SWD\_\-LOGLEVEL\_\-DEBUG@{SWD\_\-LOGLEVEL\_\-DEBUG}!libswd.h@{libswd.h}|hyperpage}{50}
+\indexentry{libswd.h@{libswd.h}!SWD\_\-LOGLEVEL\_\-DEBUG@{SWD\_\-LOGLEVEL\_\-DEBUG}|hyperpage}{50}
+\indexentry{libswd.h@{libswd.h}!swd\_\discretionary {-}{}{}operation\_\discretionary {-}{}{}t@{swd\_\discretionary {-}{}{}operation\_\discretionary {-}{}{}t}|hyperpage}{50}
+\indexentry{swd\_\discretionary {-}{}{}operation\_\discretionary {-}{}{}t@{swd\_\discretionary {-}{}{}operation\_\discretionary {-}{}{}t}!libswd.h@{libswd.h}|hyperpage}{50}
+\indexentry{SWD\_\-OPERATION\_\-FIRST@{SWD\_\-OPERATION\_\-FIRST}!libswd.h@{libswd.h}|hyperpage}{50}
+\indexentry{libswd.h@{libswd.h}!SWD\_\-OPERATION\_\-FIRST@{SWD\_\-OPERATION\_\-FIRST}|hyperpage}{50}
+\indexentry{SWD\_\-OPERATION\_\-ENQUEUE@{SWD\_\-OPERATION\_\-ENQUEUE}!libswd.h@{libswd.h}|hyperpage}{50}
+\indexentry{libswd.h@{libswd.h}!SWD\_\-OPERATION\_\-ENQUEUE@{SWD\_\-OPERATION\_\-ENQUEUE}|hyperpage}{50}
+\indexentry{SWD\_\-OPERATION\_\-EXECUTE@{SWD\_\-OPERATION\_\-EXECUTE}!libswd.h@{libswd.h}|hyperpage}{50}
+\indexentry{libswd.h@{libswd.h}!SWD\_\-OPERATION\_\-EXECUTE@{SWD\_\-OPERATION\_\-EXECUTE}|hyperpage}{50}
+\indexentry{SWD\_\-OPERATION\_\-TRANSMIT\_\-HEAD@{SWD\_\-OPERATION\_\-TRANSMIT\_\-HEAD}!libswd.h@{libswd.h}|hyperpage}{50}
+\indexentry{libswd.h@{libswd.h}!SWD\_\-OPERATION\_\-TRANSMIT\_\-HEAD@{SWD\_\-OPERATION\_\-TRANSMIT\_\-HEAD}|hyperpage}{50}
+\indexentry{SWD\_\-OPERATION\_\-TRANSMIT\_\-TAIL@{SWD\_\-OPERATION\_\-TRANSMIT\_\-TAIL}!libswd.h@{libswd.h}|hyperpage}{50}
+\indexentry{libswd.h@{libswd.h}!SWD\_\-OPERATION\_\-TRANSMIT\_\-TAIL@{SWD\_\-OPERATION\_\-TRANSMIT\_\-TAIL}|hyperpage}{50}
+\indexentry{SWD\_\-OPERATION\_\-TRANSMIT\_\-ALL@{SWD\_\-OPERATION\_\-TRANSMIT\_\-ALL}!libswd.h@{libswd.h}|hyperpage}{50}
+\indexentry{libswd.h@{libswd.h}!SWD\_\-OPERATION\_\-TRANSMIT\_\-ALL@{SWD\_\-OPERATION\_\-TRANSMIT\_\-ALL}|hyperpage}{50}
+\indexentry{SWD\_\-OPERATION\_\-TRANSMIT\_\-ONE@{SWD\_\-OPERATION\_\-TRANSMIT\_\-ONE}!libswd.h@{libswd.h}|hyperpage}{50}
+\indexentry{libswd.h@{libswd.h}!SWD\_\-OPERATION\_\-TRANSMIT\_\-ONE@{SWD\_\-OPERATION\_\-TRANSMIT\_\-ONE}|hyperpage}{50}
+\indexentry{SWD\_\-OPERATION\_\-TRANSMIT\_\-LAST@{SWD\_\-OPERATION\_\-TRANSMIT\_\-LAST}!libswd.h@{libswd.h}|hyperpage}{50}
+\indexentry{libswd.h@{libswd.h}!SWD\_\-OPERATION\_\-TRANSMIT\_\-LAST@{SWD\_\-OPERATION\_\-TRANSMIT\_\-LAST}|hyperpage}{50}
+\indexentry{SWD\_\-OPERATION\_\-LAST@{SWD\_\-OPERATION\_\-LAST}!libswd.h@{libswd.h}|hyperpage}{50}
+\indexentry{libswd.h@{libswd.h}!SWD\_\-OPERATION\_\-LAST@{SWD\_\-OPERATION\_\-LAST}|hyperpage}{50}
+\indexentry{libswd.h@{libswd.h}!swd\_\discretionary {-}{}{}shiftdir\_\discretionary {-}{}{}t@{swd\_\discretionary {-}{}{}shiftdir\_\discretionary {-}{}{}t}|hyperpage}{50}
+\indexentry{swd\_\discretionary {-}{}{}shiftdir\_\discretionary {-}{}{}t@{swd\_\discretionary {-}{}{}shiftdir\_\discretionary {-}{}{}t}!libswd.h@{libswd.h}|hyperpage}{50}
+\indexentry{SWD\_\-DIR\_\-LSBFIRST@{SWD\_\-DIR\_\-LSBFIRST}!libswd.h@{libswd.h}|hyperpage}{50}
+\indexentry{libswd.h@{libswd.h}!SWD\_\-DIR\_\-LSBFIRST@{SWD\_\-DIR\_\-LSBFIRST}|hyperpage}{50}
+\indexentry{SWD\_\-DIR\_\-MSBFIRST@{SWD\_\-DIR\_\-MSBFIRST}!libswd.h@{libswd.h}|hyperpage}{50}
+\indexentry{libswd.h@{libswd.h}!SWD\_\-DIR\_\-MSBFIRST@{SWD\_\-DIR\_\-MSBFIRST}|hyperpage}{50}
+\indexentry{libswd.h@{libswd.h}!swd\_\discretionary {-}{}{}bin32\_\discretionary {-}{}{}bitswap@{swd\_\discretionary {-}{}{}bin32\_\discretionary {-}{}{}bitswap}|hyperpage}{50}
+\indexentry{swd\_\discretionary {-}{}{}bin32\_\discretionary {-}{}{}bitswap@{swd\_\discretionary {-}{}{}bin32\_\discretionary {-}{}{}bitswap}!libswd.h@{libswd.h}|hyperpage}{50}
+\indexentry{libswd.h@{libswd.h}!swd\_\discretionary {-}{}{}bin32\_\discretionary {-}{}{}parity\_\discretionary {-}{}{}even@{swd\_\discretionary {-}{}{}bin32\_\discretionary {-}{}{}parity\_\discretionary {-}{}{}even}|hyperpage}{51}
+\indexentry{swd\_\discretionary {-}{}{}bin32\_\discretionary {-}{}{}parity\_\discretionary {-}{}{}even@{swd\_\discretionary {-}{}{}bin32\_\discretionary {-}{}{}parity\_\discretionary {-}{}{}even}!libswd.h@{libswd.h}|hyperpage}{51}
+\indexentry{libswd.h@{libswd.h}!swd\_\discretionary {-}{}{}bin32\_\discretionary {-}{}{}print@{swd\_\discretionary {-}{}{}bin32\_\discretionary {-}{}{}print}|hyperpage}{51}
+\indexentry{swd\_\discretionary {-}{}{}bin32\_\discretionary {-}{}{}print@{swd\_\discretionary {-}{}{}bin32\_\discretionary {-}{}{}print}!libswd.h@{libswd.h}|hyperpage}{51}
+\indexentry{libswd.h@{libswd.h}!swd\_\discretionary {-}{}{}bin32\_\discretionary {-}{}{}string@{swd\_\discretionary {-}{}{}bin32\_\discretionary {-}{}{}string}|hyperpage}{51}
+\indexentry{swd\_\discretionary {-}{}{}bin32\_\discretionary {-}{}{}string@{swd\_\discretionary {-}{}{}bin32\_\discretionary {-}{}{}string}!libswd.h@{libswd.h}|hyperpage}{51}
+\indexentry{libswd.h@{libswd.h}!swd\_\discretionary {-}{}{}bin8\_\discretionary {-}{}{}bitswap@{swd\_\discretionary {-}{}{}bin8\_\discretionary {-}{}{}bitswap}|hyperpage}{51}
+\indexentry{swd\_\discretionary {-}{}{}bin8\_\discretionary {-}{}{}bitswap@{swd\_\discretionary {-}{}{}bin8\_\discretionary {-}{}{}bitswap}!libswd.h@{libswd.h}|hyperpage}{51}
+\indexentry{libswd.h@{libswd.h}!swd\_\discretionary {-}{}{}bin8\_\discretionary {-}{}{}parity\_\discretionary {-}{}{}even@{swd\_\discretionary {-}{}{}bin8\_\discretionary {-}{}{}parity\_\discretionary {-}{}{}even}|hyperpage}{52}
+\indexentry{swd\_\discretionary {-}{}{}bin8\_\discretionary {-}{}{}parity\_\discretionary {-}{}{}even@{swd\_\discretionary {-}{}{}bin8\_\discretionary {-}{}{}parity\_\discretionary {-}{}{}even}!libswd.h@{libswd.h}|hyperpage}{52}
+\indexentry{libswd.h@{libswd.h}!swd\_\discretionary {-}{}{}bin8\_\discretionary {-}{}{}print@{swd\_\discretionary {-}{}{}bin8\_\discretionary {-}{}{}print}|hyperpage}{52}
+\indexentry{swd\_\discretionary {-}{}{}bin8\_\discretionary {-}{}{}print@{swd\_\discretionary {-}{}{}bin8\_\discretionary {-}{}{}print}!libswd.h@{libswd.h}|hyperpage}{52}
+\indexentry{libswd.h@{libswd.h}!swd\_\discretionary {-}{}{}bin8\_\discretionary {-}{}{}string@{swd\_\discretionary {-}{}{}bin8\_\discretionary {-}{}{}string}|hyperpage}{52}
+\indexentry{swd\_\discretionary {-}{}{}bin8\_\discretionary {-}{}{}string@{swd\_\discretionary {-}{}{}bin8\_\discretionary {-}{}{}string}!libswd.h@{libswd.h}|hyperpage}{52}
+\indexentry{libswd.h@{libswd.h}!swd\_\discretionary {-}{}{}bitgen8\_\discretionary {-}{}{}request@{swd\_\discretionary {-}{}{}bitgen8\_\discretionary {-}{}{}request}|hyperpage}{52}
+\indexentry{swd\_\discretionary {-}{}{}bitgen8\_\discretionary {-}{}{}request@{swd\_\discretionary {-}{}{}bitgen8\_\discretionary {-}{}{}request}!libswd.h@{libswd.h}|hyperpage}{52}
+\indexentry{libswd.h@{libswd.h}!swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}read\_\discretionary {-}{}{}ack@{swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}read\_\discretionary {-}{}{}ack}|hyperpage}{53}
+\indexentry{swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}read\_\discretionary {-}{}{}ack@{swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}read\_\discretionary {-}{}{}ack}!libswd.h@{libswd.h}|hyperpage}{53}
+\indexentry{libswd.h@{libswd.h}!swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}read\_\discretionary {-}{}{}data\_\discretionary {-}{}{}p@{swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}read\_\discretionary {-}{}{}data\_\discretionary {-}{}{}p}|hyperpage}{53}
+\indexentry{swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}read\_\discretionary {-}{}{}data\_\discretionary {-}{}{}p@{swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}read\_\discretionary {-}{}{}data\_\discretionary {-}{}{}p}!libswd.h@{libswd.h}|hyperpage}{53}
+\indexentry{libswd.h@{libswd.h}!swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}setdir\_\discretionary {-}{}{}miso@{swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}setdir\_\discretionary {-}{}{}miso}|hyperpage}{53}
+\indexentry{swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}setdir\_\discretionary {-}{}{}miso@{swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}setdir\_\discretionary {-}{}{}miso}!libswd.h@{libswd.h}|hyperpage}{53}
+\indexentry{libswd.h@{libswd.h}!swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}setdir\_\discretionary {-}{}{}mosi@{swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}setdir\_\discretionary {-}{}{}mosi}|hyperpage}{54}
+\indexentry{swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}setdir\_\discretionary {-}{}{}mosi@{swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}setdir\_\discretionary {-}{}{}mosi}!libswd.h@{libswd.h}|hyperpage}{54}
+\indexentry{libswd.h@{libswd.h}!swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}write\_\discretionary {-}{}{}control@{swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}write\_\discretionary {-}{}{}control}|hyperpage}{54}
+\indexentry{swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}write\_\discretionary {-}{}{}control@{swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}write\_\discretionary {-}{}{}control}!libswd.h@{libswd.h}|hyperpage}{54}
+\indexentry{libswd.h@{libswd.h}!swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}write\_\discretionary {-}{}{}data\_\discretionary {-}{}{}ap@{swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}write\_\discretionary {-}{}{}data\_\discretionary {-}{}{}ap}|hyperpage}{54}
+\indexentry{swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}write\_\discretionary {-}{}{}data\_\discretionary {-}{}{}ap@{swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}write\_\discretionary {-}{}{}data\_\discretionary {-}{}{}ap}!libswd.h@{libswd.h}|hyperpage}{54}
+\indexentry{libswd.h@{libswd.h}!swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}write\_\discretionary {-}{}{}data\_\discretionary {-}{}{}p@{swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}write\_\discretionary {-}{}{}data\_\discretionary {-}{}{}p}|hyperpage}{54}
+\indexentry{swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}write\_\discretionary {-}{}{}data\_\discretionary {-}{}{}p@{swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}write\_\discretionary {-}{}{}data\_\discretionary {-}{}{}p}!libswd.h@{libswd.h}|hyperpage}{54}
+\indexentry{libswd.h@{libswd.h}!swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}write\_\discretionary {-}{}{}request@{swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}write\_\discretionary {-}{}{}request}|hyperpage}{55}
+\indexentry{swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}write\_\discretionary {-}{}{}request@{swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}write\_\discretionary {-}{}{}request}!libswd.h@{libswd.h}|hyperpage}{55}
+\indexentry{libswd.h@{libswd.h}!swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue}|hyperpage}{55}
+\indexentry{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue}!libswd.h@{libswd.h}|hyperpage}{55}
+\indexentry{libswd.h@{libswd.h}!swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}ack@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}ack}|hyperpage}{55}
+\indexentry{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}ack@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}ack}!libswd.h@{libswd.h}|hyperpage}{55}
+\indexentry{libswd.h@{libswd.h}!swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}data@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}data}|hyperpage}{56}
+\indexentry{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}data@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}data}!libswd.h@{libswd.h}|hyperpage}{56}
+\indexentry{libswd.h@{libswd.h}!swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}data\_\discretionary {-}{}{}p@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}data\_\discretionary {-}{}{}p}|hyperpage}{56}
+\indexentry{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}data\_\discretionary {-}{}{}p@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}data\_\discretionary {-}{}{}p}!libswd.h@{libswd.h}|hyperpage}{56}
+\indexentry{libswd.h@{libswd.h}!swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}n\_\discretionary {-}{}{}data\_\discretionary {-}{}{}p@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}n\_\discretionary {-}{}{}data\_\discretionary {-}{}{}p}|hyperpage}{56}
+\indexentry{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}n\_\discretionary {-}{}{}data\_\discretionary {-}{}{}p@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}n\_\discretionary {-}{}{}data\_\discretionary {-}{}{}p}!libswd.h@{libswd.h}|hyperpage}{56}
+\indexentry{libswd.h@{libswd.h}!swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}nbit@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}nbit}|hyperpage}{56}
+\indexentry{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}nbit@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}nbit}!libswd.h@{libswd.h}|hyperpage}{56}
+\indexentry{libswd.h@{libswd.h}!swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}parity@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}parity}|hyperpage}{57}
+\indexentry{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}parity@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}parity}!libswd.h@{libswd.h}|hyperpage}{57}
+\indexentry{libswd.h@{libswd.h}!swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}trn@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}trn}|hyperpage}{57}
+\indexentry{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}trn@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}trn}!libswd.h@{libswd.h}|hyperpage}{57}
+\indexentry{libswd.h@{libswd.h}!swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}control@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}control}|hyperpage}{57}
+\indexentry{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}control@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}control}!libswd.h@{libswd.h}|hyperpage}{57}
+\indexentry{libswd.h@{libswd.h}!swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}dap\_\discretionary {-}{}{}reset@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}dap\_\discretionary {-}{}{}reset}|hyperpage}{58}
+\indexentry{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}dap\_\discretionary {-}{}{}reset@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}dap\_\discretionary {-}{}{}reset}!libswd.h@{libswd.h}|hyperpage}{58}
+\indexentry{libswd.h@{libswd.h}!swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}data@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}data}|hyperpage}{58}
+\indexentry{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}data@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}data}!libswd.h@{libswd.h}|hyperpage}{58}
+\indexentry{libswd.h@{libswd.h}!swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}data\_\discretionary {-}{}{}ap@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}data\_\discretionary {-}{}{}ap}|hyperpage}{58}
+\indexentry{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}data\_\discretionary {-}{}{}ap@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}data\_\discretionary {-}{}{}ap}!libswd.h@{libswd.h}|hyperpage}{58}
+\indexentry{libswd.h@{libswd.h}!swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}data\_\discretionary {-}{}{}p@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}data\_\discretionary {-}{}{}p}|hyperpage}{58}
+\indexentry{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}data\_\discretionary {-}{}{}p@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}data\_\discretionary {-}{}{}p}!libswd.h@{libswd.h}|hyperpage}{58}
+\indexentry{libswd.h@{libswd.h}!swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}idle@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}idle}|hyperpage}{59}
+\indexentry{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}idle@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}idle}!libswd.h@{libswd.h}|hyperpage}{59}
+\indexentry{libswd.h@{libswd.h}!swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}jtag2swd@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}jtag2swd}|hyperpage}{59}
+\indexentry{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}jtag2swd@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}jtag2swd}!libswd.h@{libswd.h}|hyperpage}{59}
+\indexentry{libswd.h@{libswd.h}!swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}n\_\discretionary {-}{}{}data\_\discretionary {-}{}{}ap@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}n\_\discretionary {-}{}{}data\_\discretionary {-}{}{}ap}|hyperpage}{59}
+\indexentry{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}n\_\discretionary {-}{}{}data\_\discretionary {-}{}{}ap@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}n\_\discretionary {-}{}{}data\_\discretionary {-}{}{}ap}!libswd.h@{libswd.h}|hyperpage}{59}
+\indexentry{libswd.h@{libswd.h}!swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}n\_\discretionary {-}{}{}data\_\discretionary {-}{}{}p@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}n\_\discretionary {-}{}{}data\_\discretionary {-}{}{}p}|hyperpage}{59}
+\indexentry{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}n\_\discretionary {-}{}{}data\_\discretionary {-}{}{}p@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}n\_\discretionary {-}{}{}data\_\discretionary {-}{}{}p}!libswd.h@{libswd.h}|hyperpage}{59}
+\indexentry{libswd.h@{libswd.h}!swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}nbit@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}nbit}|hyperpage}{60}
+\indexentry{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}nbit@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}nbit}!libswd.h@{libswd.h}|hyperpage}{60}
+\indexentry{libswd.h@{libswd.h}!swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}parity@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}parity}|hyperpage}{60}
+\indexentry{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}parity@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}parity}!libswd.h@{libswd.h}|hyperpage}{60}
+\indexentry{libswd.h@{libswd.h}!swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}request@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}request}|hyperpage}{60}
+\indexentry{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}request@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}request}!libswd.h@{libswd.h}|hyperpage}{60}
+\indexentry{libswd.h@{libswd.h}!swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}swd2jtag@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}swd2jtag}|hyperpage}{61}
+\indexentry{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}swd2jtag@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}swd2jtag}!libswd.h@{libswd.h}|hyperpage}{61}
+\indexentry{libswd.h@{libswd.h}!swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}trn@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}trn}|hyperpage}{61}
+\indexentry{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}trn@{swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}trn}!libswd.h@{libswd.h}|hyperpage}{61}
+\indexentry{libswd.h@{libswd.h}!swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}append@{swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}append}|hyperpage}{61}
+\indexentry{swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}append@{swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}append}!libswd.h@{libswd.h}|hyperpage}{61}
+\indexentry{libswd.h@{libswd.h}!swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}find\_\discretionary {-}{}{}root@{swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}find\_\discretionary {-}{}{}root}|hyperpage}{61}
+\indexentry{swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}find\_\discretionary {-}{}{}root@{swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}find\_\discretionary {-}{}{}root}!libswd.h@{libswd.h}|hyperpage}{61}
+\indexentry{libswd.h@{libswd.h}!swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}find\_\discretionary {-}{}{}tail@{swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}find\_\discretionary {-}{}{}tail}|hyperpage}{62}
+\indexentry{swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}find\_\discretionary {-}{}{}tail@{swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}find\_\discretionary {-}{}{}tail}!libswd.h@{libswd.h}|hyperpage}{62}
+\indexentry{libswd.h@{libswd.h}!swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}flush@{swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}flush}|hyperpage}{62}
+\indexentry{swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}flush@{swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}flush}!libswd.h@{libswd.h}|hyperpage}{62}
+\indexentry{libswd.h@{libswd.h}!swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}free@{swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}free}|hyperpage}{62}
+\indexentry{swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}free@{swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}free}!libswd.h@{libswd.h}|hyperpage}{62}
+\indexentry{libswd.h@{libswd.h}!swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}free\_\discretionary {-}{}{}head@{swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}free\_\discretionary {-}{}{}head}|hyperpage}{62}
+\indexentry{swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}free\_\discretionary {-}{}{}head@{swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}free\_\discretionary {-}{}{}head}!libswd.h@{libswd.h}|hyperpage}{62}
+\indexentry{libswd.h@{libswd.h}!swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}free\_\discretionary {-}{}{}tail@{swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}free\_\discretionary {-}{}{}tail}|hyperpage}{63}
+\indexentry{swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}free\_\discretionary {-}{}{}tail@{swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}free\_\discretionary {-}{}{}tail}!libswd.h@{libswd.h}|hyperpage}{63}
+\indexentry{libswd.h@{libswd.h}!swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}init@{swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}init}|hyperpage}{63}
+\indexentry{swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}init@{swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}init}!libswd.h@{libswd.h}|hyperpage}{63}
+\indexentry{libswd.h@{libswd.h}!swd\_\discretionary {-}{}{}dap\_\discretionary {-}{}{}detect@{swd\_\discretionary {-}{}{}dap\_\discretionary {-}{}{}detect}|hyperpage}{63}
+\indexentry{swd\_\discretionary {-}{}{}dap\_\discretionary {-}{}{}detect@{swd\_\discretionary {-}{}{}dap\_\discretionary {-}{}{}detect}!libswd.h@{libswd.h}|hyperpage}{63}
+\indexentry{libswd.h@{libswd.h}!swd\_\discretionary {-}{}{}dap\_\discretionary {-}{}{}reset@{swd\_\discretionary {-}{}{}dap\_\discretionary {-}{}{}reset}|hyperpage}{63}
+\indexentry{swd\_\discretionary {-}{}{}dap\_\discretionary {-}{}{}reset@{swd\_\discretionary {-}{}{}dap\_\discretionary {-}{}{}reset}!libswd.h@{libswd.h}|hyperpage}{63}
+\indexentry{libswd.h@{libswd.h}!swd\_\discretionary {-}{}{}dap\_\discretionary {-}{}{}select@{swd\_\discretionary {-}{}{}dap\_\discretionary {-}{}{}select}|hyperpage}{64}
+\indexentry{swd\_\discretionary {-}{}{}dap\_\discretionary {-}{}{}select@{swd\_\discretionary {-}{}{}dap\_\discretionary {-}{}{}select}!libswd.h@{libswd.h}|hyperpage}{64}
+\indexentry{libswd.h@{libswd.h}!swd\_\discretionary {-}{}{}deinit@{swd\_\discretionary {-}{}{}deinit}|hyperpage}{64}
+\indexentry{swd\_\discretionary {-}{}{}deinit@{swd\_\discretionary {-}{}{}deinit}!libswd.h@{libswd.h}|hyperpage}{64}
+\indexentry{libswd.h@{libswd.h}!swd\_\discretionary {-}{}{}deinit\_\discretionary {-}{}{}cmdq@{swd\_\discretionary {-}{}{}deinit\_\discretionary {-}{}{}cmdq}|hyperpage}{64}
+\indexentry{swd\_\discretionary {-}{}{}deinit\_\discretionary {-}{}{}cmdq@{swd\_\discretionary {-}{}{}deinit\_\discretionary {-}{}{}cmdq}!libswd.h@{libswd.h}|hyperpage}{64}
+\indexentry{libswd.h@{libswd.h}!swd\_\discretionary {-}{}{}deinit\_\discretionary {-}{}{}ctx@{swd\_\discretionary {-}{}{}deinit\_\discretionary {-}{}{}ctx}|hyperpage}{64}
+\indexentry{swd\_\discretionary {-}{}{}deinit\_\discretionary {-}{}{}ctx@{swd\_\discretionary {-}{}{}deinit\_\discretionary {-}{}{}ctx}!libswd.h@{libswd.h}|hyperpage}{64}
+\indexentry{libswd.h@{libswd.h}!swd\_\discretionary {-}{}{}dp\_\discretionary {-}{}{}read\_\discretionary {-}{}{}idcode@{swd\_\discretionary {-}{}{}dp\_\discretionary {-}{}{}read\_\discretionary {-}{}{}idcode}|hyperpage}{65}
+\indexentry{swd\_\discretionary {-}{}{}dp\_\discretionary {-}{}{}read\_\discretionary {-}{}{}idcode@{swd\_\discretionary {-}{}{}dp\_\discretionary {-}{}{}read\_\discretionary {-}{}{}idcode}!libswd.h@{libswd.h}|hyperpage}{65}
+\indexentry{libswd.h@{libswd.h}!swd\_\discretionary {-}{}{}drv\_\discretionary {-}{}{}transmit@{swd\_\discretionary {-}{}{}drv\_\discretionary {-}{}{}transmit}|hyperpage}{65}
+\indexentry{swd\_\discretionary {-}{}{}drv\_\discretionary {-}{}{}transmit@{swd\_\discretionary {-}{}{}drv\_\discretionary {-}{}{}transmit}!libswd.h@{libswd.h}|hyperpage}{65}
+\indexentry{libswd.h@{libswd.h}!swd\_\discretionary {-}{}{}init@{swd\_\discretionary {-}{}{}init}|hyperpage}{65}
+\indexentry{swd\_\discretionary {-}{}{}init@{swd\_\discretionary {-}{}{}init}!libswd.h@{libswd.h}|hyperpage}{65}
+\indexentry{libswd.h@{libswd.h}!swd\_\discretionary {-}{}{}log@{swd\_\discretionary {-}{}{}log}|hyperpage}{65}
+\indexentry{swd\_\discretionary {-}{}{}log@{swd\_\discretionary {-}{}{}log}!libswd.h@{libswd.h}|hyperpage}{65}
+\indexentry{libswd.h@{libswd.h}!swd\_\discretionary {-}{}{}log\_\discretionary {-}{}{}level\_\discretionary {-}{}{}inherit@{swd\_\discretionary {-}{}{}log\_\discretionary {-}{}{}level\_\discretionary {-}{}{}inherit}|hyperpage}{66}
+\indexentry{swd\_\discretionary {-}{}{}log\_\discretionary {-}{}{}level\_\discretionary {-}{}{}inherit@{swd\_\discretionary {-}{}{}log\_\discretionary {-}{}{}level\_\discretionary {-}{}{}inherit}!libswd.h@{libswd.h}|hyperpage}{66}
+\indexentry{libswd.h@{libswd.h}!swd\_\discretionary {-}{}{}log\_\discretionary {-}{}{}level\_\discretionary {-}{}{}set@{swd\_\discretionary {-}{}{}log\_\discretionary {-}{}{}level\_\discretionary {-}{}{}set}|hyperpage}{66}
+\indexentry{swd\_\discretionary {-}{}{}log\_\discretionary {-}{}{}level\_\discretionary {-}{}{}set@{swd\_\discretionary {-}{}{}log\_\discretionary {-}{}{}level\_\discretionary {-}{}{}set}!libswd.h@{libswd.h}|hyperpage}{66}

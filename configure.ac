@@ -1,0 +1,12 @@
+AC_INIT([libswd], [0.1], [tomek@cedro.info])
+AC_CONFIG_AUX_DIR([build-aux])
+AC_CONFIG_MACRO_DIR([m4])
+AM_INIT_AUTOMAKE([foreign -Wall -Werror])
+DX_HTML_FEATURE(ON)
+DX_PDF_FEATURE(ON)
+DX_INIT_DOXYGEN($PACKAGE_NAME)
+LT_INIT
+AC_PROG_CC
+AC_CONFIG_HEADERS([config.h])
+AC_CONFIG_FILES([Makefile src/Makefile])
+AC_OUTPUT

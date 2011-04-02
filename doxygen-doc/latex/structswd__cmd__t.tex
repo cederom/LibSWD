@@ -1,0 +1,80 @@
+\hypertarget{structswd__cmd__t}{
+\section{swd\_\-cmd\_\-t Struct Reference}
+\label{structswd__cmd__t}\index{swd\_\-cmd\_\-t@{swd\_\-cmd\_\-t}}
+}
+
+
+SWD Command Element Structure.  
+
+
+
+
+{\ttfamily \#include $<$libswd.h$>$}
+
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{structswd__cmd__t_a6ffacafbf5e1160e81a4ae1e650c724f}{
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+union \{\\
+\>char \hyperlink{structswd__cmd__t_ad5990fe329230159af56a95378b206ef}{TRNnMOSI}\\
+\>\>{\em Holds/sets bus direction: MOSI when zero, MISO for others. }\\
+\>char \hyperlink{structswd__cmd__t_a78267c4aaaed43ef5d38617cd0632135}{request}\\
+\>\>{\em Request header data. }\\
+\>char \hyperlink{structswd__cmd__t_a564daefcae1870dc3110fe1ef2d2fb02}{ack}\\
+\>\>{\em Acknowledge response from target. }\\
+\>int \hyperlink{structswd__cmd__t_ab4bdc51a77d6beb63af8cb9d466e731f}{misodata}\\
+\>\>{\em Data read from target (MISO). }\\
+\>int \hyperlink{structswd__cmd__t_a35f88591bec4b8aa2e3e93e289ef3ee1}{mosidata}\\
+\>\>{\em Data written to target (MOSI). }\\
+\>int \hyperlink{structswd__cmd__t_ad2bab20a395056e71fb45c3ede25418e}{data32}\\
+\>\>{\em Holds \char`\"{}int\char`\"{} data type for inspection. }\\
+\>char \hyperlink{structswd__cmd__t_aad2959ff43a559dd230664cce4c62289}{misobit}\\
+\>\>{\em Single bit read from target (bit-\/per-\/char). }\\
+\>char \hyperlink{structswd__cmd__t_abb4d4c34e0559fa73e849a887ef2e29f}{mosibit}\\
+\>\>{\em Single bit written to target (bit-\/per-\/char). }\\
+\>char \hyperlink{structswd__cmd__t_a6616cbca6e9254be1d3e949ec5d774ca}{parity}\\
+\>\>{\em Parity bit for data payload. }\\
+\>char \hyperlink{structswd__cmd__t_aa2c59bcceeba9a700d8cd3965ec17da3}{control}\\
+\>\>{\em Control transfer data (one byte). }\\
+\>char \hyperlink{structswd__cmd__t_a01b050d371e7625c7ba0a404472db377}{data8}\\
+\>\>{\em Holds \char`\"{}char\char`\"{} data type for inspection. }\\
+\}; }
+\label{structswd__cmd__t_a6ffacafbf5e1160e81a4ae1e650c724f}
+\\
+
+\end{tabbing}\item 
+\hypertarget{structswd__cmd__t_ad356acda4d21961df30b3091a27ab13b}{
+char \hyperlink{structswd__cmd__t_ad356acda4d21961df30b3091a27ab13b}{bits}}
+\label{structswd__cmd__t_ad356acda4d21961df30b3091a27ab13b}
+
+\begin{DoxyCompactList}\small\item\em Payload bit count == clk pulses on the bus. \item\end{DoxyCompactList}\item 
+\hypertarget{structswd__cmd__t_a7039d3b72c01b8cfe8d3bcd428343059}{
+\hyperlink{libswd_8h_a18e16544fabdef0ef0e531cc6b4d4b7c}{swd\_\-cmdtype\_\-t} \hyperlink{structswd__cmd__t_a7039d3b72c01b8cfe8d3bcd428343059}{cmdtype}}
+\label{structswd__cmd__t_a7039d3b72c01b8cfe8d3bcd428343059}
+
+\begin{DoxyCompactList}\small\item\em Command type as defined by swd\_\-cmdtype\_\-t. \item\end{DoxyCompactList}\item 
+\hypertarget{structswd__cmd__t_a617e4adc0aaf469af0fdab5efd93174c}{
+char \hyperlink{structswd__cmd__t_a617e4adc0aaf469af0fdab5efd93174c}{done}}
+\label{structswd__cmd__t_a617e4adc0aaf469af0fdab5efd93174c}
+
+\begin{DoxyCompactList}\small\item\em Non-\/zero if operation already executed. \item\end{DoxyCompactList}\item 
+\hypertarget{structswd__cmd__t_a51ad4da25e6438e20fafd9e44b901d49}{
+struct \hyperlink{structswd__cmd__t}{swd\_\-cmd\_\-t} $\ast$ \hyperlink{structswd__cmd__t_a51ad4da25e6438e20fafd9e44b901d49}{prev}}
+\label{structswd__cmd__t_a51ad4da25e6438e20fafd9e44b901d49}
+
+\begin{DoxyCompactList}\small\item\em Pointer to the previous command. \item\end{DoxyCompactList}\item 
+\hypertarget{structswd__cmd__t_aaf05bcb291fe2ecdf38a9168315db405}{
+struct \hyperlink{structswd__cmd__t}{swd\_\-cmd\_\-t} $\ast$ \hyperlink{structswd__cmd__t_aaf05bcb291fe2ecdf38a9168315db405}{next}}
+\label{structswd__cmd__t_aaf05bcb291fe2ecdf38a9168315db405}
+
+\begin{DoxyCompactList}\small\item\em Pointer to the next command. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+SWD Command Element Structure. In libswd each operation is split into separate commands (request, trn, ack, data, parity) that can be appended to the command queue and later executed. This organization allows better granularity for tracing bugs and makes possible to compose complete bus/target operations made of simple commands. 
+
+The documentation for this struct was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+src/\hyperlink{libswd_8h}{libswd.h}\end{DoxyCompactItemize}

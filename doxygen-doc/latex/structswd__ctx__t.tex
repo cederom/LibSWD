@@ -1,0 +1,58 @@
+\hypertarget{structswd__ctx__t}{
+\section{swd\_\-ctx\_\-t Struct Reference}
+\label{structswd__ctx__t}\index{swd\_\-ctx\_\-t@{swd\_\-ctx\_\-t}}
+}
+
+
+SWD Context Structure definition.  
+
+
+
+
+{\ttfamily \#include $<$libswd.h$>$}
+
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{structswd__ctx__t_abbf4c96d5d0cfde93e6441906161c433}{
+\hyperlink{structswd__cmd__t}{swd\_\-cmd\_\-t} $\ast$ \hyperlink{structswd__ctx__t_abbf4c96d5d0cfde93e6441906161c433}{cmdq}}
+\label{structswd__ctx__t_abbf4c96d5d0cfde93e6441906161c433}
+
+\begin{DoxyCompactList}\small\item\em Command queue, stores all bus operations. \item\end{DoxyCompactList}\item 
+\hypertarget{structswd__ctx__t_a6398e41baed39e1c051396cf7079f35e}{
+\hyperlink{structswd__context__config__t}{swd\_\-context\_\-config\_\-t} \hyperlink{structswd__ctx__t_a6398e41baed39e1c051396cf7079f35e}{config}}
+\label{structswd__ctx__t_a6398e41baed39e1c051396cf7079f35e}
+
+\begin{DoxyCompactList}\small\item\em Target specific configuration. \item\end{DoxyCompactList}\item 
+\hypertarget{structswd__ctx__t_a1af708535f1167ac7909e62dbda0296c}{
+\hyperlink{structswd__driver__t}{swd\_\-driver\_\-t} $\ast$ \hyperlink{structswd__ctx__t_a1af708535f1167ac7909e62dbda0296c}{driver}}
+\label{structswd__ctx__t_a1af708535f1167ac7909e62dbda0296c}
+
+\begin{DoxyCompactList}\small\item\em Pointer to the interface driver structure. \item\end{DoxyCompactList}\item 
+\hypertarget{structswd__ctx__t_ab2dfb610a0dc0ea3abefd8925e8d6d97}{
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+struct \{\\
+\>\hyperlink{structswd__swdp__t}{swd\_swdp\_t} \hyperlink{structswd__ctx__t_a97f9093e16939fc44a2d46d328474454}{dp\_read}\\
+\>\>{\em Last known read from the SW-\/DP registers. }\\
+\>\hyperlink{structswd__swdp__t}{swd\_swdp\_t} \hyperlink{structswd__ctx__t_a20ecbfb255b8c8b0b1ef92648c1d9825}{dp\_write}\\
+\>\>{\em Last known write to the SW-\/DP registers. }\\
+\>\hyperlink{structswd__ahbap__t}{swd\_ahbap\_t} \hyperlink{structswd__ctx__t_a5e33de2e34bfff7936ff02e6a388f003}{ap\_read}\\
+\>\>{\em Last known read from AHB-\/AP registers. }\\
+\>\hyperlink{structswd__ahbap__t}{swd\_ahbap\_t} \hyperlink{structswd__ctx__t_a40c8ded9b946c7c851cd43dc52a289ea}{ap\_write}\\
+\>\>{\em Last known write ti the AHB-\/AP registers. }\\
+\>\hyperlink{structswd__transaction__t}{swd\_transaction\_t} {\bfseries read}\\
+\>\hyperlink{structswd__transaction__t}{swd\_transaction\_t} {\bfseries write}\\
+\} {\bfseries log}}
+\label{structswd__ctx__t_ab2dfb610a0dc0ea3abefd8925e8d6d97}
+\\
+
+\end{tabbing}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+SWD Context Structure definition. It stores all the information about the library, drivers and interface configuration, target status along with DAP/AHBAP data/instruction internal registers, and the command queue. Bus operations are stored on the command queue. There may be more than one context in use by a host software, each one for single interface-\/target pair. Most of the target operations made with libswd are required to pass \hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} pointer structure that also remembers last known state of the target's internal registers. 
+
+The documentation for this struct was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+src/\hyperlink{libswd_8h}{libswd.h}\end{DoxyCompactItemize}

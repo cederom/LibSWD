@@ -1,0 +1,778 @@
+\begin{theindex}
+
+  \item {AHB\_\discretionary {-}{}{}AP\_\discretionary {-}{}{}BD0}
+    \subitem {libswd.h}, \hyperpage{45}
+  \item {AHB\_\discretionary {-}{}{}AP\_\discretionary {-}{}{}BD1}
+    \subitem {libswd.h}, \hyperpage{45}
+  \item {AHB\_\discretionary {-}{}{}AP\_\discretionary {-}{}{}BD2}
+    \subitem {libswd.h}, \hyperpage{45}
+  \item {AHB\_\discretionary {-}{}{}AP\_\discretionary {-}{}{}BD3}
+    \subitem {libswd.h}, \hyperpage{45}
+  \item {AHB\_\discretionary {-}{}{}AP\_\discretionary {-}{}{}CONTROLSTATUS}
+    \subitem {libswd.h}, \hyperpage{45}
+  \item {AHB\_\discretionary {-}{}{}AP\_\discretionary {-}{}{}DROMT}
+    \subitem {libswd.h}, \hyperpage{45}
+  \item {AHB\_\discretionary {-}{}{}AP\_\discretionary {-}{}{}DRW}
+    \subitem {libswd.h}, \hyperpage{45}
+  \item {AHB\_\discretionary {-}{}{}AP\_\discretionary {-}{}{}IDR}
+    \subitem {libswd.h}, \hyperpage{46}
+  \item {AHB\_\discretionary {-}{}{}AP\_\discretionary {-}{}{}TAR}
+    \subitem {libswd.h}, \hyperpage{46}
+
+  \indexspace
+
+  \item {libswd.c}
+    \subitem {swd\_\discretionary {-}{}{}bin32\_\discretionary {-}{}{}bitswap}, 
+		\hyperpage{19}
+    \subitem {swd\_\discretionary {-}{}{}bin32\_\discretionary {-}{}{}parity\_\discretionary {-}{}{}even}, 
+		\hyperpage{19}
+    \subitem {swd\_\discretionary {-}{}{}bin32\_\discretionary {-}{}{}print}, 
+		\hyperpage{19}
+    \subitem {swd\_\discretionary {-}{}{}bin32\_\discretionary {-}{}{}string}, 
+		\hyperpage{20}
+    \subitem {swd\_\discretionary {-}{}{}bin8\_\discretionary {-}{}{}bitswap}, 
+		\hyperpage{20}
+    \subitem {swd\_\discretionary {-}{}{}bin8\_\discretionary {-}{}{}parity\_\discretionary {-}{}{}even}, 
+		\hyperpage{20}
+    \subitem {swd\_\discretionary {-}{}{}bin8\_\discretionary {-}{}{}print}, 
+		\hyperpage{20}
+    \subitem {swd\_\discretionary {-}{}{}bin8\_\discretionary {-}{}{}string}, 
+		\hyperpage{21}
+    \subitem {swd\_\discretionary {-}{}{}bitgen8\_\discretionary {-}{}{}request}, 
+		\hyperpage{21}
+    \subitem {swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}read\_\discretionary {-}{}{}ack}, 
+		\hyperpage{21}
+    \subitem {swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}read\_\discretionary {-}{}{}data\_\discretionary {-}{}{}p}, 
+		\hyperpage{22}
+    \subitem {swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}setdir\_\discretionary {-}{}{}miso}, 
+		\hyperpage{22}
+    \subitem {swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}setdir\_\discretionary {-}{}{}mosi}, 
+		\hyperpage{22}
+    \subitem {swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}write\_\discretionary {-}{}{}control}, 
+		\hyperpage{22}
+    \subitem {swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}write\_\discretionary {-}{}{}data\_\discretionary {-}{}{}ap}, 
+		\hyperpage{23}
+    \subitem {swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}write\_\discretionary {-}{}{}data\_\discretionary {-}{}{}p}, 
+		\hyperpage{23}
+    \subitem {swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}write\_\discretionary {-}{}{}request}, 
+		\hyperpage{23}
+    \subitem {swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue}, 
+		\hyperpage{24}
+    \subitem {swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}ack}, 
+		\hyperpage{24}
+    \subitem {swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}data}, 
+		\hyperpage{24}
+    \subitem {swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}data\_\discretionary {-}{}{}p}, 
+		\hyperpage{24}
+    \subitem {swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}n\_\discretionary {-}{}{}data\_\discretionary {-}{}{}p}, 
+		\hyperpage{25}
+    \subitem {swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}nbit}, 
+		\hyperpage{25}
+    \subitem {swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}parity}, 
+		\hyperpage{25}
+    \subitem {swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}trn}, 
+		\hyperpage{26}
+    \subitem {swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}control}, 
+		\hyperpage{26}
+    \subitem {swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}dap\_\discretionary {-}{}{}reset}, 
+		\hyperpage{26}
+    \subitem {swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}data}, 
+		\hyperpage{26}
+    \subitem {swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}data\_\discretionary {-}{}{}ap}, 
+		\hyperpage{27}
+    \subitem {swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}data\_\discretionary {-}{}{}p}, 
+		\hyperpage{27}
+    \subitem {swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}idle}, 
+		\hyperpage{27}
+    \subitem {swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}jtag2swd}, 
+		\hyperpage{27}
+    \subitem {swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}n\_\discretionary {-}{}{}data\_\discretionary {-}{}{}ap}, 
+		\hyperpage{28}
+    \subitem {swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}n\_\discretionary {-}{}{}data\_\discretionary {-}{}{}p}, 
+		\hyperpage{28}
+    \subitem {swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}nbit}, 
+		\hyperpage{28}
+    \subitem {swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}parity}, 
+		\hyperpage{29}
+    \subitem {swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}request}, 
+		\hyperpage{29}
+    \subitem {swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}swd2jtag}, 
+		\hyperpage{29}
+    \subitem {swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}trn}, 
+		\hyperpage{29}
+    \subitem {swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}append}, 
+		\hyperpage{30}
+    \subitem {swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}find\_\discretionary {-}{}{}root}, 
+		\hyperpage{30}
+    \subitem {swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}find\_\discretionary {-}{}{}tail}, 
+		\hyperpage{30}
+    \subitem {swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}flush}, 
+		\hyperpage{30}
+    \subitem {swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}free}, 
+		\hyperpage{31}
+    \subitem {swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}free\_\discretionary {-}{}{}head}, 
+		\hyperpage{31}
+    \subitem {swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}free\_\discretionary {-}{}{}tail}, 
+		\hyperpage{31}
+    \subitem {swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}init}, 
+		\hyperpage{31}
+    \subitem {swd\_\discretionary {-}{}{}dap\_\discretionary {-}{}{}detect}, 
+		\hyperpage{32}
+    \subitem {swd\_\discretionary {-}{}{}dap\_\discretionary {-}{}{}reset}, 
+		\hyperpage{32}
+    \subitem {swd\_\discretionary {-}{}{}dap\_\discretionary {-}{}{}select}, 
+		\hyperpage{32}
+    \subitem {swd\_\discretionary {-}{}{}deinit}, \hyperpage{32}
+    \subitem {swd\_\discretionary {-}{}{}deinit\_\discretionary {-}{}{}cmdq}, 
+		\hyperpage{33}
+    \subitem {swd\_\discretionary {-}{}{}deinit\_\discretionary {-}{}{}ctx}, 
+		\hyperpage{33}
+    \subitem {swd\_\discretionary {-}{}{}dp\_\discretionary {-}{}{}read\_\discretionary {-}{}{}idcode}, 
+		\hyperpage{33}
+    \subitem {swd\_\discretionary {-}{}{}drv\_\discretionary {-}{}{}transmit}, 
+		\hyperpage{33}
+    \subitem {swd\_\discretionary {-}{}{}init}, \hyperpage{34}
+    \subitem {swd\_\discretionary {-}{}{}log}, \hyperpage{34}
+    \subitem {swd\_\discretionary {-}{}{}log\_\discretionary {-}{}{}level\_\discretionary {-}{}{}set}, 
+		\hyperpage{34}
+  \item {libswd.h}
+    \subitem {AHB\_\discretionary {-}{}{}AP\_\discretionary {-}{}{}BD0}, 
+		\hyperpage{45}
+    \subitem {AHB\_\discretionary {-}{}{}AP\_\discretionary {-}{}{}BD1}, 
+		\hyperpage{45}
+    \subitem {AHB\_\discretionary {-}{}{}AP\_\discretionary {-}{}{}BD2}, 
+		\hyperpage{45}
+    \subitem {AHB\_\discretionary {-}{}{}AP\_\discretionary {-}{}{}BD3}, 
+		\hyperpage{45}
+    \subitem {AHB\_\discretionary {-}{}{}AP\_\discretionary {-}{}{}CONTROLSTATUS}, 
+		\hyperpage{45}
+    \subitem {AHB\_\discretionary {-}{}{}AP\_\discretionary {-}{}{}DROMT}, 
+		\hyperpage{45}
+    \subitem {AHB\_\discretionary {-}{}{}AP\_\discretionary {-}{}{}DRW}, 
+		\hyperpage{45}
+    \subitem {AHB\_\discretionary {-}{}{}AP\_\discretionary {-}{}{}IDR}, 
+		\hyperpage{46}
+    \subitem {AHB\_\discretionary {-}{}{}AP\_\discretionary {-}{}{}TAR}, 
+		\hyperpage{46}
+    \subitem {SWD\_\-CMDTYPE\_\-MISO}, \hyperpage{48}
+    \subitem {SWD\_\-CMDTYPE\_\-MISO\_\-ACK}, \hyperpage{48}
+    \subitem {SWD\_\-CMDTYPE\_\-MISO\_\-BITBANG}, \hyperpage{48}
+    \subitem {SWD\_\-CMDTYPE\_\-MISO\_\-DATA}, \hyperpage{48}
+    \subitem {SWD\_\-CMDTYPE\_\-MISO\_\-PARITY}, \hyperpage{48}
+    \subitem {SWD\_\-CMDTYPE\_\-MISO\_\-TRN}, \hyperpage{48}
+    \subitem {SWD\_\-CMDTYPE\_\-MOSI}, \hyperpage{48}
+    \subitem {SWD\_\-CMDTYPE\_\-MOSI\_\-BITBANG}, \hyperpage{48}
+    \subitem {SWD\_\-CMDTYPE\_\-MOSI\_\-CONTROL}, \hyperpage{48}
+    \subitem {SWD\_\-CMDTYPE\_\-MOSI\_\-DATA}, \hyperpage{48}
+    \subitem {SWD\_\-CMDTYPE\_\-MOSI\_\-PARITY}, \hyperpage{48}
+    \subitem {SWD\_\-CMDTYPE\_\-MOSI\_\-REQUEST}, \hyperpage{48}
+    \subitem {SWD\_\-CMDTYPE\_\-MOSI\_\-TRN}, \hyperpage{48}
+    \subitem {SWD\_\-CMDTYPE\_\-UNDEFINED}, \hyperpage{48}
+    \subitem {SWD\_\-DIR\_\-LSBFIRST}, \hyperpage{50}
+    \subitem {SWD\_\-DIR\_\-MSBFIRST}, \hyperpage{50}
+    \subitem {SWD\_\-ERROR\_\-ACK}, \hyperpage{49}
+    \subitem {SWD\_\-ERROR\_\-ACK\_\-FAULT}, \hyperpage{49}
+    \subitem {SWD\_\-ERROR\_\-ACK\_\-WAIT}, \hyperpage{49}
+    \subitem {SWD\_\-ERROR\_\-ACKMISMATCH}, \hyperpage{49}
+    \subitem {SWD\_\-ERROR\_\-ACKMISSING}, \hyperpage{49}
+    \subitem {SWD\_\-ERROR\_\-ACKNOTDONE}, \hyperpage{49}
+    \subitem {SWD\_\-ERROR\_\-ACKORDER}, \hyperpage{49}
+    \subitem {SWD\_\-ERROR\_\-ACKUNKNOWN}, \hyperpage{49}
+    \subitem {SWD\_\-ERROR\_\-ADDR}, \hyperpage{49}
+    \subitem {SWD\_\-ERROR\_\-APnDP}, \hyperpage{49}
+    \subitem {SWD\_\-ERROR\_\-BADCMDDATA}, \hyperpage{49}
+    \subitem {SWD\_\-ERROR\_\-BADCMDTYPE}, \hyperpage{49}
+    \subitem {SWD\_\-ERROR\_\-BADOPCODE}, \hyperpage{49}
+    \subitem {SWD\_\-ERROR\_\-DATAPTR}, \hyperpage{49}
+    \subitem {SWD\_\-ERROR\_\-DEFINITION}, \hyperpage{49}
+    \subitem {SWD\_\-ERROR\_\-DIRECTION}, \hyperpage{49}
+    \subitem {SWD\_\-ERROR\_\-DRIVER}, \hyperpage{49}
+    \subitem {SWD\_\-ERROR\_\-GENERAL}, \hyperpage{49}
+    \subitem {SWD\_\-ERROR\_\-LOGLEVEL}, \hyperpage{49}
+    \subitem {SWD\_\-ERROR\_\-NODATACMD}, \hyperpage{49}
+    \subitem {SWD\_\-ERROR\_\-NOPARITYCMD}, \hyperpage{49}
+    \subitem {SWD\_\-ERROR\_\-NOTDONE}, \hyperpage{49}
+    \subitem {SWD\_\-ERROR\_\-NULLCONTEXT}, \hyperpage{49}
+    \subitem {SWD\_\-ERROR\_\-NULLPOINTER}, \hyperpage{49}
+    \subitem {SWD\_\-ERROR\_\-NULLQUEUE}, \hyperpage{49}
+    \subitem {SWD\_\-ERROR\_\-NULLTRN}, \hyperpage{49}
+    \subitem {SWD\_\-ERROR\_\-OUTOFMEM}, \hyperpage{49}
+    \subitem {SWD\_\-ERROR\_\-PARAM}, \hyperpage{49}
+    \subitem {SWD\_\-ERROR\_\-PARITY}, \hyperpage{49}
+    \subitem {SWD\_\-ERROR\_\-PARITYPTR}, \hyperpage{49}
+    \subitem {SWD\_\-ERROR\_\-QUEUE}, \hyperpage{49}
+    \subitem {SWD\_\-ERROR\_\-QUEUENOTFREE}, \hyperpage{49}
+    \subitem {SWD\_\-ERROR\_\-QUEUEROOT}, \hyperpage{49}
+    \subitem {SWD\_\-ERROR\_\-QUEUETAIL}, \hyperpage{49}
+    \subitem {SWD\_\-ERROR\_\-RANGE}, \hyperpage{49}
+    \subitem {SWD\_\-ERROR\_\-RESULT}, \hyperpage{49}
+    \subitem {SWD\_\-ERROR\_\-RnW}, \hyperpage{49}
+    \subitem {SWD\_\-ERROR\_\-TRANSPORT}, \hyperpage{49}
+    \subitem {SWD\_\-ERROR\_\-TURNAROUND}, \hyperpage{49}
+    \subitem {SWD\_\-FALSE}, \hyperpage{48}
+    \subitem {SWD\_\-LOGLEVEL\_\-DEBUG}, \hyperpage{50}
+    \subitem {SWD\_\-LOGLEVEL\_\-ERROR}, \hyperpage{50}
+    \subitem {SWD\_\-LOGLEVEL\_\-INFO}, \hyperpage{50}
+    \subitem {SWD\_\-LOGLEVEL\_\-NORMAL}, \hyperpage{50}
+    \subitem {SWD\_\-LOGLEVEL\_\-SILENT}, \hyperpage{50}
+    \subitem {SWD\_\-LOGLEVEL\_\-WARNING}, \hyperpage{50}
+    \subitem {SWD\_\-OK}, \hyperpage{49}
+    \subitem {SWD\_\-OPERATION\_\-ENQUEUE}, \hyperpage{50}
+    \subitem {SWD\_\-OPERATION\_\-EXECUTE}, \hyperpage{50}
+    \subitem {SWD\_\-OPERATION\_\-FIRST}, \hyperpage{50}
+    \subitem {SWD\_\-OPERATION\_\-LAST}, \hyperpage{50}
+    \subitem {SWD\_\-OPERATION\_\-TRANSMIT\_\-ALL}, \hyperpage{50}
+    \subitem {SWD\_\-OPERATION\_\-TRANSMIT\_\-HEAD}, \hyperpage{50}
+    \subitem {SWD\_\-OPERATION\_\-TRANSMIT\_\-LAST}, \hyperpage{50}
+    \subitem {SWD\_\-OPERATION\_\-TRANSMIT\_\-ONE}, \hyperpage{50}
+    \subitem {SWD\_\-OPERATION\_\-TRANSMIT\_\-TAIL}, \hyperpage{50}
+    \subitem {SWD\_\-TRUE}, \hyperpage{48}
+    \subitem {SWD\_\discretionary {-}{}{}ABORT\_\discretionary {-}{}{}BITNUM\_\discretionary {-}{}{}DAPABORT}, 
+		\hyperpage{46}
+    \subitem {swd\_\discretionary {-}{}{}bin32\_\discretionary {-}{}{}bitswap}, 
+		\hyperpage{50}
+    \subitem {swd\_\discretionary {-}{}{}bin32\_\discretionary {-}{}{}parity\_\discretionary {-}{}{}even}, 
+		\hyperpage{51}
+    \subitem {swd\_\discretionary {-}{}{}bin32\_\discretionary {-}{}{}print}, 
+		\hyperpage{51}
+    \subitem {swd\_\discretionary {-}{}{}bin32\_\discretionary {-}{}{}string}, 
+		\hyperpage{51}
+    \subitem {swd\_\discretionary {-}{}{}bin8\_\discretionary {-}{}{}bitswap}, 
+		\hyperpage{51}
+    \subitem {swd\_\discretionary {-}{}{}bin8\_\discretionary {-}{}{}parity\_\discretionary {-}{}{}even}, 
+		\hyperpage{52}
+    \subitem {swd\_\discretionary {-}{}{}bin8\_\discretionary {-}{}{}print}, 
+		\hyperpage{52}
+    \subitem {swd\_\discretionary {-}{}{}bin8\_\discretionary {-}{}{}string}, 
+		\hyperpage{52}
+    \subitem {swd\_\discretionary {-}{}{}bitgen8\_\discretionary {-}{}{}request}, 
+		\hyperpage{52}
+    \subitem {swd\_\discretionary {-}{}{}bool\_\discretionary {-}{}{}t}, 
+		\hyperpage{48}
+    \subitem {swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}read\_\discretionary {-}{}{}ack}, 
+		\hyperpage{53}
+    \subitem {swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}read\_\discretionary {-}{}{}data\_\discretionary {-}{}{}p}, 
+		\hyperpage{53}
+    \subitem {swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}setdir\_\discretionary {-}{}{}miso}, 
+		\hyperpage{53}
+    \subitem {swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}setdir\_\discretionary {-}{}{}mosi}, 
+		\hyperpage{54}
+    \subitem {swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}write\_\discretionary {-}{}{}control}, 
+		\hyperpage{54}
+    \subitem {swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}write\_\discretionary {-}{}{}data\_\discretionary {-}{}{}ap}, 
+		\hyperpage{54}
+    \subitem {swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}write\_\discretionary {-}{}{}data\_\discretionary {-}{}{}p}, 
+		\hyperpage{54}
+    \subitem {swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}write\_\discretionary {-}{}{}request}, 
+		\hyperpage{55}
+    \subitem {swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue}, 
+		\hyperpage{55}
+    \subitem {swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}ack}, 
+		\hyperpage{55}
+    \subitem {swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}data}, 
+		\hyperpage{56}
+    \subitem {swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}data\_\discretionary {-}{}{}p}, 
+		\hyperpage{56}
+    \subitem {swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}n\_\discretionary {-}{}{}data\_\discretionary {-}{}{}p}, 
+		\hyperpage{56}
+    \subitem {swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}nbit}, 
+		\hyperpage{56}
+    \subitem {swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}parity}, 
+		\hyperpage{57}
+    \subitem {swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}trn}, 
+		\hyperpage{57}
+    \subitem {swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}control}, 
+		\hyperpage{57}
+    \subitem {swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}dap\_\discretionary {-}{}{}reset}, 
+		\hyperpage{58}
+    \subitem {swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}data}, 
+		\hyperpage{58}
+    \subitem {swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}data\_\discretionary {-}{}{}ap}, 
+		\hyperpage{58}
+    \subitem {swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}data\_\discretionary {-}{}{}p}, 
+		\hyperpage{58}
+    \subitem {swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}idle}, 
+		\hyperpage{59}
+    \subitem {swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}jtag2swd}, 
+		\hyperpage{59}
+    \subitem {swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}n\_\discretionary {-}{}{}data\_\discretionary {-}{}{}ap}, 
+		\hyperpage{59}
+    \subitem {swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}n\_\discretionary {-}{}{}data\_\discretionary {-}{}{}p}, 
+		\hyperpage{59}
+    \subitem {swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}nbit}, 
+		\hyperpage{60}
+    \subitem {swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}parity}, 
+		\hyperpage{60}
+    \subitem {swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}request}, 
+		\hyperpage{60}
+    \subitem {swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}swd2jtag}, 
+		\hyperpage{61}
+    \subitem {swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}trn}, 
+		\hyperpage{61}
+    \subitem {swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}t}, 
+		\hyperpage{48}
+    \subitem {swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}append}, 
+		\hyperpage{61}
+    \subitem {swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}find\_\discretionary {-}{}{}root}, 
+		\hyperpage{61}
+    \subitem {swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}find\_\discretionary {-}{}{}tail}, 
+		\hyperpage{62}
+    \subitem {swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}flush}, 
+		\hyperpage{62}
+    \subitem {swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}free}, 
+		\hyperpage{62}
+    \subitem {swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}free\_\discretionary {-}{}{}head}, 
+		\hyperpage{62}
+    \subitem {swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}free\_\discretionary {-}{}{}tail}, 
+		\hyperpage{63}
+    \subitem {swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}init}, 
+		\hyperpage{63}
+    \subitem {swd\_\discretionary {-}{}{}cmdtype\_\discretionary {-}{}{}t}, 
+		\hyperpage{48}
+    \subitem {SWD\_\discretionary {-}{}{}CTRLSTAT\_\discretionary {-}{}{}BITNUM\_\discretionary {-}{}{}ORUNDETECT}, 
+		\hyperpage{46}
+    \subitem {swd\_\discretionary {-}{}{}dap\_\discretionary {-}{}{}detect}, 
+		\hyperpage{63}
+    \subitem {swd\_\discretionary {-}{}{}dap\_\discretionary {-}{}{}reset}, 
+		\hyperpage{63}
+    \subitem {swd\_\discretionary {-}{}{}dap\_\discretionary {-}{}{}select}, 
+		\hyperpage{64}
+    \subitem {SWD\_\discretionary {-}{}{}DATA\_\discretionary {-}{}{}MAXBITCOUNT}, 
+		\hyperpage{46}
+    \subitem {swd\_\discretionary {-}{}{}deinit}, \hyperpage{64}
+    \subitem {swd\_\discretionary {-}{}{}deinit\_\discretionary {-}{}{}cmdq}, 
+		\hyperpage{64}
+    \subitem {swd\_\discretionary {-}{}{}deinit\_\discretionary {-}{}{}ctx}, 
+		\hyperpage{64}
+    \subitem {swd\_\discretionary {-}{}{}dp\_\discretionary {-}{}{}read\_\discretionary {-}{}{}idcode}, 
+		\hyperpage{65}
+    \subitem {swd\_\discretionary {-}{}{}drv\_\discretionary {-}{}{}transmit}, 
+		\hyperpage{65}
+    \subitem {swd\_\discretionary {-}{}{}error\_\discretionary {-}{}{}code\_\discretionary {-}{}{}t}, 
+		\hyperpage{48}
+    \subitem {swd\_\discretionary {-}{}{}init}, \hyperpage{65}
+    \subitem {swd\_\discretionary {-}{}{}log}, \hyperpage{65}
+    \subitem {swd\_\discretionary {-}{}{}log\_\discretionary {-}{}{}level\_\discretionary {-}{}{}inherit}, 
+		\hyperpage{66}
+    \subitem {swd\_\discretionary {-}{}{}log\_\discretionary {-}{}{}level\_\discretionary {-}{}{}set}, 
+		\hyperpage{66}
+    \subitem {swd\_\discretionary {-}{}{}loglevel\_\discretionary {-}{}{}t}, 
+		\hyperpage{49}
+    \subitem {SWD\_\discretionary {-}{}{}MASKLANE\_\discretionary {-}{}{}0}, 
+		\hyperpage{46}
+    \subitem {swd\_\discretionary {-}{}{}operation\_\discretionary {-}{}{}t}, 
+		\hyperpage{50}
+    \subitem {SWD\_\discretionary {-}{}{}REQUEST\_\discretionary {-}{}{}START\_\discretionary {-}{}{}BITNUM}, 
+		\hyperpage{46}
+    \subitem {SWD\_\discretionary {-}{}{}SELECT\_\discretionary {-}{}{}BITNUM\_\discretionary {-}{}{}CTRLSEL}, 
+		\hyperpage{46}
+    \subitem {swd\_\discretionary {-}{}{}shiftdir\_\discretionary {-}{}{}t}, 
+		\hyperpage{50}
+    \subitem {SWD\_\discretionary {-}{}{}TURNROUND\_\discretionary {-}{}{}1\_\discretionary {-}{}{}CODE}, 
+		\hyperpage{46}
+    \subitem {SWD\_\discretionary {-}{}{}TURNROUND\_\discretionary {-}{}{}2\_\discretionary {-}{}{}CODE}, 
+		\hyperpage{47}
+    \subitem {SWD\_\discretionary {-}{}{}TURNROUND\_\discretionary {-}{}{}3\_\discretionary {-}{}{}CODE}, 
+		\hyperpage{47}
+    \subitem {SWD\_\discretionary {-}{}{}TURNROUND\_\discretionary {-}{}{}4\_\discretionary {-}{}{}CODE}, 
+		\hyperpage{47}
+    \subitem {SWD\_\discretionary {-}{}{}TURNROUND\_\discretionary {-}{}{}DEFAULT\_\discretionary {-}{}{}VAL}, 
+		\hyperpage{47}
+    \subitem {SWD\_\discretionary {-}{}{}TURNROUND\_\discretionary {-}{}{}MAX\_\discretionary {-}{}{}VAL}, 
+		\hyperpage{47}
+    \subitem {SWD\_\discretionary {-}{}{}TURNROUND\_\discretionary {-}{}{}MIN\_\discretionary {-}{}{}VAL}, 
+		\hyperpage{47}
+    \subitem {SWD\_\discretionary {-}{}{}WCR\_\discretionary {-}{}{}BITNUM\_\discretionary {-}{}{}PRESCALER}, 
+		\hyperpage{47}
+    \subitem {SWD\_\discretionary {-}{}{}WCR\_\discretionary {-}{}{}BITNUM\_\discretionary {-}{}{}TURNROUND}, 
+		\hyperpage{47}
+    \subitem {SWD\_\discretionary {-}{}{}WCR\_\discretionary {-}{}{}BITNUM\_\discretionary {-}{}{}WIREMODE}, 
+		\hyperpage{47}
+
+  \indexspace
+
+  \item {src/libswd.c}, \hyperpage{15}
+  \item {src/libswd.h}, \hyperpage{35}
+  \item {SWD\_\-CMDTYPE\_\-MISO}
+    \subitem {libswd.h}, \hyperpage{48}
+  \item {SWD\_\-CMDTYPE\_\-MISO\_\-ACK}
+    \subitem {libswd.h}, \hyperpage{48}
+  \item {SWD\_\-CMDTYPE\_\-MISO\_\-BITBANG}
+    \subitem {libswd.h}, \hyperpage{48}
+  \item {SWD\_\-CMDTYPE\_\-MISO\_\-DATA}
+    \subitem {libswd.h}, \hyperpage{48}
+  \item {SWD\_\-CMDTYPE\_\-MISO\_\-PARITY}
+    \subitem {libswd.h}, \hyperpage{48}
+  \item {SWD\_\-CMDTYPE\_\-MISO\_\-TRN}
+    \subitem {libswd.h}, \hyperpage{48}
+  \item {SWD\_\-CMDTYPE\_\-MOSI}
+    \subitem {libswd.h}, \hyperpage{48}
+  \item {SWD\_\-CMDTYPE\_\-MOSI\_\-BITBANG}
+    \subitem {libswd.h}, \hyperpage{48}
+  \item {SWD\_\-CMDTYPE\_\-MOSI\_\-CONTROL}
+    \subitem {libswd.h}, \hyperpage{48}
+  \item {SWD\_\-CMDTYPE\_\-MOSI\_\-DATA}
+    \subitem {libswd.h}, \hyperpage{48}
+  \item {SWD\_\-CMDTYPE\_\-MOSI\_\-PARITY}
+    \subitem {libswd.h}, \hyperpage{48}
+  \item {SWD\_\-CMDTYPE\_\-MOSI\_\-REQUEST}
+    \subitem {libswd.h}, \hyperpage{48}
+  \item {SWD\_\-CMDTYPE\_\-MOSI\_\-TRN}
+    \subitem {libswd.h}, \hyperpage{48}
+  \item {SWD\_\-CMDTYPE\_\-UNDEFINED}
+    \subitem {libswd.h}, \hyperpage{48}
+  \item {SWD\_\-DIR\_\-LSBFIRST}
+    \subitem {libswd.h}, \hyperpage{50}
+  \item {SWD\_\-DIR\_\-MSBFIRST}
+    \subitem {libswd.h}, \hyperpage{50}
+  \item {SWD\_\-ERROR\_\-ACK}
+    \subitem {libswd.h}, \hyperpage{49}
+  \item {SWD\_\-ERROR\_\-ACK\_\-FAULT}
+    \subitem {libswd.h}, \hyperpage{49}
+  \item {SWD\_\-ERROR\_\-ACK\_\-WAIT}
+    \subitem {libswd.h}, \hyperpage{49}
+  \item {SWD\_\-ERROR\_\-ACKMISMATCH}
+    \subitem {libswd.h}, \hyperpage{49}
+  \item {SWD\_\-ERROR\_\-ACKMISSING}
+    \subitem {libswd.h}, \hyperpage{49}
+  \item {SWD\_\-ERROR\_\-ACKNOTDONE}
+    \subitem {libswd.h}, \hyperpage{49}
+  \item {SWD\_\-ERROR\_\-ACKORDER}
+    \subitem {libswd.h}, \hyperpage{49}
+  \item {SWD\_\-ERROR\_\-ACKUNKNOWN}
+    \subitem {libswd.h}, \hyperpage{49}
+  \item {SWD\_\-ERROR\_\-ADDR}
+    \subitem {libswd.h}, \hyperpage{49}
+  \item {SWD\_\-ERROR\_\-APnDP}
+    \subitem {libswd.h}, \hyperpage{49}
+  \item {SWD\_\-ERROR\_\-BADCMDDATA}
+    \subitem {libswd.h}, \hyperpage{49}
+  \item {SWD\_\-ERROR\_\-BADCMDTYPE}
+    \subitem {libswd.h}, \hyperpage{49}
+  \item {SWD\_\-ERROR\_\-BADOPCODE}
+    \subitem {libswd.h}, \hyperpage{49}
+  \item {SWD\_\-ERROR\_\-DATAPTR}
+    \subitem {libswd.h}, \hyperpage{49}
+  \item {SWD\_\-ERROR\_\-DEFINITION}
+    \subitem {libswd.h}, \hyperpage{49}
+  \item {SWD\_\-ERROR\_\-DIRECTION}
+    \subitem {libswd.h}, \hyperpage{49}
+  \item {SWD\_\-ERROR\_\-DRIVER}
+    \subitem {libswd.h}, \hyperpage{49}
+  \item {SWD\_\-ERROR\_\-GENERAL}
+    \subitem {libswd.h}, \hyperpage{49}
+  \item {SWD\_\-ERROR\_\-LOGLEVEL}
+    \subitem {libswd.h}, \hyperpage{49}
+  \item {SWD\_\-ERROR\_\-NODATACMD}
+    \subitem {libswd.h}, \hyperpage{49}
+  \item {SWD\_\-ERROR\_\-NOPARITYCMD}
+    \subitem {libswd.h}, \hyperpage{49}
+  \item {SWD\_\-ERROR\_\-NOTDONE}
+    \subitem {libswd.h}, \hyperpage{49}
+  \item {SWD\_\-ERROR\_\-NULLCONTEXT}
+    \subitem {libswd.h}, \hyperpage{49}
+  \item {SWD\_\-ERROR\_\-NULLPOINTER}
+    \subitem {libswd.h}, \hyperpage{49}
+  \item {SWD\_\-ERROR\_\-NULLQUEUE}
+    \subitem {libswd.h}, \hyperpage{49}
+  \item {SWD\_\-ERROR\_\-NULLTRN}
+    \subitem {libswd.h}, \hyperpage{49}
+  \item {SWD\_\-ERROR\_\-OUTOFMEM}
+    \subitem {libswd.h}, \hyperpage{49}
+  \item {SWD\_\-ERROR\_\-PARAM}
+    \subitem {libswd.h}, \hyperpage{49}
+  \item {SWD\_\-ERROR\_\-PARITY}
+    \subitem {libswd.h}, \hyperpage{49}
+  \item {SWD\_\-ERROR\_\-PARITYPTR}
+    \subitem {libswd.h}, \hyperpage{49}
+  \item {SWD\_\-ERROR\_\-QUEUE}
+    \subitem {libswd.h}, \hyperpage{49}
+  \item {SWD\_\-ERROR\_\-QUEUENOTFREE}
+    \subitem {libswd.h}, \hyperpage{49}
+  \item {SWD\_\-ERROR\_\-QUEUEROOT}
+    \subitem {libswd.h}, \hyperpage{49}
+  \item {SWD\_\-ERROR\_\-QUEUETAIL}
+    \subitem {libswd.h}, \hyperpage{49}
+  \item {SWD\_\-ERROR\_\-RANGE}
+    \subitem {libswd.h}, \hyperpage{49}
+  \item {SWD\_\-ERROR\_\-RESULT}
+    \subitem {libswd.h}, \hyperpage{49}
+  \item {SWD\_\-ERROR\_\-RnW}
+    \subitem {libswd.h}, \hyperpage{49}
+  \item {SWD\_\-ERROR\_\-TRANSPORT}
+    \subitem {libswd.h}, \hyperpage{49}
+  \item {SWD\_\-ERROR\_\-TURNAROUND}
+    \subitem {libswd.h}, \hyperpage{49}
+  \item {SWD\_\-FALSE}
+    \subitem {libswd.h}, \hyperpage{48}
+  \item {SWD\_\-LOGLEVEL\_\-DEBUG}
+    \subitem {libswd.h}, \hyperpage{50}
+  \item {SWD\_\-LOGLEVEL\_\-ERROR}
+    \subitem {libswd.h}, \hyperpage{50}
+  \item {SWD\_\-LOGLEVEL\_\-INFO}
+    \subitem {libswd.h}, \hyperpage{50}
+  \item {SWD\_\-LOGLEVEL\_\-NORMAL}
+    \subitem {libswd.h}, \hyperpage{50}
+  \item {SWD\_\-LOGLEVEL\_\-SILENT}
+    \subitem {libswd.h}, \hyperpage{50}
+  \item {SWD\_\-LOGLEVEL\_\-WARNING}
+    \subitem {libswd.h}, \hyperpage{50}
+  \item {SWD\_\-OK}
+    \subitem {libswd.h}, \hyperpage{49}
+  \item {SWD\_\-OPERATION\_\-ENQUEUE}
+    \subitem {libswd.h}, \hyperpage{50}
+  \item {SWD\_\-OPERATION\_\-EXECUTE}
+    \subitem {libswd.h}, \hyperpage{50}
+  \item {SWD\_\-OPERATION\_\-FIRST}
+    \subitem {libswd.h}, \hyperpage{50}
+  \item {SWD\_\-OPERATION\_\-LAST}
+    \subitem {libswd.h}, \hyperpage{50}
+  \item {SWD\_\-OPERATION\_\-TRANSMIT\_\-ALL}
+    \subitem {libswd.h}, \hyperpage{50}
+  \item {SWD\_\-OPERATION\_\-TRANSMIT\_\-HEAD}
+    \subitem {libswd.h}, \hyperpage{50}
+  \item {SWD\_\-OPERATION\_\-TRANSMIT\_\-LAST}
+    \subitem {libswd.h}, \hyperpage{50}
+  \item {SWD\_\-OPERATION\_\-TRANSMIT\_\-ONE}
+    \subitem {libswd.h}, \hyperpage{50}
+  \item {SWD\_\-OPERATION\_\-TRANSMIT\_\-TAIL}
+    \subitem {libswd.h}, \hyperpage{50}
+  \item {SWD\_\-TRUE}
+    \subitem {libswd.h}, \hyperpage{48}
+  \item {SWD\_\discretionary {-}{}{}ABORT\_\discretionary {-}{}{}BITNUM\_\discretionary {-}{}{}DAPABORT}
+    \subitem {libswd.h}, \hyperpage{46}
+  \item {swd\_\discretionary {-}{}{}ahbap\_\discretionary {-}{}{}t}, 
+		\hyperpage{9}
+  \item {swd\_\discretionary {-}{}{}bin32\_\discretionary {-}{}{}bitswap}
+    \subitem {libswd.c}, \hyperpage{19}
+    \subitem {libswd.h}, \hyperpage{50}
+  \item {swd\_\discretionary {-}{}{}bin32\_\discretionary {-}{}{}parity\_\discretionary {-}{}{}even}
+    \subitem {libswd.c}, \hyperpage{19}
+    \subitem {libswd.h}, \hyperpage{51}
+  \item {swd\_\discretionary {-}{}{}bin32\_\discretionary {-}{}{}print}
+    \subitem {libswd.c}, \hyperpage{19}
+    \subitem {libswd.h}, \hyperpage{51}
+  \item {swd\_\discretionary {-}{}{}bin32\_\discretionary {-}{}{}string}
+    \subitem {libswd.c}, \hyperpage{20}
+    \subitem {libswd.h}, \hyperpage{51}
+  \item {swd\_\discretionary {-}{}{}bin8\_\discretionary {-}{}{}bitswap}
+    \subitem {libswd.c}, \hyperpage{20}
+    \subitem {libswd.h}, \hyperpage{51}
+  \item {swd\_\discretionary {-}{}{}bin8\_\discretionary {-}{}{}parity\_\discretionary {-}{}{}even}
+    \subitem {libswd.c}, \hyperpage{20}
+    \subitem {libswd.h}, \hyperpage{52}
+  \item {swd\_\discretionary {-}{}{}bin8\_\discretionary {-}{}{}print}
+    \subitem {libswd.c}, \hyperpage{20}
+    \subitem {libswd.h}, \hyperpage{52}
+  \item {swd\_\discretionary {-}{}{}bin8\_\discretionary {-}{}{}string}
+    \subitem {libswd.c}, \hyperpage{21}
+    \subitem {libswd.h}, \hyperpage{52}
+  \item {swd\_\discretionary {-}{}{}bitgen8\_\discretionary {-}{}{}request}
+    \subitem {libswd.c}, \hyperpage{21}
+    \subitem {libswd.h}, \hyperpage{52}
+  \item {swd\_\discretionary {-}{}{}bool\_\discretionary {-}{}{}t}
+    \subitem {libswd.h}, \hyperpage{48}
+  \item {swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}read\_\discretionary {-}{}{}ack}
+    \subitem {libswd.c}, \hyperpage{21}
+    \subitem {libswd.h}, \hyperpage{53}
+  \item {swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}read\_\discretionary {-}{}{}data\_\discretionary {-}{}{}p}
+    \subitem {libswd.c}, \hyperpage{22}
+    \subitem {libswd.h}, \hyperpage{53}
+  \item {swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}setdir\_\discretionary {-}{}{}miso}
+    \subitem {libswd.c}, \hyperpage{22}
+    \subitem {libswd.h}, \hyperpage{53}
+  \item {swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}setdir\_\discretionary {-}{}{}mosi}
+    \subitem {libswd.c}, \hyperpage{22}
+    \subitem {libswd.h}, \hyperpage{54}
+  \item {swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}write\_\discretionary {-}{}{}control}
+    \subitem {libswd.c}, \hyperpage{22}
+    \subitem {libswd.h}, \hyperpage{54}
+  \item {swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}write\_\discretionary {-}{}{}data\_\discretionary {-}{}{}ap}
+    \subitem {libswd.c}, \hyperpage{23}
+    \subitem {libswd.h}, \hyperpage{54}
+  \item {swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}write\_\discretionary {-}{}{}data\_\discretionary {-}{}{}p}
+    \subitem {libswd.c}, \hyperpage{23}
+    \subitem {libswd.h}, \hyperpage{54}
+  \item {swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}write\_\discretionary {-}{}{}request}
+    \subitem {libswd.c}, \hyperpage{23}
+    \subitem {libswd.h}, \hyperpage{55}
+  \item {swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue}
+    \subitem {libswd.c}, \hyperpage{24}
+    \subitem {libswd.h}, \hyperpage{55}
+  \item {swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}ack}
+    \subitem {libswd.c}, \hyperpage{24}
+    \subitem {libswd.h}, \hyperpage{55}
+  \item {swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}data}
+    \subitem {libswd.c}, \hyperpage{24}
+    \subitem {libswd.h}, \hyperpage{56}
+  \item {swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}data\_\discretionary {-}{}{}p}
+    \subitem {libswd.c}, \hyperpage{24}
+    \subitem {libswd.h}, \hyperpage{56}
+  \item {swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}n\_\discretionary {-}{}{}data\_\discretionary {-}{}{}p}
+    \subitem {libswd.c}, \hyperpage{25}
+    \subitem {libswd.h}, \hyperpage{56}
+  \item {swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}nbit}
+    \subitem {libswd.c}, \hyperpage{25}
+    \subitem {libswd.h}, \hyperpage{56}
+  \item {swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}parity}
+    \subitem {libswd.c}, \hyperpage{25}
+    \subitem {libswd.h}, \hyperpage{57}
+  \item {swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}trn}
+    \subitem {libswd.c}, \hyperpage{26}
+    \subitem {libswd.h}, \hyperpage{57}
+  \item {swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}control}
+    \subitem {libswd.c}, \hyperpage{26}
+    \subitem {libswd.h}, \hyperpage{57}
+  \item {swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}dap\_\discretionary {-}{}{}reset}
+    \subitem {libswd.c}, \hyperpage{26}
+    \subitem {libswd.h}, \hyperpage{58}
+  \item {swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}data}
+    \subitem {libswd.c}, \hyperpage{26}
+    \subitem {libswd.h}, \hyperpage{58}
+  \item {swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}data\_\discretionary {-}{}{}ap}
+    \subitem {libswd.c}, \hyperpage{27}
+    \subitem {libswd.h}, \hyperpage{58}
+  \item {swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}data\_\discretionary {-}{}{}p}
+    \subitem {libswd.c}, \hyperpage{27}
+    \subitem {libswd.h}, \hyperpage{58}
+  \item {swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}idle}
+    \subitem {libswd.c}, \hyperpage{27}
+    \subitem {libswd.h}, \hyperpage{59}
+  \item {swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}jtag2swd}
+    \subitem {libswd.c}, \hyperpage{27}
+    \subitem {libswd.h}, \hyperpage{59}
+  \item {swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}n\_\discretionary {-}{}{}data\_\discretionary {-}{}{}ap}
+    \subitem {libswd.c}, \hyperpage{28}
+    \subitem {libswd.h}, \hyperpage{59}
+  \item {swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}n\_\discretionary {-}{}{}data\_\discretionary {-}{}{}p}
+    \subitem {libswd.c}, \hyperpage{28}
+    \subitem {libswd.h}, \hyperpage{59}
+  \item {swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}nbit}
+    \subitem {libswd.c}, \hyperpage{28}
+    \subitem {libswd.h}, \hyperpage{60}
+  \item {swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}parity}
+    \subitem {libswd.c}, \hyperpage{29}
+    \subitem {libswd.h}, \hyperpage{60}
+  \item {swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}request}
+    \subitem {libswd.c}, \hyperpage{29}
+    \subitem {libswd.h}, \hyperpage{60}
+  \item {swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}swd2jtag}
+    \subitem {libswd.c}, \hyperpage{29}
+    \subitem {libswd.h}, \hyperpage{61}
+  \item {swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}trn}
+    \subitem {libswd.c}, \hyperpage{29}
+    \subitem {libswd.h}, \hyperpage{61}
+  \item {swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}t}, 
+		\hyperpage{10}
+    \subitem {libswd.h}, \hyperpage{48}
+  \item {swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}append}
+    \subitem {libswd.c}, \hyperpage{30}
+    \subitem {libswd.h}, \hyperpage{61}
+  \item {swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}find\_\discretionary {-}{}{}root}
+    \subitem {libswd.c}, \hyperpage{30}
+    \subitem {libswd.h}, \hyperpage{61}
+  \item {swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}find\_\discretionary {-}{}{}tail}
+    \subitem {libswd.c}, \hyperpage{30}
+    \subitem {libswd.h}, \hyperpage{62}
+  \item {swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}flush}
+    \subitem {libswd.c}, \hyperpage{30}
+    \subitem {libswd.h}, \hyperpage{62}
+  \item {swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}free}
+    \subitem {libswd.c}, \hyperpage{31}
+    \subitem {libswd.h}, \hyperpage{62}
+  \item {swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}free\_\discretionary {-}{}{}head}
+    \subitem {libswd.c}, \hyperpage{31}
+    \subitem {libswd.h}, \hyperpage{62}
+  \item {swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}free\_\discretionary {-}{}{}tail}
+    \subitem {libswd.c}, \hyperpage{31}
+    \subitem {libswd.h}, \hyperpage{63}
+  \item {swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}init}
+    \subitem {libswd.c}, \hyperpage{31}
+    \subitem {libswd.h}, \hyperpage{63}
+  \item {swd\_\discretionary {-}{}{}cmdtype\_\discretionary {-}{}{}t}
+    \subitem {libswd.h}, \hyperpage{48}
+  \item {swd\_\discretionary {-}{}{}context\_\discretionary {-}{}{}config\_\discretionary {-}{}{}t}, 
+		\hyperpage{11}
+  \item {SWD\_\discretionary {-}{}{}CTRLSTAT\_\discretionary {-}{}{}BITNUM\_\discretionary {-}{}{}ORUNDETECT}
+    \subitem {libswd.h}, \hyperpage{46}
+  \item {swd\_\discretionary {-}{}{}ctx\_\discretionary {-}{}{}t}, 
+		\hyperpage{12}
+  \item {swd\_\discretionary {-}{}{}dap\_\discretionary {-}{}{}detect}
+    \subitem {libswd.c}, \hyperpage{32}
+    \subitem {libswd.h}, \hyperpage{63}
+  \item {swd\_\discretionary {-}{}{}dap\_\discretionary {-}{}{}reset}
+    \subitem {libswd.c}, \hyperpage{32}
+    \subitem {libswd.h}, \hyperpage{63}
+  \item {swd\_\discretionary {-}{}{}dap\_\discretionary {-}{}{}select}
+    \subitem {libswd.c}, \hyperpage{32}
+    \subitem {libswd.h}, \hyperpage{64}
+  \item {SWD\_\discretionary {-}{}{}DATA\_\discretionary {-}{}{}MAXBITCOUNT}
+    \subitem {libswd.h}, \hyperpage{46}
+  \item {swd\_\discretionary {-}{}{}deinit}
+    \subitem {libswd.c}, \hyperpage{32}
+    \subitem {libswd.h}, \hyperpage{64}
+  \item {swd\_\discretionary {-}{}{}deinit\_\discretionary {-}{}{}cmdq}
+    \subitem {libswd.c}, \hyperpage{33}
+    \subitem {libswd.h}, \hyperpage{64}
+  \item {swd\_\discretionary {-}{}{}deinit\_\discretionary {-}{}{}ctx}
+    \subitem {libswd.c}, \hyperpage{33}
+    \subitem {libswd.h}, \hyperpage{64}
+  \item {swd\_\discretionary {-}{}{}dp\_\discretionary {-}{}{}read\_\discretionary {-}{}{}idcode}
+    \subitem {libswd.c}, \hyperpage{33}
+    \subitem {libswd.h}, \hyperpage{65}
+  \item {swd\_\discretionary {-}{}{}driver\_\discretionary {-}{}{}t}, 
+		\hyperpage{12}
+  \item {swd\_\discretionary {-}{}{}drv\_\discretionary {-}{}{}transmit}
+    \subitem {libswd.c}, \hyperpage{33}
+    \subitem {libswd.h}, \hyperpage{65}
+  \item {swd\_\discretionary {-}{}{}error\_\discretionary {-}{}{}code\_\discretionary {-}{}{}t}
+    \subitem {libswd.h}, \hyperpage{48}
+  \item {swd\_\discretionary {-}{}{}init}
+    \subitem {libswd.c}, \hyperpage{34}
+    \subitem {libswd.h}, \hyperpage{65}
+  \item {swd\_\discretionary {-}{}{}log}
+    \subitem {libswd.c}, \hyperpage{34}
+    \subitem {libswd.h}, \hyperpage{65}
+  \item {swd\_\discretionary {-}{}{}log\_\discretionary {-}{}{}level\_\discretionary {-}{}{}inherit}
+    \subitem {libswd.h}, \hyperpage{66}
+  \item {swd\_\discretionary {-}{}{}log\_\discretionary {-}{}{}level\_\discretionary {-}{}{}set}
+    \subitem {libswd.c}, \hyperpage{34}
+    \subitem {libswd.h}, \hyperpage{66}
+  \item {swd\_\discretionary {-}{}{}loglevel\_\discretionary {-}{}{}t}
+    \subitem {libswd.h}, \hyperpage{49}
+  \item {SWD\_\discretionary {-}{}{}MASKLANE\_\discretionary {-}{}{}0}
+    \subitem {libswd.h}, \hyperpage{46}
+  \item {swd\_\discretionary {-}{}{}operation\_\discretionary {-}{}{}t}
+    \subitem {libswd.h}, \hyperpage{50}
+  \item {SWD\_\discretionary {-}{}{}REQUEST\_\discretionary {-}{}{}START\_\discretionary {-}{}{}BITNUM}
+    \subitem {libswd.h}, \hyperpage{46}
+  \item {SWD\_\discretionary {-}{}{}SELECT\_\discretionary {-}{}{}BITNUM\_\discretionary {-}{}{}CTRLSEL}
+    \subitem {libswd.h}, \hyperpage{46}
+  \item {swd\_\discretionary {-}{}{}shiftdir\_\discretionary {-}{}{}t}
+    \subitem {libswd.h}, \hyperpage{50}
+  \item {swd\_\discretionary {-}{}{}swdp\_\discretionary {-}{}{}t}, 
+		\hyperpage{13}
+  \item {swd\_\discretionary {-}{}{}transaction\_\discretionary {-}{}{}t}, 
+		\hyperpage{14}
+  \item {SWD\_\discretionary {-}{}{}TURNROUND\_\discretionary {-}{}{}1\_\discretionary {-}{}{}CODE}
+    \subitem {libswd.h}, \hyperpage{46}
+  \item {SWD\_\discretionary {-}{}{}TURNROUND\_\discretionary {-}{}{}2\_\discretionary {-}{}{}CODE}
+    \subitem {libswd.h}, \hyperpage{47}
+  \item {SWD\_\discretionary {-}{}{}TURNROUND\_\discretionary {-}{}{}3\_\discretionary {-}{}{}CODE}
+    \subitem {libswd.h}, \hyperpage{47}
+  \item {SWD\_\discretionary {-}{}{}TURNROUND\_\discretionary {-}{}{}4\_\discretionary {-}{}{}CODE}
+    \subitem {libswd.h}, \hyperpage{47}
+  \item {SWD\_\discretionary {-}{}{}TURNROUND\_\discretionary {-}{}{}DEFAULT\_\discretionary {-}{}{}VAL}
+    \subitem {libswd.h}, \hyperpage{47}
+  \item {SWD\_\discretionary {-}{}{}TURNROUND\_\discretionary {-}{}{}MAX\_\discretionary {-}{}{}VAL}
+    \subitem {libswd.h}, \hyperpage{47}
+  \item {SWD\_\discretionary {-}{}{}TURNROUND\_\discretionary {-}{}{}MIN\_\discretionary {-}{}{}VAL}
+    \subitem {libswd.h}, \hyperpage{47}
+  \item {SWD\_\discretionary {-}{}{}WCR\_\discretionary {-}{}{}BITNUM\_\discretionary {-}{}{}PRESCALER}
+    \subitem {libswd.h}, \hyperpage{47}
+  \item {SWD\_\discretionary {-}{}{}WCR\_\discretionary {-}{}{}BITNUM\_\discretionary {-}{}{}TURNROUND}
+    \subitem {libswd.h}, \hyperpage{47}
+  \item {SWD\_\discretionary {-}{}{}WCR\_\discretionary {-}{}{}BITNUM\_\discretionary {-}{}{}WIREMODE}
+    \subitem {libswd.h}, \hyperpage{47}
+
+\end{theindex}

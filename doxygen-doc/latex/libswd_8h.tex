@@ -1,0 +1,2418 @@
+\hypertarget{libswd_8h}{
+\section{src/libswd.h File Reference}
+\label{libswd_8h}\index{src/libswd.h@{src/libswd.h}}
+}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structswd__cmd__t}{swd\_\-cmd\_\-t}
+\begin{DoxyCompactList}\small\item\em SWD Command Element Structure. \item\end{DoxyCompactList}\item 
+struct \hyperlink{structswd__context__config__t}{swd\_\-context\_\-config\_\-t}
+\begin{DoxyCompactList}\small\item\em Context configuration structure. \item\end{DoxyCompactList}\item 
+struct \hyperlink{structswd__swdp__t}{swd\_\-swdp\_\-t}
+\begin{DoxyCompactList}\small\item\em Most actual Serial Wire Debug Port Registers. \item\end{DoxyCompactList}\item 
+struct \hyperlink{structswd__ahbap__t}{swd\_\-ahbap\_\-t}
+\begin{DoxyCompactList}\small\item\em Most actual Advanced High Bandwidth Access Peripherial Bus Reisters. \item\end{DoxyCompactList}\item 
+struct \hyperlink{structswd__transaction__t}{swd\_\-transaction\_\-t}
+\begin{DoxyCompactList}\small\item\em Most actual SWD bus transaction/packet data. \item\end{DoxyCompactList}\item 
+struct \hyperlink{structswd__driver__t}{swd\_\-driver\_\-t}
+\begin{DoxyCompactList}\small\item\em Interface Driver structure. \item\end{DoxyCompactList}\item 
+struct \hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t}
+\begin{DoxyCompactList}\small\item\em SWD Context Structure definition. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Defines}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{libswd_8h_ac474e773617eb679af343ba2817383b4}{SWD\_\-REQUEST\_\-START\_\-BITNUM}~7
+\begin{DoxyCompactList}\small\item\em SWD Packets Bit Fields and Values. \item\end{DoxyCompactList}\item 
+\hypertarget{libswd_8h_a8c34d00c0f59df88597f3f75356fed97}{
+\#define \hyperlink{libswd_8h_a8c34d00c0f59df88597f3f75356fed97}{SWD\_\-REQUEST\_\-APnDP\_\-BITNUM}~6}
+\label{libswd_8h_a8c34d00c0f59df88597f3f75356fed97}
+
+\begin{DoxyCompactList}\small\item\em Access Port (high) or Debug Port (low) access. \item\end{DoxyCompactList}\item 
+\hypertarget{libswd_8h_a3c869f546ca8ec33824a294563e4ff19}{
+\#define \hyperlink{libswd_8h_a3c869f546ca8ec33824a294563e4ff19}{SWD\_\-REQUEST\_\-RnW\_\-BITNUM}~5}
+\label{libswd_8h_a3c869f546ca8ec33824a294563e4ff19}
+
+\begin{DoxyCompactList}\small\item\em Read (high) or Write (low) access. \item\end{DoxyCompactList}\item 
+\hypertarget{libswd_8h_af1adb8770193e85801ff4ddb97a02060}{
+\#define \hyperlink{libswd_8h_af1adb8770193e85801ff4ddb97a02060}{SWD\_\-REQUEST\_\-ADDR\_\-BITNUM}~4}
+\label{libswd_8h_af1adb8770193e85801ff4ddb97a02060}
+
+\begin{DoxyCompactList}\small\item\em LSB of the address field in request header. \item\end{DoxyCompactList}\item 
+\hypertarget{libswd_8h_a43a27090f914857ac4af74432543453b}{
+\#define \hyperlink{libswd_8h_a43a27090f914857ac4af74432543453b}{SWD\_\-REQUEST\_\-A2\_\-BITNUM}~4}
+\label{libswd_8h_a43a27090f914857ac4af74432543453b}
+
+\begin{DoxyCompactList}\small\item\em Target Register Address bit 2. \item\end{DoxyCompactList}\item 
+\hypertarget{libswd_8h_a8bb9b86bd091368f31e5a8729c7a1a26}{
+\#define \hyperlink{libswd_8h_a8bb9b86bd091368f31e5a8729c7a1a26}{SWD\_\-REQUEST\_\-A3\_\-BITNUM}~3}
+\label{libswd_8h_a8bb9b86bd091368f31e5a8729c7a1a26}
+
+\begin{DoxyCompactList}\small\item\em Target Register Address bit 3. \item\end{DoxyCompactList}\item 
+\hypertarget{libswd_8h_a5d9d053b4b7eda2dd9e26788d89b3760}{
+\#define \hyperlink{libswd_8h_a5d9d053b4b7eda2dd9e26788d89b3760}{SWD\_\-REQUEST\_\-PARITY\_\-BITNUM}~2}
+\label{libswd_8h_a5d9d053b4b7eda2dd9e26788d89b3760}
+
+\begin{DoxyCompactList}\small\item\em Odd Parity calculated from APnDP, RnW, A\mbox{[}2:3\mbox{]}. \item\end{DoxyCompactList}\item 
+\hypertarget{libswd_8h_a35b28e283c15d8de5f1552fdee44c0ad}{
+\#define \hyperlink{libswd_8h_a35b28e283c15d8de5f1552fdee44c0ad}{SWD\_\-REQUEST\_\-STOP\_\-BITNUM}~1}
+\label{libswd_8h_a35b28e283c15d8de5f1552fdee44c0ad}
+
+\begin{DoxyCompactList}\small\item\em Packet Stop bit, always 0. \item\end{DoxyCompactList}\item 
+\hypertarget{libswd_8h_a24a5a587964fa6f493e18bb65c762c13}{
+\#define \hyperlink{libswd_8h_a24a5a587964fa6f493e18bb65c762c13}{SWD\_\-REQUEST\_\-PARK\_\-BITNUM}~0}
+\label{libswd_8h_a24a5a587964fa6f493e18bb65c762c13}
+
+\begin{DoxyCompactList}\small\item\em Park wire and switch between receive/transmit. \item\end{DoxyCompactList}\item 
+\hypertarget{libswd_8h_aafbb05b1e10b907418a597f7c7e11324}{
+\#define \hyperlink{libswd_8h_aafbb05b1e10b907418a597f7c7e11324}{SWD\_\-REQUEST\_\-START\_\-VAL}~1}
+\label{libswd_8h_aafbb05b1e10b907418a597f7c7e11324}
+
+\begin{DoxyCompactList}\small\item\em Start Bit Value is always 1. \item\end{DoxyCompactList}\item 
+\hypertarget{libswd_8h_afba35c8ae901e6011f63d81030688d8a}{
+\#define \hyperlink{libswd_8h_afba35c8ae901e6011f63d81030688d8a}{SWD\_\-REQUEST\_\-STOP\_\-VAL}~0}
+\label{libswd_8h_afba35c8ae901e6011f63d81030688d8a}
+
+\begin{DoxyCompactList}\small\item\em Stop Bit Value is always 0. \item\end{DoxyCompactList}\item 
+\hypertarget{libswd_8h_a062ea6af124bcd42f7a1e73a66f4576d}{
+\#define \hyperlink{libswd_8h_a062ea6af124bcd42f7a1e73a66f4576d}{SWD\_\-REQUEST\_\-PARK\_\-VAL}~1}
+\label{libswd_8h_a062ea6af124bcd42f7a1e73a66f4576d}
+
+\begin{DoxyCompactList}\small\item\em Park bus and put outputs into Hi-\/Z state. \item\end{DoxyCompactList}\item 
+\hypertarget{libswd_8h_af39e016f542c2bd93d88969a68a27ed1}{
+\#define \hyperlink{libswd_8h_af39e016f542c2bd93d88969a68a27ed1}{SWD\_\-REQUEST\_\-BITLEN}~8}
+\label{libswd_8h_af39e016f542c2bd93d88969a68a27ed1}
+
+\begin{DoxyCompactList}\small\item\em Number of bits in request packet header. \item\end{DoxyCompactList}\item 
+\hypertarget{libswd_8h_a2622cfc328de21fffd40668837a4300b}{
+\#define \hyperlink{libswd_8h_a2622cfc328de21fffd40668837a4300b}{SWD\_\-ADDR\_\-MINVAL}~0}
+\label{libswd_8h_a2622cfc328de21fffd40668837a4300b}
+
+\begin{DoxyCompactList}\small\item\em Address field minimal value. \item\end{DoxyCompactList}\item 
+\hypertarget{libswd_8h_a5ca0b49499bc1b23eaef6a23a92e901c}{
+\#define \hyperlink{libswd_8h_a5ca0b49499bc1b23eaef6a23a92e901c}{SWD\_\-ADDR\_\-MAXVAL}~3}
+\label{libswd_8h_a5ca0b49499bc1b23eaef6a23a92e901c}
+
+\begin{DoxyCompactList}\small\item\em Address field maximal value. \item\end{DoxyCompactList}\item 
+\hypertarget{libswd_8h_a358517296797c8f74d361673a9a6b11f}{
+\#define \hyperlink{libswd_8h_a358517296797c8f74d361673a9a6b11f}{SWD\_\-ACK\_\-BITLEN}~3}
+\label{libswd_8h_a358517296797c8f74d361673a9a6b11f}
+
+\begin{DoxyCompactList}\small\item\em Number of bits in Acknowledge packet. \item\end{DoxyCompactList}\item 
+\hypertarget{libswd_8h_af4ba22b861b2fb85796d1e110d46b888}{
+\#define \hyperlink{libswd_8h_af4ba22b861b2fb85796d1e110d46b888}{SWD\_\-ACK\_\-OK\_\-VAL}~4}
+\label{libswd_8h_af4ba22b861b2fb85796d1e110d46b888}
+
+\begin{DoxyCompactList}\small\item\em OK code value. \item\end{DoxyCompactList}\item 
+\hypertarget{libswd_8h_ab726fd8d88df8f5b3b33054c94d3dcff}{
+\#define \hyperlink{libswd_8h_ab726fd8d88df8f5b3b33054c94d3dcff}{SWD\_\-ACK\_\-WAIT\_\-VAL}~2}
+\label{libswd_8h_ab726fd8d88df8f5b3b33054c94d3dcff}
+
+\begin{DoxyCompactList}\small\item\em WAIT code value. \item\end{DoxyCompactList}\item 
+\hypertarget{libswd_8h_a470853223a88aac26b485b4396fe754b}{
+\#define \hyperlink{libswd_8h_a470853223a88aac26b485b4396fe754b}{SWD\_\-ACK\_\-FAULT\_\-VAL}~1}
+\label{libswd_8h_a470853223a88aac26b485b4396fe754b}
+
+\begin{DoxyCompactList}\small\item\em FAULT code value. \item\end{DoxyCompactList}\item 
+\hypertarget{libswd_8h_a00b4ff0b6f8405e9fe7f4a2ebf765dcc}{
+\#define \hyperlink{libswd_8h_a00b4ff0b6f8405e9fe7f4a2ebf765dcc}{SWD\_\-DP\_\-ADDR\_\-IDCODE}~0}
+\label{libswd_8h_a00b4ff0b6f8405e9fe7f4a2ebf765dcc}
+
+\begin{DoxyCompactList}\small\item\em IDCODE register address (RO). \item\end{DoxyCompactList}\item 
+\hypertarget{libswd_8h_ae8c24f3d96acc7d77a15d21a9973160d}{
+\#define \hyperlink{libswd_8h_ae8c24f3d96acc7d77a15d21a9973160d}{SWD\_\-DP\_\-ADDR\_\-ABORT}~0}
+\label{libswd_8h_ae8c24f3d96acc7d77a15d21a9973160d}
+
+\begin{DoxyCompactList}\small\item\em ABORT register address (WO). \item\end{DoxyCompactList}\item 
+\hypertarget{libswd_8h_a7e23ea47b75007bbcd637d8be9049d63}{
+\#define \hyperlink{libswd_8h_a7e23ea47b75007bbcd637d8be9049d63}{SWD\_\-DP\_\-ADDR\_\-CTRLSTAT}~1}
+\label{libswd_8h_a7e23ea47b75007bbcd637d8be9049d63}
+
+\begin{DoxyCompactList}\small\item\em CTRLSTAT register address (R/W, CTRLSEL=b0). \item\end{DoxyCompactList}\item 
+\hypertarget{libswd_8h_ad89174579e1ff4a5cbd62ff11696f8da}{
+\#define \hyperlink{libswd_8h_ad89174579e1ff4a5cbd62ff11696f8da}{SWD\_\-DP\_\-ADDR\_\-WCR}~1}
+\label{libswd_8h_ad89174579e1ff4a5cbd62ff11696f8da}
+
+\begin{DoxyCompactList}\small\item\em WCR register address (R/W, CTRLSEL=b1). \item\end{DoxyCompactList}\item 
+\hypertarget{libswd_8h_a0f8df0e88c22b1cc0f96b1aafbd1ec68}{
+\#define \hyperlink{libswd_8h_a0f8df0e88c22b1cc0f96b1aafbd1ec68}{SWD\_\-DP\_\-ADDR\_\-RESEND}~2}
+\label{libswd_8h_a0f8df0e88c22b1cc0f96b1aafbd1ec68}
+
+\begin{DoxyCompactList}\small\item\em RESEND register address (RO). \item\end{DoxyCompactList}\item 
+\hypertarget{libswd_8h_a0b30dc02ee1c4fa2475728e767cbbceb}{
+\#define \hyperlink{libswd_8h_a0b30dc02ee1c4fa2475728e767cbbceb}{SWD\_\-DP\_\-ADDR\_\-SELECT}~2}
+\label{libswd_8h_a0b30dc02ee1c4fa2475728e767cbbceb}
+
+\begin{DoxyCompactList}\small\item\em SELECT register address (WO). \item\end{DoxyCompactList}\item 
+\hypertarget{libswd_8h_a00bb9eb469b9f4b019a043de67c48149}{
+\#define \hyperlink{libswd_8h_a00bb9eb469b9f4b019a043de67c48149}{SWD\_\-DP\_\-ADDR\_\-RDBUF}~3}
+\label{libswd_8h_a00bb9eb469b9f4b019a043de67c48149}
+
+\begin{DoxyCompactList}\small\item\em RDBUF register address (RO). \item\end{DoxyCompactList}\item 
+\#define \hyperlink{libswd_8h_a54431383e120685259ebf96a8c973b90}{SWD\_\-ABORT\_\-BITNUM\_\-DAPABORT}~0
+\begin{DoxyCompactList}\small\item\em SW-\/DP ABORT Register map. \item\end{DoxyCompactList}\item 
+\hypertarget{libswd_8h_ac08c7cc8e5845c0b0f500ab7bc14eef4}{
+\#define \hyperlink{libswd_8h_ac08c7cc8e5845c0b0f500ab7bc14eef4}{SWD\_\-ABORT\_\-BITNUM\_\-DSTKCMPCLR}~1}
+\label{libswd_8h_ac08c7cc8e5845c0b0f500ab7bc14eef4}
+
+\begin{DoxyCompactList}\small\item\em DSTKCMPCLR bit number. \item\end{DoxyCompactList}\item 
+\hypertarget{libswd_8h_afcca91b09e8cb5e1500e628fdb509c7a}{
+\#define \hyperlink{libswd_8h_afcca91b09e8cb5e1500e628fdb509c7a}{SWD\_\-ABORT\_\-BITNUM\_\-DSTKERRCLR}~2}
+\label{libswd_8h_afcca91b09e8cb5e1500e628fdb509c7a}
+
+\begin{DoxyCompactList}\small\item\em DSTKERRCLR bit number. \item\end{DoxyCompactList}\item 
+\hypertarget{libswd_8h_a7aaa6592a78fc8fb205890dfd99adc70}{
+\#define \hyperlink{libswd_8h_a7aaa6592a78fc8fb205890dfd99adc70}{SWD\_\-ABORT\_\-BITNUM\_\-DWDERRCLR}~3}
+\label{libswd_8h_a7aaa6592a78fc8fb205890dfd99adc70}
+
+\begin{DoxyCompactList}\small\item\em DWDERRCLR bit number. \item\end{DoxyCompactList}\item 
+\hypertarget{libswd_8h_a54869d5b403d40fd33fd7273e5b65635}{
+\#define \hyperlink{libswd_8h_a54869d5b403d40fd33fd7273e5b65635}{SWD\_\-ABORT\_\-BITNUM\_\-DORUNERRCLR}~4}
+\label{libswd_8h_a54869d5b403d40fd33fd7273e5b65635}
+
+\begin{DoxyCompactList}\small\item\em DORUNERRCLR bit number. \item\end{DoxyCompactList}\item 
+\#define \hyperlink{libswd_8h_ae1778a14ecf1f9d2194d60e67e91454d}{SWD\_\-CTRLSTAT\_\-BITNUM\_\-ORUNDETECT}~0
+\begin{DoxyCompactList}\small\item\em SW-\/DP CTRL/STAT Register map. \item\end{DoxyCompactList}\item 
+\hypertarget{libswd_8h_ad65a85c3f5fbe2e47163ac7d924a7fd8}{
+\#define \hyperlink{libswd_8h_ad65a85c3f5fbe2e47163ac7d924a7fd8}{SWD\_\-CTRLSTAT\_\-BITNUM\_\-OSTICKYORUN}~1}
+\label{libswd_8h_ad65a85c3f5fbe2e47163ac7d924a7fd8}
+
+\begin{DoxyCompactList}\small\item\em OSTICKYORUN bit number. \item\end{DoxyCompactList}\item 
+\hypertarget{libswd_8h_acfef2d796f3a94ed8dca3eda9dd41d0b}{
+\#define \hyperlink{libswd_8h_acfef2d796f3a94ed8dca3eda9dd41d0b}{SWD\_\-CTRLSTAT\_\-BITNUM\_\-OTRNMODE}~2}
+\label{libswd_8h_acfef2d796f3a94ed8dca3eda9dd41d0b}
+
+\begin{DoxyCompactList}\small\item\em OTRNMODE bit number. \item\end{DoxyCompactList}\item 
+\hypertarget{libswd_8h_a859dceb2257af181357c72c365dd340a}{
+\#define \hyperlink{libswd_8h_a859dceb2257af181357c72c365dd340a}{SWD\_\-CTRLSTAT\_\-BITNUM\_\-OSTICKYCMP}~4}
+\label{libswd_8h_a859dceb2257af181357c72c365dd340a}
+
+\begin{DoxyCompactList}\small\item\em OSTICKYCMP bit number. \item\end{DoxyCompactList}\item 
+\hypertarget{libswd_8h_a0b3124736b42431d69dfa040d7b450c6}{
+\#define \hyperlink{libswd_8h_a0b3124736b42431d69dfa040d7b450c6}{SWD\_\-CTRLSTAT\_\-BITNUM\_\-OSTICKYERR}~5}
+\label{libswd_8h_a0b3124736b42431d69dfa040d7b450c6}
+
+\begin{DoxyCompactList}\small\item\em OSTICKYERR bit number. \item\end{DoxyCompactList}\item 
+\hypertarget{libswd_8h_a6f21f4c7b1191f68cbb9ffb6dab4a6f8}{
+\#define \hyperlink{libswd_8h_a6f21f4c7b1191f68cbb9ffb6dab4a6f8}{SWD\_\-CTRLSTAT\_\-BITNUM\_\-OREADOK}~6}
+\label{libswd_8h_a6f21f4c7b1191f68cbb9ffb6dab4a6f8}
+
+\begin{DoxyCompactList}\small\item\em OREADOK bit number. \item\end{DoxyCompactList}\item 
+\hypertarget{libswd_8h_ab320b768f690d50fcf4fe96cad1c014e}{
+\#define \hyperlink{libswd_8h_ab320b768f690d50fcf4fe96cad1c014e}{SWD\_\-CTRLSTAT\_\-BITNUM\_\-OWDATAERR}~7}
+\label{libswd_8h_ab320b768f690d50fcf4fe96cad1c014e}
+
+\begin{DoxyCompactList}\small\item\em OWDATAERR bit number. \item\end{DoxyCompactList}\item 
+\hypertarget{libswd_8h_a9bb5dfc77a8f58f7ca9da7aab5039f52}{
+\#define \hyperlink{libswd_8h_a9bb5dfc77a8f58f7ca9da7aab5039f52}{SWD\_\-CTRLSTAT\_\-BITNUM\_\-OMASKLANE}~8}
+\label{libswd_8h_a9bb5dfc77a8f58f7ca9da7aab5039f52}
+
+\begin{DoxyCompactList}\small\item\em OMASKLANE bit number. \item\end{DoxyCompactList}\item 
+\hypertarget{libswd_8h_ad91d2568264cb40d45de58a4b288114f}{
+\#define \hyperlink{libswd_8h_ad91d2568264cb40d45de58a4b288114f}{SWD\_\-CTRLSTAT\_\-BITNUM\_\-OTRNCNT}~12}
+\label{libswd_8h_ad91d2568264cb40d45de58a4b288114f}
+
+\begin{DoxyCompactList}\small\item\em OTRNCNT bit number. \item\end{DoxyCompactList}\item 
+\hypertarget{libswd_8h_aa3008d25bfe009868ca3fb1f5e67dc23}{
+\#define \hyperlink{libswd_8h_aa3008d25bfe009868ca3fb1f5e67dc23}{SWD\_\-CTRLSTAT\_\-BITNUM\_\-OCDBGRSTREQ}~26}
+\label{libswd_8h_aa3008d25bfe009868ca3fb1f5e67dc23}
+
+\begin{DoxyCompactList}\small\item\em OCDBGRSTREQ bit number. \item\end{DoxyCompactList}\item 
+\hypertarget{libswd_8h_aeee81b62c86d7db500c1668a37645c7a}{
+\#define \hyperlink{libswd_8h_aeee81b62c86d7db500c1668a37645c7a}{SWD\_\-CTRLSTAT\_\-BITNUM\_\-OCDBGRSTACK}~27}
+\label{libswd_8h_aeee81b62c86d7db500c1668a37645c7a}
+
+\begin{DoxyCompactList}\small\item\em OCDBGRSTACK bit number. \item\end{DoxyCompactList}\item 
+\hypertarget{libswd_8h_ae84436bf55af3d555cdec5c14dbe6f3c}{
+\#define \hyperlink{libswd_8h_ae84436bf55af3d555cdec5c14dbe6f3c}{SWD\_\-CTRLSTAT\_\-BITNUM\_\-OCDBGPWRUPREQ}~28}
+\label{libswd_8h_ae84436bf55af3d555cdec5c14dbe6f3c}
+
+\begin{DoxyCompactList}\small\item\em OCDBGPWRUPREQ bit number. \item\end{DoxyCompactList}\item 
+\hypertarget{libswd_8h_aa832d69aa5bad55ad3567ae1901d2c57}{
+\#define \hyperlink{libswd_8h_aa832d69aa5bad55ad3567ae1901d2c57}{SWD\_\-CTRLSTAT\_\-BITNUM\_\-OCDBGPWRUPACK}~29}
+\label{libswd_8h_aa832d69aa5bad55ad3567ae1901d2c57}
+
+\begin{DoxyCompactList}\small\item\em OCDBGPWRUPACK bit number. \item\end{DoxyCompactList}\item 
+\hypertarget{libswd_8h_a28b72a5e3f6b5adaf4df3fc1b932c872}{
+\#define \hyperlink{libswd_8h_a28b72a5e3f6b5adaf4df3fc1b932c872}{SWD\_\-CTRLSTAT\_\-BITNUM\_\-OCSYSPWRUPREQ}~30}
+\label{libswd_8h_a28b72a5e3f6b5adaf4df3fc1b932c872}
+
+\begin{DoxyCompactList}\small\item\em OCSYSPWRUPREQ bit number. \item\end{DoxyCompactList}\item 
+\hypertarget{libswd_8h_a1e82a6c452e860f63c0dbbb875523b68}{
+\#define \hyperlink{libswd_8h_a1e82a6c452e860f63c0dbbb875523b68}{SWD\_\-CTRLSTAT\_\-BITNUM\_\-OCSYSPWRUPACK}~31}
+\label{libswd_8h_a1e82a6c452e860f63c0dbbb875523b68}
+
+\begin{DoxyCompactList}\small\item\em OCSYSPWRUPACK bit number. \item\end{DoxyCompactList}\item 
+\#define \hyperlink{libswd_8h_a936042b0d86463b714c7a108574f1405}{SWD\_\-MASKLANE\_\-0}~0b0001
+\begin{DoxyCompactList}\small\item\em SW-\/DP CTRLSTAT MASKLANE available values. \item\end{DoxyCompactList}\item 
+\hypertarget{libswd_8h_a1a41a6ec8ccbf6dcb15139807bf1ed8d}{
+\#define \hyperlink{libswd_8h_a1a41a6ec8ccbf6dcb15139807bf1ed8d}{SWD\_\-MASKLANE\_\-1}~0b0010}
+\label{libswd_8h_a1a41a6ec8ccbf6dcb15139807bf1ed8d}
+
+\begin{DoxyCompactList}\small\item\em Compare byte lane 1 (0x-\/-\/-\/-\/FF-\/-\/). \item\end{DoxyCompactList}\item 
+\hypertarget{libswd_8h_a20637cba92bca14c917c9d80009c54b3}{
+\#define \hyperlink{libswd_8h_a20637cba92bca14c917c9d80009c54b3}{SWD\_\-MASKLANE\_\-2}~0b0100}
+\label{libswd_8h_a20637cba92bca14c917c9d80009c54b3}
+
+\begin{DoxyCompactList}\small\item\em Compare byte lane 2 (0x-\/-\/FF-\/-\/-\/-\/). \item\end{DoxyCompactList}\item 
+\hypertarget{libswd_8h_a671550aab3cde8bd1b7d31a76d3c35ae}{
+\#define \hyperlink{libswd_8h_a671550aab3cde8bd1b7d31a76d3c35ae}{SWD\_\-MASKLANE\_\-3}~0b1000}
+\label{libswd_8h_a671550aab3cde8bd1b7d31a76d3c35ae}
+
+\begin{DoxyCompactList}\small\item\em Compare byte lane 3 (0xFF-\/-\/-\/-\/-\/-\/). \item\end{DoxyCompactList}\item 
+\#define \hyperlink{libswd_8h_aef0db05edf88e92b701db221ed43ee80}{SWD\_\-SELECT\_\-BITNUM\_\-CTRLSEL}~0
+\begin{DoxyCompactList}\small\item\em SW-\/DP SELECT Register map. \item\end{DoxyCompactList}\item 
+\hypertarget{libswd_8h_ac0b8d1985223f514730f8b97df4365d0}{
+\#define \hyperlink{libswd_8h_ac0b8d1985223f514730f8b97df4365d0}{SWD\_\-SELECT\_\-BITNUM\_\-APBANKSEL}~4}
+\label{libswd_8h_ac0b8d1985223f514730f8b97df4365d0}
+
+\begin{DoxyCompactList}\small\item\em APBANKSEL bit number. \item\end{DoxyCompactList}\item 
+\hypertarget{libswd_8h_af8720a3b41ed7613c64b39888c41f29e}{
+\#define \hyperlink{libswd_8h_af8720a3b41ed7613c64b39888c41f29e}{SWD\_\-SELECT\_\-BITNUM\_\-APSEL}~24}
+\label{libswd_8h_af8720a3b41ed7613c64b39888c41f29e}
+
+\begin{DoxyCompactList}\small\item\em APSEL bit number. \item\end{DoxyCompactList}\item 
+\#define \hyperlink{libswd_8h_a29771dc9ab321378e535614dcbafcd62}{SWD\_\-WCR\_\-BITNUM\_\-PRESCALER}~0
+\begin{DoxyCompactList}\small\item\em SW-\/DP WCR Register map. \item\end{DoxyCompactList}\item 
+\#define \hyperlink{libswd_8h_a99082086e8feb058464ce722e262c9f3}{SWD\_\-WCR\_\-BITNUM\_\-WIREMODE}~6
+\item 
+\#define \hyperlink{libswd_8h_a231971f7d925947de58c09a34b57567c}{SWD\_\-WCR\_\-BITNUM\_\-TURNROUND}~8
+\item 
+\#define \hyperlink{libswd_8h_a36c45dc73dc9ffb403ce8a72e81c58a3}{SWD\_\-TURNROUND\_\-1\_\-CODE}~0
+\begin{DoxyCompactList}\small\item\em SW-\/DP WCR TURNROUND available values. \item\end{DoxyCompactList}\item 
+\hypertarget{libswd_8h_a72a741fd76d83483f316b3282aea4fa8}{
+\#define {\bfseries SWD\_\-TURNROUND\_\-1\_\-VAL}~1}
+\label{libswd_8h_a72a741fd76d83483f316b3282aea4fa8}
+
+\item 
+\#define \hyperlink{libswd_8h_a172b3570304b445c5bba6e0fed06a0fc}{SWD\_\-TURNROUND\_\-2\_\-CODE}~1
+\item 
+\hypertarget{libswd_8h_af1c4ae317f1e62a4c497b8bb5b7bbeca}{
+\#define {\bfseries SWD\_\-TURNROUNT\_\-2\_\-VAL}~2}
+\label{libswd_8h_af1c4ae317f1e62a4c497b8bb5b7bbeca}
+
+\item 
+\#define \hyperlink{libswd_8h_a76d9cedc16e3016d847215ddce07a0d7}{SWD\_\-TURNROUND\_\-3\_\-CODE}~2
+\item 
+\hypertarget{libswd_8h_a5cc65258c862cf81800985af7ffea735}{
+\#define {\bfseries SWD\_\-TURNROUND\_\-3\_\-VAL}~3}
+\label{libswd_8h_a5cc65258c862cf81800985af7ffea735}
+
+\item 
+\#define \hyperlink{libswd_8h_a05086991ae21fa2a386788bacb45b92f}{SWD\_\-TURNROUND\_\-4\_\-CODE}~3
+\item 
+\hypertarget{libswd_8h_ae97e27c88ad680efbcb4f380b6ce2368}{
+\#define {\bfseries SWD\_\-TURNROUND\_\-4\_\-VAL}~4}
+\label{libswd_8h_ae97e27c88ad680efbcb4f380b6ce2368}
+
+\item 
+\#define \hyperlink{libswd_8h_ab9d625d2c5b4087db26e387b60773247}{SWD\_\-TURNROUND\_\-MIN\_\-VAL}~SWD\_\-TURNROUND\_\-1\_\-VAL
+\item 
+\hypertarget{libswd_8h_af0ecb9e5b6e05bbff619c8b100d5def8}{
+\#define {\bfseries SWD\_\-TURNROUND\_\-MIN\_\-CODE}~SWD\_\-TURNOUND\_\-1\_\-CODE}
+\label{libswd_8h_af0ecb9e5b6e05bbff619c8b100d5def8}
+
+\item 
+\#define \hyperlink{libswd_8h_a2dc3da13c68cd8470c080ca63c7d2904}{SWD\_\-TURNROUND\_\-MAX\_\-VAL}~SWD\_\-TURNROUND\_\-4\_\-VAL
+\item 
+\hypertarget{libswd_8h_a82e4aadc87de5aa0a82404a699f070c9}{
+\#define {\bfseries SWD\_\-TURNROUND\_\-MAX\_\-CODE}~SWD\_\-TURNROUND\_\-4\_\-CODE}
+\label{libswd_8h_a82e4aadc87de5aa0a82404a699f070c9}
+
+\item 
+\#define \hyperlink{libswd_8h_a4638bb61fa7ca7f4e2cdf177b8aa2485}{SWD\_\-TURNROUND\_\-DEFAULT\_\-VAL}~SWD\_\-TURNROUND\_\-1\_\-VAL
+\item 
+\#define \hyperlink{libswd_8h_a6d541fabb5e5a1e6a30657a97747f3ff}{AHB\_\-AP\_\-CONTROLSTATUS}~0x00
+\begin{DoxyCompactList}\small\item\em AHB-\/AP Registers Map. \item\end{DoxyCompactList}\item 
+\#define \hyperlink{libswd_8h_a1cbe7e4c68e923e1cef6d7dc621c1069}{AHB\_\-AP\_\-TAR}~0x04
+\begin{DoxyCompactList}\small\item\em R/W, 32bit, reset value: 0x00000000. \item\end{DoxyCompactList}\item 
+\#define \hyperlink{libswd_8h_aafb32eec9bde5241aaf8f6f356685212}{AHB\_\-AP\_\-DRW}~0x0C
+\begin{DoxyCompactList}\small\item\em R/W, 32bit. \item\end{DoxyCompactList}\item 
+\#define \hyperlink{libswd_8h_a79005218ec350d48873794d0428f5c9a}{AHB\_\-AP\_\-BD0}~0x10
+\begin{DoxyCompactList}\small\item\em R/W, 32bit. \item\end{DoxyCompactList}\item 
+\#define \hyperlink{libswd_8h_afac7c5f3dcf06444b70f8e3b3729fb0c}{AHB\_\-AP\_\-BD1}~0x14
+\begin{DoxyCompactList}\small\item\em R/W, 32bit. \item\end{DoxyCompactList}\item 
+\#define \hyperlink{libswd_8h_a62d95594c6aeaaf2ca65b37ffd785938}{AHB\_\-AP\_\-BD2}~0x18
+\begin{DoxyCompactList}\small\item\em R/W, 32bit. \item\end{DoxyCompactList}\item 
+\#define \hyperlink{libswd_8h_adbbab2130f80262813ec34c5ef76931e}{AHB\_\-AP\_\-BD3}~0x1C
+\begin{DoxyCompactList}\small\item\em R/W, 32bit. \item\end{DoxyCompactList}\item 
+\#define \hyperlink{libswd_8h_a29ea3a30e284147969a33f6fccd61fc3}{AHB\_\-AP\_\-DROMT}~0xF8
+\begin{DoxyCompactList}\small\item\em RO, 32bit, reset value: 0xE00FF000. \item\end{DoxyCompactList}\item 
+\#define \hyperlink{libswd_8h_a2830d02e5dad227abf3316b8e3d05fff}{AHB\_\-AP\_\-IDR}~0xFC
+\begin{DoxyCompactList}\small\item\em RO, 32bit, reset value: 0x24770001. \item\end{DoxyCompactList}\item 
+\#define \hyperlink{libswd_8h_a26692de1bd0ae7c18636700e4dc429fb}{SWD\_\-DATA\_\-MAXBITCOUNT}~32
+\begin{DoxyCompactList}\small\item\em SWD queue and payload data definitions. \item\end{DoxyCompactList}\item 
+\hypertarget{libswd_8h_acd193c9b1286337094c58e1d8d69cb6d}{
+\#define \hyperlink{libswd_8h_acd193c9b1286337094c58e1d8d69cb6d}{SWD\_\-DATA\_\-BYTESIZE}~8}
+\label{libswd_8h_acd193c9b1286337094c58e1d8d69cb6d}
+
+\begin{DoxyCompactList}\small\item\em How many bits are there in a byte. \item\end{DoxyCompactList}\item 
+\hypertarget{libswd_8h_a5c498f851df4c94c32bb57c6648cb878}{
+\#define \hyperlink{libswd_8h_a5c498f851df4c94c32bb57c6648cb878}{SWD\_\-DATA\_\-BITLEN}~32}
+\label{libswd_8h_a5c498f851df4c94c32bb57c6648cb878}
+
+\begin{DoxyCompactList}\small\item\em How many bits are there in data payload. \item\end{DoxyCompactList}\item 
+\hypertarget{libswd_8h_a312d07081ec8386b65154eeb02badf66}{
+\#define \hyperlink{libswd_8h_a312d07081ec8386b65154eeb02badf66}{SWD\_\-CMDQLEN\_\-DEFAULT}~1024;}
+\label{libswd_8h_a312d07081ec8386b65154eeb02badf66}
+
+\begin{DoxyCompactList}\small\item\em How long is the command queue by default. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \hyperlink{structswd__cmd__t}{swd\_\-cmd\_\-t} \hyperlink{libswd_8h_aff5db76ebc3422cef1d7dce92f7284e4}{swd\_\-cmd\_\-t}
+\begin{DoxyCompactList}\small\item\em SWD Command Element Structure. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77}{swd\_\-error\_\-code\_\-t} \{ \par
+\hyperlink{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77af5a1ef7dd83c34b0cc42beb5984bfb01}{SWD\_\-OK} =  0, 
+\hyperlink{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77a7acb88c6941a8ec9f104078ee8b3e02c}{SWD\_\-ERROR\_\-GENERAL} = -\/1, 
+\hyperlink{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77aedb8a7cbf26095284eb5976cd8663494}{SWD\_\-ERROR\_\-NULLPOINTER} = -\/2, 
+\hyperlink{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77a4476f371364f6c7bb0e8396120e4c4cd}{SWD\_\-ERROR\_\-NULLQUEUE} = -\/3, 
+\par
+\hyperlink{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77a22f5e6d0a9f72397595cc71b6e11411d}{SWD\_\-ERROR\_\-NULLTRN} = -\/4, 
+\hyperlink{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77aa3b8e6239ccc5999d6d75b5da2133d1a}{SWD\_\-ERROR\_\-PARAM} = -\/5, 
+\hyperlink{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77aeecf32fa72e3b4e8a55fda56852ed0a3}{SWD\_\-ERROR\_\-OUTOFMEM} = -\/6, 
+\hyperlink{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77aaac3da0a3341d405f70349763f526772}{SWD\_\-ERROR\_\-RESULT} = -\/7, 
+\par
+\hyperlink{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77abe4b62286d73462a18726261e432503e}{SWD\_\-ERROR\_\-RANGE} = -\/8, 
+\hyperlink{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77ab8707f66c87d67231a1df117d176499f}{SWD\_\-ERROR\_\-DEFINITION} = -\/9, 
+\hyperlink{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77aef273147c6f034db3ac7c1340ccaa455}{SWD\_\-ERROR\_\-NULLCONTEXT} = -\/10, 
+\hyperlink{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77a829d12144ebfc2cf1e4c30eae4327e58}{SWD\_\-ERROR\_\-QUEUE} = -\/11, 
+\par
+\hyperlink{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77a3f107ea05e8a08eeb6db8055db47b6af}{SWD\_\-ERROR\_\-ADDR} = -\/12, 
+\hyperlink{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77aac13275631d7325134021f3409e1bbf0}{SWD\_\-ERROR\_\-APnDP} = -\/13, 
+\hyperlink{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77a0dce436eb6d60b5c935780e38d317272}{SWD\_\-ERROR\_\-RnW} = -\/14, 
+\hyperlink{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77a05931ecd3c4d34ad773d31ee573cefdd}{SWD\_\-ERROR\_\-PARITY} = -\/15, 
+\par
+\hyperlink{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77ac462fccae009d83aab5d394eba7e4665}{SWD\_\-ERROR\_\-ACK} = -\/16, 
+\hyperlink{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77a3f3dbe4095052628978962830f80cbeb}{SWD\_\-ERROR\_\-ACKUNKNOWN} = -\/19, 
+\hyperlink{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77a8ba17527e1f8596b1e6c644d651a75f2}{SWD\_\-ERROR\_\-ACKNOTDONE} = -\/20, 
+\hyperlink{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77aaf9a4ffb312df6c0d6a2ad5f26236ed2}{SWD\_\-ERROR\_\-ACKMISSING} = -\/21, 
+\par
+\hyperlink{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77aa99a0d1fa79837de68da0abf82950083}{SWD\_\-ERROR\_\-ACKMISMATCH} = -\/22, 
+\hyperlink{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77a0a76fb9ee32976ef62ffff3d766d2ef1}{SWD\_\-ERROR\_\-ACKORDER} = -\/23, 
+\hyperlink{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77a154bc92f783335bf75933cbbcf477d4c}{SWD\_\-ERROR\_\-BADOPCODE} = -\/24, 
+\hyperlink{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77a3a4a9b00904529e4368120e9e7b05c77}{SWD\_\-ERROR\_\-NODATACMD} = -\/25, 
+\par
+\hyperlink{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77af41fe1c260478be2da86daded693def0}{SWD\_\-ERROR\_\-DATAPTR} = -\/26, 
+\hyperlink{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77a7960e949fb577cb55f27213364246983}{SWD\_\-ERROR\_\-NOPARITYCMD} = -\/27, 
+\hyperlink{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77aaa64317e7fcfbc135103e92e0d7461d0}{SWD\_\-ERROR\_\-PARITYPTR} = -\/28, 
+\hyperlink{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77aa09e4f36fe516704701f016e7cf08c08}{SWD\_\-ERROR\_\-NOTDONE} = -\/29, 
+\par
+\hyperlink{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77a8e6636f921f5856ece06915d2c2eeabf}{SWD\_\-ERROR\_\-QUEUEROOT} = -\/30, 
+\hyperlink{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77ad631db57f3edc4461e7deef3f7108e78}{SWD\_\-ERROR\_\-QUEUETAIL} = -\/31, 
+\hyperlink{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77a8b59d867a0320335aebfd5a503b3d331}{SWD\_\-ERROR\_\-BADCMDTYPE} = -\/32, 
+\hyperlink{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77af0ce348ad2c0dc96642814d5b40013a5}{SWD\_\-ERROR\_\-BADCMDDATA} = -\/33, 
+\par
+\hyperlink{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77a662935dd4a8fa01620b62dd4bb879c10}{SWD\_\-ERROR\_\-TURNAROUND} = -\/34, 
+\hyperlink{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77a186d948f46f62e6ed2a35a06ac8d61a2}{SWD\_\-ERROR\_\-DRIVER} = -\/35, 
+\hyperlink{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77a4de5da0a220537161b83db14cb02882e}{SWD\_\-ERROR\_\-ACK\_\-WAIT} = -\/36, 
+\hyperlink{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77a562d12325f42609d3548848d0012e668}{SWD\_\-ERROR\_\-ACK\_\-FAULT} = -\/37, 
+\par
+\hyperlink{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77a6221955153e8a1486c6ba1885fad260d}{SWD\_\-ERROR\_\-QUEUENOTFREE} = -\/38, 
+\hyperlink{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77a278660e87edcaef6a52b604c1fdda9d7}{SWD\_\-ERROR\_\-TRANSPORT} = -\/39, 
+\hyperlink{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77ad7b25e37bdd661e4146a201c01aba3e2}{SWD\_\-ERROR\_\-DIRECTION} = -\/40, 
+\hyperlink{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77a3409780dd844cd0a9ec85fab65ead058}{SWD\_\-ERROR\_\-LOGLEVEL} = -\/41
+ \}
+\begin{DoxyCompactList}\small\item\em Status and Error Codes definitions. \item\end{DoxyCompactList}\item 
+enum \hyperlink{libswd_8h_ab68cbcef79d602fc0fe70cb65c43e898}{swd\_\-loglevel\_\-t} \{ \par
+{\bfseries SWD\_\-LOGLEVEL\_\-MIN} =  0, 
+\hyperlink{libswd_8h_ab68cbcef79d602fc0fe70cb65c43e898aae6717e99b0a1bb52faddc723ccf4c8a}{SWD\_\-LOGLEVEL\_\-SILENT} =  0, 
+\hyperlink{libswd_8h_ab68cbcef79d602fc0fe70cb65c43e898aec966870ed80a0b7995871924db678f1}{SWD\_\-LOGLEVEL\_\-ERROR} =  1, 
+\hyperlink{libswd_8h_ab68cbcef79d602fc0fe70cb65c43e898a207bbe4a21ac547c5d7613cfa198e9ca}{SWD\_\-LOGLEVEL\_\-WARNING} =  2, 
+\par
+\hyperlink{libswd_8h_ab68cbcef79d602fc0fe70cb65c43e898ad06e455a696693b2226f49e6cec64146}{SWD\_\-LOGLEVEL\_\-NORMAL} =  3, 
+\hyperlink{libswd_8h_ab68cbcef79d602fc0fe70cb65c43e898ae80dd8ea77c8e8121c806150cf55495c}{SWD\_\-LOGLEVEL\_\-INFO} =  4, 
+\hyperlink{libswd_8h_ab68cbcef79d602fc0fe70cb65c43e898a911a4892f6c846b089c1d999214e0ee8}{SWD\_\-LOGLEVEL\_\-DEBUG} =  5, 
+{\bfseries SWD\_\-LOGLEVEL\_\-MAX} =  5
+ \}
+\begin{DoxyCompactList}\small\item\em Logging Level Codes definition. \item\end{DoxyCompactList}\item 
+enum \hyperlink{libswd_8h_a18e16544fabdef0ef0e531cc6b4d4b7c}{swd\_\-cmdtype\_\-t} \{ \par
+\hyperlink{libswd_8h_a18e16544fabdef0ef0e531cc6b4d4b7ca62c40fbeaf26e6daded916edd77bc21d}{SWD\_\-CMDTYPE\_\-MOSI\_\-DATA} = -\/7, 
+\hyperlink{libswd_8h_a18e16544fabdef0ef0e531cc6b4d4b7ca826701bb4e07deb5c5f5c33665688c6b}{SWD\_\-CMDTYPE\_\-MOSI\_\-REQUEST} = -\/6, 
+\hyperlink{libswd_8h_a18e16544fabdef0ef0e531cc6b4d4b7ca6da6cde9944c71a26444c97bee9b59d0}{SWD\_\-CMDTYPE\_\-MOSI\_\-TRN} = -\/5, 
+\hyperlink{libswd_8h_a18e16544fabdef0ef0e531cc6b4d4b7cab3726bd22bf211c773b091cf70bec9f1}{SWD\_\-CMDTYPE\_\-MOSI\_\-PARITY} = -\/4, 
+\par
+\hyperlink{libswd_8h_a18e16544fabdef0ef0e531cc6b4d4b7caf951c4a4ebb960641f074785a6174a5a}{SWD\_\-CMDTYPE\_\-MOSI\_\-BITBANG} = -\/3, 
+\hyperlink{libswd_8h_a18e16544fabdef0ef0e531cc6b4d4b7ca2bd240d136f2e7f661ad14bd355053a6}{SWD\_\-CMDTYPE\_\-MOSI\_\-CONTROL} = -\/2, 
+\hyperlink{libswd_8h_a18e16544fabdef0ef0e531cc6b4d4b7caceec6c2784b149355b019cbda0623fe0}{SWD\_\-CMDTYPE\_\-MOSI} = -\/1, 
+\hyperlink{libswd_8h_a18e16544fabdef0ef0e531cc6b4d4b7caa61ae4ec60ecffb3df34f3e485090586}{SWD\_\-CMDTYPE\_\-UNDEFINED} = 0, 
+\par
+\hyperlink{libswd_8h_a18e16544fabdef0ef0e531cc6b4d4b7ca4d019a00cc772982e7d1ac52aac5d4e0}{SWD\_\-CMDTYPE\_\-MISO} = 1, 
+\hyperlink{libswd_8h_a18e16544fabdef0ef0e531cc6b4d4b7ca59eade15cc1d2430434c0e4174dc3e07}{SWD\_\-CMDTYPE\_\-MISO\_\-ACK} = 2, 
+\hyperlink{libswd_8h_a18e16544fabdef0ef0e531cc6b4d4b7cab4260670a401ed63adec72c0753f915f}{SWD\_\-CMDTYPE\_\-MISO\_\-BITBANG} = 3, 
+\hyperlink{libswd_8h_a18e16544fabdef0ef0e531cc6b4d4b7ca5d23ed26796e30ae787d3de869ef9359}{SWD\_\-CMDTYPE\_\-MISO\_\-PARITY} = 4, 
+\par
+\hyperlink{libswd_8h_a18e16544fabdef0ef0e531cc6b4d4b7ca8ce670cc9c3d3f2d77c83f13c589978f}{SWD\_\-CMDTYPE\_\-MISO\_\-TRN} = 5, 
+\hyperlink{libswd_8h_a18e16544fabdef0ef0e531cc6b4d4b7ca2c17157db3f21117cac24fa17793a576}{SWD\_\-CMDTYPE\_\-MISO\_\-DATA} = 6
+ \}
+\begin{DoxyCompactList}\small\item\em SWD Command Codes definitions. \item\end{DoxyCompactList}\item 
+enum \hyperlink{libswd_8h_a7262ed71e0d9c40d2ede6c0aa44209df}{swd\_\-shiftdir\_\-t} \{ \hyperlink{libswd_8h_a7262ed71e0d9c40d2ede6c0aa44209dfa0b9f6301b086569d5a62e49d7a2ebdf0}{SWD\_\-DIR\_\-LSBFIRST} = 0, 
+\hyperlink{libswd_8h_a7262ed71e0d9c40d2ede6c0aa44209dfa76bc9b4b4ac1e47f4602576ed500a07c}{SWD\_\-DIR\_\-MSBFIRST} = 1
+ \}
+\begin{DoxyCompactList}\small\item\em What is the shift direction LSB-\/first or MSB-\/first. \item\end{DoxyCompactList}\item 
+enum \hyperlink{libswd_8h_a35ca817603eaed3d5ce753c37a1db070}{swd\_\-operation\_\-t} \{ \par
+\hyperlink{libswd_8h_a35ca817603eaed3d5ce753c37a1db070a3072b746192012364ca0986dfbd048bf}{SWD\_\-OPERATION\_\-FIRST} = 1, 
+\hyperlink{libswd_8h_a35ca817603eaed3d5ce753c37a1db070a9fe0514a56fa43763b83c16a168dc3e5}{SWD\_\-OPERATION\_\-ENQUEUE} = 1, 
+\hyperlink{libswd_8h_a35ca817603eaed3d5ce753c37a1db070a56d19aa6e805b636d0c679df01a83bf1}{SWD\_\-OPERATION\_\-EXECUTE} = 2, 
+\hyperlink{libswd_8h_a35ca817603eaed3d5ce753c37a1db070aff0c4b9c2b732437df67e41f3dde5b41}{SWD\_\-OPERATION\_\-TRANSMIT\_\-HEAD} = 3, 
+\par
+\hyperlink{libswd_8h_a35ca817603eaed3d5ce753c37a1db070a2f8b579789e424e73b147b14b910f9c0}{SWD\_\-OPERATION\_\-TRANSMIT\_\-TAIL} = 4, 
+\hyperlink{libswd_8h_a35ca817603eaed3d5ce753c37a1db070ac38a2a8469f357620b62255215119eba}{SWD\_\-OPERATION\_\-TRANSMIT\_\-ALL} = 5, 
+\hyperlink{libswd_8h_a35ca817603eaed3d5ce753c37a1db070a1b313c50018796ad8d5049a005c164dd}{SWD\_\-OPERATION\_\-TRANSMIT\_\-ONE} = 6, 
+\hyperlink{libswd_8h_a35ca817603eaed3d5ce753c37a1db070ada451b56cf1fa088d3f36c84930054dd}{SWD\_\-OPERATION\_\-TRANSMIT\_\-LAST} = 7, 
+\par
+\hyperlink{libswd_8h_a35ca817603eaed3d5ce753c37a1db070a2b0a3a85cda93ab617d1f49273a3cc3b}{SWD\_\-OPERATION\_\-LAST} = 7
+ \}
+\begin{DoxyCompactList}\small\item\em Command Queue operations codes. \item\end{DoxyCompactList}\item 
+enum \hyperlink{libswd_8h_aa690e0849a7ecb626ac82d4dd5d11bf4}{swd\_\-bool\_\-t} \{ \hyperlink{libswd_8h_aa690e0849a7ecb626ac82d4dd5d11bf4aeebb63e10fa0119c843fa9e78c69451d}{SWD\_\-FALSE} = 0, 
+\hyperlink{libswd_8h_aa690e0849a7ecb626ac82d4dd5d11bf4a17a0a3b4c146af7e8675da450e8a2213}{SWD\_\-TRUE} = 1
+ \}
+\begin{DoxyCompactList}\small\item\em Boolean values definition. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{libswd_8h_adadd09e0dcd8877a99e7983d5d98e882}{swd\_\-bin8\_\-parity\_\-even} (char $\ast$data, char $\ast$parity)
+\begin{DoxyCompactList}\small\item\em Some comments on the function behavior. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8h_a6d93a36876e62c9a05171cebcdb4b446}{swd\_\-bin32\_\-parity\_\-even} (int $\ast$data, char $\ast$parity)
+\begin{DoxyCompactList}\small\item\em Data parity calculator, calculates even parity on integer type. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8h_aa245c280d14d50118fa1ce5e090a596b}{swd\_\-bin8\_\-print} (char $\ast$data)
+\begin{DoxyCompactList}\small\item\em Prints binary data of a char value on the screen. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8h_a5ca7ae0d5ceab442348c9a03e58d54eb}{swd\_\-bin32\_\-print} (int $\ast$data)
+\begin{DoxyCompactList}\small\item\em Prints binary data of an integer value on the screen. \item\end{DoxyCompactList}\item 
+char $\ast$ \hyperlink{libswd_8h_a3570e6b4032cde907cb137892697bac9}{swd\_\-bin8\_\-string} (char $\ast$data)
+\begin{DoxyCompactList}\small\item\em Generates string containing binary data of a char value. \item\end{DoxyCompactList}\item 
+char $\ast$ \hyperlink{libswd_8h_a271c7fcdfe6cf9d5177bd2fca4e02497}{swd\_\-bin32\_\-string} (int $\ast$data)
+\begin{DoxyCompactList}\small\item\em Generates string containing binary data of an integer value. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8h_a6e7db0da4ca2f2649b826e68ef5b3caa}{swd\_\-bin8\_\-bitswap} (unsigned char $\ast$buffer, int bitcount)
+\begin{DoxyCompactList}\small\item\em Bit swap helper function that reverse bit order in char $\ast$buffer. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8h_a62fe3d826d2f575dd1b446263d1c451c}{swd\_\-bin32\_\-bitswap} (unsigned int $\ast$buffer, int bitcount)
+\begin{DoxyCompactList}\small\item\em Bit swap helper function that reverse bit order in int $\ast$buffer. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8h_a185aba078d1c57df6331fd07fcf5630c}{swd\_\-cmdq\_\-init} (\hyperlink{structswd__cmd__t}{swd\_\-cmd\_\-t} $\ast$cmdq)
+\begin{DoxyCompactList}\small\item\em Initialize new queue element in memory that becomes a queue root. \item\end{DoxyCompactList}\item 
+\hyperlink{structswd__cmd__t}{swd\_\-cmd\_\-t} $\ast$ \hyperlink{libswd_8h_a431d401d67e26e8b983c6ead8c1b93eb}{swd\_\-cmdq\_\-find\_\-root} (\hyperlink{structswd__cmd__t}{swd\_\-cmd\_\-t} $\ast$cmdq)
+\begin{DoxyCompactList}\small\item\em Find queue root (first element). \item\end{DoxyCompactList}\item 
+\hyperlink{structswd__cmd__t}{swd\_\-cmd\_\-t} $\ast$ \hyperlink{libswd_8h_a66578e5c847f74079f2e13f3bd753d58}{swd\_\-cmdq\_\-find\_\-tail} (\hyperlink{structswd__cmd__t}{swd\_\-cmd\_\-t} $\ast$cmdq)
+\begin{DoxyCompactList}\small\item\em Find queue tail (last element). \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8h_a966a561f341217ecc56d31ed61c7758e}{swd\_\-cmdq\_\-append} (\hyperlink{structswd__cmd__t}{swd\_\-cmd\_\-t} $\ast$cmdq, \hyperlink{structswd__cmd__t}{swd\_\-cmd\_\-t} $\ast$cmd)
+\begin{DoxyCompactList}\small\item\em Append element pointed by $\ast$cmd at the end of the quque pointed by $\ast$cmdq. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8h_ab205547a46a4e87e040478cc230463d6}{swd\_\-cmdq\_\-free} (\hyperlink{structswd__cmd__t}{swd\_\-cmd\_\-t} $\ast$cmdq)
+\begin{DoxyCompactList}\small\item\em Free queue pointed by $\ast$cmdq element. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8h_a583240dd9735d3192a6a895f4cefd89c}{swd\_\-cmdq\_\-free\_\-head} (\hyperlink{structswd__cmd__t}{swd\_\-cmd\_\-t} $\ast$cmdq)
+\begin{DoxyCompactList}\small\item\em Free queue head up to $\ast$cmdq element. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8h_a968846e75ffdbceafd2f4a3bd7f314b1}{swd\_\-cmdq\_\-free\_\-tail} (\hyperlink{structswd__cmd__t}{swd\_\-cmd\_\-t} $\ast$cmdq)
+\begin{DoxyCompactList}\small\item\em Free queue tail starting after $\ast$cmdq element. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8h_ad53379f5a7756cc91b01e867aaaa489d}{swd\_\-cmdq\_\-flush} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx, \hyperlink{libswd_8h_a35ca817603eaed3d5ce753c37a1db070}{swd\_\-operation\_\-t} operation)
+\begin{DoxyCompactList}\small\item\em Flush command queue contents into interface driver. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8h_a3bc721b722709fda46962cbbe6f289a6}{swd\_\-cmd\_\-enqueue} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx, \hyperlink{structswd__cmd__t}{swd\_\-cmd\_\-t} $\ast$cmd)
+\begin{DoxyCompactList}\small\item\em Append selected command to a context's command queue. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8h_a71bb2c003e1e1fb873ee70d4df04e651}{swd\_\-cmd\_\-enqueue\_\-mosi\_\-request} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx, char $\ast$request)
+\begin{DoxyCompactList}\small\item\em Appends command queue with SWD Request packet header. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8h_adb3044c0cbebdf275aef0898b37c6fa6}{swd\_\-cmd\_\-enqueue\_\-mosi\_\-trn} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx)
+\begin{DoxyCompactList}\small\item\em Append command queue with Turnaround activating MOSI mode. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8h_a63c0741f58c00faad012ccc9d29ca7c7}{swd\_\-cmd\_\-enqueue\_\-miso\_\-trn} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx)
+\begin{DoxyCompactList}\small\item\em Append command queue with Turnaround activating MISO mode. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8h_ab74b1e2baff1d3f30c07440bc84b54fe}{swd\_\-cmd\_\-enqueue\_\-miso\_\-nbit} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx, char $\ast$$\ast$data, int count)
+\begin{DoxyCompactList}\small\item\em Append command queue with bus binary read bit-\/by-\/bit operation. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8h_a5114809ee4b3f3dbdcef7070e76825cd}{swd\_\-cmd\_\-enqueue\_\-mosi\_\-nbit} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx, char $\ast$data, int count)
+\begin{DoxyCompactList}\small\item\em Append command queue with bus binary write bit-\/by-\/bit operation. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8h_ac972e99a9d163f30b983ce6ed0d2ed02}{swd\_\-cmd\_\-enqueue\_\-mosi\_\-parity} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx, char $\ast$parity)
+\begin{DoxyCompactList}\small\item\em Append command queue with parity bit write. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8h_aea2f9fdb22f5f6364f005eab9425a060}{swd\_\-cmd\_\-enqueue\_\-miso\_\-parity} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx, char $\ast$$\ast$parity)
+\begin{DoxyCompactList}\small\item\em Append command queue with parity bit read. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8h_aa3a012555652c27c0e375097b392534b}{swd\_\-cmd\_\-enqueue\_\-miso\_\-data} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx, int $\ast$$\ast$data)
+\begin{DoxyCompactList}\small\item\em Append command queue with data read. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8h_a1afca108b064601dfeb517327b0bb275}{swd\_\-cmd\_\-enqueue\_\-miso\_\-data\_\-p} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx, int $\ast$$\ast$data, char $\ast$$\ast$parity)
+\begin{DoxyCompactList}\small\item\em Append command queue with data and parity read. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8h_a1e7330acb5e3b8c7f41a82121e26decc}{swd\_\-cmd\_\-enqueue\_\-miso\_\-n\_\-data\_\-p} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx, int $\ast$$\ast$data, char $\ast$$\ast$parity, int count)
+\begin{DoxyCompactList}\small\item\em Append command queue with series of data and parity read. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8h_a02b06ae68b6e2a7b50f233c695b45548}{swd\_\-cmd\_\-enqueue\_\-mosi\_\-data} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx, int $\ast$data)
+\begin{DoxyCompactList}\small\item\em Append command queue with data and parity write. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8h_a22a5c50a280f62a84597f71b7f468a99}{swd\_\-cmd\_\-enqueue\_\-mosi\_\-data\_\-ap} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx, int $\ast$data)
+\begin{DoxyCompactList}\small\item\em Append command queue with data and automatic parity write. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8h_a25048650d706a8ae26793489acb46f5a}{swd\_\-cmd\_\-enqueue\_\-mosi\_\-data\_\-p} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx, int $\ast$data, char $\ast$parity)
+\begin{DoxyCompactList}\small\item\em Append command queue with data and provided parity write. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8h_adadb812d15558c6db4b9aa753b60e15c}{swd\_\-cmd\_\-enqueue\_\-mosi\_\-n\_\-data\_\-ap} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx, int $\ast$$\ast$data, int count)
+\begin{DoxyCompactList}\small\item\em Append command queue with series of data and automatic parity writes. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8h_afd4f9d8e098dee2708c4b3cc1e2775e6}{swd\_\-cmd\_\-enqueue\_\-mosi\_\-n\_\-data\_\-p} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx, int $\ast$$\ast$data, char $\ast$$\ast$parity, int count)
+\begin{DoxyCompactList}\small\item\em Append command queue with series of data and provided parity writes. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8h_a4d9e77e67b6167185b86f76df9b15cbd}{swd\_\-cmd\_\-enqueue\_\-miso\_\-ack} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx, char $\ast$$\ast$ack)
+\begin{DoxyCompactList}\small\item\em Append queue with ACK read. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8h_af01d9ef59271c478d8d68f7dde27a77f}{swd\_\-cmd\_\-enqueue\_\-mosi\_\-control} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx, char $\ast$ctlmsg, int len)
+\begin{DoxyCompactList}\small\item\em Append command queue with len-\/octet size control seruence. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8h_a0492d6b4eb2ebaa14fd72a5fa7f57475}{swd\_\-cmd\_\-enqueue\_\-mosi\_\-dap\_\-reset} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx)
+\begin{DoxyCompactList}\small\item\em Append command queue with SW-\/DP-\/RESET sequence. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8h_a11a8ab26aa798f18303be8364ef55f48}{swd\_\-cmd\_\-enqueue\_\-mosi\_\-idle} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx)
+\begin{DoxyCompactList}\small\item\em Append command queue with idle sequence. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8h_a314214b78c653c188f51f3324d623913}{swd\_\-cmd\_\-enqueue\_\-mosi\_\-jtag2swd} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx)
+\begin{DoxyCompactList}\small\item\em Append command queue with JTAG-\/TO-\/SWD DAP-\/switch sequence. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8h_aae11e98541fa6cf8526d59e4ae5bfff9}{swd\_\-cmd\_\-enqueue\_\-mosi\_\-swd2jtag} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx)
+\begin{DoxyCompactList}\small\item\em Append command queue with SWD-\/TO-\/JTAG DAP-\/switch sequence. \item\end{DoxyCompactList}\item 
+\hypertarget{libswd_8h_a2c825a8208192b40b0b3d5d93258dd91}{
+char $\ast$ {\bfseries swd\_\-cmd\_\-string\_\-cmdtype} (\hyperlink{structswd__cmd__t}{swd\_\-cmd\_\-t} $\ast$cmd)}
+\label{libswd_8h_a2c825a8208192b40b0b3d5d93258dd91}
+
+\item 
+int \hyperlink{libswd_8h_a342a54175498a1cd4a2668a189977012}{swd\_\-bus\_\-setdir\_\-mosi} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx)
+\begin{DoxyCompactList}\small\item\em Append command queue with TRN WRITE/MOSI, if previous command was READ/MISO. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8h_abb32abd798b3b1ffa14573e4f139c079}{swd\_\-bus\_\-setdir\_\-miso} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx)
+\begin{DoxyCompactList}\small\item\em Append command queue with TRN READ/MISO, if previous command was WRITE/MOSI. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8h_a36141f037b00ea981cf771d6061bdfd6}{swd\_\-bus\_\-write\_\-request} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx, \hyperlink{libswd_8h_a35ca817603eaed3d5ce753c37a1db070}{swd\_\-operation\_\-t} operation, char $\ast$APnDP, char $\ast$RnW, char $\ast$addr)
+\begin{DoxyCompactList}\small\item\em Perform Request. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8h_aae7d6660b4fd10d0d1105d74257b8ac7}{swd\_\-bus\_\-read\_\-ack} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx, \hyperlink{libswd_8h_a35ca817603eaed3d5ce753c37a1db070}{swd\_\-operation\_\-t} operation, char $\ast$$\ast$ack)
+\begin{DoxyCompactList}\small\item\em Perform ACK read into $\ast$ack and verify received data. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8h_ac1948d1f82a3166de4de43dae48b7413}{swd\_\-bus\_\-write\_\-data\_\-p} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx, \hyperlink{libswd_8h_a35ca817603eaed3d5ce753c37a1db070}{swd\_\-operation\_\-t} operation, int $\ast$data, char $\ast$parity)
+\begin{DoxyCompactList}\small\item\em Perform (MOSI) data write with provided parity value. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8h_a014280b7d9a07a14862f16922827f50a}{swd\_\-bus\_\-write\_\-data\_\-ap} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx, \hyperlink{libswd_8h_a35ca817603eaed3d5ce753c37a1db070}{swd\_\-operation\_\-t} operation, int $\ast$data)
+\begin{DoxyCompactList}\small\item\em Perform (MOSI) data write with automatic parity calculation. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8h_a45c79a01998ae0e845ee425c432e181d}{swd\_\-bus\_\-read\_\-data\_\-p} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx, \hyperlink{libswd_8h_a35ca817603eaed3d5ce753c37a1db070}{swd\_\-operation\_\-t} operation, int $\ast$$\ast$data, char $\ast$$\ast$parity)
+\begin{DoxyCompactList}\small\item\em Perform (MISO) data read. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8h_ad0ae33bb778d9c0bba3fe5f74adc8d22}{swd\_\-bus\_\-write\_\-control} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx, \hyperlink{libswd_8h_a35ca817603eaed3d5ce753c37a1db070}{swd\_\-operation\_\-t} operation, char $\ast$ctlmsg, int len)
+\begin{DoxyCompactList}\small\item\em Write CONTROL byte to the Target's DAP. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8h_afbae73ccf42657390d11d645fcc456d8}{swd\_\-bitgen8\_\-request} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx, char $\ast$APnDP, char $\ast$RnW, char $\ast$addr, char $\ast$request)
+\begin{DoxyCompactList}\small\item\em Generate 8-\/bit SWD-\/REQUEST packet contents with provided parameters. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8h_a2891df407bc8178e3ca45bd508822327}{swd\_\-drv\_\-transmit} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx, \hyperlink{structswd__cmd__t}{swd\_\-cmd\_\-t} $\ast$cmd)
+\begin{DoxyCompactList}\small\item\em Transmit selected command from the command queue to the interface driver. \item\end{DoxyCompactList}\item 
+\hypertarget{libswd_8h_a32e3642168a4fe782f9bafb7b7e1cef2}{
+int {\bfseries swd\_\-drv\_\-mosi\_\-8} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx, \hyperlink{structswd__cmd__t}{swd\_\-cmd\_\-t} $\ast$cmd, char $\ast$data, int bits, int nLSBfirst)}
+\label{libswd_8h_a32e3642168a4fe782f9bafb7b7e1cef2}
+
+\item 
+\hypertarget{libswd_8h_a18bfb4968ed95eb580a3b970a7d5b339}{
+int {\bfseries swd\_\-drv\_\-mosi\_\-32} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx, \hyperlink{structswd__cmd__t}{swd\_\-cmd\_\-t} $\ast$cmd, int $\ast$data, int bits, int nLSBfirst)}
+\label{libswd_8h_a18bfb4968ed95eb580a3b970a7d5b339}
+
+\item 
+\hypertarget{libswd_8h_a4aa9199caa538c5c58c8db41c4f39dc9}{
+int {\bfseries swd\_\-drv\_\-miso\_\-8} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx, \hyperlink{structswd__cmd__t}{swd\_\-cmd\_\-t} $\ast$cmd, char $\ast$data, int bits, int nLSBfirst)}
+\label{libswd_8h_a4aa9199caa538c5c58c8db41c4f39dc9}
+
+\item 
+\hypertarget{libswd_8h_ada8ec8d0bb1aa156768afe67f9162e4a}{
+int {\bfseries swd\_\-drv\_\-miso\_\-32} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx, \hyperlink{structswd__cmd__t}{swd\_\-cmd\_\-t} $\ast$cmd, int $\ast$data, int bits, int nLSBfirst)}
+\label{libswd_8h_ada8ec8d0bb1aa156768afe67f9162e4a}
+
+\item 
+\hypertarget{libswd_8h_a139265335a8bef0d406b41f834db8bb3}{
+int {\bfseries swd\_\-drv\_\-mosi\_\-trn} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx, int clks)}
+\label{libswd_8h_a139265335a8bef0d406b41f834db8bb3}
+
+\item 
+\hypertarget{libswd_8h_a5429dc71c2a229bdcc499423dc70fdaa}{
+int {\bfseries swd\_\-drv\_\-miso\_\-trn} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx, int clks)}
+\label{libswd_8h_a5429dc71c2a229bdcc499423dc70fdaa}
+
+\item 
+int \hyperlink{libswd_8h_ae53937afaa64ce0b28bef3d8d093f65a}{swd\_\-dap\_\-reset} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx, \hyperlink{libswd_8h_a35ca817603eaed3d5ce753c37a1db070}{swd\_\-operation\_\-t} operation)
+\begin{DoxyCompactList}\small\item\em Debug Access Port Reset sends 50 CLK with TMS high that brings both SW-\/DP and JTAG-\/DP into reset state. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8h_a0ffa1e7b48180a7c4bf05f2906a9cbb1}{swd\_\-dap\_\-select} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx, \hyperlink{libswd_8h_a35ca817603eaed3d5ce753c37a1db070}{swd\_\-operation\_\-t} operation)
+\begin{DoxyCompactList}\small\item\em Activate SW-\/DP by sending out RESET and JTAG-\/TO-\/SWD sequence on SWDIOTMS line. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8h_a6758b95d2adfbfb9b95198f9b0b5462c}{swd\_\-dap\_\-detect} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx, \hyperlink{libswd_8h_a35ca817603eaed3d5ce753c37a1db070}{swd\_\-operation\_\-t} operation, int $\ast$$\ast$idcode)
+\begin{DoxyCompactList}\small\item\em Macro: Reset target DAP, select SW-\/DP, read out IDCODE. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8h_a0a40c90253f99da07eae5e237be187b1}{swd\_\-dp\_\-read\_\-idcode} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx, \hyperlink{libswd_8h_a35ca817603eaed3d5ce753c37a1db070}{swd\_\-operation\_\-t} operation, int $\ast$$\ast$idcode)
+\begin{DoxyCompactList}\small\item\em Macro: Read out IDCODE register and return its value on function return. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8h_ab2228c114efd81e478ebc00e5bfe4c43}{swd\_\-log} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx, \hyperlink{libswd_8h_ab68cbcef79d602fc0fe70cb65c43e898}{swd\_\-loglevel\_\-t} loglevel, char $\ast$msg,...)
+\begin{DoxyCompactList}\small\item\em Put a message into swd context log at specified verbosity level. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8h_af30788d001ca964f2889f0d70e2eae8f}{swd\_\-log\_\-level\_\-set} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx, \hyperlink{libswd_8h_ab68cbcef79d602fc0fe70cb65c43e898}{swd\_\-loglevel\_\-t} loglevel)
+\begin{DoxyCompactList}\small\item\em Change log level to increase or decrease verbosity level. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8h_a4732d2c94a22605a8bc60c455889fe1b}{swd\_\-log\_\-level\_\-inherit} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx, int loglevel)
+\begin{DoxyCompactList}\small\item\em Set debug level according to caller's application settings. \item\end{DoxyCompactList}\item 
+\hypertarget{libswd_8h_a5c41206bbf4a593193192d03104a72f5}{
+char $\ast$ {\bfseries swd\_\-error\_\-string} (\hyperlink{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77}{swd\_\-error\_\-code\_\-t} error)}
+\label{libswd_8h_a5c41206bbf4a593193192d03104a72f5}
+
+\item 
+\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$ \hyperlink{libswd_8h_ad4f88acc646c06e6e81fbde8117c21af}{swd\_\-init} (void)
+\begin{DoxyCompactList}\small\item\em LibSWD initialization routine. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8h_ac53e7440e6d3c277df4e715665d1986d}{swd\_\-deinit\_\-ctx} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx)
+\begin{DoxyCompactList}\small\item\em De-\/initialize selected swd context and free its memory. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8h_a0426ebebbebec92cc5c8342d1746f58c}{swd\_\-deinit\_\-cmdq} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx)
+\begin{DoxyCompactList}\small\item\em De-\/initialize command queue and free its memory on selected swd context. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8h_a94b02a9cf4b72e2e76d6a9a34f34f96f}{swd\_\-deinit} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx)
+\begin{DoxyCompactList}\small\item\em De-\/initialize selected swd context and its command queue. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+\subsection{Define Documentation}
+\hypertarget{libswd_8h_a79005218ec350d48873794d0428f5c9a}{
+\index{libswd.h@{libswd.h}!AHB\_\-AP\_\-BD0@{AHB\_\-AP\_\-BD0}}
+\index{AHB\_\-AP\_\-BD0@{AHB\_\-AP\_\-BD0}!libswd.h@{libswd.h}}
+\subsubsection[{AHB\_\-AP\_\-BD0}]{\setlength{\rightskip}{0pt plus 5cm}\#define AHB\_\-AP\_\-BD0~0x10}}
+\label{libswd_8h_a79005218ec350d48873794d0428f5c9a}
+
+
+R/W, 32bit. 
+
+R/W, 32bit \hypertarget{libswd_8h_afac7c5f3dcf06444b70f8e3b3729fb0c}{
+\index{libswd.h@{libswd.h}!AHB\_\-AP\_\-BD1@{AHB\_\-AP\_\-BD1}}
+\index{AHB\_\-AP\_\-BD1@{AHB\_\-AP\_\-BD1}!libswd.h@{libswd.h}}
+\subsubsection[{AHB\_\-AP\_\-BD1}]{\setlength{\rightskip}{0pt plus 5cm}\#define AHB\_\-AP\_\-BD1~0x14}}
+\label{libswd_8h_afac7c5f3dcf06444b70f8e3b3729fb0c}
+
+
+R/W, 32bit. 
+
+R/W, 32bit \hypertarget{libswd_8h_a62d95594c6aeaaf2ca65b37ffd785938}{
+\index{libswd.h@{libswd.h}!AHB\_\-AP\_\-BD2@{AHB\_\-AP\_\-BD2}}
+\index{AHB\_\-AP\_\-BD2@{AHB\_\-AP\_\-BD2}!libswd.h@{libswd.h}}
+\subsubsection[{AHB\_\-AP\_\-BD2}]{\setlength{\rightskip}{0pt plus 5cm}\#define AHB\_\-AP\_\-BD2~0x18}}
+\label{libswd_8h_a62d95594c6aeaaf2ca65b37ffd785938}
+
+
+R/W, 32bit. 
+
+R/W, 32bit \hypertarget{libswd_8h_adbbab2130f80262813ec34c5ef76931e}{
+\index{libswd.h@{libswd.h}!AHB\_\-AP\_\-BD3@{AHB\_\-AP\_\-BD3}}
+\index{AHB\_\-AP\_\-BD3@{AHB\_\-AP\_\-BD3}!libswd.h@{libswd.h}}
+\subsubsection[{AHB\_\-AP\_\-BD3}]{\setlength{\rightskip}{0pt plus 5cm}\#define AHB\_\-AP\_\-BD3~0x1C}}
+\label{libswd_8h_adbbab2130f80262813ec34c5ef76931e}
+
+
+R/W, 32bit. 
+
+R/W, 32bit \hypertarget{libswd_8h_a6d541fabb5e5a1e6a30657a97747f3ff}{
+\index{libswd.h@{libswd.h}!AHB\_\-AP\_\-CONTROLSTATUS@{AHB\_\-AP\_\-CONTROLSTATUS}}
+\index{AHB\_\-AP\_\-CONTROLSTATUS@{AHB\_\-AP\_\-CONTROLSTATUS}!libswd.h@{libswd.h}}
+\subsubsection[{AHB\_\-AP\_\-CONTROLSTATUS}]{\setlength{\rightskip}{0pt plus 5cm}\#define AHB\_\-AP\_\-CONTROLSTATUS~0x00}}
+\label{libswd_8h_a6d541fabb5e5a1e6a30657a97747f3ff}
+
+
+AHB-\/AP Registers Map. 
+
+TODO!!!! R/W, 32bit, reset value: 0x43800042 R/W, 32bit, reset value: 0x43800042 \hypertarget{libswd_8h_a29ea3a30e284147969a33f6fccd61fc3}{
+\index{libswd.h@{libswd.h}!AHB\_\-AP\_\-DROMT@{AHB\_\-AP\_\-DROMT}}
+\index{AHB\_\-AP\_\-DROMT@{AHB\_\-AP\_\-DROMT}!libswd.h@{libswd.h}}
+\subsubsection[{AHB\_\-AP\_\-DROMT}]{\setlength{\rightskip}{0pt plus 5cm}\#define AHB\_\-AP\_\-DROMT~0xF8}}
+\label{libswd_8h_a29ea3a30e284147969a33f6fccd61fc3}
+
+
+RO, 32bit, reset value: 0xE00FF000. 
+
+RO, 32bit, reset value: 0xE00FF000 \hypertarget{libswd_8h_aafb32eec9bde5241aaf8f6f356685212}{
+\index{libswd.h@{libswd.h}!AHB\_\-AP\_\-DRW@{AHB\_\-AP\_\-DRW}}
+\index{AHB\_\-AP\_\-DRW@{AHB\_\-AP\_\-DRW}!libswd.h@{libswd.h}}
+\subsubsection[{AHB\_\-AP\_\-DRW}]{\setlength{\rightskip}{0pt plus 5cm}\#define AHB\_\-AP\_\-DRW~0x0C}}
+\label{libswd_8h_aafb32eec9bde5241aaf8f6f356685212}
+
+
+R/W, 32bit. 
+
+R/W, 32bit \hypertarget{libswd_8h_a2830d02e5dad227abf3316b8e3d05fff}{
+\index{libswd.h@{libswd.h}!AHB\_\-AP\_\-IDR@{AHB\_\-AP\_\-IDR}}
+\index{AHB\_\-AP\_\-IDR@{AHB\_\-AP\_\-IDR}!libswd.h@{libswd.h}}
+\subsubsection[{AHB\_\-AP\_\-IDR}]{\setlength{\rightskip}{0pt plus 5cm}\#define AHB\_\-AP\_\-IDR~0xFC}}
+\label{libswd_8h_a2830d02e5dad227abf3316b8e3d05fff}
+
+
+RO, 32bit, reset value: 0x24770001. 
+
+RO, 32bit, reset value: 0x24770001 \hypertarget{libswd_8h_a1cbe7e4c68e923e1cef6d7dc621c1069}{
+\index{libswd.h@{libswd.h}!AHB\_\-AP\_\-TAR@{AHB\_\-AP\_\-TAR}}
+\index{AHB\_\-AP\_\-TAR@{AHB\_\-AP\_\-TAR}!libswd.h@{libswd.h}}
+\subsubsection[{AHB\_\-AP\_\-TAR}]{\setlength{\rightskip}{0pt plus 5cm}\#define AHB\_\-AP\_\-TAR~0x04}}
+\label{libswd_8h_a1cbe7e4c68e923e1cef6d7dc621c1069}
+
+
+R/W, 32bit, reset value: 0x00000000. 
+
+R/W, 32bit, reset value: 0x00000000 \hypertarget{libswd_8h_a54431383e120685259ebf96a8c973b90}{
+\index{libswd.h@{libswd.h}!SWD\_\-ABORT\_\-BITNUM\_\-DAPABORT@{SWD\_\-ABORT\_\-BITNUM\_\-DAPABORT}}
+\index{SWD\_\-ABORT\_\-BITNUM\_\-DAPABORT@{SWD\_\-ABORT\_\-BITNUM\_\-DAPABORT}!libswd.h@{libswd.h}}
+\subsubsection[{SWD\_\-ABORT\_\-BITNUM\_\-DAPABORT}]{\setlength{\rightskip}{0pt plus 5cm}\#define SWD\_\-ABORT\_\-BITNUM\_\-DAPABORT~0}}
+\label{libswd_8h_a54431383e120685259ebf96a8c973b90}
+
+
+SW-\/DP ABORT Register map. 
+
+DAPABORT bit number. \hypertarget{libswd_8h_ae1778a14ecf1f9d2194d60e67e91454d}{
+\index{libswd.h@{libswd.h}!SWD\_\-CTRLSTAT\_\-BITNUM\_\-ORUNDETECT@{SWD\_\-CTRLSTAT\_\-BITNUM\_\-ORUNDETECT}}
+\index{SWD\_\-CTRLSTAT\_\-BITNUM\_\-ORUNDETECT@{SWD\_\-CTRLSTAT\_\-BITNUM\_\-ORUNDETECT}!libswd.h@{libswd.h}}
+\subsubsection[{SWD\_\-CTRLSTAT\_\-BITNUM\_\-ORUNDETECT}]{\setlength{\rightskip}{0pt plus 5cm}\#define SWD\_\-CTRLSTAT\_\-BITNUM\_\-ORUNDETECT~0}}
+\label{libswd_8h_ae1778a14ecf1f9d2194d60e67e91454d}
+
+
+SW-\/DP CTRL/STAT Register map. 
+
+ORUNDETECT bit number. \hypertarget{libswd_8h_a26692de1bd0ae7c18636700e4dc429fb}{
+\index{libswd.h@{libswd.h}!SWD\_\-DATA\_\-MAXBITCOUNT@{SWD\_\-DATA\_\-MAXBITCOUNT}}
+\index{SWD\_\-DATA\_\-MAXBITCOUNT@{SWD\_\-DATA\_\-MAXBITCOUNT}!libswd.h@{libswd.h}}
+\subsubsection[{SWD\_\-DATA\_\-MAXBITCOUNT}]{\setlength{\rightskip}{0pt plus 5cm}\#define SWD\_\-DATA\_\-MAXBITCOUNT~32}}
+\label{libswd_8h_a26692de1bd0ae7c18636700e4dc429fb}
+
+
+SWD queue and payload data definitions. 
+
+What is the maximal bit length of the data. \hypertarget{libswd_8h_a936042b0d86463b714c7a108574f1405}{
+\index{libswd.h@{libswd.h}!SWD\_\-MASKLANE\_\-0@{SWD\_\-MASKLANE\_\-0}}
+\index{SWD\_\-MASKLANE\_\-0@{SWD\_\-MASKLANE\_\-0}!libswd.h@{libswd.h}}
+\subsubsection[{SWD\_\-MASKLANE\_\-0}]{\setlength{\rightskip}{0pt plus 5cm}\#define SWD\_\-MASKLANE\_\-0~0b0001}}
+\label{libswd_8h_a936042b0d86463b714c7a108574f1405}
+
+
+SW-\/DP CTRLSTAT MASKLANE available values. 
+
+Compare byte lane 0 (0x-\/-\/-\/-\/-\/-\/FF) \hypertarget{libswd_8h_ac474e773617eb679af343ba2817383b4}{
+\index{libswd.h@{libswd.h}!SWD\_\-REQUEST\_\-START\_\-BITNUM@{SWD\_\-REQUEST\_\-START\_\-BITNUM}}
+\index{SWD\_\-REQUEST\_\-START\_\-BITNUM@{SWD\_\-REQUEST\_\-START\_\-BITNUM}!libswd.h@{libswd.h}}
+\subsubsection[{SWD\_\-REQUEST\_\-START\_\-BITNUM}]{\setlength{\rightskip}{0pt plus 5cm}\#define SWD\_\-REQUEST\_\-START\_\-BITNUM~7}}
+\label{libswd_8h_ac474e773617eb679af343ba2817383b4}
+
+
+SWD Packets Bit Fields and Values. 
+
+Packet Start bit, always set to 1. \hypertarget{libswd_8h_aef0db05edf88e92b701db221ed43ee80}{
+\index{libswd.h@{libswd.h}!SWD\_\-SELECT\_\-BITNUM\_\-CTRLSEL@{SWD\_\-SELECT\_\-BITNUM\_\-CTRLSEL}}
+\index{SWD\_\-SELECT\_\-BITNUM\_\-CTRLSEL@{SWD\_\-SELECT\_\-BITNUM\_\-CTRLSEL}!libswd.h@{libswd.h}}
+\subsubsection[{SWD\_\-SELECT\_\-BITNUM\_\-CTRLSEL}]{\setlength{\rightskip}{0pt plus 5cm}\#define SWD\_\-SELECT\_\-BITNUM\_\-CTRLSEL~0}}
+\label{libswd_8h_aef0db05edf88e92b701db221ed43ee80}
+
+
+SW-\/DP SELECT Register map. 
+
+CTRLSEL bit number. \hypertarget{libswd_8h_a36c45dc73dc9ffb403ce8a72e81c58a3}{
+\index{libswd.h@{libswd.h}!SWD\_\-TURNROUND\_\-1\_\-CODE@{SWD\_\-TURNROUND\_\-1\_\-CODE}}
+\index{SWD\_\-TURNROUND\_\-1\_\-CODE@{SWD\_\-TURNROUND\_\-1\_\-CODE}!libswd.h@{libswd.h}}
+\subsubsection[{SWD\_\-TURNROUND\_\-1\_\-CODE}]{\setlength{\rightskip}{0pt plus 5cm}\#define SWD\_\-TURNROUND\_\-1\_\-CODE~0}}
+\label{libswd_8h_a36c45dc73dc9ffb403ce8a72e81c58a3}
+
+
+SW-\/DP WCR TURNROUND available values. 
+
+TRN takes one CLK cycle. TRN takes one CLK cycle. \hypertarget{libswd_8h_a172b3570304b445c5bba6e0fed06a0fc}{
+\index{libswd.h@{libswd.h}!SWD\_\-TURNROUND\_\-2\_\-CODE@{SWD\_\-TURNROUND\_\-2\_\-CODE}}
+\index{SWD\_\-TURNROUND\_\-2\_\-CODE@{SWD\_\-TURNROUND\_\-2\_\-CODE}!libswd.h@{libswd.h}}
+\subsubsection[{SWD\_\-TURNROUND\_\-2\_\-CODE}]{\setlength{\rightskip}{0pt plus 5cm}\#define SWD\_\-TURNROUND\_\-2\_\-CODE~1}}
+\label{libswd_8h_a172b3570304b445c5bba6e0fed06a0fc}
+TRN takes two CLK cycles. \hypertarget{libswd_8h_a76d9cedc16e3016d847215ddce07a0d7}{
+\index{libswd.h@{libswd.h}!SWD\_\-TURNROUND\_\-3\_\-CODE@{SWD\_\-TURNROUND\_\-3\_\-CODE}}
+\index{SWD\_\-TURNROUND\_\-3\_\-CODE@{SWD\_\-TURNROUND\_\-3\_\-CODE}!libswd.h@{libswd.h}}
+\subsubsection[{SWD\_\-TURNROUND\_\-3\_\-CODE}]{\setlength{\rightskip}{0pt plus 5cm}\#define SWD\_\-TURNROUND\_\-3\_\-CODE~2}}
+\label{libswd_8h_a76d9cedc16e3016d847215ddce07a0d7}
+TRN takes three CLK cycles. \hypertarget{libswd_8h_a05086991ae21fa2a386788bacb45b92f}{
+\index{libswd.h@{libswd.h}!SWD\_\-TURNROUND\_\-4\_\-CODE@{SWD\_\-TURNROUND\_\-4\_\-CODE}}
+\index{SWD\_\-TURNROUND\_\-4\_\-CODE@{SWD\_\-TURNROUND\_\-4\_\-CODE}!libswd.h@{libswd.h}}
+\subsubsection[{SWD\_\-TURNROUND\_\-4\_\-CODE}]{\setlength{\rightskip}{0pt plus 5cm}\#define SWD\_\-TURNROUND\_\-4\_\-CODE~3}}
+\label{libswd_8h_a05086991ae21fa2a386788bacb45b92f}
+TRN takes four CLK cycles. ???? \hypertarget{libswd_8h_a4638bb61fa7ca7f4e2cdf177b8aa2485}{
+\index{libswd.h@{libswd.h}!SWD\_\-TURNROUND\_\-DEFAULT\_\-VAL@{SWD\_\-TURNROUND\_\-DEFAULT\_\-VAL}}
+\index{SWD\_\-TURNROUND\_\-DEFAULT\_\-VAL@{SWD\_\-TURNROUND\_\-DEFAULT\_\-VAL}!libswd.h@{libswd.h}}
+\subsubsection[{SWD\_\-TURNROUND\_\-DEFAULT\_\-VAL}]{\setlength{\rightskip}{0pt plus 5cm}\#define SWD\_\-TURNROUND\_\-DEFAULT\_\-VAL~SWD\_\-TURNROUND\_\-1\_\-VAL}}
+\label{libswd_8h_a4638bb61fa7ca7f4e2cdf177b8aa2485}
+Default TRN length is one CLK. \hypertarget{libswd_8h_a2dc3da13c68cd8470c080ca63c7d2904}{
+\index{libswd.h@{libswd.h}!SWD\_\-TURNROUND\_\-MAX\_\-VAL@{SWD\_\-TURNROUND\_\-MAX\_\-VAL}}
+\index{SWD\_\-TURNROUND\_\-MAX\_\-VAL@{SWD\_\-TURNROUND\_\-MAX\_\-VAL}!libswd.h@{libswd.h}}
+\subsubsection[{SWD\_\-TURNROUND\_\-MAX\_\-VAL}]{\setlength{\rightskip}{0pt plus 5cm}\#define SWD\_\-TURNROUND\_\-MAX\_\-VAL~SWD\_\-TURNROUND\_\-4\_\-VAL}}
+\label{libswd_8h_a2dc3da13c68cd8470c080ca63c7d2904}
+longest TRN time. \hypertarget{libswd_8h_ab9d625d2c5b4087db26e387b60773247}{
+\index{libswd.h@{libswd.h}!SWD\_\-TURNROUND\_\-MIN\_\-VAL@{SWD\_\-TURNROUND\_\-MIN\_\-VAL}}
+\index{SWD\_\-TURNROUND\_\-MIN\_\-VAL@{SWD\_\-TURNROUND\_\-MIN\_\-VAL}!libswd.h@{libswd.h}}
+\subsubsection[{SWD\_\-TURNROUND\_\-MIN\_\-VAL}]{\setlength{\rightskip}{0pt plus 5cm}\#define SWD\_\-TURNROUND\_\-MIN\_\-VAL~SWD\_\-TURNROUND\_\-1\_\-VAL}}
+\label{libswd_8h_ab9d625d2c5b4087db26e387b60773247}
+shortest TRN time. \hypertarget{libswd_8h_a29771dc9ab321378e535614dcbafcd62}{
+\index{libswd.h@{libswd.h}!SWD\_\-WCR\_\-BITNUM\_\-PRESCALER@{SWD\_\-WCR\_\-BITNUM\_\-PRESCALER}}
+\index{SWD\_\-WCR\_\-BITNUM\_\-PRESCALER@{SWD\_\-WCR\_\-BITNUM\_\-PRESCALER}!libswd.h@{libswd.h}}
+\subsubsection[{SWD\_\-WCR\_\-BITNUM\_\-PRESCALER}]{\setlength{\rightskip}{0pt plus 5cm}\#define SWD\_\-WCR\_\-BITNUM\_\-PRESCALER~0}}
+\label{libswd_8h_a29771dc9ab321378e535614dcbafcd62}
+
+
+SW-\/DP WCR Register map. 
+
+PRESCALER bit number. PRESCALER bit number. \hypertarget{libswd_8h_a231971f7d925947de58c09a34b57567c}{
+\index{libswd.h@{libswd.h}!SWD\_\-WCR\_\-BITNUM\_\-TURNROUND@{SWD\_\-WCR\_\-BITNUM\_\-TURNROUND}}
+\index{SWD\_\-WCR\_\-BITNUM\_\-TURNROUND@{SWD\_\-WCR\_\-BITNUM\_\-TURNROUND}!libswd.h@{libswd.h}}
+\subsubsection[{SWD\_\-WCR\_\-BITNUM\_\-TURNROUND}]{\setlength{\rightskip}{0pt plus 5cm}\#define SWD\_\-WCR\_\-BITNUM\_\-TURNROUND~8}}
+\label{libswd_8h_a231971f7d925947de58c09a34b57567c}
+TURNROUND bit number. \hypertarget{libswd_8h_a99082086e8feb058464ce722e262c9f3}{
+\index{libswd.h@{libswd.h}!SWD\_\-WCR\_\-BITNUM\_\-WIREMODE@{SWD\_\-WCR\_\-BITNUM\_\-WIREMODE}}
+\index{SWD\_\-WCR\_\-BITNUM\_\-WIREMODE@{SWD\_\-WCR\_\-BITNUM\_\-WIREMODE}!libswd.h@{libswd.h}}
+\subsubsection[{SWD\_\-WCR\_\-BITNUM\_\-WIREMODE}]{\setlength{\rightskip}{0pt plus 5cm}\#define SWD\_\-WCR\_\-BITNUM\_\-WIREMODE~6}}
+\label{libswd_8h_a99082086e8feb058464ce722e262c9f3}
+WIREMODE bit number. 
+
+\subsection{Typedef Documentation}
+\hypertarget{libswd_8h_aff5db76ebc3422cef1d7dce92f7284e4}{
+\index{libswd.h@{libswd.h}!swd\_\-cmd\_\-t@{swd\_\-cmd\_\-t}}
+\index{swd\_\-cmd\_\-t@{swd\_\-cmd\_\-t}!libswd.h@{libswd.h}}
+\subsubsection[{swd\_\-cmd\_\-t}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf swd\_\-cmd\_\-t}  {\bf swd\_\-cmd\_\-t}}}
+\label{libswd_8h_aff5db76ebc3422cef1d7dce92f7284e4}
+
+
+SWD Command Element Structure. 
+
+In libswd each operation is split into separate commands (request, trn, ack, data, parity) that can be appended to the command queue and later executed. This organization allows better granularity for tracing bugs and makes possible to compose complete bus/target operations made of simple commands. 
+
+\subsection{Enumeration Type Documentation}
+\hypertarget{libswd_8h_aa690e0849a7ecb626ac82d4dd5d11bf4}{
+\index{libswd.h@{libswd.h}!swd\_\-bool\_\-t@{swd\_\-bool\_\-t}}
+\index{swd\_\-bool\_\-t@{swd\_\-bool\_\-t}!libswd.h@{libswd.h}}
+\subsubsection[{swd\_\-bool\_\-t}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf swd\_\-bool\_\-t}}}
+\label{libswd_8h_aa690e0849a7ecb626ac82d4dd5d11bf4}
+
+
+Boolean values definition. 
+
+\begin{Desc}
+\item[Enumerator: ]\par
+\begin{description}
+\index{SWD\_\-FALSE@{SWD\_\-FALSE}!libswd.h@{libswd.h}}\index{libswd.h@{libswd.h}!SWD\_\-FALSE@{SWD\_\-FALSE}}\item[{\em 
+\hypertarget{libswd_8h_aa690e0849a7ecb626ac82d4dd5d11bf4aeebb63e10fa0119c843fa9e78c69451d}{
+SWD\_\-FALSE}
+\label{libswd_8h_aa690e0849a7ecb626ac82d4dd5d11bf4aeebb63e10fa0119c843fa9e78c69451d}
+}]False is 0. \index{SWD\_\-TRUE@{SWD\_\-TRUE}!libswd.h@{libswd.h}}\index{libswd.h@{libswd.h}!SWD\_\-TRUE@{SWD\_\-TRUE}}\item[{\em 
+\hypertarget{libswd_8h_aa690e0849a7ecb626ac82d4dd5d11bf4a17a0a3b4c146af7e8675da450e8a2213}{
+SWD\_\-TRUE}
+\label{libswd_8h_aa690e0849a7ecb626ac82d4dd5d11bf4a17a0a3b4c146af7e8675da450e8a2213}
+}]True is 1. \end{description}
+\end{Desc}
+
+\hypertarget{libswd_8h_a18e16544fabdef0ef0e531cc6b4d4b7c}{
+\index{libswd.h@{libswd.h}!swd\_\-cmdtype\_\-t@{swd\_\-cmdtype\_\-t}}
+\index{swd\_\-cmdtype\_\-t@{swd\_\-cmdtype\_\-t}!libswd.h@{libswd.h}}
+\subsubsection[{swd\_\-cmdtype\_\-t}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf swd\_\-cmdtype\_\-t}}}
+\label{libswd_8h_a18e16544fabdef0ef0e531cc6b4d4b7c}
+
+
+SWD Command Codes definitions. 
+
+Available values: MISO$>$0, MOSI$<$0, undefined=0. To check command direction (read/write) multiply tested value with one of the MOSI or MISO commands
+\begin{DoxyItemize}
+\item result is positive for equal direction and negative if direction differs. Command Type codes definition, use this to see names in debugger. 
+\end{DoxyItemize}\begin{Desc}
+\item[Enumerator: ]\par
+\begin{description}
+\index{SWD\_\-CMDTYPE\_\-MOSI\_\-DATA@{SWD\_\-CMDTYPE\_\-MOSI\_\-DATA}!libswd.h@{libswd.h}}\index{libswd.h@{libswd.h}!SWD\_\-CMDTYPE\_\-MOSI\_\-DATA@{SWD\_\-CMDTYPE\_\-MOSI\_\-DATA}}\item[{\em 
+\hypertarget{libswd_8h_a18e16544fabdef0ef0e531cc6b4d4b7ca62c40fbeaf26e6daded916edd77bc21d}{
+SWD\_\-CMDTYPE\_\-MOSI\_\-DATA}
+\label{libswd_8h_a18e16544fabdef0ef0e531cc6b4d4b7ca62c40fbeaf26e6daded916edd77bc21d}
+}]Contains MOSI data (from host). \index{SWD\_\-CMDTYPE\_\-MOSI\_\-REQUEST@{SWD\_\-CMDTYPE\_\-MOSI\_\-REQUEST}!libswd.h@{libswd.h}}\index{libswd.h@{libswd.h}!SWD\_\-CMDTYPE\_\-MOSI\_\-REQUEST@{SWD\_\-CMDTYPE\_\-MOSI\_\-REQUEST}}\item[{\em 
+\hypertarget{libswd_8h_a18e16544fabdef0ef0e531cc6b4d4b7ca826701bb4e07deb5c5f5c33665688c6b}{
+SWD\_\-CMDTYPE\_\-MOSI\_\-REQUEST}
+\label{libswd_8h_a18e16544fabdef0ef0e531cc6b4d4b7ca826701bb4e07deb5c5f5c33665688c6b}
+}]Contains MOSI request packet. \index{SWD\_\-CMDTYPE\_\-MOSI\_\-TRN@{SWD\_\-CMDTYPE\_\-MOSI\_\-TRN}!libswd.h@{libswd.h}}\index{libswd.h@{libswd.h}!SWD\_\-CMDTYPE\_\-MOSI\_\-TRN@{SWD\_\-CMDTYPE\_\-MOSI\_\-TRN}}\item[{\em 
+\hypertarget{libswd_8h_a18e16544fabdef0ef0e531cc6b4d4b7ca6da6cde9944c71a26444c97bee9b59d0}{
+SWD\_\-CMDTYPE\_\-MOSI\_\-TRN}
+\label{libswd_8h_a18e16544fabdef0ef0e531cc6b4d4b7ca6da6cde9944c71a26444c97bee9b59d0}
+}]Bus will switch into MOSI mode. \index{SWD\_\-CMDTYPE\_\-MOSI\_\-PARITY@{SWD\_\-CMDTYPE\_\-MOSI\_\-PARITY}!libswd.h@{libswd.h}}\index{libswd.h@{libswd.h}!SWD\_\-CMDTYPE\_\-MOSI\_\-PARITY@{SWD\_\-CMDTYPE\_\-MOSI\_\-PARITY}}\item[{\em 
+\hypertarget{libswd_8h_a18e16544fabdef0ef0e531cc6b4d4b7cab3726bd22bf211c773b091cf70bec9f1}{
+SWD\_\-CMDTYPE\_\-MOSI\_\-PARITY}
+\label{libswd_8h_a18e16544fabdef0ef0e531cc6b4d4b7cab3726bd22bf211c773b091cf70bec9f1}
+}]Contains MOSI data parity. \index{SWD\_\-CMDTYPE\_\-MOSI\_\-BITBANG@{SWD\_\-CMDTYPE\_\-MOSI\_\-BITBANG}!libswd.h@{libswd.h}}\index{libswd.h@{libswd.h}!SWD\_\-CMDTYPE\_\-MOSI\_\-BITBANG@{SWD\_\-CMDTYPE\_\-MOSI\_\-BITBANG}}\item[{\em 
+\hypertarget{libswd_8h_a18e16544fabdef0ef0e531cc6b4d4b7caf951c4a4ebb960641f074785a6174a5a}{
+SWD\_\-CMDTYPE\_\-MOSI\_\-BITBANG}
+\label{libswd_8h_a18e16544fabdef0ef0e531cc6b4d4b7caf951c4a4ebb960641f074785a6174a5a}
+}]Allows MOSI operation bit-\/by-\/bit. \index{SWD\_\-CMDTYPE\_\-MOSI\_\-CONTROL@{SWD\_\-CMDTYPE\_\-MOSI\_\-CONTROL}!libswd.h@{libswd.h}}\index{libswd.h@{libswd.h}!SWD\_\-CMDTYPE\_\-MOSI\_\-CONTROL@{SWD\_\-CMDTYPE\_\-MOSI\_\-CONTROL}}\item[{\em 
+\hypertarget{libswd_8h_a18e16544fabdef0ef0e531cc6b4d4b7ca2bd240d136f2e7f661ad14bd355053a6}{
+SWD\_\-CMDTYPE\_\-MOSI\_\-CONTROL}
+\label{libswd_8h_a18e16544fabdef0ef0e531cc6b4d4b7ca2bd240d136f2e7f661ad14bd355053a6}
+}]MOSI control sequence (ie. sw-\/dp reset, idle). \index{SWD\_\-CMDTYPE\_\-MOSI@{SWD\_\-CMDTYPE\_\-MOSI}!libswd.h@{libswd.h}}\index{libswd.h@{libswd.h}!SWD\_\-CMDTYPE\_\-MOSI@{SWD\_\-CMDTYPE\_\-MOSI}}\item[{\em 
+\hypertarget{libswd_8h_a18e16544fabdef0ef0e531cc6b4d4b7caceec6c2784b149355b019cbda0623fe0}{
+SWD\_\-CMDTYPE\_\-MOSI}
+\label{libswd_8h_a18e16544fabdef0ef0e531cc6b4d4b7caceec6c2784b149355b019cbda0623fe0}
+}]Master Output Slave Input direction. \index{SWD\_\-CMDTYPE\_\-UNDEFINED@{SWD\_\-CMDTYPE\_\-UNDEFINED}!libswd.h@{libswd.h}}\index{libswd.h@{libswd.h}!SWD\_\-CMDTYPE\_\-UNDEFINED@{SWD\_\-CMDTYPE\_\-UNDEFINED}}\item[{\em 
+\hypertarget{libswd_8h_a18e16544fabdef0ef0e531cc6b4d4b7caa61ae4ec60ecffb3df34f3e485090586}{
+SWD\_\-CMDTYPE\_\-UNDEFINED}
+\label{libswd_8h_a18e16544fabdef0ef0e531cc6b4d4b7caa61ae4ec60ecffb3df34f3e485090586}
+}]undefined command, not transmitted. \index{SWD\_\-CMDTYPE\_\-MISO@{SWD\_\-CMDTYPE\_\-MISO}!libswd.h@{libswd.h}}\index{libswd.h@{libswd.h}!SWD\_\-CMDTYPE\_\-MISO@{SWD\_\-CMDTYPE\_\-MISO}}\item[{\em 
+\hypertarget{libswd_8h_a18e16544fabdef0ef0e531cc6b4d4b7ca4d019a00cc772982e7d1ac52aac5d4e0}{
+SWD\_\-CMDTYPE\_\-MISO}
+\label{libswd_8h_a18e16544fabdef0ef0e531cc6b4d4b7ca4d019a00cc772982e7d1ac52aac5d4e0}
+}]Master Input Slave Output direction. \index{SWD\_\-CMDTYPE\_\-MISO\_\-ACK@{SWD\_\-CMDTYPE\_\-MISO\_\-ACK}!libswd.h@{libswd.h}}\index{libswd.h@{libswd.h}!SWD\_\-CMDTYPE\_\-MISO\_\-ACK@{SWD\_\-CMDTYPE\_\-MISO\_\-ACK}}\item[{\em 
+\hypertarget{libswd_8h_a18e16544fabdef0ef0e531cc6b4d4b7ca59eade15cc1d2430434c0e4174dc3e07}{
+SWD\_\-CMDTYPE\_\-MISO\_\-ACK}
+\label{libswd_8h_a18e16544fabdef0ef0e531cc6b4d4b7ca59eade15cc1d2430434c0e4174dc3e07}
+}]Contains ACK data from target. \index{SWD\_\-CMDTYPE\_\-MISO\_\-BITBANG@{SWD\_\-CMDTYPE\_\-MISO\_\-BITBANG}!libswd.h@{libswd.h}}\index{libswd.h@{libswd.h}!SWD\_\-CMDTYPE\_\-MISO\_\-BITBANG@{SWD\_\-CMDTYPE\_\-MISO\_\-BITBANG}}\item[{\em 
+\hypertarget{libswd_8h_a18e16544fabdef0ef0e531cc6b4d4b7cab4260670a401ed63adec72c0753f915f}{
+SWD\_\-CMDTYPE\_\-MISO\_\-BITBANG}
+\label{libswd_8h_a18e16544fabdef0ef0e531cc6b4d4b7cab4260670a401ed63adec72c0753f915f}
+}]Allows MISO operation bit-\/by-\/bit. \index{SWD\_\-CMDTYPE\_\-MISO\_\-PARITY@{SWD\_\-CMDTYPE\_\-MISO\_\-PARITY}!libswd.h@{libswd.h}}\index{libswd.h@{libswd.h}!SWD\_\-CMDTYPE\_\-MISO\_\-PARITY@{SWD\_\-CMDTYPE\_\-MISO\_\-PARITY}}\item[{\em 
+\hypertarget{libswd_8h_a18e16544fabdef0ef0e531cc6b4d4b7ca5d23ed26796e30ae787d3de869ef9359}{
+SWD\_\-CMDTYPE\_\-MISO\_\-PARITY}
+\label{libswd_8h_a18e16544fabdef0ef0e531cc6b4d4b7ca5d23ed26796e30ae787d3de869ef9359}
+}]Contains MISO data parity. \index{SWD\_\-CMDTYPE\_\-MISO\_\-TRN@{SWD\_\-CMDTYPE\_\-MISO\_\-TRN}!libswd.h@{libswd.h}}\index{libswd.h@{libswd.h}!SWD\_\-CMDTYPE\_\-MISO\_\-TRN@{SWD\_\-CMDTYPE\_\-MISO\_\-TRN}}\item[{\em 
+\hypertarget{libswd_8h_a18e16544fabdef0ef0e531cc6b4d4b7ca8ce670cc9c3d3f2d77c83f13c589978f}{
+SWD\_\-CMDTYPE\_\-MISO\_\-TRN}
+\label{libswd_8h_a18e16544fabdef0ef0e531cc6b4d4b7ca8ce670cc9c3d3f2d77c83f13c589978f}
+}]Bus will switch into MISO mode. \index{SWD\_\-CMDTYPE\_\-MISO\_\-DATA@{SWD\_\-CMDTYPE\_\-MISO\_\-DATA}!libswd.h@{libswd.h}}\index{libswd.h@{libswd.h}!SWD\_\-CMDTYPE\_\-MISO\_\-DATA@{SWD\_\-CMDTYPE\_\-MISO\_\-DATA}}\item[{\em 
+\hypertarget{libswd_8h_a18e16544fabdef0ef0e531cc6b4d4b7ca2c17157db3f21117cac24fa17793a576}{
+SWD\_\-CMDTYPE\_\-MISO\_\-DATA}
+\label{libswd_8h_a18e16544fabdef0ef0e531cc6b4d4b7ca2c17157db3f21117cac24fa17793a576}
+}]Contains MISO data (from target). \end{description}
+\end{Desc}
+
+\hypertarget{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77}{
+\index{libswd.h@{libswd.h}!swd\_\-error\_\-code\_\-t@{swd\_\-error\_\-code\_\-t}}
+\index{swd\_\-error\_\-code\_\-t@{swd\_\-error\_\-code\_\-t}!libswd.h@{libswd.h}}
+\subsubsection[{swd\_\-error\_\-code\_\-t}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf swd\_\-error\_\-code\_\-t}}}
+\label{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77}
+
+
+Status and Error Codes definitions. 
+
+Error Codes definition, use this to have its name on debugger. \begin{Desc}
+\item[Enumerator: ]\par
+\begin{description}
+\index{SWD\_\-OK@{SWD\_\-OK}!libswd.h@{libswd.h}}\index{libswd.h@{libswd.h}!SWD\_\-OK@{SWD\_\-OK}}\item[{\em 
+\hypertarget{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77af5a1ef7dd83c34b0cc42beb5984bfb01}{
+SWD\_\-OK}
+\label{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77af5a1ef7dd83c34b0cc42beb5984bfb01}
+}]No error. \index{SWD\_\-ERROR\_\-GENERAL@{SWD\_\-ERROR\_\-GENERAL}!libswd.h@{libswd.h}}\index{libswd.h@{libswd.h}!SWD\_\-ERROR\_\-GENERAL@{SWD\_\-ERROR\_\-GENERAL}}\item[{\em 
+\hypertarget{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77a7acb88c6941a8ec9f104078ee8b3e02c}{
+SWD\_\-ERROR\_\-GENERAL}
+\label{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77a7acb88c6941a8ec9f104078ee8b3e02c}
+}]General error. \index{SWD\_\-ERROR\_\-NULLPOINTER@{SWD\_\-ERROR\_\-NULLPOINTER}!libswd.h@{libswd.h}}\index{libswd.h@{libswd.h}!SWD\_\-ERROR\_\-NULLPOINTER@{SWD\_\-ERROR\_\-NULLPOINTER}}\item[{\em 
+\hypertarget{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77aedb8a7cbf26095284eb5976cd8663494}{
+SWD\_\-ERROR\_\-NULLPOINTER}
+\label{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77aedb8a7cbf26095284eb5976cd8663494}
+}]Null pointer. \index{SWD\_\-ERROR\_\-NULLQUEUE@{SWD\_\-ERROR\_\-NULLQUEUE}!libswd.h@{libswd.h}}\index{libswd.h@{libswd.h}!SWD\_\-ERROR\_\-NULLQUEUE@{SWD\_\-ERROR\_\-NULLQUEUE}}\item[{\em 
+\hypertarget{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77a4476f371364f6c7bb0e8396120e4c4cd}{
+SWD\_\-ERROR\_\-NULLQUEUE}
+\label{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77a4476f371364f6c7bb0e8396120e4c4cd}
+}]Null queue pointer. \index{SWD\_\-ERROR\_\-NULLTRN@{SWD\_\-ERROR\_\-NULLTRN}!libswd.h@{libswd.h}}\index{libswd.h@{libswd.h}!SWD\_\-ERROR\_\-NULLTRN@{SWD\_\-ERROR\_\-NULLTRN}}\item[{\em 
+\hypertarget{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77a22f5e6d0a9f72397595cc71b6e11411d}{
+SWD\_\-ERROR\_\-NULLTRN}
+\label{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77a22f5e6d0a9f72397595cc71b6e11411d}
+}]Null TurnaRouNd pointer. \index{SWD\_\-ERROR\_\-PARAM@{SWD\_\-ERROR\_\-PARAM}!libswd.h@{libswd.h}}\index{libswd.h@{libswd.h}!SWD\_\-ERROR\_\-PARAM@{SWD\_\-ERROR\_\-PARAM}}\item[{\em 
+\hypertarget{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77aa3b8e6239ccc5999d6d75b5da2133d1a}{
+SWD\_\-ERROR\_\-PARAM}
+\label{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77aa3b8e6239ccc5999d6d75b5da2133d1a}
+}]Bad parameter. \index{SWD\_\-ERROR\_\-OUTOFMEM@{SWD\_\-ERROR\_\-OUTOFMEM}!libswd.h@{libswd.h}}\index{libswd.h@{libswd.h}!SWD\_\-ERROR\_\-OUTOFMEM@{SWD\_\-ERROR\_\-OUTOFMEM}}\item[{\em 
+\hypertarget{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77aeecf32fa72e3b4e8a55fda56852ed0a3}{
+SWD\_\-ERROR\_\-OUTOFMEM}
+\label{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77aeecf32fa72e3b4e8a55fda56852ed0a3}
+}]Out of memory. \index{SWD\_\-ERROR\_\-RESULT@{SWD\_\-ERROR\_\-RESULT}!libswd.h@{libswd.h}}\index{libswd.h@{libswd.h}!SWD\_\-ERROR\_\-RESULT@{SWD\_\-ERROR\_\-RESULT}}\item[{\em 
+\hypertarget{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77aaac3da0a3341d405f70349763f526772}{
+SWD\_\-ERROR\_\-RESULT}
+\label{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77aaac3da0a3341d405f70349763f526772}
+}]Bad result. \index{SWD\_\-ERROR\_\-RANGE@{SWD\_\-ERROR\_\-RANGE}!libswd.h@{libswd.h}}\index{libswd.h@{libswd.h}!SWD\_\-ERROR\_\-RANGE@{SWD\_\-ERROR\_\-RANGE}}\item[{\em 
+\hypertarget{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77abe4b62286d73462a18726261e432503e}{
+SWD\_\-ERROR\_\-RANGE}
+\label{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77abe4b62286d73462a18726261e432503e}
+}]Out of range. \index{SWD\_\-ERROR\_\-DEFINITION@{SWD\_\-ERROR\_\-DEFINITION}!libswd.h@{libswd.h}}\index{libswd.h@{libswd.h}!SWD\_\-ERROR\_\-DEFINITION@{SWD\_\-ERROR\_\-DEFINITION}}\item[{\em 
+\hypertarget{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77ab8707f66c87d67231a1df117d176499f}{
+SWD\_\-ERROR\_\-DEFINITION}
+\label{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77ab8707f66c87d67231a1df117d176499f}
+}]Definition (internal) error. \index{SWD\_\-ERROR\_\-NULLCONTEXT@{SWD\_\-ERROR\_\-NULLCONTEXT}!libswd.h@{libswd.h}}\index{libswd.h@{libswd.h}!SWD\_\-ERROR\_\-NULLCONTEXT@{SWD\_\-ERROR\_\-NULLCONTEXT}}\item[{\em 
+\hypertarget{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77aef273147c6f034db3ac7c1340ccaa455}{
+SWD\_\-ERROR\_\-NULLCONTEXT}
+\label{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77aef273147c6f034db3ac7c1340ccaa455}
+}]Null context pointer. \index{SWD\_\-ERROR\_\-QUEUE@{SWD\_\-ERROR\_\-QUEUE}!libswd.h@{libswd.h}}\index{libswd.h@{libswd.h}!SWD\_\-ERROR\_\-QUEUE@{SWD\_\-ERROR\_\-QUEUE}}\item[{\em 
+\hypertarget{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77a829d12144ebfc2cf1e4c30eae4327e58}{
+SWD\_\-ERROR\_\-QUEUE}
+\label{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77a829d12144ebfc2cf1e4c30eae4327e58}
+}]Queue error. \index{SWD\_\-ERROR\_\-ADDR@{SWD\_\-ERROR\_\-ADDR}!libswd.h@{libswd.h}}\index{libswd.h@{libswd.h}!SWD\_\-ERROR\_\-ADDR@{SWD\_\-ERROR\_\-ADDR}}\item[{\em 
+\hypertarget{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77a3f107ea05e8a08eeb6db8055db47b6af}{
+SWD\_\-ERROR\_\-ADDR}
+\label{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77a3f107ea05e8a08eeb6db8055db47b6af}
+}]Addressing error. \index{SWD\_\-ERROR\_\-APnDP@{SWD\_\-ERROR\_\-APnDP}!libswd.h@{libswd.h}}\index{libswd.h@{libswd.h}!SWD\_\-ERROR\_\-APnDP@{SWD\_\-ERROR\_\-APnDP}}\item[{\em 
+\hypertarget{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77aac13275631d7325134021f3409e1bbf0}{
+SWD\_\-ERROR\_\-APnDP}
+\label{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77aac13275631d7325134021f3409e1bbf0}
+}]Bad APnDP value. \index{SWD\_\-ERROR\_\-RnW@{SWD\_\-ERROR\_\-RnW}!libswd.h@{libswd.h}}\index{libswd.h@{libswd.h}!SWD\_\-ERROR\_\-RnW@{SWD\_\-ERROR\_\-RnW}}\item[{\em 
+\hypertarget{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77a0dce436eb6d60b5c935780e38d317272}{
+SWD\_\-ERROR\_\-RnW}
+\label{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77a0dce436eb6d60b5c935780e38d317272}
+}]Bad RnW value. \index{SWD\_\-ERROR\_\-PARITY@{SWD\_\-ERROR\_\-PARITY}!libswd.h@{libswd.h}}\index{libswd.h@{libswd.h}!SWD\_\-ERROR\_\-PARITY@{SWD\_\-ERROR\_\-PARITY}}\item[{\em 
+\hypertarget{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77a05931ecd3c4d34ad773d31ee573cefdd}{
+SWD\_\-ERROR\_\-PARITY}
+\label{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77a05931ecd3c4d34ad773d31ee573cefdd}
+}]Parity error. \index{SWD\_\-ERROR\_\-ACK@{SWD\_\-ERROR\_\-ACK}!libswd.h@{libswd.h}}\index{libswd.h@{libswd.h}!SWD\_\-ERROR\_\-ACK@{SWD\_\-ERROR\_\-ACK}}\item[{\em 
+\hypertarget{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77ac462fccae009d83aab5d394eba7e4665}{
+SWD\_\-ERROR\_\-ACK}
+\label{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77ac462fccae009d83aab5d394eba7e4665}
+}]Acknowledge error. \index{SWD\_\-ERROR\_\-ACKUNKNOWN@{SWD\_\-ERROR\_\-ACKUNKNOWN}!libswd.h@{libswd.h}}\index{libswd.h@{libswd.h}!SWD\_\-ERROR\_\-ACKUNKNOWN@{SWD\_\-ERROR\_\-ACKUNKNOWN}}\item[{\em 
+\hypertarget{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77a3f3dbe4095052628978962830f80cbeb}{
+SWD\_\-ERROR\_\-ACKUNKNOWN}
+\label{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77a3f3dbe4095052628978962830f80cbeb}
+}]Unknown ACK value. \index{SWD\_\-ERROR\_\-ACKNOTDONE@{SWD\_\-ERROR\_\-ACKNOTDONE}!libswd.h@{libswd.h}}\index{libswd.h@{libswd.h}!SWD\_\-ERROR\_\-ACKNOTDONE@{SWD\_\-ERROR\_\-ACKNOTDONE}}\item[{\em 
+\hypertarget{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77a8ba17527e1f8596b1e6c644d651a75f2}{
+SWD\_\-ERROR\_\-ACKNOTDONE}
+\label{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77a8ba17527e1f8596b1e6c644d651a75f2}
+}]ACK not yet executed on target. \index{SWD\_\-ERROR\_\-ACKMISSING@{SWD\_\-ERROR\_\-ACKMISSING}!libswd.h@{libswd.h}}\index{libswd.h@{libswd.h}!SWD\_\-ERROR\_\-ACKMISSING@{SWD\_\-ERROR\_\-ACKMISSING}}\item[{\em 
+\hypertarget{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77aaf9a4ffb312df6c0d6a2ad5f26236ed2}{
+SWD\_\-ERROR\_\-ACKMISSING}
+\label{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77aaf9a4ffb312df6c0d6a2ad5f26236ed2}
+}]ACK command not found on the queue. \index{SWD\_\-ERROR\_\-ACKMISMATCH@{SWD\_\-ERROR\_\-ACKMISMATCH}!libswd.h@{libswd.h}}\index{libswd.h@{libswd.h}!SWD\_\-ERROR\_\-ACKMISMATCH@{SWD\_\-ERROR\_\-ACKMISMATCH}}\item[{\em 
+\hypertarget{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77aa99a0d1fa79837de68da0abf82950083}{
+SWD\_\-ERROR\_\-ACKMISMATCH}
+\label{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77aa99a0d1fa79837de68da0abf82950083}
+}]Bad ACK result address. \index{SWD\_\-ERROR\_\-ACKORDER@{SWD\_\-ERROR\_\-ACKORDER}!libswd.h@{libswd.h}}\index{libswd.h@{libswd.h}!SWD\_\-ERROR\_\-ACKORDER@{SWD\_\-ERROR\_\-ACKORDER}}\item[{\em 
+\hypertarget{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77a0a76fb9ee32976ef62ffff3d766d2ef1}{
+SWD\_\-ERROR\_\-ACKORDER}
+\label{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77a0a76fb9ee32976ef62ffff3d766d2ef1}
+}]ACK not in order REQ-\/$>$TRN-\/$>$ACK. \index{SWD\_\-ERROR\_\-BADOPCODE@{SWD\_\-ERROR\_\-BADOPCODE}!libswd.h@{libswd.h}}\index{libswd.h@{libswd.h}!SWD\_\-ERROR\_\-BADOPCODE@{SWD\_\-ERROR\_\-BADOPCODE}}\item[{\em 
+\hypertarget{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77a154bc92f783335bf75933cbbcf477d4c}{
+SWD\_\-ERROR\_\-BADOPCODE}
+\label{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77a154bc92f783335bf75933cbbcf477d4c}
+}]Unsupported operation requested. \index{SWD\_\-ERROR\_\-NODATACMD@{SWD\_\-ERROR\_\-NODATACMD}!libswd.h@{libswd.h}}\index{libswd.h@{libswd.h}!SWD\_\-ERROR\_\-NODATACMD@{SWD\_\-ERROR\_\-NODATACMD}}\item[{\em 
+\hypertarget{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77a3a4a9b00904529e4368120e9e7b05c77}{
+SWD\_\-ERROR\_\-NODATACMD}
+\label{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77a3a4a9b00904529e4368120e9e7b05c77}
+}]Command not found on the queue. \index{SWD\_\-ERROR\_\-DATAPTR@{SWD\_\-ERROR\_\-DATAPTR}!libswd.h@{libswd.h}}\index{libswd.h@{libswd.h}!SWD\_\-ERROR\_\-DATAPTR@{SWD\_\-ERROR\_\-DATAPTR}}\item[{\em 
+\hypertarget{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77af41fe1c260478be2da86daded693def0}{
+SWD\_\-ERROR\_\-DATAPTR}
+\label{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77af41fe1c260478be2da86daded693def0}
+}]Bad DATA pointer address. \index{SWD\_\-ERROR\_\-NOPARITYCMD@{SWD\_\-ERROR\_\-NOPARITYCMD}!libswd.h@{libswd.h}}\index{libswd.h@{libswd.h}!SWD\_\-ERROR\_\-NOPARITYCMD@{SWD\_\-ERROR\_\-NOPARITYCMD}}\item[{\em 
+\hypertarget{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77a7960e949fb577cb55f27213364246983}{
+SWD\_\-ERROR\_\-NOPARITYCMD}
+\label{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77a7960e949fb577cb55f27213364246983}
+}]Parity after Data missing or misplaced. \index{SWD\_\-ERROR\_\-PARITYPTR@{SWD\_\-ERROR\_\-PARITYPTR}!libswd.h@{libswd.h}}\index{libswd.h@{libswd.h}!SWD\_\-ERROR\_\-PARITYPTR@{SWD\_\-ERROR\_\-PARITYPTR}}\item[{\em 
+\hypertarget{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77aaa64317e7fcfbc135103e92e0d7461d0}{
+SWD\_\-ERROR\_\-PARITYPTR}
+\label{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77aaa64317e7fcfbc135103e92e0d7461d0}
+}]Bad PARITY pointer address. \index{SWD\_\-ERROR\_\-NOTDONE@{SWD\_\-ERROR\_\-NOTDONE}!libswd.h@{libswd.h}}\index{libswd.h@{libswd.h}!SWD\_\-ERROR\_\-NOTDONE@{SWD\_\-ERROR\_\-NOTDONE}}\item[{\em 
+\hypertarget{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77aa09e4f36fe516704701f016e7cf08c08}{
+SWD\_\-ERROR\_\-NOTDONE}
+\label{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77aa09e4f36fe516704701f016e7cf08c08}
+}]Could not end selected task. \index{SWD\_\-ERROR\_\-QUEUEROOT@{SWD\_\-ERROR\_\-QUEUEROOT}!libswd.h@{libswd.h}}\index{libswd.h@{libswd.h}!SWD\_\-ERROR\_\-QUEUEROOT@{SWD\_\-ERROR\_\-QUEUEROOT}}\item[{\em 
+\hypertarget{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77a8e6636f921f5856ece06915d2c2eeabf}{
+SWD\_\-ERROR\_\-QUEUEROOT}
+\label{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77a8e6636f921f5856ece06915d2c2eeabf}
+}]Queue root not found or null. \index{SWD\_\-ERROR\_\-QUEUETAIL@{SWD\_\-ERROR\_\-QUEUETAIL}!libswd.h@{libswd.h}}\index{libswd.h@{libswd.h}!SWD\_\-ERROR\_\-QUEUETAIL@{SWD\_\-ERROR\_\-QUEUETAIL}}\item[{\em 
+\hypertarget{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77ad631db57f3edc4461e7deef3f7108e78}{
+SWD\_\-ERROR\_\-QUEUETAIL}
+\label{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77ad631db57f3edc4461e7deef3f7108e78}
+}]Queue tail not found or null. \index{SWD\_\-ERROR\_\-BADCMDTYPE@{SWD\_\-ERROR\_\-BADCMDTYPE}!libswd.h@{libswd.h}}\index{libswd.h@{libswd.h}!SWD\_\-ERROR\_\-BADCMDTYPE@{SWD\_\-ERROR\_\-BADCMDTYPE}}\item[{\em 
+\hypertarget{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77a8b59d867a0320335aebfd5a503b3d331}{
+SWD\_\-ERROR\_\-BADCMDTYPE}
+\label{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77a8b59d867a0320335aebfd5a503b3d331}
+}]Unknown command detected. \index{SWD\_\-ERROR\_\-BADCMDDATA@{SWD\_\-ERROR\_\-BADCMDDATA}!libswd.h@{libswd.h}}\index{libswd.h@{libswd.h}!SWD\_\-ERROR\_\-BADCMDDATA@{SWD\_\-ERROR\_\-BADCMDDATA}}\item[{\em 
+\hypertarget{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77af0ce348ad2c0dc96642814d5b40013a5}{
+SWD\_\-ERROR\_\-BADCMDDATA}
+\label{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77af0ce348ad2c0dc96642814d5b40013a5}
+}]Bad command data. \index{SWD\_\-ERROR\_\-TURNAROUND@{SWD\_\-ERROR\_\-TURNAROUND}!libswd.h@{libswd.h}}\index{libswd.h@{libswd.h}!SWD\_\-ERROR\_\-TURNAROUND@{SWD\_\-ERROR\_\-TURNAROUND}}\item[{\em 
+\hypertarget{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77a662935dd4a8fa01620b62dd4bb879c10}{
+SWD\_\-ERROR\_\-TURNAROUND}
+\label{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77a662935dd4a8fa01620b62dd4bb879c10}
+}]Error during turnaround switch. \index{SWD\_\-ERROR\_\-DRIVER@{SWD\_\-ERROR\_\-DRIVER}!libswd.h@{libswd.h}}\index{libswd.h@{libswd.h}!SWD\_\-ERROR\_\-DRIVER@{SWD\_\-ERROR\_\-DRIVER}}\item[{\em 
+\hypertarget{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77a186d948f46f62e6ed2a35a06ac8d61a2}{
+SWD\_\-ERROR\_\-DRIVER}
+\label{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77a186d948f46f62e6ed2a35a06ac8d61a2}
+}]Driver error. \index{SWD\_\-ERROR\_\-ACK\_\-WAIT@{SWD\_\-ERROR\_\-ACK\_\-WAIT}!libswd.h@{libswd.h}}\index{libswd.h@{libswd.h}!SWD\_\-ERROR\_\-ACK\_\-WAIT@{SWD\_\-ERROR\_\-ACK\_\-WAIT}}\item[{\em 
+\hypertarget{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77a4de5da0a220537161b83db14cb02882e}{
+SWD\_\-ERROR\_\-ACK\_\-WAIT}
+\label{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77a4de5da0a220537161b83db14cb02882e}
+}]Received ACK WAIT. \index{SWD\_\-ERROR\_\-ACK\_\-FAULT@{SWD\_\-ERROR\_\-ACK\_\-FAULT}!libswd.h@{libswd.h}}\index{libswd.h@{libswd.h}!SWD\_\-ERROR\_\-ACK\_\-FAULT@{SWD\_\-ERROR\_\-ACK\_\-FAULT}}\item[{\em 
+\hypertarget{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77a562d12325f42609d3548848d0012e668}{
+SWD\_\-ERROR\_\-ACK\_\-FAULT}
+\label{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77a562d12325f42609d3548848d0012e668}
+}]Received ACK FAULT. \index{SWD\_\-ERROR\_\-QUEUENOTFREE@{SWD\_\-ERROR\_\-QUEUENOTFREE}!libswd.h@{libswd.h}}\index{libswd.h@{libswd.h}!SWD\_\-ERROR\_\-QUEUENOTFREE@{SWD\_\-ERROR\_\-QUEUENOTFREE}}\item[{\em 
+\hypertarget{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77a6221955153e8a1486c6ba1885fad260d}{
+SWD\_\-ERROR\_\-QUEUENOTFREE}
+\label{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77a6221955153e8a1486c6ba1885fad260d}
+}]Cannot free resources, queue not empty. \index{SWD\_\-ERROR\_\-TRANSPORT@{SWD\_\-ERROR\_\-TRANSPORT}!libswd.h@{libswd.h}}\index{libswd.h@{libswd.h}!SWD\_\-ERROR\_\-TRANSPORT@{SWD\_\-ERROR\_\-TRANSPORT}}\item[{\em 
+\hypertarget{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77a278660e87edcaef6a52b604c1fdda9d7}{
+SWD\_\-ERROR\_\-TRANSPORT}
+\label{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77a278660e87edcaef6a52b604c1fdda9d7}
+}]Transport type unknown or undefined. \index{SWD\_\-ERROR\_\-DIRECTION@{SWD\_\-ERROR\_\-DIRECTION}!libswd.h@{libswd.h}}\index{libswd.h@{libswd.h}!SWD\_\-ERROR\_\-DIRECTION@{SWD\_\-ERROR\_\-DIRECTION}}\item[{\em 
+\hypertarget{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77ad7b25e37bdd661e4146a201c01aba3e2}{
+SWD\_\-ERROR\_\-DIRECTION}
+\label{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77ad7b25e37bdd661e4146a201c01aba3e2}
+}]Direction error (LSb/MSb first). \index{SWD\_\-ERROR\_\-LOGLEVEL@{SWD\_\-ERROR\_\-LOGLEVEL}!libswd.h@{libswd.h}}\index{libswd.h@{libswd.h}!SWD\_\-ERROR\_\-LOGLEVEL@{SWD\_\-ERROR\_\-LOGLEVEL}}\item[{\em 
+\hypertarget{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77a3409780dd844cd0a9ec85fab65ead058}{
+SWD\_\-ERROR\_\-LOGLEVEL}
+\label{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77a3409780dd844cd0a9ec85fab65ead058}
+}]Invalid loglevel number. \end{description}
+\end{Desc}
+
+\hypertarget{libswd_8h_ab68cbcef79d602fc0fe70cb65c43e898}{
+\index{libswd.h@{libswd.h}!swd\_\-loglevel\_\-t@{swd\_\-loglevel\_\-t}}
+\index{swd\_\-loglevel\_\-t@{swd\_\-loglevel\_\-t}!libswd.h@{libswd.h}}
+\subsubsection[{swd\_\-loglevel\_\-t}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf swd\_\-loglevel\_\-t}}}
+\label{libswd_8h_ab68cbcef79d602fc0fe70cb65c43e898}
+
+
+Logging Level Codes definition. 
+
+Logging Level codes definition, use this to have its name on debugger. \begin{Desc}
+\item[Enumerator: ]\par
+\begin{description}
+\index{SWD\_\-LOGLEVEL\_\-SILENT@{SWD\_\-LOGLEVEL\_\-SILENT}!libswd.h@{libswd.h}}\index{libswd.h@{libswd.h}!SWD\_\-LOGLEVEL\_\-SILENT@{SWD\_\-LOGLEVEL\_\-SILENT}}\item[{\em 
+\hypertarget{libswd_8h_ab68cbcef79d602fc0fe70cb65c43e898aae6717e99b0a1bb52faddc723ccf4c8a}{
+SWD\_\-LOGLEVEL\_\-SILENT}
+\label{libswd_8h_ab68cbcef79d602fc0fe70cb65c43e898aae6717e99b0a1bb52faddc723ccf4c8a}
+}]Remain silent. \index{SWD\_\-LOGLEVEL\_\-ERROR@{SWD\_\-LOGLEVEL\_\-ERROR}!libswd.h@{libswd.h}}\index{libswd.h@{libswd.h}!SWD\_\-LOGLEVEL\_\-ERROR@{SWD\_\-LOGLEVEL\_\-ERROR}}\item[{\em 
+\hypertarget{libswd_8h_ab68cbcef79d602fc0fe70cb65c43e898aec966870ed80a0b7995871924db678f1}{
+SWD\_\-LOGLEVEL\_\-ERROR}
+\label{libswd_8h_ab68cbcef79d602fc0fe70cb65c43e898aec966870ed80a0b7995871924db678f1}
+}]Show errors. \index{SWD\_\-LOGLEVEL\_\-WARNING@{SWD\_\-LOGLEVEL\_\-WARNING}!libswd.h@{libswd.h}}\index{libswd.h@{libswd.h}!SWD\_\-LOGLEVEL\_\-WARNING@{SWD\_\-LOGLEVEL\_\-WARNING}}\item[{\em 
+\hypertarget{libswd_8h_ab68cbcef79d602fc0fe70cb65c43e898a207bbe4a21ac547c5d7613cfa198e9ca}{
+SWD\_\-LOGLEVEL\_\-WARNING}
+\label{libswd_8h_ab68cbcef79d602fc0fe70cb65c43e898a207bbe4a21ac547c5d7613cfa198e9ca}
+}]Show warnings. \index{SWD\_\-LOGLEVEL\_\-NORMAL@{SWD\_\-LOGLEVEL\_\-NORMAL}!libswd.h@{libswd.h}}\index{libswd.h@{libswd.h}!SWD\_\-LOGLEVEL\_\-NORMAL@{SWD\_\-LOGLEVEL\_\-NORMAL}}\item[{\em 
+\hypertarget{libswd_8h_ab68cbcef79d602fc0fe70cb65c43e898ad06e455a696693b2226f49e6cec64146}{
+SWD\_\-LOGLEVEL\_\-NORMAL}
+\label{libswd_8h_ab68cbcef79d602fc0fe70cb65c43e898ad06e455a696693b2226f49e6cec64146}
+}]Normal verbosity. \index{SWD\_\-LOGLEVEL\_\-INFO@{SWD\_\-LOGLEVEL\_\-INFO}!libswd.h@{libswd.h}}\index{libswd.h@{libswd.h}!SWD\_\-LOGLEVEL\_\-INFO@{SWD\_\-LOGLEVEL\_\-INFO}}\item[{\em 
+\hypertarget{libswd_8h_ab68cbcef79d602fc0fe70cb65c43e898ae80dd8ea77c8e8121c806150cf55495c}{
+SWD\_\-LOGLEVEL\_\-INFO}
+\label{libswd_8h_ab68cbcef79d602fc0fe70cb65c43e898ae80dd8ea77c8e8121c806150cf55495c}
+}]Show messages. \index{SWD\_\-LOGLEVEL\_\-DEBUG@{SWD\_\-LOGLEVEL\_\-DEBUG}!libswd.h@{libswd.h}}\index{libswd.h@{libswd.h}!SWD\_\-LOGLEVEL\_\-DEBUG@{SWD\_\-LOGLEVEL\_\-DEBUG}}\item[{\em 
+\hypertarget{libswd_8h_ab68cbcef79d602fc0fe70cb65c43e898a911a4892f6c846b089c1d999214e0ee8}{
+SWD\_\-LOGLEVEL\_\-DEBUG}
+\label{libswd_8h_ab68cbcef79d602fc0fe70cb65c43e898a911a4892f6c846b089c1d999214e0ee8}
+}]Show all including debug information. \end{description}
+\end{Desc}
+
+\hypertarget{libswd_8h_a35ca817603eaed3d5ce753c37a1db070}{
+\index{libswd.h@{libswd.h}!swd\_\-operation\_\-t@{swd\_\-operation\_\-t}}
+\index{swd\_\-operation\_\-t@{swd\_\-operation\_\-t}!libswd.h@{libswd.h}}
+\subsubsection[{swd\_\-operation\_\-t}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf swd\_\-operation\_\-t}}}
+\label{libswd_8h_a35ca817603eaed3d5ce753c37a1db070}
+
+
+Command Queue operations codes. 
+
+\begin{Desc}
+\item[Enumerator: ]\par
+\begin{description}
+\index{SWD\_\-OPERATION\_\-FIRST@{SWD\_\-OPERATION\_\-FIRST}!libswd.h@{libswd.h}}\index{libswd.h@{libswd.h}!SWD\_\-OPERATION\_\-FIRST@{SWD\_\-OPERATION\_\-FIRST}}\item[{\em 
+\hypertarget{libswd_8h_a35ca817603eaed3d5ce753c37a1db070a3072b746192012364ca0986dfbd048bf}{
+SWD\_\-OPERATION\_\-FIRST}
+\label{libswd_8h_a35ca817603eaed3d5ce753c37a1db070a3072b746192012364ca0986dfbd048bf}
+}]First operation to know its code. \index{SWD\_\-OPERATION\_\-ENQUEUE@{SWD\_\-OPERATION\_\-ENQUEUE}!libswd.h@{libswd.h}}\index{libswd.h@{libswd.h}!SWD\_\-OPERATION\_\-ENQUEUE@{SWD\_\-OPERATION\_\-ENQUEUE}}\item[{\em 
+\hypertarget{libswd_8h_a35ca817603eaed3d5ce753c37a1db070a9fe0514a56fa43763b83c16a168dc3e5}{
+SWD\_\-OPERATION\_\-ENQUEUE}
+\label{libswd_8h_a35ca817603eaed3d5ce753c37a1db070a9fe0514a56fa43763b83c16a168dc3e5}
+}]Append command(s) to the queue. \index{SWD\_\-OPERATION\_\-EXECUTE@{SWD\_\-OPERATION\_\-EXECUTE}!libswd.h@{libswd.h}}\index{libswd.h@{libswd.h}!SWD\_\-OPERATION\_\-EXECUTE@{SWD\_\-OPERATION\_\-EXECUTE}}\item[{\em 
+\hypertarget{libswd_8h_a35ca817603eaed3d5ce753c37a1db070a56d19aa6e805b636d0c679df01a83bf1}{
+SWD\_\-OPERATION\_\-EXECUTE}
+\label{libswd_8h_a35ca817603eaed3d5ce753c37a1db070a56d19aa6e805b636d0c679df01a83bf1}
+}]Queue commands then flush the queue. \index{SWD\_\-OPERATION\_\-TRANSMIT\_\-HEAD@{SWD\_\-OPERATION\_\-TRANSMIT\_\-HEAD}!libswd.h@{libswd.h}}\index{libswd.h@{libswd.h}!SWD\_\-OPERATION\_\-TRANSMIT\_\-HEAD@{SWD\_\-OPERATION\_\-TRANSMIT\_\-HEAD}}\item[{\em 
+\hypertarget{libswd_8h_a35ca817603eaed3d5ce753c37a1db070aff0c4b9c2b732437df67e41f3dde5b41}{
+SWD\_\-OPERATION\_\-TRANSMIT\_\-HEAD}
+\label{libswd_8h_a35ca817603eaed3d5ce753c37a1db070aff0c4b9c2b732437df67e41f3dde5b41}
+}]Transmit root..current (head). \index{SWD\_\-OPERATION\_\-TRANSMIT\_\-TAIL@{SWD\_\-OPERATION\_\-TRANSMIT\_\-TAIL}!libswd.h@{libswd.h}}\index{libswd.h@{libswd.h}!SWD\_\-OPERATION\_\-TRANSMIT\_\-TAIL@{SWD\_\-OPERATION\_\-TRANSMIT\_\-TAIL}}\item[{\em 
+\hypertarget{libswd_8h_a35ca817603eaed3d5ce753c37a1db070a2f8b579789e424e73b147b14b910f9c0}{
+SWD\_\-OPERATION\_\-TRANSMIT\_\-TAIL}
+\label{libswd_8h_a35ca817603eaed3d5ce753c37a1db070a2f8b579789e424e73b147b14b910f9c0}
+}]Transmit current..last (tail). \index{SWD\_\-OPERATION\_\-TRANSMIT\_\-ALL@{SWD\_\-OPERATION\_\-TRANSMIT\_\-ALL}!libswd.h@{libswd.h}}\index{libswd.h@{libswd.h}!SWD\_\-OPERATION\_\-TRANSMIT\_\-ALL@{SWD\_\-OPERATION\_\-TRANSMIT\_\-ALL}}\item[{\em 
+\hypertarget{libswd_8h_a35ca817603eaed3d5ce753c37a1db070ac38a2a8469f357620b62255215119eba}{
+SWD\_\-OPERATION\_\-TRANSMIT\_\-ALL}
+\label{libswd_8h_a35ca817603eaed3d5ce753c37a1db070ac38a2a8469f357620b62255215119eba}
+}]Transmit all commands on the queue. \index{SWD\_\-OPERATION\_\-TRANSMIT\_\-ONE@{SWD\_\-OPERATION\_\-TRANSMIT\_\-ONE}!libswd.h@{libswd.h}}\index{libswd.h@{libswd.h}!SWD\_\-OPERATION\_\-TRANSMIT\_\-ONE@{SWD\_\-OPERATION\_\-TRANSMIT\_\-ONE}}\item[{\em 
+\hypertarget{libswd_8h_a35ca817603eaed3d5ce753c37a1db070a1b313c50018796ad8d5049a005c164dd}{
+SWD\_\-OPERATION\_\-TRANSMIT\_\-ONE}
+\label{libswd_8h_a35ca817603eaed3d5ce753c37a1db070a1b313c50018796ad8d5049a005c164dd}
+}]Transmit only current command. \index{SWD\_\-OPERATION\_\-TRANSMIT\_\-LAST@{SWD\_\-OPERATION\_\-TRANSMIT\_\-LAST}!libswd.h@{libswd.h}}\index{libswd.h@{libswd.h}!SWD\_\-OPERATION\_\-TRANSMIT\_\-LAST@{SWD\_\-OPERATION\_\-TRANSMIT\_\-LAST}}\item[{\em 
+\hypertarget{libswd_8h_a35ca817603eaed3d5ce753c37a1db070ada451b56cf1fa088d3f36c84930054dd}{
+SWD\_\-OPERATION\_\-TRANSMIT\_\-LAST}
+\label{libswd_8h_a35ca817603eaed3d5ce753c37a1db070ada451b56cf1fa088d3f36c84930054dd}
+}]Transmit last command on the queue. \index{SWD\_\-OPERATION\_\-LAST@{SWD\_\-OPERATION\_\-LAST}!libswd.h@{libswd.h}}\index{libswd.h@{libswd.h}!SWD\_\-OPERATION\_\-LAST@{SWD\_\-OPERATION\_\-LAST}}\item[{\em 
+\hypertarget{libswd_8h_a35ca817603eaed3d5ce753c37a1db070a2b0a3a85cda93ab617d1f49273a3cc3b}{
+SWD\_\-OPERATION\_\-LAST}
+\label{libswd_8h_a35ca817603eaed3d5ce753c37a1db070a2b0a3a85cda93ab617d1f49273a3cc3b}
+}]Last operation to know its code. \end{description}
+\end{Desc}
+
+\hypertarget{libswd_8h_a7262ed71e0d9c40d2ede6c0aa44209df}{
+\index{libswd.h@{libswd.h}!swd\_\-shiftdir\_\-t@{swd\_\-shiftdir\_\-t}}
+\index{swd\_\-shiftdir\_\-t@{swd\_\-shiftdir\_\-t}!libswd.h@{libswd.h}}
+\subsubsection[{swd\_\-shiftdir\_\-t}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf swd\_\-shiftdir\_\-t}}}
+\label{libswd_8h_a7262ed71e0d9c40d2ede6c0aa44209df}
+
+
+What is the shift direction LSB-\/first or MSB-\/first. 
+
+\begin{Desc}
+\item[Enumerator: ]\par
+\begin{description}
+\index{SWD\_\-DIR\_\-LSBFIRST@{SWD\_\-DIR\_\-LSBFIRST}!libswd.h@{libswd.h}}\index{libswd.h@{libswd.h}!SWD\_\-DIR\_\-LSBFIRST@{SWD\_\-DIR\_\-LSBFIRST}}\item[{\em 
+\hypertarget{libswd_8h_a7262ed71e0d9c40d2ede6c0aa44209dfa0b9f6301b086569d5a62e49d7a2ebdf0}{
+SWD\_\-DIR\_\-LSBFIRST}
+\label{libswd_8h_a7262ed71e0d9c40d2ede6c0aa44209dfa0b9f6301b086569d5a62e49d7a2ebdf0}
+}]Data is shifted in/out right (LSB-\/first). \index{SWD\_\-DIR\_\-MSBFIRST@{SWD\_\-DIR\_\-MSBFIRST}!libswd.h@{libswd.h}}\index{libswd.h@{libswd.h}!SWD\_\-DIR\_\-MSBFIRST@{SWD\_\-DIR\_\-MSBFIRST}}\item[{\em 
+\hypertarget{libswd_8h_a7262ed71e0d9c40d2ede6c0aa44209dfa76bc9b4b4ac1e47f4602576ed500a07c}{
+SWD\_\-DIR\_\-MSBFIRST}
+\label{libswd_8h_a7262ed71e0d9c40d2ede6c0aa44209dfa76bc9b4b4ac1e47f4602576ed500a07c}
+}]Data is shifted in/out left (MSB-\/first). \end{description}
+\end{Desc}
+
+
+
+\subsection{Function Documentation}
+\hypertarget{libswd_8h_a62fe3d826d2f575dd1b446263d1c451c}{
+\index{libswd.h@{libswd.h}!swd\_\-bin32\_\-bitswap@{swd\_\-bin32\_\-bitswap}}
+\index{swd\_\-bin32\_\-bitswap@{swd\_\-bin32\_\-bitswap}!libswd.h@{libswd.h}}
+\subsubsection[{swd\_\-bin32\_\-bitswap}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-bin32\_\-bitswap (
+\begin{DoxyParamCaption}
+\item[{unsigned int $\ast$}]{ buffer, }
+\item[{int}]{ bitcount}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8h_a62fe3d826d2f575dd1b446263d1c451c}
+
+
+Bit swap helper function that reverse bit order in int $\ast$buffer. 
+
+Most Significant Bit becomes Least Significant Bit. It is possible to swap only n-\/bits from int (32-\/bit) $\ast$buffer. 
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$buffer}]unsigned char (32-\/bit) data pointer. \item[{\em bitcount}]how many bits to swap. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+swapped bit count (positive) or error code (negative). 
+\end{DoxyReturn}
+\hypertarget{libswd_8h_a6d93a36876e62c9a05171cebcdb4b446}{
+\index{libswd.h@{libswd.h}!swd\_\-bin32\_\-parity\_\-even@{swd\_\-bin32\_\-parity\_\-even}}
+\index{swd\_\-bin32\_\-parity\_\-even@{swd\_\-bin32\_\-parity\_\-even}!libswd.h@{libswd.h}}
+\subsubsection[{swd\_\-bin32\_\-parity\_\-even}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-bin32\_\-parity\_\-even (
+\begin{DoxyParamCaption}
+\item[{int $\ast$}]{ data, }
+\item[{char $\ast$}]{ parity}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8h_a6d93a36876e62c9a05171cebcdb4b446}
+
+
+Data parity calculator, calculates even parity on integer type. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$data}]source data pointer. \item[{\em $\ast$parity}]resulting data pointer. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+negative value on error, 0 or 1 as parity result. 
+\end{DoxyReturn}
+\hypertarget{libswd_8h_a5ca7ae0d5ceab442348c9a03e58d54eb}{
+\index{libswd.h@{libswd.h}!swd\_\-bin32\_\-print@{swd\_\-bin32\_\-print}}
+\index{swd\_\-bin32\_\-print@{swd\_\-bin32\_\-print}!libswd.h@{libswd.h}}
+\subsubsection[{swd\_\-bin32\_\-print}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-bin32\_\-print (
+\begin{DoxyParamCaption}
+\item[{int $\ast$}]{ data}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8h_a5ca7ae0d5ceab442348c9a03e58d54eb}
+
+
+Prints binary data of an integer value on the screen. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$data}]source data pointer. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of characters printed. 
+\end{DoxyReturn}
+\hypertarget{libswd_8h_a271c7fcdfe6cf9d5177bd2fca4e02497}{
+\index{libswd.h@{libswd.h}!swd\_\-bin32\_\-string@{swd\_\-bin32\_\-string}}
+\index{swd\_\-bin32\_\-string@{swd\_\-bin32\_\-string}!libswd.h@{libswd.h}}
+\subsubsection[{swd\_\-bin32\_\-string}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ swd\_\-bin32\_\-string (
+\begin{DoxyParamCaption}
+\item[{int $\ast$}]{ data}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8h_a271c7fcdfe6cf9d5177bd2fca4e02497}
+
+
+Generates string containing binary data of an integer value. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$data}]source data pointer. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+pointer to the resulting string. 
+\end{DoxyReturn}
+\hypertarget{libswd_8h_a6e7db0da4ca2f2649b826e68ef5b3caa}{
+\index{libswd.h@{libswd.h}!swd\_\-bin8\_\-bitswap@{swd\_\-bin8\_\-bitswap}}
+\index{swd\_\-bin8\_\-bitswap@{swd\_\-bin8\_\-bitswap}!libswd.h@{libswd.h}}
+\subsubsection[{swd\_\-bin8\_\-bitswap}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-bin8\_\-bitswap (
+\begin{DoxyParamCaption}
+\item[{unsigned char $\ast$}]{ buffer, }
+\item[{int}]{ bitcount}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8h_a6e7db0da4ca2f2649b826e68ef5b3caa}
+
+
+Bit swap helper function that reverse bit order in char $\ast$buffer. 
+
+Most Significant Bit becomes Least Significant Bit. It is possible to swap only n-\/bits from char (8-\/bit) $\ast$buffer. 
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$buffer}]unsigned char (8-\/bit) data pointer. \item[{\em bitcount}]how many bits to swap. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+swapped bit count (positive) or error code (negative). 
+\end{DoxyReturn}
+\hypertarget{libswd_8h_adadd09e0dcd8877a99e7983d5d98e882}{
+\index{libswd.h@{libswd.h}!swd\_\-bin8\_\-parity\_\-even@{swd\_\-bin8\_\-parity\_\-even}}
+\index{swd\_\-bin8\_\-parity\_\-even@{swd\_\-bin8\_\-parity\_\-even}!libswd.h@{libswd.h}}
+\subsubsection[{swd\_\-bin8\_\-parity\_\-even}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-bin8\_\-parity\_\-even (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{ data, }
+\item[{char $\ast$}]{ parity}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8h_adadd09e0dcd8877a99e7983d5d98e882}
+
+
+Some comments on the function behavior. 
+
+Some comments on the function behavior.
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$data}]source data pointer. \item[{\em $\ast$parity}]resulting data pointer. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+negative value on error, 0 or 1 as parity result. 
+\end{DoxyReturn}
+\hypertarget{libswd_8h_aa245c280d14d50118fa1ce5e090a596b}{
+\index{libswd.h@{libswd.h}!swd\_\-bin8\_\-print@{swd\_\-bin8\_\-print}}
+\index{swd\_\-bin8\_\-print@{swd\_\-bin8\_\-print}!libswd.h@{libswd.h}}
+\subsubsection[{swd\_\-bin8\_\-print}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-bin8\_\-print (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{ data}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8h_aa245c280d14d50118fa1ce5e090a596b}
+
+
+Prints binary data of a char value on the screen. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$data}]source data pointer. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of characters printed. 
+\end{DoxyReturn}
+\hypertarget{libswd_8h_a3570e6b4032cde907cb137892697bac9}{
+\index{libswd.h@{libswd.h}!swd\_\-bin8\_\-string@{swd\_\-bin8\_\-string}}
+\index{swd\_\-bin8\_\-string@{swd\_\-bin8\_\-string}!libswd.h@{libswd.h}}
+\subsubsection[{swd\_\-bin8\_\-string}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ swd\_\-bin8\_\-string (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{ data}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8h_a3570e6b4032cde907cb137892697bac9}
+
+
+Generates string containing binary data of a char value. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$data}]source data pointer. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+pointer to the resulting string. 
+\end{DoxyReturn}
+\hypertarget{libswd_8h_afbae73ccf42657390d11d645fcc456d8}{
+\index{libswd.h@{libswd.h}!swd\_\-bitgen8\_\-request@{swd\_\-bitgen8\_\-request}}
+\index{swd\_\-bitgen8\_\-request@{swd\_\-bitgen8\_\-request}!libswd.h@{libswd.h}}
+\subsubsection[{swd\_\-bitgen8\_\-request}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-bitgen8\_\-request (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-ctx\_\-t} $\ast$}]{ swdctx, }
+\item[{char $\ast$}]{ APnDP, }
+\item[{char $\ast$}]{ RnW, }
+\item[{char $\ast$}]{ addr, }
+\item[{char $\ast$}]{ request}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8h_afbae73ccf42657390d11d645fcc456d8}
+
+
+Generate 8-\/bit SWD-\/REQUEST packet contents with provided parameters. 
+
+Note that parity bit value is calculated automatically. 
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$swdctx}]swd context pointer. \item[{\em $\ast$APnDP}]AccessPort (high) or DebugPort (low) access type pointer. \item[{\em $\ast$RnW}]Read (high) or Write (low) operation type pointer. \item[{\em $\ast$addr}]target register address value pointer. \item[{\em $\ast$request}]pointer where to store resulting packet. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of generated packets (1), or SWD\_\-ERROR\_\-CODE on failure. 
+\end{DoxyReturn}
+\hypertarget{libswd_8h_aae7d6660b4fd10d0d1105d74257b8ac7}{
+\index{libswd.h@{libswd.h}!swd\_\-bus\_\-read\_\-ack@{swd\_\-bus\_\-read\_\-ack}}
+\index{swd\_\-bus\_\-read\_\-ack@{swd\_\-bus\_\-read\_\-ack}!libswd.h@{libswd.h}}
+\subsubsection[{swd\_\-bus\_\-read\_\-ack}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-bus\_\-read\_\-ack (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-ctx\_\-t} $\ast$}]{ swdctx, }
+\item[{{\bf swd\_\-operation\_\-t}}]{ operation, }
+\item[{char $\ast$$\ast$}]{ ack}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8h_aae7d6660b4fd10d0d1105d74257b8ac7}
+
+
+Perform ACK read into $\ast$ack and verify received data. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$swdctx}]swd context pointer. \item[{\em operation}]type of action to perform with generated request. \item[{\em $\ast$ack}]pointer to the result location. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of commands processed, or SWD\_\-ERROR\_\-CODE on failure. 
+\end{DoxyReturn}
+\hypertarget{libswd_8h_a45c79a01998ae0e845ee425c432e181d}{
+\index{libswd.h@{libswd.h}!swd\_\-bus\_\-read\_\-data\_\-p@{swd\_\-bus\_\-read\_\-data\_\-p}}
+\index{swd\_\-bus\_\-read\_\-data\_\-p@{swd\_\-bus\_\-read\_\-data\_\-p}!libswd.h@{libswd.h}}
+\subsubsection[{swd\_\-bus\_\-read\_\-data\_\-p}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-bus\_\-read\_\-data\_\-p (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-ctx\_\-t} $\ast$}]{ swdctx, }
+\item[{{\bf swd\_\-operation\_\-t}}]{ operation, }
+\item[{int $\ast$$\ast$}]{ data, }
+\item[{char $\ast$$\ast$}]{ parity}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8h_a45c79a01998ae0e845ee425c432e181d}
+
+
+Perform (MISO) data read. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$swdctx}]swd context pointer. \item[{\em operation}]type of action to perform on generated command. \item[{\em $\ast$data}]payload value pointer. \item[{\em $\ast$parity}]payload parity value pointer. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of elements processed, or SWD\_\-ERROR\_\-CODE on failure. 
+\end{DoxyReturn}
+\hypertarget{libswd_8h_abb32abd798b3b1ffa14573e4f139c079}{
+\index{libswd.h@{libswd.h}!swd\_\-bus\_\-setdir\_\-miso@{swd\_\-bus\_\-setdir\_\-miso}}
+\index{swd\_\-bus\_\-setdir\_\-miso@{swd\_\-bus\_\-setdir\_\-miso}!libswd.h@{libswd.h}}
+\subsubsection[{swd\_\-bus\_\-setdir\_\-miso}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-bus\_\-setdir\_\-miso (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-ctx\_\-t} $\ast$}]{ swdctx}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8h_abb32abd798b3b1ffa14573e4f139c079}
+
+
+Append command queue with TRN READ/MISO, if previous command was WRITE/MOSI. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$swdctx}]swd context pointer. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of elements appended, or SWD\_\-ERROR\_\-CODE on failure. 
+\end{DoxyReturn}
+\hypertarget{libswd_8h_a342a54175498a1cd4a2668a189977012}{
+\index{libswd.h@{libswd.h}!swd\_\-bus\_\-setdir\_\-mosi@{swd\_\-bus\_\-setdir\_\-mosi}}
+\index{swd\_\-bus\_\-setdir\_\-mosi@{swd\_\-bus\_\-setdir\_\-mosi}!libswd.h@{libswd.h}}
+\subsubsection[{swd\_\-bus\_\-setdir\_\-mosi}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-bus\_\-setdir\_\-mosi (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-ctx\_\-t} $\ast$}]{ swdctx}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8h_a342a54175498a1cd4a2668a189977012}
+
+
+Append command queue with TRN WRITE/MOSI, if previous command was READ/MISO. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$swdctx}]swd context pointer. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of elements appended, or SWD\_\-ERROR\_\-CODE on failure. 
+\end{DoxyReturn}
+\hypertarget{libswd_8h_ad0ae33bb778d9c0bba3fe5f74adc8d22}{
+\index{libswd.h@{libswd.h}!swd\_\-bus\_\-write\_\-control@{swd\_\-bus\_\-write\_\-control}}
+\index{swd\_\-bus\_\-write\_\-control@{swd\_\-bus\_\-write\_\-control}!libswd.h@{libswd.h}}
+\subsubsection[{swd\_\-bus\_\-write\_\-control}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-bus\_\-write\_\-control (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-ctx\_\-t} $\ast$}]{ swdctx, }
+\item[{{\bf swd\_\-operation\_\-t}}]{ operation, }
+\item[{char $\ast$}]{ ctlmsg, }
+\item[{int}]{ len}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8h_ad0ae33bb778d9c0bba3fe5f74adc8d22}
+
+
+Write CONTROL byte to the Target's DAP. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$swdctx}]swd context. \item[{\em operation}]can be SWD\_\-OPERATION\_\-ENQUEUE or SWD\_\-OPERATION\_\-EXECUTE. \item[{\em $\ast$ctlmsg}]byte/char array that contains control payload. \item[{\em len}]number of bytes in the $\ast$ctlmsg to send. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of bytes sent or SWD\_\-ERROR\_\-CODE on failure. 
+\end{DoxyReturn}
+\hypertarget{libswd_8h_a014280b7d9a07a14862f16922827f50a}{
+\index{libswd.h@{libswd.h}!swd\_\-bus\_\-write\_\-data\_\-ap@{swd\_\-bus\_\-write\_\-data\_\-ap}}
+\index{swd\_\-bus\_\-write\_\-data\_\-ap@{swd\_\-bus\_\-write\_\-data\_\-ap}!libswd.h@{libswd.h}}
+\subsubsection[{swd\_\-bus\_\-write\_\-data\_\-ap}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-bus\_\-write\_\-data\_\-ap (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-ctx\_\-t} $\ast$}]{ swdctx, }
+\item[{{\bf swd\_\-operation\_\-t}}]{ operation, }
+\item[{int $\ast$}]{ data}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8h_a014280b7d9a07a14862f16922827f50a}
+
+
+Perform (MOSI) data write with automatic parity calculation. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$swdctx}]swd context pointer. \item[{\em operation}]type of action to perform on generated command. \item[{\em $\ast$data}]payload value pointer. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of elements processed, or SWD\_\-ERROR\_\-CODE on failure. 
+\end{DoxyReturn}
+\hypertarget{libswd_8h_ac1948d1f82a3166de4de43dae48b7413}{
+\index{libswd.h@{libswd.h}!swd\_\-bus\_\-write\_\-data\_\-p@{swd\_\-bus\_\-write\_\-data\_\-p}}
+\index{swd\_\-bus\_\-write\_\-data\_\-p@{swd\_\-bus\_\-write\_\-data\_\-p}!libswd.h@{libswd.h}}
+\subsubsection[{swd\_\-bus\_\-write\_\-data\_\-p}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-bus\_\-write\_\-data\_\-p (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-ctx\_\-t} $\ast$}]{ swdctx, }
+\item[{{\bf swd\_\-operation\_\-t}}]{ operation, }
+\item[{int $\ast$}]{ data, }
+\item[{char $\ast$}]{ parity}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8h_ac1948d1f82a3166de4de43dae48b7413}
+
+
+Perform (MOSI) data write with provided parity value. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$swdctx}]swd context pointer. \item[{\em operation}]type of action to perform on generated command. \item[{\em $\ast$data}]payload value pointer. \item[{\em $\ast$parity}]payload parity value pointer. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of elements processed, or SWD\_\-ERROR\_\-CODE on failure. 
+\end{DoxyReturn}
+\hypertarget{libswd_8h_a36141f037b00ea981cf771d6061bdfd6}{
+\index{libswd.h@{libswd.h}!swd\_\-bus\_\-write\_\-request@{swd\_\-bus\_\-write\_\-request}}
+\index{swd\_\-bus\_\-write\_\-request@{swd\_\-bus\_\-write\_\-request}!libswd.h@{libswd.h}}
+\subsubsection[{swd\_\-bus\_\-write\_\-request}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-bus\_\-write\_\-request (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-ctx\_\-t} $\ast$}]{ swdctx, }
+\item[{{\bf swd\_\-operation\_\-t}}]{ operation, }
+\item[{char $\ast$}]{ APnDP, }
+\item[{char $\ast$}]{ RnW, }
+\item[{char $\ast$}]{ addr}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8h_a36141f037b00ea981cf771d6061bdfd6}
+
+
+Perform Request. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$swdctx}]swd context pointer. \item[{\em operation}]type of action to perform with generated request. \item[{\em $\ast$APnDP}]AccessPort (high) or DebugPort (low) access value pointer. \item[{\em $\ast$RnW}]Read (high) or Write (low) access value pointer. \item[{\em $\ast$addr}]target register address value pointer. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of commands processed, or SWD\_\-ERROR\_\-CODE on failure. 
+\end{DoxyReturn}
+\hypertarget{libswd_8h_a3bc721b722709fda46962cbbe6f289a6}{
+\index{libswd.h@{libswd.h}!swd\_\-cmd\_\-enqueue@{swd\_\-cmd\_\-enqueue}}
+\index{swd\_\-cmd\_\-enqueue@{swd\_\-cmd\_\-enqueue}!libswd.h@{libswd.h}}
+\subsubsection[{swd\_\-cmd\_\-enqueue}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-cmd\_\-enqueue (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-ctx\_\-t} $\ast$}]{ swdctx, }
+\item[{{\bf swd\_\-cmd\_\-t} $\ast$}]{ cmd}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8h_a3bc721b722709fda46962cbbe6f289a6}
+
+
+Append selected command to a context's command queue. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$swdctx}]swd context pointer containing the command queue. \item[{\em $\ast$cmd}]command to be appended to the context's command queue. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of elements appended or SWD\_\-ERROR\_\-CODE on failure. 
+\end{DoxyReturn}
+\hypertarget{libswd_8h_a4d9e77e67b6167185b86f76df9b15cbd}{
+\index{libswd.h@{libswd.h}!swd\_\-cmd\_\-enqueue\_\-miso\_\-ack@{swd\_\-cmd\_\-enqueue\_\-miso\_\-ack}}
+\index{swd\_\-cmd\_\-enqueue\_\-miso\_\-ack@{swd\_\-cmd\_\-enqueue\_\-miso\_\-ack}!libswd.h@{libswd.h}}
+\subsubsection[{swd\_\-cmd\_\-enqueue\_\-miso\_\-ack}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-cmd\_\-enqueue\_\-miso\_\-ack (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-ctx\_\-t} $\ast$}]{ swdctx, }
+\item[{char $\ast$$\ast$}]{ ack}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8h_a4d9e77e67b6167185b86f76df9b15cbd}
+
+
+Append queue with ACK read. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$swdctx}]swd context pointer. \item[{\em $\ast$ack}]packet value pointer. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of elements appended (1), or SWD\_\-ERROR\_\-CODE on failure. 
+\end{DoxyReturn}
+\hypertarget{libswd_8h_aa3a012555652c27c0e375097b392534b}{
+\index{libswd.h@{libswd.h}!swd\_\-cmd\_\-enqueue\_\-miso\_\-data@{swd\_\-cmd\_\-enqueue\_\-miso\_\-data}}
+\index{swd\_\-cmd\_\-enqueue\_\-miso\_\-data@{swd\_\-cmd\_\-enqueue\_\-miso\_\-data}!libswd.h@{libswd.h}}
+\subsubsection[{swd\_\-cmd\_\-enqueue\_\-miso\_\-data}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-cmd\_\-enqueue\_\-miso\_\-data (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-ctx\_\-t} $\ast$}]{ swdctx, }
+\item[{int $\ast$$\ast$}]{ data}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8h_aa3a012555652c27c0e375097b392534b}
+
+
+Append command queue with data read. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$swdctx}]swd context pointer. \item[{\em $\ast$data}]data pointer. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+of elements appended (1), or SWD\_\-ERROR\_\-CODE on failure. 
+\end{DoxyReturn}
+\hypertarget{libswd_8h_a1afca108b064601dfeb517327b0bb275}{
+\index{libswd.h@{libswd.h}!swd\_\-cmd\_\-enqueue\_\-miso\_\-data\_\-p@{swd\_\-cmd\_\-enqueue\_\-miso\_\-data\_\-p}}
+\index{swd\_\-cmd\_\-enqueue\_\-miso\_\-data\_\-p@{swd\_\-cmd\_\-enqueue\_\-miso\_\-data\_\-p}!libswd.h@{libswd.h}}
+\subsubsection[{swd\_\-cmd\_\-enqueue\_\-miso\_\-data\_\-p}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-cmd\_\-enqueue\_\-miso\_\-data\_\-p (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-ctx\_\-t} $\ast$}]{ swdctx, }
+\item[{int $\ast$$\ast$}]{ data, }
+\item[{char $\ast$$\ast$}]{ parity}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8h_a1afca108b064601dfeb517327b0bb275}
+
+
+Append command queue with data and parity read. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$swdctx}]swd context pointer. \item[{\em $\ast$data}]data value pointer. \item[{\em $\ast$parity}]parity value pointer. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of elements appended (2), or SWD\_\-ERROR\_\-CODE on failure. 
+\end{DoxyReturn}
+\hypertarget{libswd_8h_a1e7330acb5e3b8c7f41a82121e26decc}{
+\index{libswd.h@{libswd.h}!swd\_\-cmd\_\-enqueue\_\-miso\_\-n\_\-data\_\-p@{swd\_\-cmd\_\-enqueue\_\-miso\_\-n\_\-data\_\-p}}
+\index{swd\_\-cmd\_\-enqueue\_\-miso\_\-n\_\-data\_\-p@{swd\_\-cmd\_\-enqueue\_\-miso\_\-n\_\-data\_\-p}!libswd.h@{libswd.h}}
+\subsubsection[{swd\_\-cmd\_\-enqueue\_\-miso\_\-n\_\-data\_\-p}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-cmd\_\-enqueue\_\-miso\_\-n\_\-data\_\-p (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-ctx\_\-t} $\ast$}]{ swdctx, }
+\item[{int $\ast$$\ast$}]{ data, }
+\item[{char $\ast$$\ast$}]{ parity, }
+\item[{int}]{ count}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8h_a1e7330acb5e3b8c7f41a82121e26decc}
+
+
+Append command queue with series of data and parity read. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$swdctx}]swd context pointer. \item[{\em $\ast$$\ast$data}]data value array pointer. \item[{\em $\ast$$\ast$parity}]parity value array pointer. \item[{\em count}]number of (data+parity) elements to read. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of elements appended (2$\ast$count), or SWD\_\-ERROR\_\-CODE on failure. 
+\end{DoxyReturn}
+\hypertarget{libswd_8h_ab74b1e2baff1d3f30c07440bc84b54fe}{
+\index{libswd.h@{libswd.h}!swd\_\-cmd\_\-enqueue\_\-miso\_\-nbit@{swd\_\-cmd\_\-enqueue\_\-miso\_\-nbit}}
+\index{swd\_\-cmd\_\-enqueue\_\-miso\_\-nbit@{swd\_\-cmd\_\-enqueue\_\-miso\_\-nbit}!libswd.h@{libswd.h}}
+\subsubsection[{swd\_\-cmd\_\-enqueue\_\-miso\_\-nbit}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-cmd\_\-enqueue\_\-miso\_\-nbit (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-ctx\_\-t} $\ast$}]{ swdctx, }
+\item[{char $\ast$$\ast$}]{ data, }
+\item[{int}]{ count}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8h_ab74b1e2baff1d3f30c07440bc84b54fe}
+
+
+Append command queue with bus binary read bit-\/by-\/bit operation. 
+
+This function will append command to the queue for each bit, and store one bit into single char array element, so read is not constrained to 8 bits. On error memory is released and apropriate error code is returned. Important: Memory pointed by $\ast$data must be allocated prior call! 
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$swdctx}]swd context pointer. \item[{\em $\ast$$\ast$data}]allocated data array to write result into. \item[{\em count}]number of bits to read (also the $\ast$$\ast$data size). \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of elements processed, or SWD\_\-ERROR\_\-CODE on failure. 
+\end{DoxyReturn}
+\hypertarget{libswd_8h_aea2f9fdb22f5f6364f005eab9425a060}{
+\index{libswd.h@{libswd.h}!swd\_\-cmd\_\-enqueue\_\-miso\_\-parity@{swd\_\-cmd\_\-enqueue\_\-miso\_\-parity}}
+\index{swd\_\-cmd\_\-enqueue\_\-miso\_\-parity@{swd\_\-cmd\_\-enqueue\_\-miso\_\-parity}!libswd.h@{libswd.h}}
+\subsubsection[{swd\_\-cmd\_\-enqueue\_\-miso\_\-parity}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-cmd\_\-enqueue\_\-miso\_\-parity (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-ctx\_\-t} $\ast$}]{ swdctx, }
+\item[{char $\ast$$\ast$}]{ parity}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8h_aea2f9fdb22f5f6364f005eab9425a060}
+
+
+Append command queue with parity bit read. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$swdctx}]swd context pointer. \item[{\em $\ast$parity}]parity value pointer. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of elements appended (1), or SWD\_\-ERROR\_\-CODE on failure. 
+\end{DoxyReturn}
+\hypertarget{libswd_8h_a63c0741f58c00faad012ccc9d29ca7c7}{
+\index{libswd.h@{libswd.h}!swd\_\-cmd\_\-enqueue\_\-miso\_\-trn@{swd\_\-cmd\_\-enqueue\_\-miso\_\-trn}}
+\index{swd\_\-cmd\_\-enqueue\_\-miso\_\-trn@{swd\_\-cmd\_\-enqueue\_\-miso\_\-trn}!libswd.h@{libswd.h}}
+\subsubsection[{swd\_\-cmd\_\-enqueue\_\-miso\_\-trn}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-cmd\_\-enqueue\_\-miso\_\-trn (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-ctx\_\-t} $\ast$}]{ swdctx}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8h_a63c0741f58c00faad012ccc9d29ca7c7}
+
+
+Append command queue with Turnaround activating MISO mode. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$swdctx}]swd context pointer. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+return number of elements appended (1), or SWD\_\-ERROR\_\-CODE on failure. 
+\end{DoxyReturn}
+\hypertarget{libswd_8h_af01d9ef59271c478d8d68f7dde27a77f}{
+\index{libswd.h@{libswd.h}!swd\_\-cmd\_\-enqueue\_\-mosi\_\-control@{swd\_\-cmd\_\-enqueue\_\-mosi\_\-control}}
+\index{swd\_\-cmd\_\-enqueue\_\-mosi\_\-control@{swd\_\-cmd\_\-enqueue\_\-mosi\_\-control}!libswd.h@{libswd.h}}
+\subsubsection[{swd\_\-cmd\_\-enqueue\_\-mosi\_\-control}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-cmd\_\-enqueue\_\-mosi\_\-control (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-ctx\_\-t} $\ast$}]{ swdctx, }
+\item[{char $\ast$}]{ ctlmsg, }
+\item[{int}]{ len}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8h_af01d9ef59271c478d8d68f7dde27a77f}
+
+
+Append command queue with len-\/octet size control seruence. 
+
+This control sequence can be used for instance to send payload of packets switching DAP between JTAG and SWD mode. 
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$swdctx}]swd context pointer. \item[{\em $\ast$ctlmsg}]control message array pointer. \item[{\em len}]number of elements to send from $\ast$ctlmsg. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of elements appended (len), or SWD\_\-ERROR\_\-CODE on failure. 
+\end{DoxyReturn}
+\hypertarget{libswd_8h_a0492d6b4eb2ebaa14fd72a5fa7f57475}{
+\index{libswd.h@{libswd.h}!swd\_\-cmd\_\-enqueue\_\-mosi\_\-dap\_\-reset@{swd\_\-cmd\_\-enqueue\_\-mosi\_\-dap\_\-reset}}
+\index{swd\_\-cmd\_\-enqueue\_\-mosi\_\-dap\_\-reset@{swd\_\-cmd\_\-enqueue\_\-mosi\_\-dap\_\-reset}!libswd.h@{libswd.h}}
+\subsubsection[{swd\_\-cmd\_\-enqueue\_\-mosi\_\-dap\_\-reset}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-cmd\_\-enqueue\_\-mosi\_\-dap\_\-reset (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-ctx\_\-t} $\ast$}]{ swdctx}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8h_a0492d6b4eb2ebaa14fd72a5fa7f57475}
+
+
+Append command queue with SW-\/DP-\/RESET sequence. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$swdctx}]swd context pointer. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of elements appended, or SWD\_\-ERROR\_\-CODE on failure. 
+\end{DoxyReturn}
+\hypertarget{libswd_8h_a02b06ae68b6e2a7b50f233c695b45548}{
+\index{libswd.h@{libswd.h}!swd\_\-cmd\_\-enqueue\_\-mosi\_\-data@{swd\_\-cmd\_\-enqueue\_\-mosi\_\-data}}
+\index{swd\_\-cmd\_\-enqueue\_\-mosi\_\-data@{swd\_\-cmd\_\-enqueue\_\-mosi\_\-data}!libswd.h@{libswd.h}}
+\subsubsection[{swd\_\-cmd\_\-enqueue\_\-mosi\_\-data}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-cmd\_\-enqueue\_\-mosi\_\-data (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-ctx\_\-t} $\ast$}]{ swdctx, }
+\item[{int $\ast$}]{ data}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8h_a02b06ae68b6e2a7b50f233c695b45548}
+
+
+Append command queue with data and parity write. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$swdctx}]swd context pointer. \item[{\em $\ast$data}]data value pointer. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of elements appended (1), or SWD\_\-ERROR\_\-CODE on failure. 
+\end{DoxyReturn}
+\hypertarget{libswd_8h_a22a5c50a280f62a84597f71b7f468a99}{
+\index{libswd.h@{libswd.h}!swd\_\-cmd\_\-enqueue\_\-mosi\_\-data\_\-ap@{swd\_\-cmd\_\-enqueue\_\-mosi\_\-data\_\-ap}}
+\index{swd\_\-cmd\_\-enqueue\_\-mosi\_\-data\_\-ap@{swd\_\-cmd\_\-enqueue\_\-mosi\_\-data\_\-ap}!libswd.h@{libswd.h}}
+\subsubsection[{swd\_\-cmd\_\-enqueue\_\-mosi\_\-data\_\-ap}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-cmd\_\-enqueue\_\-mosi\_\-data\_\-ap (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-ctx\_\-t} $\ast$}]{ swdctx, }
+\item[{int $\ast$}]{ data}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8h_a22a5c50a280f62a84597f71b7f468a99}
+
+
+Append command queue with data and automatic parity write. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$swdctx}]swd context pointer. \item[{\em $\ast$data}]data value pointer. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of elements appended (2), or SWD\_\-ERROR\_\-CODE on failure. 
+\end{DoxyReturn}
+\hypertarget{libswd_8h_a25048650d706a8ae26793489acb46f5a}{
+\index{libswd.h@{libswd.h}!swd\_\-cmd\_\-enqueue\_\-mosi\_\-data\_\-p@{swd\_\-cmd\_\-enqueue\_\-mosi\_\-data\_\-p}}
+\index{swd\_\-cmd\_\-enqueue\_\-mosi\_\-data\_\-p@{swd\_\-cmd\_\-enqueue\_\-mosi\_\-data\_\-p}!libswd.h@{libswd.h}}
+\subsubsection[{swd\_\-cmd\_\-enqueue\_\-mosi\_\-data\_\-p}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-cmd\_\-enqueue\_\-mosi\_\-data\_\-p (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-ctx\_\-t} $\ast$}]{ swdctx, }
+\item[{int $\ast$}]{ data, }
+\item[{char $\ast$}]{ parity}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8h_a25048650d706a8ae26793489acb46f5a}
+
+
+Append command queue with data and provided parity write. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$swdctx}]swd context pointer. \item[{\em $\ast$data}]data value pointer. \item[{\em $\ast$parity}]parity value pointer. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of elements appended (2), or SWD\_\-ERROR\_\-CODE on failure. 
+\end{DoxyReturn}
+\hypertarget{libswd_8h_a11a8ab26aa798f18303be8364ef55f48}{
+\index{libswd.h@{libswd.h}!swd\_\-cmd\_\-enqueue\_\-mosi\_\-idle@{swd\_\-cmd\_\-enqueue\_\-mosi\_\-idle}}
+\index{swd\_\-cmd\_\-enqueue\_\-mosi\_\-idle@{swd\_\-cmd\_\-enqueue\_\-mosi\_\-idle}!libswd.h@{libswd.h}}
+\subsubsection[{swd\_\-cmd\_\-enqueue\_\-mosi\_\-idle}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-cmd\_\-enqueue\_\-mosi\_\-idle (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-ctx\_\-t} $\ast$}]{ swdctx}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8h_a11a8ab26aa798f18303be8364ef55f48}
+
+
+Append command queue with idle sequence. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$swdctx}]swd context pointer. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of elements appended, or SWD\_\-ERROR\_\-CODE on failure. 
+\end{DoxyReturn}
+\hypertarget{libswd_8h_a314214b78c653c188f51f3324d623913}{
+\index{libswd.h@{libswd.h}!swd\_\-cmd\_\-enqueue\_\-mosi\_\-jtag2swd@{swd\_\-cmd\_\-enqueue\_\-mosi\_\-jtag2swd}}
+\index{swd\_\-cmd\_\-enqueue\_\-mosi\_\-jtag2swd@{swd\_\-cmd\_\-enqueue\_\-mosi\_\-jtag2swd}!libswd.h@{libswd.h}}
+\subsubsection[{swd\_\-cmd\_\-enqueue\_\-mosi\_\-jtag2swd}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-cmd\_\-enqueue\_\-mosi\_\-jtag2swd (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-ctx\_\-t} $\ast$}]{ swdctx}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8h_a314214b78c653c188f51f3324d623913}
+
+
+Append command queue with JTAG-\/TO-\/SWD DAP-\/switch sequence. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$swdctx}]swd context pointer. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of elements appended, or SWD\_\-ERROR\_\-CODE on failure. 
+\end{DoxyReturn}
+\hypertarget{libswd_8h_adadb812d15558c6db4b9aa753b60e15c}{
+\index{libswd.h@{libswd.h}!swd\_\-cmd\_\-enqueue\_\-mosi\_\-n\_\-data\_\-ap@{swd\_\-cmd\_\-enqueue\_\-mosi\_\-n\_\-data\_\-ap}}
+\index{swd\_\-cmd\_\-enqueue\_\-mosi\_\-n\_\-data\_\-ap@{swd\_\-cmd\_\-enqueue\_\-mosi\_\-n\_\-data\_\-ap}!libswd.h@{libswd.h}}
+\subsubsection[{swd\_\-cmd\_\-enqueue\_\-mosi\_\-n\_\-data\_\-ap}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-cmd\_\-enqueue\_\-mosi\_\-n\_\-data\_\-ap (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-ctx\_\-t} $\ast$}]{ swdctx, }
+\item[{int $\ast$$\ast$}]{ data, }
+\item[{int}]{ count}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8h_adadb812d15558c6db4b9aa753b60e15c}
+
+
+Append command queue with series of data and automatic parity writes. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$swdctx}]swd context pointer. \item[{\em $\ast$$\ast$data}]data value array pointer. \item[{\em count}]number of (data+parity) elements to read. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of elements appended (2$\ast$count), or SWD\_\-ERROR\_\-CODE on failure. 
+\end{DoxyReturn}
+\hypertarget{libswd_8h_afd4f9d8e098dee2708c4b3cc1e2775e6}{
+\index{libswd.h@{libswd.h}!swd\_\-cmd\_\-enqueue\_\-mosi\_\-n\_\-data\_\-p@{swd\_\-cmd\_\-enqueue\_\-mosi\_\-n\_\-data\_\-p}}
+\index{swd\_\-cmd\_\-enqueue\_\-mosi\_\-n\_\-data\_\-p@{swd\_\-cmd\_\-enqueue\_\-mosi\_\-n\_\-data\_\-p}!libswd.h@{libswd.h}}
+\subsubsection[{swd\_\-cmd\_\-enqueue\_\-mosi\_\-n\_\-data\_\-p}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-cmd\_\-enqueue\_\-mosi\_\-n\_\-data\_\-p (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-ctx\_\-t} $\ast$}]{ swdctx, }
+\item[{int $\ast$$\ast$}]{ data, }
+\item[{char $\ast$$\ast$}]{ parity, }
+\item[{int}]{ count}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8h_afd4f9d8e098dee2708c4b3cc1e2775e6}
+
+
+Append command queue with series of data and provided parity writes. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$swdctx}]swd context pointer. \item[{\em $\ast$$\ast$data}]data value array pointer. \item[{\em $\ast$$\ast$parity}]parity value array pointer. \item[{\em count}]number of (data+parity) elements to read. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of elements appended (2$\ast$count), or SWD\_\-ERROR\_\-CODE on failure. 
+\end{DoxyReturn}
+\hypertarget{libswd_8h_a5114809ee4b3f3dbdcef7070e76825cd}{
+\index{libswd.h@{libswd.h}!swd\_\-cmd\_\-enqueue\_\-mosi\_\-nbit@{swd\_\-cmd\_\-enqueue\_\-mosi\_\-nbit}}
+\index{swd\_\-cmd\_\-enqueue\_\-mosi\_\-nbit@{swd\_\-cmd\_\-enqueue\_\-mosi\_\-nbit}!libswd.h@{libswd.h}}
+\subsubsection[{swd\_\-cmd\_\-enqueue\_\-mosi\_\-nbit}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-cmd\_\-enqueue\_\-mosi\_\-nbit (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-ctx\_\-t} $\ast$}]{ swdctx, }
+\item[{char $\ast$}]{ data, }
+\item[{int}]{ count}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8h_a5114809ee4b3f3dbdcef7070e76825cd}
+
+
+Append command queue with bus binary write bit-\/by-\/bit operation. 
+
+This function will append command to the queue for each bit and store one bit into single char array element, so read is not constrained to 8 bits. On error memory is released and apropriate error code is returned. Important: Memory pointed by $\ast$data must be allocated prior call! 
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$swdctx}]swd context pointer. \item[{\em $\ast$$\ast$data}]allocated data array to write result into. \item[{\em count}]number of bits to read (also the $\ast$$\ast$data size). \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of elements processed, or SWD\_\-ERROR\_\-CODE on failure. 
+\end{DoxyReturn}
+\hypertarget{libswd_8h_ac972e99a9d163f30b983ce6ed0d2ed02}{
+\index{libswd.h@{libswd.h}!swd\_\-cmd\_\-enqueue\_\-mosi\_\-parity@{swd\_\-cmd\_\-enqueue\_\-mosi\_\-parity}}
+\index{swd\_\-cmd\_\-enqueue\_\-mosi\_\-parity@{swd\_\-cmd\_\-enqueue\_\-mosi\_\-parity}!libswd.h@{libswd.h}}
+\subsubsection[{swd\_\-cmd\_\-enqueue\_\-mosi\_\-parity}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-cmd\_\-enqueue\_\-mosi\_\-parity (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-ctx\_\-t} $\ast$}]{ swdctx, }
+\item[{char $\ast$}]{ parity}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8h_ac972e99a9d163f30b983ce6ed0d2ed02}
+
+
+Append command queue with parity bit write. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$swdctx}]swd context pointer. \item[{\em $\ast$parity}]parity value pointer. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of elements appended (1), or SWD\_\-ERROR\_\-CODE on failure. 
+\end{DoxyReturn}
+\hypertarget{libswd_8h_a71bb2c003e1e1fb873ee70d4df04e651}{
+\index{libswd.h@{libswd.h}!swd\_\-cmd\_\-enqueue\_\-mosi\_\-request@{swd\_\-cmd\_\-enqueue\_\-mosi\_\-request}}
+\index{swd\_\-cmd\_\-enqueue\_\-mosi\_\-request@{swd\_\-cmd\_\-enqueue\_\-mosi\_\-request}!libswd.h@{libswd.h}}
+\subsubsection[{swd\_\-cmd\_\-enqueue\_\-mosi\_\-request}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-cmd\_\-enqueue\_\-mosi\_\-request (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-ctx\_\-t} $\ast$}]{ swdctx, }
+\item[{char $\ast$}]{ request}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8h_a71bb2c003e1e1fb873ee70d4df04e651}
+
+
+Appends command queue with SWD Request packet header. 
+
+Note that contents is not validated, so bad request can be sent as well. 
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$swdctx}]swd context pointer. \item[{\em $\ast$request}]pointer to the 8-\/bit request payload. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+return number elements appended (1), or SWD\_\-ERROR\_\-CODE on failure. 
+\end{DoxyReturn}
+\hypertarget{libswd_8h_aae11e98541fa6cf8526d59e4ae5bfff9}{
+\index{libswd.h@{libswd.h}!swd\_\-cmd\_\-enqueue\_\-mosi\_\-swd2jtag@{swd\_\-cmd\_\-enqueue\_\-mosi\_\-swd2jtag}}
+\index{swd\_\-cmd\_\-enqueue\_\-mosi\_\-swd2jtag@{swd\_\-cmd\_\-enqueue\_\-mosi\_\-swd2jtag}!libswd.h@{libswd.h}}
+\subsubsection[{swd\_\-cmd\_\-enqueue\_\-mosi\_\-swd2jtag}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-cmd\_\-enqueue\_\-mosi\_\-swd2jtag (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-ctx\_\-t} $\ast$}]{ swdctx}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8h_aae11e98541fa6cf8526d59e4ae5bfff9}
+
+
+Append command queue with SWD-\/TO-\/JTAG DAP-\/switch sequence. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$swdctx}]swd context pointer. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of elements appended, or SWD\_\-ERROR\_\-CODE on failure. 
+\end{DoxyReturn}
+\hypertarget{libswd_8h_adb3044c0cbebdf275aef0898b37c6fa6}{
+\index{libswd.h@{libswd.h}!swd\_\-cmd\_\-enqueue\_\-mosi\_\-trn@{swd\_\-cmd\_\-enqueue\_\-mosi\_\-trn}}
+\index{swd\_\-cmd\_\-enqueue\_\-mosi\_\-trn@{swd\_\-cmd\_\-enqueue\_\-mosi\_\-trn}!libswd.h@{libswd.h}}
+\subsubsection[{swd\_\-cmd\_\-enqueue\_\-mosi\_\-trn}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-cmd\_\-enqueue\_\-mosi\_\-trn (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-ctx\_\-t} $\ast$}]{ swdctx}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8h_adb3044c0cbebdf275aef0898b37c6fa6}
+
+
+Append command queue with Turnaround activating MOSI mode. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$swdctx}]swd context pointer. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+return number elements appended (1), or SWD\_\-ERROR\_\-CODE on failure. 
+\end{DoxyReturn}
+\hypertarget{libswd_8h_a966a561f341217ecc56d31ed61c7758e}{
+\index{libswd.h@{libswd.h}!swd\_\-cmdq\_\-append@{swd\_\-cmdq\_\-append}}
+\index{swd\_\-cmdq\_\-append@{swd\_\-cmdq\_\-append}!libswd.h@{libswd.h}}
+\subsubsection[{swd\_\-cmdq\_\-append}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-cmdq\_\-append (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-cmd\_\-t} $\ast$}]{ cmdq, }
+\item[{{\bf swd\_\-cmd\_\-t} $\ast$}]{ cmd}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8h_a966a561f341217ecc56d31ed61c7758e}
+
+
+Append element pointed by $\ast$cmd at the end of the quque pointed by $\ast$cmdq. 
+
+After this operation queue will be pointed by appended element (ie. last element added becomes actual quque pointer to show what was added recently). 
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$cmdq}]pointer to any element on command queue \item[{\em $\ast$cmd}]pointer to the command to be appended \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of appended elements (one), SWD\_\-ERROR\_\-CODE on failure 
+\end{DoxyReturn}
+\hypertarget{libswd_8h_a431d401d67e26e8b983c6ead8c1b93eb}{
+\index{libswd.h@{libswd.h}!swd\_\-cmdq\_\-find\_\-root@{swd\_\-cmdq\_\-find\_\-root}}
+\index{swd\_\-cmdq\_\-find\_\-root@{swd\_\-cmdq\_\-find\_\-root}!libswd.h@{libswd.h}}
+\subsubsection[{swd\_\-cmdq\_\-find\_\-root}]{\setlength{\rightskip}{0pt plus 5cm}{\bf swd\_\-cmd\_\-t}$\ast$ swd\_\-cmdq\_\-find\_\-root (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-cmd\_\-t} $\ast$}]{ cmdq}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8h_a431d401d67e26e8b983c6ead8c1b93eb}
+
+
+Find queue root (first element). 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$cmdq}]pointer to any queue element \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+swd\_\-cmd\_\-t$\ast$ pointer to the first element (root), NULL on failure 
+\end{DoxyReturn}
+\hypertarget{libswd_8h_a66578e5c847f74079f2e13f3bd753d58}{
+\index{libswd.h@{libswd.h}!swd\_\-cmdq\_\-find\_\-tail@{swd\_\-cmdq\_\-find\_\-tail}}
+\index{swd\_\-cmdq\_\-find\_\-tail@{swd\_\-cmdq\_\-find\_\-tail}!libswd.h@{libswd.h}}
+\subsubsection[{swd\_\-cmdq\_\-find\_\-tail}]{\setlength{\rightskip}{0pt plus 5cm}{\bf swd\_\-cmd\_\-t}$\ast$ swd\_\-cmdq\_\-find\_\-tail (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-cmd\_\-t} $\ast$}]{ cmdq}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8h_a66578e5c847f74079f2e13f3bd753d58}
+
+
+Find queue tail (last element). 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$cmdq}]pointer to any queue element \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+swd\_\-cmd\_\-t$\ast$ pointer to the last element (tail), NULL on failure 
+\end{DoxyReturn}
+\hypertarget{libswd_8h_ad53379f5a7756cc91b01e867aaaa489d}{
+\index{libswd.h@{libswd.h}!swd\_\-cmdq\_\-flush@{swd\_\-cmdq\_\-flush}}
+\index{swd\_\-cmdq\_\-flush@{swd\_\-cmdq\_\-flush}!libswd.h@{libswd.h}}
+\subsubsection[{swd\_\-cmdq\_\-flush}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-cmdq\_\-flush (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-ctx\_\-t} $\ast$}]{ swdctx, }
+\item[{{\bf swd\_\-operation\_\-t}}]{ operation}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8h_ad53379f5a7756cc91b01e867aaaa489d}
+
+
+Flush command queue contents into interface driver. 
+
+Operation is specified by SWD\_\-OPERATION and can be used to select how to flush the queue, ie. head-\/only, tail-\/only, one, all, etc. 
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$swdctx}]swd context pointer. \item[{\em operation}]tells how to flush the queue. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of commands transmitted, or SWD\_\-ERROR\_\-CODE on failure. 
+\end{DoxyReturn}
+\hypertarget{libswd_8h_ab205547a46a4e87e040478cc230463d6}{
+\index{libswd.h@{libswd.h}!swd\_\-cmdq\_\-free@{swd\_\-cmdq\_\-free}}
+\index{swd\_\-cmdq\_\-free@{swd\_\-cmdq\_\-free}!libswd.h@{libswd.h}}
+\subsubsection[{swd\_\-cmdq\_\-free}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-cmdq\_\-free (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-cmd\_\-t} $\ast$}]{ cmdq}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8h_ab205547a46a4e87e040478cc230463d6}
+
+
+Free queue pointed by $\ast$cmdq element. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$cmdq}]pointer to any element on command queue \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of elements destroyed, SWD\_\-ERROR\_\-CODE on failure 
+\end{DoxyReturn}
+\hypertarget{libswd_8h_a583240dd9735d3192a6a895f4cefd89c}{
+\index{libswd.h@{libswd.h}!swd\_\-cmdq\_\-free\_\-head@{swd\_\-cmdq\_\-free\_\-head}}
+\index{swd\_\-cmdq\_\-free\_\-head@{swd\_\-cmdq\_\-free\_\-head}!libswd.h@{libswd.h}}
+\subsubsection[{swd\_\-cmdq\_\-free\_\-head}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-cmdq\_\-free\_\-head (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-cmd\_\-t} $\ast$}]{ cmdq}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8h_a583240dd9735d3192a6a895f4cefd89c}
+
+
+Free queue head up to $\ast$cmdq element. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$cmdq}]pointer to the element that becomes new queue root. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of elements destroyed, or SWD\_\-ERROR\_\-CODE on failure. 
+\end{DoxyReturn}
+\hypertarget{libswd_8h_a968846e75ffdbceafd2f4a3bd7f314b1}{
+\index{libswd.h@{libswd.h}!swd\_\-cmdq\_\-free\_\-tail@{swd\_\-cmdq\_\-free\_\-tail}}
+\index{swd\_\-cmdq\_\-free\_\-tail@{swd\_\-cmdq\_\-free\_\-tail}!libswd.h@{libswd.h}}
+\subsubsection[{swd\_\-cmdq\_\-free\_\-tail}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-cmdq\_\-free\_\-tail (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-cmd\_\-t} $\ast$}]{ cmdq}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8h_a968846e75ffdbceafd2f4a3bd7f314b1}
+
+
+Free queue tail starting after $\ast$cmdq element. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$cmdq}]pointer to the last element on the new queue. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of elements destroyed, or SWD\_\-ERROR\_\-CODE on failure. 
+\end{DoxyReturn}
+\hypertarget{libswd_8h_a185aba078d1c57df6331fd07fcf5630c}{
+\index{libswd.h@{libswd.h}!swd\_\-cmdq\_\-init@{swd\_\-cmdq\_\-init}}
+\index{swd\_\-cmdq\_\-init@{swd\_\-cmdq\_\-init}!libswd.h@{libswd.h}}
+\subsubsection[{swd\_\-cmdq\_\-init}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-cmdq\_\-init (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-cmd\_\-t} $\ast$}]{ cmdq}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8h_a185aba078d1c57df6331fd07fcf5630c}
+
+
+Initialize new queue element in memory that becomes a queue root. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$cmdq}]pointer to the command queue element of type \hyperlink{structswd__cmd__t}{swd\_\-cmd\_\-t} \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+SWD\_\-OK on success, SWD\_\-ERROR\_\-CODE code on failure 
+\end{DoxyReturn}
+\hypertarget{libswd_8h_a6758b95d2adfbfb9b95198f9b0b5462c}{
+\index{libswd.h@{libswd.h}!swd\_\-dap\_\-detect@{swd\_\-dap\_\-detect}}
+\index{swd\_\-dap\_\-detect@{swd\_\-dap\_\-detect}!libswd.h@{libswd.h}}
+\subsubsection[{swd\_\-dap\_\-detect}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-dap\_\-detect (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-ctx\_\-t} $\ast$}]{ swdctx, }
+\item[{{\bf swd\_\-operation\_\-t}}]{ operation, }
+\item[{int $\ast$$\ast$}]{ idcode}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8h_a6758b95d2adfbfb9b95198f9b0b5462c}
+
+
+Macro: Reset target DAP, select SW-\/DP, read out IDCODE. 
+
+This is the proper SW-\/DP initialization as stated by ARM Information Center. 
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$swdctx}]swd context pointer. \item[{\em operation}]type (SWD\_\-OPERATION\_\-ENQUEUE or SWD\_\-OPERATION\_\-EXECUTE). \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Target's IDCODE, or error code on failure. 
+\end{DoxyReturn}
+\hypertarget{libswd_8h_ae53937afaa64ce0b28bef3d8d093f65a}{
+\index{libswd.h@{libswd.h}!swd\_\-dap\_\-reset@{swd\_\-dap\_\-reset}}
+\index{swd\_\-dap\_\-reset@{swd\_\-dap\_\-reset}!libswd.h@{libswd.h}}
+\subsubsection[{swd\_\-dap\_\-reset}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-dap\_\-reset (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-ctx\_\-t} $\ast$}]{ swdctx, }
+\item[{{\bf swd\_\-operation\_\-t}}]{ operation}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8h_ae53937afaa64ce0b28bef3d8d093f65a}
+
+
+Debug Access Port Reset sends 50 CLK with TMS high that brings both SW-\/DP and JTAG-\/DP into reset state. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$swdctx}]swd context pointer. \item[{\em operation}]type (SWD\_\-OPERATION\_\-ENQUEUE or SWD\_\-OPERATION\_\-EXECUTE). \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of elements processed or SWD\_\-ERROR\_\-CODE code on failure. 
+\end{DoxyReturn}
+\hypertarget{libswd_8h_a0ffa1e7b48180a7c4bf05f2906a9cbb1}{
+\index{libswd.h@{libswd.h}!swd\_\-dap\_\-select@{swd\_\-dap\_\-select}}
+\index{swd\_\-dap\_\-select@{swd\_\-dap\_\-select}!libswd.h@{libswd.h}}
+\subsubsection[{swd\_\-dap\_\-select}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-dap\_\-select (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-ctx\_\-t} $\ast$}]{ swdctx, }
+\item[{{\bf swd\_\-operation\_\-t}}]{ operation}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8h_a0ffa1e7b48180a7c4bf05f2906a9cbb1}
+
+
+Activate SW-\/DP by sending out RESET and JTAG-\/TO-\/SWD sequence on SWDIOTMS line. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$swdctx}]swd context. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of control bytes executed, or error code on failre. 
+\end{DoxyReturn}
+\hypertarget{libswd_8h_a94b02a9cf4b72e2e76d6a9a34f34f96f}{
+\index{libswd.h@{libswd.h}!swd\_\-deinit@{swd\_\-deinit}}
+\index{swd\_\-deinit@{swd\_\-deinit}!libswd.h@{libswd.h}}
+\subsubsection[{swd\_\-deinit}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-deinit (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-ctx\_\-t} $\ast$}]{ swdctx}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8h_a94b02a9cf4b72e2e76d6a9a34f34f96f}
+
+
+De-\/initialize selected swd context and its command queue. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$swdctx}]swd context pointer. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of elements freed, or SWD\_\-ERROR\_\-CODE on failure. 
+\end{DoxyReturn}
+\hypertarget{libswd_8h_a0426ebebbebec92cc5c8342d1746f58c}{
+\index{libswd.h@{libswd.h}!swd\_\-deinit\_\-cmdq@{swd\_\-deinit\_\-cmdq}}
+\index{swd\_\-deinit\_\-cmdq@{swd\_\-deinit\_\-cmdq}!libswd.h@{libswd.h}}
+\subsubsection[{swd\_\-deinit\_\-cmdq}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-deinit\_\-cmdq (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-ctx\_\-t} $\ast$}]{ swdctx}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8h_a0426ebebbebec92cc5c8342d1746f58c}
+
+
+De-\/initialize command queue and free its memory on selected swd context. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$swdctx}]swd context pointer. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of commands freed, or SWD\_\-ERROR\_\-CODE on failure. 
+\end{DoxyReturn}
+\hypertarget{libswd_8h_ac53e7440e6d3c277df4e715665d1986d}{
+\index{libswd.h@{libswd.h}!swd\_\-deinit\_\-ctx@{swd\_\-deinit\_\-ctx}}
+\index{swd\_\-deinit\_\-ctx@{swd\_\-deinit\_\-ctx}!libswd.h@{libswd.h}}
+\subsubsection[{swd\_\-deinit\_\-ctx}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-deinit\_\-ctx (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-ctx\_\-t} $\ast$}]{ swdctx}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8h_ac53e7440e6d3c277df4e715665d1986d}
+
+
+De-\/initialize selected swd context and free its memory. 
+
+Note: This function will not free command queue for selected context! 
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$swdctx}]swd context pointer. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+SWD\_\-OK on success, SWD\_\-ERROR\_\-CODE on failure. 
+\end{DoxyReturn}
+\hypertarget{libswd_8h_a0a40c90253f99da07eae5e237be187b1}{
+\index{libswd.h@{libswd.h}!swd\_\-dp\_\-read\_\-idcode@{swd\_\-dp\_\-read\_\-idcode}}
+\index{swd\_\-dp\_\-read\_\-idcode@{swd\_\-dp\_\-read\_\-idcode}!libswd.h@{libswd.h}}
+\subsubsection[{swd\_\-dp\_\-read\_\-idcode}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-dp\_\-read\_\-idcode (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-ctx\_\-t} $\ast$}]{ swdctx, }
+\item[{{\bf swd\_\-operation\_\-t}}]{ operation, }
+\item[{int $\ast$$\ast$}]{ idcode}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8h_a0a40c90253f99da07eae5e237be187b1}
+
+
+Macro: Read out IDCODE register and return its value on function return. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$swdctx}]swd context pointer. \item[{\em operation}]operation type. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Target's IDCODE value or code error on failure. 
+\end{DoxyReturn}
+\hypertarget{libswd_8h_a2891df407bc8178e3ca45bd508822327}{
+\index{libswd.h@{libswd.h}!swd\_\-drv\_\-transmit@{swd\_\-drv\_\-transmit}}
+\index{swd\_\-drv\_\-transmit@{swd\_\-drv\_\-transmit}!libswd.h@{libswd.h}}
+\subsubsection[{swd\_\-drv\_\-transmit}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-drv\_\-transmit (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-ctx\_\-t} $\ast$}]{ swdctx, }
+\item[{{\bf swd\_\-cmd\_\-t} $\ast$}]{ cmd}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8h_a2891df407bc8178e3ca45bd508822327}
+
+
+Transmit selected command from the command queue to the interface driver. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$swdctx}]swd context pointer. \item[{\em $\ast$cmd}]pointer to the command to be sent. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of commands transmitted (1), or SWD\_\-ERROR\_\-CODE on failure. 
+\end{DoxyReturn}
+\hypertarget{libswd_8h_ad4f88acc646c06e6e81fbde8117c21af}{
+\index{libswd.h@{libswd.h}!swd\_\-init@{swd\_\-init}}
+\index{swd\_\-init@{swd\_\-init}!libswd.h@{libswd.h}}
+\subsubsection[{swd\_\-init}]{\setlength{\rightskip}{0pt plus 5cm}{\bf swd\_\-ctx\_\-t}$\ast$ swd\_\-init (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8h_ad4f88acc646c06e6e81fbde8117c21af}
+
+
+LibSWD initialization routine. 
+
+It should be called prior any operation made with libswd. It initializes command queue and basic parameters for context that is returned as pointer. \begin{DoxyReturn}{Returns}
+pointer to the initialized swd context. 
+\end{DoxyReturn}
+\hypertarget{libswd_8h_ab2228c114efd81e478ebc00e5bfe4c43}{
+\index{libswd.h@{libswd.h}!swd\_\-log@{swd\_\-log}}
+\index{swd\_\-log@{swd\_\-log}!libswd.h@{libswd.h}}
+\subsubsection[{swd\_\-log}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-log (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-ctx\_\-t} $\ast$}]{ swdctx, }
+\item[{{\bf swd\_\-loglevel\_\-t}}]{ loglevel, }
+\item[{char $\ast$}]{ msg, }
+\item[{}]{ ...}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8h_ab2228c114efd81e478ebc00e5bfe4c43}
+
+
+Put a message into swd context log at specified verbosity level. 
+
+If specified message's log level is lower than actual context configuration, message will be omitted. Verbosity level increases from 0 (silent) to 4 (debug). 
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$swdctx}]swd context. \item[{\em loglevel}]at which to put selected message. \item[{\em $\ast$msg}]message body with variable arguments as in \char`\"{}printf\char`\"{}. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of characters written or error code on failure. 
+\end{DoxyReturn}
+\hypertarget{libswd_8h_a4732d2c94a22605a8bc60c455889fe1b}{
+\index{libswd.h@{libswd.h}!swd\_\-log\_\-level\_\-inherit@{swd\_\-log\_\-level\_\-inherit}}
+\index{swd\_\-log\_\-level\_\-inherit@{swd\_\-log\_\-level\_\-inherit}!libswd.h@{libswd.h}}
+\subsubsection[{swd\_\-log\_\-level\_\-inherit}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-log\_\-level\_\-inherit (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-ctx\_\-t} $\ast$}]{ swdctx, }
+\item[{int}]{ loglevel}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8h_a4732d2c94a22605a8bc60c455889fe1b}
+
+
+Set debug level according to caller's application settings. 
+
+$\ast$swdctx swd context to work on.  loglevel caller's application log level to be converted. \begin{DoxyReturn}{Returns}
+SWD\_\-OK on success, of error code on failure. 
+\end{DoxyReturn}
+\hypertarget{libswd_8h_af30788d001ca964f2889f0d70e2eae8f}{
+\index{libswd.h@{libswd.h}!swd\_\-log\_\-level\_\-set@{swd\_\-log\_\-level\_\-set}}
+\index{swd\_\-log\_\-level\_\-set@{swd\_\-log\_\-level\_\-set}!libswd.h@{libswd.h}}
+\subsubsection[{swd\_\-log\_\-level\_\-set}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-log\_\-level\_\-set (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-ctx\_\-t} $\ast$}]{ swdctx, }
+\item[{{\bf swd\_\-loglevel\_\-t}}]{ loglevel}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8h_af30788d001ca964f2889f0d70e2eae8f}
+
+
+Change log level to increase or decrease verbosity level. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$swdctx}]swd context. \item[{\em loglevel}]is the target verbosity level to be set. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+SWD\_\-OK on success or error code. 
+\end{DoxyReturn}

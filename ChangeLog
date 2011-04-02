@@ -1,0 +1,9 @@
+
+LibSWD-0.1 (2011-04-02):
+Initial release of LibSWD:
+ * Basic functionality of transport, queue and drivers for ADIv5.0.
+ * Automated SW-DP activation/reset and IDCODE read.
+ * Tested and verified functionality on UrJTAG.
+ * Source code documented using Doxygen.
+ * Autotools integration for standarized build.
+

@@ -1,0 +1,187 @@
+\contentsline {chapter}{\numberline {1}Serial Wire Debug Open Library.}{1}{chapter.1}
+\contentsline {section}{\numberline {1.1}Introduction}{1}{section.1.1}
+\contentsline {section}{\numberline {1.2}What is this about}{1}{section.1.2}
+\contentsline {section}{\numberline {1.3}How it works}{1}{section.1.3}
+\contentsline {subsection}{\numberline {1.3.1}SWD Context}{1}{subsection.1.3.1}
+\contentsline {subsection}{\numberline {1.3.2}Functions}{2}{subsection.1.3.2}
+\contentsline {subsection}{\numberline {1.3.3}Commands}{2}{subsection.1.3.3}
+\contentsline {section}{\numberline {1.4}Drivers}{2}{section.1.4}
+\contentsline {section}{\numberline {1.5}Example}{3}{section.1.5}
+\contentsline {chapter}{\numberline {2}Class Index}{5}{chapter.2}
+\contentsline {section}{\numberline {2.1}Class List}{5}{section.2.1}
+\contentsline {chapter}{\numberline {3}File Index}{7}{chapter.3}
+\contentsline {section}{\numberline {3.1}File List}{7}{section.3.1}
+\contentsline {chapter}{\numberline {4}Class Documentation}{9}{chapter.4}
+\contentsline {section}{\numberline {4.1}swd\_\discretionary {-}{}{}ahbap\_\discretionary {-}{}{}t Struct Reference}{9}{section.4.1}
+\contentsline {subsection}{\numberline {4.1.1}Detailed Description}{10}{subsection.4.1.1}
+\contentsline {section}{\numberline {4.2}swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}t Struct Reference}{10}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}Detailed Description}{11}{subsection.4.2.1}
+\contentsline {section}{\numberline {4.3}swd\_\discretionary {-}{}{}context\_\discretionary {-}{}{}config\_\discretionary {-}{}{}t Struct Reference}{11}{section.4.3}
+\contentsline {subsection}{\numberline {4.3.1}Detailed Description}{11}{subsection.4.3.1}
+\contentsline {section}{\numberline {4.4}swd\_\discretionary {-}{}{}ctx\_\discretionary {-}{}{}t Struct Reference}{12}{section.4.4}
+\contentsline {subsection}{\numberline {4.4.1}Detailed Description}{12}{subsection.4.4.1}
+\contentsline {section}{\numberline {4.5}swd\_\discretionary {-}{}{}driver\_\discretionary {-}{}{}t Struct Reference}{12}{section.4.5}
+\contentsline {subsection}{\numberline {4.5.1}Detailed Description}{13}{subsection.4.5.1}
+\contentsline {section}{\numberline {4.6}swd\_\discretionary {-}{}{}swdp\_\discretionary {-}{}{}t Struct Reference}{13}{section.4.6}
+\contentsline {subsection}{\numberline {4.6.1}Detailed Description}{14}{subsection.4.6.1}
+\contentsline {section}{\numberline {4.7}swd\_\discretionary {-}{}{}transaction\_\discretionary {-}{}{}t Struct Reference}{14}{section.4.7}
+\contentsline {subsection}{\numberline {4.7.1}Detailed Description}{14}{subsection.4.7.1}
+\contentsline {chapter}{\numberline {5}File Documentation}{15}{chapter.5}
+\contentsline {section}{\numberline {5.1}src/libswd.c File Reference}{15}{section.5.1}
+\contentsline {subsection}{\numberline {5.1.1}Detailed Description}{19}{subsection.5.1.1}
+\contentsline {subsection}{\numberline {5.1.2}Function Documentation}{19}{subsection.5.1.2}
+\contentsline {subsubsection}{\numberline {5.1.2.1}swd\_\discretionary {-}{}{}bin32\_\discretionary {-}{}{}bitswap}{19}{subsubsection.5.1.2.1}
+\contentsline {subsubsection}{\numberline {5.1.2.2}swd\_\discretionary {-}{}{}bin32\_\discretionary {-}{}{}parity\_\discretionary {-}{}{}even}{19}{subsubsection.5.1.2.2}
+\contentsline {subsubsection}{\numberline {5.1.2.3}swd\_\discretionary {-}{}{}bin32\_\discretionary {-}{}{}print}{20}{subsubsection.5.1.2.3}
+\contentsline {subsubsection}{\numberline {5.1.2.4}swd\_\discretionary {-}{}{}bin32\_\discretionary {-}{}{}string}{20}{subsubsection.5.1.2.4}
+\contentsline {subsubsection}{\numberline {5.1.2.5}swd\_\discretionary {-}{}{}bin8\_\discretionary {-}{}{}bitswap}{20}{subsubsection.5.1.2.5}
+\contentsline {subsubsection}{\numberline {5.1.2.6}swd\_\discretionary {-}{}{}bin8\_\discretionary {-}{}{}parity\_\discretionary {-}{}{}even}{20}{subsubsection.5.1.2.6}
+\contentsline {subsubsection}{\numberline {5.1.2.7}swd\_\discretionary {-}{}{}bin8\_\discretionary {-}{}{}print}{21}{subsubsection.5.1.2.7}
+\contentsline {subsubsection}{\numberline {5.1.2.8}swd\_\discretionary {-}{}{}bin8\_\discretionary {-}{}{}string}{21}{subsubsection.5.1.2.8}
+\contentsline {subsubsection}{\numberline {5.1.2.9}swd\_\discretionary {-}{}{}bitgen8\_\discretionary {-}{}{}request}{21}{subsubsection.5.1.2.9}
+\contentsline {subsubsection}{\numberline {5.1.2.10}swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}read\_\discretionary {-}{}{}ack}{21}{subsubsection.5.1.2.10}
+\contentsline {subsubsection}{\numberline {5.1.2.11}swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}read\_\discretionary {-}{}{}data\_\discretionary {-}{}{}p}{22}{subsubsection.5.1.2.11}
+\contentsline {subsubsection}{\numberline {5.1.2.12}swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}setdir\_\discretionary {-}{}{}miso}{22}{subsubsection.5.1.2.12}
+\contentsline {subsubsection}{\numberline {5.1.2.13}swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}setdir\_\discretionary {-}{}{}mosi}{22}{subsubsection.5.1.2.13}
+\contentsline {subsubsection}{\numberline {5.1.2.14}swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}write\_\discretionary {-}{}{}control}{23}{subsubsection.5.1.2.14}
+\contentsline {subsubsection}{\numberline {5.1.2.15}swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}write\_\discretionary {-}{}{}data\_\discretionary {-}{}{}ap}{23}{subsubsection.5.1.2.15}
+\contentsline {subsubsection}{\numberline {5.1.2.16}swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}write\_\discretionary {-}{}{}data\_\discretionary {-}{}{}p}{23}{subsubsection.5.1.2.16}
+\contentsline {subsubsection}{\numberline {5.1.2.17}swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}write\_\discretionary {-}{}{}request}{24}{subsubsection.5.1.2.17}
+\contentsline {subsubsection}{\numberline {5.1.2.18}swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue}{24}{subsubsection.5.1.2.18}
+\contentsline {subsubsection}{\numberline {5.1.2.19}swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}ack}{24}{subsubsection.5.1.2.19}
+\contentsline {subsubsection}{\numberline {5.1.2.20}swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}data}{24}{subsubsection.5.1.2.20}
+\contentsline {subsubsection}{\numberline {5.1.2.21}swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}data\_\discretionary {-}{}{}p}{25}{subsubsection.5.1.2.21}
+\contentsline {subsubsection}{\numberline {5.1.2.22}swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}n\_\discretionary {-}{}{}data\_\discretionary {-}{}{}p}{25}{subsubsection.5.1.2.22}
+\contentsline {subsubsection}{\numberline {5.1.2.23}swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}nbit}{25}{subsubsection.5.1.2.23}
+\contentsline {subsubsection}{\numberline {5.1.2.24}swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}parity}{26}{subsubsection.5.1.2.24}
+\contentsline {subsubsection}{\numberline {5.1.2.25}swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}trn}{26}{subsubsection.5.1.2.25}
+\contentsline {subsubsection}{\numberline {5.1.2.26}swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}control}{26}{subsubsection.5.1.2.26}
+\contentsline {subsubsection}{\numberline {5.1.2.27}swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}dap\_\discretionary {-}{}{}reset}{26}{subsubsection.5.1.2.27}
+\contentsline {subsubsection}{\numberline {5.1.2.28}swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}data}{27}{subsubsection.5.1.2.28}
+\contentsline {subsubsection}{\numberline {5.1.2.29}swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}data\_\discretionary {-}{}{}ap}{27}{subsubsection.5.1.2.29}
+\contentsline {subsubsection}{\numberline {5.1.2.30}swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}data\_\discretionary {-}{}{}p}{27}{subsubsection.5.1.2.30}
+\contentsline {subsubsection}{\numberline {5.1.2.31}swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}idle}{27}{subsubsection.5.1.2.31}
+\contentsline {subsubsection}{\numberline {5.1.2.32}swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}jtag2swd}{28}{subsubsection.5.1.2.32}
+\contentsline {subsubsection}{\numberline {5.1.2.33}swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}n\_\discretionary {-}{}{}data\_\discretionary {-}{}{}ap}{28}{subsubsection.5.1.2.33}
+\contentsline {subsubsection}{\numberline {5.1.2.34}swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}n\_\discretionary {-}{}{}data\_\discretionary {-}{}{}p}{28}{subsubsection.5.1.2.34}
+\contentsline {subsubsection}{\numberline {5.1.2.35}swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}nbit}{28}{subsubsection.5.1.2.35}
+\contentsline {subsubsection}{\numberline {5.1.2.36}swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}parity}{29}{subsubsection.5.1.2.36}
+\contentsline {subsubsection}{\numberline {5.1.2.37}swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}request}{29}{subsubsection.5.1.2.37}
+\contentsline {subsubsection}{\numberline {5.1.2.38}swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}swd2jtag}{29}{subsubsection.5.1.2.38}
+\contentsline {subsubsection}{\numberline {5.1.2.39}swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}trn}{30}{subsubsection.5.1.2.39}
+\contentsline {subsubsection}{\numberline {5.1.2.40}swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}append}{30}{subsubsection.5.1.2.40}
+\contentsline {subsubsection}{\numberline {5.1.2.41}swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}find\_\discretionary {-}{}{}root}{30}{subsubsection.5.1.2.41}
+\contentsline {subsubsection}{\numberline {5.1.2.42}swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}find\_\discretionary {-}{}{}tail}{30}{subsubsection.5.1.2.42}
+\contentsline {subsubsection}{\numberline {5.1.2.43}swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}flush}{31}{subsubsection.5.1.2.43}
+\contentsline {subsubsection}{\numberline {5.1.2.44}swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}free}{31}{subsubsection.5.1.2.44}
+\contentsline {subsubsection}{\numberline {5.1.2.45}swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}free\_\discretionary {-}{}{}head}{31}{subsubsection.5.1.2.45}
+\contentsline {subsubsection}{\numberline {5.1.2.46}swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}free\_\discretionary {-}{}{}tail}{31}{subsubsection.5.1.2.46}
+\contentsline {subsubsection}{\numberline {5.1.2.47}swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}init}{32}{subsubsection.5.1.2.47}
+\contentsline {subsubsection}{\numberline {5.1.2.48}swd\_\discretionary {-}{}{}dap\_\discretionary {-}{}{}detect}{32}{subsubsection.5.1.2.48}
+\contentsline {subsubsection}{\numberline {5.1.2.49}swd\_\discretionary {-}{}{}dap\_\discretionary {-}{}{}reset}{32}{subsubsection.5.1.2.49}
+\contentsline {subsubsection}{\numberline {5.1.2.50}swd\_\discretionary {-}{}{}dap\_\discretionary {-}{}{}select}{32}{subsubsection.5.1.2.50}
+\contentsline {subsubsection}{\numberline {5.1.2.51}swd\_\discretionary {-}{}{}deinit}{33}{subsubsection.5.1.2.51}
+\contentsline {subsubsection}{\numberline {5.1.2.52}swd\_\discretionary {-}{}{}deinit\_\discretionary {-}{}{}cmdq}{33}{subsubsection.5.1.2.52}
+\contentsline {subsubsection}{\numberline {5.1.2.53}swd\_\discretionary {-}{}{}deinit\_\discretionary {-}{}{}ctx}{33}{subsubsection.5.1.2.53}
+\contentsline {subsubsection}{\numberline {5.1.2.54}swd\_\discretionary {-}{}{}dp\_\discretionary {-}{}{}read\_\discretionary {-}{}{}idcode}{33}{subsubsection.5.1.2.54}
+\contentsline {subsubsection}{\numberline {5.1.2.55}swd\_\discretionary {-}{}{}drv\_\discretionary {-}{}{}transmit}{34}{subsubsection.5.1.2.55}
+\contentsline {subsubsection}{\numberline {5.1.2.56}swd\_\discretionary {-}{}{}init}{34}{subsubsection.5.1.2.56}
+\contentsline {subsubsection}{\numberline {5.1.2.57}swd\_\discretionary {-}{}{}log}{34}{subsubsection.5.1.2.57}
+\contentsline {subsubsection}{\numberline {5.1.2.58}swd\_\discretionary {-}{}{}log\_\discretionary {-}{}{}level\_\discretionary {-}{}{}set}{34}{subsubsection.5.1.2.58}
+\contentsline {section}{\numberline {5.2}src/libswd.h File Reference}{35}{section.5.2}
+\contentsline {subsection}{\numberline {5.2.1}Detailed Description}{45}{subsection.5.2.1}
+\contentsline {subsection}{\numberline {5.2.2}Define Documentation}{45}{subsection.5.2.2}
+\contentsline {subsubsection}{\numberline {5.2.2.1}AHB\_\discretionary {-}{}{}AP\_\discretionary {-}{}{}BD0}{45}{subsubsection.5.2.2.1}
+\contentsline {subsubsection}{\numberline {5.2.2.2}AHB\_\discretionary {-}{}{}AP\_\discretionary {-}{}{}BD1}{45}{subsubsection.5.2.2.2}
+\contentsline {subsubsection}{\numberline {5.2.2.3}AHB\_\discretionary {-}{}{}AP\_\discretionary {-}{}{}BD2}{45}{subsubsection.5.2.2.3}
+\contentsline {subsubsection}{\numberline {5.2.2.4}AHB\_\discretionary {-}{}{}AP\_\discretionary {-}{}{}BD3}{45}{subsubsection.5.2.2.4}
+\contentsline {subsubsection}{\numberline {5.2.2.5}AHB\_\discretionary {-}{}{}AP\_\discretionary {-}{}{}CONTROLSTATUS}{45}{subsubsection.5.2.2.5}
+\contentsline {subsubsection}{\numberline {5.2.2.6}AHB\_\discretionary {-}{}{}AP\_\discretionary {-}{}{}DROMT}{45}{subsubsection.5.2.2.6}
+\contentsline {subsubsection}{\numberline {5.2.2.7}AHB\_\discretionary {-}{}{}AP\_\discretionary {-}{}{}DRW}{46}{subsubsection.5.2.2.7}
+\contentsline {subsubsection}{\numberline {5.2.2.8}AHB\_\discretionary {-}{}{}AP\_\discretionary {-}{}{}IDR}{46}{subsubsection.5.2.2.8}
+\contentsline {subsubsection}{\numberline {5.2.2.9}AHB\_\discretionary {-}{}{}AP\_\discretionary {-}{}{}TAR}{46}{subsubsection.5.2.2.9}
+\contentsline {subsubsection}{\numberline {5.2.2.10}SWD\_\discretionary {-}{}{}ABORT\_\discretionary {-}{}{}BITNUM\_\discretionary {-}{}{}DAPABORT}{46}{subsubsection.5.2.2.10}
+\contentsline {subsubsection}{\numberline {5.2.2.11}SWD\_\discretionary {-}{}{}CTRLSTAT\_\discretionary {-}{}{}BITNUM\_\discretionary {-}{}{}ORUNDETECT}{46}{subsubsection.5.2.2.11}
+\contentsline {subsubsection}{\numberline {5.2.2.12}SWD\_\discretionary {-}{}{}DATA\_\discretionary {-}{}{}MAXBITCOUNT}{46}{subsubsection.5.2.2.12}
+\contentsline {subsubsection}{\numberline {5.2.2.13}SWD\_\discretionary {-}{}{}MASKLANE\_\discretionary {-}{}{}0}{46}{subsubsection.5.2.2.13}
+\contentsline {subsubsection}{\numberline {5.2.2.14}SWD\_\discretionary {-}{}{}REQUEST\_\discretionary {-}{}{}START\_\discretionary {-}{}{}BITNUM}{46}{subsubsection.5.2.2.14}
+\contentsline {subsubsection}{\numberline {5.2.2.15}SWD\_\discretionary {-}{}{}SELECT\_\discretionary {-}{}{}BITNUM\_\discretionary {-}{}{}CTRLSEL}{46}{subsubsection.5.2.2.15}
+\contentsline {subsubsection}{\numberline {5.2.2.16}SWD\_\discretionary {-}{}{}TURNROUND\_\discretionary {-}{}{}1\_\discretionary {-}{}{}CODE}{47}{subsubsection.5.2.2.16}
+\contentsline {subsubsection}{\numberline {5.2.2.17}SWD\_\discretionary {-}{}{}TURNROUND\_\discretionary {-}{}{}2\_\discretionary {-}{}{}CODE}{47}{subsubsection.5.2.2.17}
+\contentsline {subsubsection}{\numberline {5.2.2.18}SWD\_\discretionary {-}{}{}TURNROUND\_\discretionary {-}{}{}3\_\discretionary {-}{}{}CODE}{47}{subsubsection.5.2.2.18}
+\contentsline {subsubsection}{\numberline {5.2.2.19}SWD\_\discretionary {-}{}{}TURNROUND\_\discretionary {-}{}{}4\_\discretionary {-}{}{}CODE}{47}{subsubsection.5.2.2.19}
+\contentsline {subsubsection}{\numberline {5.2.2.20}SWD\_\discretionary {-}{}{}TURNROUND\_\discretionary {-}{}{}DEFAULT\_\discretionary {-}{}{}VAL}{47}{subsubsection.5.2.2.20}
+\contentsline {subsubsection}{\numberline {5.2.2.21}SWD\_\discretionary {-}{}{}TURNROUND\_\discretionary {-}{}{}MAX\_\discretionary {-}{}{}VAL}{47}{subsubsection.5.2.2.21}
+\contentsline {subsubsection}{\numberline {5.2.2.22}SWD\_\discretionary {-}{}{}TURNROUND\_\discretionary {-}{}{}MIN\_\discretionary {-}{}{}VAL}{47}{subsubsection.5.2.2.22}
+\contentsline {subsubsection}{\numberline {5.2.2.23}SWD\_\discretionary {-}{}{}WCR\_\discretionary {-}{}{}BITNUM\_\discretionary {-}{}{}PRESCALER}{47}{subsubsection.5.2.2.23}
+\contentsline {subsubsection}{\numberline {5.2.2.24}SWD\_\discretionary {-}{}{}WCR\_\discretionary {-}{}{}BITNUM\_\discretionary {-}{}{}TURNROUND}{47}{subsubsection.5.2.2.24}
+\contentsline {subsubsection}{\numberline {5.2.2.25}SWD\_\discretionary {-}{}{}WCR\_\discretionary {-}{}{}BITNUM\_\discretionary {-}{}{}WIREMODE}{47}{subsubsection.5.2.2.25}
+\contentsline {subsection}{\numberline {5.2.3}Typedef Documentation}{48}{subsection.5.2.3}
+\contentsline {subsubsection}{\numberline {5.2.3.1}swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}t}{48}{subsubsection.5.2.3.1}
+\contentsline {subsection}{\numberline {5.2.4}Enumeration Type Documentation}{48}{subsection.5.2.4}
+\contentsline {subsubsection}{\numberline {5.2.4.1}swd\_\discretionary {-}{}{}bool\_\discretionary {-}{}{}t}{48}{subsubsection.5.2.4.1}
+\contentsline {subsubsection}{\numberline {5.2.4.2}swd\_\discretionary {-}{}{}cmdtype\_\discretionary {-}{}{}t}{48}{subsubsection.5.2.4.2}
+\contentsline {subsubsection}{\numberline {5.2.4.3}swd\_\discretionary {-}{}{}error\_\discretionary {-}{}{}code\_\discretionary {-}{}{}t}{49}{subsubsection.5.2.4.3}
+\contentsline {subsubsection}{\numberline {5.2.4.4}swd\_\discretionary {-}{}{}loglevel\_\discretionary {-}{}{}t}{50}{subsubsection.5.2.4.4}
+\contentsline {subsubsection}{\numberline {5.2.4.5}swd\_\discretionary {-}{}{}operation\_\discretionary {-}{}{}t}{50}{subsubsection.5.2.4.5}
+\contentsline {subsubsection}{\numberline {5.2.4.6}swd\_\discretionary {-}{}{}shiftdir\_\discretionary {-}{}{}t}{50}{subsubsection.5.2.4.6}
+\contentsline {subsection}{\numberline {5.2.5}Function Documentation}{50}{subsection.5.2.5}
+\contentsline {subsubsection}{\numberline {5.2.5.1}swd\_\discretionary {-}{}{}bin32\_\discretionary {-}{}{}bitswap}{50}{subsubsection.5.2.5.1}
+\contentsline {subsubsection}{\numberline {5.2.5.2}swd\_\discretionary {-}{}{}bin32\_\discretionary {-}{}{}parity\_\discretionary {-}{}{}even}{51}{subsubsection.5.2.5.2}
+\contentsline {subsubsection}{\numberline {5.2.5.3}swd\_\discretionary {-}{}{}bin32\_\discretionary {-}{}{}print}{51}{subsubsection.5.2.5.3}
+\contentsline {subsubsection}{\numberline {5.2.5.4}swd\_\discretionary {-}{}{}bin32\_\discretionary {-}{}{}string}{51}{subsubsection.5.2.5.4}
+\contentsline {subsubsection}{\numberline {5.2.5.5}swd\_\discretionary {-}{}{}bin8\_\discretionary {-}{}{}bitswap}{52}{subsubsection.5.2.5.5}
+\contentsline {subsubsection}{\numberline {5.2.5.6}swd\_\discretionary {-}{}{}bin8\_\discretionary {-}{}{}parity\_\discretionary {-}{}{}even}{52}{subsubsection.5.2.5.6}
+\contentsline {subsubsection}{\numberline {5.2.5.7}swd\_\discretionary {-}{}{}bin8\_\discretionary {-}{}{}print}{52}{subsubsection.5.2.5.7}
+\contentsline {subsubsection}{\numberline {5.2.5.8}swd\_\discretionary {-}{}{}bin8\_\discretionary {-}{}{}string}{52}{subsubsection.5.2.5.8}
+\contentsline {subsubsection}{\numberline {5.2.5.9}swd\_\discretionary {-}{}{}bitgen8\_\discretionary {-}{}{}request}{53}{subsubsection.5.2.5.9}
+\contentsline {subsubsection}{\numberline {5.2.5.10}swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}read\_\discretionary {-}{}{}ack}{53}{subsubsection.5.2.5.10}
+\contentsline {subsubsection}{\numberline {5.2.5.11}swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}read\_\discretionary {-}{}{}data\_\discretionary {-}{}{}p}{53}{subsubsection.5.2.5.11}
+\contentsline {subsubsection}{\numberline {5.2.5.12}swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}setdir\_\discretionary {-}{}{}miso}{54}{subsubsection.5.2.5.12}
+\contentsline {subsubsection}{\numberline {5.2.5.13}swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}setdir\_\discretionary {-}{}{}mosi}{54}{subsubsection.5.2.5.13}
+\contentsline {subsubsection}{\numberline {5.2.5.14}swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}write\_\discretionary {-}{}{}control}{54}{subsubsection.5.2.5.14}
+\contentsline {subsubsection}{\numberline {5.2.5.15}swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}write\_\discretionary {-}{}{}data\_\discretionary {-}{}{}ap}{54}{subsubsection.5.2.5.15}
+\contentsline {subsubsection}{\numberline {5.2.5.16}swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}write\_\discretionary {-}{}{}data\_\discretionary {-}{}{}p}{55}{subsubsection.5.2.5.16}
+\contentsline {subsubsection}{\numberline {5.2.5.17}swd\_\discretionary {-}{}{}bus\_\discretionary {-}{}{}write\_\discretionary {-}{}{}request}{55}{subsubsection.5.2.5.17}
+\contentsline {subsubsection}{\numberline {5.2.5.18}swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue}{55}{subsubsection.5.2.5.18}
+\contentsline {subsubsection}{\numberline {5.2.5.19}swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}ack}{56}{subsubsection.5.2.5.19}
+\contentsline {subsubsection}{\numberline {5.2.5.20}swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}data}{56}{subsubsection.5.2.5.20}
+\contentsline {subsubsection}{\numberline {5.2.5.21}swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}data\_\discretionary {-}{}{}p}{56}{subsubsection.5.2.5.21}
+\contentsline {subsubsection}{\numberline {5.2.5.22}swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}n\_\discretionary {-}{}{}data\_\discretionary {-}{}{}p}{56}{subsubsection.5.2.5.22}
+\contentsline {subsubsection}{\numberline {5.2.5.23}swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}nbit}{57}{subsubsection.5.2.5.23}
+\contentsline {subsubsection}{\numberline {5.2.5.24}swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}parity}{57}{subsubsection.5.2.5.24}
+\contentsline {subsubsection}{\numberline {5.2.5.25}swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}miso\_\discretionary {-}{}{}trn}{57}{subsubsection.5.2.5.25}
+\contentsline {subsubsection}{\numberline {5.2.5.26}swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}control}{57}{subsubsection.5.2.5.26}
+\contentsline {subsubsection}{\numberline {5.2.5.27}swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}dap\_\discretionary {-}{}{}reset}{58}{subsubsection.5.2.5.27}
+\contentsline {subsubsection}{\numberline {5.2.5.28}swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}data}{58}{subsubsection.5.2.5.28}
+\contentsline {subsubsection}{\numberline {5.2.5.29}swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}data\_\discretionary {-}{}{}ap}{58}{subsubsection.5.2.5.29}
+\contentsline {subsubsection}{\numberline {5.2.5.30}swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}data\_\discretionary {-}{}{}p}{59}{subsubsection.5.2.5.30}
+\contentsline {subsubsection}{\numberline {5.2.5.31}swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}idle}{59}{subsubsection.5.2.5.31}
+\contentsline {subsubsection}{\numberline {5.2.5.32}swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}jtag2swd}{59}{subsubsection.5.2.5.32}
+\contentsline {subsubsection}{\numberline {5.2.5.33}swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}n\_\discretionary {-}{}{}data\_\discretionary {-}{}{}ap}{59}{subsubsection.5.2.5.33}
+\contentsline {subsubsection}{\numberline {5.2.5.34}swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}n\_\discretionary {-}{}{}data\_\discretionary {-}{}{}p}{60}{subsubsection.5.2.5.34}
+\contentsline {subsubsection}{\numberline {5.2.5.35}swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}nbit}{60}{subsubsection.5.2.5.35}
+\contentsline {subsubsection}{\numberline {5.2.5.36}swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}parity}{60}{subsubsection.5.2.5.36}
+\contentsline {subsubsection}{\numberline {5.2.5.37}swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}request}{61}{subsubsection.5.2.5.37}
+\contentsline {subsubsection}{\numberline {5.2.5.38}swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}swd2jtag}{61}{subsubsection.5.2.5.38}
+\contentsline {subsubsection}{\numberline {5.2.5.39}swd\_\discretionary {-}{}{}cmd\_\discretionary {-}{}{}enqueue\_\discretionary {-}{}{}mosi\_\discretionary {-}{}{}trn}{61}{subsubsection.5.2.5.39}
+\contentsline {subsubsection}{\numberline {5.2.5.40}swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}append}{61}{subsubsection.5.2.5.40}
+\contentsline {subsubsection}{\numberline {5.2.5.41}swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}find\_\discretionary {-}{}{}root}{62}{subsubsection.5.2.5.41}
+\contentsline {subsubsection}{\numberline {5.2.5.42}swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}find\_\discretionary {-}{}{}tail}{62}{subsubsection.5.2.5.42}
+\contentsline {subsubsection}{\numberline {5.2.5.43}swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}flush}{62}{subsubsection.5.2.5.43}
+\contentsline {subsubsection}{\numberline {5.2.5.44}swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}free}{62}{subsubsection.5.2.5.44}
+\contentsline {subsubsection}{\numberline {5.2.5.45}swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}free\_\discretionary {-}{}{}head}{63}{subsubsection.5.2.5.45}
+\contentsline {subsubsection}{\numberline {5.2.5.46}swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}free\_\discretionary {-}{}{}tail}{63}{subsubsection.5.2.5.46}
+\contentsline {subsubsection}{\numberline {5.2.5.47}swd\_\discretionary {-}{}{}cmdq\_\discretionary {-}{}{}init}{63}{subsubsection.5.2.5.47}
+\contentsline {subsubsection}{\numberline {5.2.5.48}swd\_\discretionary {-}{}{}dap\_\discretionary {-}{}{}detect}{63}{subsubsection.5.2.5.48}
+\contentsline {subsubsection}{\numberline {5.2.5.49}swd\_\discretionary {-}{}{}dap\_\discretionary {-}{}{}reset}{64}{subsubsection.5.2.5.49}
+\contentsline {subsubsection}{\numberline {5.2.5.50}swd\_\discretionary {-}{}{}dap\_\discretionary {-}{}{}select}{64}{subsubsection.5.2.5.50}
+\contentsline {subsubsection}{\numberline {5.2.5.51}swd\_\discretionary {-}{}{}deinit}{64}{subsubsection.5.2.5.51}
+\contentsline {subsubsection}{\numberline {5.2.5.52}swd\_\discretionary {-}{}{}deinit\_\discretionary {-}{}{}cmdq}{64}{subsubsection.5.2.5.52}
+\contentsline {subsubsection}{\numberline {5.2.5.53}swd\_\discretionary {-}{}{}deinit\_\discretionary {-}{}{}ctx}{65}{subsubsection.5.2.5.53}
+\contentsline {subsubsection}{\numberline {5.2.5.54}swd\_\discretionary {-}{}{}dp\_\discretionary {-}{}{}read\_\discretionary {-}{}{}idcode}{65}{subsubsection.5.2.5.54}
+\contentsline {subsubsection}{\numberline {5.2.5.55}swd\_\discretionary {-}{}{}drv\_\discretionary {-}{}{}transmit}{65}{subsubsection.5.2.5.55}
+\contentsline {subsubsection}{\numberline {5.2.5.56}swd\_\discretionary {-}{}{}init}{65}{subsubsection.5.2.5.56}
+\contentsline {subsubsection}{\numberline {5.2.5.57}swd\_\discretionary {-}{}{}log}{66}{subsubsection.5.2.5.57}
+\contentsline {subsubsection}{\numberline {5.2.5.58}swd\_\discretionary {-}{}{}log\_\discretionary {-}{}{}level\_\discretionary {-}{}{}inherit}{66}{subsubsection.5.2.5.58}
+\contentsline {subsubsection}{\numberline {5.2.5.59}swd\_\discretionary {-}{}{}log\_\discretionary {-}{}{}level\_\discretionary {-}{}{}set}{66}{subsubsection.5.2.5.59}

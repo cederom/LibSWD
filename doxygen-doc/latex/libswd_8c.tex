@@ -1,0 +1,1339 @@
+\hypertarget{libswd_8c}{
+\section{src/libswd.c File Reference}
+\label{libswd_8c}\index{src/libswd.c@{src/libswd.c}}
+}
+{\ttfamily \#include $<$libswd.h$>$}\par
+{\ttfamily \#include $<$string.h$>$}\par
+{\ttfamily \#include $<$stdlib.h$>$}\par
+{\ttfamily \#include $<$stdio.h$>$}\par
+{\ttfamily \#include $<$stdarg.h$>$}\par
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{libswd_8c_adadd09e0dcd8877a99e7983d5d98e882}{swd\_\-bin8\_\-parity\_\-even} (char $\ast$data, char $\ast$parity)
+\begin{DoxyCompactList}\small\item\em Data parity calculator, calculates even parity on char type. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8c_a6d93a36876e62c9a05171cebcdb4b446}{swd\_\-bin32\_\-parity\_\-even} (int $\ast$data, char $\ast$parity)
+\begin{DoxyCompactList}\small\item\em Data parity calculator, calculates even parity on integer type. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8c_aa245c280d14d50118fa1ce5e090a596b}{swd\_\-bin8\_\-print} (char $\ast$data)
+\begin{DoxyCompactList}\small\item\em Prints binary data of a char value on the screen. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8c_a5ca7ae0d5ceab442348c9a03e58d54eb}{swd\_\-bin32\_\-print} (int $\ast$data)
+\begin{DoxyCompactList}\small\item\em Prints binary data of an integer value on the screen. \item\end{DoxyCompactList}\item 
+char $\ast$ \hyperlink{libswd_8c_a3570e6b4032cde907cb137892697bac9}{swd\_\-bin8\_\-string} (char $\ast$data)
+\begin{DoxyCompactList}\small\item\em Generates string containing binary data of a char value. \item\end{DoxyCompactList}\item 
+char $\ast$ \hyperlink{libswd_8c_a271c7fcdfe6cf9d5177bd2fca4e02497}{swd\_\-bin32\_\-string} (int $\ast$data)
+\begin{DoxyCompactList}\small\item\em Generates string containing binary data of an integer value. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8c_a6e7db0da4ca2f2649b826e68ef5b3caa}{swd\_\-bin8\_\-bitswap} (unsigned char $\ast$buffer, int bitcount)
+\begin{DoxyCompactList}\small\item\em Bit swap helper function that reverse bit order in char $\ast$buffer. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8c_a62fe3d826d2f575dd1b446263d1c451c}{swd\_\-bin32\_\-bitswap} (unsigned int $\ast$buffer, int bitcount)
+\begin{DoxyCompactList}\small\item\em Bit swap helper function that reverse bit order in int $\ast$buffer. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8c_a185aba078d1c57df6331fd07fcf5630c}{swd\_\-cmdq\_\-init} (\hyperlink{structswd__cmd__t}{swd\_\-cmd\_\-t} $\ast$cmdq)
+\begin{DoxyCompactList}\small\item\em Initialize new queue element in memory that becomes a queue root. \item\end{DoxyCompactList}\item 
+\hyperlink{structswd__cmd__t}{swd\_\-cmd\_\-t} $\ast$ \hyperlink{libswd_8c_a431d401d67e26e8b983c6ead8c1b93eb}{swd\_\-cmdq\_\-find\_\-root} (\hyperlink{structswd__cmd__t}{swd\_\-cmd\_\-t} $\ast$cmdq)
+\begin{DoxyCompactList}\small\item\em Find queue root (first element). \item\end{DoxyCompactList}\item 
+\hyperlink{structswd__cmd__t}{swd\_\-cmd\_\-t} $\ast$ \hyperlink{libswd_8c_a66578e5c847f74079f2e13f3bd753d58}{swd\_\-cmdq\_\-find\_\-tail} (\hyperlink{structswd__cmd__t}{swd\_\-cmd\_\-t} $\ast$cmdq)
+\begin{DoxyCompactList}\small\item\em Find queue tail (last element). \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8c_a966a561f341217ecc56d31ed61c7758e}{swd\_\-cmdq\_\-append} (\hyperlink{structswd__cmd__t}{swd\_\-cmd\_\-t} $\ast$cmdq, \hyperlink{structswd__cmd__t}{swd\_\-cmd\_\-t} $\ast$cmd)
+\begin{DoxyCompactList}\small\item\em Append element pointed by $\ast$cmd at the end of the quque pointed by $\ast$cmdq. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8c_ab205547a46a4e87e040478cc230463d6}{swd\_\-cmdq\_\-free} (\hyperlink{structswd__cmd__t}{swd\_\-cmd\_\-t} $\ast$cmdq)
+\begin{DoxyCompactList}\small\item\em Free queue pointed by $\ast$cmdq element. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8c_a583240dd9735d3192a6a895f4cefd89c}{swd\_\-cmdq\_\-free\_\-head} (\hyperlink{structswd__cmd__t}{swd\_\-cmd\_\-t} $\ast$cmdq)
+\begin{DoxyCompactList}\small\item\em Free queue head up to $\ast$cmdq element. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8c_a968846e75ffdbceafd2f4a3bd7f314b1}{swd\_\-cmdq\_\-free\_\-tail} (\hyperlink{structswd__cmd__t}{swd\_\-cmd\_\-t} $\ast$cmdq)
+\begin{DoxyCompactList}\small\item\em Free queue tail starting after $\ast$cmdq element. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8c_a3bc721b722709fda46962cbbe6f289a6}{swd\_\-cmd\_\-enqueue} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx, \hyperlink{structswd__cmd__t}{swd\_\-cmd\_\-t} $\ast$cmd)
+\begin{DoxyCompactList}\small\item\em Append selected command to a context's command queue. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8c_a71bb2c003e1e1fb873ee70d4df04e651}{swd\_\-cmd\_\-enqueue\_\-mosi\_\-request} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx, char $\ast$request)
+\begin{DoxyCompactList}\small\item\em Appends command queue with SWD Request packet header. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8c_adb3044c0cbebdf275aef0898b37c6fa6}{swd\_\-cmd\_\-enqueue\_\-mosi\_\-trn} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx)
+\begin{DoxyCompactList}\small\item\em Append command queue with Turnaround activating MOSI mode. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8c_a63c0741f58c00faad012ccc9d29ca7c7}{swd\_\-cmd\_\-enqueue\_\-miso\_\-trn} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx)
+\begin{DoxyCompactList}\small\item\em Append command queue with Turnaround activating MISO mode. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8c_ab74b1e2baff1d3f30c07440bc84b54fe}{swd\_\-cmd\_\-enqueue\_\-miso\_\-nbit} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx, char $\ast$$\ast$data, int count)
+\begin{DoxyCompactList}\small\item\em Append command queue with bus binary read bit-\/by-\/bit operation. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8c_a5114809ee4b3f3dbdcef7070e76825cd}{swd\_\-cmd\_\-enqueue\_\-mosi\_\-nbit} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx, char $\ast$data, int count)
+\begin{DoxyCompactList}\small\item\em Append command queue with bus binary write bit-\/by-\/bit operation. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8c_ac972e99a9d163f30b983ce6ed0d2ed02}{swd\_\-cmd\_\-enqueue\_\-mosi\_\-parity} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx, char $\ast$parity)
+\begin{DoxyCompactList}\small\item\em Append command queue with parity bit write. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8c_aea2f9fdb22f5f6364f005eab9425a060}{swd\_\-cmd\_\-enqueue\_\-miso\_\-parity} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx, char $\ast$$\ast$parity)
+\begin{DoxyCompactList}\small\item\em Append command queue with parity bit read. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8c_aa3a012555652c27c0e375097b392534b}{swd\_\-cmd\_\-enqueue\_\-miso\_\-data} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx, int $\ast$$\ast$data)
+\begin{DoxyCompactList}\small\item\em Append command queue with data read. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8c_a1afca108b064601dfeb517327b0bb275}{swd\_\-cmd\_\-enqueue\_\-miso\_\-data\_\-p} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx, int $\ast$$\ast$data, char $\ast$$\ast$parity)
+\begin{DoxyCompactList}\small\item\em Append command queue with data and parity read. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8c_a1e7330acb5e3b8c7f41a82121e26decc}{swd\_\-cmd\_\-enqueue\_\-miso\_\-n\_\-data\_\-p} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx, int $\ast$$\ast$data, char $\ast$$\ast$parity, int count)
+\begin{DoxyCompactList}\small\item\em Append command queue with series of data and parity read. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8c_a02b06ae68b6e2a7b50f233c695b45548}{swd\_\-cmd\_\-enqueue\_\-mosi\_\-data} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx, int $\ast$data)
+\begin{DoxyCompactList}\small\item\em Append command queue with data and parity write. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8c_a22a5c50a280f62a84597f71b7f468a99}{swd\_\-cmd\_\-enqueue\_\-mosi\_\-data\_\-ap} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx, int $\ast$data)
+\begin{DoxyCompactList}\small\item\em Append command queue with data and automatic parity write. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8c_a25048650d706a8ae26793489acb46f5a}{swd\_\-cmd\_\-enqueue\_\-mosi\_\-data\_\-p} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx, int $\ast$data, char $\ast$parity)
+\begin{DoxyCompactList}\small\item\em Append command queue with data and provided parity write. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8c_adadb812d15558c6db4b9aa753b60e15c}{swd\_\-cmd\_\-enqueue\_\-mosi\_\-n\_\-data\_\-ap} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx, int $\ast$$\ast$data, int count)
+\begin{DoxyCompactList}\small\item\em Append command queue with series of data and automatic parity writes. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8c_afd4f9d8e098dee2708c4b3cc1e2775e6}{swd\_\-cmd\_\-enqueue\_\-mosi\_\-n\_\-data\_\-p} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx, int $\ast$$\ast$data, char $\ast$$\ast$parity, int count)
+\begin{DoxyCompactList}\small\item\em Append command queue with series of data and provided parity writes. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8c_a4d9e77e67b6167185b86f76df9b15cbd}{swd\_\-cmd\_\-enqueue\_\-miso\_\-ack} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx, char $\ast$$\ast$ack)
+\begin{DoxyCompactList}\small\item\em Append queue with ACK read. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8c_af01d9ef59271c478d8d68f7dde27a77f}{swd\_\-cmd\_\-enqueue\_\-mosi\_\-control} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx, char $\ast$ctlmsg, int len)
+\begin{DoxyCompactList}\small\item\em Append command queue with len-\/octet size control seruence. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8c_a0492d6b4eb2ebaa14fd72a5fa7f57475}{swd\_\-cmd\_\-enqueue\_\-mosi\_\-dap\_\-reset} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx)
+\begin{DoxyCompactList}\small\item\em Append command queue with SW-\/DP-\/RESET sequence. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8c_a11a8ab26aa798f18303be8364ef55f48}{swd\_\-cmd\_\-enqueue\_\-mosi\_\-idle} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx)
+\begin{DoxyCompactList}\small\item\em Append command queue with idle sequence. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8c_a314214b78c653c188f51f3324d623913}{swd\_\-cmd\_\-enqueue\_\-mosi\_\-jtag2swd} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx)
+\begin{DoxyCompactList}\small\item\em Append command queue with JTAG-\/TO-\/SWD DAP-\/switch sequence. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8c_aae11e98541fa6cf8526d59e4ae5bfff9}{swd\_\-cmd\_\-enqueue\_\-mosi\_\-swd2jtag} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx)
+\begin{DoxyCompactList}\small\item\em Append command queue with SWD-\/TO-\/JTAG DAP-\/switch sequence. \item\end{DoxyCompactList}\item 
+\hypertarget{libswd_8c_a2c825a8208192b40b0b3d5d93258dd91}{
+char $\ast$ {\bfseries swd\_\-cmd\_\-string\_\-cmdtype} (\hyperlink{structswd__cmd__t}{swd\_\-cmd\_\-t} $\ast$cmd)}
+\label{libswd_8c_a2c825a8208192b40b0b3d5d93258dd91}
+
+\item 
+int \hyperlink{libswd_8c_afbae73ccf42657390d11d645fcc456d8}{swd\_\-bitgen8\_\-request} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx, char $\ast$APnDP, char $\ast$RnW, char $\ast$addr, char $\ast$request)
+\begin{DoxyCompactList}\small\item\em Generate 8-\/bit SWD-\/REQUEST packet contents with provided parameters. \item\end{DoxyCompactList}\item 
+\hypertarget{libswd_8c_a32e3642168a4fe782f9bafb7b7e1cef2}{
+int {\bfseries swd\_\-drv\_\-mosi\_\-8} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx, \hyperlink{structswd__cmd__t}{swd\_\-cmd\_\-t} $\ast$cmd, char $\ast$data, int bits, int nLSBfirst)}
+\label{libswd_8c_a32e3642168a4fe782f9bafb7b7e1cef2}
+
+\item 
+\hypertarget{libswd_8c_a18bfb4968ed95eb580a3b970a7d5b339}{
+int {\bfseries swd\_\-drv\_\-mosi\_\-32} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx, \hyperlink{structswd__cmd__t}{swd\_\-cmd\_\-t} $\ast$cmd, int $\ast$data, int bits, int nLSBfirst)}
+\label{libswd_8c_a18bfb4968ed95eb580a3b970a7d5b339}
+
+\item 
+\hypertarget{libswd_8c_a4aa9199caa538c5c58c8db41c4f39dc9}{
+int {\bfseries swd\_\-drv\_\-miso\_\-8} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx, \hyperlink{structswd__cmd__t}{swd\_\-cmd\_\-t} $\ast$cmd, char $\ast$data, int bits, int nLSBfirst)}
+\label{libswd_8c_a4aa9199caa538c5c58c8db41c4f39dc9}
+
+\item 
+\hypertarget{libswd_8c_ada8ec8d0bb1aa156768afe67f9162e4a}{
+int {\bfseries swd\_\-drv\_\-miso\_\-32} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx, \hyperlink{structswd__cmd__t}{swd\_\-cmd\_\-t} $\ast$cmd, int $\ast$data, int bits, int nLSBfirst)}
+\label{libswd_8c_ada8ec8d0bb1aa156768afe67f9162e4a}
+
+\item 
+\hypertarget{libswd_8c_a94345700108bf12e4aad25cd54fd3b83}{
+int {\bfseries swd\_\-drv\_\-mosi\_\-trn} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx, int bits)}
+\label{libswd_8c_a94345700108bf12e4aad25cd54fd3b83}
+
+\item 
+\hypertarget{libswd_8c_adb03d22371e2bcde8a5faa8aabf49daa}{
+int {\bfseries swd\_\-drv\_\-miso\_\-trn} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx, int bits)}
+\label{libswd_8c_adb03d22371e2bcde8a5faa8aabf49daa}
+
+\item 
+int \hyperlink{libswd_8c_a2891df407bc8178e3ca45bd508822327}{swd\_\-drv\_\-transmit} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx, \hyperlink{structswd__cmd__t}{swd\_\-cmd\_\-t} $\ast$cmd)
+\begin{DoxyCompactList}\small\item\em Transmit selected command from the command queue to the interface driver. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8c_ad53379f5a7756cc91b01e867aaaa489d}{swd\_\-cmdq\_\-flush} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx, \hyperlink{libswd_8h_a35ca817603eaed3d5ce753c37a1db070}{swd\_\-operation\_\-t} operation)
+\begin{DoxyCompactList}\small\item\em Flush command queue contents into interface driver. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8c_a342a54175498a1cd4a2668a189977012}{swd\_\-bus\_\-setdir\_\-mosi} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx)
+\begin{DoxyCompactList}\small\item\em Append command queue with TRN WRITE/MOSI, if previous command was READ/MISO. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8c_abb32abd798b3b1ffa14573e4f139c079}{swd\_\-bus\_\-setdir\_\-miso} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx)
+\begin{DoxyCompactList}\small\item\em Append command queue with TRN READ/MISO, if previous command was WRITE/MOSI. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8c_a36141f037b00ea981cf771d6061bdfd6}{swd\_\-bus\_\-write\_\-request} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx, \hyperlink{libswd_8h_a35ca817603eaed3d5ce753c37a1db070}{swd\_\-operation\_\-t} operation, char $\ast$APnDP, char $\ast$RnW, char $\ast$addr)
+\begin{DoxyCompactList}\small\item\em Perform Request. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8c_aae7d6660b4fd10d0d1105d74257b8ac7}{swd\_\-bus\_\-read\_\-ack} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx, \hyperlink{libswd_8h_a35ca817603eaed3d5ce753c37a1db070}{swd\_\-operation\_\-t} operation, char $\ast$$\ast$ack)
+\begin{DoxyCompactList}\small\item\em Perform ACK read into $\ast$ack and verify received data. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8c_ac1948d1f82a3166de4de43dae48b7413}{swd\_\-bus\_\-write\_\-data\_\-p} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx, \hyperlink{libswd_8h_a35ca817603eaed3d5ce753c37a1db070}{swd\_\-operation\_\-t} operation, int $\ast$data, char $\ast$parity)
+\begin{DoxyCompactList}\small\item\em Perform (MOSI) data write with provided parity value. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8c_a014280b7d9a07a14862f16922827f50a}{swd\_\-bus\_\-write\_\-data\_\-ap} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx, \hyperlink{libswd_8h_a35ca817603eaed3d5ce753c37a1db070}{swd\_\-operation\_\-t} operation, int $\ast$data)
+\begin{DoxyCompactList}\small\item\em Perform (MOSI) data write with automatic parity calculation. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8c_a45c79a01998ae0e845ee425c432e181d}{swd\_\-bus\_\-read\_\-data\_\-p} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx, \hyperlink{libswd_8h_a35ca817603eaed3d5ce753c37a1db070}{swd\_\-operation\_\-t} operation, int $\ast$$\ast$data, char $\ast$$\ast$parity)
+\begin{DoxyCompactList}\small\item\em Perform (MISO) data read. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8c_ad0ae33bb778d9c0bba3fe5f74adc8d22}{swd\_\-bus\_\-write\_\-control} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx, \hyperlink{libswd_8h_a35ca817603eaed3d5ce753c37a1db070}{swd\_\-operation\_\-t} operation, char $\ast$ctlmsg, int len)
+\begin{DoxyCompactList}\small\item\em Write CONTROL byte to the Target's DAP. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8c_ae53937afaa64ce0b28bef3d8d093f65a}{swd\_\-dap\_\-reset} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx, \hyperlink{libswd_8h_a35ca817603eaed3d5ce753c37a1db070}{swd\_\-operation\_\-t} operation)
+\begin{DoxyCompactList}\small\item\em Debug Access Port Reset sends 50 CLK with TMS high that brings both SW-\/DP and JTAG-\/DP into reset state. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8c_a0ffa1e7b48180a7c4bf05f2906a9cbb1}{swd\_\-dap\_\-select} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx, \hyperlink{libswd_8h_a35ca817603eaed3d5ce753c37a1db070}{swd\_\-operation\_\-t} operation)
+\begin{DoxyCompactList}\small\item\em Activate SW-\/DP by sending out RESET and JTAG-\/TO-\/SWD sequence on SWDIOTMS line. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8c_a0a40c90253f99da07eae5e237be187b1}{swd\_\-dp\_\-read\_\-idcode} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx, \hyperlink{libswd_8h_a35ca817603eaed3d5ce753c37a1db070}{swd\_\-operation\_\-t} operation, int $\ast$$\ast$idcode)
+\begin{DoxyCompactList}\small\item\em Macro: Read out IDCODE register and return its value on function return. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8c_a6758b95d2adfbfb9b95198f9b0b5462c}{swd\_\-dap\_\-detect} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx, \hyperlink{libswd_8h_a35ca817603eaed3d5ce753c37a1db070}{swd\_\-operation\_\-t} operation, int $\ast$$\ast$idcode)
+\begin{DoxyCompactList}\small\item\em Macro: Reset target DAP, select SW-\/DP, read out IDCODE. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8c_ab2228c114efd81e478ebc00e5bfe4c43}{swd\_\-log} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx, \hyperlink{libswd_8h_ab68cbcef79d602fc0fe70cb65c43e898}{swd\_\-loglevel\_\-t} loglevel, char $\ast$msg,...)
+\begin{DoxyCompactList}\small\item\em Put a message into swd context log at specified verbosity level. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8c_af30788d001ca964f2889f0d70e2eae8f}{swd\_\-log\_\-level\_\-set} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx, \hyperlink{libswd_8h_ab68cbcef79d602fc0fe70cb65c43e898}{swd\_\-loglevel\_\-t} loglevel)
+\begin{DoxyCompactList}\small\item\em Change log level to increase or decrease verbosity level. \item\end{DoxyCompactList}\item 
+\hypertarget{libswd_8c_a5c41206bbf4a593193192d03104a72f5}{
+char $\ast$ {\bfseries swd\_\-error\_\-string} (\hyperlink{libswd_8h_aeb409c8f8007baa9bf15efce6491ad77}{swd\_\-error\_\-code\_\-t} error)}
+\label{libswd_8c_a5c41206bbf4a593193192d03104a72f5}
+
+\item 
+\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$ \hyperlink{libswd_8c_ad4f88acc646c06e6e81fbde8117c21af}{swd\_\-init} (void)
+\begin{DoxyCompactList}\small\item\em LibSWD initialization routine. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8c_ac53e7440e6d3c277df4e715665d1986d}{swd\_\-deinit\_\-ctx} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx)
+\begin{DoxyCompactList}\small\item\em De-\/initialize selected swd context and free its memory. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8c_a0426ebebbebec92cc5c8342d1746f58c}{swd\_\-deinit\_\-cmdq} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx)
+\begin{DoxyCompactList}\small\item\em De-\/initialize command queue and free its memory on selected swd context. \item\end{DoxyCompactList}\item 
+int \hyperlink{libswd_8c_a94b02a9cf4b72e2e76d6a9a34f34f96f}{swd\_\-deinit} (\hyperlink{structswd__ctx__t}{swd\_\-ctx\_\-t} $\ast$swdctx)
+\begin{DoxyCompactList}\small\item\em De-\/initialize selected swd context and its command queue. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+\subsection{Function Documentation}
+\hypertarget{libswd_8c_a62fe3d826d2f575dd1b446263d1c451c}{
+\index{libswd.c@{libswd.c}!swd\_\-bin32\_\-bitswap@{swd\_\-bin32\_\-bitswap}}
+\index{swd\_\-bin32\_\-bitswap@{swd\_\-bin32\_\-bitswap}!libswd.c@{libswd.c}}
+\subsubsection[{swd\_\-bin32\_\-bitswap}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-bin32\_\-bitswap (
+\begin{DoxyParamCaption}
+\item[{unsigned int $\ast$}]{ buffer, }
+\item[{int}]{ bitcount}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8c_a62fe3d826d2f575dd1b446263d1c451c}
+
+
+Bit swap helper function that reverse bit order in int $\ast$buffer. 
+
+Most Significant Bit becomes Least Significant Bit. It is possible to swap only n-\/bits from int (32-\/bit) $\ast$buffer. 
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$buffer}]unsigned char (32-\/bit) data pointer. \item[{\em bitcount}]how many bits to swap. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+swapped bit count (positive) or error code (negative). 
+\end{DoxyReturn}
+\hypertarget{libswd_8c_a6d93a36876e62c9a05171cebcdb4b446}{
+\index{libswd.c@{libswd.c}!swd\_\-bin32\_\-parity\_\-even@{swd\_\-bin32\_\-parity\_\-even}}
+\index{swd\_\-bin32\_\-parity\_\-even@{swd\_\-bin32\_\-parity\_\-even}!libswd.c@{libswd.c}}
+\subsubsection[{swd\_\-bin32\_\-parity\_\-even}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-bin32\_\-parity\_\-even (
+\begin{DoxyParamCaption}
+\item[{int $\ast$}]{ data, }
+\item[{char $\ast$}]{ parity}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8c_a6d93a36876e62c9a05171cebcdb4b446}
+
+
+Data parity calculator, calculates even parity on integer type. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$data}]source data pointer. \item[{\em $\ast$parity}]resulting data pointer. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+negative value on error, 0 or 1 as parity result. 
+\end{DoxyReturn}
+\hypertarget{libswd_8c_a5ca7ae0d5ceab442348c9a03e58d54eb}{
+\index{libswd.c@{libswd.c}!swd\_\-bin32\_\-print@{swd\_\-bin32\_\-print}}
+\index{swd\_\-bin32\_\-print@{swd\_\-bin32\_\-print}!libswd.c@{libswd.c}}
+\subsubsection[{swd\_\-bin32\_\-print}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-bin32\_\-print (
+\begin{DoxyParamCaption}
+\item[{int $\ast$}]{ data}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8c_a5ca7ae0d5ceab442348c9a03e58d54eb}
+
+
+Prints binary data of an integer value on the screen. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$data}]source data pointer. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of characters printed. 
+\end{DoxyReturn}
+\hypertarget{libswd_8c_a271c7fcdfe6cf9d5177bd2fca4e02497}{
+\index{libswd.c@{libswd.c}!swd\_\-bin32\_\-string@{swd\_\-bin32\_\-string}}
+\index{swd\_\-bin32\_\-string@{swd\_\-bin32\_\-string}!libswd.c@{libswd.c}}
+\subsubsection[{swd\_\-bin32\_\-string}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ swd\_\-bin32\_\-string (
+\begin{DoxyParamCaption}
+\item[{int $\ast$}]{ data}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8c_a271c7fcdfe6cf9d5177bd2fca4e02497}
+
+
+Generates string containing binary data of an integer value. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$data}]source data pointer. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+pointer to the resulting string. 
+\end{DoxyReturn}
+\hypertarget{libswd_8c_a6e7db0da4ca2f2649b826e68ef5b3caa}{
+\index{libswd.c@{libswd.c}!swd\_\-bin8\_\-bitswap@{swd\_\-bin8\_\-bitswap}}
+\index{swd\_\-bin8\_\-bitswap@{swd\_\-bin8\_\-bitswap}!libswd.c@{libswd.c}}
+\subsubsection[{swd\_\-bin8\_\-bitswap}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-bin8\_\-bitswap (
+\begin{DoxyParamCaption}
+\item[{unsigned char $\ast$}]{ buffer, }
+\item[{int}]{ bitcount}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8c_a6e7db0da4ca2f2649b826e68ef5b3caa}
+
+
+Bit swap helper function that reverse bit order in char $\ast$buffer. 
+
+Most Significant Bit becomes Least Significant Bit. It is possible to swap only n-\/bits from char (8-\/bit) $\ast$buffer. 
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$buffer}]unsigned char (8-\/bit) data pointer. \item[{\em bitcount}]how many bits to swap. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+swapped bit count (positive) or error code (negative). 
+\end{DoxyReturn}
+\hypertarget{libswd_8c_adadd09e0dcd8877a99e7983d5d98e882}{
+\index{libswd.c@{libswd.c}!swd\_\-bin8\_\-parity\_\-even@{swd\_\-bin8\_\-parity\_\-even}}
+\index{swd\_\-bin8\_\-parity\_\-even@{swd\_\-bin8\_\-parity\_\-even}!libswd.c@{libswd.c}}
+\subsubsection[{swd\_\-bin8\_\-parity\_\-even}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-bin8\_\-parity\_\-even (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{ data, }
+\item[{char $\ast$}]{ parity}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8c_adadd09e0dcd8877a99e7983d5d98e882}
+
+
+Data parity calculator, calculates even parity on char type. 
+
+Some comments on the function behavior.
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$data}]source data pointer. \item[{\em $\ast$parity}]resulting data pointer. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+negative value on error, 0 or 1 as parity result. 
+\end{DoxyReturn}
+\hypertarget{libswd_8c_aa245c280d14d50118fa1ce5e090a596b}{
+\index{libswd.c@{libswd.c}!swd\_\-bin8\_\-print@{swd\_\-bin8\_\-print}}
+\index{swd\_\-bin8\_\-print@{swd\_\-bin8\_\-print}!libswd.c@{libswd.c}}
+\subsubsection[{swd\_\-bin8\_\-print}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-bin8\_\-print (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{ data}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8c_aa245c280d14d50118fa1ce5e090a596b}
+
+
+Prints binary data of a char value on the screen. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$data}]source data pointer. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of characters printed. 
+\end{DoxyReturn}
+\hypertarget{libswd_8c_a3570e6b4032cde907cb137892697bac9}{
+\index{libswd.c@{libswd.c}!swd\_\-bin8\_\-string@{swd\_\-bin8\_\-string}}
+\index{swd\_\-bin8\_\-string@{swd\_\-bin8\_\-string}!libswd.c@{libswd.c}}
+\subsubsection[{swd\_\-bin8\_\-string}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ swd\_\-bin8\_\-string (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{ data}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8c_a3570e6b4032cde907cb137892697bac9}
+
+
+Generates string containing binary data of a char value. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$data}]source data pointer. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+pointer to the resulting string. 
+\end{DoxyReturn}
+\hypertarget{libswd_8c_afbae73ccf42657390d11d645fcc456d8}{
+\index{libswd.c@{libswd.c}!swd\_\-bitgen8\_\-request@{swd\_\-bitgen8\_\-request}}
+\index{swd\_\-bitgen8\_\-request@{swd\_\-bitgen8\_\-request}!libswd.c@{libswd.c}}
+\subsubsection[{swd\_\-bitgen8\_\-request}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-bitgen8\_\-request (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-ctx\_\-t} $\ast$}]{ swdctx, }
+\item[{char $\ast$}]{ APnDP, }
+\item[{char $\ast$}]{ RnW, }
+\item[{char $\ast$}]{ addr, }
+\item[{char $\ast$}]{ request}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8c_afbae73ccf42657390d11d645fcc456d8}
+
+
+Generate 8-\/bit SWD-\/REQUEST packet contents with provided parameters. 
+
+Note that parity bit value is calculated automatically. 
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$swdctx}]swd context pointer. \item[{\em $\ast$APnDP}]AccessPort (high) or DebugPort (low) access type pointer. \item[{\em $\ast$RnW}]Read (high) or Write (low) operation type pointer. \item[{\em $\ast$addr}]target register address value pointer. \item[{\em $\ast$request}]pointer where to store resulting packet. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of generated packets (1), or SWD\_\-ERROR\_\-CODE on failure. 
+\end{DoxyReturn}
+\hypertarget{libswd_8c_aae7d6660b4fd10d0d1105d74257b8ac7}{
+\index{libswd.c@{libswd.c}!swd\_\-bus\_\-read\_\-ack@{swd\_\-bus\_\-read\_\-ack}}
+\index{swd\_\-bus\_\-read\_\-ack@{swd\_\-bus\_\-read\_\-ack}!libswd.c@{libswd.c}}
+\subsubsection[{swd\_\-bus\_\-read\_\-ack}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-bus\_\-read\_\-ack (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-ctx\_\-t} $\ast$}]{ swdctx, }
+\item[{{\bf swd\_\-operation\_\-t}}]{ operation, }
+\item[{char $\ast$$\ast$}]{ ack}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8c_aae7d6660b4fd10d0d1105d74257b8ac7}
+
+
+Perform ACK read into $\ast$ack and verify received data. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$swdctx}]swd context pointer. \item[{\em operation}]type of action to perform with generated request. \item[{\em $\ast$ack}]pointer to the result location. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of commands processed, or SWD\_\-ERROR\_\-CODE on failure. 
+\end{DoxyReturn}
+\hypertarget{libswd_8c_a45c79a01998ae0e845ee425c432e181d}{
+\index{libswd.c@{libswd.c}!swd\_\-bus\_\-read\_\-data\_\-p@{swd\_\-bus\_\-read\_\-data\_\-p}}
+\index{swd\_\-bus\_\-read\_\-data\_\-p@{swd\_\-bus\_\-read\_\-data\_\-p}!libswd.c@{libswd.c}}
+\subsubsection[{swd\_\-bus\_\-read\_\-data\_\-p}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-bus\_\-read\_\-data\_\-p (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-ctx\_\-t} $\ast$}]{ swdctx, }
+\item[{{\bf swd\_\-operation\_\-t}}]{ operation, }
+\item[{int $\ast$$\ast$}]{ data, }
+\item[{char $\ast$$\ast$}]{ parity}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8c_a45c79a01998ae0e845ee425c432e181d}
+
+
+Perform (MISO) data read. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$swdctx}]swd context pointer. \item[{\em operation}]type of action to perform on generated command. \item[{\em $\ast$data}]payload value pointer. \item[{\em $\ast$parity}]payload parity value pointer. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of elements processed, or SWD\_\-ERROR\_\-CODE on failure. 
+\end{DoxyReturn}
+\hypertarget{libswd_8c_abb32abd798b3b1ffa14573e4f139c079}{
+\index{libswd.c@{libswd.c}!swd\_\-bus\_\-setdir\_\-miso@{swd\_\-bus\_\-setdir\_\-miso}}
+\index{swd\_\-bus\_\-setdir\_\-miso@{swd\_\-bus\_\-setdir\_\-miso}!libswd.c@{libswd.c}}
+\subsubsection[{swd\_\-bus\_\-setdir\_\-miso}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-bus\_\-setdir\_\-miso (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-ctx\_\-t} $\ast$}]{ swdctx}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8c_abb32abd798b3b1ffa14573e4f139c079}
+
+
+Append command queue with TRN READ/MISO, if previous command was WRITE/MOSI. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$swdctx}]swd context pointer. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of elements appended, or SWD\_\-ERROR\_\-CODE on failure. 
+\end{DoxyReturn}
+\hypertarget{libswd_8c_a342a54175498a1cd4a2668a189977012}{
+\index{libswd.c@{libswd.c}!swd\_\-bus\_\-setdir\_\-mosi@{swd\_\-bus\_\-setdir\_\-mosi}}
+\index{swd\_\-bus\_\-setdir\_\-mosi@{swd\_\-bus\_\-setdir\_\-mosi}!libswd.c@{libswd.c}}
+\subsubsection[{swd\_\-bus\_\-setdir\_\-mosi}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-bus\_\-setdir\_\-mosi (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-ctx\_\-t} $\ast$}]{ swdctx}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8c_a342a54175498a1cd4a2668a189977012}
+
+
+Append command queue with TRN WRITE/MOSI, if previous command was READ/MISO. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$swdctx}]swd context pointer. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of elements appended, or SWD\_\-ERROR\_\-CODE on failure. 
+\end{DoxyReturn}
+\hypertarget{libswd_8c_ad0ae33bb778d9c0bba3fe5f74adc8d22}{
+\index{libswd.c@{libswd.c}!swd\_\-bus\_\-write\_\-control@{swd\_\-bus\_\-write\_\-control}}
+\index{swd\_\-bus\_\-write\_\-control@{swd\_\-bus\_\-write\_\-control}!libswd.c@{libswd.c}}
+\subsubsection[{swd\_\-bus\_\-write\_\-control}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-bus\_\-write\_\-control (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-ctx\_\-t} $\ast$}]{ swdctx, }
+\item[{{\bf swd\_\-operation\_\-t}}]{ operation, }
+\item[{char $\ast$}]{ ctlmsg, }
+\item[{int}]{ len}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8c_ad0ae33bb778d9c0bba3fe5f74adc8d22}
+
+
+Write CONTROL byte to the Target's DAP. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$swdctx}]swd context. \item[{\em operation}]can be SWD\_\-OPERATION\_\-ENQUEUE or SWD\_\-OPERATION\_\-EXECUTE. \item[{\em $\ast$ctlmsg}]byte/char array that contains control payload. \item[{\em len}]number of bytes in the $\ast$ctlmsg to send. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of bytes sent or SWD\_\-ERROR\_\-CODE on failure. 
+\end{DoxyReturn}
+\hypertarget{libswd_8c_a014280b7d9a07a14862f16922827f50a}{
+\index{libswd.c@{libswd.c}!swd\_\-bus\_\-write\_\-data\_\-ap@{swd\_\-bus\_\-write\_\-data\_\-ap}}
+\index{swd\_\-bus\_\-write\_\-data\_\-ap@{swd\_\-bus\_\-write\_\-data\_\-ap}!libswd.c@{libswd.c}}
+\subsubsection[{swd\_\-bus\_\-write\_\-data\_\-ap}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-bus\_\-write\_\-data\_\-ap (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-ctx\_\-t} $\ast$}]{ swdctx, }
+\item[{{\bf swd\_\-operation\_\-t}}]{ operation, }
+\item[{int $\ast$}]{ data}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8c_a014280b7d9a07a14862f16922827f50a}
+
+
+Perform (MOSI) data write with automatic parity calculation. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$swdctx}]swd context pointer. \item[{\em operation}]type of action to perform on generated command. \item[{\em $\ast$data}]payload value pointer. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of elements processed, or SWD\_\-ERROR\_\-CODE on failure. 
+\end{DoxyReturn}
+\hypertarget{libswd_8c_ac1948d1f82a3166de4de43dae48b7413}{
+\index{libswd.c@{libswd.c}!swd\_\-bus\_\-write\_\-data\_\-p@{swd\_\-bus\_\-write\_\-data\_\-p}}
+\index{swd\_\-bus\_\-write\_\-data\_\-p@{swd\_\-bus\_\-write\_\-data\_\-p}!libswd.c@{libswd.c}}
+\subsubsection[{swd\_\-bus\_\-write\_\-data\_\-p}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-bus\_\-write\_\-data\_\-p (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-ctx\_\-t} $\ast$}]{ swdctx, }
+\item[{{\bf swd\_\-operation\_\-t}}]{ operation, }
+\item[{int $\ast$}]{ data, }
+\item[{char $\ast$}]{ parity}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8c_ac1948d1f82a3166de4de43dae48b7413}
+
+
+Perform (MOSI) data write with provided parity value. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$swdctx}]swd context pointer. \item[{\em operation}]type of action to perform on generated command. \item[{\em $\ast$data}]payload value pointer. \item[{\em $\ast$parity}]payload parity value pointer. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of elements processed, or SWD\_\-ERROR\_\-CODE on failure. 
+\end{DoxyReturn}
+\hypertarget{libswd_8c_a36141f037b00ea981cf771d6061bdfd6}{
+\index{libswd.c@{libswd.c}!swd\_\-bus\_\-write\_\-request@{swd\_\-bus\_\-write\_\-request}}
+\index{swd\_\-bus\_\-write\_\-request@{swd\_\-bus\_\-write\_\-request}!libswd.c@{libswd.c}}
+\subsubsection[{swd\_\-bus\_\-write\_\-request}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-bus\_\-write\_\-request (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-ctx\_\-t} $\ast$}]{ swdctx, }
+\item[{{\bf swd\_\-operation\_\-t}}]{ operation, }
+\item[{char $\ast$}]{ APnDP, }
+\item[{char $\ast$}]{ RnW, }
+\item[{char $\ast$}]{ addr}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8c_a36141f037b00ea981cf771d6061bdfd6}
+
+
+Perform Request. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$swdctx}]swd context pointer. \item[{\em operation}]type of action to perform with generated request. \item[{\em $\ast$APnDP}]AccessPort (high) or DebugPort (low) access value pointer. \item[{\em $\ast$RnW}]Read (high) or Write (low) access value pointer. \item[{\em $\ast$addr}]target register address value pointer. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of commands processed, or SWD\_\-ERROR\_\-CODE on failure. 
+\end{DoxyReturn}
+\hypertarget{libswd_8c_a3bc721b722709fda46962cbbe6f289a6}{
+\index{libswd.c@{libswd.c}!swd\_\-cmd\_\-enqueue@{swd\_\-cmd\_\-enqueue}}
+\index{swd\_\-cmd\_\-enqueue@{swd\_\-cmd\_\-enqueue}!libswd.c@{libswd.c}}
+\subsubsection[{swd\_\-cmd\_\-enqueue}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-cmd\_\-enqueue (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-ctx\_\-t} $\ast$}]{ swdctx, }
+\item[{{\bf swd\_\-cmd\_\-t} $\ast$}]{ cmd}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8c_a3bc721b722709fda46962cbbe6f289a6}
+
+
+Append selected command to a context's command queue. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$swdctx}]swd context pointer containing the command queue. \item[{\em $\ast$cmd}]command to be appended to the context's command queue. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of elements appended or SWD\_\-ERROR\_\-CODE on failure. 
+\end{DoxyReturn}
+\hypertarget{libswd_8c_a4d9e77e67b6167185b86f76df9b15cbd}{
+\index{libswd.c@{libswd.c}!swd\_\-cmd\_\-enqueue\_\-miso\_\-ack@{swd\_\-cmd\_\-enqueue\_\-miso\_\-ack}}
+\index{swd\_\-cmd\_\-enqueue\_\-miso\_\-ack@{swd\_\-cmd\_\-enqueue\_\-miso\_\-ack}!libswd.c@{libswd.c}}
+\subsubsection[{swd\_\-cmd\_\-enqueue\_\-miso\_\-ack}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-cmd\_\-enqueue\_\-miso\_\-ack (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-ctx\_\-t} $\ast$}]{ swdctx, }
+\item[{char $\ast$$\ast$}]{ ack}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8c_a4d9e77e67b6167185b86f76df9b15cbd}
+
+
+Append queue with ACK read. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$swdctx}]swd context pointer. \item[{\em $\ast$ack}]packet value pointer. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of elements appended (1), or SWD\_\-ERROR\_\-CODE on failure. 
+\end{DoxyReturn}
+\hypertarget{libswd_8c_aa3a012555652c27c0e375097b392534b}{
+\index{libswd.c@{libswd.c}!swd\_\-cmd\_\-enqueue\_\-miso\_\-data@{swd\_\-cmd\_\-enqueue\_\-miso\_\-data}}
+\index{swd\_\-cmd\_\-enqueue\_\-miso\_\-data@{swd\_\-cmd\_\-enqueue\_\-miso\_\-data}!libswd.c@{libswd.c}}
+\subsubsection[{swd\_\-cmd\_\-enqueue\_\-miso\_\-data}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-cmd\_\-enqueue\_\-miso\_\-data (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-ctx\_\-t} $\ast$}]{ swdctx, }
+\item[{int $\ast$$\ast$}]{ data}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8c_aa3a012555652c27c0e375097b392534b}
+
+
+Append command queue with data read. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$swdctx}]swd context pointer. \item[{\em $\ast$data}]data pointer. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+of elements appended (1), or SWD\_\-ERROR\_\-CODE on failure. 
+\end{DoxyReturn}
+\hypertarget{libswd_8c_a1afca108b064601dfeb517327b0bb275}{
+\index{libswd.c@{libswd.c}!swd\_\-cmd\_\-enqueue\_\-miso\_\-data\_\-p@{swd\_\-cmd\_\-enqueue\_\-miso\_\-data\_\-p}}
+\index{swd\_\-cmd\_\-enqueue\_\-miso\_\-data\_\-p@{swd\_\-cmd\_\-enqueue\_\-miso\_\-data\_\-p}!libswd.c@{libswd.c}}
+\subsubsection[{swd\_\-cmd\_\-enqueue\_\-miso\_\-data\_\-p}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-cmd\_\-enqueue\_\-miso\_\-data\_\-p (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-ctx\_\-t} $\ast$}]{ swdctx, }
+\item[{int $\ast$$\ast$}]{ data, }
+\item[{char $\ast$$\ast$}]{ parity}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8c_a1afca108b064601dfeb517327b0bb275}
+
+
+Append command queue with data and parity read. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$swdctx}]swd context pointer. \item[{\em $\ast$data}]data value pointer. \item[{\em $\ast$parity}]parity value pointer. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of elements appended (2), or SWD\_\-ERROR\_\-CODE on failure. 
+\end{DoxyReturn}
+\hypertarget{libswd_8c_a1e7330acb5e3b8c7f41a82121e26decc}{
+\index{libswd.c@{libswd.c}!swd\_\-cmd\_\-enqueue\_\-miso\_\-n\_\-data\_\-p@{swd\_\-cmd\_\-enqueue\_\-miso\_\-n\_\-data\_\-p}}
+\index{swd\_\-cmd\_\-enqueue\_\-miso\_\-n\_\-data\_\-p@{swd\_\-cmd\_\-enqueue\_\-miso\_\-n\_\-data\_\-p}!libswd.c@{libswd.c}}
+\subsubsection[{swd\_\-cmd\_\-enqueue\_\-miso\_\-n\_\-data\_\-p}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-cmd\_\-enqueue\_\-miso\_\-n\_\-data\_\-p (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-ctx\_\-t} $\ast$}]{ swdctx, }
+\item[{int $\ast$$\ast$}]{ data, }
+\item[{char $\ast$$\ast$}]{ parity, }
+\item[{int}]{ count}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8c_a1e7330acb5e3b8c7f41a82121e26decc}
+
+
+Append command queue with series of data and parity read. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$swdctx}]swd context pointer. \item[{\em $\ast$$\ast$data}]data value array pointer. \item[{\em $\ast$$\ast$parity}]parity value array pointer. \item[{\em count}]number of (data+parity) elements to read. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of elements appended (2$\ast$count), or SWD\_\-ERROR\_\-CODE on failure. 
+\end{DoxyReturn}
+\hypertarget{libswd_8c_ab74b1e2baff1d3f30c07440bc84b54fe}{
+\index{libswd.c@{libswd.c}!swd\_\-cmd\_\-enqueue\_\-miso\_\-nbit@{swd\_\-cmd\_\-enqueue\_\-miso\_\-nbit}}
+\index{swd\_\-cmd\_\-enqueue\_\-miso\_\-nbit@{swd\_\-cmd\_\-enqueue\_\-miso\_\-nbit}!libswd.c@{libswd.c}}
+\subsubsection[{swd\_\-cmd\_\-enqueue\_\-miso\_\-nbit}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-cmd\_\-enqueue\_\-miso\_\-nbit (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-ctx\_\-t} $\ast$}]{ swdctx, }
+\item[{char $\ast$$\ast$}]{ data, }
+\item[{int}]{ count}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8c_ab74b1e2baff1d3f30c07440bc84b54fe}
+
+
+Append command queue with bus binary read bit-\/by-\/bit operation. 
+
+This function will append command to the queue for each bit, and store one bit into single char array element, so read is not constrained to 8 bits. On error memory is released and apropriate error code is returned. Important: Memory pointed by $\ast$data must be allocated prior call! 
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$swdctx}]swd context pointer. \item[{\em $\ast$$\ast$data}]allocated data array to write result into. \item[{\em count}]number of bits to read (also the $\ast$$\ast$data size). \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of elements processed, or SWD\_\-ERROR\_\-CODE on failure. 
+\end{DoxyReturn}
+\hypertarget{libswd_8c_aea2f9fdb22f5f6364f005eab9425a060}{
+\index{libswd.c@{libswd.c}!swd\_\-cmd\_\-enqueue\_\-miso\_\-parity@{swd\_\-cmd\_\-enqueue\_\-miso\_\-parity}}
+\index{swd\_\-cmd\_\-enqueue\_\-miso\_\-parity@{swd\_\-cmd\_\-enqueue\_\-miso\_\-parity}!libswd.c@{libswd.c}}
+\subsubsection[{swd\_\-cmd\_\-enqueue\_\-miso\_\-parity}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-cmd\_\-enqueue\_\-miso\_\-parity (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-ctx\_\-t} $\ast$}]{ swdctx, }
+\item[{char $\ast$$\ast$}]{ parity}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8c_aea2f9fdb22f5f6364f005eab9425a060}
+
+
+Append command queue with parity bit read. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$swdctx}]swd context pointer. \item[{\em $\ast$parity}]parity value pointer. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of elements appended (1), or SWD\_\-ERROR\_\-CODE on failure. 
+\end{DoxyReturn}
+\hypertarget{libswd_8c_a63c0741f58c00faad012ccc9d29ca7c7}{
+\index{libswd.c@{libswd.c}!swd\_\-cmd\_\-enqueue\_\-miso\_\-trn@{swd\_\-cmd\_\-enqueue\_\-miso\_\-trn}}
+\index{swd\_\-cmd\_\-enqueue\_\-miso\_\-trn@{swd\_\-cmd\_\-enqueue\_\-miso\_\-trn}!libswd.c@{libswd.c}}
+\subsubsection[{swd\_\-cmd\_\-enqueue\_\-miso\_\-trn}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-cmd\_\-enqueue\_\-miso\_\-trn (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-ctx\_\-t} $\ast$}]{ swdctx}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8c_a63c0741f58c00faad012ccc9d29ca7c7}
+
+
+Append command queue with Turnaround activating MISO mode. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$swdctx}]swd context pointer. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+return number of elements appended (1), or SWD\_\-ERROR\_\-CODE on failure. 
+\end{DoxyReturn}
+\hypertarget{libswd_8c_af01d9ef59271c478d8d68f7dde27a77f}{
+\index{libswd.c@{libswd.c}!swd\_\-cmd\_\-enqueue\_\-mosi\_\-control@{swd\_\-cmd\_\-enqueue\_\-mosi\_\-control}}
+\index{swd\_\-cmd\_\-enqueue\_\-mosi\_\-control@{swd\_\-cmd\_\-enqueue\_\-mosi\_\-control}!libswd.c@{libswd.c}}
+\subsubsection[{swd\_\-cmd\_\-enqueue\_\-mosi\_\-control}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-cmd\_\-enqueue\_\-mosi\_\-control (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-ctx\_\-t} $\ast$}]{ swdctx, }
+\item[{char $\ast$}]{ ctlmsg, }
+\item[{int}]{ len}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8c_af01d9ef59271c478d8d68f7dde27a77f}
+
+
+Append command queue with len-\/octet size control seruence. 
+
+This control sequence can be used for instance to send payload of packets switching DAP between JTAG and SWD mode. 
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$swdctx}]swd context pointer. \item[{\em $\ast$ctlmsg}]control message array pointer. \item[{\em len}]number of elements to send from $\ast$ctlmsg. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of elements appended (len), or SWD\_\-ERROR\_\-CODE on failure. 
+\end{DoxyReturn}
+\hypertarget{libswd_8c_a0492d6b4eb2ebaa14fd72a5fa7f57475}{
+\index{libswd.c@{libswd.c}!swd\_\-cmd\_\-enqueue\_\-mosi\_\-dap\_\-reset@{swd\_\-cmd\_\-enqueue\_\-mosi\_\-dap\_\-reset}}
+\index{swd\_\-cmd\_\-enqueue\_\-mosi\_\-dap\_\-reset@{swd\_\-cmd\_\-enqueue\_\-mosi\_\-dap\_\-reset}!libswd.c@{libswd.c}}
+\subsubsection[{swd\_\-cmd\_\-enqueue\_\-mosi\_\-dap\_\-reset}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-cmd\_\-enqueue\_\-mosi\_\-dap\_\-reset (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-ctx\_\-t} $\ast$}]{ swdctx}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8c_a0492d6b4eb2ebaa14fd72a5fa7f57475}
+
+
+Append command queue with SW-\/DP-\/RESET sequence. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$swdctx}]swd context pointer. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of elements appended, or SWD\_\-ERROR\_\-CODE on failure. 
+\end{DoxyReturn}
+\hypertarget{libswd_8c_a02b06ae68b6e2a7b50f233c695b45548}{
+\index{libswd.c@{libswd.c}!swd\_\-cmd\_\-enqueue\_\-mosi\_\-data@{swd\_\-cmd\_\-enqueue\_\-mosi\_\-data}}
+\index{swd\_\-cmd\_\-enqueue\_\-mosi\_\-data@{swd\_\-cmd\_\-enqueue\_\-mosi\_\-data}!libswd.c@{libswd.c}}
+\subsubsection[{swd\_\-cmd\_\-enqueue\_\-mosi\_\-data}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-cmd\_\-enqueue\_\-mosi\_\-data (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-ctx\_\-t} $\ast$}]{ swdctx, }
+\item[{int $\ast$}]{ data}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8c_a02b06ae68b6e2a7b50f233c695b45548}
+
+
+Append command queue with data and parity write. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$swdctx}]swd context pointer. \item[{\em $\ast$data}]data value pointer. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of elements appended (1), or SWD\_\-ERROR\_\-CODE on failure. 
+\end{DoxyReturn}
+\hypertarget{libswd_8c_a22a5c50a280f62a84597f71b7f468a99}{
+\index{libswd.c@{libswd.c}!swd\_\-cmd\_\-enqueue\_\-mosi\_\-data\_\-ap@{swd\_\-cmd\_\-enqueue\_\-mosi\_\-data\_\-ap}}
+\index{swd\_\-cmd\_\-enqueue\_\-mosi\_\-data\_\-ap@{swd\_\-cmd\_\-enqueue\_\-mosi\_\-data\_\-ap}!libswd.c@{libswd.c}}
+\subsubsection[{swd\_\-cmd\_\-enqueue\_\-mosi\_\-data\_\-ap}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-cmd\_\-enqueue\_\-mosi\_\-data\_\-ap (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-ctx\_\-t} $\ast$}]{ swdctx, }
+\item[{int $\ast$}]{ data}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8c_a22a5c50a280f62a84597f71b7f468a99}
+
+
+Append command queue with data and automatic parity write. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$swdctx}]swd context pointer. \item[{\em $\ast$data}]data value pointer. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of elements appended (2), or SWD\_\-ERROR\_\-CODE on failure. 
+\end{DoxyReturn}
+\hypertarget{libswd_8c_a25048650d706a8ae26793489acb46f5a}{
+\index{libswd.c@{libswd.c}!swd\_\-cmd\_\-enqueue\_\-mosi\_\-data\_\-p@{swd\_\-cmd\_\-enqueue\_\-mosi\_\-data\_\-p}}
+\index{swd\_\-cmd\_\-enqueue\_\-mosi\_\-data\_\-p@{swd\_\-cmd\_\-enqueue\_\-mosi\_\-data\_\-p}!libswd.c@{libswd.c}}
+\subsubsection[{swd\_\-cmd\_\-enqueue\_\-mosi\_\-data\_\-p}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-cmd\_\-enqueue\_\-mosi\_\-data\_\-p (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-ctx\_\-t} $\ast$}]{ swdctx, }
+\item[{int $\ast$}]{ data, }
+\item[{char $\ast$}]{ parity}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8c_a25048650d706a8ae26793489acb46f5a}
+
+
+Append command queue with data and provided parity write. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$swdctx}]swd context pointer. \item[{\em $\ast$data}]data value pointer. \item[{\em $\ast$parity}]parity value pointer. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of elements appended (2), or SWD\_\-ERROR\_\-CODE on failure. 
+\end{DoxyReturn}
+\hypertarget{libswd_8c_a11a8ab26aa798f18303be8364ef55f48}{
+\index{libswd.c@{libswd.c}!swd\_\-cmd\_\-enqueue\_\-mosi\_\-idle@{swd\_\-cmd\_\-enqueue\_\-mosi\_\-idle}}
+\index{swd\_\-cmd\_\-enqueue\_\-mosi\_\-idle@{swd\_\-cmd\_\-enqueue\_\-mosi\_\-idle}!libswd.c@{libswd.c}}
+\subsubsection[{swd\_\-cmd\_\-enqueue\_\-mosi\_\-idle}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-cmd\_\-enqueue\_\-mosi\_\-idle (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-ctx\_\-t} $\ast$}]{ swdctx}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8c_a11a8ab26aa798f18303be8364ef55f48}
+
+
+Append command queue with idle sequence. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$swdctx}]swd context pointer. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of elements appended, or SWD\_\-ERROR\_\-CODE on failure. 
+\end{DoxyReturn}
+\hypertarget{libswd_8c_a314214b78c653c188f51f3324d623913}{
+\index{libswd.c@{libswd.c}!swd\_\-cmd\_\-enqueue\_\-mosi\_\-jtag2swd@{swd\_\-cmd\_\-enqueue\_\-mosi\_\-jtag2swd}}
+\index{swd\_\-cmd\_\-enqueue\_\-mosi\_\-jtag2swd@{swd\_\-cmd\_\-enqueue\_\-mosi\_\-jtag2swd}!libswd.c@{libswd.c}}
+\subsubsection[{swd\_\-cmd\_\-enqueue\_\-mosi\_\-jtag2swd}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-cmd\_\-enqueue\_\-mosi\_\-jtag2swd (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-ctx\_\-t} $\ast$}]{ swdctx}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8c_a314214b78c653c188f51f3324d623913}
+
+
+Append command queue with JTAG-\/TO-\/SWD DAP-\/switch sequence. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$swdctx}]swd context pointer. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of elements appended, or SWD\_\-ERROR\_\-CODE on failure. 
+\end{DoxyReturn}
+\hypertarget{libswd_8c_adadb812d15558c6db4b9aa753b60e15c}{
+\index{libswd.c@{libswd.c}!swd\_\-cmd\_\-enqueue\_\-mosi\_\-n\_\-data\_\-ap@{swd\_\-cmd\_\-enqueue\_\-mosi\_\-n\_\-data\_\-ap}}
+\index{swd\_\-cmd\_\-enqueue\_\-mosi\_\-n\_\-data\_\-ap@{swd\_\-cmd\_\-enqueue\_\-mosi\_\-n\_\-data\_\-ap}!libswd.c@{libswd.c}}
+\subsubsection[{swd\_\-cmd\_\-enqueue\_\-mosi\_\-n\_\-data\_\-ap}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-cmd\_\-enqueue\_\-mosi\_\-n\_\-data\_\-ap (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-ctx\_\-t} $\ast$}]{ swdctx, }
+\item[{int $\ast$$\ast$}]{ data, }
+\item[{int}]{ count}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8c_adadb812d15558c6db4b9aa753b60e15c}
+
+
+Append command queue with series of data and automatic parity writes. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$swdctx}]swd context pointer. \item[{\em $\ast$$\ast$data}]data value array pointer. \item[{\em count}]number of (data+parity) elements to read. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of elements appended (2$\ast$count), or SWD\_\-ERROR\_\-CODE on failure. 
+\end{DoxyReturn}
+\hypertarget{libswd_8c_afd4f9d8e098dee2708c4b3cc1e2775e6}{
+\index{libswd.c@{libswd.c}!swd\_\-cmd\_\-enqueue\_\-mosi\_\-n\_\-data\_\-p@{swd\_\-cmd\_\-enqueue\_\-mosi\_\-n\_\-data\_\-p}}
+\index{swd\_\-cmd\_\-enqueue\_\-mosi\_\-n\_\-data\_\-p@{swd\_\-cmd\_\-enqueue\_\-mosi\_\-n\_\-data\_\-p}!libswd.c@{libswd.c}}
+\subsubsection[{swd\_\-cmd\_\-enqueue\_\-mosi\_\-n\_\-data\_\-p}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-cmd\_\-enqueue\_\-mosi\_\-n\_\-data\_\-p (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-ctx\_\-t} $\ast$}]{ swdctx, }
+\item[{int $\ast$$\ast$}]{ data, }
+\item[{char $\ast$$\ast$}]{ parity, }
+\item[{int}]{ count}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8c_afd4f9d8e098dee2708c4b3cc1e2775e6}
+
+
+Append command queue with series of data and provided parity writes. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$swdctx}]swd context pointer. \item[{\em $\ast$$\ast$data}]data value array pointer. \item[{\em $\ast$$\ast$parity}]parity value array pointer. \item[{\em count}]number of (data+parity) elements to read. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of elements appended (2$\ast$count), or SWD\_\-ERROR\_\-CODE on failure. 
+\end{DoxyReturn}
+\hypertarget{libswd_8c_a5114809ee4b3f3dbdcef7070e76825cd}{
+\index{libswd.c@{libswd.c}!swd\_\-cmd\_\-enqueue\_\-mosi\_\-nbit@{swd\_\-cmd\_\-enqueue\_\-mosi\_\-nbit}}
+\index{swd\_\-cmd\_\-enqueue\_\-mosi\_\-nbit@{swd\_\-cmd\_\-enqueue\_\-mosi\_\-nbit}!libswd.c@{libswd.c}}
+\subsubsection[{swd\_\-cmd\_\-enqueue\_\-mosi\_\-nbit}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-cmd\_\-enqueue\_\-mosi\_\-nbit (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-ctx\_\-t} $\ast$}]{ swdctx, }
+\item[{char $\ast$}]{ data, }
+\item[{int}]{ count}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8c_a5114809ee4b3f3dbdcef7070e76825cd}
+
+
+Append command queue with bus binary write bit-\/by-\/bit operation. 
+
+This function will append command to the queue for each bit and store one bit into single char array element, so read is not constrained to 8 bits. On error memory is released and apropriate error code is returned. Important: Memory pointed by $\ast$data must be allocated prior call! 
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$swdctx}]swd context pointer. \item[{\em $\ast$$\ast$data}]allocated data array to write result into. \item[{\em count}]number of bits to read (also the $\ast$$\ast$data size). \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of elements processed, or SWD\_\-ERROR\_\-CODE on failure. 
+\end{DoxyReturn}
+\hypertarget{libswd_8c_ac972e99a9d163f30b983ce6ed0d2ed02}{
+\index{libswd.c@{libswd.c}!swd\_\-cmd\_\-enqueue\_\-mosi\_\-parity@{swd\_\-cmd\_\-enqueue\_\-mosi\_\-parity}}
+\index{swd\_\-cmd\_\-enqueue\_\-mosi\_\-parity@{swd\_\-cmd\_\-enqueue\_\-mosi\_\-parity}!libswd.c@{libswd.c}}
+\subsubsection[{swd\_\-cmd\_\-enqueue\_\-mosi\_\-parity}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-cmd\_\-enqueue\_\-mosi\_\-parity (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-ctx\_\-t} $\ast$}]{ swdctx, }
+\item[{char $\ast$}]{ parity}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8c_ac972e99a9d163f30b983ce6ed0d2ed02}
+
+
+Append command queue with parity bit write. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$swdctx}]swd context pointer. \item[{\em $\ast$parity}]parity value pointer. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of elements appended (1), or SWD\_\-ERROR\_\-CODE on failure. 
+\end{DoxyReturn}
+\hypertarget{libswd_8c_a71bb2c003e1e1fb873ee70d4df04e651}{
+\index{libswd.c@{libswd.c}!swd\_\-cmd\_\-enqueue\_\-mosi\_\-request@{swd\_\-cmd\_\-enqueue\_\-mosi\_\-request}}
+\index{swd\_\-cmd\_\-enqueue\_\-mosi\_\-request@{swd\_\-cmd\_\-enqueue\_\-mosi\_\-request}!libswd.c@{libswd.c}}
+\subsubsection[{swd\_\-cmd\_\-enqueue\_\-mosi\_\-request}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-cmd\_\-enqueue\_\-mosi\_\-request (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-ctx\_\-t} $\ast$}]{ swdctx, }
+\item[{char $\ast$}]{ request}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8c_a71bb2c003e1e1fb873ee70d4df04e651}
+
+
+Appends command queue with SWD Request packet header. 
+
+Note that contents is not validated, so bad request can be sent as well. 
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$swdctx}]swd context pointer. \item[{\em $\ast$request}]pointer to the 8-\/bit request payload. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+return number elements appended (1), or SWD\_\-ERROR\_\-CODE on failure. 
+\end{DoxyReturn}
+\hypertarget{libswd_8c_aae11e98541fa6cf8526d59e4ae5bfff9}{
+\index{libswd.c@{libswd.c}!swd\_\-cmd\_\-enqueue\_\-mosi\_\-swd2jtag@{swd\_\-cmd\_\-enqueue\_\-mosi\_\-swd2jtag}}
+\index{swd\_\-cmd\_\-enqueue\_\-mosi\_\-swd2jtag@{swd\_\-cmd\_\-enqueue\_\-mosi\_\-swd2jtag}!libswd.c@{libswd.c}}
+\subsubsection[{swd\_\-cmd\_\-enqueue\_\-mosi\_\-swd2jtag}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-cmd\_\-enqueue\_\-mosi\_\-swd2jtag (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-ctx\_\-t} $\ast$}]{ swdctx}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8c_aae11e98541fa6cf8526d59e4ae5bfff9}
+
+
+Append command queue with SWD-\/TO-\/JTAG DAP-\/switch sequence. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$swdctx}]swd context pointer. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of elements appended, or SWD\_\-ERROR\_\-CODE on failure. 
+\end{DoxyReturn}
+\hypertarget{libswd_8c_adb3044c0cbebdf275aef0898b37c6fa6}{
+\index{libswd.c@{libswd.c}!swd\_\-cmd\_\-enqueue\_\-mosi\_\-trn@{swd\_\-cmd\_\-enqueue\_\-mosi\_\-trn}}
+\index{swd\_\-cmd\_\-enqueue\_\-mosi\_\-trn@{swd\_\-cmd\_\-enqueue\_\-mosi\_\-trn}!libswd.c@{libswd.c}}
+\subsubsection[{swd\_\-cmd\_\-enqueue\_\-mosi\_\-trn}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-cmd\_\-enqueue\_\-mosi\_\-trn (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-ctx\_\-t} $\ast$}]{ swdctx}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8c_adb3044c0cbebdf275aef0898b37c6fa6}
+
+
+Append command queue with Turnaround activating MOSI mode. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$swdctx}]swd context pointer. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+return number elements appended (1), or SWD\_\-ERROR\_\-CODE on failure. 
+\end{DoxyReturn}
+\hypertarget{libswd_8c_a966a561f341217ecc56d31ed61c7758e}{
+\index{libswd.c@{libswd.c}!swd\_\-cmdq\_\-append@{swd\_\-cmdq\_\-append}}
+\index{swd\_\-cmdq\_\-append@{swd\_\-cmdq\_\-append}!libswd.c@{libswd.c}}
+\subsubsection[{swd\_\-cmdq\_\-append}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-cmdq\_\-append (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-cmd\_\-t} $\ast$}]{ cmdq, }
+\item[{{\bf swd\_\-cmd\_\-t} $\ast$}]{ cmd}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8c_a966a561f341217ecc56d31ed61c7758e}
+
+
+Append element pointed by $\ast$cmd at the end of the quque pointed by $\ast$cmdq. 
+
+After this operation queue will be pointed by appended element (ie. last element added becomes actual quque pointer to show what was added recently). 
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$cmdq}]pointer to any element on command queue \item[{\em $\ast$cmd}]pointer to the command to be appended \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of appended elements (one), SWD\_\-ERROR\_\-CODE on failure 
+\end{DoxyReturn}
+\hypertarget{libswd_8c_a431d401d67e26e8b983c6ead8c1b93eb}{
+\index{libswd.c@{libswd.c}!swd\_\-cmdq\_\-find\_\-root@{swd\_\-cmdq\_\-find\_\-root}}
+\index{swd\_\-cmdq\_\-find\_\-root@{swd\_\-cmdq\_\-find\_\-root}!libswd.c@{libswd.c}}
+\subsubsection[{swd\_\-cmdq\_\-find\_\-root}]{\setlength{\rightskip}{0pt plus 5cm}{\bf swd\_\-cmd\_\-t}$\ast$ swd\_\-cmdq\_\-find\_\-root (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-cmd\_\-t} $\ast$}]{ cmdq}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8c_a431d401d67e26e8b983c6ead8c1b93eb}
+
+
+Find queue root (first element). 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$cmdq}]pointer to any queue element \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+swd\_\-cmd\_\-t$\ast$ pointer to the first element (root), NULL on failure 
+\end{DoxyReturn}
+\hypertarget{libswd_8c_a66578e5c847f74079f2e13f3bd753d58}{
+\index{libswd.c@{libswd.c}!swd\_\-cmdq\_\-find\_\-tail@{swd\_\-cmdq\_\-find\_\-tail}}
+\index{swd\_\-cmdq\_\-find\_\-tail@{swd\_\-cmdq\_\-find\_\-tail}!libswd.c@{libswd.c}}
+\subsubsection[{swd\_\-cmdq\_\-find\_\-tail}]{\setlength{\rightskip}{0pt plus 5cm}{\bf swd\_\-cmd\_\-t}$\ast$ swd\_\-cmdq\_\-find\_\-tail (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-cmd\_\-t} $\ast$}]{ cmdq}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8c_a66578e5c847f74079f2e13f3bd753d58}
+
+
+Find queue tail (last element). 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$cmdq}]pointer to any queue element \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+swd\_\-cmd\_\-t$\ast$ pointer to the last element (tail), NULL on failure 
+\end{DoxyReturn}
+\hypertarget{libswd_8c_ad53379f5a7756cc91b01e867aaaa489d}{
+\index{libswd.c@{libswd.c}!swd\_\-cmdq\_\-flush@{swd\_\-cmdq\_\-flush}}
+\index{swd\_\-cmdq\_\-flush@{swd\_\-cmdq\_\-flush}!libswd.c@{libswd.c}}
+\subsubsection[{swd\_\-cmdq\_\-flush}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-cmdq\_\-flush (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-ctx\_\-t} $\ast$}]{ swdctx, }
+\item[{{\bf swd\_\-operation\_\-t}}]{ operation}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8c_ad53379f5a7756cc91b01e867aaaa489d}
+
+
+Flush command queue contents into interface driver. 
+
+Operation is specified by SWD\_\-OPERATION and can be used to select how to flush the queue, ie. head-\/only, tail-\/only, one, all, etc. 
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$swdctx}]swd context pointer. \item[{\em operation}]tells how to flush the queue. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of commands transmitted, or SWD\_\-ERROR\_\-CODE on failure. 
+\end{DoxyReturn}
+\hypertarget{libswd_8c_ab205547a46a4e87e040478cc230463d6}{
+\index{libswd.c@{libswd.c}!swd\_\-cmdq\_\-free@{swd\_\-cmdq\_\-free}}
+\index{swd\_\-cmdq\_\-free@{swd\_\-cmdq\_\-free}!libswd.c@{libswd.c}}
+\subsubsection[{swd\_\-cmdq\_\-free}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-cmdq\_\-free (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-cmd\_\-t} $\ast$}]{ cmdq}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8c_ab205547a46a4e87e040478cc230463d6}
+
+
+Free queue pointed by $\ast$cmdq element. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$cmdq}]pointer to any element on command queue \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of elements destroyed, SWD\_\-ERROR\_\-CODE on failure 
+\end{DoxyReturn}
+\hypertarget{libswd_8c_a583240dd9735d3192a6a895f4cefd89c}{
+\index{libswd.c@{libswd.c}!swd\_\-cmdq\_\-free\_\-head@{swd\_\-cmdq\_\-free\_\-head}}
+\index{swd\_\-cmdq\_\-free\_\-head@{swd\_\-cmdq\_\-free\_\-head}!libswd.c@{libswd.c}}
+\subsubsection[{swd\_\-cmdq\_\-free\_\-head}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-cmdq\_\-free\_\-head (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-cmd\_\-t} $\ast$}]{ cmdq}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8c_a583240dd9735d3192a6a895f4cefd89c}
+
+
+Free queue head up to $\ast$cmdq element. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$cmdq}]pointer to the element that becomes new queue root. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of elements destroyed, or SWD\_\-ERROR\_\-CODE on failure. 
+\end{DoxyReturn}
+\hypertarget{libswd_8c_a968846e75ffdbceafd2f4a3bd7f314b1}{
+\index{libswd.c@{libswd.c}!swd\_\-cmdq\_\-free\_\-tail@{swd\_\-cmdq\_\-free\_\-tail}}
+\index{swd\_\-cmdq\_\-free\_\-tail@{swd\_\-cmdq\_\-free\_\-tail}!libswd.c@{libswd.c}}
+\subsubsection[{swd\_\-cmdq\_\-free\_\-tail}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-cmdq\_\-free\_\-tail (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-cmd\_\-t} $\ast$}]{ cmdq}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8c_a968846e75ffdbceafd2f4a3bd7f314b1}
+
+
+Free queue tail starting after $\ast$cmdq element. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$cmdq}]pointer to the last element on the new queue. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of elements destroyed, or SWD\_\-ERROR\_\-CODE on failure. 
+\end{DoxyReturn}
+\hypertarget{libswd_8c_a185aba078d1c57df6331fd07fcf5630c}{
+\index{libswd.c@{libswd.c}!swd\_\-cmdq\_\-init@{swd\_\-cmdq\_\-init}}
+\index{swd\_\-cmdq\_\-init@{swd\_\-cmdq\_\-init}!libswd.c@{libswd.c}}
+\subsubsection[{swd\_\-cmdq\_\-init}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-cmdq\_\-init (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-cmd\_\-t} $\ast$}]{ cmdq}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8c_a185aba078d1c57df6331fd07fcf5630c}
+
+
+Initialize new queue element in memory that becomes a queue root. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$cmdq}]pointer to the command queue element of type \hyperlink{structswd__cmd__t}{swd\_\-cmd\_\-t} \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+SWD\_\-OK on success, SWD\_\-ERROR\_\-CODE code on failure 
+\end{DoxyReturn}
+\hypertarget{libswd_8c_a6758b95d2adfbfb9b95198f9b0b5462c}{
+\index{libswd.c@{libswd.c}!swd\_\-dap\_\-detect@{swd\_\-dap\_\-detect}}
+\index{swd\_\-dap\_\-detect@{swd\_\-dap\_\-detect}!libswd.c@{libswd.c}}
+\subsubsection[{swd\_\-dap\_\-detect}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-dap\_\-detect (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-ctx\_\-t} $\ast$}]{ swdctx, }
+\item[{{\bf swd\_\-operation\_\-t}}]{ operation, }
+\item[{int $\ast$$\ast$}]{ idcode}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8c_a6758b95d2adfbfb9b95198f9b0b5462c}
+
+
+Macro: Reset target DAP, select SW-\/DP, read out IDCODE. 
+
+This is the proper SW-\/DP initialization as stated by ARM Information Center. 
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$swdctx}]swd context pointer. \item[{\em operation}]type (SWD\_\-OPERATION\_\-ENQUEUE or SWD\_\-OPERATION\_\-EXECUTE). \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Target's IDCODE, or error code on failure. 
+\end{DoxyReturn}
+\hypertarget{libswd_8c_ae53937afaa64ce0b28bef3d8d093f65a}{
+\index{libswd.c@{libswd.c}!swd\_\-dap\_\-reset@{swd\_\-dap\_\-reset}}
+\index{swd\_\-dap\_\-reset@{swd\_\-dap\_\-reset}!libswd.c@{libswd.c}}
+\subsubsection[{swd\_\-dap\_\-reset}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-dap\_\-reset (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-ctx\_\-t} $\ast$}]{ swdctx, }
+\item[{{\bf swd\_\-operation\_\-t}}]{ operation}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8c_ae53937afaa64ce0b28bef3d8d093f65a}
+
+
+Debug Access Port Reset sends 50 CLK with TMS high that brings both SW-\/DP and JTAG-\/DP into reset state. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$swdctx}]swd context pointer. \item[{\em operation}]type (SWD\_\-OPERATION\_\-ENQUEUE or SWD\_\-OPERATION\_\-EXECUTE). \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of elements processed or SWD\_\-ERROR\_\-CODE code on failure. 
+\end{DoxyReturn}
+\hypertarget{libswd_8c_a0ffa1e7b48180a7c4bf05f2906a9cbb1}{
+\index{libswd.c@{libswd.c}!swd\_\-dap\_\-select@{swd\_\-dap\_\-select}}
+\index{swd\_\-dap\_\-select@{swd\_\-dap\_\-select}!libswd.c@{libswd.c}}
+\subsubsection[{swd\_\-dap\_\-select}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-dap\_\-select (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-ctx\_\-t} $\ast$}]{ swdctx, }
+\item[{{\bf swd\_\-operation\_\-t}}]{ operation}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8c_a0ffa1e7b48180a7c4bf05f2906a9cbb1}
+
+
+Activate SW-\/DP by sending out RESET and JTAG-\/TO-\/SWD sequence on SWDIOTMS line. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$swdctx}]swd context. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of control bytes executed, or error code on failre. 
+\end{DoxyReturn}
+\hypertarget{libswd_8c_a94b02a9cf4b72e2e76d6a9a34f34f96f}{
+\index{libswd.c@{libswd.c}!swd\_\-deinit@{swd\_\-deinit}}
+\index{swd\_\-deinit@{swd\_\-deinit}!libswd.c@{libswd.c}}
+\subsubsection[{swd\_\-deinit}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-deinit (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-ctx\_\-t} $\ast$}]{ swdctx}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8c_a94b02a9cf4b72e2e76d6a9a34f34f96f}
+
+
+De-\/initialize selected swd context and its command queue. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$swdctx}]swd context pointer. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of elements freed, or SWD\_\-ERROR\_\-CODE on failure. 
+\end{DoxyReturn}
+\hypertarget{libswd_8c_a0426ebebbebec92cc5c8342d1746f58c}{
+\index{libswd.c@{libswd.c}!swd\_\-deinit\_\-cmdq@{swd\_\-deinit\_\-cmdq}}
+\index{swd\_\-deinit\_\-cmdq@{swd\_\-deinit\_\-cmdq}!libswd.c@{libswd.c}}
+\subsubsection[{swd\_\-deinit\_\-cmdq}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-deinit\_\-cmdq (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-ctx\_\-t} $\ast$}]{ swdctx}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8c_a0426ebebbebec92cc5c8342d1746f58c}
+
+
+De-\/initialize command queue and free its memory on selected swd context. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$swdctx}]swd context pointer. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of commands freed, or SWD\_\-ERROR\_\-CODE on failure. 
+\end{DoxyReturn}
+\hypertarget{libswd_8c_ac53e7440e6d3c277df4e715665d1986d}{
+\index{libswd.c@{libswd.c}!swd\_\-deinit\_\-ctx@{swd\_\-deinit\_\-ctx}}
+\index{swd\_\-deinit\_\-ctx@{swd\_\-deinit\_\-ctx}!libswd.c@{libswd.c}}
+\subsubsection[{swd\_\-deinit\_\-ctx}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-deinit\_\-ctx (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-ctx\_\-t} $\ast$}]{ swdctx}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8c_ac53e7440e6d3c277df4e715665d1986d}
+
+
+De-\/initialize selected swd context and free its memory. 
+
+Note: This function will not free command queue for selected context! 
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$swdctx}]swd context pointer. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+SWD\_\-OK on success, SWD\_\-ERROR\_\-CODE on failure. 
+\end{DoxyReturn}
+\hypertarget{libswd_8c_a0a40c90253f99da07eae5e237be187b1}{
+\index{libswd.c@{libswd.c}!swd\_\-dp\_\-read\_\-idcode@{swd\_\-dp\_\-read\_\-idcode}}
+\index{swd\_\-dp\_\-read\_\-idcode@{swd\_\-dp\_\-read\_\-idcode}!libswd.c@{libswd.c}}
+\subsubsection[{swd\_\-dp\_\-read\_\-idcode}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-dp\_\-read\_\-idcode (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-ctx\_\-t} $\ast$}]{ swdctx, }
+\item[{{\bf swd\_\-operation\_\-t}}]{ operation, }
+\item[{int $\ast$$\ast$}]{ idcode}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8c_a0a40c90253f99da07eae5e237be187b1}
+
+
+Macro: Read out IDCODE register and return its value on function return. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$swdctx}]swd context pointer. \item[{\em operation}]operation type. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Target's IDCODE value or code error on failure. 
+\end{DoxyReturn}
+\hypertarget{libswd_8c_a2891df407bc8178e3ca45bd508822327}{
+\index{libswd.c@{libswd.c}!swd\_\-drv\_\-transmit@{swd\_\-drv\_\-transmit}}
+\index{swd\_\-drv\_\-transmit@{swd\_\-drv\_\-transmit}!libswd.c@{libswd.c}}
+\subsubsection[{swd\_\-drv\_\-transmit}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-drv\_\-transmit (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-ctx\_\-t} $\ast$}]{ swdctx, }
+\item[{{\bf swd\_\-cmd\_\-t} $\ast$}]{ cmd}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8c_a2891df407bc8178e3ca45bd508822327}
+
+
+Transmit selected command from the command queue to the interface driver. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$swdctx}]swd context pointer. \item[{\em $\ast$cmd}]pointer to the command to be sent. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of commands transmitted (1), or SWD\_\-ERROR\_\-CODE on failure. 
+\end{DoxyReturn}
+\hypertarget{libswd_8c_ad4f88acc646c06e6e81fbde8117c21af}{
+\index{libswd.c@{libswd.c}!swd\_\-init@{swd\_\-init}}
+\index{swd\_\-init@{swd\_\-init}!libswd.c@{libswd.c}}
+\subsubsection[{swd\_\-init}]{\setlength{\rightskip}{0pt plus 5cm}{\bf swd\_\-ctx\_\-t}$\ast$ swd\_\-init (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8c_ad4f88acc646c06e6e81fbde8117c21af}
+
+
+LibSWD initialization routine. 
+
+It should be called prior any operation made with libswd. It initializes command queue and basic parameters for context that is returned as pointer. \begin{DoxyReturn}{Returns}
+pointer to the initialized swd context. 
+\end{DoxyReturn}
+\hypertarget{libswd_8c_ab2228c114efd81e478ebc00e5bfe4c43}{
+\index{libswd.c@{libswd.c}!swd\_\-log@{swd\_\-log}}
+\index{swd\_\-log@{swd\_\-log}!libswd.c@{libswd.c}}
+\subsubsection[{swd\_\-log}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-log (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-ctx\_\-t} $\ast$}]{ swdctx, }
+\item[{{\bf swd\_\-loglevel\_\-t}}]{ loglevel, }
+\item[{char $\ast$}]{ msg, }
+\item[{}]{ ...}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8c_ab2228c114efd81e478ebc00e5bfe4c43}
+
+
+Put a message into swd context log at specified verbosity level. 
+
+If specified message's log level is lower than actual context configuration, message will be omitted. Verbosity level increases from 0 (silent) to 4 (debug). 
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$swdctx}]swd context. \item[{\em loglevel}]at which to put selected message. \item[{\em $\ast$msg}]message body with variable arguments as in \char`\"{}printf\char`\"{}. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of characters written or error code on failure. 
+\end{DoxyReturn}
+\hypertarget{libswd_8c_af30788d001ca964f2889f0d70e2eae8f}{
+\index{libswd.c@{libswd.c}!swd\_\-log\_\-level\_\-set@{swd\_\-log\_\-level\_\-set}}
+\index{swd\_\-log\_\-level\_\-set@{swd\_\-log\_\-level\_\-set}!libswd.c@{libswd.c}}
+\subsubsection[{swd\_\-log\_\-level\_\-set}]{\setlength{\rightskip}{0pt plus 5cm}int swd\_\-log\_\-level\_\-set (
+\begin{DoxyParamCaption}
+\item[{{\bf swd\_\-ctx\_\-t} $\ast$}]{ swdctx, }
+\item[{{\bf swd\_\-loglevel\_\-t}}]{ loglevel}
+\end{DoxyParamCaption}
+)}}
+\label{libswd_8c_af30788d001ca964f2889f0d70e2eae8f}
+
+
+Change log level to increase or decrease verbosity level. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em $\ast$swdctx}]swd context. \item[{\em loglevel}]is the target verbosity level to be set. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+SWD\_\-OK on success or error code. 
+\end{DoxyReturn}
