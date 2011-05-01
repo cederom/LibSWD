@@ -30,9 +30,11 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.*
  *
- * Written by Tomasz Boleslaw CEDRO <tomek@cedro.info>, 2010-2011;
+ * Written by Tomasz Boleslaw CEDRO <cederom@tlen.pl>, 2010-2011;
  *
  */
+
+/** \file libswd_externs.c Template for driver bridge between libswd and your application. */
 
 #include <libswd.h>
 #include <stdlib.h>
@@ -76,7 +78,7 @@ int swd_drv_miso_32(swd_ctx_t *swdctx, swd_cmd_t *cmd, int *data, int bits, int 
  // Your code goes here...
 
  return bits;
-}       
+}
 
 
 /* This function sets interface buffers to MOSI direction.
@@ -118,11 +120,10 @@ int swd_log_level_inherit(swd_ctx_t *swdctx, int loglevel){
   default:
    new_swdlevel=SWD_LOGLEVEL_NORMAL;
  }
-                                
+
  int res=swd_log_level_set(swdctx, new_swdlevel);
  if (res<0) {
   // Your error routine goes here...
   // return URJ_ERROR_SYNTAX;
  } else return SWD_OK;
 }
-

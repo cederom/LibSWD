@@ -30,11 +30,11 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.*
  *
- * Written by Tomasz Boleslaw CEDRO <tomek@cedro.info>, 2010-2011;
+ * Written by Tomasz Boleslaw CEDRO <cederom@tlen.pl>, 2010-2011;
  *
  */
 
-/** \file libswd.h */
+/** \file libswd.h Serial Wire Debug Open Library Header File. */
 
 /** \mainpage Serial Wire Debug Open Library.
  *
@@ -67,7 +67,7 @@
  *
  * \section doc_example Example
  * \code
- *  #include <libswd/libswd.h>
+ *  #include <libswd.h>
  *  int main(){
  *   swd_ctx_t *swdctx;
  *   int res, *idcode;
@@ -81,17 +81,16 @@
  *    return res;
  *   } else printf("IDCODE: 0x%X (%s)\n", *idcode, swd_bin32_string(*idcode));
  *   swd_deinit(swdctx);
- *   return *idcode;
+ *   return 0;
  *  }
  * \endcode
  */
 
-
+#include <stdlib.h>
+#include <stdarg.h>
 
 #ifndef __LIBSWD_H__
 #define __LIBSWD_H__
-
-
 
 /** SWD Packets Bit Fields and Values */
 /// Packet Start bit, always set to 1.

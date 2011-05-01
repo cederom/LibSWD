@@ -30,9 +30,11 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.*
  *
- * Written by Tomasz Boleslaw CEDRO <tomek@cedro.info>, 2010-2011;
+ * Written by Tomasz Boleslaw CEDRO <cederom@tlen.pl>, 2010-2011;
  *
  */
+
+/** \file libswd_urjtag.c Driver bridge between libswd and UrJTAG. */
 
 #include <libswd.h>
 #include <urjtag/urjtag.h>
