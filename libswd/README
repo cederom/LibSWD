@@ -27,10 +27,8 @@ To obtain the latest release visit project website at http://libswd.sf.net. LibS
  ./configure <optional parameters>
  make install clean
 
-It is possible to build the documentation in html, pdf or both formats. Note that you need to have Doxygen installed for this to work. Additionally you need to have LaTeX installed to build the PDF. 
+It is possible to build the documentation in html and pdf. Note that you need to have Doxygen installed for this to work. Additionally you need to have LaTeX installed to build the PDF. For complete documentation build type: 
 
- make doxygen-pdf
- make doxygen-html
  make doxygen-doc
 
 To create package file for distribution type:
@@ -40,4 +38,12 @@ To create package file for distribution type:
 To uninstall the library type:
 
  make uninstall
+
+To specify alternative install location:
+
+ ./configure --prefix=<your path>
+
+To know more build options that can be set before compilation:
+
+ ./configure --help
 

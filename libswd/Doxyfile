@@ -1,7 +1,7 @@
 # Doxyfile 1.7.1
 DOXYFILE_ENCODING      = UTF-8
 PROJECT_NAME           = "Serial Wire Debug Open Library"
-PROJECT_NUMBER         = $(PROJECT)-$(VERSION)
+PROJECT_NUMBER         = $(PROJECT)
 OUTPUT_DIRECTORY       = doxygen-doc
 CREATE_SUBDIRS         = NO
 
@@ -142,7 +142,7 @@ ALIASES                =
 # For instance, some of the names that are used will be different. The list
 # of all members will be omitted, etc.
 
-OPTIMIZE_OUTPUT_FOR_C  = NO
+OPTIMIZE_OUTPUT_FOR_C  = YES
 
 # Set the OPTIMIZE_OUTPUT_JAVA tag to YES if your project consists of Java
 # sources only. Doxygen will then generate output that is more tailored for

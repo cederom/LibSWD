@@ -1,4 +1,9 @@
 
+LibSWD-0.2-devel:
+ * Source code reorganization (split into different files).
+ * Build system fixes and documentation updates.
+ * Integration with OpenOCD.
+
 LibSWD-0.1 (2011-04-02):
 Initial release of LibSWD:
  * Basic functionality of transport, queue and drivers for ADIv5.0.
