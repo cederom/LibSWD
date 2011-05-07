@@ -40,12 +40,12 @@
 #include <urjtag/urjtag.h>
 
 /**
- * Use UrJTAG's driver to transmit char (8-bit) data type.
+ * Use UrJTAG's driver to write 8-bit data (char type).
  * MOSI (Master Output Slave Input) is a SWD Write Operation.
  * \param *swdctx swd context to work on.
  * \param *cmd point to the actual command being sent.
- * \param *data points to the char buffer array.
- * \bits tells how many bits to send (at most 8 for each byte).
+ * \param *data points to the char data.
+ * \bits tells how many bits to send (at most 8).
  * \bits nLSBfirst tells the shift direction: 0 = LSB first, other MSB first.
  * \return data count transferred, or negative SWD_ERROR code on failure.
  */
@@ -67,12 +67,12 @@ int swd_drv_mosi_8(swd_ctx_t *swdctx, swd_cmd_t *cmd, char *data, int bits, int 
 }
 
 /**
- * Use UrJTAG's driver to transmit int (32-bit) data type.
+ * Use UrJTAG's driver to write 32-bit data (int type).
  * MOSI (Master Output Slave Input) is a SWD Write Operation.
  * \param *swdctx swd context to work on.
  * \param *cmd point to the actual command being sent.
  * \param *data points to the char buffer array.
- * \bits tells how many bits to send (at most 32 for each byte).
+ * \bits tells how many bits to send (at most 32).
  * \bits nLSBfirst tells the shift direction: 0 = LSB first, other MSB first.
  * \return data count transferred, or negative SWD_ERROR code on failure.
  */
@@ -94,12 +94,12 @@ int swd_drv_mosi_32(swd_ctx_t *swdctx, swd_cmd_t *cmd, int *data, int bits, int 
 }
 
 /**
- * Use UrJTAG's driver to transmit char (8-bit) data type.
+ * Use UrJTAG's driver to read 8-bit data (char type).
  * MISO (Master Input Slave Output) is a SWD Read Operation.
  * \param *swdctx swd context to work on.
  * \param *cmd point to the actual command being sent.
  * \param *data points to the char buffer array.
- * \bits tells how many bits to send (at most 8 for each byte).
+ * \bits tells how many bits to send (at most 8).
  * \bits nLSBfirst tells the shift direction: 0 = LSB first, other MSB first.
  * \return data count transferred, or negative SWD_ERROR code on failure.
  */
@@ -122,12 +122,12 @@ int swd_drv_miso_8(swd_ctx_t *swdctx, swd_cmd_t *cmd, char *data, int bits, int 
 }
 
 /**
- * Use UrJTAG's driver to transmit int (32-bit) data type.
+ * Use UrJTAG's driver to read 32-bit data (int type).
  * MISO (Master Input Slave Output) is a SWD Read Operation.
  * \param *swdctx swd context to work on.
  * \param *cmd point to the actual command being sent.
  * \param *data points to the char buffer array.
- * \bits tells how many bits to send (at most 32 for each byte).
+ * \bits tells how many bits to send (at most 32).
  * \bits nLSBfirst tells the shift direction: 0 = LSB first, other MSB first.
  * \return data count transferred, or negative SWD_ERROR code on failure.
  */

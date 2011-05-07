@@ -510,18 +510,18 @@ Functions</h2></td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Generate 8-bit SWD-REQUEST packet contents with provided parameters.  <a href="#afbae73ccf42657390d11d645fcc456d8"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8h.html#a2891df407bc8178e3ca45bd508822327">swd_drv_transmit</a> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, <a class="el" href="structswd__cmd__t.html">swd_cmd_t</a> *cmd)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Transmit selected command from the command queue to the interface driver.  <a href="#a2891df407bc8178e3ca45bd508822327"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a32e3642168a4fe782f9bafb7b7e1cef2"></a><!-- doxytag: member="libswd.h::swd_drv_mosi_8" ref="a32e3642168a4fe782f9bafb7b7e1cef2" args="(swd_ctx_t *swdctx, swd_cmd_t *cmd, char *data, int bits, int nLSBfirst)" -->
-int&nbsp;</td><td class="memItemRight" valign="bottom"><b>swd_drv_mosi_8</b> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, <a class="el" href="structswd__cmd__t.html">swd_cmd_t</a> *cmd, char *data, int bits, int nLSBfirst)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a18bfb4968ed95eb580a3b970a7d5b339"></a><!-- doxytag: member="libswd.h::swd_drv_mosi_32" ref="a18bfb4968ed95eb580a3b970a7d5b339" args="(swd_ctx_t *swdctx, swd_cmd_t *cmd, int *data, int bits, int nLSBfirst)" -->
-int&nbsp;</td><td class="memItemRight" valign="bottom"><b>swd_drv_mosi_32</b> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, <a class="el" href="structswd__cmd__t.html">swd_cmd_t</a> *cmd, int *data, int bits, int nLSBfirst)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4aa9199caa538c5c58c8db41c4f39dc9"></a><!-- doxytag: member="libswd.h::swd_drv_miso_8" ref="a4aa9199caa538c5c58c8db41c4f39dc9" args="(swd_ctx_t *swdctx, swd_cmd_t *cmd, char *data, int bits, int nLSBfirst)" -->
-int&nbsp;</td><td class="memItemRight" valign="bottom"><b>swd_drv_miso_8</b> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, <a class="el" href="structswd__cmd__t.html">swd_cmd_t</a> *cmd, char *data, int bits, int nLSBfirst)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ada8ec8d0bb1aa156768afe67f9162e4a"></a><!-- doxytag: member="libswd.h::swd_drv_miso_32" ref="ada8ec8d0bb1aa156768afe67f9162e4a" args="(swd_ctx_t *swdctx, swd_cmd_t *cmd, int *data, int bits, int nLSBfirst)" -->
-int&nbsp;</td><td class="memItemRight" valign="bottom"><b>swd_drv_miso_32</b> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, <a class="el" href="structswd__cmd__t.html">swd_cmd_t</a> *cmd, int *data, int bits, int nLSBfirst)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a139265335a8bef0d406b41f834db8bb3"></a><!-- doxytag: member="libswd.h::swd_drv_mosi_trn" ref="a139265335a8bef0d406b41f834db8bb3" args="(swd_ctx_t *swdctx, int clks)" -->
-int&nbsp;</td><td class="memItemRight" valign="bottom"><b>swd_drv_mosi_trn</b> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, int clks)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5429dc71c2a229bdcc499423dc70fdaa"></a><!-- doxytag: member="libswd.h::swd_drv_miso_trn" ref="a5429dc71c2a229bdcc499423dc70fdaa" args="(swd_ctx_t *swdctx, int clks)" -->
-int&nbsp;</td><td class="memItemRight" valign="bottom"><b>swd_drv_miso_trn</b> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, int clks)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8h.html#a32e3642168a4fe782f9bafb7b7e1cef2">swd_drv_mosi_8</a> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, <a class="el" href="structswd__cmd__t.html">swd_cmd_t</a> *cmd, char *data, int bits, int nLSBfirst)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Use UrJTAG's driver to write 8-bit data (char type).  <a href="#a32e3642168a4fe782f9bafb7b7e1cef2"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8h.html#a18bfb4968ed95eb580a3b970a7d5b339">swd_drv_mosi_32</a> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, <a class="el" href="structswd__cmd__t.html">swd_cmd_t</a> *cmd, int *data, int bits, int nLSBfirst)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Use UrJTAG's driver to write 32-bit data (int type).  <a href="#a18bfb4968ed95eb580a3b970a7d5b339"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8h.html#a4aa9199caa538c5c58c8db41c4f39dc9">swd_drv_miso_8</a> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, <a class="el" href="structswd__cmd__t.html">swd_cmd_t</a> *cmd, char *data, int bits, int nLSBfirst)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Use UrJTAG's driver to read 8-bit data (char type).  <a href="#a4aa9199caa538c5c58c8db41c4f39dc9"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8h.html#ada8ec8d0bb1aa156768afe67f9162e4a">swd_drv_miso_32</a> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, <a class="el" href="structswd__cmd__t.html">swd_cmd_t</a> *cmd, int *data, int bits, int nLSBfirst)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Use UrJTAG's driver to read 32-bit data (int type).  <a href="#ada8ec8d0bb1aa156768afe67f9162e4a"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8h.html#a139265335a8bef0d406b41f834db8bb3">swd_drv_mosi_trn</a> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, int clks)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">This function sets interface buffers to MOSI direction.  <a href="#a139265335a8bef0d406b41f834db8bb3"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8h.html#a5429dc71c2a229bdcc499423dc70fdaa">swd_drv_miso_trn</a> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, int clks)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">This function sets interface buffers to MISO direction.  <a href="#a5429dc71c2a229bdcc499423dc70fdaa"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8h.html#ae53937afaa64ce0b28bef3d8d093f65a">swd_dap_reset</a> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, <a class="el" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070">swd_operation_t</a> operation)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Debug Access Port Reset sends 50 CLK with TMS high that brings both SW-DP and JTAG-DP into reset state.  <a href="#ae53937afaa64ce0b28bef3d8d093f65a"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd_8h.html#a0ffa1e7b48180a7c4bf05f2906a9cbb1">swd_dap_select</a> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, <a class="el" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070">swd_operation_t</a> operation)</td></tr>
@@ -3298,6 +3298,310 @@ char *&nbsp;</td><td class="memItemRight" valign="bottom"><b>swd_error_string</b
 
 </div>
 </div>
+<a class="anchor" id="ada8ec8d0bb1aa156768afe67f9162e4a"></a><!-- doxytag: member="libswd.h::swd_drv_miso_32" ref="ada8ec8d0bb1aa156768afe67f9162e4a" args="(swd_ctx_t *swdctx, swd_cmd_t *cmd, int *data, int bits, int nLSBfirst)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int swd_drv_miso_32 </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *&nbsp;</td>
+          <td class="paramname"> <em>swdctx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structswd__cmd__t.html">swd_cmd_t</a> *&nbsp;</td>
+          <td class="paramname"> <em>cmd</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int *&nbsp;</td>
+          <td class="paramname"> <em>data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>bits</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>nLSBfirst</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Use UrJTAG's driver to read 32-bit data (int type). </p>
+<p>MISO (Master Input Slave Output) is a SWD Read Operation. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>*swdctx</em>&nbsp;</td><td>swd context to work on. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>*cmd</em>&nbsp;</td><td>point to the actual command being sent. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>*data</em>&nbsp;</td><td>points to the char buffer array.  tells how many bits to send (at most 32).  nLSBfirst tells the shift direction: 0 = LSB first, other MSB first. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>data count transferred, or negative SWD_ERROR code on failure. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a4aa9199caa538c5c58c8db41c4f39dc9"></a><!-- doxytag: member="libswd.h::swd_drv_miso_8" ref="a4aa9199caa538c5c58c8db41c4f39dc9" args="(swd_ctx_t *swdctx, swd_cmd_t *cmd, char *data, int bits, int nLSBfirst)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int swd_drv_miso_8 </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *&nbsp;</td>
+          <td class="paramname"> <em>swdctx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structswd__cmd__t.html">swd_cmd_t</a> *&nbsp;</td>
+          <td class="paramname"> <em>cmd</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&nbsp;</td>
+          <td class="paramname"> <em>data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>bits</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>nLSBfirst</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Use UrJTAG's driver to read 8-bit data (char type). </p>
+<p>MISO (Master Input Slave Output) is a SWD Read Operation. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>*swdctx</em>&nbsp;</td><td>swd context to work on. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>*cmd</em>&nbsp;</td><td>point to the actual command being sent. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>*data</em>&nbsp;</td><td>points to the char buffer array.  tells how many bits to send (at most 8).  nLSBfirst tells the shift direction: 0 = LSB first, other MSB first. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>data count transferred, or negative SWD_ERROR code on failure. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a5429dc71c2a229bdcc499423dc70fdaa"></a><!-- doxytag: member="libswd.h::swd_drv_miso_trn" ref="a5429dc71c2a229bdcc499423dc70fdaa" args="(swd_ctx_t *swdctx, int clks)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int swd_drv_miso_trn </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *&nbsp;</td>
+          <td class="paramname"> <em>swdctx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>bits</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>This function sets interface buffers to MISO direction. </p>
+<p>MISO (Master Input Slave Output) is a SWD Read operation. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>*swdctx</em>&nbsp;</td><td>is the swd context to work on. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>bits</em>&nbsp;</td><td>specify how many clock cycles must be used for TRN. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>number of bits transmitted or negative SWD_ERROR code on failure. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a18bfb4968ed95eb580a3b970a7d5b339"></a><!-- doxytag: member="libswd.h::swd_drv_mosi_32" ref="a18bfb4968ed95eb580a3b970a7d5b339" args="(swd_ctx_t *swdctx, swd_cmd_t *cmd, int *data, int bits, int nLSBfirst)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int swd_drv_mosi_32 </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *&nbsp;</td>
+          <td class="paramname"> <em>swdctx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structswd__cmd__t.html">swd_cmd_t</a> *&nbsp;</td>
+          <td class="paramname"> <em>cmd</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int *&nbsp;</td>
+          <td class="paramname"> <em>data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>bits</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>nLSBfirst</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Use UrJTAG's driver to write 32-bit data (int type). </p>
+<p>MOSI (Master Output Slave Input) is a SWD Write Operation. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>*swdctx</em>&nbsp;</td><td>swd context to work on. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>*cmd</em>&nbsp;</td><td>point to the actual command being sent. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>*data</em>&nbsp;</td><td>points to the char buffer array.  tells how many bits to send (at most 32).  nLSBfirst tells the shift direction: 0 = LSB first, other MSB first. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>data count transferred, or negative SWD_ERROR code on failure. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a32e3642168a4fe782f9bafb7b7e1cef2"></a><!-- doxytag: member="libswd.h::swd_drv_mosi_8" ref="a32e3642168a4fe782f9bafb7b7e1cef2" args="(swd_ctx_t *swdctx, swd_cmd_t *cmd, char *data, int bits, int nLSBfirst)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int swd_drv_mosi_8 </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *&nbsp;</td>
+          <td class="paramname"> <em>swdctx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structswd__cmd__t.html">swd_cmd_t</a> *&nbsp;</td>
+          <td class="paramname"> <em>cmd</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&nbsp;</td>
+          <td class="paramname"> <em>data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>bits</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>nLSBfirst</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Use UrJTAG's driver to write 8-bit data (char type). </p>
+<p>MOSI (Master Output Slave Input) is a SWD Write Operation. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>*swdctx</em>&nbsp;</td><td>swd context to work on. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>*cmd</em>&nbsp;</td><td>point to the actual command being sent. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>*data</em>&nbsp;</td><td>points to the char data.  tells how many bits to send (at most 8).  nLSBfirst tells the shift direction: 0 = LSB first, other MSB first. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>data count transferred, or negative SWD_ERROR code on failure. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a139265335a8bef0d406b41f834db8bb3"></a><!-- doxytag: member="libswd.h::swd_drv_mosi_trn" ref="a139265335a8bef0d406b41f834db8bb3" args="(swd_ctx_t *swdctx, int clks)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int swd_drv_mosi_trn </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *&nbsp;</td>
+          <td class="paramname"> <em>swdctx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>bits</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>This function sets interface buffers to MOSI direction. </p>
+<p>MOSI (Master Output Slave Input) is a SWD Write operation. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>*swdctx</em>&nbsp;</td><td>is the swd context to work on. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>bits</em>&nbsp;</td><td>specify how many clock cycles must be used for TRN. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>number of bits transmitted or negative SWD_ERROR code on failure. </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="a2891df407bc8178e3ca45bd508822327"></a><!-- doxytag: member="libswd.h::swd_drv_transmit" ref="a2891df407bc8178e3ca45bd508822327" args="(swd_ctx_t *swdctx, swd_cmd_t *cmd)" -->
 <div class="memitem">
 <div class="memproto">
@@ -3435,7 +3739,16 @@ char *&nbsp;</td><td class="memItemRight" valign="bottom"><b>swd_error_string</b
 
 <p>Set debug level according to caller's application settings. </p>
 <p>*swdctx swd context to work on.  loglevel caller's application log level to be converted. </p>
-<dl class="return"><dt><b>Returns:</b></dt><dd>SWD_OK on success, of error code on failure. </dd></dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>SWD_OK on success, of error code on failure.</dd></dl>
+<p>Set debug level according to caller's application settings.</p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>*swdctx</em>&nbsp;</td><td>is the context to work on. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>loglevel</em>&nbsp;</td><td>is the UrJTAG's lovleve to be transformed into LibSWD one. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>SWD_OK on success, negative SWD_ERROR code on failure. </dd></dl>
 
 </div>
 </div>
@@ -3491,7 +3804,7 @@ char *&nbsp;</td><td class="memItemRight" valign="bottom"><b>swd_error_string</b
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sun May 1 2011 13:28:10 for Serial Wire Debug Open Library by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Sat May 7 2011 23:07:45 for Serial Wire Debug Open Library by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>
