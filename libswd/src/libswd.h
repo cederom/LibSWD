@@ -136,63 +136,101 @@
 #define SWD_ACK_FAULT_VAL     1
 
 /// IDCODE register address (RO).
-#define SWD_DP_ADDR_IDCODE    0
+#define SWD_DP_IDCODE_ADDR    0
 /// ABORT register address (WO).
-#define SWD_DP_ADDR_ABORT     0
+#define SWD_DP_ABORT_ADDR     0
 /// CTRLSTAT register address (R/W, CTRLSEL=b0)
-#define SWD_DP_ADDR_CTRLSTAT  1
+#define SWD_DP_CTRLSTAT_ADDR  1
 /// WCR register address (R/W, CTRLSEL=b1)
-#define SWD_DP_ADDR_WCR       1
+#define SWD_DP_WCR_ADDR       1
 /// RESEND register address (RO)
-#define SWD_DP_ADDR_RESEND    2
+#define SWD_DP_RESEND_ADDR    2
 /// SELECT register address (WO)
-#define SWD_DP_ADDR_SELECT    2
+#define SWD_DP_SELECT_ADDR    2
 /// RDBUF register address (RO)
-#define SWD_DP_ADDR_RDBUF     3
+#define SWD_DP_RDBUF_ADDR     3
 
 /** SW-DP ABORT Register map */
 /// DAPABORT bit number.
-#define SWD_ABORT_BITNUM_DAPABORT    0
+#define SWD_DP_ABORT_DAPABORT_BITNUM    0
 /// DSTKCMPCLR bit number.
-#define SWD_ABORT_BITNUM_DSTKCMPCLR  1
+#define SWD_DP_ABORT_DSTKCMPCLR_BITNUM  1
 /// DSTKERRCLR bit number.
-#define SWD_ABORT_BITNUM_DSTKERRCLR  2
+#define SWD_DP_ABORT_DSTKERRCLR_BITNUM  2
 /// DWDERRCLR bit number.
-#define SWD_ABORT_BITNUM_DWDERRCLR   3
+#define SWD_DP_ABORT_DWDERRCLR_BITNUM   3
 /// DORUNERRCLR bit number.
-#define SWD_ABORT_BITNUM_DORUNERRCLR 4
+#define SWD_DP_ABORT_DORUNERRCLR_BITNUM 4
+
+/// DAPABORT bitmask
+#define SWD_DP_ABORT_DAPABORT           (1 << SWD_DP_ABORT_DAPABORT_BITNUM)
+/// DSTKCMPCLR bitmask
+#define SWD_DP_ABORT_DSTKCMPCLR         (1 << SWD_DP_ABORT_DSTKCMPCLR_BITNUM)
+/// DSTKERRCLR bitmask
+#define SWD_DP_ABORT_DSTKERRCLR         (1 << SWD_DP_ABORT_DSTKERRCLR_BITNUM)
+/// DWDERRCLR bitmask
+#define SWD_DP_ABORT_DWDERRCLR          (1 << SWD_DP_ABORT_DWDERRCLR_BITNUM)
+/// DORUNERRCLR bitmask
+#define SWD_DP_ABORT_DORUNERRCLR        (1 << SWD_DP_ABORT_DORUNERRCLR_BITNUM)
+
 
 /** SW-DP CTRL/STAT Register map */
 /// ORUNDETECT bit number.
-#define SWD_CTRLSTAT_BITNUM_ORUNDETECT    0
-/// OSTICKYORUN bit number.
-#define SWD_CTRLSTAT_BITNUM_OSTICKYORUN   1
-/// OTRNMODE bit number.
-#define SWD_CTRLSTAT_BITNUM_OTRNMODE      2
-/// OSTICKYCMP bit number.
-#define SWD_CTRLSTAT_BITNUM_OSTICKYCMP    4
-/// OSTICKYERR bit number.
-#define SWD_CTRLSTAT_BITNUM_OSTICKYERR    5
-/// OREADOK bit number.
-#define SWD_CTRLSTAT_BITNUM_OREADOK       6
-/// OWDATAERR bit number.
-#define SWD_CTRLSTAT_BITNUM_OWDATAERR     7
-/// OMASKLANE bit number.
-#define SWD_CTRLSTAT_BITNUM_OMASKLANE     8
-/// OTRNCNT bit number.
-#define SWD_CTRLSTAT_BITNUM_OTRNCNT       12
-/// OCDBGRSTREQ bit number.
-#define SWD_CTRLSTAT_BITNUM_OCDBGRSTREQ   26
-/// OCDBGRSTACK bit number.
-#define SWD_CTRLSTAT_BITNUM_OCDBGRSTACK   27
-/// OCDBGPWRUPREQ bit number.
-#define SWD_CTRLSTAT_BITNUM_OCDBGPWRUPREQ 28
-/// OCDBGPWRUPACK bit number.
-#define SWD_CTRLSTAT_BITNUM_OCDBGPWRUPACK 29
-/// OCSYSPWRUPREQ bit number.
-#define SWD_CTRLSTAT_BITNUM_OCSYSPWRUPREQ 30
-/// OCSYSPWRUPACK bit number.
-#define SWD_CTRLSTAT_BITNUM_OCSYSPWRUPACK 31
+#define SWD_DP_CTRLSTAT_ORUNDETECT_BITNUM    0
+/// STICKYORUN bit number.
+#define SWD_DP_CTRLSTAT_STICKYORUN_BITNUM    1
+/// TRNMODE bit number.
+#define SWD_DP_CTRLSTAT_TRNMODE_BITNUM       2
+/// STICKYCMP bit number.
+#define SWD_DP_CTRLSTAT_STICKYCMP_BITNUM     4
+/// STICKYERR bit number.
+#define SWD_DP_CTRLSTAT_STICKYERR_BITNUM     5
+/// READOK bit number.
+#define SWD_DP_CTRLSTAT_READOK_BITNUM        6
+/// WDATAERR bit number.
+#define SWD_DP_CTRLSTAT_WDATAERR_BITNUM      7
+/// MASKLANE bit number.
+#define SWD_DP_CTRLSTAT_MASKLANE_BITNUM      8
+/// TRNCNT bit number.
+#define SWD_DP_CTRLSTAT_TRNCNT_BITNUM        12
+/// CDBGRSTREQ bit number.
+#define SWD_DP_CTRLSTAT_CDBGRSTREQ_BITNUM    26
+/// CDBGRSTACK bit number.
+#define SWD_DP_CTRLSTAT_CDBGRSTACK_BITNUM    27
+/// CDBGPWRUPREQ bit number.
+#define SWD_DP_CTRLSTAT_CDBGPWRUPREQ_BITNUM  28
+/// CDBGPWRUPACK bit number.
+#define SWD_DP_CTRLSTAT_CDBGPWRUPACK_BITNUM  29
+/// CSYSPWRUPREQ bit number.
+#define SWD_DP_CTRLSTAT_CSYSPWRUPREQ_BITNUM  30
+/// CSYSPWRUPACK bit number.
+#define SWD_DP_CTRLSTAT_CSYSPWRUPACK_BITNUM  31
+
+/// ORUNDETECT bitmask
+#define SWD_DP_CTRLSTAT_ORUNDETECT           (1 << SWD_DP_CTRLSTAT_ORUNDETECT_BITNUM)
+/// STICKYORUN bitmask
+#define SWD_DP_CTRLSTAT_STICKYORUN           (1 << SWD_DP_CTRLSTAT_OSTICKYORUN_BITNUM)
+/// STICKYCMP bitmask
+#define SWD_DP_CTRLSTAT_STICKYCMP            (1 << SWD_DP_CTRLSTAT_OSTICKYCMP_BITNUM)
+/// STICKYERR bitmask
+#define SWD_DP_CTRLSTAT_STICKYERR            (1 << SWD_DP_CTRLSTAT_OSTICKYERR_BITNUM)
+/// READOK bitmask
+#define SWD_DP_CTRLSTAT_READOK               (1 << SWD_DP_CTRLSTAT_OREADOK_BITNUM)
+/// WDATAERR bitmask
+#define SWD_DP_CTRLSTAT_WDATAERR             (1 << SWD_DP_CTRLSTAT_OWDATAERR_BITNUM)
+/// CDBGRSTREQ bitmask
+#define SWD_DP_CTRLSTAT_CDBGRSTREQ           (1 << SWD_DP_CTRLSTAT_OCDBGRSTREQ_BITNUM)
+/// CDBGRSTACK bitmask
+#define SWD_DP_CTRLSTAT_CDBGRSTACK           (1 << SWD_DP_CTRLSTAT_OCDBGRSTACK_BITNUM)
+/// CDBGPWRUPREQ bitmask
+#define SWD_DP_CTRLSTAT_CDBGPWRUPREQ         (1 << SWD_DP_CTRLSTAT_OCDBGPWRUPREQ_BITNUM)
+/// CDBGPWRUPACK bitmask
+#define SWD_DP_CTRLSTAT_CDBGPWRUPACK         (1 << SWD_DP_CTRLSTAT_OCDBGPWRUPACK_BITNUM)
+/// CSYSPWRUPREQ bitmask
+#define SWD_DP_CTRLSTAT_CSYSPWRUPREQ         (1 << SWD_DP_CTRLSTAT_OCSYSPWRUPREQ_BITNUM)
+/// CSYSPWRUPACK bitmask
+#define SWD_DP_CTRLSTAT_CSYSPWRUPACK         (1 << SWD_DP_CTRLSTAT_OCSYSPWRUPACK_BITNUM)
+
 /** SW-DP CTRLSTAT MASKLANE available values */
 /// Compare byte lane 0 (0x------FF)
 #define SWD_MASKLANE_0 0b0001
@@ -205,19 +243,27 @@
 
 /** SW-DP SELECT Register map */
 /// CTRLSEL bit number.
-#define SWD_SELECT_BITNUM_CTRLSEL   0
+#define SWD_DP_SELECT_CTRLSEL_BITNUM   0
 /// APBANKSEL bit number.
-#define SWD_SELECT_BITNUM_APBANKSEL 4
+#define SWD_DP_SELECT_APBANKSEL_BITNUM 4
 /// APSEL bit number.
-#define SWD_SELECT_BITNUM_APSEL     24
+#define SWD_DP_SELECT_APSEL_BITNUM     24
+
+///CTRLSEL bitmask
+#define SWD_DP_SELECT_CTRLSEL          (1 << SWD_DP_SELECT_CTRLSEL_BITNUM)
+/// APBANKSEL bitmask
+#define SWD_DP_SELECT_APBANKSEL        (1 << SWD_DP_SELECT_APBANKSEL_BITNUM)
+/// APSEL bitmask
+#define SWD_DP_SELECT_APSEL            (1 << SWD_DP_SELECT_APSEL_BITNUM)
 
 /** SW-DP WCR Register map */
 /// PRESCALER bit number.
-#define SWD_WCR_BITNUM_PRESCALER  0          ///< PRESCALER bit number.
+#define SWD_DP_WCR_PRESCALER_BITNUM  0          ///< PRESCALER bit number.
 /// WIREMODE bit number.
-#define SWD_WCR_BITNUM_WIREMODE   6          ///< WIREMODE bit number.
+#define SWD_DP_WCR_WIREMODE_BITNUM   6          ///< WIREMODE bit number.
 /// TURNROUND bit number.
-#define SWD_WCR_BITNUM_TURNROUND  8          ///< TURNROUND bit number.
+#define SWD_DP_WCR_TURNROUND_BITNUM  8          ///< TURNROUND bit number.
+
 /** SW-DP WCR TURNROUND available values */
 /// TRN takes one CLK cycle.
 #define SWD_TURNROUND_1_CODE  0              ///< TRN takes one CLK cycle. 
@@ -445,6 +491,7 @@ typedef struct {
 typedef struct {
  char request;      ///< Last known request on the bus.
  char ack;          ///< Last known ack on the bus.
+ char addr;		///< Last known address operation on the bus.
  int data;          ///< Last known data on the bus.
  int control;       ///< Last known control data on the bus.
  char parity;       ///< Last known parity on the bus.
@@ -477,12 +524,10 @@ typedef struct {
  swd_context_config_t config; ///< Target specific configuration.
  swd_driver_t *driver;        ///< Pointer to the interface driver structure.
  struct {
-  swd_swdp_t dp_read;         ///< Last known read from the SW-DP registers.
-  swd_swdp_t dp_write;        ///< Last known write to the SW-DP registers.
-  swd_ahbap_t ap_read;        ///< Last known read from AHB-AP registers.
-  swd_ahbap_t ap_write;       ///< Last known write ti the AHB-AP registers.
-  swd_transaction_t read;
-  swd_transaction_t write;
+  swd_swdp_t dp;              ///< Last known value of the SW-DP registers.
+  swd_ahbap_t ap;             ///< Last known value of the AHB-AP registers.
+  swd_transaction_t read;     ///< Last read operation fields.
+  swd_transaction_t write;    ///< Last write operation fields.
  } log;
 } swd_ctx_t;
 
@@ -556,6 +601,10 @@ int swd_dap_select(swd_ctx_t *swdctx, swd_operation_t operation);
 int swd_dap_detect(swd_ctx_t *swdctx, swd_operation_t operation, int **idcode);
 
 int swd_dp_read_idcode(swd_ctx_t *swdctx, swd_operation_t operation, int **idcode);
+int swd_dp_read(swd_ctx_t *swdctx, swd_operation_t operation, char addr, int **data);
+int swd_dp_write(swd_ctx_t *swdctx, swd_operation_t operation, char addr, int *data);
+int swd_ap_read(swd_ctx_t *swdctx, swd_operation_t operation, char addr, int **data);
+int swd_ap_write(swd_ctx_t *swdctx, swd_operation_t operation, char addr, int *data);
 
 int swd_log(swd_ctx_t *swdctx, swd_loglevel_t loglevel, char *msg, ...);
 int swd_log_level_set(swd_ctx_t *swdctx, swd_loglevel_t loglevel);

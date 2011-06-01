@@ -30,7 +30,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * Written by Tomasz Boleslaw CEDRO <tomek.cedro@gmail.com>, 2010;
+ * Written by Tomasz Boleslaw CEDRO <cederom@tlen.pl>, 2010;
  *
  */
 
@@ -39,7 +39,7 @@
 #include <stdio.h>
 
 int main(int argc, char argv[]){
- printf("Hello to SWD world, a simple SWD API test program.\n");
+ printf("Hello to SWD world, a simple SWD API and general test program.\n");
 
  int i, x, res;
  unsigned char c, uc, uc2;

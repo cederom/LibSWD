@@ -1,8 +1,7 @@
 /*
  * $Id$
  *
- * Serial Wire Debug Open Library.
- * External Handlers Definition File.
+ * Driver Bridge between LibSWD and UrJTAG.
  *
  * Copyright (C) 2010-2011, Tomasz Boleslaw CEDRO (http://www.tomek.cedro.info)
  * All rights reserved.
@@ -34,7 +33,7 @@
  *
  */
 
-/** \file libswd_urjtag.c Driver bridge between libswd and UrJTAG. */
+/** \file libswd_drv_urjtag.c Driver Bridge between LibSWD and UrJTAG. */
 
 #include <libswd.h>
 #include <urjtag/urjtag.h>

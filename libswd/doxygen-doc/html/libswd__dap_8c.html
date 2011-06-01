@@ -63,9 +63,119 @@ Functions</h2></td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Macro: Read out IDCODE register and return its value on function return.  <a href="#a0a40c90253f99da07eae5e237be187b1"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd__dap_8c.html#a6758b95d2adfbfb9b95198f9b0b5462c">swd_dap_detect</a> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, <a class="el" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070">swd_operation_t</a> operation, int **idcode)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Macro: Reset target DAP, select SW-DP, read out IDCODE.  <a href="#a6758b95d2adfbfb9b95198f9b0b5462c"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd__dap_8c.html#aa0f56786b17a96eaef3d18a93d64addf">swd_dp_read</a> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, <a class="el" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070">swd_operation_t</a> operation, char addr, int **data)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Macro: Generic read of the DP register.  <a href="#aa0f56786b17a96eaef3d18a93d64addf"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd__dap_8c.html#a1824ca36591c6c626e1b7ccb921fa730">swd_dp_write</a> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, <a class="el" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070">swd_operation_t</a> operation, char addr, int *data)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Macro function: Generic write of the DP register.  <a href="#a1824ca36591c6c626e1b7ccb921fa730"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd__dap_8c.html#a856b4ec0759257ef82b4a1b4ef171e25">swd_ap_read</a> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, <a class="el" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070">swd_operation_t</a> operation, char addr, int **data)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Macro function: Generic read of the AP register.  <a href="#a856b4ec0759257ef82b4a1b4ef171e25"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="libswd__dap_8c.html#a4823e838723c7b7b314a58a17c7fba87">swd_ap_write</a> (<a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *swdctx, <a class="el" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070">swd_operation_t</a> operation, char addr, int *data)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Macro function: Generic write of the AP register.  <a href="#a4823e838723c7b7b314a58a17c7fba87"></a><br/></td></tr>
 </table>
 <hr/><a name="_details"></a><h2>Detailed Description</h2>
 <hr/><h2>Function Documentation</h2>
+<a class="anchor" id="a856b4ec0759257ef82b4a1b4ef171e25"></a><!-- doxytag: member="libswd_dap.c::swd_ap_read" ref="a856b4ec0759257ef82b4a1b4ef171e25" args="(swd_ctx_t *swdctx, swd_operation_t operation, char addr, int **data)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int swd_ap_read </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *&nbsp;</td>
+          <td class="paramname"> <em>swdctx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070">swd_operation_t</a>&nbsp;</td>
+          <td class="paramname"> <em>operation</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char&nbsp;</td>
+          <td class="paramname"> <em>addr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int **&nbsp;</td>
+          <td class="paramname"> <em>data</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Macro function: Generic read of the AP register. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>*swdctx</em>&nbsp;</td><td>swd context to work on. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>operation</em>&nbsp;</td><td>can be SWD_OPERATION_ENQUEUE or SWD_OPERATION_EXECUTE. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>addr</em>&nbsp;</td><td>is the address of the AP register to read. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>**data</em>&nbsp;</td><td>is the pointer to data where result will be stored. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>number of elements processed or SWD_ERROR code on failure. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a4823e838723c7b7b314a58a17c7fba87"></a><!-- doxytag: member="libswd_dap.c::swd_ap_write" ref="a4823e838723c7b7b314a58a17c7fba87" args="(swd_ctx_t *swdctx, swd_operation_t operation, char addr, int *data)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int swd_ap_write </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *&nbsp;</td>
+          <td class="paramname"> <em>swdctx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070">swd_operation_t</a>&nbsp;</td>
+          <td class="paramname"> <em>operation</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char&nbsp;</td>
+          <td class="paramname"> <em>addr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int *&nbsp;</td>
+          <td class="paramname"> <em>data</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Macro function: Generic write of the AP register. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>*swdctx</em>&nbsp;</td><td>swd context to work on. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>operation</em>&nbsp;</td><td>can be SWD_OPERATION_ENQUEUE or SWD_OPERATION_EXECUTE. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>addr</em>&nbsp;</td><td>is the address of the AP register to write. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>*data</em>&nbsp;</td><td>is the pointer to data to be written. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>number of elements processed or SWD_ERROR code on failure. </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="a6758b95d2adfbfb9b95198f9b0b5462c"></a><!-- doxytag: member="libswd_dap.c::swd_dap_detect" ref="a6758b95d2adfbfb9b95198f9b0b5462c" args="(swd_ctx_t *swdctx, swd_operation_t operation, int **idcode)" -->
 <div class="memitem">
 <div class="memproto">
@@ -106,7 +216,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>Target's IDCODE, or error code on failure. </dd></dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>Target's IDCODE, or SWD_ERROR_CODE on failure. </dd></dl>
 
 </div>
 </div>
@@ -183,6 +293,57 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="aa0f56786b17a96eaef3d18a93d64addf"></a><!-- doxytag: member="libswd_dap.c::swd_dp_read" ref="aa0f56786b17a96eaef3d18a93d64addf" args="(swd_ctx_t *swdctx, swd_operation_t operation, char addr, int **data)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int swd_dp_read </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *&nbsp;</td>
+          <td class="paramname"> <em>swdctx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070">swd_operation_t</a>&nbsp;</td>
+          <td class="paramname"> <em>operation</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char&nbsp;</td>
+          <td class="paramname"> <em>addr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int **&nbsp;</td>
+          <td class="paramname"> <em>data</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Macro: Generic read of the DP register. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>*swdctx</em>&nbsp;</td><td>swd context to work on. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>operation</em>&nbsp;</td><td>can be SWD_OPERATION_ENQUEUE or SWD_OPERATION_EXECUTE. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>addr</em>&nbsp;</td><td>is the address of the DP register to read. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>**data</em>&nbsp;</td><td>is the pointer to data where result will be stored. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>number of elements processed or SWD_ERROR_CODE on failure. </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="a0a40c90253f99da07eae5e237be187b1"></a><!-- doxytag: member="libswd_dap.c::swd_dp_read_idcode" ref="a0a40c90253f99da07eae5e237be187b1" args="(swd_ctx_t *swdctx, swd_operation_t operation, int **idcode)" -->
 <div class="memitem">
 <div class="memproto">
@@ -222,7 +383,58 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>Target's IDCODE value or code error on failure. </dd></dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>Number of elements processed or SWD_ERROR code error on failure. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a1824ca36591c6c626e1b7ccb921fa730"></a><!-- doxytag: member="libswd_dap.c::swd_dp_write" ref="a1824ca36591c6c626e1b7ccb921fa730" args="(swd_ctx_t *swdctx, swd_operation_t operation, char addr, int *data)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int swd_dp_write </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structswd__ctx__t.html">swd_ctx_t</a> *&nbsp;</td>
+          <td class="paramname"> <em>swdctx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="libswd_8h.html#a35ca817603eaed3d5ce753c37a1db070">swd_operation_t</a>&nbsp;</td>
+          <td class="paramname"> <em>operation</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char&nbsp;</td>
+          <td class="paramname"> <em>addr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int *&nbsp;</td>
+          <td class="paramname"> <em>data</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Macro function: Generic write of the DP register. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>*swdctx</em>&nbsp;</td><td>swd context to work on. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>operation</em>&nbsp;</td><td>can be SWD_OPERATION_ENQUEUE or SWD_OPERATION_EXECUTE. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>addr</em>&nbsp;</td><td>is the address of the DP register to write. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>*data</em>&nbsp;</td><td>is the pointer to data to be written. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>number of elements processed or SWD_ERROR code on failure. </dd></dl>
 
 </div>
 </div>
@@ -241,7 +453,7 @@ Functions</h2></td></tr>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sat May 7 2011 23:07:45 for Serial Wire Debug Open Library by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jun 1 2011 11:56:02 for Serial Wire Debug Open Library by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

@@ -71,16 +71,14 @@ Data Fields</h2></td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Pointer to the interface driver structure. <br/></td></tr>
 <tr><td class="memItemLeft" ><a class="anchor" id="ab2dfb610a0dc0ea3abefd8925e8d6d97"></a><!-- doxytag: member="swd_ctx_t::log" ref="ab2dfb610a0dc0ea3abefd8925e8d6d97" args="" -->
 struct {</td></tr>
-<tr><td class="memItemLeft" >&nbsp;&nbsp;&nbsp;<a class="el" href="structswd__swdp__t.html">swd_swdp_t</a>&nbsp;&nbsp;&nbsp;<a class="el" href="structswd__ctx__t.html#a97f9093e16939fc44a2d46d328474454">dp_read</a></td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Last known read from the SW-DP registers. <br/></td></tr>
-<tr><td class="memItemLeft" >&nbsp;&nbsp;&nbsp;<a class="el" href="structswd__swdp__t.html">swd_swdp_t</a>&nbsp;&nbsp;&nbsp;<a class="el" href="structswd__ctx__t.html#a20ecbfb255b8c8b0b1ef92648c1d9825">dp_write</a></td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Last known write to the SW-DP registers. <br/></td></tr>
-<tr><td class="memItemLeft" >&nbsp;&nbsp;&nbsp;<a class="el" href="structswd__ahbap__t.html">swd_ahbap_t</a>&nbsp;&nbsp;&nbsp;<a class="el" href="structswd__ctx__t.html#a5e33de2e34bfff7936ff02e6a388f003">ap_read</a></td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Last known read from AHB-AP registers. <br/></td></tr>
-<tr><td class="memItemLeft" >&nbsp;&nbsp;&nbsp;<a class="el" href="structswd__ahbap__t.html">swd_ahbap_t</a>&nbsp;&nbsp;&nbsp;<a class="el" href="structswd__ctx__t.html#a40c8ded9b946c7c851cd43dc52a289ea">ap_write</a></td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Last known write ti the AHB-AP registers. <br/></td></tr>
-<tr><td class="memItemLeft" >&nbsp;&nbsp;&nbsp;<a class="el" href="structswd__transaction__t.html">swd_transaction_t</a>&nbsp;&nbsp;&nbsp;<b>read</b></td></tr>
-<tr><td class="memItemLeft" >&nbsp;&nbsp;&nbsp;<a class="el" href="structswd__transaction__t.html">swd_transaction_t</a>&nbsp;&nbsp;&nbsp;<b>write</b></td></tr>
+<tr><td class="memItemLeft" >&nbsp;&nbsp;&nbsp;<a class="el" href="structswd__swdp__t.html">swd_swdp_t</a>&nbsp;&nbsp;&nbsp;<a class="el" href="structswd__ctx__t.html#ac46f374afaec9df84099527001c91c65">dp</a></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Last known value of the SW-DP registers. <br/></td></tr>
+<tr><td class="memItemLeft" >&nbsp;&nbsp;&nbsp;<a class="el" href="structswd__ahbap__t.html">swd_ahbap_t</a>&nbsp;&nbsp;&nbsp;<a class="el" href="structswd__ctx__t.html#ad02f583b165e3d8b4fbe756d585ce7ec">ap</a></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Last known value of the AHB-AP registers. <br/></td></tr>
+<tr><td class="memItemLeft" >&nbsp;&nbsp;&nbsp;<a class="el" href="structswd__transaction__t.html">swd_transaction_t</a>&nbsp;&nbsp;&nbsp;<a class="el" href="structswd__ctx__t.html#a14327e28e8eff352c86df8fd9bcddf74">read</a></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Last read operation fields. <br/></td></tr>
+<tr><td class="memItemLeft" >&nbsp;&nbsp;&nbsp;<a class="el" href="structswd__transaction__t.html">swd_transaction_t</a>&nbsp;&nbsp;&nbsp;<a class="el" href="structswd__ctx__t.html#a4bf25f53dbbc76e16e5018f0627358b7">write</a></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Last write operation fields. <br/></td></tr>
 <tr><td class="memItemLeft" valign="top">}&nbsp;</td><td class="memItemRight" valign="bottom"><b>log</b></td></tr>
 </table>
 <hr/><a name="_details"></a><h2>Detailed Description</h2>
@@ -104,7 +102,7 @@ struct {</td></tr>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sat May 7 2011 23:07:45 for Serial Wire Debug Open Library by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jun 1 2011 11:56:02 for Serial Wire Debug Open Library by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>
