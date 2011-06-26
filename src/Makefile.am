@@ -14,5 +14,4 @@ libswd_la_SOURCES = \
  libswd_dap.c \
  libswd_drv.c \
  libswd_error.c \
- libswd_externs.c \
  libswd_log.c
