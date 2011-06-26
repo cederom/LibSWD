@@ -606,7 +606,7 @@ int swd_dp_write(swd_ctx_t *swdctx, swd_operation_t operation, char addr, int *d
 int swd_ap_read(swd_ctx_t *swdctx, swd_operation_t operation, char addr, int **data);
 int swd_ap_write(swd_ctx_t *swdctx, swd_operation_t operation, char addr, int *data);
 
-extern swd_log(swd_ctx_t *swdctx, swd_loglevel_t loglevel, char *msg, ...);
+extern int swd_log(swd_ctx_t *swdctx, swd_loglevel_t loglevel, char *msg, ...);
 int swd_log_internal(swd_ctx_t *swdctx, swd_loglevel_t loglevel, char *msg, ...);
 int swd_log_level_set(swd_ctx_t *swdctx, swd_loglevel_t loglevel);
 extern int swd_log_level_inherit(swd_ctx_t *swdctx, int loglevel);
