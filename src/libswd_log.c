@@ -43,6 +43,14 @@
  * @{
  ******************************************************************************/
 
+/** Logging functionality can be external or internal, by default external
+ * function can be defined to use target program logging mechanism.
+ * To use internal logging mechanism simply wrap swd_log_internal() around
+ * this function in application specific driver bridge file,
+ * see libswd_externs.c for examples.
+ */
+extern int swd_log(swd_ctx_t *swdctx, swd_loglevel_t loglevel, char *msg, ...);
+
 /** Put a message into swd context log at specified verbosity level.
  * If specified message's log level is lower than actual context configuration,
  * message will be omitted. Verbosity level increases from 0 (silent) to 4 (debug).
@@ -51,7 +59,7 @@
  * \param *msg message body with variable arguments as in "printf".
  * \return number of characters written or error code on failure.
  */
-int swd_log(swd_ctx_t *swdctx, swd_loglevel_t loglevel, char *msg, ...){
+int swd_log_internal(swd_ctx_t *swdctx, swd_loglevel_t loglevel, char *msg, ...){
  if (loglevel<SWD_LOGLEVEL_MIN && loglevel>SWD_LOGLEVEL_MAX)
   return SWD_ERROR_LOGLEVEL;
  if (loglevel > swdctx->config.loglevel) return SWD_OK;

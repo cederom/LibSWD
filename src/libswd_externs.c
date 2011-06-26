@@ -127,3 +127,11 @@ int swd_log_level_inherit(swd_ctx_t *swdctx, int loglevel){
   // return URJ_ERROR_SYNTAX;
  } else return SWD_OK;
 }
+
+/** By default we want to use internal logging mechanisms.
+ * It is possible however to use target program mechanisms to log messages.
+ */
+int swd_log(swd_ctx_t *swdctx, swd_loglevel_t loglevel, char *msg, ...){
+ return swd_log_internal(swdctx, loglevel, msg);
+}
+
