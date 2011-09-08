@@ -169,7 +169,6 @@ int swd_bus_read_ack(swd_ctx_t *swdctx, swd_operation_t operation, char **ack){
   res=swd_cmdq_flush(swdctx, operation);
   if (res<0) return res;
   tcmdcnt+=res;
-  return qcmdcnt+tcmdcnt;
  } else return SWD_ERROR_BADOPCODE;
 
  /* Now verify the read result and return/pass error code if necessary. */
@@ -185,6 +184,7 @@ int swd_bus_read_ack(swd_ctx_t *swdctx, swd_operation_t operation, char **ack){
  if (tmpcmdq->cmdtype==SWD_CMDTYPE_MISO_ACK && tmpcmdq->done){
   /* Verify data address found on the queue, with pointer selected before run.*/
   if (&tmpcmdq->ack!=*ack) return SWD_ERROR_ACKMISMATCH;
+  if (tmpcmdq->ack==0 || tmpcmdq->ack==7) swd_log(swdctx, SWD_LOGLEVEL_ERROR, "SWD_E: Error! ACK=0x%02X, is your target powered on?\n", tmpcmdq->ack);
   return qcmdcnt+tcmdcnt; 
  } else return SWD_ERROR_ACKNOTDONE;
 }
