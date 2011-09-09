@@ -1,4 +1,5 @@
 #!/bin/sh
+mkdir m4
 if autoreconf -i -s -v -f ; then
 	echo
 	echo "autoreconf done."
