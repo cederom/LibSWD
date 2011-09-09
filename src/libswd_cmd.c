@@ -203,7 +203,7 @@ int i;
  */ 
 int swd_cmd_enqueue_mosi_parity(swd_ctx_t *swdctx, char *parity){
  if (swdctx==NULL) return SWD_ERROR_NULLCONTEXT;
- if (*parity!=0 || *parity!=1) return SWD_ERROR_PARAM;
+ if (*parity!=0 && *parity!=1) return SWD_ERROR_PARAM;
  int res;
  swd_cmd_t *cmd;
  cmd=(swd_cmd_t *)calloc(1,sizeof(swd_cmd_t));
