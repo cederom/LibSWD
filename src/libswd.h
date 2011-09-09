@@ -610,6 +610,7 @@ extern int swd_log(swd_ctx_t *swdctx, swd_loglevel_t loglevel, char *msg, ...);
 int swd_log_internal(swd_ctx_t *swdctx, swd_loglevel_t loglevel, char *msg, ...);
 int swd_log_level_set(swd_ctx_t *swdctx, swd_loglevel_t loglevel);
 extern int swd_log_level_inherit(swd_ctx_t *swdctx, int loglevel);
+const char *swd_log_level_string(swd_loglevel_t loglevel);
 char *swd_error_string(swd_error_code_t error);
 
 swd_ctx_t *swd_init(void);
