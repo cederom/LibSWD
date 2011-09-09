@@ -68,7 +68,7 @@ int swd_bin32_parity_even(int *data, char *parity){
  int i;
  unsigned int test=*data;
  *parity=0;
- for (i=0;i<32;i++) *parity ^= (test>>i)&1; 
+ for (i=0;i<32;i++) *parity ^= ((test>>i)&1); 
  if (*parity<0 || *parity>1) return SWD_ERROR_PARITY;
  return (int)*parity;
 }
