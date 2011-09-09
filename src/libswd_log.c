@@ -86,4 +86,17 @@ int swd_log_level_set(swd_ctx_t *swdctx, swd_loglevel_t loglevel){
  return SWD_OK;
 }
 
+const char *swd_log_level_string(swd_loglevel_t loglevel){
+ switch (loglevel){
+  case SWD_LOGLEVEL_SILENT: return "SWD_LOGLEVEL_SILENT";
+  case SWD_LOGLEVEL_ERROR:  return "SWD_LOGLEVEL_ERROR";
+  case SWD_LOGLEVEL_WARNING: return "SWD_LOGLEVEL_WARNING";
+  case SWD_LOGLEVEL_NORMAL:  return "SWD_LOGLEVEL_NORMAL";
+  case SWD_LOGLEVEL_INFO:    return "SWD_LOGLEVEL_INFO";
+  case SWD_LOGLEVEL_DEBUG:   return "SWD_LOGLEVEL_DEBUG";
+ }
+ return "UNKNOWN LOGLEVEL!";
+};
+
+
 /** @} */
