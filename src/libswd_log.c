@@ -83,6 +83,7 @@ int swd_log_level_set(swd_ctx_t *swdctx, swd_loglevel_t loglevel){
   return SWD_ERROR_LOGLEVEL;
 
  swdctx->config.loglevel=loglevel;
+ swd_log(swdctx, SWD_LOGLEVEL_NORMAL, "SWD LogLevel[%d..%d] set to: %d (%s)", SWD_LOGLEVEL_MIN, SWD_LOGLEVEL_MAX, loglevel, swd_log_level_string(loglevel));
  return SWD_OK;
 }
 
