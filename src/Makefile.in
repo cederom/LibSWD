@@ -75,7 +75,7 @@ LTLIBRARIES = $(lib_LTLIBRARIES)
 libswd_la_LIBADD =
 am_libswd_la_OBJECTS = libswd_bin.lo libswd_bitgen.lo libswd_bus.lo \
 	libswd_cmd.lo libswd_cmdq.lo libswd_core.lo libswd_dap.lo \
-	libswd_drv.lo libswd_error.lo libswd_externs.lo libswd_log.lo
+	libswd_drv.lo libswd_error.lo libswd_log.lo
 libswd_la_OBJECTS = $(am_libswd_la_OBJECTS)
 libswd_la_LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
@@ -249,7 +249,6 @@ libswd_la_SOURCES = \
  libswd_dap.c \
  libswd_drv.c \
  libswd_error.c \
- libswd_externs.c \
  libswd_log.c
 
 all: all-am
@@ -335,7 +334,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libswd_dap.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libswd_drv.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libswd_error.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libswd_externs.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libswd_log.Plo@am__quote@
 
 .c.o:
