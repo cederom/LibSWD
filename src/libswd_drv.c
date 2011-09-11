@@ -52,6 +52,9 @@ extern int swd_drv_mosi_trn(swd_ctx_t *swdctx, int bits);
 extern int swd_drv_miso_trn(swd_ctx_t *swdctx, int bits);
 
 /** Transmit selected command from the command queue to the interface driver.
+ * Also update the swdctx->log structure (this should be done only here!).
+ * Because commands that were queued does not get ack/parity data anymore,
+ * we need to verify ACK/PARITY that was just read and return error if necesary.
  * \param *swdctx swd context pointer.
  * \param *cmd pointer to the command to be sent.
  * \return number of commands transmitted (1), or SWD_ERROR_CODE on failure.
@@ -154,13 +157,45 @@ int swd_drv_transmit(swd_ctx_t *swdctx, swd_cmd_t *cmd){
  } 
 
  swd_log(swdctx, SWD_LOGLEVEL_DEBUG,
-  "SWD_D: swd_drv_transmit(0x%x, 0x%x) bits=%-2d cmdtype=%-12s returns=%-3d payload=0x%08x (%s)\n",
+  "SWD_D: swd_drv_transmit(swdctx=@0x%p, cmd=@0x%p) bits=%-2d cmdtype=%-12s returns=%-3d payload=0x%08x (%s)\n",
   swdctx, cmd, cmd->bits, swd_cmd_string_cmdtype(cmd), res,
   (cmd->bits>8)?cmd->data32:cmd->data8,
   (cmd->bits<=8)?swd_bin8_string(&cmd->data8):swd_bin32_string(&cmd->data32));
 
  if (res<0) return res;
  cmd->done=1;
+
+ /* Now verify the ACK value and notify caller about possible errors. */
+ if (cmd->cmdtype==SWD_CMDTYPE_MISO_ACK){
+  switch(cmd->ack){
+   case SWD_ACK_OK_VAL: return res;
+   case SWD_ACK_FAULT_VAL:
+    swd_log(swdctx, SWD_LOGLEVEL_ERROR, "SWD_E: SWD_ACK_FAULT detected!\n");
+    return SWD_ERROR_ACK_FAULT;
+   case SWD_ACK_WAIT_VAL:
+    swd_log(swdctx, SWD_LOGLEVEL_ERROR, "SWD_E: SWD_ACK_WAIT detectd!\n");
+    return SWD_ERROR_ACK_WAIT;
+   default:
+    swd_log(swdctx, SWD_LOGLEVEL_ERROR, "SWD_E: Unknown ACK detected! Is your target powered on?\n");
+    return SWD_ERROR_ACK;
+  }
+ }
+
+ /* Now verify the PARITY value and notifu caller about possible errors. */
+ if (cmd->cmdtype==SWD_CMDTYPE_MISO_PARITY){
+  if (cmd->prev->cmdtype==SWD_CMDTYPE_MISO_DATA){
+   char testparity;
+   if (swd_bin32_parity_even(&cmd->prev->misodata, &testparity)<0)
+    swd_log(swdctx, SWD_LOGLEVEL_WARNING, "SWD_W: Cannot perform parity check (calculation error).\n");
+   if (cmd->parity!=testparity){
+    swd_log(swdctx, SWD_LOGLEVEL_ERROR, "SWD_E: Parity mismatch detected (%s/%d)!\n", swd_bin32_string(&cmd->prev->misodata), cmd->parity);
+    return SWD_ERROR_PARITY;
+   }
+  } else {
+   swd_log(swdctx, SWD_LOGLEVEL_WARNING, "SWD_W: Cannot perform parity check (data missing).\n");
+   return res;
+  }
+ }
  return res;
 }
 
