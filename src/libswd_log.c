@@ -99,5 +99,21 @@ const char *swd_log_level_string(swd_loglevel_t loglevel){
  return "UNKNOWN LOGLEVEL!";
 };
 
+/** Helper function to produce operation name string for logging purposes.
+ * \param operation is the swd_operation_t code to return as string.
+ * \return char* array with operation name string.
+ */
+const char *swd_operation_string(swd_operation_t operation){
+ switch(operation){
+  case SWD_OPERATION_ENQUEUE:       return "SWD_OPERATION_ENQUEUE";
+  case SWD_OPERATION_EXECUTE:       return "SWD_OPERATION_EXECUTE";
+  case SWD_OPERATION_TRANSMIT_HEAD: return "SWD_OPERATION_TRANSMIT_HEAD";
+  case SWD_OPERATION_TRANSMIT_TAIL: return "SWD_OPERATION_TRANSMIT_TAIL";
+  case SWD_OPERATION_TRANSMIT_ALL:  return "SWD_OPERATION_TRANSMIT_ALL";
+  case SWD_OPERATION_TRANSMIT_ONE:  return "SWD_OPERATION_TRANSMIT_ONE";
+  case SWD_OPERATION_TRANSMIT_LAST: return "SWD_OPERATION_TRANSMIT_LAST"; 
+ }
+ return "UNKNOWN_SWD_OPERATION";
+} 
 
 /** @} */
