@@ -487,13 +487,16 @@ typedef struct {
  int idr;           ///< Last known IDR register value.
 } swd_ahbap_t;
 
-/** Most actual SWD bus transaction/packet data. */
+/** Most actual SWD bus transaction/packet data.
+ * This structure is updated by swd_drv_transmit() function.
+ * For clarity, it should not be updated by any other function.
+ */
 typedef struct {
  char request;      ///< Last known request on the bus.
  char ack;          ///< Last known ack on the bus.
- char addr;		///< Last known address operation on the bus.
  int data;          ///< Last known data on the bus.
  int control;       ///< Last known control data on the bus.
+ char bitbang;      ///< Last known bitbang data on the bus.
  char parity;       ///< Last known parity on the bus.
 } swd_transaction_t;
 
