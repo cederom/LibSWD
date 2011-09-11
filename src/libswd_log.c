@@ -76,21 +76,24 @@ int swd_log_internal(swd_ctx_t *swdctx, swd_loglevel_t loglevel, char *msg, ...)
  * \param loglevel is the target verbosity level to be set.
  * \return SWD_OK on success or error code.
  */
-
 int swd_log_level_set(swd_ctx_t *swdctx, swd_loglevel_t loglevel){
  if (swdctx==NULL) return SWD_ERROR_NULLCONTEXT;
  if (loglevel<SWD_LOGLEVEL_MIN && loglevel>SWD_LOGLEVEL_MAX)
   return SWD_ERROR_LOGLEVEL;
 
  swdctx->config.loglevel=loglevel;
- swd_log(swdctx, SWD_LOGLEVEL_DEBUG, "SWD_D: SWD LogLevel[%d..%d] set to: %d (%s)", SWD_LOGLEVEL_MIN, SWD_LOGLEVEL_MAX, loglevel, swd_log_level_string(loglevel));
+ swd_log(swdctx, SWD_LOGLEVEL_DEBUG, "SWD_D: swd_log_level_set(swdctx=0x%p, loglevel[%d..%d]=%d/%s)", (void*)swdctx, SWD_LOGLEVEL_MIN, SWD_LOGLEVEL_MAX, loglevel, swd_log_level_string(loglevel));
  return SWD_OK;
 }
 
+/** Helper function that returns loglevel name string for logging purposes.
+ * \param loglevel is the swd_loglevel_t code to produce a string.
+ * \return char* loglevel name sring array.
+ */
 const char *swd_log_level_string(swd_loglevel_t loglevel){
  switch (loglevel){
-  case SWD_LOGLEVEL_SILENT: return "SWD_LOGLEVEL_SILENT";
-  case SWD_LOGLEVEL_ERROR:  return "SWD_LOGLEVEL_ERROR";
+  case SWD_LOGLEVEL_SILENT:  return "SWD_LOGLEVEL_SILENT";
+  case SWD_LOGLEVEL_ERROR:   return "SWD_LOGLEVEL_ERROR";
   case SWD_LOGLEVEL_WARNING: return "SWD_LOGLEVEL_WARNING";
   case SWD_LOGLEVEL_NORMAL:  return "SWD_LOGLEVEL_NORMAL";
   case SWD_LOGLEVEL_INFO:    return "SWD_LOGLEVEL_INFO";
