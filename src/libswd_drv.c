@@ -55,6 +55,7 @@ extern int swd_drv_miso_trn(swd_ctx_t *swdctx, int bits);
  * Also update the swdctx->log structure (this should be done only here!).
  * Because commands that were queued does not get ack/parity data anymore,
  * we need to verify ACK/PARITY that was just read and return error if necesary.
+ * When ACK/PARITY error is detected queue tail is removed as it is invalid.
  * \param *swdctx swd context pointer.
  * \param *cmd pointer to the command to be sent.
  * \return number of commands transmitted (1), or SWD_ERROR_CODE on failure.
@@ -63,7 +64,7 @@ int swd_drv_transmit(swd_ctx_t *swdctx, swd_cmd_t *cmd){
  if (swdctx==NULL) return SWD_ERROR_NULLCONTEXT;
  if (cmd==NULL) return SWD_ERROR_NULLPOINTER;
   
- int res=SWD_ERROR_BADCMDTYPE;
+ int res=SWD_ERROR_BADCMDTYPE, errcode=SWD_ERROR_RESULT;
 
  switch (cmd->cmdtype){
   case SWD_CMDTYPE_MOSI:
@@ -165,37 +166,86 @@ int swd_drv_transmit(swd_ctx_t *swdctx, swd_cmd_t *cmd){
  if (res<0) return res;
  cmd->done=1;
 
- /* Now verify the ACK value and notify caller about possible errors. */
+ /* Now verify the ACK value and notify caller about possible errors.
+  * If error was detected, delete trailing queue elements. */
  if (cmd->cmdtype==SWD_CMDTYPE_MISO_ACK){
   switch(cmd->ack){
+   // If the ACK was OK then simply return to the caller.
    case SWD_ACK_OK_VAL: return res;
+   // For other ACK codes produce a warning and remember the code.
    case SWD_ACK_FAULT_VAL:
-    swd_log(swdctx, SWD_LOGLEVEL_ERROR, "SWD_E: SWD_ACK_FAULT detected!\n");
-    return SWD_ERROR_ACK_FAULT;
+    swd_log(swdctx, SWD_LOGLEVEL_WARNING,
+      "SWD_W: swd_drv_transmit(swdctx=@0x%p, cmd=@0x%p): SWD_ACK_FAULT detected!\n",
+      (void*)swdctx, (void*)cmd );
+    errcode=SWD_ERROR_ACK_FAULT;
+    break;
    case SWD_ACK_WAIT_VAL:
-    swd_log(swdctx, SWD_LOGLEVEL_ERROR, "SWD_E: SWD_ACK_WAIT detectd!\n");
-    return SWD_ERROR_ACK_WAIT;
+    swd_log(swdctx, SWD_LOGLEVEL_WARNING,
+      "SWD_W: swd_drv_transmit(swdctx=@0x%p, cmd=@0x%p): SWD_ACK_WAIT detectd!\n",
+      (void*)swdctx, (void*)cmd );
+    errcode=SWD_ERROR_ACK_WAIT;
+    break;
    default:
-    swd_log(swdctx, SWD_LOGLEVEL_ERROR, "SWD_E: Unknown ACK detected! Is your target powered on?\n");
-    return SWD_ERROR_ACK;
+    swd_log(swdctx, SWD_LOGLEVEL_WARNING,
+      "SWD_W: swd_drv_transmit(swdctx=@0x%p, cmd=@0x%p): Unknown ACK detected! Is your target powered on?\n",
+      (void*)swdctx, (void*)cmd );
+    errcode=SWD_ERROR_ACK;
   }
+  // Now give a warning and clean cmdq tail (as it contains invalid operations).
+  swd_log(swdctx, SWD_LOGLEVEL_WARNING,
+    "SWD_W: swd_drv_transmit(swdctx=@0x%p, cmd=@0x%p): Bad ACK, clearing cmdq tail to preserve synchronization...\n",
+    (void*)swdctx, (void*)cmd );
+  if (swd_cmdq_free_tail(cmd)<0) {
+   swd_log(swdctx, SWD_LOGLEVEL_ERROR,
+     "SWD_E: swd_drv_transmit(swdctx=@0x%p, cmd=@0x%p): Cannot free cmdq tail in ACK error hanlig routine!\n",
+     (void*)swdctx, (void*)cmd );
+   return SWD_ERROR_QUEUENOTFREE;
+  }
+ return errcode;
  }
 
- /* Now verify the PARITY value and notifu caller about possible errors. */
+
+ /* Now verify the PARITY value and notifu caller about possible errors.
+  * If error was detected, delete trailing queue elements. */
  if (cmd->cmdtype==SWD_CMDTYPE_MISO_PARITY){
+  // Parity must be preceded with data, look for that data and verify parity.
   if (cmd->prev->cmdtype==SWD_CMDTYPE_MISO_DATA){
    char testparity;
+   // Calculate parity based on data value or give warning it cannot be performed.
    if (swd_bin32_parity_even(&cmd->prev->misodata, &testparity)<0)
-    swd_log(swdctx, SWD_LOGLEVEL_WARNING, "SWD_W: Cannot perform parity check (calculation error).\n");
+    swd_log(swdctx, SWD_LOGLEVEL_WARNING,
+      "SWD_W: swd_drv_transmit(swdctx=@0x%p, cmd=@0x%p): Cannot perform parity check (calculation error).\n",
+      (void*)swdctx, (void*)cmd );
+   // Verify calculated data parity with value received from target.
    if (cmd->parity!=testparity){
-    swd_log(swdctx, SWD_LOGLEVEL_ERROR, "SWD_E: Parity mismatch detected (%s/%d)!\n", swd_bin32_string(&cmd->prev->misodata), cmd->parity);
+    // Give error message.
+    swd_log(swdctx, SWD_LOGLEVEL_ERROR,
+      "SWD_E: swd_drv_transmit(swdctx=@0x%p, cmd=@0x%p): Parity mismatch detected (%s/%d)!\n",
+      (void*)swdctx, (void*)cmd, swd_bin32_string(&cmd->prev->misodata), cmd->parity );
+    // Clean the cmdq tail (as it contains invalid operations).
+    swd_log(swdctx, SWD_LOGLEVEL_WARNING,
+      "SWD_W: swd_drv_transmit(swdctx=@0x%p, cmd=@0x%p): Bad PARITY, clearing cmdq tail to preserve synchronization...\n",
+      (void*)swdctx, (void*)cmd );
+    if (swd_cmdq_free_tail(cmd)<0) {
+     swd_log(swdctx, SWD_LOGLEVEL_ERROR,
+       "SWD_E: swd_drv_transmit(swdctx=@0x%p, cmd=@0x%p): Cannot free cmdq tail in PARITY error hanlig routine!\n",
+       (void*)swdctx, (void*)cmd);
+     return SWD_ERROR_QUEUENOTFREE;
+    }
+    // Return parity error.
     return SWD_ERROR_PARITY;
    }
   } else {
-   swd_log(swdctx, SWD_LOGLEVEL_WARNING, "SWD_W: Cannot perform parity check (data missing).\n");
+   // If data element was not found then parity cannot be calculated.
+   // Give warning about that but does not return an error, as queue might be cleaned just before.
+   swd_log(swdctx, SWD_LOGLEVEL_WARNING,
+     "SWD_W: swd_drv_transmit(swdctx=@0x%p, cmd=@0x%p): Cannot perform parity check (data missing).\n",
+     (void*)swdctx, (void*)cmd );
    return res;
   }
  }
+
+ /* Everyting went fine, return number of elements processed. */
  return res;
 }
 
