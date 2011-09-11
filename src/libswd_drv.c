@@ -79,7 +79,7 @@ int swd_drv_transmit(swd_ctx_t *swdctx, swd_cmd_t *cmd){
    // 1 clock cycle.
    if (cmd->bits!=1) return SWD_ERROR_BADCMDDATA;
    res=swd_drv_mosi_8(swdctx, cmd, &cmd->mosibit, 1, SWD_DIR_LSBFIRST);
-   swdctx->log.write.control=cmd->mosibit;
+   swdctx->log.write.bitbang=cmd->mosibit;
    break;
 
   case SWD_CMDTYPE_MOSI_PARITY:
@@ -121,7 +121,7 @@ int swd_drv_transmit(swd_ctx_t *swdctx, swd_cmd_t *cmd){
    // 1 clock cycle.
    if (cmd->bits!=1) return SWD_ERROR_BADCMDDATA;
    res=swd_drv_miso_8(swdctx, cmd, &cmd->misobit, 1, SWD_DIR_LSBFIRST);
-   swdctx->log.read.control=cmd->misobit;
+   swdctx->log.read.bitbang=cmd->misobit;
    break;
 
   case SWD_CMDTYPE_MISO_PARITY:
