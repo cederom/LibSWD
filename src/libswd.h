@@ -532,6 +532,10 @@ typedef struct {
   swd_transaction_t read;     ///< Last read operation fields.
   swd_transaction_t write;    ///< Last write operation fields.
  } log;
+ struct {
+  swd_transaction_t read;     ///< Data queued for read.
+  swd_transaction_t write;    ///< Data queued for write.
+ } qlog;
 } swd_ctx_t;
 
 /** Some comments on the function behavior **/

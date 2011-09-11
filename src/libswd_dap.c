@@ -131,12 +131,11 @@ int swd_dp_read_idcode(swd_ctx_t *swdctx, swd_operation_t operation, int **idcod
  if (res<1) return res;
  cmdcnt=+res;
 
- swdctx->log.read.addr=addr;
  if (operation==SWD_OPERATION_ENQUEUE){
-  res=swd_bus_read_ack(swdctx, operation, (char**)&swdctx->log.read.ack);
+  res=swd_bus_read_ack(swdctx, operation, (char**)&swdctx->qlog.read.ack);
   if (res<1) return res;
   cmdcnt=+res;
-  res=swd_bus_read_data_p(swdctx, operation, (int**)&swdctx->log.read.data, (char**)&swdctx->log.read.parity);
+  res=swd_bus_read_data_p(swdctx, operation, idcode, (char**)&swdctx->qlog.read.parity);
   if (res<1) return res;
   cmdcnt=+res;
   return cmdcnt;
@@ -144,21 +143,13 @@ int swd_dp_read_idcode(swd_ctx_t *swdctx, swd_operation_t operation, int **idcod
  } else if (operation==SWD_OPERATION_EXECUTE){
   res=swd_bus_read_ack(swdctx, operation, &ack);
   if (res<1) return res;
-  swdctx->log.read.ack=*ack;
   cmdcnt+=res;
-  if (*ack!=SWD_ACK_OK_VAL){
-   if (*ack==SWD_ACK_WAIT_VAL) return SWD_ERROR_ACK_WAIT;
-   if (*ack==SWD_ACK_FAULT_VAL) return SWD_ERROR_ACK_FAULT; 
-   return SWD_ERROR_ACK;
-  }
   res=swd_bus_read_data_p(swdctx, operation, idcode, &parity);
   if (res<0) return res;
   cmdcnt+=res;
   res=swd_bin32_parity_even(*idcode, &cparity); 
   if (res<0) return res;
-  swdctx->log.read.data=**idcode;
   swdctx->log.dp.idcode=**idcode;
-  swdctx->log.read.parity=*parity;
   if (cparity!=*parity) return SWD_ERROR_PARITY;
  swd_log(swdctx, SWD_LOGLEVEL_INFO, "SWD_I: swd_dp_read_idcode() succeeds, IDCODE=%X (%s)\n", **idcode, swd_bin32_string(*idcode));
   return cmdcnt;
@@ -204,13 +195,11 @@ int swd_dp_read(swd_ctx_t *swdctx, swd_operation_t operation, char addr, int **d
  if (res<1) return res;
  cmdcnt=+res;
 
- swdctx->log.read.addr=addr;
-
  if (operation==SWD_OPERATION_ENQUEUE){
-  res=swd_bus_read_ack(swdctx, operation, (char**)&swdctx->log.read.ack);
+  res=swd_bus_read_ack(swdctx, operation, (char**)&swdctx->qlog.read.ack);
   if (res<1) return res;
   cmdcnt=+res;
-  res=swd_bus_read_data_p(swdctx, operation, (int**)&swdctx->log.read.data, (char**)&swdctx->log.read.parity);
+  res=swd_bus_read_data_p(swdctx, operation, data, (char**)&swdctx->qlog.read.parity);
   if (res<1) return res;
   cmdcnt=+res;
   return cmdcnt;
@@ -218,17 +207,10 @@ int swd_dp_read(swd_ctx_t *swdctx, swd_operation_t operation, char addr, int **d
  } else if (operation==SWD_OPERATION_EXECUTE){
   res=swd_bus_read_ack(swdctx, operation, &ack);
   if (res<1) return res;
-  swdctx->log.read.ack=*ack;
   cmdcnt+=res;
-  if (*ack!=SWD_ACK_OK_VAL){
-   if (*ack==SWD_ACK_WAIT_VAL) return SWD_ERROR_ACK_WAIT;
-   if (*ack==SWD_ACK_FAULT_VAL) return SWD_ERROR_ACK_FAULT; 
-   return SWD_ERROR_ACK;
-  }
   res=swd_bus_read_data_p(swdctx, operation, data, &parity);
   if (res<0) return res;
   cmdcnt+=res;
-  swdctx->log.read.data=**data;
   res=swd_bin32_parity_even(*data, &cparity); 
   if (res<0) return res;
   if (cparity!=*parity) return SWD_ERROR_PARITY;
@@ -259,9 +241,7 @@ int swd_dp_write(swd_ctx_t *swdctx, swd_operation_t operation, char addr, int *d
  if (res<1) return res;
  cmdcnt=+res;
 
- swdctx->log.write.addr=addr;
- swdctx->log.write.data=*data;
- swd_bin32_parity_even(data, (char *)&swdctx->log.write.parity);
+ swd_bin32_parity_even(data, (char *)&swdctx->qlog.write.parity);
 
  if (operation==SWD_OPERATION_ENQUEUE){
   res=swd_bus_read_ack(swdctx, operation, (char**)&swdctx->log.write.ack);
@@ -275,13 +255,7 @@ int swd_dp_write(swd_ctx_t *swdctx, swd_operation_t operation, char addr, int *d
  } else if (operation==SWD_OPERATION_EXECUTE){
   res=swd_bus_read_ack(swdctx, operation, &ack);
   if (res<1) return res;
-  swdctx->log.write.ack=*ack;
   cmdcnt+=res;
-  if (*ack!=SWD_ACK_OK_VAL){
-   if (*ack==SWD_ACK_WAIT_VAL) return SWD_ERROR_ACK_WAIT;
-   if (*ack==SWD_ACK_FAULT_VAL) return SWD_ERROR_ACK_FAULT; 
-   return SWD_ERROR_ACK;
-  }
   res=swd_bus_write_data_ap(swdctx, operation, data);
   if (res<0) return res;
   cmdcnt+=res;
@@ -313,13 +287,11 @@ int swd_ap_read(swd_ctx_t *swdctx, swd_operation_t operation, char addr, int **d
  if (res<1) return res;
  cmdcnt=+res;
 
- swdctx->log.read.addr=addr;
-
  if (operation==SWD_OPERATION_ENQUEUE){
-  res=swd_bus_read_ack(swdctx, operation, (char**)&swdctx->log.read.ack);
+  res=swd_bus_read_ack(swdctx, operation, (char**)&swdctx->qlog.read.ack);
   if (res<1) return res;
   cmdcnt=+res;
-  res=swd_bus_read_data_p(swdctx, operation, (int**)&swdctx->log.read.data, (char**)&swdctx->log.read.parity);
+  res=swd_bus_read_data_p(swdctx, operation, data, (char**)&swdctx->qlog.read.parity);
   if (res<1) return res;
   cmdcnt=+res;
   return cmdcnt;
@@ -327,18 +299,10 @@ int swd_ap_read(swd_ctx_t *swdctx, swd_operation_t operation, char addr, int **d
  } else if (operation==SWD_OPERATION_EXECUTE){
   res=swd_bus_read_ack(swdctx, operation, &ack);
   if (res<1) return res;
-  swdctx->log.read.ack=*ack;
   cmdcnt+=res;
-  if (*ack!=SWD_ACK_OK_VAL){
-   if (*ack==SWD_ACK_WAIT_VAL) return SWD_ERROR_ACK_WAIT;
-   if (*ack==SWD_ACK_FAULT_VAL) return SWD_ERROR_ACK_FAULT; 
-   return SWD_ERROR_ACK;
-  }
   res=swd_bus_read_data_p(swdctx, operation, data, &parity);
   if (res<0) return res;
   cmdcnt+=res;
-  swdctx->log.read.data=**data;
-  swdctx->log.read.parity=*parity;
   res=swd_bin32_parity_even(*data, &cparity); 
   if (res<0) return res;
   if (cparity!=*parity) return SWD_ERROR_PARITY;
@@ -369,12 +333,10 @@ int swd_ap_write(swd_ctx_t *swdctx, swd_operation_t operation, char addr, int *d
  if (res<1) return res;
  cmdcnt=+res;
 
- swdctx->log.write.addr=addr;
- swdctx->log.write.data=*data;
- swd_bin32_parity_even(data, (char *)&swdctx->log.write.parity);
+ swd_bin32_parity_even(data, (char *)&swdctx->qlog.write.parity);
 
  if (operation==SWD_OPERATION_ENQUEUE){
-  res=swd_bus_read_ack(swdctx, operation, (char**)&swdctx->log.write.ack);
+  res=swd_bus_read_ack(swdctx, operation, (char**)&swdctx->qlog.write.ack);
   if (res<1) return res;
   cmdcnt=+res;
   res=swd_bus_write_data_ap(swdctx, operation, data);
@@ -385,13 +347,7 @@ int swd_ap_write(swd_ctx_t *swdctx, swd_operation_t operation, char addr, int *d
  } else if (operation==SWD_OPERATION_EXECUTE){
   res=swd_bus_read_ack(swdctx, operation, &ack);
   if (res<1) return res;
-  swdctx->log.write.ack=*ack;
   cmdcnt+=res;
-  if (*ack!=SWD_ACK_OK_VAL){
-   if (*ack==SWD_ACK_WAIT_VAL) return SWD_ERROR_ACK_WAIT;
-   if (*ack==SWD_ACK_FAULT_VAL) return SWD_ERROR_ACK_FAULT; 
-   return SWD_ERROR_ACK;
-  }
   res=swd_bus_write_data_ap(swdctx, operation, data);
   if (res<0) return res;
   cmdcnt+=res;
