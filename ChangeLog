@@ -1,8 +1,10 @@
 
-LibSWD-0.2-devel:
+LibSWD-0.2 (2011-10-31):
  * Source code reorganization (split into different files).
  * Build system fixes and documentation updates.
  * Integration with OpenOCD.
+ * Bugfixes and improvements.
+ * Error detection in swd_drv_transmit() - cmdq is truncated on error.
 
 LibSWD-0.1 (2011-04-02):
 Initial release of LibSWD:

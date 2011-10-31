@@ -1,3 +1,7 @@
+2011-10-31:
+-----------
+ * LibSWD release 0.2, it can now work with OpenOCD (libswd trunk).
+
 2011-04-02:
 -----------
  * LibSWD initial version 0.1 released to the public.
