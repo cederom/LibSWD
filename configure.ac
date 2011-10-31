@@ -1,4 +1,4 @@
-AC_INIT([libswd], [0.2-devel], [tomek@cedro.info])
+AC_INIT([libswd], [0.2], [tomek@cedro.info])
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_MACRO_DIR([m4])
 AM_INIT_AUTOMAKE([foreign -Wall -Werror])
