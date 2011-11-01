@@ -93,24 +93,43 @@
 #define __LIBSWD_H__
 
 /** SWD Packets Bit Fields and Values */
-/// Packet Start bit, always set to 1.
+/// Request packet Start field bitnumber, always set to 1.
 #define SWD_REQUEST_START_BITNUM  7
-/// Access Port (high) or Debug Port (low) access.
+/// Requect packet APnDP field bitnumber. Access Port ot Debug Port access.
 #define SWD_REQUEST_APnDP_BITNUM  6
-/// Read (high) or Write (low) access.
+/// Request packet RnW field bitnumber. Read or Write operation.
 #define SWD_REQUEST_RnW_BITNUM    5
-/// LSB of the address field in request header.
+/// Request packet ADDR field bitnumber. AP/DP register address (two bit field).
 #define SWD_REQUEST_ADDR_BITNUM   4
-/// Target Register Address bit 2.
+/// Request packet A2 field bitnumber.
 #define SWD_REQUEST_A2_BITNUM     4
-/// Target Register Address bit 3.
+/// Request packet A3 field bitnumber.
 #define SWD_REQUEST_A3_BITNUM     3
-/// Odd Parity calculated from APnDP, RnW, A[2:3].
+/// Request packet PARITY field bitnumber. Odd Parity calculated from APnDP, RnW, A[2:3].
 #define SWD_REQUEST_PARITY_BITNUM 2
-/// Packet Stop bit, always 0.
+/// Request packet STOP field bitnumber. Packet Stop bit, always 0.
 #define SWD_REQUEST_STOP_BITNUM   1
-/// Park wire and switch between receive/transmit.
+/// Request packet PARK field bitnumber. Park wire and switch between receive/transmit.
 #define SWD_REQUEST_PARK_BITNUM   0
+
+/// Request Start field bitmask
+#define SWD_REQUEST_START         (1 << SWD_REQUEST_START_BITNUM)
+/// Requect packet APnDP field bitmask.
+#define SWD_REQUEST_APnDP         (1 << SWD_REQUEST_APnDP_BITNUM)
+/// Request packet RnW field bitmask.
+#define SWD_REQUEST_RnW           (1 << SWD_REQUEST_RnW_BITNUM)
+/// Request packet ADDR field bitmask.
+#define SWD_REQUEST_ADDR          (1 << SWD_REQUEST_A2_BITNUM) | (1 << SWD_REQUEST_A3_BITNUM)
+/// Request packet A2 field bitmask
+#define SWD_REQUEST_A2            (1 << SWD_REQUEST_A2_BITNUM)
+/// Request packet A3 field bitmask.
+#define SWD_REQUEST_A3            (1 << SWD_REQUEST_A3_BITNUM)
+/// Request packet PARITY field bitmask.
+#define SWD_REQUEST_PARITY        (1 << SWD_REQUEST_PARITY_BITNUM)
+/// Request packet STOP field bitmask.
+#define SWD_REQUEST_STOP          (1 << SWD_REQUEST_STOP_BITNUM)
+/// Request packet PARK field bitmask.
+#define SWD_REQUEST_PARK          (1 << SWD_REQUEST_PARK_BITNUM)
 
 /// Start Bit Value is always 1.
 #define SWD_REQUEST_START_VAL     1
@@ -154,24 +173,24 @@
 /// DAPABORT bit number.
 #define SWD_DP_ABORT_DAPABORT_BITNUM    0
 /// DSTKCMPCLR bit number.
-#define SWD_DP_ABORT_DSTKCMPCLR_BITNUM  1
+#define SWD_DP_ABORT_STKCMPCLR_BITNUM  1
 /// DSTKERRCLR bit number.
-#define SWD_DP_ABORT_DSTKERRCLR_BITNUM  2
+#define SWD_DP_ABORT_STKERRCLR_BITNUM  2
 /// DWDERRCLR bit number.
-#define SWD_DP_ABORT_DWDERRCLR_BITNUM   3
+#define SWD_DP_ABORT_WDERRCLR_BITNUM   3
 /// DORUNERRCLR bit number.
-#define SWD_DP_ABORT_DORUNERRCLR_BITNUM 4
+#define SWD_DP_ABORT_ORUNERRCLR_BITNUM 4
 
 /// DAPABORT bitmask
 #define SWD_DP_ABORT_DAPABORT           (1 << SWD_DP_ABORT_DAPABORT_BITNUM)
 /// DSTKCMPCLR bitmask
-#define SWD_DP_ABORT_DSTKCMPCLR         (1 << SWD_DP_ABORT_DSTKCMPCLR_BITNUM)
+#define SWD_DP_ABORT_STKCMPCLR         (1 << SWD_DP_ABORT_STKCMPCLR_BITNUM)
 /// DSTKERRCLR bitmask
-#define SWD_DP_ABORT_DSTKERRCLR         (1 << SWD_DP_ABORT_DSTKERRCLR_BITNUM)
+#define SWD_DP_ABORT_STKERRCLR         (1 << SWD_DP_ABORT_STKERRCLR_BITNUM)
 /// DWDERRCLR bitmask
-#define SWD_DP_ABORT_DWDERRCLR          (1 << SWD_DP_ABORT_DWDERRCLR_BITNUM)
+#define SWD_DP_ABORT_WDERRCLR          (1 << SWD_DP_ABORT_WDERRCLR_BITNUM)
 /// DORUNERRCLR bitmask
-#define SWD_DP_ABORT_DORUNERRCLR        (1 << SWD_DP_ABORT_DORUNERRCLR_BITNUM)
+#define SWD_DP_ABORT_ORUNERRCLR        (1 << SWD_DP_ABORT_ORUNERRCLR_BITNUM)
 
 
 /** SW-DP CTRL/STAT Register map */
