@@ -106,12 +106,17 @@ int swd_drv_transmit(swd_ctx_t *swdctx, swd_cmd_t *cmd){
    res=swd_drv_mosi_8(swdctx, cmd, &cmd->request, 8, SWD_DIR_MSBFIRST);
    swdctx->log.write.request=cmd->request;
    // Log human-readable request fields for easier transmission debug.
+   unsigned int addr,rnw;
+   addr=((cmd->request&(1<<SWD_REQUEST_A3_BITNUM))?1:0)<<1;
+   addr|=(cmd->request&(1<<SWD_REQUEST_A2_BITNUM))?1:0;
+   rnw=(cmd->request&(1<<SWD_REQUEST_RnW_BITNUM));
    swd_log(swdctx, SWD_LOGLEVEL_DEBUG, \
-    "SWD_D: Request packet hint: %s %s Addr=%d%d Parity=%d \n",\
-    (cmd->request&(1<<SWD_REQUEST_RnW_BITNUM))?"R":"W", \
+    "SWD_D: Request packet hint: %s %s Addr=%d%d/%s Parity=%d \n",\
+    rnw?"R":"W", \
     (cmd->request&(1<<SWD_REQUEST_APnDP_BITNUM))?"AP":"DP", \
     (cmd->request&(1<<SWD_REQUEST_A3_BITNUM))?1:0, \
     (cmd->request&(1<<SWD_REQUEST_A2_BITNUM))?1:0, \
+    swd_dap_register_string(swdctx, rnw, addr), \
     (cmd->request&(1<<SWD_REQUEST_PARITY_BITNUM))?1:0);
    break;
 

@@ -119,4 +119,31 @@ const char *swd_operation_string(swd_operation_t operation){
  return "UNKNOWN_SWD_OPERATION";
 } 
 
+/** Helper function that can print name of the DAP register.
+ * \param swdctx points to the swd context and its necessary to know 
+    DP SELECT register value as it determines CTRL/STAT or WCR access.
+ * \param RnW is the read/write bit of the request packet.
+ * \param addr is the address of the register.
+ * \return char* array with the register name string.
+ */
+const char *swd_dap_register_string(swd_ctx_t *swdctx, char RnW, int addr){
+ if (RnW) {
+  switch (addr){
+   case 0: return "IDCODE";
+   case 1: return (swdctx->log.dp.select&1<<SWD_DP_SELECT_CTRLSEL_BITNUM)?"(CTRL/STAT or [WCR])":"([CTRL/STAT] or WCR)";
+   case 2: return "RESEND";
+   case 3: return "RDBUFF";
+   default: return "UNKNOWN!";
+  }
+ } else {
+  switch (addr) {
+   case 0: return "ABORT";
+   case 1: return (swdctx->log.dp.select&1<<SWD_DP_SELECT_CTRLSEL_BITNUM)?"(CTRL/STAT or [WCR])":"([CTRL/STAT] or WCR)";
+   case 2: return "SELECT";
+   default: return "UNKNOWN!";
+  }
+ }
+}
+
+
 /** @} */
