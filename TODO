@@ -1,0 +1,3 @@
+*do not automatically flush cmdq when full, as the pointers pointing to queue elements will cause program crash when referencing to nonexistent elements.
+
+
