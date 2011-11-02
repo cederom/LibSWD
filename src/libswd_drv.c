@@ -111,7 +111,7 @@ int swd_drv_transmit(swd_ctx_t *swdctx, swd_cmd_t *cmd){
    addr|=(cmd->request&(1<<SWD_REQUEST_A2_BITNUM))?1:0;
    rnw=(cmd->request&(1<<SWD_REQUEST_RnW_BITNUM));
    swd_log(swdctx, SWD_LOGLEVEL_DEBUG, \
-    "SWD_D: Request packet hint: %s %s Addr=%d%d/%s Parity=%d \n",\
+    "SWD_D: Sending Request: %s %s Addr=%d%d/%s Parity=%d \n",\
     rnw?"R":"W", \
     (cmd->request&(1<<SWD_REQUEST_APnDP_BITNUM))?"AP":"DP", \
     (cmd->request&(1<<SWD_REQUEST_A3_BITNUM))?1:0, \
@@ -170,8 +170,8 @@ int swd_drv_transmit(swd_ctx_t *swdctx, swd_cmd_t *cmd){
    return SWD_ERROR_BADCMDTYPE;
  } 
 
- swd_log(swdctx, SWD_LOGLEVEL_DEBUG,
-  "SWD_D: swd_drv_transmit(swdctx=@0x%p, cmd=@0x%p) bits=%-2d cmdtype=%-12s returns=%-3d payload=0x%08x (%s)\n",
+ swd_log(swdctx, SWD_LOGLEVEL_PAYLOAD,
+  "SWD_P: swd_drv_transmit(swdctx=@0x%p, cmd=@0x%p) bits=%-2d cmdtype=%-12s returns=%-3d payload=0x%08x (%s)\n",
   swdctx, cmd, cmd->bits, swd_cmd_string_cmdtype(cmd), res,
   (cmd->bits>8)?cmd->data32:cmd->data8,
   (cmd->bits<=8)?swd_bin8_string(&cmd->data8):swd_bin32_string(&cmd->data32));

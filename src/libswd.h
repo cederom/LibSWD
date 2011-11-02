@@ -389,8 +389,9 @@ typedef enum {
  SWD_LOGLEVEL_WARNING = 2, ///< Show warnings.
  SWD_LOGLEVEL_NORMAL  = 3, ///< Normal verbosity.
  SWD_LOGLEVEL_INFO    = 4, ///< Show messages.
- SWD_LOGLEVEL_DEBUG   = 5, ///< Show all including debug information.
- SWD_LOGLEVEL_MAX     = 5
+ SWD_LOGLEVEL_DEBUG   = 5, ///< Show debug information.
+ SWD_LOGLEVEL_PAYLOAD = 6, ///< Show packet payload.
+ SWD_LOGLEVEL_MAX     = 6
 } swd_loglevel_t;
 
 /** SWD queue and payload data definitions */
