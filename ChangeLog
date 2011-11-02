@@ -1,8 +1,16 @@
+LibSWD-0.3:
+ * Fixed critical issue with ACK/DATA bitswap due erratic ARM documentation.
+ * Fixes and improvements in libswd.h.
+ * Debug hint function in Request packet decoposition (libswd_drv).
+ * Fixed OpenOCD drivers.
 
-LibSWD-0.2-devel:
+LibSWD-0.2 (2011-10-31):
  * Source code reorganization (split into different files).
  * Build system fixes and documentation updates.
  * Integration with OpenOCD.
+ * Bugfixes and improvements.
+ * Error detection in swd_drv_transmit() - cmdq is truncated on error.
+ * Created dedicated functions to work on DAP registers.
 
 LibSWD-0.1 (2011-04-02):
 Initial release of LibSWD:
