@@ -148,11 +148,11 @@
 /// Number of bits in Acknowledge packet.
 #define SWD_ACK_BITLEN        3
 /// OK code value.
-#define SWD_ACK_OK_VAL        4
+#define SWD_ACK_OK_VAL        1
 /// WAIT code value.
 #define SWD_ACK_WAIT_VAL      2
 /// FAULT code value.
-#define SWD_ACK_FAULT_VAL     1
+#define SWD_ACK_FAULT_VAL     4
 
 /// IDCODE register address (RO).
 #define SWD_DP_IDCODE_ADDR    0
