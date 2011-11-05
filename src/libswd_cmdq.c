@@ -203,11 +203,15 @@ int swd_cmdq_flush(swd_ctx_t *swdctx, swd_operation_t operation){
  if (firstcmd==NULL) return SWD_ERROR_QUEUEROOT;
  if (lastcmd==NULL) return SWD_ERROR_QUEUETAIL;
 
- if (firstcmd==lastcmd)
-  return swd_drv_transmit(swdctx, firstcmd); 
+ if (firstcmd==lastcmd){
+  if (!cmd->done) return swd_drv_transmit(swdctx, firstcmd); 
+ }
 
  for (cmd=firstcmd;;cmd=cmd->next){
-  if (cmd->done) continue;
+  if (cmd->done){
+   if (cmd->next) continue;
+   break;
+  }
   res=swd_drv_transmit(swdctx, cmd); 
   if (res<0) return res;
   cmdcnt=+res;
