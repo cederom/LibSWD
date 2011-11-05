@@ -200,7 +200,7 @@ int swd_drv_transmit(swd_ctx_t *swdctx, swd_cmd_t *cmd){
     break;
    default:
     swd_log(swdctx, SWD_LOGLEVEL_ERROR,
-      "SWD_E: swd_drv_transmit(swdctx=@0x%p, cmd=@0x%p): Unknown ACK detected! DAP Stalled or Target is Powered Down...?\n",
+      "SWD_E: swd_drv_transmit(swdctx=@0x%p, cmd=@0x%p): Unknown ACK detected! DAP Stalled or Target Powered Down...?\n",
       (void*)swdctx, (void*)cmd );
     errcode=SWD_ERROR_ACK;
   }
