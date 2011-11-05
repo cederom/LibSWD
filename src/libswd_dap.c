@@ -147,11 +147,13 @@ int swd_dp_read_idcode(swd_ctx_t *swdctx, swd_operation_t operation, int **idcod
   res=swd_bus_read_data_p(swdctx, operation, idcode, &parity);
   if (res<0) return res;
   cmdcnt+=res;
+  swdctx->log.dp.idcode=**idcode;
+  swdctx->log.dp.parity=*parity;
+  swdctx->log.dp.ack   =*ack;
   res=swd_bin32_parity_even(*idcode, &cparity); 
   if (res<0) return res;
-  swdctx->log.dp.idcode=**idcode;
   if (cparity!=*parity) return SWD_ERROR_PARITY;
- swd_log(swdctx, SWD_LOGLEVEL_INFO, "SWD_I: swd_dp_read_idcode(swdctx=@%p, operation=%s, *idcode=0x%X/%s).\n", (void*)swdctx, swd_operation_string(operation), **idcode, swd_bin32_string(*idcode));
+ swd_log(swdctx, SWD_LOGLEVEL_INFO, "SWD_I: swd_dp_read_idcode(swdctx=@%p, operation=%s, **idcode=0x%X/%s).\n", (void*)swdctx, swd_operation_string(operation), **idcode, swd_bin32_string(*idcode));
   return cmdcnt;
  } else return SWD_ERROR_BADOPCODE;
 }
@@ -199,7 +201,7 @@ int swd_dp_read(swd_ctx_t *swdctx, swd_operation_t operation, char addr, int **d
   res=swd_bus_read_ack(swdctx, operation, (char**)&swdctx->qlog.read.ack);
   if (res<1) return res;
   cmdcnt=+res;
-  res=swd_bus_read_data_p(swdctx, operation, (int**)&swdctx->qlog.read.data, (char**)&swdctx->qlog.read.parity);
+  res=swd_bus_read_data_p(swdctx, operation, (int**)&data, (char**)&swdctx->qlog.read.parity);
   if (res<1) return res;
   cmdcnt=+res;
   return cmdcnt;
@@ -214,7 +216,7 @@ int swd_dp_read(swd_ctx_t *swdctx, swd_operation_t operation, char addr, int **d
   res=swd_bin32_parity_even(*data, &cparity); 
   if (res<0) return res;
   if (cparity!=*parity) return SWD_ERROR_PARITY;
-  swd_log(swdctx, SWD_LOGLEVEL_INFO, "SWD_I: swd_dp_read(swdctx=@%p, operation=%s, addr=0x%X, *data=0x%X/%s).\n", (void*)swdctx, swd_operation_string(operation), addr, **data, swd_bin32_string(*data));
+  swd_log(swdctx, SWD_LOGLEVEL_INFO, "SWD_I: swd_dp_read(swdctx=@%p, operation=%s, addr=0x%X, **data=0x%X/%s).\n", (void*)swdctx, swd_operation_string(operation), addr, **data, swd_bin32_string(*data));
   return cmdcnt;
  } else return SWD_ERROR_BADOPCODE;
 } 
