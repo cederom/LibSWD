@@ -75,7 +75,7 @@ int swd_drv_transmit(swd_ctx_t *swdctx, swd_cmd_t *cmd){
   case SWD_CMDTYPE_MOSI_CONTROL:
    // 8 clock cycles.
    if (cmd->bits!=8) return SWD_ERROR_BADCMDDATA;
-   res=swd_drv_mosi_8(swdctx, cmd, &cmd->control, 8, SWD_DIR_MSBFIRST);
+   res=swd_drv_mosi_8(swdctx, cmd, &cmd->control, 8, SWD_DIR_LSBFIRST);
    swdctx->log.write.control=cmd->control;
    break;
 
@@ -199,14 +199,14 @@ int swd_drv_transmit(swd_ctx_t *swdctx, swd_cmd_t *cmd){
     errcode=SWD_ERROR_ACK_WAIT;
     break;
    default:
-    swd_log(swdctx, SWD_LOGLEVEL_WARNING,
-      "SWD_W: swd_drv_transmit(swdctx=@0x%p, cmd=@0x%p): Unknown ACK detected! Is your target powered on?\n",
+    swd_log(swdctx, SWD_LOGLEVEL_ERROR,
+      "SWD_E: swd_drv_transmit(swdctx=@0x%p, cmd=@0x%p): Unknown ACK detected! DAP Stalled or Target is Powered Down...?\n",
       (void*)swdctx, (void*)cmd );
     errcode=SWD_ERROR_ACK;
   }
-  // Now give a warning and clean cmdq tail (as it contains invalid operations).
-  swd_log(swdctx, SWD_LOGLEVEL_WARNING,
-    "SWD_W: swd_drv_transmit(swdctx=@0x%p, cmd=@0x%p): Bad ACK, clearing cmdq tail to preserve synchronization...\n",
+  // Now log error and clean cmdq tail (as it contains invalid operations).
+  swd_log(swdctx, SWD_LOGLEVEL_ERROR,
+    "SWD_E: swd_drv_transmit(swdctx=@0x%p, cmd=@0x%p): Bad ACK, clearing cmdq tail to preserve synchronization...\n",
     (void*)swdctx, (void*)cmd );
   if (swd_cmdq_free_tail(cmd)<0) {
    swd_log(swdctx, SWD_LOGLEVEL_ERROR,
