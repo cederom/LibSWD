@@ -103,7 +103,7 @@ int swd_drv_transmit(swd_ctx_t *swdctx, swd_cmd_t *cmd){
   case SWD_CMDTYPE_MOSI_REQUEST:
    // 8 clock cycles.
    if (cmd->bits!=SWD_REQUEST_BITLEN) return SWD_ERROR_BADCMDDATA;
-   res=swd_drv_mosi_8(swdctx, cmd, &cmd->request, 8, SWD_DIR_MSBFIRST);
+   res=swd_drv_mosi_8(swdctx, cmd, &cmd->request, 8, SWD_DIR_LSBFIRST);
    swdctx->log.write.request=cmd->request;
    // Log human-readable request fields for easier transmission debug.
    unsigned int addr,rnw;

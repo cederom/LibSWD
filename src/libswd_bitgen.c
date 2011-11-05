@@ -46,6 +46,7 @@
 
 /** Generate 8-bit SWD-REQUEST packet contents with provided parameters.
  * Note that parity bit value is calculated automatically.
+ * Note that Request is also sent LSB-First so diagrams are wrapped!
  * \param *swdctx swd context pointer.
  * \param *APnDP AccessPort (high) or DebugPort (low) access type pointer.
  * \param *RnW Read (high) or Write (low) operation type pointer.

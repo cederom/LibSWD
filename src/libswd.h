@@ -94,23 +94,23 @@
 
 /** SWD Packets Bit Fields and Values */
 /// Request packet Start field bitnumber, always set to 1.
-#define SWD_REQUEST_START_BITNUM  7
+#define SWD_REQUEST_START_BITNUM  0
 /// Requect packet APnDP field bitnumber. Access Port ot Debug Port access.
-#define SWD_REQUEST_APnDP_BITNUM  6
+#define SWD_REQUEST_APnDP_BITNUM  1
 /// Request packet RnW field bitnumber. Read or Write operation.
-#define SWD_REQUEST_RnW_BITNUM    5
+#define SWD_REQUEST_RnW_BITNUM    2
 /// Request packet ADDR field bitnumber. AP/DP register address (two bit field).
-#define SWD_REQUEST_ADDR_BITNUM   4
+#define SWD_REQUEST_ADDR_BITNUM   3
 /// Request packet A2 field bitnumber.
-#define SWD_REQUEST_A2_BITNUM     4
+#define SWD_REQUEST_A2_BITNUM     3
 /// Request packet A3 field bitnumber.
-#define SWD_REQUEST_A3_BITNUM     3
+#define SWD_REQUEST_A3_BITNUM     4
 /// Request packet PARITY field bitnumber. Odd Parity calculated from APnDP, RnW, A[2:3].
-#define SWD_REQUEST_PARITY_BITNUM 2
+#define SWD_REQUEST_PARITY_BITNUM 5
 /// Request packet STOP field bitnumber. Packet Stop bit, always 0.
-#define SWD_REQUEST_STOP_BITNUM   1
+#define SWD_REQUEST_STOP_BITNUM   6
 /// Request packet PARK field bitnumber. Park wire and switch between receive/transmit.
-#define SWD_REQUEST_PARK_BITNUM   0
+#define SWD_REQUEST_PARK_BITNUM   7
 
 /// Request Start field bitmask
 #define SWD_REQUEST_START         (1 << SWD_REQUEST_START_BITNUM)
