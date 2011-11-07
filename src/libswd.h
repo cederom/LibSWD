@@ -79,7 +79,7 @@
  *   if (res<0){
  *    printf("ERROR: %s\n", swd_error_string(res));
  *    return res;
- *   } else printf("IDCODE: 0x%X (%s)\n", *idcode, swd_bin32_string(*idcode));
+ *   } else printf("IDCODE: 0x%X (%s)\n", *idcode, swd_bin32_string(idcode));
  *   swd_deinit(swdctx);
  *   return 0;
  *  }
