@@ -1,6 +1,32 @@
-2011-04-02:
------------
- * LibSWD initial version 0.1 released to the public.
+2011-11-11
+----------
+ * LibSWD 0.3 comes out, a major bugfix release.
+
+2011-11-01
+----------
+ * Code repository now use only a GIT system. SVN only stores doxygen
+   documentation in trunk for easier web browsing, including documentation and
+   code for releases. Synchronization between svn and git is a mess, we don't
+   need that, git is far better for code development :-)
+
+2011-10-31
+----------
+ * LibSWD 0.2 release: 
+  * Source code reorganization (split into different files). 
+  * Build system fixes and documentation updates. 
+  * Integration with OpenOCD. 
+  * Bugfixes and improvements. 
+  * Created function set for easier work on DAP. 
+  * Error detection in swd_drv_transmit() - cmdq is truncated on error. 
+
+2011-04-02
+----------
+ * LibSWD initial version 0.1 released to the public. 
+ * Basic functionality of transport, queue and drivers for ADIv5.0. 
+ * Automated SW-DP activation/reset and IDCODE read. 
+ * Tested and verified functionality on UrJTAG. 
+ * Source code documented using Doxygen. 
+ * Autotools integration for standarized build.
 
 2011-03-23:
 -----------

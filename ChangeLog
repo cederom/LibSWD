@@ -1,9 +1,11 @@
-LibSWD-0.3:
+LibSWD-0.3 (2011-11-11):
  * Fixed critical issue with ACK/DATA bitswap due erratic ARM documentation.
  * Fixes and improvements in libswd.h.
  * Debug hint function in Request packet decoposition (libswd_drv).
  * Fixed OpenOCD drivers.
  * Introduced SWD_LOGLEVEL_PAYLOAD even more verbose than debug.
+ * All transfers are now LSB-First.
+ * Major bugfixes.
 
 LibSWD-0.2 (2011-10-31):
  * Source code reorganization (split into different files).
