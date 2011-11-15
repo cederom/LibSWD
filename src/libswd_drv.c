@@ -56,6 +56,7 @@ extern int swd_drv_miso_trn(swd_ctx_t *swdctx, int bits);
  * Because commands that were queued does not get ack/parity data anymore,
  * we need to verify ACK/PARITY that was just read and return error if necesary.
  * When ACK/PARITY error is detected queue tail is removed as it is invalid.
+ * When CTRL/STAT:STICKYORUN=1 ACK={WAIT,FAULT] requires additional data phase.
  * \param *swdctx swd context pointer.
  * \param *cmd pointer to the command to be sent.
  * \return number of commands transmitted (1), or SWD_ERROR_CODE on failure.
@@ -180,7 +181,10 @@ int swd_drv_transmit(swd_ctx_t *swdctx, swd_cmd_t *cmd){
  cmd->done=1;
 
  /* Now verify the ACK value and notify caller about possible errors.
-  * If error was detected, delete trailing queue elements. */
+  * If error was detected, delete trailing queue elements, maybe perform data phase.
+  * Accodring to ADIv5.0 specification (ARM IHI 0031A, section 5.4.5) data phase is required when STICKYORUN=1.
+  * Unfortunately at this point we cannot read the CTRL/STAT flag, so we will write zeros to avoid random Request.
+  */
  if (cmd->cmdtype==SWD_CMDTYPE_MISO_ACK){
   switch(cmd->ack){
    // If the ACK was OK then simply return to the caller.
@@ -200,26 +204,51 @@ int swd_drv_transmit(swd_ctx_t *swdctx, swd_cmd_t *cmd){
     break;
    default:
     swd_log(swdctx, SWD_LOGLEVEL_ERROR,
-      "SWD_E: swd_drv_transmit(swdctx=@0x%p, cmd=@0x%p): Unknown ACK detected! DAP Stalled or Target Powered Down...?\n",
+      "SWD_E: swd_drv_transmit(swdctx=@0x%p, cmd=@0x%p): Unknown ACK detected / Protocol Error Sequence! DAP Stalled or Target Power Off?\n",
       (void*)swdctx, (void*)cmd );
-    errcode=SWD_ERROR_ACK;
+    errcode=SWD_ERROR_ACKUNKNOWN;
   }
-  // Now log error and clean cmdq tail (as it contains invalid operations).
-  swd_log(swdctx, SWD_LOGLEVEL_ERROR,
-    "SWD_E: swd_drv_transmit(swdctx=@0x%p, cmd=@0x%p): Bad ACK, clearing cmdq tail to preserve synchronization...\n",
+  // Now log error, clean cmdq tail (as it contains invalid operations).
+  swd_log(swdctx, SWD_LOGLEVEL_INFO,
+    "SWD_I: swd_drv_transmit(swdctx=@0x%p, cmd=@0x%p): ACK!=OK, clearing cmdq tail to preserve synchronization...\n",
     (void*)swdctx, (void*)cmd );
   if (swd_cmdq_free_tail(cmd)<0) {
    swd_log(swdctx, SWD_LOGLEVEL_ERROR,
-     "SWD_E: swd_drv_transmit(swdctx=@0x%p, cmd=@0x%p): Cannot free cmdq tail in ACK error hanlig routine!\n",
+     "SWD_E: swd_drv_transmit(swdctx=@0x%p, cmd=@0x%p): Cannot free cmdq tail in ACK error hanlig routine, Protocol Error Sequence imminent...\n",
      (void*)swdctx, (void*)cmd );
    return SWD_ERROR_QUEUENOTFREE;
   }
- return errcode;
+  // If ACK={WAIT,FAULT} then append data phase and again flush the queue to maintain sync.
+  // MOSI_TRN + 33 zero data cycles should be universal for STICKYORUN={0,1} ???
+  if (errcode==SWD_ERROR_ACK_WAIT || errcode==SWD_ERROR_ACK_FAULT){
+   swd_log(swdctx, SWD_LOGLEVEL_DEBUG, "SWD_D: swd_drv_transmit(swdctx=@0x%p, cmd=@0x%p): Performing data phase after ACK={WAIT,FAULT}...\n");
+   int data=0, parity=0;
+   res=swd_bus_write_data_p(swdctx, SWD_OPERATION_EXECUTE, &data, &parity);
+   if (res<0){
+    swd_log(swdctx, SWD_LOGLEVEL_ERROR,
+      "SWD_E: swd_drv_transmit(swdctx=@0x%p, cmd=@0x%p): Cannot perform data phase after ACK=WAIT/FAIL, Protocol Error Sequence imminent...\n",
+      (void*)swdctx, (void*)cmd );
+   }
+   // Caller now should read CTRL/STAT and clear STICKY Error Flags.
+  }
+  // If ACK={UNKNOWN} then we probably have Protocol Error Sequence. We need to reset+detect DAP.
+  if (errcode==SWD_ERROR_ACKUNKNOWN){
+   swd_log(swdctx, SWD_LOGLEVEL_DEBUG, "SWD_D: swd_drv_transmit(swdctx=@0x%p, cmd=@0x%p): Trying to detect Target...\n", (void*)swdctx, (void*)cmd);
+   int *idcode;
+   res=swd_dap_detect(swdctx, SWD_OPERATION_EXECUTE, &idcode);
+   if (res<0){
+    swd_log(swdctx, SWD_LOGLEVEL_ERROR,
+      "SWD_E: swd_drv_transmit(swdctx=@0x%p, cmd=@0x%p): Error Detecting DAP after Protocol Error Sequence!\n",
+      (void*)swdctx, (void*)cmd );
+   }
+  }
+  return errcode;
  }
 
 
- /* Now verify the PARITY value and notifu caller about possible errors.
-  * If error was detected, delete trailing queue elements. */
+ /* Verify the PARITY value and notify caller about possible errors.
+  * If error was detected, delete trailing queue elements.
+  */
  if (cmd->cmdtype==SWD_CMDTYPE_MISO_PARITY){
   // Parity must be preceded with data, look for that data and verify parity.
   if (cmd->prev->cmdtype==SWD_CMDTYPE_MISO_DATA){
