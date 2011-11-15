@@ -1,3 +1,7 @@
+LibSWD-0.4:
+ * Implemented necessary data phase on ACK={WAIT,FAULT} reply from Target.
+ * Unknown ACK response, a Protocol Error Sequence, forces DAP detection.
+
 LibSWD-0.3 (2011-11-11):
  * Fixed critical issue with ACK/DATA bitswap due erratic ARM documentation.
  * Fixes and improvements in libswd.h.
