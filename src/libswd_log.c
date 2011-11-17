@@ -119,30 +119,60 @@ const char *swd_operation_string(swd_operation_t operation){
  return "UNKNOWN_SWD_OPERATION";
 } 
 
-/** Helper function that can print name of the DAP register.
+/** Helper function that can print name of the request fields.
  * \param swdctx points to the swd context and its necessary to know 
     DP SELECT register value as it determines CTRL/STAT or WCR access.
  * \param RnW is the read/write bit of the request packet.
  * \param addr is the address of the register.
  * \return char* array with the register name string.
  */
-const char *swd_dap_register_string(swd_ctx_t *swdctx, char RnW, int addr){
- if (RnW) {
+const char *swd_request_string(swd_ctx_t *swdctx, char request){
+ static char string[100], tmp[8]; string[0]=0;
+ int apndp=request&SWD_REQUEST_APnDP;
+ int addr=(request&SWD_REQUEST_A3)?1<<1:0|(request&SWD_REQUEST_A2)?1:0;
+ int rnw=request&SWD_REQUEST_RnW;
+ int parity=request&SWD_REQUEST_PARITY;
+
+ strcat(string, "AccessPort ");
+ strcat(string, rnw?"Read ":"Write ");
+ strcat(string, "Addr="); sprintf(tmp, "0x%02X", addr); strcat(string, tmp);
+
+ if (apndp){
+  // APnDP=1 so we print out the AHB-AP registers
   switch (addr){
-   case 0: return "IDCODE";
-   case 1: return (swdctx->log.dp.select&1<<SWD_DP_SELECT_CTRLSEL_BITNUM)?"(CTRL/STAT or [WCR])":"([CTRL/STAT] or WCR)";
-   case 2: return "RESEND";
-   case 3: return "RDBUFF";
-   default: return "UNKNOWN!";
+   case 0x00: strcat(string, "(R/W: Control/Status Word, CSW (reset value: 0x43800042)) "); break;
+   case 0x04: strcat(string, "(R/W: Transfer Address, TAR (reset value: 0x00000000)) "); break;
+   case 0x08: strcat(string, "(Reserved SBZ) "); break;
+   case 0x0c: strcat(string, "(R/W, Data Read/Write, DRW) "); break;
+   case 0x10: strcat(string, "(R/W, Banked Data 0, BD0) "); break;
+   case 0x14: strcat(string, "(R/W, Banked Data 1, BD1) "); break;
+   case 0x18: strcat(string, "(R/W, Banked Data 2, BD2 )"); break;
+   case 0x1c: strcat(string, "(R/W, Banked Data 3, BD3) "); break;
+   case 0xf8: strcat(string, "(RO, Debug ROM table (reset value: 0xE00FF000)) "); break;
+   case 0xfc: strcat(string, "(RO, Identification Register, IDR (reset value: 0x24770001)) "); break;
+   default:   strcat(string, "(UNKNOWN) ");
   }
  } else {
-  switch (addr) {
-   case 0: return "ABORT";
-   case 1: return (swdctx->log.dp.select&1<<SWD_DP_SELECT_CTRLSEL_BITNUM)?"(CTRL/STAT or [WCR])":"([CTRL/STAT] or WCR)";
-   case 2: return "SELECT";
-   default: return "UNKNOWN!";
+  // APnDP=0 so we print out the SW-DP registers
+  if (rnw) {
+   switch (addr){
+    case 0: strcat(string, "(IDCODE )"); break;
+    case 1: strcat(string, (swdctx->log.dp.select&1<<SWD_DP_SELECT_CTRLSEL_BITNUM)?"(CTRL/STAT or [WCR])":"([CTRL/STAT] or WCR)"); break;
+    case 2: strcat(string ,"(RESEND) "); break;
+    case 3: strcat(string, "(RDBUFF) "); break;
+    default: strcat(string, "(UNKNOWN) ");
+   }
+  } else {
+   switch (addr) {
+    case 0: strcat(string, "(ABORT) "); break;
+    case 1: strcat(string, (swdctx->log.dp.select&1<<SWD_DP_SELECT_CTRLSEL_BITNUM)?"(CTRL/STAT or [WCR]) ":"([CTRL/STAT] or WCR) "); break;
+    case 2: strcat(string, "(SELECT) "); break;
+    default: strcat(string, "(UNKNOWN) ");
+   }
   }
  }
+ strcat(string, "Parity="); strcat(string, parity?"1":"0");
+ return string;
 }
 
 
