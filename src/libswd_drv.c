@@ -172,7 +172,7 @@ int swd_drv_transmit(swd_ctx_t *swdctx, swd_cmd_t *cmd){
  } 
 
  swd_log(swdctx, SWD_LOGLEVEL_PAYLOAD,
-  "SWD_P: swd_drv_transmit(swdctx=@0x%p, cmd=@0x%p) bits=%-2d cmdtype=%-12s returns=%-3d payload=0x%08x (%s)\n",
+  "SWD_P: swd_drv_transmit(swdctx=@%p, cmd=@%p) bits=%-2d cmdtype=%-12s returns=%-3d payload=0x%08x (%s)\n",
   swdctx, cmd, cmd->bits, swd_cmd_string_cmdtype(cmd), res,
   (cmd->bits>8)?cmd->data32:cmd->data8,
   (cmd->bits<=8)?swd_bin8_string(&cmd->data8):swd_bin32_string(&cmd->data32));
@@ -192,56 +192,57 @@ int swd_drv_transmit(swd_ctx_t *swdctx, swd_cmd_t *cmd){
    // For other ACK codes produce a warning and remember the code.
    case SWD_ACK_FAULT_VAL:
     swd_log(swdctx, SWD_LOGLEVEL_WARNING,
-      "SWD_W: swd_drv_transmit(swdctx=@0x%p, cmd=@0x%p): SWD_ACK_FAULT detected!\n",
+      "SWD_W: swd_drv_transmit(swdctx=@%p, cmd=@%p): SWD_ACK_FAULT detected!\n",
       (void*)swdctx, (void*)cmd );
     errcode=SWD_ERROR_ACK_FAULT;
     break;
    case SWD_ACK_WAIT_VAL:
     swd_log(swdctx, SWD_LOGLEVEL_WARNING,
-      "SWD_W: swd_drv_transmit(swdctx=@0x%p, cmd=@0x%p): SWD_ACK_WAIT detectd!\n",
+      "SWD_W: swd_drv_transmit(swdctx=@%p, cmd=@%p): SWD_ACK_WAIT detectd!\n",
       (void*)swdctx, (void*)cmd );
     errcode=SWD_ERROR_ACK_WAIT;
     break;
    default:
     swd_log(swdctx, SWD_LOGLEVEL_ERROR,
-      "SWD_E: swd_drv_transmit(swdctx=@0x%p, cmd=@0x%p): Unknown ACK detected / Protocol Error Sequence! DAP Stalled or Target Power Off?\n",
+      "SWD_E: swd_drv_transmit(swdctx=@%p, cmd=@%p): Unknown ACK detected / Protocol Error Sequence! DAP Stalled or Target Power Off?\n",
       (void*)swdctx, (void*)cmd );
     errcode=SWD_ERROR_ACKUNKNOWN;
   }
   // Now log error, clean cmdq tail (as it contains invalid operations).
-  swd_log(swdctx, SWD_LOGLEVEL_INFO,
-    "SWD_I: swd_drv_transmit(swdctx=@0x%p, cmd=@0x%p): ACK!=OK, clearing cmdq tail to preserve synchronization...\n",
+  swd_log(swdctx, SWD_LOGLEVEL_DEBUG,
+    "SWD_D: swd_drv_transmit(swdctx=@%p, cmd=@%p): ACK!=OK, clearing cmdq tail to preserve synchronization...\n",
     (void*)swdctx, (void*)cmd );
   if (swd_cmdq_free_tail(cmd)<0) {
    swd_log(swdctx, SWD_LOGLEVEL_ERROR,
-     "SWD_E: swd_drv_transmit(swdctx=@0x%p, cmd=@0x%p): Cannot free cmdq tail in ACK error hanlig routine, Protocol Error Sequence imminent...\n",
+     "SWD_E: swd_drv_transmit(swdctx=@%p, cmd=@%p): Cannot free cmdq tail in ACK error hanlig routine, Protocol Error Sequence imminent...\n",
      (void*)swdctx, (void*)cmd );
    return SWD_ERROR_QUEUENOTFREE;
   }
   // If ACK={WAIT,FAULT} then append data phase and again flush the queue to maintain sync.
   // MOSI_TRN + 33 zero data cycles should be universal for STICKYORUN={0,1} ???
   if (errcode==SWD_ERROR_ACK_WAIT || errcode==SWD_ERROR_ACK_FAULT){
-   swd_log(swdctx, SWD_LOGLEVEL_DEBUG, "SWD_D: swd_drv_transmit(swdctx=@0x%p, cmd=@0x%p): Performing data phase after ACK={WAIT,FAULT}...\n");
+   swd_log(swdctx, SWD_LOGLEVEL_DEBUG, "SWD_D: swd_drv_transmit(swdctx=@%p, cmd=@%p): Performing data phase after ACK={WAIT,FAULT}...\n", (void*)swdctx, (void*)cmd);
    int data=0, parity=0;
    res=swd_bus_write_data_p(swdctx, SWD_OPERATION_EXECUTE, &data, &parity);
    if (res<0){
     swd_log(swdctx, SWD_LOGLEVEL_ERROR,
-      "SWD_E: swd_drv_transmit(swdctx=@0x%p, cmd=@0x%p): Cannot perform data phase after ACK=WAIT/FAIL, Protocol Error Sequence imminent...\n",
+      "SWD_E: swd_drv_transmit(swdctx=@%p, cmd=@%p): Cannot perform data phase after ACK=WAIT/FAIL, Protocol Error Sequence imminent...\n",
       (void*)swdctx, (void*)cmd );
    }
    // Caller now should read CTRL/STAT and clear STICKY Error Flags.
   }
   // If ACK={UNKNOWN} then we probably have Protocol Error Sequence. We need to reset+detect DAP.
   if (errcode==SWD_ERROR_ACKUNKNOWN){
-   swd_log(swdctx, SWD_LOGLEVEL_DEBUG, "SWD_D: swd_drv_transmit(swdctx=@0x%p, cmd=@0x%p): Trying to detect Target...\n", (void*)swdctx, (void*)cmd);
+   swd_log(swdctx, SWD_LOGLEVEL_DEBUG, "SWD_D: swd_drv_transmit(swdctx=@%p, cmd=@%p): Trying to detect Target...\n", (void*)swdctx, (void*)cmd);
    int *idcode;
    res=swd_dap_detect(swdctx, SWD_OPERATION_EXECUTE, &idcode);
    if (res<0){
     swd_log(swdctx, SWD_LOGLEVEL_ERROR,
-      "SWD_E: swd_drv_transmit(swdctx=@0x%p, cmd=@0x%p): Error Detecting DAP after Protocol Error Sequence!\n",
+      "SWD_E: swd_drv_transmit(swdctx=@%p, cmd=@%p): Error Detecting DAP after Protocol Error Sequence!\n",
       (void*)swdctx, (void*)cmd );
    }
   }
+  sleep(2);
   return errcode;
  }
 
@@ -256,21 +257,21 @@ int swd_drv_transmit(swd_ctx_t *swdctx, swd_cmd_t *cmd){
    // Calculate parity based on data value or give warning it cannot be performed.
    if (swd_bin32_parity_even(&cmd->prev->misodata, &testparity)<0)
     swd_log(swdctx, SWD_LOGLEVEL_WARNING,
-      "SWD_W: swd_drv_transmit(swdctx=@0x%p, cmd=@0x%p): Cannot perform parity check (calculation error).\n",
+      "SWD_W: swd_drv_transmit(swdctx=@%p, cmd=@%p): Cannot perform parity check (calculation error).\n",
       (void*)swdctx, (void*)cmd );
    // Verify calculated data parity with value received from target.
    if (cmd->parity!=testparity){
     // Give error message.
     swd_log(swdctx, SWD_LOGLEVEL_ERROR,
-      "SWD_E: swd_drv_transmit(swdctx=@0x%p, cmd=@0x%p): Parity mismatch detected (%s/%d)!\n",
+      "SWD_E: swd_drv_transmit(swdctx=@%p, cmd=@%p): Parity mismatch detected (%s/%d)!\n",
       (void*)swdctx, (void*)cmd, swd_bin32_string(&cmd->prev->misodata), cmd->parity );
     // Clean the cmdq tail (as it contains invalid operations).
     swd_log(swdctx, SWD_LOGLEVEL_WARNING,
-      "SWD_W: swd_drv_transmit(swdctx=@0x%p, cmd=@0x%p): Bad PARITY, clearing cmdq tail to preserve synchronization...\n",
+      "SWD_W: swd_drv_transmit(swdctx=@%p, cmd=@%p): Bad PARITY, clearing cmdq tail to preserve synchronization...\n",
       (void*)swdctx, (void*)cmd );
     if (swd_cmdq_free_tail(cmd)<0) {
      swd_log(swdctx, SWD_LOGLEVEL_ERROR,
-       "SWD_E: swd_drv_transmit(swdctx=@0x%p, cmd=@0x%p): Cannot free cmdq tail in PARITY error hanlig routine!\n",
+       "SWD_E: swd_drv_transmit(swdctx=@%p, cmd=@%p): Cannot free cmdq tail in PARITY error hanlig routine!\n",
        (void*)swdctx, (void*)cmd);
      return SWD_ERROR_QUEUENOTFREE;
     }
@@ -281,7 +282,7 @@ int swd_drv_transmit(swd_ctx_t *swdctx, swd_cmd_t *cmd){
    // If data element was not found then parity cannot be calculated.
    // Give warning about that but does not return an error, as queue might be cleaned just before.
    swd_log(swdctx, SWD_LOGLEVEL_WARNING,
-     "SWD_W: swd_drv_transmit(swdctx=@0x%p, cmd=@0x%p): Cannot perform parity check (data missing).\n",
+     "SWD_W: swd_drv_transmit(swdctx=@%p, cmd=@%p): Cannot perform parity check (data missing).\n",
      (void*)swdctx, (void*)cmd );
    return res;
   }
