@@ -290,6 +290,49 @@ int swd_dp_write(swd_ctx_t *swdctx, swd_operation_t operation, char addr, int *d
  } else return SWD_ERROR_BADOPCODE;
 } 
 
+/** Macro function: Selects APBANK based on provided value, before AP read/write (updates APBANKSEL field in SELECT register).
+ * Remember to execute SELECT write before calling this function to have up to date register value.
+ * Remember not to enqueue any other SELECT writes after this function and before queue flush.
+ * \param *swdctx swd context to work on.
+ * \param addr is the target AP register address, bank will be calculated based on this value.
+ * \return number of cmdq operations on success, or SWD_ERROR code on failure.
+ */
+int swd_ap_bank_select(swd_ctx_t *swdctx, swd_operation_t operation, char addr){
+ // If the correct AP bank is already selected no need to change it.
+ // Verify against cached DP SELECT register value.
+ // Unfortunately SELECT register is read only so we need to work on cached values...
+ if ( (addr&0x000000F0) != (swdctx->log.dp.select&0x00000F0) ){
+  int retval;
+  int new_select=swdctx->log.dp.select;
+  new_select=(new_select&0xFFFFF0F)|(addr&0xF0); 
+  retval=swd_dp_write(swdctx, operation, SWD_DP_SELECT_ADDR, &new_select);
+  if (retval<0) swd_log(swdctx, SWD_LOGLEVEL_ERROR, "swd_ap_bank_select(%p, %0x02X): cannot update DP SELECT register (%s)\n", (void*)swdctx, addr, swd_error_string(retval));
+  return retval;
+ } else return 0;
+}
+
+
+/** Macro function: Select Access Port (updates APSEL field in DP SELECT register).
+ * Remember to execute SELECT write before calling this function to have up to date register value.
+ * Remember not to enqueue any other SELECT writes after this function and before queue flush.
+ * \param *swdctx swd context to work on.
+ * \param addr is the target AP register address, bank will be calculated based on this value.
+ * \return number of cmdq operations on success, or SWD_ERROR code on failure.
+ */
+int swd_ap_select(swd_ctx_t *swdctx, swd_operation_t operation, char ap){
+ // If the correct AP is already selected no need to change it.
+ // Verify against cached DP SELECT register value.
+ // Unfortunately SELECT register is read only so we need to work on cached values...
+ if ( ap != (swdctx->log.dp.select&0xFF0000000)>>SWD_DP_SELECT_APSEL_BITNUM ){
+  int retval;
+  int new_select=ap;
+  new_select=(new_select<<SWD_DP_SELECT_APSEL_BITNUM)|(swdctx->log.dp.select&0x00FFFFFF); 
+  retval=swd_dp_write(swdctx, operation, SWD_DP_SELECT_ADDR, &new_select);
+  if (retval<0) swd_log(swdctx, SWD_LOGLEVEL_ERROR, "swd_ap_select(%p, %0x02X): cannot update DP SELECT register (%s)\n", (void*)swdctx, ap, swd_error_string(retval));
+  return retval;
+ } else return 0;
+}
+
 
 /** Macro function: Generic read of the AP register.
  * \param *swdctx swd context to work on.
@@ -308,6 +351,9 @@ int swd_ap_read(swd_ctx_t *swdctx, swd_operation_t operation, char addr, int **d
 
  APnDP=1;
  RnW=1;
+
+ res=swd_ap_bank_select(swdctx, operation, addr);
+ if (res<0) return res;
 
  res=swd_bus_write_request(swdctx, SWD_OPERATION_ENQUEUE, &APnDP, &RnW, &addr);
  if (res<1) return res;
@@ -354,6 +400,9 @@ int swd_ap_write(swd_ctx_t *swdctx, swd_operation_t operation, char addr, int *d
 
  APnDP=1;
  RnW=0;
+
+ res=swd_ap_bank_select(swdctx, operation, addr);
+ if (res<0) return res;
 
  res=swd_bus_write_request(swdctx, SWD_OPERATION_ENQUEUE, &APnDP, &RnW, &addr);
  if (res<1) return res;
