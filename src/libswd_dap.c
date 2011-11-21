@@ -176,6 +176,7 @@ int swd_dap_detect(swd_ctx_t *swdctx, swd_operation_t operation, int **idcode){
 }
 
 /** Macro: Generic read of the DP register.
+ * When operation is SWD_OPERATION_EXECUTE it also caches register values.
  * \param *swdctx swd context to work on.
  * \param operation can be SWD_OPERATION_ENQUEUE or SWD_OPERATION_EXECUTE.
  * \param addr is the address of the DP register to read.
@@ -217,11 +218,23 @@ int swd_dp_read(swd_ctx_t *swdctx, swd_operation_t operation, char addr, int **d
   if (res<0) return res;
   if (cparity!=*parity) return SWD_ERROR_PARITY;
   swd_log(swdctx, SWD_LOGLEVEL_INFO, "SWD_I: swd_dp_read(swdctx=@%p, operation=%s, addr=0x%X, **data=0x%X/%s).\n", (void*)swdctx, swd_operation_string(operation), addr, **data, swd_bin32_string(*data));
+  // Here we also can cache DP register values into swdctx log.
+  switch(addr){
+   case SWD_DP_IDCODE_ADDR: swdctx->log.dp.idcode=**data; break;
+   case SWD_DP_RDBUFF_ADDR: swdctx->log.dp.rdbuff=**data; break;
+   case SWD_DP_RESEND_ADDR: swdctx->log.dp.resend=**data; break;
+   case SWD_DP_CTRLSTAT_ADDR: // which is also SWD_DP_WCR_ADDR
+    if (swdctx->log.dp.select&1){
+     swdctx->log.dp.wcr=**data;
+    } else swdctx->log.dp.ctrlstat=**data;
+    break;
+  }
   return cmdcnt;
  } else return SWD_ERROR_BADOPCODE;
 } 
 
 /** Macro function: Generic write of the DP register.
+ * When operation is SWD_OPERATION_EXECUTE it also caches register values.
  * \param *swdctx swd context to work on.
  * \param operation can be SWD_OPERATION_ENQUEUE or SWD_OPERATION_EXECUTE.
  * \param addr is the address of the DP register to write.
@@ -262,6 +275,17 @@ int swd_dp_write(swd_ctx_t *swdctx, swd_operation_t operation, char addr, int *d
   if (res<0) return res;
   cmdcnt+=res;
   swd_log(swdctx, SWD_LOGLEVEL_INFO, "SWD_I: swd_dp_write(swdctx=@%p, operation=%s, addr=0x%X, *data=0x%X/%s).\n", (void*)swdctx, swd_operation_string(operation), addr, *data, swd_bin32_string(data));
+  // Here we also can cache DP register values into swdctx log.
+  switch(addr){
+   case SWD_DP_ABORT_ADDR: swdctx->log.dp.abort=*data; break;
+   case SWD_DP_SELECT_ADDR: swdctx->log.dp.select=*data; break;
+   case SWD_DP_ROUTESEL_ADDR: swdctx->log.dp.routesel=*data; break;
+   case SWD_DP_CTRLSTAT_ADDR: // which is also SWD_DP_WCR_ADDR
+    if (swdctx->log.dp.select&1){
+     swdctx->log.dp.wcr=*data;
+    } else swdctx->log.dp.ctrlstat=*data;
+    break;
+  }
   return cmdcnt;
  } else return SWD_ERROR_BADOPCODE;
 } 
