@@ -246,7 +246,7 @@ int swd_dp_write(swd_ctx_t *swdctx, swd_operation_t operation, char addr, int *d
  swd_bin32_parity_even(data, (char *)&swdctx->qlog.write.parity);
 
  if (operation==SWD_OPERATION_ENQUEUE){
-  res=swd_bus_read_ack(swdctx, operation, (char**)&swdctx->log.write.ack);
+  res=swd_bus_read_ack(swdctx, operation, (char**)&swdctx->qlog.write.ack);
   if (res<1) return res;
   cmdcnt=+res;
   res=swd_bus_write_data_ap(swdctx, operation, data);
