@@ -143,7 +143,7 @@
 /// Address field minimal value.
 #define SWD_ADDR_MINVAL       0
 /// Address field maximal value.
-#define SWD_ADDR_MAXVAL       3
+#define SWD_ADDR_MAXVAL       0xC 
 
 /// Number of bits in Acknowledge packet.
 #define SWD_ACK_BITLEN        3
@@ -159,19 +159,21 @@
 /// ABORT register address (WO).
 #define SWD_DP_ABORT_ADDR     0
 /// CTRLSTAT register address (R/W, CTRLSEL=b0)
-#define SWD_DP_CTRLSTAT_ADDR  1
+#define SWD_DP_CTRLSTAT_ADDR  0x4
 /// WCR register address (R/W, CTRLSEL=b1)
-#define SWD_DP_WCR_ADDR       1
+#define SWD_DP_WCR_ADDR       0x4
 /// RESEND register address (RO)
-#define SWD_DP_RESEND_ADDR    2
+#define SWD_DP_RESEND_ADDR    0x8
 /// SELECT register address (WO)
-#define SWD_DP_SELECT_ADDR    2
-/// RDBUF register address (RO)
-#define SWD_DP_RDBUF_ADDR     3
+#define SWD_DP_SELECT_ADDR    0x8
+/// RDBUFF register address (RO)
+#define SWD_DP_RDBUFF_ADDR    0xC
+/// ROUTESEL register address (WO)
+#define SWD_DP_ROUTESEL_ADDR  0xC
 
 /** SW-DP ABORT Register map */
 /// DAPABORT bit number.
-#define SWD_DP_ABORT_DAPABORT_BITNUM    0
+#define SWD_DP_ABORT_DAPABORT_BITNUM   0
 /// DSTKCMPCLR bit number.
 #define SWD_DP_ABORT_STKCMPCLR_BITNUM  1
 /// DSTKERRCLR bit number.
@@ -269,9 +271,9 @@
 #define SWD_DP_SELECT_APSEL_BITNUM     24
 
 ///CTRLSEL bitmask
-#define SWD_DP_SELECT_CTRLSEL          (1 << SWD_DP_SELECT_CTRLSEL_BITNUM)
+#define SWD_DP_SELECT_CTRLSEL          (0xFF << SWD_DP_SELECT_CTRLSEL_BITNUM)
 /// APBANKSEL bitmask
-#define SWD_DP_SELECT_APBANKSEL        (1 << SWD_DP_SELECT_APBANKSEL_BITNUM)
+#define SWD_DP_SELECT_APBANKSEL        (0xF << SWD_DP_SELECT_APBANKSEL_BITNUM)
 /// APSEL bitmask
 #define SWD_DP_SELECT_APSEL            (1 << SWD_DP_SELECT_APSEL_BITNUM)
 
