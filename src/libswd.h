@@ -492,7 +492,9 @@ typedef struct {
  int ctrlstat; ///< Last known CTRLSTAT register value.
  int wcr;      ///< Last known WCR register value.
  int select;   ///< Last known SELECT register value.
- int rdbuf;    ///< Last known RDBUF register (payload data) value.
+ int resend;   ///< Last known RESEND register value.
+ int rdbuff;   ///< Last known RDBUFF register (payload data) value.
+ int routesel; ///< Last known ROUTESEL register value.
 } swd_swdp_t;
 
 /** Most actual Advanced High Bandwidth Access Peripherial Bus Reisters */
