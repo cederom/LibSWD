@@ -130,7 +130,7 @@ const char *swd_operation_string(swd_operation_t operation){
 const char *swd_request_string(swd_ctx_t *swdctx, char request){
  static char string[100], tmp[8]; string[0]=0;
  int apndp=request&SWD_REQUEST_APnDP;
- int addr=(request&SWD_REQUEST_A3)?1<<3:0|(request&SWD_REQUEST_A2)?1<<2:0;
+ int addr=((request&SWD_REQUEST_A3)?1<<3:0)|((request&SWD_REQUEST_A2)?1<<2:0);
  int rnw=request&SWD_REQUEST_RnW;
  int parity=request&SWD_REQUEST_PARITY;
 
