@@ -98,6 +98,7 @@ const char *swd_log_level_string(swd_loglevel_t loglevel){
   case SWD_LOGLEVEL_NORMAL:  return "SWD_LOGLEVEL_NORMAL";
   case SWD_LOGLEVEL_INFO:    return "SWD_LOGLEVEL_INFO";
   case SWD_LOGLEVEL_DEBUG:   return "SWD_LOGLEVEL_DEBUG";
+  case SWD_LOGLEVEL_PAYLOAD: return "SWD_LOGLEVEL_PAYLOAD";
  }
  return "UNKNOWN LOGLEVEL!";
 };
@@ -129,16 +130,17 @@ const char *swd_operation_string(swd_operation_t operation){
 const char *swd_request_string(swd_ctx_t *swdctx, char request){
  static char string[100], tmp[8]; string[0]=0;
  int apndp=request&SWD_REQUEST_APnDP;
- int addr=(request&SWD_REQUEST_A3)?1<<1:0|(request&SWD_REQUEST_A2)?1:0;
+ int addr=(request&SWD_REQUEST_A3)?1<<3:0|(request&SWD_REQUEST_A2)?1<<2:0;
  int rnw=request&SWD_REQUEST_RnW;
  int parity=request&SWD_REQUEST_PARITY;
 
- strcat(string, "AccessPort ");
+ strcat(string, apndp?"AccessPort ":"DebugPort ");
  strcat(string, rnw?"Read ":"Write ");
  strcat(string, "Addr="); sprintf(tmp, "0x%02X", addr); strcat(string, tmp);
 
  if (apndp){
   // APnDP=1 so we print out the AHB-AP registers
+  addr|=swdctx->log.dp.select&SWD_DP_SELECT_APBANKSEL;
   switch (addr){
    case 0x00: strcat(string, "(R/W: Control/Status Word, CSW (reset value: 0x43800042)) "); break;
    case 0x04: strcat(string, "(R/W: Transfer Address, TAR (reset value: 0x00000000)) "); break;
@@ -156,17 +158,18 @@ const char *swd_request_string(swd_ctx_t *swdctx, char request){
   // APnDP=0 so we print out the SW-DP registers
   if (rnw) {
    switch (addr){
-    case 0: strcat(string, "(IDCODE )"); break;
-    case 1: strcat(string, (swdctx->log.dp.select&1<<SWD_DP_SELECT_CTRLSEL_BITNUM)?"(CTRL/STAT or [WCR])":"([CTRL/STAT] or WCR)"); break;
-    case 2: strcat(string ,"(RESEND) "); break;
-    case 3: strcat(string, "(RDBUFF) "); break;
+    case SWD_DP_IDCODE_ADDR: strcat(string, "(IDCODE)"); break;
+    case SWD_DP_CTRLSTAT_ADDR: strcat(string, (swdctx->log.dp.select&1<<SWD_DP_SELECT_CTRLSEL_BITNUM)?"(CTRL/STAT or [WCR])":"([CTRL/STAT] or WCR)"); break;
+    case SWD_DP_RESEND_ADDR: strcat(string ,"(RESEND) "); break;
+    case SWD_DP_RDBUFF_ADDR: strcat(string, "(RDBUFF) "); break;
     default: strcat(string, "(UNKNOWN) ");
    }
   } else {
    switch (addr) {
-    case 0: strcat(string, "(ABORT) "); break;
-    case 1: strcat(string, (swdctx->log.dp.select&1<<SWD_DP_SELECT_CTRLSEL_BITNUM)?"(CTRL/STAT or [WCR]) ":"([CTRL/STAT] or WCR) "); break;
-    case 2: strcat(string, "(SELECT) "); break;
+    case SWD_DP_ABORT_ADDR: strcat(string, "(ABORT) "); break;
+    case SWD_DP_CTRLSTAT_ADDR: strcat(string, (swdctx->log.dp.select&1<<SWD_DP_SELECT_CTRLSEL_BITNUM)?"(CTRL/STAT or [WCR]) ":"([CTRL/STAT] or WCR) "); break;
+    case SWD_DP_SELECT_ADDR: strcat(string, "(SELECT) "); break;
+    case SWD_DP_ROUTESEL_ADDR: strcat(string, "(ROUTESEL)"); break;
     default: strcat(string, "(UNKNOWN) ");
    }
   }
