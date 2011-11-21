@@ -97,7 +97,7 @@ int swd_bus_write_request
  if (swdctx==NULL) return SWD_ERROR_NULLCONTEXT;
  if (*APnDP!=0 && *APnDP!=1) return SWD_ERROR_APnDP;
  if (*RnW!=0 && *RnW!=1) return SWD_ERROR_RnW;
- if (*addr<SWD_ADDR_MINVAL && *addr>SWD_ADDR_MAXVAL) return SWD_ERROR_ADDR;
+ if (*addr<SWD_ADDR_MINVAL || *addr>SWD_ADDR_MAXVAL) return SWD_ERROR_ADDR;
  if (operation!=SWD_OPERATION_ENQUEUE && operation!=SWD_OPERATION_EXECUTE)
   return SWD_ERROR_BADOPCODE;
 
