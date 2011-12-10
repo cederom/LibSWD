@@ -219,20 +219,8 @@ int swd_drv_transmit(swd_ctx_t *swdctx, swd_cmd_t *cmd){
       "SWD_E: swd_drv_transmit(swdctx=@%p, cmd=@%p): Cannot perform data phase after ACK=WAIT/FAIL, Protocol Error Sequence imminent...\n",
       (void*)swdctx, (void*)cmd );
    }
-   // Caller now should read CTRL/STAT and clear STICKY Error Flags.
+   // Caller now should read CTRL/STAT and clear STICKY Error Flags at this point.
   }
-  // If ACK={UNKNOWN} then we probably have Protocol Error Sequence. We need to reset+detect DAP.
-  if (errcode==SWD_ERROR_ACKUNKNOWN){
-   swd_log(swdctx, SWD_LOGLEVEL_DEBUG, "SWD_D: swd_drv_transmit(swdctx=@%p, cmd=@%p): Trying to detect Target...\n", (void*)swdctx, (void*)cmd);
-   int *idcode;
-   res=swd_dap_detect(swdctx, SWD_OPERATION_EXECUTE, &idcode);
-   if (res<0){
-    swd_log(swdctx, SWD_LOGLEVEL_ERROR,
-      "SWD_E: swd_drv_transmit(swdctx=@%p, cmd=@%p): Error Detecting DAP after Protocol Error Sequence!\n",
-      (void*)swdctx, (void*)cmd );
-   }
-  }
-  sleep(2);
   return errcode;
  }
 
