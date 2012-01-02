@@ -3,6 +3,7 @@ LibSWD-0.4:
  * Unknown ACK response and Protocol Error Sequence detection.
  * swd_cmd_t was added *errors to hold queue for error handling in ACK element.
  * fixed swd_cmdq_free_tail()
+ * swd_cmdq_flush() updates swdctx->cmdq upon execution.
 
 LibSWD-0.3 (2011-11-11):
  * Fixed critical issue with ACK/DATA bitswap due erratic ARM documentation.

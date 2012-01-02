@@ -159,6 +159,7 @@ int swd_cmdq_free_tail(swd_cmd_t *cmdq){
 }
 
 /** Flush command queue contents into interface driver.
+ * This will also update the swdctx->cmdq to the last executed element.
  * Operation is specified by SWD_OPERATION and can be used to select
  * how to flush the queue, ie. head-only, tail-only, one, all, etc.
  * \param *swdctx swd context pointer.
@@ -203,7 +204,8 @@ int swd_cmdq_flush(swd_ctx_t *swdctx, swd_operation_t operation){
  if (lastcmd==NULL) return SWD_ERROR_QUEUETAIL;
 
  if (firstcmd==lastcmd){
-  if (!cmd->done) return swd_drv_transmit(swdctx, firstcmd); 
+  swdctx->cmdq=firstcmd;
+  if (!cmd->done) return swd_drv_transmit(swdctx, swdctx->cmdq);
  }
 
  for (cmd=firstcmd;;cmd=cmd->next){
@@ -211,7 +213,8 @@ int swd_cmdq_flush(swd_ctx_t *swdctx, swd_operation_t operation){
    if (cmd->next) continue;
    break;
   }
-  res=swd_drv_transmit(swdctx, cmd); 
+  swdctx->cmdq=cmd;
+  res=swd_drv_transmit(swdctx, swdctx->cmdq); 
   if (res<0) return res;
   cmdcnt=+res;
   if (cmd==lastcmd) break;
