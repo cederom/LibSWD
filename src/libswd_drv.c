@@ -77,21 +77,21 @@ int swd_drv_transmit(swd_ctx_t *swdctx, swd_cmd_t *cmd){
    // 8 clock cycles.
    if (cmd->bits!=8) return SWD_ERROR_BADCMDDATA;
    res=swd_drv_mosi_8(swdctx, cmd, &cmd->control, 8, SWD_DIR_LSBFIRST);
-   swdctx->log.write.control=cmd->control;
+   if (res>=0) swdctx->log.write.control=cmd->control;
    break;
 
   case SWD_CMDTYPE_MOSI_BITBANG:
    // 1 clock cycle.
    if (cmd->bits!=1) return SWD_ERROR_BADCMDDATA;
    res=swd_drv_mosi_8(swdctx, cmd, &cmd->mosibit, 1, SWD_DIR_LSBFIRST);
-   swdctx->log.write.bitbang=cmd->mosibit;
+   if (res>=0) swdctx->log.write.bitbang=cmd->mosibit;
    break;
 
   case SWD_CMDTYPE_MOSI_PARITY:
    // 1 clock cycle.
    if (cmd->bits!=1) return SWD_ERROR_BADCMDDATA;
    res=swd_drv_mosi_8(swdctx, cmd, &cmd->parity, 1, SWD_DIR_LSBFIRST);
-   swdctx->log.write.parity=cmd->parity;
+   if (res>=0) swdctx->log.write.parity=cmd->parity;
    break;
 
   case SWD_CMDTYPE_MOSI_TRN:
@@ -105,38 +105,40 @@ int swd_drv_transmit(swd_ctx_t *swdctx, swd_cmd_t *cmd){
    // 8 clock cycles.
    if (cmd->bits!=SWD_REQUEST_BITLEN) return SWD_ERROR_BADCMDDATA;
    res=swd_drv_mosi_8(swdctx, cmd, &cmd->request, 8, SWD_DIR_LSBFIRST);
-   swdctx->log.write.request=cmd->request;
-   // Log human-readable request fields for easier transmission debug.
-   swd_log(swdctx, SWD_LOGLEVEL_DEBUG, "SWD_D: Sending Request: %s\n", \
-    swd_request_string(swdctx, cmd->request)); 
+   if (res>=0){
+    swdctx->log.write.request=cmd->request;
+    // Log human-readable request fields for easier transmission debug.
+    swd_log(swdctx, SWD_LOGLEVEL_DEBUG, "SWD_D: Sending Request: %s\n", \
+     swd_request_string(swdctx, cmd->request));
+   }
    break;
 
   case SWD_CMDTYPE_MOSI_DATA:
    // 32 clock cycles.
    if (cmd->bits!=SWD_DATA_BITLEN) return SWD_ERROR_BADCMDDATA; 
    res=swd_drv_mosi_32(swdctx, cmd, &cmd->mosidata, 32, SWD_DIR_LSBFIRST);
-   swdctx->log.write.data=cmd->mosidata;
+   if (res>=0) swdctx->log.write.data=cmd->mosidata;
    break;
 
   case SWD_CMDTYPE_MISO_ACK:
    // 3 clock cycles.
    if (cmd->bits!=SWD_ACK_BITLEN) return SWD_ERROR_BADCMDDATA;
    res=swd_drv_miso_8(swdctx, cmd, &cmd->ack, cmd->bits, SWD_DIR_LSBFIRST);
-   swdctx->log.read.ack=cmd->ack;
+   if (res>=0) swdctx->log.read.ack=cmd->ack;
    break;
 
   case SWD_CMDTYPE_MISO_BITBANG:
    // 1 clock cycle.
    if (cmd->bits!=1) return SWD_ERROR_BADCMDDATA;
    res=swd_drv_miso_8(swdctx, cmd, &cmd->misobit, 1, SWD_DIR_LSBFIRST);
-   swdctx->log.read.bitbang=cmd->misobit;
+   if (res>=0) swdctx->log.read.bitbang=cmd->misobit;
    break;
 
   case SWD_CMDTYPE_MISO_PARITY:
    // 1 clock cycle.
    if (cmd->bits!=1) return SWD_ERROR_BADCMDDATA;
    res=swd_drv_miso_8(swdctx, cmd, &cmd->parity, 1, SWD_DIR_LSBFIRST);
-   swdctx->log.read.parity=cmd->parity;
+   if (res>=0) swdctx->log.read.parity=cmd->parity;
    break;
 
   case SWD_CMDTYPE_MISO_TRN:
@@ -150,7 +152,7 @@ int swd_drv_transmit(swd_ctx_t *swdctx, swd_cmd_t *cmd){
    // 32 clock cycles
    if (cmd->bits!=SWD_DATA_BITLEN) return SWD_ERROR_BADCMDDATA;
    res=swd_drv_miso_32(swdctx, cmd, &cmd->misodata, cmd->bits, SWD_DIR_LSBFIRST);
-   swdctx->log.read.data=cmd->misodata;
+   if (res>=0) swdctx->log.read.data=cmd->misodata;
    break;
 
   case SWD_CMDTYPE_UNDEFINED:
