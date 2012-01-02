@@ -67,6 +67,7 @@ swd_ctx_t *swd_init(void){
  swdctx->config.trnlen=SWD_TURNROUND_DEFAULT_VAL;
  swdctx->config.maxcmdqlen=SWD_CMDQLEN_DEFAULT;
  swdctx->config.loglevel=SWD_LOGLEVEL_NORMAL;
+ swdctx->config.trunccmdqonerror=SWD_TRUE;
  swd_log(swdctx, SWD_LOGLEVEL_NORMAL, "SWD_N: Using " PACKAGE_STRING " (http://libswd.sf.net)\nSWD_N: (c) Tomasz Boleslaw CEDRO (http://www.tomek.cedro.info)\n");
  return swdctx;
 }

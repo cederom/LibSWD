@@ -1,5 +1,7 @@
 LibSWD-0.4:
  * Implemented necessary data phase on ACK={WAIT,FAULT} reply from Target.
+ * Unknown ACK response and Protocol Error Sequence detection.
+ * swd_cmd_t was added *errors to hold queue for error handling in ACK element.
  * fixed swd_cmdq_free_tail()
 
 LibSWD-0.3 (2011-11-11):
