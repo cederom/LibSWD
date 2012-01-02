@@ -145,17 +145,16 @@ int swd_cmdq_free_head(swd_cmd_t *cmdq){
 int swd_cmdq_free_tail(swd_cmd_t *cmdq){
  if (cmdq==NULL) return SWD_ERROR_NULLQUEUE;
  int cmdcnt=0;
- swd_cmd_t *cmdqend, *nextcmd;
- nextcmd=cmdq;
- cmdqend=swd_cmdq_find_tail(cmdq);
+ swd_cmd_t *cmdqend;
+ if (cmdq->next==NULL) return 0;
+ cmdqend=swd_cmdq_find_tail(cmdq->next);
  if (cmdqend==NULL) return SWD_ERROR_QUEUE; 
- while(nextcmd!=cmdq){
-  nextcmd=cmdqend->prev;
-  free(cmdqend);
-  cmdqend=nextcmd;
+ while(cmdqend!=cmdq){
+  cmdqend=cmdqend->prev;
+  free(cmdqend->next);
   cmdcnt++;
  }
- cmdqend->next=NULL;
+ cmdq->next=NULL;
  return cmdcnt;
 }
 
