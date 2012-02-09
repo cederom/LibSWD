@@ -50,7 +50,8 @@
  * @{
  ******************************************************************************/
 
-/** Append selected command to a context's command queue.
+/** Append selected command to a context's command queue (swdctx->cmdq).
+ * This function does not update the swdctx->cmdq pointer (its updated on flush).
  * \param *swdctx swd context pointer containing the command queue.
  * \param *cmd command to be appended to the context's command queue.
  * \return number of elements appended or SWD_ERROR_CODE on failure.
@@ -59,7 +60,6 @@ int swd_cmd_enqueue(swd_ctx_t *swdctx, swd_cmd_t *cmd){
  if (swdctx==NULL || cmd==NULL) return SWD_ERROR_NULLPOINTER;
  int res;
  res=swd_cmdq_append(swdctx->cmdq, cmd);
- if (res>0) swdctx->cmdq=cmd;
  return res;
 }
 
