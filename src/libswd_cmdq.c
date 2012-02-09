@@ -116,7 +116,6 @@ int swd_cmdq_append(swd_cmd_t *cmdq, swd_cmd_t *cmd){
   cmdq->next=cmd;
   cmd->prev=cmdq;
  }
- cmdq=cmd; 
  return 1;
 }
 
