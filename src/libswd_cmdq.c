@@ -60,7 +60,7 @@ int swd_cmdq_init(swd_cmd_t *cmdq){
  * \param *cmdq pointer to any queue element
  * \return swd_cmd_t* pointer to the first element (root), NULL on failure
  */
-swd_cmd_t* swd_cmdq_find_root(swd_cmd_t *cmdq){
+swd_cmd_t* swd_cmdq_find_head(swd_cmd_t *cmdq){
  if (cmdq==NULL) return NULL;
  swd_cmd_t *cmd=cmdq;
  while (cmd->prev!=NULL) cmd=cmd->prev;
@@ -109,7 +109,7 @@ int swd_cmdq_free(swd_cmd_t *cmdq){
  if (cmdq==NULL) return SWD_ERROR_NULLQUEUE;
  int cmdcnt=0;
  swd_cmd_t *cmd, *nextcmd;
- cmd=swd_cmdq_find_root(cmdq);
+ cmd=swd_cmdq_find_head(cmdq);
  while (cmd!=NULL) {
   nextcmd=cmd->next;
   free(cmd);
@@ -127,7 +127,7 @@ int swd_cmdq_free_head(swd_cmd_t *cmdq){
  if (cmdq==NULL) return SWD_ERROR_NULLQUEUE;
  int cmdcnt=0;
  swd_cmd_t *cmdqroot, *nextcmd;
- cmdqroot=swd_cmdq_find_root(cmdq);
+ cmdqroot=swd_cmdq_find_head(cmdq);
  while(cmdqroot!=cmdq){
   nextcmd=cmdqroot->next;
   free(cmdqroot);
