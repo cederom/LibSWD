@@ -368,7 +368,7 @@ typedef enum {
  SWD_ERROR_ACKUNKNOWN  =-19, ///< Unknown ACK value.
  SWD_ERROR_ACKNOTDONE  =-20, ///< ACK not yet executed on target.
  SWD_ERROR_ACKMISSING  =-21, ///< ACK command not found on the queue.
- SWD_ERROR_ACKMISMATCH =-22, ///< Bad ACK result address.
+ SWD_ERROR_ACKMISMATCH =-22, ///< Bad ACK result address/value.
  SWD_ERROR_ACKORDER    =-23, ///< ACK not in order REQ->TRN->ACK.
  SWD_ERROR_BADOPCODE   =-24, ///< Unsupported operation requested.
  SWD_ERROR_NODATACMD   =-25, ///< Command not found on the queue.
@@ -387,7 +387,9 @@ typedef enum {
  SWD_ERROR_QUEUENOTFREE=-38, ///< Cannot free resources, queue not empty.
  SWD_ERROR_TRANSPORT   =-39, ///< Transport type unknown or undefined.
  SWD_ERROR_DIRECTION   =-40, ///< Direction error (LSb/MSb first).
- SWD_ERROR_LOGLEVEL    =-41  ///< Invalid loglevel number.
+ SWD_ERROR_LOGLEVEL    =-41, ///< Invalid loglevel number.
+ SWD_ERROR_UNHANDLED   =-42, ///< Error cannot be fixed with swd_error*().
+ SWD_ERROR_MAXRETRY    =-43  ///< Maximum retry count exceeded.
 } swd_error_code_t;
 
 /** Logging Level Codes definition */
