@@ -89,4 +89,115 @@ char *swd_error_string(swd_error_code_t error){
  return "undefined error";
 }
 
+
+int swd_error_handle(swd_ctx_t *swdctx){
+ // At this point we got negative return code from swd_cmd_flush() so we need to handle errors accordingly here.
+ // swdctx->cmdq should point to the last element executed that produced error.
+ int retval;
+ swd_cmd_t *exectail;
+
+ // Verify if swdctx->cmdq contains last executed element, correct if necessary.
+ exectail=swd_cmdq_find_exectail(swdctx->cmdq);
+ if (exectail==NULL) {
+  swd_log(swdctx, SWD_LOGLEVEL_ERROR, "SWD_E: swd_error_handle(swdctx=@%p): Cannot find last executed element on the queue!\n", (void*)swdctx);
+  return SWD_ERROR_QUEUE;
+ }
+ if (exectail!=swdctx->cmdq){
+  swd_log(swdctx, SWD_LOGLEVEL_WARNING, "SWD_W: swd_error_handle(swdctx=@%p): Correcting swdctx->cmdq to match last executed element...\n", (void*)swdctx);
+  swdctx->cmdq=exectail;
+ } 
+
+ switch (swdctx->cmdq->cmdtype){
+  case SWD_CMDTYPE_MISO_ACK:
+   retval=swd_error_handle_ack(swdctx);
+   break;
+  default:
+   return SWD_ERROR_UNHANDLED;
+ }
+
+ if (retval<0){
+  swd_log(swdctx, SWD_LOGLEVEL_ERROR, "swd_error_handle(@%p) failed! on cmdq=@%p", (void*)swdctx, (void*)swdctx->cmdq); 
+ }
+ return retval;
+}
+
+int swd_error_handle_ack(swd_ctx_t *swdctx){
+ if (swdctx==NULL) return SWD_ERROR_NULLCONTEXT;
+ // Make sure we are working on the ACK cmdq element.
+ if (swdctx->cmdq->cmdtype!=SWD_CMDTYPE_MISO_ACK){
+  swd_log(swdctx, SWD_LOGLEVEL_ERROR, "swd_error_handle_ack(@%p):swdctx->cmdq does not point to ACK!", (void*)swdctx);
+  return SWD_ERROR_UNHANDLED; //do we want to handle this kind of error here?
+ }
+
+ switch (swdctx->cmdq->ack) {
+  case SWD_ACK_OK_VAL:
+   // Uhm, there was no error.
+   return SWD_OK;
+  case SWD_ACK_WAIT_VAL:
+   return swd_error_handle_ack_wait(swdctx);
+  case SWD_ACK_FAULT_VAL:
+   // TODO: Handle ACK=FAULT accordingly.
+   return SWD_ERROR_UNHANDLED;
+  default:
+   // TODO: By default we assume lost synchronization, handle accordingly.
+   return SWD_ERROR_UNHANDLED;
+ }
+}
+
+int swd_error_handle_ack_wait(swd_ctx_t *swdctx){
+ if (swdctx==NULL) return SWD_ERROR_NULLCONTEXT;
+ // Make sure we are working on the ACK cmdq element.
+ if (swdctx->cmdq->cmdtype!=SWD_CMDTYPE_MISO_ACK){
+  swd_log(swdctx, SWD_LOGLEVEL_ERROR, "swd_error_handle_ack_wait(@%p):swdctx->cmdq does not point to ACK!", (void*)swdctx);
+  return SWD_ERROR_UNHANDLED; //do we want to handle this kind of error here?
+ }
+ // Make sure the ACK contains WAIT response.
+ if (swdctx->cmdq->ack!=SWD_ACK_WAIT_VAL){
+  swd_log(swdctx, SWD_LOGLEVEL_ERROR, "swd_error_handle_ack_wait(@%p):swdctx->cmdq->ack does not contain WAIT response!", (void*)swdctx);
+  return SWD_ERROR_ACKMISMATCH;
+ }
+
+ // Remember original cmdq, restore on return.
+ swd_cmd_t mastercmdq = *swdctx->cmdq;
+
+ // Create new error handling queue, fix sticky flags and retry operation.
+ int retval, *ctrlstat, *rdata, abort;
+ retval=swd_cmdq_init(swdctx->cmdq->errors);
+ if (retval<0) goto swd_error_handle_ack_wait_end;
+ swdctx->cmdq=swdctx->cmdq->errors; // From now, this becomes out main cmdq for use with standard functions.
+
+ // ctrlstat clenup / read retry body below 
+ int retrycnt;
+ for (retrycnt=SWD_RETRY_COUNT_DEFAULT; retrycnt>0; retrycnt--){
+  retval=swd_dp_read(swdctx, SWD_OPERATION_EXECUTE, SWD_DP_CTRLSTAT_ADDR, &ctrlstat);
+  if (retval<0) goto swd_error_handle_ack_wait_end;
+  abort=0x00000014;
+  retval=swd_dp_write(swdctx, SWD_OPERATION_EXECUTE, SWD_DP_ABORT_ADDR, &abort);
+  if (retval<0) goto swd_error_handle_ack_wait_end;
+  retval=swd_dp_read(swdctx, SWD_OPERATION_EXECUTE, SWD_DP_CTRLSTAT_ADDR, &ctrlstat);
+  if (retval<0) goto swd_error_handle_ack_wait_end;
+  if (*ctrlstat&SWD_DP_CTRLSTAT_READOK){
+   retval=swd_dp_read(swdctx, SWD_OPERATION_EXECUTE, SWD_DP_RDBUFF_ADDR, &rdata);
+   if (retval<0) goto swd_error_handle_ack_wait_end;
+   break;
+  }
+ }
+ if (retrycnt==0){
+  retval=SWD_ERROR_MAXRETRY;
+  goto swd_error_handle_ack_wait_end;
+ }
+  
+ // At this point we should have the read result from RDBUFF ready for MEM-AP read fix. 
+
+
+swd_error_handle_ack_wait_end:
+ // Exit ACK WAIT handling routine, verify retval before return.
+ if (retval<0){
+  swd_log(swdctx, SWD_LOGLEVEL_ERROR, "swd_error_handle_ack_wait(@%p): %s", (void*)swdctx, swd_error_string(retval));
+ }
+
+ *swdctx->cmdq=mastercmdq;
+ while (1) {printf("ACK WAIT HANDLER\n");}
+ return retval;
+}
 /** @} */
