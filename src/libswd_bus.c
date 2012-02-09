@@ -60,7 +60,9 @@
 int swd_bus_setdir_mosi(swd_ctx_t *swdctx){
  if (swdctx==NULL) return SWD_ERROR_NULLCONTEXT;
  int res, cmdcnt=0;
- if ( swdctx->cmdq->prev==NULL || (swdctx->cmdq->cmdtype*SWD_CMDTYPE_MOSI<0) ) {
+ swd_cmd_t *cmdqtail=swd_cmdq_find_tail(swdctx->cmdq);
+ if (cmdqtail==NULL) return SWD_ERROR_QUEUE;
+ if ( cmdqtail->prev==NULL || (cmdqtail->cmdtype*SWD_CMDTYPE_MOSI<0) ) {
   res=swd_cmd_enqueue_mosi_trn(swdctx);
   if (res<1) return res;
   cmdcnt=+res;
@@ -75,7 +77,9 @@ int swd_bus_setdir_mosi(swd_ctx_t *swdctx){
 int swd_bus_setdir_miso(swd_ctx_t *swdctx){
  if (swdctx==NULL) return SWD_ERROR_NULLCONTEXT;
  int res, cmdcnt=0;
- if ( swdctx->cmdq->prev==NULL || (swdctx->cmdq->cmdtype*SWD_CMDTYPE_MISO<0) ) {
+ swd_cmd_t *cmdqtail=swd_cmdq_find_tail(swdctx->cmdq);
+ if (cmdqtail==NULL) return SWD_ERROR_QUEUE;
+ if (cmdqtail->prev==NULL || (cmdqtail->cmdtype*SWD_CMDTYPE_MISO<0) ) {
   res=swd_cmd_enqueue_miso_trn(swdctx);
   if (res<0) return res;
   cmdcnt=+res;
