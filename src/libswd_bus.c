@@ -145,15 +145,17 @@ int swd_bus_read_ack(swd_ctx_t *swdctx, swd_operation_t operation, char **ack){
   return SWD_ERROR_BADOPCODE;
 
  int res, qcmdcnt=0, tcmdcnt=0;
- swd_cmd_t *tmpcmdq;
+ swd_cmd_t *tmpcmdq, *cmdqtail;
 
- /* ACK can only show after REQ_MOSI and TRN_MISO. */
- if (swdctx->cmdq->prev==NULL) return SWD_ERROR_ACKORDER;
+ /* ACK can only show after REQ_MOSI,TRN_MISO sequence. */
+ cmdqtail=swd_cmdq_find_tail(swdctx->cmdq);
+ if (cmdqtail==NULL) return SWD_ERROR_QUEUE;
+ if (cmdqtail->prev==NULL) return SWD_ERROR_ACKORDER;
  /* Check if there is REQ->TRN sequence at the command queue tail. */
- if (swdctx->cmdq->prev->cmdtype!=SWD_CMDTYPE_MOSI_REQUEST
-  && swdctx->cmdq->cmdtype!=SWD_CMDTYPE_MISO_TRN){
+ if (cmdqtail->prev->cmdtype!=SWD_CMDTYPE_MOSI_REQUEST
+  && cmdqtail->cmdtype!=SWD_CMDTYPE_MISO_TRN){
    /* If not, there should be at least REQ. */
-   if (swdctx->cmdq->cmdtype!=SWD_CMDTYPE_MOSI_REQUEST){
+   if (cmdqtail->cmdtype!=SWD_CMDTYPE_MOSI_REQUEST){
     return SWD_ERROR_ACKORDER;
    } else {
     /* TRN was found at queue tail, so we need to append TRN_MISO command. */
