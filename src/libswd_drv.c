@@ -51,7 +51,7 @@ extern int swd_drv_miso_32(swd_ctx_t *swdctx, swd_cmd_t *cmd, int *data, int bit
 extern int swd_drv_mosi_trn(swd_ctx_t *swdctx, int bits);
 extern int swd_drv_miso_trn(swd_ctx_t *swdctx, int bits);
 
-/** Transmit selected command from the command queue to the interface driver.
+/** Transmit selected command from the *cmdq to the interface driver.
  * Also update the swdctx->log structure (this should be done only here!).
  * Because commands that were queued does not get ack/parity data anymore,
  * we need to verify ACK/PARITY that was just read and return error if necesary.
