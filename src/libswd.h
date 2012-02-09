@@ -330,6 +330,11 @@
 /// RO, 32bit, reset value: 0x24770001
 #define AHB_AP_IDR           0xFC  ///< RO, 32bit, reset value: 0x24770001
 
+/// Retry count default value
+#define SWD_RETRY_COUNT_DEFAULT 10
+/// Retry delay default value
+#define SWD_RETRY_DELAY_DEFAULT 5
+
 /** Payload for commands that will not change, transmitted MSBFirst */
 /// SW-DP Reset sequence.
 static const char SWD_CMD_SWDPRESET[] = {0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0x00}; 
