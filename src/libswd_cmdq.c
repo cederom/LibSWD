@@ -78,6 +78,25 @@ swd_cmd_t* swd_cmdq_find_tail(swd_cmd_t *cmdq){
  return cmd;
 }
 
+/** Find last executed element from the *cmdq.
+ * Start search at *cmdq head, return element pointer or NULL if not found.
+ * \param *cmdq queue that contains elements.
+ * \return swd_cmd_t* pointer to the last executed element or NULL on error.
+ */
+swd_cmd_t* swd_cmdq_find_exectail(swd_cmd_t *cmdq){
+ if (cmdq==NULL) return NULL;
+ swd_cmd_t *cmd=swd_cmdq_find_head(cmdq);
+ if (cmd==NULL) return NULL;
+ for (cmd=swd_cmdq_find_head(cmdq);cmd;cmd=cmd->next){
+  if (cmd->done) {
+   if (cmd->next){
+    if (!cmd->next->done) return cmd;
+   } else return cmd;
+  }
+ }
+ return NULL;
+}
+
 /** Append element pointed by *cmd at the end of the quque pointed by *cmdq.
  * After this operation queue will be pointed by appended element (ie. last
  * element added becomes actual quque pointer to show what was added recently).

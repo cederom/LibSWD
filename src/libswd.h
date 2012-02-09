@@ -588,6 +588,7 @@ int swd_bin32_bitswap(unsigned int *buffer, int bitcount);
 int swd_cmdq_init(swd_cmd_t *cmdq);
 swd_cmd_t* swd_cmdq_find_head(swd_cmd_t *cmdq);
 swd_cmd_t* swd_cmdq_find_tail(swd_cmd_t *cmdq);
+swd_cmd_t* swd_cmdq_find_exectail(swd_cmd_t *cmdq);
 int swd_cmdq_append(swd_cmd_t *cmdq, swd_cmd_t *cmd);
 int swd_cmdq_free(swd_cmd_t *cmdq);
 int swd_cmdq_free_head(swd_cmd_t *cmdq);
