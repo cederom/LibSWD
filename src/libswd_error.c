@@ -65,7 +65,7 @@ char *swd_error_string(swd_error_code_t error){
   case SWD_ERROR_ACKUNKNOWN:   return "[SWD_ERROR_ACKUNKNOWN] got unknown acknowledge";
   case SWD_ERROR_ACKNOTDONE:   return "[SWD_ERROR_ACKNOTDONE] not yet executed on target";
   case SWD_ERROR_ACKMISSING:   return "[SWD_ERROR_ACKMISSING] command not found on the queue";
-  case SWD_ERROR_ACKMISMATCH:  return "[SWD_ERROR_ACKMISMATCH] different result address expected";
+  case SWD_ERROR_ACKMISMATCH:  return "[SWD_ERROR_ACKMISMATCH] different result address/value expected";
   case SWD_ERROR_ACKORDER:     return "[SWD_ERROR_ACKORDER] cmdq not in sequence REQ->TRN->ACK";
   case SWD_ERROR_BADOPCODE:    return "[SWD_ERROR_BADOPCODE] unsupported operation requested";
   case SWD_ERROR_NODATACMD:    return "[SWD_ERROR_NODATACMD] command not found on the queue";
@@ -82,6 +82,8 @@ char *swd_error_string(swd_error_code_t error){
   case SWD_ERROR_QUEUENOTFREE: return "[SWD_ERROR_QUEUENOTFREE] cannot free resources, queue not empty";
   case SWD_ERROR_TRANSPORT:    return "[SWD_ERROR_TRANSPORT] transport error or undefined";
   case SWD_ERROR_DIRECTION:    return "[SWD_ERROR_DIRECTION] MSb/LSb direction error";
+  case SWD_ERROR_UNHANDLED:    return "[SWD_ERROR_UNHANDLED] cannot handle that error automatically";
+  case SWD_ERROR_MAXRETRY:     return "[SWD_ERROR_MAXRETRY] maximum retry count exceeded";
   default:                     return "undefined error";
  }
  return "undefined error";
