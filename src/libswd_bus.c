@@ -125,7 +125,7 @@ int swd_bus_write_request
  if (operation==SWD_OPERATION_ENQUEUE){
   return qcmdcnt; 
  } else if (operation==SWD_OPERATION_EXECUTE){
-  res=swd_cmdq_flush(swdctx, operation);
+  res=swd_cmdq_flush(swdctx, &swdctx->cmdq, operation);
   if (res<0) return res;
   tcmdcnt=+res;
   return qcmdcnt+tcmdcnt;
@@ -170,7 +170,7 @@ int swd_bus_read_ack(swd_ctx_t *swdctx, swd_operation_t operation, char **ack){
  if (operation==SWD_OPERATION_ENQUEUE){
   return qcmdcnt;
  } else if (operation==SWD_OPERATION_EXECUTE){
-  res=swd_cmdq_flush(swdctx, operation);
+  res=swd_cmdq_flush(swdctx, &swdctx->cmdq, operation);
   if (res<0) return res;
   tcmdcnt+=res;
  } else return SWD_ERROR_BADOPCODE;
@@ -219,7 +219,7 @@ int swd_bus_write_data_p
  if (operation==SWD_OPERATION_ENQUEUE){
   return qcmdcnt;       
  } else if (operation==SWD_OPERATION_EXECUTE){
-  res=swd_cmdq_flush(swdctx, operation);
+  res=swd_cmdq_flush(swdctx, &swdctx->cmdq, operation);
   if (res<0) return res;
   tcmdcnt=+res;
   return qcmdcnt+tcmdcnt;
@@ -252,7 +252,7 @@ int swd_bus_write_data_ap(swd_ctx_t *swdctx, swd_operation_t operation, int *dat
  if (operation==SWD_OPERATION_ENQUEUE){
   return qcmdcnt;       
  } else if (operation==SWD_OPERATION_EXECUTE) {
-  res=swd_cmdq_flush(swdctx, operation);
+  res=swd_cmdq_flush(swdctx, &swdctx->cmdq, operation);
   if (res<0) return res;
   tcmdcnt=+res;
   return qcmdcnt+tcmdcnt;
@@ -285,7 +285,7 @@ int swd_bus_read_data_p(swd_ctx_t *swdctx, swd_operation_t operation, int **data
  if (operation==SWD_OPERATION_ENQUEUE){
   return qcmdcnt;        
  } else if (operation==SWD_OPERATION_EXECUTE){
-  res=swd_cmdq_flush(swdctx, operation);
+  res=swd_cmdq_flush(swdctx, &swdctx->cmdq, operation);
   if (res<2) return res;
   tcmdcnt+=res;
  } else return SWD_ERROR_BADOPCODE;
@@ -342,7 +342,7 @@ int swd_bus_write_control(swd_ctx_t *swdctx, swd_operation_t operation, char *ct
  if (operation==SWD_OPERATION_ENQUEUE){
   return qcmdcnt;        
  } else if (operation==SWD_OPERATION_EXECUTE){
-  res=swd_cmdq_flush(swdctx, operation);
+  res=swd_cmdq_flush(swdctx, &swdctx->cmdq, operation);
   if (res<0) return res;
   tcmdcnt+=res;
  } else return SWD_ERROR_BADOPCODE;

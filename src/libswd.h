@@ -593,7 +593,7 @@ int swd_cmdq_append(swd_cmd_t *cmdq, swd_cmd_t *cmd);
 int swd_cmdq_free(swd_cmd_t *cmdq);
 int swd_cmdq_free_head(swd_cmd_t *cmdq);
 int swd_cmdq_free_tail(swd_cmd_t *cmdq);
-int swd_cmdq_flush(swd_ctx_t *swdctx, swd_operation_t operation);
+int swd_cmdq_flush(swd_ctx_t *swdctx, swd_cmd_t **cmdq, swd_operation_t operation);
 
 int swd_cmd_enqueue(swd_ctx_t *swdctx, swd_cmd_t *cmd);
 int swd_cmd_enqueue_mosi_request(swd_ctx_t *swdctx, char *request);

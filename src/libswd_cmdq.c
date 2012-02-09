@@ -176,16 +176,21 @@ int swd_cmdq_free_tail(swd_cmd_t *cmdq){
  return cmdcnt;
 }
 
-/** Flush command queue contents into interface driver.
- * This will also update the swdctx->cmdq to the last executed element.
+/** Flush command queue contents into interface driver and update **cmdq.
  * Operation is specified by SWD_OPERATION and can be used to select
  * how to flush the queue, ie. head-only, tail-only, one, all, etc.
- * \param *swdctx swd context pointer.
+ * This function is not only used to flush swdctx->cmdq but also other
+ * queues (i.e. error handling) so the parameter is **cmdq not swdctx itself.
+ * This is the only place where **cmdq is updated to the last executed element.
+ * Double pointer is used because we update pointer element not its data.
+ * \param *cmdq pointer to queue to be flushed.
  * \param operation tells how to flush the queue.
  * \return number of commands transmitted, or SWD_ERROR_CODE on failure.
+ * !TODO: HOW WE WANT TO UPDATE CMDQ ELEMENT AFTER PROCESSING WITHOUT DOUBLE POINTER?
  */
-int swd_cmdq_flush(swd_ctx_t *swdctx, swd_operation_t operation){
+int swd_cmdq_flush(swd_ctx_t *swdctx, swd_cmd_t **cmdq, swd_operation_t operation){
  if (swdctx==NULL) return SWD_ERROR_NULLCONTEXT;
+ if (*cmdq==NULL||cmdq==NULL) return SWD_ERROR_NULLQUEUE;
  if (operation<SWD_OPERATION_FIRST || operation>SWD_OPERATION_LAST)
   return SWD_ERROR_BADOPCODE;
 
@@ -194,24 +199,24 @@ int swd_cmdq_flush(swd_ctx_t *swdctx, swd_operation_t operation){
 
  switch (operation){
   case SWD_OPERATION_TRANSMIT_HEAD:
-   firstcmd=swd_cmdq_find_root(swdctx->cmdq);
-   lastcmd=swdctx->cmdq;
+   firstcmd=swd_cmdq_find_head(*cmdq);
+   lastcmd=*cmdq;
    break;
   case SWD_OPERATION_TRANSMIT_TAIL:
-   firstcmd=swdctx->cmdq;
-   lastcmd=swd_cmdq_find_tail(swdctx->cmdq);
+   firstcmd=*cmdq;
+   lastcmd=swd_cmdq_find_tail(*cmdq);
    break;
   case SWD_OPERATION_EXECUTE:
   case SWD_OPERATION_TRANSMIT_ALL:
-   firstcmd=swd_cmdq_find_root(swdctx->cmdq);
-   lastcmd=swd_cmdq_find_tail(swdctx->cmdq);
+   firstcmd=swd_cmdq_find_head(*cmdq);
+   lastcmd=swd_cmdq_find_tail(*cmdq);
    break;
   case SWD_OPERATION_TRANSMIT_ONE:
-   firstcmd=swdctx->cmdq;
-   lastcmd=swdctx->cmdq;
+   firstcmd=*cmdq;
+   lastcmd=*cmdq;
    break;
   case SWD_OPERATION_TRANSMIT_LAST:
-   firstcmd=swd_cmdq_find_tail(swdctx->cmdq);
+   firstcmd=swd_cmdq_find_tail(*cmdq);
    lastcmd=firstcmd;
    break;
   default:
@@ -222,22 +227,26 @@ int swd_cmdq_flush(swd_ctx_t *swdctx, swd_operation_t operation){
  if (lastcmd==NULL) return SWD_ERROR_QUEUETAIL;
 
  if (firstcmd==lastcmd){
-  swdctx->cmdq=firstcmd;
-  if (!cmd->done) return swd_drv_transmit(swdctx, swdctx->cmdq);
+  if (!firstcmd->done) {
+   res=swd_drv_transmit(swdctx, firstcmd);
+   if (res<0) return res;
+   *cmdq=firstcmd;
+  }
+  return 1;
  }
 
  for (cmd=firstcmd;;cmd=cmd->next){
   if (cmd->done){
-   if (cmd->next) continue;
-   break;
+   if (cmd->next){
+    continue;
+   } else break;
   }
-  swdctx->cmdq=cmd;
-  res=swd_drv_transmit(swdctx, swdctx->cmdq); 
+  res=swd_drv_transmit(swdctx, cmd); 
   if (res<0) return res;
   cmdcnt=+res;
   if (cmd==lastcmd) break;
  } 
-
+ *cmdq=cmd;
  return cmdcnt;
 }
 

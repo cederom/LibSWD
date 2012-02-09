@@ -73,7 +73,7 @@ int swd_dap_reset(swd_ctx_t *swdctx, swd_operation_t operation){
  if (operation==SWD_OPERATION_ENQUEUE){
   return qcmdcnt;
  } else if (operation==SWD_OPERATION_EXECUTE){
-  res=swd_cmdq_flush(swdctx, operation);
+  res=swd_cmdq_flush(swdctx, &swdctx->cmdq, operation);
   if (res<0) return res;
   tcmdcnt+=res;
   return qcmdcnt+tcmdcnt;
@@ -101,7 +101,7 @@ int swd_dap_select(swd_ctx_t *swdctx, swd_operation_t operation){
  if (operation==SWD_OPERATION_ENQUEUE){
   return qcmdcnt;       
  } else if (operation==SWD_OPERATION_EXECUTE){
-  res=swd_cmdq_flush(swdctx, operation);
+  res=swd_cmdq_flush(swdctx, &swdctx->cmdq, operation);
   if (res<0) return res;
   tcmdcnt=+res;
   return qcmdcnt+tcmdcnt;
