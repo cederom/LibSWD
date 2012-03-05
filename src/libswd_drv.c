@@ -172,8 +172,7 @@ int swd_drv_transmit(swd_ctx_t *swdctx, swd_cmd_t *cmd){
  if (res<0) return res;
  cmd->done=1;
 
- /* Now verify the ACK value, notify caller about possible errors, and truncate cmdq if necessary.
-  * If error was detected, delete trailing queue elements, maybe perform data phase.
+ /* Now verify the ACK value, notify caller about possible errors, truncate cmdq if swdctx.config.autofixerrors is not set.
   * Accodring to ADIv5.0 specification (ARM IHI 0031A, section 5.4.5) data phase is required when STICKYORUN=1.
   * Unfortunately at this point we cannot read the CTRL/STAT flag, so we will write zeros to avoid random Request.
   */
@@ -200,19 +199,20 @@ int swd_drv_transmit(swd_ctx_t *swdctx, swd_cmd_t *cmd){
       (void*)swdctx, (void*)cmd );
     errcode=SWD_ERROR_ACKUNKNOWN;
   }
-  // If trunccmdqonerror is set then truncate cmdq on error.
-  // The reason for clearing out the queue is to preserve syncrhonization with Target.
+  // If swdctx.config.autofixerrors is not set then truncate cmdq on error.
+  // The reason for clearing out the queue is to preserve synchronization with Target.
   // It might be also necessary to execute extra data phase on truncated queue.
-  if (swdctx->config.trunccmdqonerror){
+  if (!swdctx->config.autofixerrors){
    swd_log(swdctx, SWD_LOGLEVEL_DEBUG,
      "SWD_D: swd_drv_transmit(swdctx=@%p, cmd=@%p): ACK!=OK, clearing cmdq tail to preserve synchronization...\n",
      (void*)swdctx, (void*)cmd );
    if (swd_cmdq_free_tail(cmd)<0) {
     swd_log(swdctx, SWD_LOGLEVEL_ERROR,
-      "SWD_E: swd_drv_transmit(swdctx=@%p, cmd=@%p): Cannot free cmdq tail in ACK error hanlig routine, Protocol Error Sequence imminent...\n",
+      "SWD_E: swd_drv_transmit(swdctx=@%p, cmd=@%p): Cannot free cmdq tail in ACK error handling routine, Protocol Error Sequence imminent...\n",
       (void*)swdctx, (void*)cmd );
     return SWD_ERROR_QUEUENOTFREE;
    }
+   // TODO: MOVE THIS INTO SEPARATE ERROR HANDLING ROUTINE
    // If ACK={WAIT,FAULT} then append data phase and again flush the queue to maintain sync.
    // MOSI_TRN + 33 zero data cycles should be universal for STICKYORUN={0,1} ???
    if (errcode==SWD_ERROR_ACK_WAIT || errcode==SWD_ERROR_ACK_FAULT){
@@ -228,7 +228,12 @@ int swd_drv_transmit(swd_ctx_t *swdctx, swd_cmd_t *cmd){
    }
   } else {
    swd_log(swdctx, SWD_LOGLEVEL_DEBUG,
-     "SWD_D: swd_drv_transmit(swdctx=@%p, cmd=@%p): swdctx->config.trunccmdqonerror is not set, leaving queue intact...\n", (void*)swdctx, (void*)cmd );
+     "SWD_D: swd_drv_transmit(swdctx=@%p, cmd=@%p): swdctx->config.autofixerrors is set, applying error handling...\n", (void*)swdctx, (void*)cmd );
+   res=swd_error_handle(swdctx);
+   if (res<0){
+    swd_log(swdctx, SWD_LOGLEVEL_ERROR, "swd_drv_transmit(swdctx=@%p, @%p): error handling failed, %s\n", (void*)swdctx, (void*)cmd, swd_error_string(res));
+    return res;
+   }
   }
   return errcode;
  }

@@ -193,11 +193,11 @@ int swd_error_handle_ack_wait(swd_ctx_t *swdctx){
 swd_error_handle_ack_wait_end:
  // Exit ACK WAIT handling routine, verify retval before return.
  if (retval<0){
-  swd_log(swdctx, SWD_LOGLEVEL_ERROR, "swd_error_handle_ack_wait(@%p): %s", (void*)swdctx, swd_error_string(retval));
+  swd_log(swdctx, SWD_LOGLEVEL_ERROR, "SWD_E: swd_error_handle_ack_wait(swdctx=@%p): %s\n", (void*)swdctx, swd_error_string(retval));
  }
 
  *swdctx->cmdq=mastercmdq;
- while (1) {printf("ACK WAIT HANDLER\n");}
+ while (1) {printf("ACK WAIT HANDLER\n");sleep(1);}
  return retval;
 }
 /** @} */
