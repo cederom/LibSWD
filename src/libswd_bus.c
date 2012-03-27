@@ -87,6 +87,42 @@ int swd_bus_setdir_miso(swd_ctx_t *swdctx){
  return cmdcnt;
 }
 
+/** Perform Request (write provided raw byte).
+ * \param *swdctx swd context pointer.
+ * \param operation type of action to perform with generated request.
+ * \param *request request packet raw data
+ * \return number of commands processed, or SWD_ERROR_CODE on failure.
+ */
+int swd_bus_write_request_raw
+(swd_ctx_t *swdctx, swd_operation_t operation, char *request){
+ /* Verify function parameters.*/
+ if (swdctx==NULL) return SWD_ERROR_NULLCONTEXT;
+ if (request==NULL) return SWD_ERROR_NULLPOINTER;
+ if (operation!=SWD_OPERATION_ENQUEUE && operation!=SWD_OPERATION_EXECUTE)
+  return SWD_ERROR_BADOPCODE;
+
+ int res, qcmdcnt=0, tcmdcnt=0;
+
+ /* Bus direction must be MOSI. */
+ res=swd_bus_setdir_mosi(swdctx);
+ if (res<0) return res;
+ qcmdcnt=+res;
+
+ /* Append request command to the queue. */
+ res=swd_cmd_enqueue_mosi_request(swdctx, request);
+ if (res<0) return res;
+ qcmdcnt+=res;
+
+ if (operation==SWD_OPERATION_ENQUEUE){
+  return qcmdcnt; 
+ } else if (operation==SWD_OPERATION_EXECUTE){
+  res=swd_cmdq_flush(swdctx, &swdctx->cmdq, operation);
+  if (res<0) return res;
+  tcmdcnt=+res;
+  return qcmdcnt+tcmdcnt;
+ } else return SWD_ERROR_BADOPCODE;
+}
+
 /** Perform Request.
  * \param *swdctx swd context pointer.
  * \param operation type of action to perform with generated request.

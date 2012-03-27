@@ -622,8 +622,8 @@ char *swd_cmd_string_cmdtype(swd_cmd_t *cmd);
 
 int swd_bus_setdir_mosi(swd_ctx_t *swdctx);
 int swd_bus_setdir_miso(swd_ctx_t *swdctx);
-int swd_bus_write_request
-(swd_ctx_t *swdctx, swd_operation_t operation, char *APnDP, char *RnW, char *addr);
+int swd_bus_write_request_raw(swd_ctx_t *swdctx, swd_operation_t operation, char *request);
+int swd_bus_write_request(swd_ctx_t *swdctx, swd_operation_t operation, char *APnDP, char *RnW, char *addr);
 int swd_bus_read_ack(swd_ctx_t *swdctx, swd_operation_t operation, char **ack);
 int swd_bus_write_data_p(swd_ctx_t *swdctx, swd_operation_t operation, int *data, char *parity);
 int swd_bus_write_data_ap(swd_ctx_t *swdctx, swd_operation_t operation, int *data);
