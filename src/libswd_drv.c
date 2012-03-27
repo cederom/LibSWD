@@ -199,9 +199,8 @@ int swd_drv_transmit(swd_ctx_t *swdctx, swd_cmd_t *cmd){
       (void*)swdctx, (void*)cmd );
     errcode=SWD_ERROR_ACKUNKNOWN;
   }
-  // If swdctx.config.autofixerrors is not set then truncate cmdq on error.
+  // If swdctx.config.autofixerrors is not set, on error truncate cmdq, append+execute dummy data phase, then let caller handle situation.
   // The reason for clearing out the queue is to preserve synchronization with Target.
-  // It might be also necessary to execute extra data phase on truncated queue.
   if (!swdctx->config.autofixerrors){
    swd_log(swdctx, SWD_LOGLEVEL_DEBUG,
      "SWD_D: swd_drv_transmit(swdctx=@%p, cmd=@%p): ACK!=OK, clearing cmdq tail to preserve synchronization...\n",
@@ -234,6 +233,7 @@ int swd_drv_transmit(swd_ctx_t *swdctx, swd_cmd_t *cmd){
     swd_log(swdctx, SWD_LOGLEVEL_ERROR, "swd_drv_transmit(swdctx=@%p, @%p): error handling failed, %s\n", (void*)swdctx, (void*)cmd, swd_error_string(res));
     return res;
    }
+   errcode=SWD_OK;
   }
   return errcode;
  }
