@@ -116,7 +116,7 @@ int swd_error_handle(swd_ctx_t *swdctx){
  }
 
  if (retval<0){
-  swd_log(swdctx, SWD_LOGLEVEL_ERROR, "swd_error_handle(@%p) failed! on cmdq=@%p", (void*)swdctx, (void*)swdctx->cmdq); 
+  swd_log(swdctx, SWD_LOGLEVEL_ERROR, "SWD_E: swd_error_handle(@%p) failed! on cmdq=@%p", (void*)swdctx, (void*)swdctx->cmdq); 
  }
  return retval;
 }
@@ -125,13 +125,15 @@ int swd_error_handle_ack(swd_ctx_t *swdctx){
  if (swdctx==NULL) return SWD_ERROR_NULLCONTEXT;
  // Make sure we are working on the ACK cmdq element.
  if (swdctx->cmdq->cmdtype!=SWD_CMDTYPE_MISO_ACK){
-  swd_log(swdctx, SWD_LOGLEVEL_ERROR, "swd_error_handle_ack(@%p):swdctx->cmdq does not point to ACK!", (void*)swdctx);
+  swd_log(swdctx, SWD_LOGLEVEL_ERROR, "SWD_E: swd_error_handle_ack(@%p):swdctx->cmdq does not point to ACK!", (void*)swdctx);
   return SWD_ERROR_UNHANDLED; //do we want to handle this kind of error here?
  }
 
  switch (swdctx->cmdq->ack) {
   case SWD_ACK_OK_VAL:
    // Uhm, there was no error.
+   // Should we return OK or search for next ACK recursively?
+   swd_log(swdctx, SWD_LOGLEVEL_WARNING, "SWD_W: swd_error_handle_ack(swdctx=@%p): ACK=OK, handling wrong element?\n", (void*)swdctx);
    return SWD_OK;
   case SWD_ACK_WAIT_VAL:
    return swd_error_handle_ack_wait(swdctx);
@@ -148,35 +150,62 @@ int swd_error_handle_ack_wait(swd_ctx_t *swdctx){
  if (swdctx==NULL) return SWD_ERROR_NULLCONTEXT;
  // Make sure we are working on the ACK cmdq element.
  if (swdctx->cmdq->cmdtype!=SWD_CMDTYPE_MISO_ACK){
-  swd_log(swdctx, SWD_LOGLEVEL_ERROR, "swd_error_handle_ack_wait(@%p):swdctx->cmdq does not point to ACK!", (void*)swdctx);
+  swd_log(swdctx, SWD_LOGLEVEL_ERROR, "SWD_E: swd_error_handle_ack_wait(swdctx=@%p):swdctx->cmdq does not point to ACK!", (void*)swdctx);
   return SWD_ERROR_UNHANDLED; //do we want to handle this kind of error here?
  }
  // Make sure the ACK contains WAIT response.
  if (swdctx->cmdq->ack!=SWD_ACK_WAIT_VAL){
-  swd_log(swdctx, SWD_LOGLEVEL_ERROR, "swd_error_handle_ack_wait(@%p):swdctx->cmdq->ack does not contain WAIT response!", (void*)swdctx);
+  swd_log(swdctx, SWD_LOGLEVEL_ERROR, "SWD_E: swd_error_handle_ack_wait(swdctx=@%p):swdctx->cmdq->ack does not contain WAIT response!", (void*)swdctx);
   return SWD_ERROR_ACKMISMATCH;
  }
 
+ //TODO: NOW DECIDE IF AN OPERATION WAS READ OR WRITE AND PERFORM RETRY ACCORDINGLY
+ // READ AND WRITE WILL HAVE DIFFERENT RETRY SEQUENCES
+
+ char request = swdctx->cmdq->prev->prev->request; 
+ char *ack, *rparity;
+ char parity=0;
+
  // Remember original cmdq, restore on return.
- swd_cmd_t mastercmdq = *swdctx->cmdq;
+ swd_cmd_t *mastercmdq = swdctx->cmdq;
 
- // Create new error handling queue, fix sticky flags and retry operation.
+ // Append dummy data phase, fix sticky flags and retry operation.
  int retval, *ctrlstat, *rdata, abort;
- retval=swd_cmdq_init(swdctx->cmdq->errors);
- if (retval<0) goto swd_error_handle_ack_wait_end;
+// retval=swd_cmdq_init(errors);
+ swdctx->cmdq->errors=(swd_cmd_t*)calloc(1,sizeof(swd_cmd_t));
+ //retval = SWD_ERROR_OUTOFMEM;
+ if (swdctx->cmdq->errors==NULL) goto swd_error_handle_ack_wait_end;
  swdctx->cmdq=swdctx->cmdq->errors; // From now, this becomes out main cmdq for use with standard functions.
+ swd_log(swdctx, SWD_LOGLEVEL_DEBUG, "SWD_D: swd_error_handle_ack_wait(swdctx=@%p): Performing data phase after ACK={WAIT,FAULT}...\n", (void*)swdctx);
+ int res, data=0;
+ retval=swd_bus_write_data_p(swdctx, SWD_OPERATION_EXECUTE, &data, &parity);
+ if (retval<0) goto swd_error_handle_ack_wait_end;
 
- // ctrlstat clenup / read retry body below 
+ // NOW WE CAN HANDLE MEM-AP READ RETRY:
+ // 1. READ STICKY FLAGS FROM CTRL/STAT
+ // 2. CLEAR STICKY FLAGS IN ABORT - this will discard AP transaction
+ // 3. RETRY MEM-AP DRW READ - now it must be ACK=OK (it will return last mem-ap read result). 
+ // 4. READ DP RDBUFF TO OBTAIN READ DATA
+
  int retrycnt;
- for (retrycnt=SWD_RETRY_COUNT_DEFAULT; retrycnt>0; retrycnt--){
+ for (retrycnt=50/*SWD_RETRY_COUNT_DEFAULT*/; retrycnt>0; retrycnt--){
   retval=swd_dp_read(swdctx, SWD_OPERATION_EXECUTE, SWD_DP_CTRLSTAT_ADDR, &ctrlstat);
   if (retval<0) goto swd_error_handle_ack_wait_end;
   abort=0x00000014;
   retval=swd_dp_write(swdctx, SWD_OPERATION_EXECUTE, SWD_DP_ABORT_ADDR, &abort);
   if (retval<0) goto swd_error_handle_ack_wait_end;
+  retval=swd_bus_write_request_raw(swdctx, SWD_OPERATION_ENQUEUE, &request);
+  retval=swd_bus_read_ack(swdctx, SWD_OPERATION_EXECUTE, &ack);
+  if (retval<0 || *ack!=SWD_ACK_OK_VAL) goto swd_error_handle_ack_wait_end;
+  retval=swd_bus_read_data_p(swdctx, SWD_OPERATION_EXECUTE, &rdata, &rparity);
+  if (retval<0) goto swd_error_handle_ack_wait_end;
+
   retval=swd_dp_read(swdctx, SWD_OPERATION_EXECUTE, SWD_DP_CTRLSTAT_ADDR, &ctrlstat);
   if (retval<0) goto swd_error_handle_ack_wait_end;
+
+
   if (*ctrlstat&SWD_DP_CTRLSTAT_READOK){
+   swd_log(swdctx, SWD_LOGLEVEL_DEBUG, "=========================GOT RESPONSE===========================\n\n\n");
    retval=swd_dp_read(swdctx, SWD_OPERATION_EXECUTE, SWD_DP_RDBUFF_ADDR, &rdata);
    if (retval<0) goto swd_error_handle_ack_wait_end;
    break;
@@ -186,17 +215,33 @@ int swd_error_handle_ack_wait(swd_ctx_t *swdctx){
   retval=SWD_ERROR_MAXRETRY;
   goto swd_error_handle_ack_wait_end;
  }
+
+ //Make sure we have RDATA and PARITY elements after swdctx->cmdq.
+ //Should we check for this at the procedure start???
+ swdctx->cmdq=mastercmdq;
+ if (swdctx->cmdq->cmdtype==SWD_CMDTYPE_MISO_ACK && swdctx->cmdq->next->cmdtype==SWD_CMDTYPE_MISO_DATA && swdctx->cmdq->next->next->cmdtype==SWD_CMDTYPE_MISO_PARITY){
+  swdctx->cmdq->ack=SWD_ACK_OK_VAL;
+  swdctx->cmdq=swdctx->cmdq->next;
+  swdctx->cmdq->misodata=*rdata;
+  swdctx->cmdq->done=1;
+  swdctx->cmdq=swdctx->cmdq->next;
+  //swd_bin8_parity_even(rdata, &parity);
+  swdctx->cmdq->parity=*rparity;
+  swdctx->cmdq->done=1;
+  return SWD_OK;
+ } else swd_log(swdctx, SWD_LOGLEVEL_ERROR, "SWD_E: UNSUPPORTED COMMAND SEQUENCE ON CMDQ (NOT ACK->RDATA->PARITY)\n");
+ 
   
  // At this point we should have the read result from RDBUFF ready for MEM-AP read fix. 
 
 
 swd_error_handle_ack_wait_end:
  // Exit ACK WAIT handling routine, verify retval before return.
- if (retval<0){
-  swd_log(swdctx, SWD_LOGLEVEL_ERROR, "SWD_E: swd_error_handle_ack_wait(swdctx=@%p): %s\n", (void*)swdctx, swd_error_string(retval));
+ if (retval<0||retrycnt==0){
+  swd_log(swdctx, SWD_LOGLEVEL_ERROR, "SWD_E: swd_error_handle_ack_wait(swdctx=@%p) ejecting: %s\n", (void*)swdctx, swd_error_string(retval));
  }
 
- *swdctx->cmdq=mastercmdq;
+ swdctx->cmdq=mastercmdq;
  while (1) {printf("ACK WAIT HANDLER\n");sleep(1);}
  return retval;
 }
