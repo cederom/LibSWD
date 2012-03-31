@@ -48,7 +48,6 @@
  * \return SWD_OK on success, SWD_ERROR_CODE code on failure
  */
 int swd_cmdq_init(swd_cmd_t *cmdq){
- if (cmdq==NULL) return SWD_ERROR_NULLPOINTER;
  cmdq=(swd_cmd_t *)calloc(1,sizeof(swd_cmd_t));
  if (cmdq==NULL) return SWD_ERROR_OUTOFMEM;
  cmdq->prev=NULL;
