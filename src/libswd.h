@@ -643,6 +643,7 @@ extern int swd_drv_miso_trn(swd_ctx_t *swdctx, int clks);
 int swd_dap_reset(swd_ctx_t *swdctx, swd_operation_t operation);
 int swd_dap_select(swd_ctx_t *swdctx, swd_operation_t operation);
 int swd_dap_detect(swd_ctx_t *swdctx, swd_operation_t operation, int **idcode);
+int swd_dap_errors_handle(swd_ctx_t *swdctx, swd_operation_t operation, int *ctrlstat, int *abort);
 
 int swd_dp_read_idcode(swd_ctx_t *swdctx, swd_operation_t operation, int **idcode);
 int swd_dp_read(swd_ctx_t *swdctx, swd_operation_t operation, char addr, int **data);

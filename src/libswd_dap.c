@@ -108,6 +108,46 @@ int swd_dap_select(swd_ctx_t *swdctx, swd_operation_t operation){
  } else return SWD_ERROR_BADOPCODE;
 }
 
+/** Read out the CTRL/STAT and clear apropriate flags in ABORT register.
+ * This function is helpful for clearing sticky errors.
+ * ABORT register flags are additionally bitmasked by a function parameter,
+ * so called can control which bits can be set (0xFFFFFFFF allows all).
+ * \param *swdctx swd context pointer.
+ * \param operation operation type.
+ * \param *ctrlstat will hold the CTRL/STAT register value.
+ * \param *abort bitmask of which ABORT flags can be set, also will hold the ABORT write.
+ */
+int swd_dap_errors_handle(swd_ctx_t *swdctx, swd_operation_t operation, int *ctrlstat, int *abort){
+ if (swdctx==NULL) return SWD_ERROR_NULLCONTEXT;
+ if (operation!=SWD_OPERATION_EXECUTE && operation!=SWD_OPERATION_ENQUEUE) return SWD_ERROR_BADOPCODE;
+
+ int res, abortreg;
+ char APnDP=0, R=1, W=0, ctrlstat_addr=SWD_DP_CTRLSTAT_ADDR, abort_addr=SWD_DP_ABORT_ADDR, *ack, *parity, cparity;
+ if (ctrlstat!=NULL){
+  res=swd_bus_write_request(swdctx, operation, &APnDP, &R, &ctrlstat_addr); 
+  if (res<0) return res;
+  res=swd_bus_read_ack(swdctx, operation, &ack);
+  if (res<0) return res;
+  res=swd_bus_read_data_p(swdctx, operation, &ctrlstat, &parity);
+  if (res<0) return res;
+  res=swd_bin32_parity_even(ctrlstat, &cparity);
+  if (res<0) return res;
+  if (*parity!=cparity) return SWD_ERROR_PARITY;
+ }
+
+ if (abort!=NULL) {
+  *abort=*abort&(SWD_DP_ABORT_STKCMPCLR|SWD_DP_ABORT_STKERRCLR|SWD_DP_ABORT_WDERRCLR|SWD_DP_ABORT_ORUNERRCLR); 
+  res=swd_bus_write_request(swdctx, operation, &APnDP, &W, &abort_addr);
+  if (res<0) return res;
+  res=swd_bus_read_ack(swdctx, operation, &ack);
+  if (res<0) return res;
+  res=swd_bus_write_data_ap(swdctx, operation, abort);
+  if (res<0) return res;
+ }
+ return SWD_OK;
+}
+
+
 /** Macro: Read out IDCODE register and return its value on function return.
  * \param *swdctx swd context pointer.
  * \param operation operation type.
