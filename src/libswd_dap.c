@@ -229,12 +229,14 @@ int swd_dp_read(swd_ctx_t *swdctx, swd_operation_t operation, char addr, int **d
   return SWD_ERROR_BADOPCODE;
 
  int res, cmdcnt=0;
- char APnDP, RnW, cparity, *ack, *parity;
+ char APnDP, RnW, cparity, *ack, *parity, request;
 
  APnDP=0;
  RnW=1;
 
- res=swd_bus_write_request(swdctx, SWD_OPERATION_ENQUEUE, &APnDP, &RnW, &addr);
+ res=swd_bitgen8_request(swdctx, &APnDP, &RnW, &addr, &request);
+ if (res<0) return res;
+ res=swd_bus_write_request_raw(swdctx, SWD_OPERATION_ENQUEUE, &request);
  if (res<1) return res;
  cmdcnt=+res;
 
@@ -249,14 +251,36 @@ int swd_dp_read(swd_ctx_t *swdctx, swd_operation_t operation, char addr, int **d
 
  } else if (operation==SWD_OPERATION_EXECUTE){
   res=swd_bus_read_ack(swdctx, operation, &ack);
-  if (res<1) return res;
-  cmdcnt+=res;
-  res=swd_bus_read_data_p(swdctx, operation, data, &parity);
-  if (res<0) return res;
-  cmdcnt+=res;
-  res=swd_bin32_parity_even(*data, &cparity); 
-  if (res<0) return res;
-  if (cparity!=*parity) return SWD_ERROR_PARITY;
+  if (res>=0) {
+   res=swd_bus_read_data_p(swdctx, operation, data, &parity);
+   if (res<0) return res;
+   res=swd_bin32_parity_even(*data, &cparity); 
+   if (res<0) return res;
+   if (cparity!=*parity) return SWD_ERROR_PARITY;
+   cmdcnt=+res;
+  } else if (res==SWD_ERROR_ACK_WAIT) {
+   //We got ACK==WAIT, retry last transfer until success or failure.
+   int retry, ctrlstat, abort;
+   for (retry=SWD_RETRY_COUNT_DEFAULT; retry>0; retry--){
+    abort=0xFFFFFFFF;
+    res=swd_dap_errors_handle(swdctx, SWD_OPERATION_EXECUTE, &ctrlstat, &abort); 
+    if (res<0) continue;
+    res=swd_bus_write_request_raw(swdctx, SWD_OPERATION_ENQUEUE, &request);
+    if (res<0) continue; 
+    res=swd_bus_read_ack(swdctx, SWD_OPERATION_EXECUTE, &ack);
+    if (res<0) continue;
+    res=swd_bus_read_data_p(swdctx, SWD_OPERATION_EXECUTE, data, &parity);
+    if (res<0) continue;
+    res=swd_dp_read(swdctx, SWD_OPERATION_EXECUTE, SWD_DP_RDBUFF_ADDR, data);
+    if (res<0) continue;
+    break;
+   }
+   if (retry==0) return SWD_ERROR_MAXRETRY;
+  }
+  if (res<0) {
+   swd_log(swdctx, SWD_LOGLEVEL_ERROR, "SWD_E: swd_dp_read(swdctx=@%p, operation=%s, addr=0x%X, **data=0x%X/%s) failed: %s.\n", (void*)swdctx, swd_operation_string(operation), addr, **data, swd_bin32_string(*data), swd_error_string(res));
+   return res;
+  }
   swd_log(swdctx, SWD_LOGLEVEL_INFO, "SWD_I: swd_dp_read(swdctx=@%p, operation=%s, addr=0x%X, **data=0x%X/%s).\n", (void*)swdctx, swd_operation_string(operation), addr, **data, swd_bin32_string(*data));
   // Here we also can cache DP register values into swdctx log.
   switch(addr){
@@ -287,12 +311,14 @@ int swd_dp_write(swd_ctx_t *swdctx, swd_operation_t operation, char addr, int *d
   return SWD_ERROR_BADOPCODE;
 
  int res, cmdcnt=0;
- char APnDP, RnW, cparity, *ack, *parity;
+ char APnDP, RnW, cparity, *ack, *parity, request;
 
  APnDP=0;
  RnW=0;
 
- res=swd_bus_write_request(swdctx, SWD_OPERATION_ENQUEUE, &APnDP, &RnW, &addr);
+ res=swd_bitgen8_request(swdctx, &APnDP, &RnW, &addr, &request);
+ if (res<0) return res; 
+ res=swd_bus_write_request_raw(swdctx, SWD_OPERATION_ENQUEUE, &request);
  if (res<1) return res;
  cmdcnt=+res;
 
@@ -309,11 +335,29 @@ int swd_dp_write(swd_ctx_t *swdctx, swd_operation_t operation, char addr, int *d
 
  } else if (operation==SWD_OPERATION_EXECUTE){
   res=swd_bus_read_ack(swdctx, operation, &ack);
-  if (res<1) return res;
-  cmdcnt+=res;
-  res=swd_bus_write_data_ap(swdctx, operation, data);
-  if (res<0) return res;
-  cmdcnt+=res;
+  if (res>=0) {
+   res=swd_bus_write_data_ap(swdctx, operation, data);
+  } else if (res==SWD_ERROR_ACK_WAIT) {
+   //We got ACK==WAIT, retry last transfer until success or failure.
+   int retry, ctrlstat, abort;
+   for (retry=SWD_RETRY_COUNT_DEFAULT; retry>0; retry--){
+    abort=0xFFFFFFFF;
+    res=swd_dap_errors_handle(swdctx, SWD_OPERATION_EXECUTE, &ctrlstat, &abort); 
+    if (res<0) continue;
+    res=swd_bus_write_request_raw(swdctx, SWD_OPERATION_ENQUEUE, &request);
+    if (res<0) continue; 
+    res=swd_bus_read_ack(swdctx, SWD_OPERATION_EXECUTE, &ack);
+    if (res<0) continue;
+    res=swd_bus_write_data_ap(swdctx, SWD_OPERATION_EXECUTE, data);
+    if (res<0) continue;
+    break;
+   }
+   if (retry==0) return SWD_ERROR_MAXRETRY;
+  }
+  if (res<0) {
+   swd_log(swdctx, SWD_LOGLEVEL_ERROR, "SWD_E: swd_dp_write(swdctx=@%p, operation=%s, addr=0x%X, *data=0x%X/%s) failed: %s.\n", (void*)swdctx, swd_operation_string(operation), addr, *data, swd_bin32_string(data), swd_error_string(res));
+   return res;
+  }
   swd_log(swdctx, SWD_LOGLEVEL_INFO, "SWD_I: swd_dp_write(swdctx=@%p, operation=%s, addr=0x%X, *data=0x%X/%s).\n", (void*)swdctx, swd_operation_string(operation), addr, *data, swd_bin32_string(data));
   // Here we also can cache DP register values into swdctx log.
   switch(addr){
@@ -363,7 +407,7 @@ int swd_ap_select(swd_ctx_t *swdctx, swd_operation_t operation, char ap){
  // If the correct AP is already selected no need to change it.
  // Verify against cached DP SELECT register value.
  // Unfortunately SELECT register is read only so we need to work on cached values...
- if ( ap != (swdctx->log.dp.select&0xFF0000000)>>SWD_DP_SELECT_APSEL_BITNUM ){
+ if ( ap != ((swdctx->log.dp.select&0xFF000000)>>SWD_DP_SELECT_APSEL_BITNUM) ){
   int retval;
   int new_select=ap;
   new_select=(new_select<<SWD_DP_SELECT_APSEL_BITNUM)|(swdctx->log.dp.select&0x00FFFFFF); 
@@ -387,7 +431,7 @@ int swd_ap_read(swd_ctx_t *swdctx, swd_operation_t operation, char addr, int **d
   return SWD_ERROR_BADOPCODE;
 
  int res, cmdcnt=0;
- char APnDP, RnW, cparity, *ack, *parity;
+ char APnDP, RnW, cparity, *ack, *parity, request;
 
  APnDP=1;
  RnW=1;
@@ -395,7 +439,9 @@ int swd_ap_read(swd_ctx_t *swdctx, swd_operation_t operation, char addr, int **d
  res=swd_ap_bank_select(swdctx, operation, addr);
  if (res<0) return res;
 
- res=swd_bus_write_request(swdctx, SWD_OPERATION_ENQUEUE, &APnDP, &RnW, &addr);
+ res=swd_bitgen8_request(swdctx, &APnDP, &RnW, &addr, &request);
+ if (res<0) return res;
+ res=swd_bus_write_request_raw(swdctx, SWD_OPERATION_ENQUEUE, &request);
  if (res<1) return res;
  cmdcnt=+res;
 
@@ -410,15 +456,36 @@ int swd_ap_read(swd_ctx_t *swdctx, swd_operation_t operation, char addr, int **d
 
  } else if (operation==SWD_OPERATION_EXECUTE){
   res=swd_bus_read_ack(swdctx, operation, &ack);
-  if (res<1) return res;
-  cmdcnt+=res;
-  res=swd_bus_read_data_p(swdctx, operation, data, &parity);
-  if (res<0) return res;
-  cmdcnt+=res;
-  res=swd_bin32_parity_even(*data, &cparity); 
-  if (res<0) return res;
-  if (cparity!=*parity) return SWD_ERROR_PARITY;
-  swd_log(swdctx, SWD_LOGLEVEL_INFO, "SWD_I: swd_ap_read(swdctx=@%p, command=%s, addr=0x%X, *data=0x%X/%s).\n", (void*)swdctx, swd_operation_string(operation), addr, **data, swd_bin32_string(*data));
+  if (res>=0) {
+   res=swd_bus_read_data_p(swdctx, operation, data, &parity);
+   if (res<0) return res;
+   res=swd_bin32_parity_even(*data, &cparity); 
+   if (res<0) return res;
+   if (cparity!=*parity) return SWD_ERROR_PARITY;
+  } else if (res==SWD_ERROR_ACK_WAIT) {
+   //We got ACK==WAIT, retry last transfer until success or failure.
+   int retry, ctrlstat, abort;
+   for (retry=SWD_RETRY_COUNT_DEFAULT; retry>0; retry--){
+    abort=0xFFFFFFFF;
+    res=swd_dap_errors_handle(swdctx, SWD_OPERATION_EXECUTE, &ctrlstat, &abort); 
+    if (res<0) continue;
+    res=swd_bus_write_request_raw(swdctx, SWD_OPERATION_ENQUEUE, &request);
+    if (res<0) continue; 
+    res=swd_bus_read_ack(swdctx, SWD_OPERATION_EXECUTE, &ack);
+    if (res<0) continue;
+    res=swd_bus_read_data_p(swdctx, SWD_OPERATION_EXECUTE, data, &parity);
+    if (res<0) continue;
+    res=swd_dp_read(swdctx, SWD_OPERATION_EXECUTE, SWD_DP_RDBUFF_ADDR, data);
+    if (res<0) continue;
+    break;
+   }
+   if (retry==0) return SWD_ERROR_MAXRETRY;
+  }
+  if (res<0) {
+   swd_log(swdctx, SWD_LOGLEVEL_ERROR, "SWD_E: swd_ap_read(swdctx=@%p, operation=%s, addr=0x%X, **data=0x%X/%s) failed: %s.\n", (void*)swdctx, swd_operation_string(operation), addr, **data, swd_bin32_string(*data), swd_error_string(res));
+   return res;
+  }
+ swd_log(swdctx, SWD_LOGLEVEL_INFO, "SWD_I: swd_ap_read(swdctx=@%p, command=%s, addr=0x%X, *data=0x%X/%s).\n", (void*)swdctx, swd_operation_string(operation), addr, **data, swd_bin32_string(*data));
   return cmdcnt;
  } else return SWD_ERROR_BADOPCODE;
 } 
@@ -436,7 +503,7 @@ int swd_ap_write(swd_ctx_t *swdctx, swd_operation_t operation, char addr, int *d
   return SWD_ERROR_BADOPCODE;
 
  int res, cmdcnt=0;
- char APnDP, RnW, cparity, *ack, *parity;
+ char APnDP, RnW, cparity, *ack, *parity, request;
 
  APnDP=1;
  RnW=0;
@@ -444,10 +511,11 @@ int swd_ap_write(swd_ctx_t *swdctx, swd_operation_t operation, char addr, int *d
  res=swd_ap_bank_select(swdctx, operation, addr);
  if (res<0) return res;
 
- res=swd_bus_write_request(swdctx, SWD_OPERATION_ENQUEUE, &APnDP, &RnW, &addr);
+ res=swd_bitgen8_request(swdctx, &APnDP, &RnW, &addr, &request);
+ if (res<0) return res;
+ res=swd_bus_write_request_raw(swdctx, SWD_OPERATION_ENQUEUE, &request);
  if (res<1) return res;
  cmdcnt=+res;
-
  swd_bin32_parity_even(data, (char *)&swdctx->qlog.write.parity);
 
  if (operation==SWD_OPERATION_ENQUEUE){
@@ -462,11 +530,31 @@ int swd_ap_write(swd_ctx_t *swdctx, swd_operation_t operation, char addr, int *d
 
  } else if (operation==SWD_OPERATION_EXECUTE){
   res=swd_bus_read_ack(swdctx, operation, &ack);
-  if (res<1) return res;
-  cmdcnt+=res;
-  res=swd_bus_write_data_ap(swdctx, operation, data);
-  if (res<0) return res;
-  cmdcnt+=res;
+  if (res>=0) {
+   res=swd_bus_write_data_ap(swdctx, operation, data);
+   if (res<0) return res;
+   cmdcnt+=res;
+  } else if (res==SWD_ERROR_ACK_WAIT) {
+   //We got ACK==WAIT, retry last transfer until success or failure.
+   int retry, ctrlstat, abort;
+   for (retry=SWD_RETRY_COUNT_DEFAULT; retry>0; retry--){
+    abort=0xFFFFFFFF;
+    res=swd_dap_errors_handle(swdctx, SWD_OPERATION_EXECUTE, &ctrlstat, &abort); 
+    if (res<0) continue;
+    res=swd_bus_write_request_raw(swdctx, SWD_OPERATION_ENQUEUE, &request);
+    if (res<0) continue; 
+    res=swd_bus_read_ack(swdctx, SWD_OPERATION_EXECUTE, &ack);
+    if (res<0) continue;
+    res=swd_bus_write_data_ap(swdctx, SWD_OPERATION_EXECUTE, data);
+    if (res<0) continue;
+    break;
+   }
+   if (retry==0) return SWD_ERROR_MAXRETRY;
+  }
+  if (res<0) {
+   swd_log(swdctx, SWD_LOGLEVEL_ERROR, "SWD_E: swd_ap_write(swdctx=@%p, operation=%s, addr=0x%X, *data=0x%X/%s) failed: %s.\n", (void*)swdctx, swd_operation_string(operation), addr, *data, swd_bin32_string(data), swd_error_string(res));
+   return res;
+  }
   swd_log(swdctx, SWD_LOGLEVEL_INFO, "SWD_I: swd_ap_write(swdctx=@%p, operation=%s, addr=0x%X, *data=0x%X/%s).\n", (void*)swdctx, swd_operation_string(operation), addr, *data, swd_bin32_string(data));
   return cmdcnt;
  } else return SWD_ERROR_BADOPCODE;
