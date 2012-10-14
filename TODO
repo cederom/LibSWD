@@ -1,3 +1,7 @@
 *do not automatically flush cmdq when full, as the pointers pointing to queue elements will cause program crash when referencing to nonexistent elements.
-
-
+*make a production release.
+*integrate into UrJTAG main project source repository.
+*integrate into OpenOCD main project source repository.
+*do automatic error handling on enqueued elements.
+*make commandline interface to drive DAP with single text commands.
+*make GUI to track down the queue and make user friendly interface to work with DAP.
