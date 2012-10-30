@@ -34,15 +34,15 @@
  *
  */
 
-/** \file libswd_externs.c Template for driver bridge between libswd and your application. */
+/** \file liblibswd_externs.c Template for driver bridge between libswd and your application. */
 
 #include <libswd.h>
 #include <stdlib.h>
 
-int swd_drv_mosi_8(swd_ctx_t *swdctx, swd_cmd_t *cmd, char *data, int bits, int nLSBfirst){
- if (data==NULL) return SWD_ERROR_NULLPOINTER;
- if (bits<0 && bits>8) return SWD_ERROR_PARAM;
- if (nLSBfirst!=0 && nLSBfirst!=1) return SWD_ERROR_PARAM;
+int libswd_drv_mosi_8(libswd_ctx_t *swdctx, libswd_cmd_t *cmd, char *data, int bits, int nLSBfirst){
+ if (data==NULL) return LIBSWD_ERROR_NULLPOINTER;
+ if (bits<0 && bits>8) return LIBSWD_ERROR_PARAM;
+ if (nLSBfirst!=0 && nLSBfirst!=1) return LIBSWD_ERROR_PARAM;
 
  // Your code goes here...
 
@@ -50,30 +50,30 @@ int swd_drv_mosi_8(swd_ctx_t *swdctx, swd_cmd_t *cmd, char *data, int bits, int 
 }
 
 
-int swd_drv_mosi_32(swd_ctx_t *swdctx, swd_cmd_t *cmd, int *data, int bits, int nLSBfirst){
- if (data==NULL) return SWD_ERROR_NULLPOINTER;
- if (bits<0 && bits>8) return SWD_ERROR_PARAM;
- if (nLSBfirst!=0 && nLSBfirst!=1) return SWD_ERROR_PARAM;
+int libswd_drv_mosi_32(libswd_ctx_t *swdctx, libswd_cmd_t *cmd, int *data, int bits, int nLSBfirst){
+ if (data==NULL) return LIBSWD_ERROR_NULLPOINTER;
+ if (bits<0 && bits>8) return LIBSWD_ERROR_PARAM;
+ if (nLSBfirst!=0 && nLSBfirst!=1) return LIBSWD_ERROR_PARAM;
 
  // Your code goes here...
 
  return bits;
 }
 
-int swd_drv_miso_8(swd_ctx_t *swdctx, swd_cmd_t *cmd, char *data, int bits, int nLSBfirst){
- if (data==NULL) return SWD_ERROR_NULLPOINTER;
- if (bits<0 && bits>8) return SWD_ERROR_PARAM;
- if (nLSBfirst!=0 && nLSBfirst!=1) return SWD_ERROR_PARAM;
+int libswd_drv_miso_8(libswd_ctx_t *swdctx, libswd_cmd_t *cmd, char *data, int bits, int nLSBfirst){
+ if (data==NULL) return LIBSWD_ERROR_NULLPOINTER;
+ if (bits<0 && bits>8) return LIBSWD_ERROR_PARAM;
+ if (nLSBfirst!=0 && nLSBfirst!=1) return LIBSWD_ERROR_PARAM;
 
  // Your code goes here...
  
  return bits;
 }
 
-int swd_drv_miso_32(swd_ctx_t *swdctx, swd_cmd_t *cmd, int *data, int bits, int nLSBfirst){
- if (data==NULL) return SWD_ERROR_NULLPOINTER;
- if (bits<0 && bits>8) return SWD_ERROR_PARAM;
- if (nLSBfirst!=0 && nLSBfirst!=1) return SWD_ERROR_PARAM;
+int libswd_drv_miso_32(libswd_ctx_t *swdctx, libswd_cmd_t *cmd, int *data, int bits, int nLSBfirst){
+ if (data==NULL) return LIBSWD_ERROR_NULLPOINTER;
+ if (bits<0 && bits>8) return LIBSWD_ERROR_PARAM;
+ if (nLSBfirst!=0 && nLSBfirst!=1) return LIBSWD_ERROR_PARAM;
 
  // Your code goes here...
 
@@ -84,18 +84,18 @@ int swd_drv_miso_32(swd_ctx_t *swdctx, swd_cmd_t *cmd, int *data, int bits, int 
 /* This function sets interface buffers to MOSI direction.
  * Master Output Slave Input - SWD Write operation.
  * bits specify how many clock cycles must be used. */
-int swd_drv_mosi_trn(swd_ctx_t *swdctx, int bits){
- if (bits<SWD_TURNROUND_MIN_VAL && bits>SWD_TURNROUND_MAX_VAL)
-  return SWD_ERROR_TURNAROUND; 
+int libswd_drv_mosi_trn(libswd_ctx_t *swdctx, int bits){
+ if (bits<LIBSWD_TURNROUND_MIN_VAL && bits>LIBSWD_TURNROUND_MAX_VAL)
+  return LIBSWD_ERROR_TURNAROUND; 
 
  // Your code goes here...
 
  return bits;
 }
 
-int swd_drv_miso_trn(swd_ctx_t *swdctx, int bits){
- if (bits<SWD_TURNROUND_MIN_VAL && bits>SWD_TURNROUND_MAX_VAL)
-  return SWD_ERROR_TURNAROUND; 
+int libswd_drv_miso_trn(libswd_ctx_t *swdctx, int bits){
+ if (bits<LIBSWD_TURNROUND_MIN_VAL && bits>LIBSWD_TURNROUND_MAX_VAL)
+  return LIBSWD_ERROR_TURNAROUND; 
 
  // Your code goes here...
 
@@ -106,32 +106,32 @@ int swd_drv_miso_trn(swd_ctx_t *swdctx, int bits){
 /** Set debug level according to caller's application settings.
  * \params *swdctx swd context to work on.
  * \params loglevel caller's application log level to be converted.
- * \return SWD_OK on success, of error code on failure.
+ * \return LIBSWD_OK on success, of error code on failure.
  */
-int swd_log_level_inherit(swd_ctx_t *swdctx, int loglevel){
+int libswd_log_level_inherit(libswd_ctx_t *swdctx, int loglevel){
  if (swdctx==NULL){
-  // log(LOG_LEVEL_DEBUG, "swd_log_level_inherit(): SWD Context not (yet) initialized...\n");
-  return SWD_OK;
+  // log(LOG_LEVEL_DEBUG, "libswd_log_level_inherit(): SWD Context not (yet) initialized...\n");
+  return LIBSWD_OK;
  }
 
- swd_loglevel_t new_swdlevel;
+ libswd_loglevel_t new_swdlevel;
  switch (loglevel){
   // Your code goes here...
   default:
-   new_swdlevel=SWD_LOGLEVEL_NORMAL;
+   new_swdlevel=LIBSWD_LOGLEVEL_NORMAL;
  }
 
- int res=swd_log_level_set(swdctx, new_swdlevel);
+ int res=libswd_log_level_set(swdctx, new_swdlevel);
  if (res<0) {
   // Your error routine goes here...
   // return URJ_ERROR_SYNTAX;
- } else return SWD_OK;
+ } else return LIBSWD_OK;
 }
 
 /** By default we want to use internal logging mechanisms.
  * It is possible however to use target program mechanisms to log messages.
  */
-int swd_log(swd_ctx_t *swdctx, swd_loglevel_t loglevel, char *msg, ...){
- return swd_log_internal(swdctx, loglevel, msg);
+int libswd_log(libswd_ctx_t *swdctx, libswd_loglevel_t loglevel, char *msg, ...){
+ return libswd_log_internal(swdctx, loglevel, msg);
 }
 

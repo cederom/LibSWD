@@ -34,17 +34,17 @@
  *
  */
 
-/** \file libswd_cmd.c */
+/** \file liblibswd_cmd.c */
 
 #include <libswd.h>
 
 /*******************************************************************************
- * \defgroup swd_cmd_enqueue SWD Command Genration and Enqueueing routines.
+ * \defgroup libswd_cmd_enqueue SWD Command Genration and Enqueueing routines.
  * Command quants are first generated/created in memory, then enqueued into
- * command queue for execution by swd_cmd_flush(). Queue elements are created
+ * command queue for execution by libswd_cmd_flush(). Queue elements are created
  * in memory and filled with payload, then appended to the queue. If enqueue
  * fails, memory for newly created elements is set free before return.
- * All functions here start with "swd_cmd_queue_append_" prefix.
+ * All functions here start with "libswd_cmd_queue_append_" prefix.
  * Functions here are NOT intelligent, they only create payload in memory,
  * so treat them rather as blocks for high-level functions.
  * @{
@@ -54,12 +54,12 @@
  * This function does not update the swdctx->cmdq pointer (its updated on flush).
  * \param *swdctx swd context pointer containing the command queue.
  * \param *cmd command to be appended to the context's command queue.
- * \return number of elements appended or SWD_ERROR_CODE on failure.
+ * \return number of elements appended or LIBSWD_ERROR_CODE on failure.
  */
-int swd_cmd_enqueue(swd_ctx_t *swdctx, swd_cmd_t *cmd){
- if (swdctx==NULL || cmd==NULL) return SWD_ERROR_NULLPOINTER;
+int libswd_cmd_enqueue(libswd_ctx_t *swdctx, libswd_cmd_t *cmd){
+ if (swdctx==NULL || cmd==NULL) return LIBSWD_ERROR_NULLPOINTER;
  int res;
- res=swd_cmdq_append(swdctx->cmdq, cmd);
+ res=libswd_cmdq_append(swdctx->cmdq, cmd);
  return res;
 }
 
@@ -67,55 +67,55 @@ int swd_cmd_enqueue(swd_ctx_t *swdctx, swd_cmd_t *cmd){
  * Note that contents is not validated, so bad request can be sent as well.
  * \param *swdctx swd context pointer.
  * \param *request pointer to the 8-bit request payload.
- * \return return number elements appended (1), or SWD_ERROR_CODE on failure.
+ * \return return number elements appended (1), or LIBSWD_ERROR_CODE on failure.
  */
-int swd_cmd_enqueue_mosi_request(swd_ctx_t *swdctx, char *request){
- if (swdctx==NULL) return SWD_ERROR_NULLCONTEXT;
- if (request==NULL) return SWD_ERROR_NULLPOINTER;
+int libswd_cmd_enqueue_mosi_request(libswd_ctx_t *swdctx, char *request){
+ if (swdctx==NULL) return LIBSWD_ERROR_NULLCONTEXT;
+ if (request==NULL) return LIBSWD_ERROR_NULLPOINTER;
  int res;
- swd_cmd_t *cmd;
- cmd=(swd_cmd_t *)calloc(1,sizeof(swd_cmd_t));
- if (cmd==NULL) return SWD_ERROR_OUTOFMEM;
+ libswd_cmd_t *cmd;
+ cmd=(libswd_cmd_t *)calloc(1,sizeof(libswd_cmd_t));
+ if (cmd==NULL) return LIBSWD_ERROR_OUTOFMEM;
  cmd->request=*request;
- cmd->bits=SWD_REQUEST_BITLEN;
- cmd->cmdtype=SWD_CMDTYPE_MOSI_REQUEST;
- res=swd_cmd_enqueue(swdctx, cmd);
+ cmd->bits=LIBSWD_REQUEST_BITLEN;
+ cmd->cmdtype=LIBSWD_CMDTYPE_MOSI_REQUEST;
+ res=libswd_cmd_enqueue(swdctx, cmd);
  if (res<1) free(cmd);
  return res;
 } 
 
 /** Append command queue with Turnaround activating MOSI mode.
  * \param *swdctx swd context pointer.
- * \return return number elements appended (1), or SWD_ERROR_CODE on failure.
+ * \return return number elements appended (1), or LIBSWD_ERROR_CODE on failure.
  */ 
-int swd_cmd_enqueue_mosi_trn(swd_ctx_t *swdctx){
- if (swdctx==NULL) return SWD_ERROR_NULLCONTEXT;
+int libswd_cmd_enqueue_mosi_trn(libswd_ctx_t *swdctx){
+ if (swdctx==NULL) return LIBSWD_ERROR_NULLCONTEXT;
  int res;
-  swd_cmd_t *cmd;
-  cmd=(swd_cmd_t *)calloc(1,sizeof(swd_cmd_t));
-  if (cmd==NULL) return SWD_ERROR_OUTOFMEM;
+  libswd_cmd_t *cmd;
+  cmd=(libswd_cmd_t *)calloc(1,sizeof(libswd_cmd_t));
+  if (cmd==NULL) return LIBSWD_ERROR_OUTOFMEM;
   cmd->TRNnMOSI=0;
   cmd->bits=swdctx->config.trnlen;
-  cmd->cmdtype=SWD_CMDTYPE_MOSI_TRN;
-  res=swd_cmd_enqueue(swdctx, cmd);
+  cmd->cmdtype=LIBSWD_CMDTYPE_MOSI_TRN;
+  res=libswd_cmd_enqueue(swdctx, cmd);
   if (res<1) free(cmd);
   return res;
 }
 
 /** Append command queue with Turnaround activating MISO mode.
  * \param *swdctx swd context pointer.
- * \return return number of elements appended (1), or SWD_ERROR_CODE on failure.
+ * \return return number of elements appended (1), or LIBSWD_ERROR_CODE on failure.
  */
-int swd_cmd_enqueue_miso_trn(swd_ctx_t *swdctx){
- if (swdctx==NULL) return SWD_ERROR_NULLCONTEXT;
+int libswd_cmd_enqueue_miso_trn(libswd_ctx_t *swdctx){
+ if (swdctx==NULL) return LIBSWD_ERROR_NULLCONTEXT;
  int res;
- swd_cmd_t *cmd;
- cmd=(swd_cmd_t *)calloc(1,sizeof(swd_cmd_t));
- if (cmd==NULL) return SWD_ERROR_OUTOFMEM;
+ libswd_cmd_t *cmd;
+ cmd=(libswd_cmd_t *)calloc(1,sizeof(libswd_cmd_t));
+ if (cmd==NULL) return LIBSWD_ERROR_OUTOFMEM;
  cmd->TRNnMOSI=1;
  cmd->bits=swdctx->config.trnlen;
- cmd->cmdtype=SWD_CMDTYPE_MISO_TRN;
- res=swd_cmd_enqueue(swdctx, cmd);
+ cmd->cmdtype=LIBSWD_CMDTYPE_MISO_TRN;
+ res=libswd_cmd_enqueue(swdctx, cmd);
  if (res<1) free(cmd);
  return res;
 }
@@ -128,30 +128,30 @@ int swd_cmd_enqueue_miso_trn(swd_ctx_t *swdctx){
  * \param *swdctx swd context pointer.
  * \param **data allocated data array to write result into.
  * \param count number of bits to read (also the **data size).
- * \return number of elements processed, or SWD_ERROR_CODE on failure.
+ * \return number of elements processed, or LIBSWD_ERROR_CODE on failure.
  */
-int swd_cmd_enqueue_miso_nbit(swd_ctx_t *swdctx, char **data, int count){
- if (swdctx==NULL) return SWD_ERROR_NULLCONTEXT;
- if (count<=0) return SWD_ERROR_PARAM;
+int libswd_cmd_enqueue_miso_nbit(libswd_ctx_t *swdctx, char **data, int count){
+ if (swdctx==NULL) return LIBSWD_ERROR_NULLCONTEXT;
+ if (count<=0) return LIBSWD_ERROR_PARAM;
  int res, res2;
- swd_cmd_t *cmd, *oldcmdq=swdctx->cmdq;
+ libswd_cmd_t *cmd, *oldcmdq=swdctx->cmdq;
  int i,cmdcnt=0;
  for (i=0;i<count;i++){
-  cmd=(swd_cmd_t *)calloc(1,sizeof(swd_cmd_t));
+  cmd=(libswd_cmd_t *)calloc(1,sizeof(libswd_cmd_t));
   if (cmd==NULL) {
-   res=SWD_ERROR_OUTOFMEM;
+   res=LIBSWD_ERROR_OUTOFMEM;
    break;
   }
   cmd->bits=1;
   if (data!=NULL) *data=&cmd->misobit;
-  cmd->cmdtype=SWD_CMDTYPE_MISO_BITBANG;
-  res=swd_cmd_enqueue(swdctx, cmd);
+  cmd->cmdtype=LIBSWD_CMDTYPE_MISO_BITBANG;
+  res=libswd_cmd_enqueue(swdctx, cmd);
   if (res<1) break;
   cmdcnt+=res;
  }
  //If there was problem enqueueing elements, rollback changes on queue.
  if (res<1) {
-  res2=swd_cmdq_free_tail(oldcmdq);
+  res2=libswd_cmdq_free_tail(oldcmdq);
   if (res2<0) return res2;
   return res;
  } else return cmdcnt;
@@ -165,31 +165,31 @@ int swd_cmd_enqueue_miso_nbit(swd_ctx_t *swdctx, char **data, int count){
  * \param *swdctx swd context pointer.
  * \param **data allocated data array to write result into.
  * \param count number of bits to read (also the **data size).
- * \return number of elements processed, or SWD_ERROR_CODE on failure.
+ * \return number of elements processed, or LIBSWD_ERROR_CODE on failure.
  */
-int swd_cmd_enqueue_mosi_nbit(swd_ctx_t *swdctx, char *data, int count){
- if (swdctx==NULL) return SWD_ERROR_NULLCONTEXT;
- if (data==NULL) return SWD_ERROR_NULLPOINTER;
- if (count<=0) return SWD_ERROR_PARAM;
+int libswd_cmd_enqueue_mosi_nbit(libswd_ctx_t *swdctx, char *data, int count){
+ if (swdctx==NULL) return LIBSWD_ERROR_NULLCONTEXT;
+ if (data==NULL) return LIBSWD_ERROR_NULLPOINTER;
+ if (count<=0) return LIBSWD_ERROR_PARAM;
  int res, res2, cmdcnt=0;
- swd_cmd_t *cmd, *oldcmdq=swdctx->cmdq;
+ libswd_cmd_t *cmd, *oldcmdq=swdctx->cmdq;
 int i;
  for (i=0;i<count;i++){
-  cmd=(swd_cmd_t *)calloc(1, sizeof(swd_cmd_t));
+  cmd=(libswd_cmd_t *)calloc(1, sizeof(libswd_cmd_t));
   if (cmd==NULL) {
-   res=SWD_ERROR_OUTOFMEM;
+   res=LIBSWD_ERROR_OUTOFMEM;
    break;
   }
   cmd->mosibit=data[i];
   cmd->bits=1;
-  cmd->cmdtype=SWD_CMDTYPE_MOSI_BITBANG;
-  res=swd_cmd_enqueue(swdctx, cmd);
+  cmd->cmdtype=LIBSWD_CMDTYPE_MOSI_BITBANG;
+  res=libswd_cmd_enqueue(swdctx, cmd);
   if (res<1) break;
   cmdcnt+=res;
  }
  //If there was problem enqueueing elements, rollback changes on queue.
  if (res<1){
-  res2=swd_cmdq_free_tail(oldcmdq);
+  res2=libswd_cmdq_free_tail(oldcmdq);
   if (res2<0) return res2;
   swdctx->cmdq=oldcmdq;
   return res;
@@ -199,19 +199,19 @@ int i;
 /** Append command queue with parity bit write.
  * \param *swdctx swd context pointer.
  * \param *parity parity value pointer.
- * \return number of elements appended (1), or SWD_ERROR_CODE on failure.
+ * \return number of elements appended (1), or LIBSWD_ERROR_CODE on failure.
  */ 
-int swd_cmd_enqueue_mosi_parity(swd_ctx_t *swdctx, char *parity){
- if (swdctx==NULL) return SWD_ERROR_NULLCONTEXT;
- if (*parity!=0 && *parity!=1) return SWD_ERROR_PARAM;
+int libswd_cmd_enqueue_mosi_parity(libswd_ctx_t *swdctx, char *parity){
+ if (swdctx==NULL) return LIBSWD_ERROR_NULLCONTEXT;
+ if (*parity!=0 && *parity!=1) return LIBSWD_ERROR_PARAM;
  int res;
- swd_cmd_t *cmd;
- cmd=(swd_cmd_t *)calloc(1,sizeof(swd_cmd_t));
- if (cmd==NULL) return SWD_ERROR_OUTOFMEM;
+ libswd_cmd_t *cmd;
+ cmd=(libswd_cmd_t *)calloc(1,sizeof(libswd_cmd_t));
+ if (cmd==NULL) return LIBSWD_ERROR_OUTOFMEM;
  cmd->parity=*parity;
  cmd->bits=1;
- cmd->cmdtype=SWD_CMDTYPE_MOSI_PARITY;
- res=swd_cmd_enqueue(swdctx, cmd);
+ cmd->cmdtype=LIBSWD_CMDTYPE_MOSI_PARITY;
+ res=libswd_cmd_enqueue(swdctx, cmd);
  if (res<1) free(cmd);
  return res;
 }
@@ -219,18 +219,18 @@ int swd_cmd_enqueue_mosi_parity(swd_ctx_t *swdctx, char *parity){
 /** Append command queue with parity bit read.
  * \param *swdctx swd context pointer.
  * \param *parity parity value pointer.
- * \return number of elements appended (1), or SWD_ERROR_CODE on failure.
+ * \return number of elements appended (1), or LIBSWD_ERROR_CODE on failure.
  */
-int swd_cmd_enqueue_miso_parity(swd_ctx_t *swdctx, char **parity){
- if (swdctx==NULL) return SWD_ERROR_NULLCONTEXT;
+int libswd_cmd_enqueue_miso_parity(libswd_ctx_t *swdctx, char **parity){
+ if (swdctx==NULL) return LIBSWD_ERROR_NULLCONTEXT;
  int res;
- swd_cmd_t *cmd;
- cmd=(swd_cmd_t *)calloc(1,sizeof(swd_cmd_t));
- if (cmd==NULL) return SWD_ERROR_OUTOFMEM;
+ libswd_cmd_t *cmd;
+ cmd=(libswd_cmd_t *)calloc(1,sizeof(libswd_cmd_t));
+ if (cmd==NULL) return LIBSWD_ERROR_OUTOFMEM;
  if (parity!=NULL) *parity=&cmd->parity;
  cmd->bits=1;
- cmd->cmdtype=SWD_CMDTYPE_MISO_PARITY;
- res=swd_cmd_enqueue(swdctx, cmd);
+ cmd->cmdtype=LIBSWD_CMDTYPE_MISO_PARITY;
+ res=libswd_cmd_enqueue(swdctx, cmd);
  if (res<1) free(cmd);
  return res;
 }
@@ -238,18 +238,18 @@ int swd_cmd_enqueue_miso_parity(swd_ctx_t *swdctx, char **parity){
 /** Append command queue with data read.
  * \param *swdctx swd context pointer.
  * \param *data data pointer.
- * \return of elements appended (1), or SWD_ERROR_CODE on failure.
+ * \return of elements appended (1), or LIBSWD_ERROR_CODE on failure.
  */
-int swd_cmd_enqueue_miso_data(swd_ctx_t *swdctx, int **data){
- if (swdctx==NULL) return SWD_ERROR_NULLCONTEXT;
+int libswd_cmd_enqueue_miso_data(libswd_ctx_t *swdctx, int **data){
+ if (swdctx==NULL) return LIBSWD_ERROR_NULLCONTEXT;
  int res;
- swd_cmd_t *cmd;
- cmd=(swd_cmd_t *)calloc(1,sizeof(swd_cmd_t));
- if (cmd==NULL) return SWD_ERROR_OUTOFMEM;
+ libswd_cmd_t *cmd;
+ cmd=(libswd_cmd_t *)calloc(1,sizeof(libswd_cmd_t));
+ if (cmd==NULL) return LIBSWD_ERROR_OUTOFMEM;
  if (data!=NULL) *data=&cmd->misodata;
  cmd->bits=32;
- cmd->cmdtype=SWD_CMDTYPE_MISO_DATA;
- res=swd_cmd_enqueue(swdctx, cmd); // should be 1 on success
+ cmd->cmdtype=LIBSWD_CMDTYPE_MISO_DATA;
+ res=libswd_cmd_enqueue(swdctx, cmd); // should be 1 on success
  if (res<1) free(cmd);
  return res;
 }
@@ -258,15 +258,15 @@ int swd_cmd_enqueue_miso_data(swd_ctx_t *swdctx, int **data){
  * \param *swdctx swd context pointer.
  * \param *data data value pointer.
  * \param *parity parity value pointer.
- * \return number of elements appended (2), or SWD_ERROR_CODE on failure.
+ * \return number of elements appended (2), or LIBSWD_ERROR_CODE on failure.
  */
-int swd_cmd_enqueue_miso_data_p(swd_ctx_t *swdctx, int **data, char **parity){
- if (swdctx==NULL) return SWD_ERROR_NULLCONTEXT;
+int libswd_cmd_enqueue_miso_data_p(libswd_ctx_t *swdctx, int **data, char **parity){
+ if (swdctx==NULL) return LIBSWD_ERROR_NULLCONTEXT;
  int res, cmdcnt=0;
- res=swd_cmd_enqueue_miso_data(swdctx, data);
+ res=libswd_cmd_enqueue_miso_data(swdctx, data);
  if (res<1) return res;
  cmdcnt+=res;
- res=swd_cmd_enqueue_miso_parity(swdctx, parity);
+ res=libswd_cmd_enqueue_miso_parity(swdctx, parity);
  if (res<1) return res;
  cmdcnt+=res;
  return cmdcnt; // should be 2 or 3(+trn) on success
@@ -277,15 +277,15 @@ int swd_cmd_enqueue_miso_data_p(swd_ctx_t *swdctx, int **data, char **parity){
  * \param **data data value array pointer.
  * \param **parity parity value array pointer.
  * \param count number of (data+parity) elements to read.
- * \return number of elements appended (2*count), or SWD_ERROR_CODE on failure.
+ * \return number of elements appended (2*count), or LIBSWD_ERROR_CODE on failure.
  */
-int swd_cmd_enqueue_miso_n_data_p(swd_ctx_t *swdctx, int **data, char **parity, int count){
- if (swdctx==NULL) return SWD_ERROR_NULLCONTEXT;
- if (count<=0) return SWD_ERROR_PARAM;
+int libswd_cmd_enqueue_miso_n_data_p(libswd_ctx_t *swdctx, int **data, char **parity, int count){
+ if (swdctx==NULL) return LIBSWD_ERROR_NULLCONTEXT;
+ if (count<=0) return LIBSWD_ERROR_PARAM;
  int i,res, cmdcnt=0;
  for (i=0;i<=count;i++){
-  res=swd_cmd_enqueue_miso_data_p(swdctx, &data[i], &parity[i]);
-  if (res<2) return SWD_ERROR_RESULT;
+  res=libswd_cmd_enqueue_miso_data_p(swdctx, &data[i], &parity[i]);
+  if (res<2) return LIBSWD_ERROR_RESULT;
   cmdcnt=+res;
  }
  return cmdcnt;
@@ -294,19 +294,19 @@ int swd_cmd_enqueue_miso_n_data_p(swd_ctx_t *swdctx, int **data, char **parity, 
 /** Append command queue with data and parity write.
  * \param *swdctx swd context pointer.
  * \param *data data value pointer.
- * \return number of elements appended (1), or SWD_ERROR_CODE on failure.
+ * \return number of elements appended (1), or LIBSWD_ERROR_CODE on failure.
  */
-int swd_cmd_enqueue_mosi_data(swd_ctx_t *swdctx, int *data){
- if (swdctx==NULL) return SWD_ERROR_NULLCONTEXT;
- if (data==NULL) return SWD_ERROR_NULLPOINTER;
+int libswd_cmd_enqueue_mosi_data(libswd_ctx_t *swdctx, int *data){
+ if (swdctx==NULL) return LIBSWD_ERROR_NULLCONTEXT;
+ if (data==NULL) return LIBSWD_ERROR_NULLPOINTER;
  int res;
- swd_cmd_t *cmd;
- cmd=(swd_cmd_t *)calloc(1,sizeof(swd_cmd_t));
- if (cmd==NULL) return SWD_ERROR_OUTOFMEM;
+ libswd_cmd_t *cmd;
+ cmd=(libswd_cmd_t *)calloc(1,sizeof(libswd_cmd_t));
+ if (cmd==NULL) return LIBSWD_ERROR_OUTOFMEM;
  cmd->mosidata=*data;
  cmd->bits=32;
- cmd->cmdtype=SWD_CMDTYPE_MOSI_DATA;
- res=swd_cmd_enqueue(swdctx, cmd); // should be 1 or 2 on success
+ cmd->cmdtype=LIBSWD_CMDTYPE_MOSI_DATA;
+ res=libswd_cmd_enqueue(swdctx, cmd); // should be 1 or 2 on success
  if (res<1) free(cmd);
  return res;
 }
@@ -314,19 +314,19 @@ int swd_cmd_enqueue_mosi_data(swd_ctx_t *swdctx, int *data){
 /** Append command queue with data and automatic parity write.
  * \param *swdctx swd context pointer.
  * \param *data data value pointer.
- * \return number of elements appended (2), or SWD_ERROR_CODE on failure.
+ * \return number of elements appended (2), or LIBSWD_ERROR_CODE on failure.
  */
-int swd_cmd_enqueue_mosi_data_ap(swd_ctx_t *swdctx, int *data){
- if (swdctx==NULL) return SWD_ERROR_NULLCONTEXT;
- if (data==NULL) return SWD_ERROR_NULLPOINTER;
+int libswd_cmd_enqueue_mosi_data_ap(libswd_ctx_t *swdctx, int *data){
+ if (swdctx==NULL) return LIBSWD_ERROR_NULLCONTEXT;
+ if (data==NULL) return LIBSWD_ERROR_NULLPOINTER;
  int res, cmdcnt=0;
  char parity;
- res=swd_cmd_enqueue_mosi_data(swdctx, data);
+ res=libswd_cmd_enqueue_mosi_data(swdctx, data);
  if (res<1) return res;
  cmdcnt=+res;
- res=swd_bin32_parity_even(data, &parity);
+ res=libswd_bin32_parity_even(data, &parity);
  if (res<0) return res;
- res=swd_cmd_enqueue_mosi_parity(swdctx, &parity);
+ res=libswd_cmd_enqueue_mosi_parity(swdctx, &parity);
  if (res<1) return res;
  cmdcnt=+res;
  return cmdcnt; // should be 2 or 3 on success
@@ -336,16 +336,16 @@ int swd_cmd_enqueue_mosi_data_ap(swd_ctx_t *swdctx, int *data){
  * \param *swdctx swd context pointer.
  * \param *data data value pointer.
  * \param *parity parity value pointer.
- * \return number of elements appended (2), or SWD_ERROR_CODE on failure.
+ * \return number of elements appended (2), or LIBSWD_ERROR_CODE on failure.
  */
-int swd_cmd_enqueue_mosi_data_p(swd_ctx_t *swdctx, int *data, char *parity){
- if (swdctx==NULL) return SWD_ERROR_NULLCONTEXT;
- if (data==NULL || parity==NULL) return SWD_ERROR_NULLPOINTER;
+int libswd_cmd_enqueue_mosi_data_p(libswd_ctx_t *swdctx, int *data, char *parity){
+ if (swdctx==NULL) return LIBSWD_ERROR_NULLCONTEXT;
+ if (data==NULL || parity==NULL) return LIBSWD_ERROR_NULLPOINTER;
  int res, cmdcnt=0;
- res=swd_cmd_enqueue_mosi_data(swdctx, data);
+ res=libswd_cmd_enqueue_mosi_data(swdctx, data);
  if (res<1) return res;
  cmdcnt=+res;
- res=swd_cmd_enqueue_mosi_parity(swdctx, parity);
+ res=libswd_cmd_enqueue_mosi_parity(swdctx, parity);
  if (res<1) return res;
  cmdcnt=+res;
  return cmdcnt; // should be 2 or 3 on success
@@ -355,15 +355,15 @@ int swd_cmd_enqueue_mosi_data_p(swd_ctx_t *swdctx, int *data, char *parity){
  * \param *swdctx swd context pointer.
  * \param **data data value array pointer.
  * \param count number of (data+parity) elements to read.
- * \return number of elements appended (2*count), or SWD_ERROR_CODE on failure.
+ * \return number of elements appended (2*count), or LIBSWD_ERROR_CODE on failure.
  */
-int swd_cmd_enqueue_mosi_n_data_ap(swd_ctx_t *swdctx, int **data, int count){
- if (swdctx==NULL) return SWD_ERROR_NULLCONTEXT;
- if (data==NULL) return SWD_ERROR_NULLPOINTER;
- if (count<1) return SWD_ERROR_PARAM;
+int libswd_cmd_enqueue_mosi_n_data_ap(libswd_ctx_t *swdctx, int **data, int count){
+ if (swdctx==NULL) return LIBSWD_ERROR_NULLCONTEXT;
+ if (data==NULL) return LIBSWD_ERROR_NULLPOINTER;
+ if (count<1) return LIBSWD_ERROR_PARAM;
  int i, res, cmdcnt=0;
  for (i=0;i<count;i++){
-  res=swd_cmd_enqueue_mosi_data(swdctx, data[i]);
+  res=libswd_cmd_enqueue_mosi_data(swdctx, data[i]);
   if (res<1) return res;
   cmdcnt=+res;
  }
@@ -375,15 +375,15 @@ int swd_cmd_enqueue_mosi_n_data_ap(swd_ctx_t *swdctx, int **data, int count){
  * \param **data data value array pointer.
  * \param **parity parity value array pointer.
  * \param count number of (data+parity) elements to read.
- * \return number of elements appended (2*count), or SWD_ERROR_CODE on failure.
+ * \return number of elements appended (2*count), or LIBSWD_ERROR_CODE on failure.
  */
-int swd_cmd_enqueue_mosi_n_data_p(swd_ctx_t *swdctx, int **data, char **parity, int count){
- if (swdctx==NULL) return SWD_ERROR_NULLCONTEXT;
- if (data==NULL) return SWD_ERROR_NULLPOINTER;
- if (count<1) return SWD_ERROR_PARAM;
+int libswd_cmd_enqueue_mosi_n_data_p(libswd_ctx_t *swdctx, int **data, char **parity, int count){
+ if (swdctx==NULL) return LIBSWD_ERROR_NULLCONTEXT;
+ if (data==NULL) return LIBSWD_ERROR_NULLPOINTER;
+ if (count<1) return LIBSWD_ERROR_PARAM;
  int i, res, cmdcnt=0;
  for (i=0;i<count;i++){
-  res=swd_cmd_enqueue_mosi_data_p(swdctx, data[i], parity[i]);
+  res=libswd_cmd_enqueue_mosi_data_p(swdctx, data[i], parity[i]);
   if (res<1) return res;
   cmdcnt=+res;
  }
@@ -393,18 +393,18 @@ int swd_cmd_enqueue_mosi_n_data_p(swd_ctx_t *swdctx, int **data, char **parity, 
 /** Append queue with ACK read.
  * \param *swdctx swd context pointer.
  * \param *ack packet value pointer.
- * \return number of elements appended (1), or SWD_ERROR_CODE on failure.
+ * \return number of elements appended (1), or LIBSWD_ERROR_CODE on failure.
  */
-int swd_cmd_enqueue_miso_ack(swd_ctx_t *swdctx, char **ack){
- if (swdctx==NULL) return SWD_ERROR_NULLCONTEXT;
+int libswd_cmd_enqueue_miso_ack(libswd_ctx_t *swdctx, char **ack){
+ if (swdctx==NULL) return LIBSWD_ERROR_NULLCONTEXT;
  int res;
- swd_cmd_t *cmd;
- cmd=(swd_cmd_t *)calloc(1,sizeof(swd_cmd_t));
- if (cmd==NULL) return SWD_ERROR_OUTOFMEM;
+ libswd_cmd_t *cmd;
+ cmd=(libswd_cmd_t *)calloc(1,sizeof(libswd_cmd_t));
+ if (cmd==NULL) return LIBSWD_ERROR_OUTOFMEM;
  if (ack!=NULL) *ack=&cmd->ack;
- cmd->bits=SWD_ACK_BITLEN;
- cmd->cmdtype=SWD_CMDTYPE_MISO_ACK;
- res=swd_cmd_enqueue(swdctx, cmd); //should be 1 on success
+ cmd->bits=LIBSWD_ACK_BITLEN;
+ cmd->cmdtype=LIBSWD_CMDTYPE_MISO_ACK;
+ res=libswd_cmd_enqueue(swdctx, cmd); //should be 1 on success
  if (res<1) free(cmd);
  return res;
 }
@@ -415,30 +415,30 @@ int swd_cmd_enqueue_miso_ack(swd_ctx_t *swdctx, char **ack){
  * \param *swdctx swd context pointer.
  * \param *ctlmsg control message array pointer.
  * \param len number of elements to send from *ctlmsg.
- * \return number of elements appended (len), or SWD_ERROR_CODE on failure.
+ * \return number of elements appended (len), or LIBSWD_ERROR_CODE on failure.
  */
-int swd_cmd_enqueue_mosi_control(swd_ctx_t *swdctx, char *ctlmsg, int len){
- if (swdctx==NULL) return SWD_ERROR_NULLCONTEXT;
- if (ctlmsg==NULL) return SWD_ERROR_NULLPOINTER;
- if (len<=0) return SWD_ERROR_PARAM;
+int libswd_cmd_enqueue_mosi_control(libswd_ctx_t *swdctx, char *ctlmsg, int len){
+ if (swdctx==NULL) return LIBSWD_ERROR_NULLCONTEXT;
+ if (ctlmsg==NULL) return LIBSWD_ERROR_NULLPOINTER;
+ if (len<=0) return LIBSWD_ERROR_PARAM;
  int elm, res, res2, cmdcnt=0;
- swd_cmd_t *cmd=NULL, *oldcmdq=swdctx->cmdq;
+ libswd_cmd_t *cmd=NULL, *oldcmdq=swdctx->cmdq;
  for (elm=0;elm<len;elm++){
-  cmd=(swd_cmd_t *)calloc(1,sizeof(swd_cmd_t));
+  cmd=(libswd_cmd_t *)calloc(1,sizeof(libswd_cmd_t));
   if (cmd==NULL){
-   res=SWD_ERROR_OUTOFMEM;
+   res=LIBSWD_ERROR_OUTOFMEM;
    break;
   }
   cmd->control=ctlmsg[elm];
-  cmd->cmdtype=SWD_CMDTYPE_MOSI_CONTROL;
-  cmd->bits=sizeof(ctlmsg[elm])*SWD_DATA_BYTESIZE;
-  res=swd_cmd_enqueue(swdctx, cmd); 
+  cmd->cmdtype=LIBSWD_CMDTYPE_MOSI_CONTROL;
+  cmd->bits=sizeof(ctlmsg[elm])*LIBSWD_DATA_BYTESIZE;
+  res=libswd_cmd_enqueue(swdctx, cmd); 
   if (res<1) break;
   cmdcnt=+res;
  }
  //If there was problem enqueueing elements, rollback changes on queue.
  if (res<1){
-  res2=swd_cmdq_free_tail(oldcmdq);
+  res2=libswd_cmdq_free_tail(oldcmdq);
   if (res2<0) return res2;
   swdctx->cmdq=oldcmdq;
   return res;
@@ -447,57 +447,57 @@ int swd_cmd_enqueue_mosi_control(swd_ctx_t *swdctx, char *ctlmsg, int len){
 
 /** Append command queue with SW-DP-RESET sequence.
  * \param *swdctx swd context pointer.
- * \return number of elements appended, or SWD_ERROR_CODE on failure.
+ * \return number of elements appended, or LIBSWD_ERROR_CODE on failure.
  */
-int swd_cmd_enqueue_mosi_dap_reset(swd_ctx_t *swdctx){
- return swd_cmd_enqueue_mosi_control(swdctx, (char *)SWD_CMD_SWDPRESET, sizeof(SWD_CMD_SWDPRESET));
+int libswd_cmd_enqueue_mosi_dap_reset(libswd_ctx_t *swdctx){
+ return libswd_cmd_enqueue_mosi_control(swdctx, (char *)LIBSWD_CMD_SWDPRESET, sizeof(LIBSWD_CMD_SWDPRESET));
 }
 
 /** Append command queue with idle sequence.
  * \param *swdctx swd context pointer.
- * \return number of elements appended, or SWD_ERROR_CODE on failure.
+ * \return number of elements appended, or LIBSWD_ERROR_CODE on failure.
  */
-int swd_cmd_enqueue_mosi_idle(swd_ctx_t *swdctx){
- return swd_cmd_enqueue_mosi_control(swdctx, (char *)SWD_CMD_IDLE, sizeof(SWD_CMD_IDLE));
+int libswd_cmd_enqueue_mosi_idle(libswd_ctx_t *swdctx){
+ return libswd_cmd_enqueue_mosi_control(swdctx, (char *)LIBSWD_CMD_IDLE, sizeof(LIBSWD_CMD_IDLE));
 }
 
 /** Append command queue with JTAG-TO-SWD DAP-switch sequence.
  * \param *swdctx swd context pointer.
- * \return number of elements appended, or SWD_ERROR_CODE on failure.
+ * \return number of elements appended, or LIBSWD_ERROR_CODE on failure.
  */
-int swd_cmd_enqueue_mosi_jtag2swd(swd_ctx_t *swdctx){
- return swd_cmd_enqueue_mosi_control(swdctx, (char *)SWD_CMD_JTAG2SWD, sizeof(SWD_CMD_JTAG2SWD));
+int libswd_cmd_enqueue_mosi_jtag2swd(libswd_ctx_t *swdctx){
+ return libswd_cmd_enqueue_mosi_control(swdctx, (char *)LIBSWD_CMD_JTAG2SWD, sizeof(LIBSWD_CMD_JTAG2SWD));
 }
 
 /** Append command queue with SWD-TO-JTAG DAP-switch sequence.
  * \param *swdctx swd context pointer.
- * \return number of elements appended, or SWD_ERROR_CODE on failure.
+ * \return number of elements appended, or LIBSWD_ERROR_CODE on failure.
  */
-int swd_cmd_enqueue_mosi_swd2jtag(swd_ctx_t *swdctx){
- return swd_cmd_enqueue_mosi_control(swdctx, (char *)SWD_CMD_SWD2JTAG, sizeof(SWD_CMD_SWD2JTAG));
+int libswd_cmd_enqueue_mosi_swd2jtag(libswd_ctx_t *swdctx){
+ return libswd_cmd_enqueue_mosi_control(swdctx, (char *)LIBSWD_CMD_SWD2JTAG, sizeof(LIBSWD_CMD_SWD2JTAG));
 }
 
 /** Return human readable command type string of *cmd.
  * \param *cmd command the name is to be printed.
  * \return string containing human readable command name, or NULL on failure.
  */
-char *swd_cmd_string_cmdtype(swd_cmd_t *cmd){
+char *libswd_cmd_string_cmdtype(libswd_cmd_t *cmd){
  if (cmd==NULL) return NULL;
  switch (cmd->cmdtype){
-  case SWD_CMDTYPE_MOSI_DATA:    return "MOSI_DATA";
-  case SWD_CMDTYPE_MOSI_REQUEST: return "MOSI_REQUEST";
-  case SWD_CMDTYPE_MOSI_TRN:     return "MOSI_TRN";
-  case SWD_CMDTYPE_MOSI_PARITY:  return "MOSI_PARITY";
-  case SWD_CMDTYPE_MOSI_BITBANG: return "MOSI_BITBANG";
-  case SWD_CMDTYPE_MOSI_CONTROL: return "MOSI_CONTROL";
-  case SWD_CMDTYPE_MOSI:         return "MOSI";
-  case SWD_CMDTYPE_UNDEFINED:    return "UNDEFINED";
-  case SWD_CMDTYPE_MISO:         return "MISO";
-  case SWD_CMDTYPE_MISO_ACK:     return "MISO_ACK";
-  case SWD_CMDTYPE_MISO_BITBANG: return "MISO_BITBANG";
-  case SWD_CMDTYPE_MISO_PARITY:  return "MISO_PARITY";
-  case SWD_CMDTYPE_MISO_TRN:     return "MISO_TRN";
-  case SWD_CMDTYPE_MISO_DATA:    return "MISO_DATA";
+  case LIBSWD_CMDTYPE_MOSI_DATA:    return "MOSI_DATA";
+  case LIBSWD_CMDTYPE_MOSI_REQUEST: return "MOSI_REQUEST";
+  case LIBSWD_CMDTYPE_MOSI_TRN:     return "MOSI_TRN";
+  case LIBSWD_CMDTYPE_MOSI_PARITY:  return "MOSI_PARITY";
+  case LIBSWD_CMDTYPE_MOSI_BITBANG: return "MOSI_BITBANG";
+  case LIBSWD_CMDTYPE_MOSI_CONTROL: return "MOSI_CONTROL";
+  case LIBSWD_CMDTYPE_MOSI:         return "MOSI";
+  case LIBSWD_CMDTYPE_UNDEFINED:    return "UNDEFINED";
+  case LIBSWD_CMDTYPE_MISO:         return "MISO";
+  case LIBSWD_CMDTYPE_MISO_ACK:     return "MISO_ACK";
+  case LIBSWD_CMDTYPE_MISO_BITBANG: return "MISO_BITBANG";
+  case LIBSWD_CMDTYPE_MISO_PARITY:  return "MISO_PARITY";
+  case LIBSWD_CMDTYPE_MISO_TRN:     return "MISO_TRN";
+  case LIBSWD_CMDTYPE_MISO_DATA:    return "MISO_DATA";
   default: return "Unknown command type!";
  }
 }

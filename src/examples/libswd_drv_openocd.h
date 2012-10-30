@@ -34,16 +34,16 @@
  *
  */
 
-/** \file libswd_drv_openocd.h Driver Bridge between LibSWD and OpenOCD header file. */
+/** \file liblibswd_drv_openocd.h Driver Bridge between LibSWD and OpenOCD header file. */
 
 #include <libswd.h>
 
-int swd_drv_mosi_8(swd_ctx_t *swdctx, swd_cmd_t *cmd, char *data, int bits, int nLSBfirst);
-int swd_drv_mosi_32(swd_ctx_t *swdctx, swd_cmd_t *cmd, int *data, int bits, int nLSBfirst);
-int swd_drv_miso_8(swd_ctx_t *swdctx, swd_cmd_t *cmd, char *data, int bits, int nLSBfirst);
-int swd_drv_miso_32(swd_ctx_t *swdctx, swd_cmd_t *cmd, int *data, int bits, int nLSBfirst);
-int swd_drv_mosi_trn(swd_ctx_t *swdctx, int bits);
-int swd_drv_miso_trn(swd_ctx_t *swdctx, int bits);
-int swd_log_level_inherit(swd_ctx_t *swdctx, int loglevel);
-int swd_log(swd_ctx_t *swdctx, swd_loglevel_t loglevel, char *msg, ...);
+int libswd_drv_mosi_8(libswd_ctx_t *swdctx, libswd_cmd_t *cmd, char *data, int bits, int nLSBfirst);
+int libswd_drv_mosi_32(libswd_ctx_t *swdctx, libswd_cmd_t *cmd, int *data, int bits, int nLSBfirst);
+int libswd_drv_miso_8(libswd_ctx_t *swdctx, libswd_cmd_t *cmd, char *data, int bits, int nLSBfirst);
+int libswd_drv_miso_32(libswd_ctx_t *swdctx, libswd_cmd_t *cmd, int *data, int bits, int nLSBfirst);
+int libswd_drv_mosi_trn(libswd_ctx_t *swdctx, int bits);
+int libswd_drv_miso_trn(libswd_ctx_t *swdctx, int bits);
+int libswd_log_level_inherit(libswd_ctx_t *swdctx, int loglevel);
+int libswd_log(libswd_ctx_t *swdctx, libswd_loglevel_t loglevel, char *msg, ...);
 

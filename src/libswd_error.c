@@ -34,129 +34,129 @@
  *
  */
 
-/** \file libswd_error.c */
+/** \file liblibswd_error.c */
 
 #include <libswd.h>
 
 /*******************************************************************************
- * \defgroup swd_error Error handling and information routines.
+ * \defgroup libswd_error Error handling and information routines.
  * @{
  ******************************************************************************/
 
-char *swd_error_string(swd_error_code_t error){
+char *libswd_error_string(libswd_error_code_t error){
  switch (error){
-  case SWD_OK:                 return "[SWD_OK] hmm, there was no error";
-  case SWD_ERROR_GENERAL:      return "[SWD_ERROR_GENERAL] general error";
-  case SWD_ERROR_NULLPOINTER:  return "[SWD_ERROR_NULLPOINTER] null pointer";
-  case SWD_ERROR_NULLQUEUE:    return "[SWD_ERROR_NULLQUEUE] null queue";
-  case SWD_ERROR_NULLTRN:      return "[SWD_ERROR_NULLTRN] null turnaround";
-  case SWD_ERROR_PARAM:        return "[SWD_ERROR_PARAM] bad parameter";
-  case SWD_ERROR_OUTOFMEM:     return "[SWD_ERROR_OUTOFMEM] out of memory";
-  case SWD_ERROR_RESULT:       return "[SWD_ERROR_RESULT] bad result";
-  case SWD_ERROR_RANGE:        return "[SWD_ERROR_RANGE] out of range";
-  case SWD_ERROR_DEFINITION:   return "[SWD_ERROR_DEFINITION] definition error";
-  case SWD_ERROR_NULLCONTEXT:  return "[SWD_ERROR_NULLCONTEXT] null context";
-  case SWD_ERROR_QUEUE:        return "[SWD_ERROR_QUEUE] queue error";
-  case SWD_ERROR_ADDR:         return "[SWD_ERROR_ADDR] addressing error";
-  case SWD_ERROR_APnDP:        return "[SWD_ERROR_APnDP] bad APnDP value";
-  case SWD_ERROR_RnW:          return "[SWD_ERROR_RnW] bad RnW value";
-  case SWD_ERROR_PARITY:       return "[SWD_ERROR_PARITY] parity error";
-  case SWD_ERROR_ACK:          return "[SWD_ERROR_ACK] acknowledge error";
-  case SWD_ERROR_ACKUNKNOWN:   return "[SWD_ERROR_ACKUNKNOWN] got unknown acknowledge";
-  case SWD_ERROR_ACKNOTDONE:   return "[SWD_ERROR_ACKNOTDONE] not yet executed on target";
-  case SWD_ERROR_ACKMISSING:   return "[SWD_ERROR_ACKMISSING] command not found on the queue";
-  case SWD_ERROR_ACKMISMATCH:  return "[SWD_ERROR_ACKMISMATCH] different result address/value expected";
-  case SWD_ERROR_ACKORDER:     return "[SWD_ERROR_ACKORDER] cmdq not in sequence REQ->TRN->ACK";
-  case SWD_ERROR_BADOPCODE:    return "[SWD_ERROR_BADOPCODE] unsupported operation requested";
-  case SWD_ERROR_NODATACMD:    return "[SWD_ERROR_NODATACMD] command not found on the queue";
-  case SWD_ERROR_DATAPTR:      return "[SWD_ERROR_DATAPTR] bad data pointer address";
-  case SWD_ERROR_NOPARITYCMD:  return "[SWD_ERROR_NOPARITYCMD] parity command missing or misplaced";
-  case SWD_ERROR_PARITYPTR:    return "[SWD_ERROR_PARITYPTR] bad parity pointer address";
-  case SWD_ERROR_NOTDONE:      return "[SWD_ERROR_NOTDONE] could not end selected task";
-  case SWD_ERROR_QUEUEROOT:    return "[SWD_ERROR_QUEUEROOT] queue root not found or null";
-  case SWD_ERROR_QUEUETAIL:    return "[SWD_ERROR_QUEUETAIL] queue tail not found or null";
-  case SWD_ERROR_BADCMDTYPE:   return "[SWD_ERROR_BADCMDTYPE] unknown command detected";
-  case SWD_ERROR_BADCMDDATA:   return "[SWD_ERROR_BADCMDDATA] command contains bad data (out of range, etc)";
-  case SWD_ERROR_ACK_WAIT:     return "[SWD_ERROR_ACK_WAIT] got ACK_WAIT response";
-  case SWD_ERROR_ACK_FAULT:    return "[SWD_ERROR_ACK_FAULT] got ACK_FAULT response";
-  case SWD_ERROR_QUEUENOTFREE: return "[SWD_ERROR_QUEUENOTFREE] cannot free resources, queue not empty";
-  case SWD_ERROR_TRANSPORT:    return "[SWD_ERROR_TRANSPORT] transport error or undefined";
-  case SWD_ERROR_DIRECTION:    return "[SWD_ERROR_DIRECTION] MSb/LSb direction error";
-  case SWD_ERROR_UNHANDLED:    return "[SWD_ERROR_UNHANDLED] cannot handle that error automatically";
-  case SWD_ERROR_MAXRETRY:     return "[SWD_ERROR_MAXRETRY] maximum retry count exceeded";
+  case LIBSWD_OK:                 return "[LIBSWD_OK] hmm, there was no error";
+  case LIBSWD_ERROR_GENERAL:      return "[LIBSWD_ERROR_GENERAL] general error";
+  case LIBSWD_ERROR_NULLPOINTER:  return "[LIBSWD_ERROR_NULLPOINTER] null pointer";
+  case LIBSWD_ERROR_NULLQUEUE:    return "[LIBSWD_ERROR_NULLQUEUE] null queue";
+  case LIBSWD_ERROR_NULLTRN:      return "[LIBSWD_ERROR_NULLTRN] null turnaround";
+  case LIBSWD_ERROR_PARAM:        return "[LIBSWD_ERROR_PARAM] bad parameter";
+  case LIBSWD_ERROR_OUTOFMEM:     return "[LIBSWD_ERROR_OUTOFMEM] out of memory";
+  case LIBSWD_ERROR_RESULT:       return "[LIBSWD_ERROR_RESULT] bad result";
+  case LIBSWD_ERROR_RANGE:        return "[LIBSWD_ERROR_RANGE] out of range";
+  case LIBSWD_ERROR_DEFINITION:   return "[LIBSWD_ERROR_DEFINITION] definition error";
+  case LIBSWD_ERROR_NULLCONTEXT:  return "[LIBSWD_ERROR_NULLCONTEXT] null context";
+  case LIBSWD_ERROR_QUEUE:        return "[LIBSWD_ERROR_QUEUE] queue error";
+  case LIBSWD_ERROR_ADDR:         return "[LIBSWD_ERROR_ADDR] addressing error";
+  case LIBSWD_ERROR_APnDP:        return "[LIBSWD_ERROR_APnDP] bad APnDP value";
+  case LIBSWD_ERROR_RnW:          return "[LIBSWD_ERROR_RnW] bad RnW value";
+  case LIBSWD_ERROR_PARITY:       return "[LIBSWD_ERROR_PARITY] parity error";
+  case LIBSWD_ERROR_ACK:          return "[LIBSWD_ERROR_ACK] acknowledge error";
+  case LIBSWD_ERROR_ACKUNKNOWN:   return "[LIBSWD_ERROR_ACKUNKNOWN] got unknown acknowledge";
+  case LIBSWD_ERROR_ACKNOTDONE:   return "[LIBSWD_ERROR_ACKNOTDONE] not yet executed on target";
+  case LIBSWD_ERROR_ACKMISSING:   return "[LIBSWD_ERROR_ACKMISSING] command not found on the queue";
+  case LIBSWD_ERROR_ACKMISMATCH:  return "[LIBSWD_ERROR_ACKMISMATCH] different result address/value expected";
+  case LIBSWD_ERROR_ACKORDER:     return "[LIBSWD_ERROR_ACKORDER] cmdq not in sequence REQ->TRN->ACK";
+  case LIBSWD_ERROR_BADOPCODE:    return "[LIBSWD_ERROR_BADOPCODE] unsupported operation requested";
+  case LIBSWD_ERROR_NODATACMD:    return "[LIBSWD_ERROR_NODATACMD] command not found on the queue";
+  case LIBSWD_ERROR_DATAPTR:      return "[LIBSWD_ERROR_DATAPTR] bad data pointer address";
+  case LIBSWD_ERROR_NOPARITYCMD:  return "[LIBSWD_ERROR_NOPARITYCMD] parity command missing or misplaced";
+  case LIBSWD_ERROR_PARITYPTR:    return "[LIBSWD_ERROR_PARITYPTR] bad parity pointer address";
+  case LIBSWD_ERROR_NOTDONE:      return "[LIBSWD_ERROR_NOTDONE] could not end selected task";
+  case LIBSWD_ERROR_QUEUEROOT:    return "[LIBSWD_ERROR_QUEUEROOT] queue root not found or null";
+  case LIBSWD_ERROR_QUEUETAIL:    return "[LIBSWD_ERROR_QUEUETAIL] queue tail not found or null";
+  case LIBSWD_ERROR_BADCMDTYPE:   return "[LIBSWD_ERROR_BADCMDTYPE] unknown command detected";
+  case LIBSWD_ERROR_BADCMDDATA:   return "[LIBSWD_ERROR_BADCMDDATA] command contains bad data (out of range, etc)";
+  case LIBSWD_ERROR_ACK_WAIT:     return "[LIBSWD_ERROR_ACK_WAIT] got ACK_WAIT response";
+  case LIBSWD_ERROR_ACK_FAULT:    return "[LIBSWD_ERROR_ACK_FAULT] got ACK_FAULT response";
+  case LIBSWD_ERROR_QUEUENOTFREE: return "[LIBSWD_ERROR_QUEUENOTFREE] cannot free resources, queue not empty";
+  case LIBSWD_ERROR_TRANSPORT:    return "[LIBSWD_ERROR_TRANSPORT] transport error or undefined";
+  case LIBSWD_ERROR_DIRECTION:    return "[LIBSWD_ERROR_DIRECTION] MSb/LSb direction error";
+  case LIBSWD_ERROR_UNHANDLED:    return "[LIBSWD_ERROR_UNHANDLED] cannot handle that error automatically";
+  case LIBSWD_ERROR_MAXRETRY:     return "[LIBSWD_ERROR_MAXRETRY] maximum retry count exceeded";
   default:                     return "undefined error";
  }
  return "undefined error";
 }
 
 
-int swd_error_handle(swd_ctx_t *swdctx){
- // At this point we got negative return code from swd_cmd_flush() so we need to handle errors accordingly here.
+int libswd_error_handle(libswd_ctx_t *swdctx){
+ // At this point we got negative return code from libswd_cmd_flush() so we need to handle errors accordingly here.
  // swdctx->cmdq should point to the last element executed that produced error.
  int retval;
- swd_cmd_t *exectail;
+ libswd_cmd_t *exectail;
 
  // Verify if swdctx->cmdq contains last executed element, correct if necessary.
- exectail=swd_cmdq_find_exectail(swdctx->cmdq);
+ exectail=libswd_cmdq_find_exectail(swdctx->cmdq);
  if (exectail==NULL) {
-  swd_log(swdctx, SWD_LOGLEVEL_ERROR, "SWD_E: swd_error_handle(swdctx=@%p): Cannot find last executed element on the queue!\n", (void*)swdctx);
-  return SWD_ERROR_QUEUE;
+  libswd_log(swdctx, LIBSWD_LOGLEVEL_ERROR, "LIBSWD_E: libswd_error_handle(swdctx=@%p): Cannot find last executed element on the queue!\n", (void*)swdctx);
+  return LIBSWD_ERROR_QUEUE;
  }
  if (exectail!=swdctx->cmdq){
-  swd_log(swdctx, SWD_LOGLEVEL_WARNING, "SWD_W: swd_error_handle(swdctx=@%p): Correcting swdctx->cmdq to match last executed element...\n", (void*)swdctx);
+  libswd_log(swdctx, LIBSWD_LOGLEVEL_WARNING, "LIBSWD_W: libswd_error_handle(swdctx=@%p): Correcting swdctx->cmdq to match last executed element...\n", (void*)swdctx);
   swdctx->cmdq=exectail;
  } 
 
  switch (swdctx->cmdq->cmdtype){
-  case SWD_CMDTYPE_MISO_ACK:
-   retval=swd_error_handle_ack(swdctx);
+  case LIBSWD_CMDTYPE_MISO_ACK:
+   retval=libswd_error_handle_ack(swdctx);
    break;
   default:
-   return SWD_ERROR_UNHANDLED;
+   return LIBSWD_ERROR_UNHANDLED;
  }
 
  if (retval<0){
-  swd_log(swdctx, SWD_LOGLEVEL_ERROR, "SWD_E: swd_error_handle(@%p) failed! on cmdq=@%p", (void*)swdctx, (void*)swdctx->cmdq); 
+  libswd_log(swdctx, LIBSWD_LOGLEVEL_ERROR, "LIBSWD_E: libswd_error_handle(@%p) failed! on cmdq=@%p", (void*)swdctx, (void*)swdctx->cmdq); 
  }
  return retval;
 }
 
-int swd_error_handle_ack(swd_ctx_t *swdctx){
- if (swdctx==NULL) return SWD_ERROR_NULLCONTEXT;
+int libswd_error_handle_ack(libswd_ctx_t *swdctx){
+ if (swdctx==NULL) return LIBSWD_ERROR_NULLCONTEXT;
  // Make sure we are working on the ACK cmdq element.
- if (swdctx->cmdq->cmdtype!=SWD_CMDTYPE_MISO_ACK){
-  swd_log(swdctx, SWD_LOGLEVEL_ERROR, "SWD_E: swd_error_handle_ack(@%p):swdctx->cmdq does not point to ACK!", (void*)swdctx);
-  return SWD_ERROR_UNHANDLED; //do we want to handle this kind of error here?
+ if (swdctx->cmdq->cmdtype!=LIBSWD_CMDTYPE_MISO_ACK){
+  libswd_log(swdctx, LIBSWD_LOGLEVEL_ERROR, "LIBSWD_E: libswd_error_handle_ack(@%p):swdctx->cmdq does not point to ACK!", (void*)swdctx);
+  return LIBSWD_ERROR_UNHANDLED; //do we want to handle this kind of error here?
  }
 
  switch (swdctx->cmdq->ack) {
-  case SWD_ACK_OK_VAL:
+  case LIBSWD_ACK_OK_VAL:
    // Uhm, there was no error.
    // Should we return OK or search for next ACK recursively?
-   swd_log(swdctx, SWD_LOGLEVEL_WARNING, "SWD_W: swd_error_handle_ack(swdctx=@%p): ACK=OK, handling wrong element?\n", (void*)swdctx);
-   return SWD_OK;
-  case SWD_ACK_WAIT_VAL:
-   return swd_error_handle_ack_wait(swdctx);
-  case SWD_ACK_FAULT_VAL:
+   libswd_log(swdctx, LIBSWD_LOGLEVEL_WARNING, "LIBSWD_W: libswd_error_handle_ack(swdctx=@%p): ACK=OK, handling wrong element?\n", (void*)swdctx);
+   return LIBSWD_OK;
+  case LIBSWD_ACK_WAIT_VAL:
+   return libswd_error_handle_ack_wait(swdctx);
+  case LIBSWD_ACK_FAULT_VAL:
    // TODO: Handle ACK=FAULT accordingly.
-   return SWD_ERROR_UNHANDLED;
+   return LIBSWD_ERROR_UNHANDLED;
   default:
    // TODO: By default we assume lost synchronization, handle accordingly.
-   return SWD_ERROR_UNHANDLED;
+   return LIBSWD_ERROR_UNHANDLED;
  }
 }
 
-int swd_error_handle_ack_wait(swd_ctx_t *swdctx){
- if (swdctx==NULL) return SWD_ERROR_NULLCONTEXT;
+int libswd_error_handle_ack_wait(libswd_ctx_t *swdctx){
+ if (swdctx==NULL) return LIBSWD_ERROR_NULLCONTEXT;
  // Make sure we are working on the ACK cmdq element.
- if (swdctx->cmdq->cmdtype!=SWD_CMDTYPE_MISO_ACK){
-  swd_log(swdctx, SWD_LOGLEVEL_ERROR, "SWD_E: swd_error_handle_ack_wait(swdctx=@%p):swdctx->cmdq does not point to ACK!", (void*)swdctx);
-  return SWD_ERROR_UNHANDLED; //do we want to handle this kind of error here?
+ if (swdctx->cmdq->cmdtype!=LIBSWD_CMDTYPE_MISO_ACK){
+  libswd_log(swdctx, LIBSWD_LOGLEVEL_ERROR, "LIBSWD_E: libswd_error_handle_ack_wait(swdctx=@%p):swdctx->cmdq does not point to ACK!", (void*)swdctx);
+  return LIBSWD_ERROR_UNHANDLED; //do we want to handle this kind of error here?
  }
  // Make sure the ACK contains WAIT response.
- if (swdctx->cmdq->ack!=SWD_ACK_WAIT_VAL){
-  swd_log(swdctx, SWD_LOGLEVEL_ERROR, "SWD_E: swd_error_handle_ack_wait(swdctx=@%p):swdctx->cmdq->ack does not contain WAIT response!", (void*)swdctx);
-  return SWD_ERROR_ACKMISMATCH;
+ if (swdctx->cmdq->ack!=LIBSWD_ACK_WAIT_VAL){
+  libswd_log(swdctx, LIBSWD_LOGLEVEL_ERROR, "LIBSWD_E: libswd_error_handle_ack_wait(swdctx=@%p):swdctx->cmdq->ack does not contain WAIT response!", (void*)swdctx);
+  return LIBSWD_ERROR_ACKMISMATCH;
  }
 
  //TODO: NOW DECIDE IF AN OPERATION WAS READ OR WRITE AND PERFORM RETRY ACCORDINGLY
@@ -167,19 +167,19 @@ int swd_error_handle_ack_wait(swd_ctx_t *swdctx){
  char parity=0;
 
  // Remember original cmdq, restore on return.
- swd_cmd_t *mastercmdq = swdctx->cmdq;
+ libswd_cmd_t *mastercmdq = swdctx->cmdq;
 
  // Append dummy data phase, fix sticky flags and retry operation.
  int retval, *ctrlstat, *rdata, abort;
-// retval=swd_cmdq_init(errors);
- swdctx->cmdq->errors=(swd_cmd_t*)calloc(1,sizeof(swd_cmd_t));
- //retval = SWD_ERROR_OUTOFMEM;
- if (swdctx->cmdq->errors==NULL) goto swd_error_handle_ack_wait_end;
+// retval=libswd_cmdq_init(errors);
+ swdctx->cmdq->errors=(libswd_cmd_t*)calloc(1,sizeof(libswd_cmd_t));
+ //retval = LIBSWD_ERROR_OUTOFMEM;
+ if (swdctx->cmdq->errors==NULL) goto libswd_error_handle_ack_wait_end;
  swdctx->cmdq=swdctx->cmdq->errors; // From now, this becomes out main cmdq for use with standard functions.
- swd_log(swdctx, SWD_LOGLEVEL_DEBUG, "SWD_D: swd_error_handle_ack_wait(swdctx=@%p): Performing data phase after ACK={WAIT,FAULT}...\n", (void*)swdctx);
+ libswd_log(swdctx, LIBSWD_LOGLEVEL_DEBUG, "LIBSWD_D: libswd_error_handle_ack_wait(swdctx=@%p): Performing data phase after ACK={WAIT,FAULT}...\n", (void*)swdctx);
  int res, data=0;
- retval=swd_bus_write_data_p(swdctx, SWD_OPERATION_EXECUTE, &data, &parity);
- if (retval<0) goto swd_error_handle_ack_wait_end;
+ retval=libswd_bus_write_data_p(swdctx, LIBSWD_OPERATION_EXECUTE, &data, &parity);
+ if (retval<0) goto libswd_error_handle_ack_wait_end;
 
  // NOW WE CAN HANDLE MEM-AP READ RETRY:
  // 1. READ STICKY FLAGS FROM CTRL/STAT
@@ -188,57 +188,57 @@ int swd_error_handle_ack_wait(swd_ctx_t *swdctx){
  // 4. READ DP RDBUFF TO OBTAIN READ DATA
 
  int retrycnt;
- for (retrycnt=50/*SWD_RETRY_COUNT_DEFAULT*/; retrycnt>0; retrycnt--){
-  retval=swd_dp_read(swdctx, SWD_OPERATION_EXECUTE, SWD_DP_CTRLSTAT_ADDR, &ctrlstat);
-  if (retval<0) goto swd_error_handle_ack_wait_end;
+ for (retrycnt=50/*LIBSWD_RETRY_COUNT_DEFAULT*/; retrycnt>0; retrycnt--){
+  retval=libswd_dp_read(swdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_DP_CTRLSTAT_ADDR, &ctrlstat);
+  if (retval<0) goto libswd_error_handle_ack_wait_end;
   abort=0x00000014;
-  retval=swd_dp_write(swdctx, SWD_OPERATION_EXECUTE, SWD_DP_ABORT_ADDR, &abort);
-  if (retval<0) goto swd_error_handle_ack_wait_end;
-  retval=swd_bus_write_request_raw(swdctx, SWD_OPERATION_ENQUEUE, &request);
-  retval=swd_bus_read_ack(swdctx, SWD_OPERATION_EXECUTE, &ack);
-  if (retval<0 || *ack!=SWD_ACK_OK_VAL) goto swd_error_handle_ack_wait_end;
-  retval=swd_bus_read_data_p(swdctx, SWD_OPERATION_EXECUTE, &rdata, &rparity);
-  if (retval<0) goto swd_error_handle_ack_wait_end;
+  retval=libswd_dp_write(swdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_DP_ABORT_ADDR, &abort);
+  if (retval<0) goto libswd_error_handle_ack_wait_end;
+  retval=libswd_bus_write_request_raw(swdctx, LIBSWD_OPERATION_ENQUEUE, &request);
+  retval=libswd_bus_read_ack(swdctx, LIBSWD_OPERATION_EXECUTE, &ack);
+  if (retval<0 || *ack!=LIBSWD_ACK_OK_VAL) goto libswd_error_handle_ack_wait_end;
+  retval=libswd_bus_read_data_p(swdctx, LIBSWD_OPERATION_EXECUTE, &rdata, &rparity);
+  if (retval<0) goto libswd_error_handle_ack_wait_end;
 
-  retval=swd_dp_read(swdctx, SWD_OPERATION_EXECUTE, SWD_DP_CTRLSTAT_ADDR, &ctrlstat);
-  if (retval<0) goto swd_error_handle_ack_wait_end;
+  retval=libswd_dp_read(swdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_DP_CTRLSTAT_ADDR, &ctrlstat);
+  if (retval<0) goto libswd_error_handle_ack_wait_end;
 
 
-  if (*ctrlstat&SWD_DP_CTRLSTAT_READOK){
-   swd_log(swdctx, SWD_LOGLEVEL_DEBUG, "=========================GOT RESPONSE===========================\n\n\n");
-   retval=swd_dp_read(swdctx, SWD_OPERATION_EXECUTE, SWD_DP_RDBUFF_ADDR, &rdata);
-   if (retval<0) goto swd_error_handle_ack_wait_end;
+  if (*ctrlstat&LIBSWD_DP_CTRLSTAT_READOK){
+   libswd_log(swdctx, LIBSWD_LOGLEVEL_DEBUG, "=========================GOT RESPONSE===========================\n\n\n");
+   retval=libswd_dp_read(swdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_DP_RDBUFF_ADDR, &rdata);
+   if (retval<0) goto libswd_error_handle_ack_wait_end;
    break;
   }
  }
  if (retrycnt==0){
-  retval=SWD_ERROR_MAXRETRY;
-  goto swd_error_handle_ack_wait_end;
+  retval=LIBSWD_ERROR_MAXRETRY;
+  goto libswd_error_handle_ack_wait_end;
  }
 
  //Make sure we have RDATA and PARITY elements after swdctx->cmdq.
  //Should we check for this at the procedure start???
  swdctx->cmdq=mastercmdq;
- if (swdctx->cmdq->cmdtype==SWD_CMDTYPE_MISO_ACK && swdctx->cmdq->next->cmdtype==SWD_CMDTYPE_MISO_DATA && swdctx->cmdq->next->next->cmdtype==SWD_CMDTYPE_MISO_PARITY){
-  swdctx->cmdq->ack=SWD_ACK_OK_VAL;
+ if (swdctx->cmdq->cmdtype==LIBSWD_CMDTYPE_MISO_ACK && swdctx->cmdq->next->cmdtype==LIBSWD_CMDTYPE_MISO_DATA && swdctx->cmdq->next->next->cmdtype==LIBSWD_CMDTYPE_MISO_PARITY){
+  swdctx->cmdq->ack=LIBSWD_ACK_OK_VAL;
   swdctx->cmdq=swdctx->cmdq->next;
   swdctx->cmdq->misodata=*rdata;
   swdctx->cmdq->done=1;
   swdctx->cmdq=swdctx->cmdq->next;
-  //swd_bin8_parity_even(rdata, &parity);
+  //libswd_bin8_parity_even(rdata, &parity);
   swdctx->cmdq->parity=*rparity;
   swdctx->cmdq->done=1;
-  return SWD_OK;
- } else swd_log(swdctx, SWD_LOGLEVEL_ERROR, "SWD_E: UNSUPPORTED COMMAND SEQUENCE ON CMDQ (NOT ACK->RDATA->PARITY)\n");
+  return LIBSWD_OK;
+ } else libswd_log(swdctx, LIBSWD_LOGLEVEL_ERROR, "LIBSWD_E: UNSUPPORTED COMMAND SEQUENCE ON CMDQ (NOT ACK->RDATA->PARITY)\n");
  
   
  // At this point we should have the read result from RDBUFF ready for MEM-AP read fix. 
 
 
-swd_error_handle_ack_wait_end:
+libswd_error_handle_ack_wait_end:
  // Exit ACK WAIT handling routine, verify retval before return.
  if (retval<0||retrycnt==0){
-  swd_log(swdctx, SWD_LOGLEVEL_ERROR, "SWD_E: swd_error_handle_ack_wait(swdctx=@%p) ejecting: %s\n", (void*)swdctx, swd_error_string(retval));
+  libswd_log(swdctx, LIBSWD_LOGLEVEL_ERROR, "LIBSWD_E: libswd_error_handle_ack_wait(swdctx=@%p) ejecting: %s\n", (void*)swdctx, libswd_error_string(retval));
  }
 
  swdctx->cmdq=mastercmdq;

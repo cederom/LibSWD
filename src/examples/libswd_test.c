@@ -48,21 +48,21 @@ int main(int argc, char argv[]){
  printf("\n=> Bitswap test:\n");
  i=0x01a0cede;
  c=0x6f;
- printf("C size %d bits, I size %d bits.\n", sizeof(c)*SWD_DATA_BYTESIZE, sizeof(i)*SWD_DATA_BYTESIZE);
- printf("Before bitswap: C=%s, I=%s\n", swd_bin8_string(&c), swd_bin32_string(&i));
- swd_bin8_bitswap(&c, SWD_DATA_BYTESIZE);
- swd_bin32_bitswap(&i, sizeof(i)*SWD_DATA_BYTESIZE);
- printf("After bitswap : C=%s, I=%s\n", swd_bin8_string(&c), swd_bin32_string(&i));
+ printf("C size %d bits, I size %d bits.\n", sizeof(c)*LIBSWD_DATA_BYTESIZE, sizeof(i)*LIBSWD_DATA_BYTESIZE);
+ printf("Before bitswap: C=%s, I=%s\n", libswd_bin8_string(&c), libswd_bin32_string(&i));
+ libswd_bin8_bitswap(&c, LIBSWD_DATA_BYTESIZE);
+ libswd_bin32_bitswap(&i, sizeof(i)*LIBSWD_DATA_BYTESIZE);
+ printf("After bitswap : C=%s, I=%s\n", libswd_bin8_string(&c), libswd_bin32_string(&i));
 
  printf("\n=> Parity test:\n");
  for (x=0;x<=0xff;x++){
   i=x*x*x*x;
   c=x;
-  res=swd_bin8_parity_even(&c, &par8);
+  res=libswd_bin8_parity_even(&c, &par8);
   if (res<0) return res;
-  res=swd_bin32_parity_even(&c, &par32);
+  res=libswd_bin32_parity_even(&c, &par32);
   if (res<0) return res;
-  printf("C=%s P=%d  | I=%s P=%d\n", swd_bin8_string(&c), par8, swd_bin32_string(&i), par32);
+  printf("C=%s P=%d  | I=%s P=%d\n", libswd_bin8_string(&c), par8, libswd_bin32_string(&i), par32);
  }
 
  printf("\n=> Casting test:\n");

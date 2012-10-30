@@ -34,22 +34,22 @@
  *
  */
 
-/** \file libswd_log.c */
+/** \file liblibswd_log.c */
 
 #include <libswd.h>
 
 /*******************************************************************************
- * \defgroup swd_log Miscelanous logging functionalities.
+ * \defgroup libswd_log Miscelanous logging functionalities.
  * @{
  ******************************************************************************/
 
 /** Logging functionality can be external or internal, by default external
  * function can be defined to use target program logging mechanism.
- * To use internal logging mechanism simply wrap swd_log_internal() around
+ * To use internal logging mechanism simply wrap libswd_log_internal() around
  * this function in application specific driver bridge file,
- * see libswd_externs.c for examples.
+ * see liblibswd_externs.c for examples.
  */
-extern int swd_log(swd_ctx_t *swdctx, swd_loglevel_t loglevel, char *msg, ...);
+extern int libswd_log(libswd_ctx_t *swdctx, libswd_loglevel_t loglevel, char *msg, ...);
 
 /** Put a message into swd context log at specified verbosity level.
  * If specified message's log level is lower than actual context configuration,
@@ -59,10 +59,10 @@ extern int swd_log(swd_ctx_t *swdctx, swd_loglevel_t loglevel, char *msg, ...);
  * \param *msg message body with variable arguments as in "printf".
  * \return number of characters written or error code on failure.
  */
-int swd_log_internal(swd_ctx_t *swdctx, swd_loglevel_t loglevel, char *msg, ...){
- if (loglevel<SWD_LOGLEVEL_MIN && loglevel>SWD_LOGLEVEL_MAX)
-  return SWD_ERROR_LOGLEVEL;
- if (loglevel > swdctx->config.loglevel) return SWD_OK;
+int libswd_log_internal(libswd_ctx_t *swdctx, libswd_loglevel_t loglevel, char *msg, ...){
+ if (loglevel<LIBSWD_LOGLEVEL_MIN && loglevel>LIBSWD_LOGLEVEL_MAX)
+  return LIBSWD_ERROR_LOGLEVEL;
+ if (loglevel > swdctx->config.loglevel) return LIBSWD_OK;
  int res;
  va_list ap;
  va_start(ap, msg);
@@ -74,50 +74,50 @@ int swd_log_internal(swd_ctx_t *swdctx, swd_loglevel_t loglevel, char *msg, ...)
 /** Change log level to increase or decrease verbosity level.
  * \param *swdctx swd context.
  * \param loglevel is the target verbosity level to be set.
- * \return SWD_OK on success or error code.
+ * \return LIBSWD_OK on success or error code.
  */
-int swd_log_level_set(swd_ctx_t *swdctx, swd_loglevel_t loglevel){
- if (swdctx==NULL) return SWD_ERROR_NULLCONTEXT;
- if (loglevel<SWD_LOGLEVEL_MIN && loglevel>SWD_LOGLEVEL_MAX)
-  return SWD_ERROR_LOGLEVEL;
+int libswd_log_level_set(libswd_ctx_t *swdctx, libswd_loglevel_t loglevel){
+ if (swdctx==NULL) return LIBSWD_ERROR_NULLCONTEXT;
+ if (loglevel<LIBSWD_LOGLEVEL_MIN && loglevel>LIBSWD_LOGLEVEL_MAX)
+  return LIBSWD_ERROR_LOGLEVEL;
 
  swdctx->config.loglevel=loglevel;
- swd_log(swdctx, SWD_LOGLEVEL_DEBUG, "SWD_D: swd_log_level_set(swdctx=0x%p, loglevel[%d..%d]=%d/%s)", (void*)swdctx, SWD_LOGLEVEL_MIN, SWD_LOGLEVEL_MAX, loglevel, swd_log_level_string(loglevel));
- return SWD_OK;
+ libswd_log(swdctx, LIBSWD_LOGLEVEL_DEBUG, "LIBSWD_D: libswd_log_level_set(swdctx=0x%p, loglevel[%d..%d]=%d/%s)", (void*)swdctx, LIBSWD_LOGLEVEL_MIN, LIBSWD_LOGLEVEL_MAX, loglevel, libswd_log_level_string(loglevel));
+ return LIBSWD_OK;
 }
 
 /** Helper function that returns loglevel name string for logging purposes.
- * \param loglevel is the swd_loglevel_t code to produce a string.
+ * \param loglevel is the libswd_loglevel_t code to produce a string.
  * \return char* loglevel name sring array.
  */
-const char *swd_log_level_string(swd_loglevel_t loglevel){
+const char *libswd_log_level_string(libswd_loglevel_t loglevel){
  switch (loglevel){
-  case SWD_LOGLEVEL_SILENT:  return "SWD_LOGLEVEL_SILENT";
-  case SWD_LOGLEVEL_ERROR:   return "SWD_LOGLEVEL_ERROR";
-  case SWD_LOGLEVEL_WARNING: return "SWD_LOGLEVEL_WARNING";
-  case SWD_LOGLEVEL_NORMAL:  return "SWD_LOGLEVEL_NORMAL";
-  case SWD_LOGLEVEL_INFO:    return "SWD_LOGLEVEL_INFO";
-  case SWD_LOGLEVEL_DEBUG:   return "SWD_LOGLEVEL_DEBUG";
-  case SWD_LOGLEVEL_PAYLOAD: return "SWD_LOGLEVEL_PAYLOAD";
+  case LIBSWD_LOGLEVEL_SILENT:  return "LIBSWD_LOGLEVEL_SILENT";
+  case LIBSWD_LOGLEVEL_ERROR:   return "LIBSWD_LOGLEVEL_ERROR";
+  case LIBSWD_LOGLEVEL_WARNING: return "LIBSWD_LOGLEVEL_WARNING";
+  case LIBSWD_LOGLEVEL_NORMAL:  return "LIBSWD_LOGLEVEL_NORMAL";
+  case LIBSWD_LOGLEVEL_INFO:    return "LIBSWD_LOGLEVEL_INFO";
+  case LIBSWD_LOGLEVEL_DEBUG:   return "LIBSWD_LOGLEVEL_DEBUG";
+  case LIBSWD_LOGLEVEL_PAYLOAD: return "LIBSWD_LOGLEVEL_PAYLOAD";
  }
  return "UNKNOWN LOGLEVEL!";
 };
 
 /** Helper function to produce operation name string for logging purposes.
- * \param operation is the swd_operation_t code to return as string.
+ * \param operation is the libswd_operation_t code to return as string.
  * \return char* array with operation name string.
  */
-const char *swd_operation_string(swd_operation_t operation){
+const char *libswd_operation_string(libswd_operation_t operation){
  switch(operation){
-  case SWD_OPERATION_ENQUEUE:       return "SWD_OPERATION_ENQUEUE";
-  case SWD_OPERATION_EXECUTE:       return "SWD_OPERATION_EXECUTE";
-  case SWD_OPERATION_TRANSMIT_HEAD: return "SWD_OPERATION_TRANSMIT_HEAD";
-  case SWD_OPERATION_TRANSMIT_TAIL: return "SWD_OPERATION_TRANSMIT_TAIL";
-  case SWD_OPERATION_TRANSMIT_ALL:  return "SWD_OPERATION_TRANSMIT_ALL";
-  case SWD_OPERATION_TRANSMIT_ONE:  return "SWD_OPERATION_TRANSMIT_ONE";
-  case SWD_OPERATION_TRANSMIT_LAST: return "SWD_OPERATION_TRANSMIT_LAST"; 
+  case LIBSWD_OPERATION_ENQUEUE:       return "LIBSWD_OPERATION_ENQUEUE";
+  case LIBSWD_OPERATION_EXECUTE:       return "LIBSWD_OPERATION_EXECUTE";
+  case LIBSWD_OPERATION_TRANSMIT_HEAD: return "LIBSWD_OPERATION_TRANSMIT_HEAD";
+  case LIBSWD_OPERATION_TRANSMIT_TAIL: return "LIBSWD_OPERATION_TRANSMIT_TAIL";
+  case LIBSWD_OPERATION_TRANSMIT_ALL:  return "LIBSWD_OPERATION_TRANSMIT_ALL";
+  case LIBSWD_OPERATION_TRANSMIT_ONE:  return "LIBSWD_OPERATION_TRANSMIT_ONE";
+  case LIBSWD_OPERATION_TRANSMIT_LAST: return "LIBSWD_OPERATION_TRANSMIT_LAST"; 
  }
- return "UNKNOWN_SWD_OPERATION";
+ return "UNKNOWN_LIBSWD_OPERATION";
 } 
 
 /** Helper function that can print name of the request fields.
@@ -127,12 +127,12 @@ const char *swd_operation_string(swd_operation_t operation){
  * \param addr is the address of the register.
  * \return char* array with the register name string.
  */
-const char *swd_request_string(swd_ctx_t *swdctx, char request){
+const char *libswd_request_string(libswd_ctx_t *swdctx, char request){
  static char string[100], tmp[8]; string[0]=0;
- int apndp=request&SWD_REQUEST_APnDP;
- int addr=((request&SWD_REQUEST_A3)?1<<3:0)|((request&SWD_REQUEST_A2)?1<<2:0);
- int rnw=request&SWD_REQUEST_RnW;
- int parity=request&SWD_REQUEST_PARITY;
+ int apndp=request&LIBSWD_REQUEST_APnDP;
+ int addr=((request&LIBSWD_REQUEST_A3)?1<<3:0)|((request&LIBSWD_REQUEST_A2)?1<<2:0);
+ int rnw=request&LIBSWD_REQUEST_RnW;
+ int parity=request&LIBSWD_REQUEST_PARITY;
 
  strcat(string, apndp?"AccessPort ":"DebugPort ");
  strcat(string, rnw?"Read ":"Write ");
@@ -140,7 +140,7 @@ const char *swd_request_string(swd_ctx_t *swdctx, char request){
 
  if (apndp){
   // APnDP=1 so we print out the AHB-AP registers
-  addr|=swdctx->log.dp.select&SWD_DP_SELECT_APBANKSEL;
+  addr|=swdctx->log.dp.select&LIBSWD_DP_SELECT_APBANKSEL;
   switch (addr){
    case 0x00: strcat(string, "(R/W: Control/Status Word, CSW (reset value: 0x43800042)) "); break;
    case 0x04: strcat(string, "(R/W: Transfer Address, TAR (reset value: 0x00000000)) "); break;
@@ -158,18 +158,18 @@ const char *swd_request_string(swd_ctx_t *swdctx, char request){
   // APnDP=0 so we print out the SW-DP registers
   if (rnw) {
    switch (addr){
-    case SWD_DP_IDCODE_ADDR: strcat(string, "(IDCODE)"); break;
-    case SWD_DP_CTRLSTAT_ADDR: strcat(string, (swdctx->log.dp.select&1<<SWD_DP_SELECT_CTRLSEL_BITNUM)?"(CTRL/STAT or [WCR])":"([CTRL/STAT] or WCR)"); break;
-    case SWD_DP_RESEND_ADDR: strcat(string ,"(RESEND) "); break;
-    case SWD_DP_RDBUFF_ADDR: strcat(string, "(RDBUFF) "); break;
+    case LIBSWD_DP_IDCODE_ADDR: strcat(string, "(IDCODE)"); break;
+    case LIBSWD_DP_CTRLSTAT_ADDR: strcat(string, (swdctx->log.dp.select&1<<LIBSWD_DP_SELECT_CTRLSEL_BITNUM)?"(CTRL/STAT or [WCR])":"([CTRL/STAT] or WCR)"); break;
+    case LIBSWD_DP_RESEND_ADDR: strcat(string ,"(RESEND) "); break;
+    case LIBSWD_DP_RDBUFF_ADDR: strcat(string, "(RDBUFF) "); break;
     default: strcat(string, "(UNKNOWN) ");
    }
   } else {
    switch (addr) {
-    case SWD_DP_ABORT_ADDR: strcat(string, "(ABORT) "); break;
-    case SWD_DP_CTRLSTAT_ADDR: strcat(string, (swdctx->log.dp.select&1<<SWD_DP_SELECT_CTRLSEL_BITNUM)?"(CTRL/STAT or [WCR]) ":"([CTRL/STAT] or WCR) "); break;
-    case SWD_DP_SELECT_ADDR: strcat(string, "(SELECT) "); break;
-    case SWD_DP_ROUTESEL_ADDR: strcat(string, "(ROUTESEL)"); break;
+    case LIBSWD_DP_ABORT_ADDR: strcat(string, "(ABORT) "); break;
+    case LIBSWD_DP_CTRLSTAT_ADDR: strcat(string, (swdctx->log.dp.select&1<<LIBSWD_DP_SELECT_CTRLSEL_BITNUM)?"(CTRL/STAT or [WCR]) ":"([CTRL/STAT] or WCR) "); break;
+    case LIBSWD_DP_SELECT_ADDR: strcat(string, "(SELECT) "); break;
+    case LIBSWD_DP_ROUTESEL_ADDR: strcat(string, "(ROUTESEL)"); break;
     default: strcat(string, "(UNKNOWN) ");
    }
   }

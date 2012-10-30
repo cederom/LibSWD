@@ -34,45 +34,45 @@
  *
  */
 
-/** \file libswd_cmdq.c */
+/** \file liblibswd_cmdq.c */
 
 #include <libswd.h>
 
 /*******************************************************************************
- * \defgroup swd_cmdq Command Queue helper functions
+ * \defgroup libswd_cmdq Command Queue helper functions
  * @{
  ******************************************************************************/
 
 /** Initialize new queue element in memory that becomes a queue root.
- * \param *cmdq pointer to the command queue element of type swd_cmd_t
- * \return SWD_OK on success, SWD_ERROR_CODE code on failure
+ * \param *cmdq pointer to the command queue element of type libswd_cmd_t
+ * \return LIBSWD_OK on success, LIBSWD_ERROR_CODE code on failure
  */
-int swd_cmdq_init(swd_cmd_t *cmdq){
- cmdq=(swd_cmd_t *)calloc(1,sizeof(swd_cmd_t));
- if (cmdq==NULL) return SWD_ERROR_OUTOFMEM;
+int libswd_cmdq_init(libswd_cmd_t *cmdq){
+ cmdq=(libswd_cmd_t *)calloc(1,sizeof(libswd_cmd_t));
+ if (cmdq==NULL) return LIBSWD_ERROR_OUTOFMEM;
  cmdq->prev=NULL;
  cmdq->next=NULL;
- return SWD_OK;
+ return LIBSWD_OK;
 }
 
 /** Find queue root (first element).
  * \param *cmdq pointer to any queue element
- * \return swd_cmd_t* pointer to the first element (root), NULL on failure
+ * \return libswd_cmd_t* pointer to the first element (root), NULL on failure
  */
-swd_cmd_t* swd_cmdq_find_head(swd_cmd_t *cmdq){
+libswd_cmd_t* libswd_cmdq_find_head(libswd_cmd_t *cmdq){
  if (cmdq==NULL) return NULL;
- swd_cmd_t *cmd=cmdq;
+ libswd_cmd_t *cmd=cmdq;
  while (cmd->prev!=NULL) cmd=cmd->prev;
  return cmd;
 }
 
 /** Find queue tail (last element).
  * \param  *cmdq pointer to any queue element
- * \return swd_cmd_t* pointer to the last element (tail), NULL on failure
+ * \return libswd_cmd_t* pointer to the last element (tail), NULL on failure
  */
-swd_cmd_t* swd_cmdq_find_tail(swd_cmd_t *cmdq){
+libswd_cmd_t* libswd_cmdq_find_tail(libswd_cmd_t *cmdq){
  if (cmdq==NULL) return NULL;
- swd_cmd_t *cmd=cmdq;
+ libswd_cmd_t *cmd=cmdq;
  while (cmd->next!=NULL) cmd=cmd->next;
  return cmd;
 }
@@ -80,13 +80,13 @@ swd_cmd_t* swd_cmdq_find_tail(swd_cmd_t *cmdq){
 /** Find last executed element from the *cmdq.
  * Start search at *cmdq head, return element pointer or NULL if not found.
  * \param *cmdq queue that contains elements.
- * \return swd_cmd_t* pointer to the last executed element or NULL on error.
+ * \return libswd_cmd_t* pointer to the last executed element or NULL on error.
  */
-swd_cmd_t* swd_cmdq_find_exectail(swd_cmd_t *cmdq){
+libswd_cmd_t* libswd_cmdq_find_exectail(libswd_cmd_t *cmdq){
  if (cmdq==NULL) return NULL;
- swd_cmd_t *cmd=swd_cmdq_find_head(cmdq);
+ libswd_cmd_t *cmd=libswd_cmdq_find_head(cmdq);
  if (cmd==NULL) return NULL;
- for (cmd=swd_cmdq_find_head(cmdq);cmd;cmd=cmd->next){
+ for (cmd=libswd_cmdq_find_head(cmdq);cmd;cmd=cmd->next){
   if (cmd->done) {
    if (cmd->next){
     if (!cmd->next->done) return cmd;
@@ -101,14 +101,14 @@ swd_cmd_t* swd_cmdq_find_exectail(swd_cmd_t *cmdq){
  * element added becomes actual quque pointer to show what was added recently).
  * \param *cmdq pointer to any element on command queue 
  * \param *cmd pointer to the command to be appended
- * \return number of appended elements (one), SWD_ERROR_CODE on failure
+ * \return number of appended elements (one), LIBSWD_ERROR_CODE on failure
  */
-int swd_cmdq_append(swd_cmd_t *cmdq, swd_cmd_t *cmd){
- if (cmdq==NULL) return SWD_ERROR_NULLQUEUE;
- if (cmd==NULL) return SWD_ERROR_NULLPOINTER;
+int libswd_cmdq_append(libswd_cmd_t *cmdq, libswd_cmd_t *cmd){
+ if (cmdq==NULL) return LIBSWD_ERROR_NULLQUEUE;
+ if (cmd==NULL) return LIBSWD_ERROR_NULLPOINTER;
  if (cmdq->next != NULL){
-  swd_cmd_t *lastcmd;
-  lastcmd=swd_cmdq_find_tail(cmdq);
+  libswd_cmd_t *lastcmd;
+  lastcmd=libswd_cmdq_find_tail(cmdq);
   lastcmd->next=cmd;
   cmd->prev=lastcmd;
  } else {
@@ -120,13 +120,13 @@ int swd_cmdq_append(swd_cmd_t *cmdq, swd_cmd_t *cmd){
 
 /** Free queue pointed by *cmdq element.
  * \param *cmdq pointer to any element on command queue
- * \return number of elements destroyed, SWD_ERROR_CODE on failure
+ * \return number of elements destroyed, LIBSWD_ERROR_CODE on failure
  */
-int swd_cmdq_free(swd_cmd_t *cmdq){
- if (cmdq==NULL) return SWD_ERROR_NULLQUEUE;
+int libswd_cmdq_free(libswd_cmd_t *cmdq){
+ if (cmdq==NULL) return LIBSWD_ERROR_NULLQUEUE;
  int cmdcnt=0;
- swd_cmd_t *cmd, *nextcmd;
- cmd=swd_cmdq_find_head(cmdq);
+ libswd_cmd_t *cmd, *nextcmd;
+ cmd=libswd_cmdq_find_head(cmdq);
  while (cmd!=NULL) {
   nextcmd=cmd->next;
   free(cmd);
@@ -138,13 +138,13 @@ int swd_cmdq_free(swd_cmd_t *cmdq){
 
 /** Free queue head up to *cmdq element.
  * \param *cmdq pointer to the element that becomes new queue root.
- * \return number of elements destroyed, or SWD_ERROR_CODE on failure.
+ * \return number of elements destroyed, or LIBSWD_ERROR_CODE on failure.
  */
-int swd_cmdq_free_head(swd_cmd_t *cmdq){
- if (cmdq==NULL) return SWD_ERROR_NULLQUEUE;
+int libswd_cmdq_free_head(libswd_cmd_t *cmdq){
+ if (cmdq==NULL) return LIBSWD_ERROR_NULLQUEUE;
  int cmdcnt=0;
- swd_cmd_t *cmdqroot, *nextcmd;
- cmdqroot=swd_cmdq_find_head(cmdq);
+ libswd_cmd_t *cmdqroot, *nextcmd;
+ cmdqroot=libswd_cmdq_find_head(cmdq);
  while(cmdqroot!=cmdq){
   nextcmd=cmdqroot->next;
   free(cmdqroot);
@@ -157,15 +157,15 @@ int swd_cmdq_free_head(swd_cmd_t *cmdq){
 
 /** Free queue tail starting after *cmdq element.
  * \param *cmdq pointer to the last element on the new queue.
- * \return number of elements destroyed, or SWD_ERROR_CODE on failure.
+ * \return number of elements destroyed, or LIBSWD_ERROR_CODE on failure.
  */
-int swd_cmdq_free_tail(swd_cmd_t *cmdq){
- if (cmdq==NULL) return SWD_ERROR_NULLQUEUE;
+int libswd_cmdq_free_tail(libswd_cmd_t *cmdq){
+ if (cmdq==NULL) return LIBSWD_ERROR_NULLQUEUE;
  int cmdcnt=0;
- swd_cmd_t *cmdqend;
+ libswd_cmd_t *cmdqend;
  if (cmdq->next==NULL) return 0;
- cmdqend=swd_cmdq_find_tail(cmdq->next);
- if (cmdqend==NULL) return SWD_ERROR_QUEUE; 
+ cmdqend=libswd_cmdq_find_tail(cmdq->next);
+ if (cmdqend==NULL) return LIBSWD_ERROR_QUEUE; 
  while(cmdqend!=cmdq){
   cmdqend=cmdqend->prev;
   free(cmdqend->next);
@@ -176,7 +176,7 @@ int swd_cmdq_free_tail(swd_cmd_t *cmdq){
 }
 
 /** Flush command queue contents into interface driver and update **cmdq.
- * Operation is specified by SWD_OPERATION and can be used to select
+ * Operation is specified by LIBSWD_OPERATION and can be used to select
  * how to flush the queue, ie. head-only, tail-only, one, all, etc.
  * This function is not only used to flush swdctx->cmdq but also other
  * queues (i.e. error handling) so the parameter is **cmdq not swdctx itself.
@@ -184,50 +184,50 @@ int swd_cmdq_free_tail(swd_cmd_t *cmdq){
  * Double pointer is used because we update pointer element not its data.
  * \param *cmdq pointer to queue to be flushed.
  * \param operation tells how to flush the queue.
- * \return number of commands transmitted, or SWD_ERROR_CODE on failure.
+ * \return number of commands transmitted, or LIBSWD_ERROR_CODE on failure.
  * !TODO: HOW WE WANT TO UPDATE CMDQ ELEMENT AFTER PROCESSING WITHOUT DOUBLE POINTER?
  */
-int swd_cmdq_flush(swd_ctx_t *swdctx, swd_cmd_t **cmdq, swd_operation_t operation){
- if (swdctx==NULL) return SWD_ERROR_NULLCONTEXT;
- if (*cmdq==NULL||cmdq==NULL) return SWD_ERROR_NULLQUEUE;
- if (operation<SWD_OPERATION_FIRST || operation>SWD_OPERATION_LAST)
-  return SWD_ERROR_BADOPCODE;
+int libswd_cmdq_flush(libswd_ctx_t *swdctx, libswd_cmd_t **cmdq, libswd_operation_t operation){
+ if (swdctx==NULL) return LIBSWD_ERROR_NULLCONTEXT;
+ if (*cmdq==NULL||cmdq==NULL) return LIBSWD_ERROR_NULLQUEUE;
+ if (operation<LIBSWD_OPERATION_FIRST || operation>LIBSWD_OPERATION_LAST)
+  return LIBSWD_ERROR_BADOPCODE;
 
  int res, cmdcnt=0;
- swd_cmd_t *cmd, *firstcmd, *lastcmd;
+ libswd_cmd_t *cmd, *firstcmd, *lastcmd;
 
  switch (operation){
-  case SWD_OPERATION_TRANSMIT_HEAD:
-   firstcmd=swd_cmdq_find_head(*cmdq);
+  case LIBSWD_OPERATION_TRANSMIT_HEAD:
+   firstcmd=libswd_cmdq_find_head(*cmdq);
    lastcmd=*cmdq;
    break;
-  case SWD_OPERATION_TRANSMIT_TAIL:
+  case LIBSWD_OPERATION_TRANSMIT_TAIL:
    firstcmd=*cmdq;
-   lastcmd=swd_cmdq_find_tail(*cmdq);
+   lastcmd=libswd_cmdq_find_tail(*cmdq);
    break;
-  case SWD_OPERATION_EXECUTE:
-  case SWD_OPERATION_TRANSMIT_ALL:
-   firstcmd=swd_cmdq_find_head(*cmdq);
-   lastcmd=swd_cmdq_find_tail(*cmdq);
+  case LIBSWD_OPERATION_EXECUTE:
+  case LIBSWD_OPERATION_TRANSMIT_ALL:
+   firstcmd=libswd_cmdq_find_head(*cmdq);
+   lastcmd=libswd_cmdq_find_tail(*cmdq);
    break;
-  case SWD_OPERATION_TRANSMIT_ONE:
+  case LIBSWD_OPERATION_TRANSMIT_ONE:
    firstcmd=*cmdq;
    lastcmd=*cmdq;
    break;
-  case SWD_OPERATION_TRANSMIT_LAST:
-   firstcmd=swd_cmdq_find_tail(*cmdq);
+  case LIBSWD_OPERATION_TRANSMIT_LAST:
+   firstcmd=libswd_cmdq_find_tail(*cmdq);
    lastcmd=firstcmd;
    break;
   default:
-   return SWD_ERROR_BADOPCODE;
+   return LIBSWD_ERROR_BADOPCODE;
  }
 
- if (firstcmd==NULL) return SWD_ERROR_QUEUEROOT;
- if (lastcmd==NULL) return SWD_ERROR_QUEUETAIL;
+ if (firstcmd==NULL) return LIBSWD_ERROR_QUEUEROOT;
+ if (lastcmd==NULL) return LIBSWD_ERROR_QUEUETAIL;
 
  if (firstcmd==lastcmd){
   if (!firstcmd->done) {
-   res=swd_drv_transmit(swdctx, firstcmd);
+   res=libswd_drv_transmit(swdctx, firstcmd);
    if (res<0) return res;
    *cmdq=firstcmd;
   }
@@ -240,7 +240,7 @@ int swd_cmdq_flush(swd_ctx_t *swdctx, swd_cmd_t **cmdq, swd_operation_t operatio
     continue;
    } else break;
   }
-  res=swd_drv_transmit(swdctx, cmd); 
+  res=libswd_drv_transmit(swdctx, cmd); 
   if (res<0) return res;
   cmdcnt=+res;
   if (cmd==lastcmd) break;
