@@ -38,12 +38,12 @@
 
 #include <libswd.h>
 
-int libswd_drv_mosi_8(libswd_ctx_t *swdctx, libswd_cmd_t *cmd, char *data, int bits, int nLSBfirst);
-int libswd_drv_mosi_32(libswd_ctx_t *swdctx, libswd_cmd_t *cmd, int *data, int bits, int nLSBfirst);
-int libswd_drv_miso_8(libswd_ctx_t *swdctx, libswd_cmd_t *cmd, char *data, int bits, int nLSBfirst);
-int libswd_drv_miso_32(libswd_ctx_t *swdctx, libswd_cmd_t *cmd, int *data, int bits, int nLSBfirst);
-int libswd_drv_mosi_trn(libswd_ctx_t *swdctx, int bits);
-int libswd_drv_miso_trn(libswd_ctx_t *swdctx, int bits);
-int libswd_log_level_inherit(libswd_ctx_t *swdctx, int loglevel);
-int libswd_log(libswd_ctx_t *swdctx, libswd_loglevel_t loglevel, char *msg, ...);
+int libswd_drv_mosi_8(libswd_ctx_t *libswdctx, libswd_cmd_t *cmd, char *data, int bits, int nLSBfirst);
+int libswd_drv_mosi_32(libswd_ctx_t *libswdctx, libswd_cmd_t *cmd, int *data, int bits, int nLSBfirst);
+int libswd_drv_miso_8(libswd_ctx_t *libswdctx, libswd_cmd_t *cmd, char *data, int bits, int nLSBfirst);
+int libswd_drv_miso_32(libswd_ctx_t *libswdctx, libswd_cmd_t *cmd, int *data, int bits, int nLSBfirst);
+int libswd_drv_mosi_trn(libswd_ctx_t *libswdctx, int bits);
+int libswd_drv_miso_trn(libswd_ctx_t *libswdctx, int bits);
+int libswd_log_level_inherit(libswd_ctx_t *libswdctx, int loglevel);
+int libswd_log(libswd_ctx_t *libswdctx, libswd_loglevel_t loglevel, char *msg, ...);
 

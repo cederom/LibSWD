@@ -47,16 +47,16 @@
 /** Generate 8-bit SWD-REQUEST packet contents with provided parameters.
  * Note that parity bit value is calculated automatically.
  * Note that Request is also sent LSB-First so diagrams are wrapped!
- * \param *swdctx swd context pointer.
+ * \param *libswdctx swd context pointer.
  * \param *APnDP AccessPort (high) or DebugPort (low) access type pointer.
  * \param *RnW Read (high) or Write (low) operation type pointer.
  * \param *addr target register address value pointer.
  * \param *request pointer where to store resulting packet.
  * \return number of generated packets (1), or LIBSWD_ERROR_CODE on failure.
  */
-int libswd_bitgen8_request(libswd_ctx_t *swdctx, char *APnDP, char *RnW, char *addr, char *request){
+int libswd_bitgen8_request(libswd_ctx_t *libswdctx, char *APnDP, char *RnW, char *addr, char *request){
  /* Verify function parameters.*/
- if (swdctx==NULL) return LIBSWD_ERROR_NULLCONTEXT;
+ if (libswdctx==NULL) return LIBSWD_ERROR_NULLCONTEXT;
  if (*APnDP!=0 && *APnDP!=1) return LIBSWD_ERROR_APnDP;
  if (*RnW!=0 && *RnW!=1) return LIBSWD_ERROR_RnW;
  if (*addr<LIBSWD_ADDR_MINVAL && *addr>LIBSWD_ADDR_MAXVAL) return LIBSWD_ERROR_ADDR;

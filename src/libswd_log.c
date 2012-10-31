@@ -49,20 +49,20 @@
  * this function in application specific driver bridge file,
  * see liblibswd_externs.c for examples.
  */
-extern int libswd_log(libswd_ctx_t *swdctx, libswd_loglevel_t loglevel, char *msg, ...);
+extern int libswd_log(libswd_ctx_t *libswdctx, libswd_loglevel_t loglevel, char *msg, ...);
 
 /** Put a message into swd context log at specified verbosity level.
  * If specified message's log level is lower than actual context configuration,
  * message will be omitted. Verbosity level increases from 0 (silent) to 4 (debug).
- * \param *swdctx swd context.
+ * \param *libswdctx swd context.
  * \param loglevel at which to put selected message.
  * \param *msg message body with variable arguments as in "printf".
  * \return number of characters written or error code on failure.
  */
-int libswd_log_internal(libswd_ctx_t *swdctx, libswd_loglevel_t loglevel, char *msg, ...){
+int libswd_log_internal(libswd_ctx_t *libswdctx, libswd_loglevel_t loglevel, char *msg, ...){
  if (loglevel<LIBSWD_LOGLEVEL_MIN && loglevel>LIBSWD_LOGLEVEL_MAX)
   return LIBSWD_ERROR_LOGLEVEL;
- if (loglevel > swdctx->config.loglevel) return LIBSWD_OK;
+ if (loglevel > libswdctx->config.loglevel) return LIBSWD_OK;
  int res;
  va_list ap;
  va_start(ap, msg);
@@ -72,17 +72,17 @@ int libswd_log_internal(libswd_ctx_t *swdctx, libswd_loglevel_t loglevel, char *
 }
 
 /** Change log level to increase or decrease verbosity level.
- * \param *swdctx swd context.
+ * \param *libswdctx swd context.
  * \param loglevel is the target verbosity level to be set.
  * \return LIBSWD_OK on success or error code.
  */
-int libswd_log_level_set(libswd_ctx_t *swdctx, libswd_loglevel_t loglevel){
- if (swdctx==NULL) return LIBSWD_ERROR_NULLCONTEXT;
+int libswd_log_level_set(libswd_ctx_t *libswdctx, libswd_loglevel_t loglevel){
+ if (libswdctx==NULL) return LIBSWD_ERROR_NULLCONTEXT;
  if (loglevel<LIBSWD_LOGLEVEL_MIN && loglevel>LIBSWD_LOGLEVEL_MAX)
   return LIBSWD_ERROR_LOGLEVEL;
 
- swdctx->config.loglevel=loglevel;
- libswd_log(swdctx, LIBSWD_LOGLEVEL_DEBUG, "LIBSWD_D: libswd_log_level_set(swdctx=0x%p, loglevel[%d..%d]=%d/%s)", (void*)swdctx, LIBSWD_LOGLEVEL_MIN, LIBSWD_LOGLEVEL_MAX, loglevel, libswd_log_level_string(loglevel));
+ libswdctx->config.loglevel=loglevel;
+ libswd_log(libswdctx, LIBSWD_LOGLEVEL_DEBUG, "LIBSWD_D: libswd_log_level_set(libswdctx=0x%p, loglevel[%d..%d]=%d/%s)", (void*)libswdctx, LIBSWD_LOGLEVEL_MIN, LIBSWD_LOGLEVEL_MAX, loglevel, libswd_log_level_string(loglevel));
  return LIBSWD_OK;
 }
 
@@ -121,13 +121,13 @@ const char *libswd_operation_string(libswd_operation_t operation){
 } 
 
 /** Helper function that can print name of the request fields.
- * \param swdctx points to the swd context and its necessary to know 
+ * \param libswdctx points to the swd context and its necessary to know 
     DP SELECT register value as it determines CTRL/STAT or WCR access.
  * \param RnW is the read/write bit of the request packet.
  * \param addr is the address of the register.
  * \return char* array with the register name string.
  */
-const char *libswd_request_string(libswd_ctx_t *swdctx, char request){
+const char *libswd_request_string(libswd_ctx_t *libswdctx, char request){
  static char string[100], tmp[8]; string[0]=0;
  int apndp=request&LIBSWD_REQUEST_APnDP;
  int addr=((request&LIBSWD_REQUEST_A3)?1<<3:0)|((request&LIBSWD_REQUEST_A2)?1<<2:0);
@@ -140,7 +140,7 @@ const char *libswd_request_string(libswd_ctx_t *swdctx, char request){
 
  if (apndp){
   // APnDP=1 so we print out the AHB-AP registers
-  addr|=swdctx->log.dp.select&LIBSWD_DP_SELECT_APBANKSEL;
+  addr|=libswdctx->log.dp.select&LIBSWD_DP_SELECT_APBANKSEL;
   switch (addr){
    case 0x00: strcat(string, "(R/W: Control/Status Word, CSW (reset value: 0x43800042)) "); break;
    case 0x04: strcat(string, "(R/W: Transfer Address, TAR (reset value: 0x00000000)) "); break;
@@ -159,7 +159,7 @@ const char *libswd_request_string(libswd_ctx_t *swdctx, char request){
   if (rnw) {
    switch (addr){
     case LIBSWD_DP_IDCODE_ADDR: strcat(string, "(IDCODE)"); break;
-    case LIBSWD_DP_CTRLSTAT_ADDR: strcat(string, (swdctx->log.dp.select&1<<LIBSWD_DP_SELECT_CTRLSEL_BITNUM)?"(CTRL/STAT or [WCR])":"([CTRL/STAT] or WCR)"); break;
+    case LIBSWD_DP_CTRLSTAT_ADDR: strcat(string, (libswdctx->log.dp.select&1<<LIBSWD_DP_SELECT_CTRLSEL_BITNUM)?"(CTRL/STAT or [WCR])":"([CTRL/STAT] or WCR)"); break;
     case LIBSWD_DP_RESEND_ADDR: strcat(string ,"(RESEND) "); break;
     case LIBSWD_DP_RDBUFF_ADDR: strcat(string, "(RDBUFF) "); break;
     default: strcat(string, "(UNKNOWN) ");
@@ -167,7 +167,7 @@ const char *libswd_request_string(libswd_ctx_t *swdctx, char request){
   } else {
    switch (addr) {
     case LIBSWD_DP_ABORT_ADDR: strcat(string, "(ABORT) "); break;
-    case LIBSWD_DP_CTRLSTAT_ADDR: strcat(string, (swdctx->log.dp.select&1<<LIBSWD_DP_SELECT_CTRLSEL_BITNUM)?"(CTRL/STAT or [WCR]) ":"([CTRL/STAT] or WCR) "); break;
+    case LIBSWD_DP_CTRLSTAT_ADDR: strcat(string, (libswdctx->log.dp.select&1<<LIBSWD_DP_SELECT_CTRLSEL_BITNUM)?"(CTRL/STAT or [WCR]) ":"([CTRL/STAT] or WCR) "); break;
     case LIBSWD_DP_SELECT_ADDR: strcat(string, "(SELECT) "); break;
     case LIBSWD_DP_ROUTESEL_ADDR: strcat(string, "(ROUTESEL)"); break;
     default: strcat(string, "(UNKNOWN) ");

@@ -178,8 +178,8 @@ int libswd_cmdq_free_tail(libswd_cmd_t *cmdq){
 /** Flush command queue contents into interface driver and update **cmdq.
  * Operation is specified by LIBSWD_OPERATION and can be used to select
  * how to flush the queue, ie. head-only, tail-only, one, all, etc.
- * This function is not only used to flush swdctx->cmdq but also other
- * queues (i.e. error handling) so the parameter is **cmdq not swdctx itself.
+ * This function is not only used to flush libswdctx->cmdq but also other
+ * queues (i.e. error handling) so the parameter is **cmdq not libswdctx itself.
  * This is the only place where **cmdq is updated to the last executed element.
  * Double pointer is used because we update pointer element not its data.
  * \param *cmdq pointer to queue to be flushed.
@@ -187,8 +187,8 @@ int libswd_cmdq_free_tail(libswd_cmd_t *cmdq){
  * \return number of commands transmitted, or LIBSWD_ERROR_CODE on failure.
  * !TODO: HOW WE WANT TO UPDATE CMDQ ELEMENT AFTER PROCESSING WITHOUT DOUBLE POINTER?
  */
-int libswd_cmdq_flush(libswd_ctx_t *swdctx, libswd_cmd_t **cmdq, libswd_operation_t operation){
- if (swdctx==NULL) return LIBSWD_ERROR_NULLCONTEXT;
+int libswd_cmdq_flush(libswd_ctx_t *libswdctx, libswd_cmd_t **cmdq, libswd_operation_t operation){
+ if (libswdctx==NULL) return LIBSWD_ERROR_NULLCONTEXT;
  if (*cmdq==NULL||cmdq==NULL) return LIBSWD_ERROR_NULLQUEUE;
  if (operation<LIBSWD_OPERATION_FIRST || operation>LIBSWD_OPERATION_LAST)
   return LIBSWD_ERROR_BADOPCODE;
@@ -227,7 +227,7 @@ int libswd_cmdq_flush(libswd_ctx_t *swdctx, libswd_cmd_t **cmdq, libswd_operatio
 
  if (firstcmd==lastcmd){
   if (!firstcmd->done) {
-   res=libswd_drv_transmit(swdctx, firstcmd);
+   res=libswd_drv_transmit(libswdctx, firstcmd);
    if (res<0) return res;
    *cmdq=firstcmd;
   }
@@ -240,7 +240,7 @@ int libswd_cmdq_flush(libswd_ctx_t *swdctx, libswd_cmd_t **cmdq, libswd_operatio
     continue;
    } else break;
   }
-  res=libswd_drv_transmit(swdctx, cmd); 
+  res=libswd_drv_transmit(libswdctx, cmd); 
   if (res<0) return res;
   cmdcnt=+res;
   if (cmd==lastcmd) break;

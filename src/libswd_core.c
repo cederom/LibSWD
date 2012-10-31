@@ -50,61 +50,61 @@
  * \return pointer to the initialized swd context.
  */
 libswd_ctx_t *libswd_init(void){
- libswd_ctx_t *swdctx;
- swdctx=(libswd_ctx_t *)calloc(1,sizeof(libswd_ctx_t));
- if (swdctx==NULL) return NULL;
- swdctx->driver=(libswd_driver_t *)calloc(1,sizeof(libswd_driver_t));
- if (swdctx->driver==NULL){
-  free(swdctx);
+ libswd_ctx_t *libswdctx;
+ libswdctx=(libswd_ctx_t *)calloc(1,sizeof(libswd_ctx_t));
+ if (libswdctx==NULL) return NULL;
+ libswdctx->driver=(libswd_driver_t *)calloc(1,sizeof(libswd_driver_t));
+ if (libswdctx->driver==NULL){
+  free(libswdctx);
   return NULL;
  }
- swdctx->cmdq=(libswd_cmd_t *)calloc(1,sizeof(libswd_cmd_t));
- if (swdctx->cmdq==NULL) {
-  libswd_deinit_ctx(swdctx);
+ libswdctx->cmdq=(libswd_cmd_t *)calloc(1,sizeof(libswd_cmd_t));
+ if (libswdctx->cmdq==NULL) {
+  libswd_deinit_ctx(libswdctx);
   return NULL;
  }
- swdctx->config.initialized=LIBSWD_TRUE;
- swdctx->config.trnlen=LIBSWD_TURNROUND_DEFAULT_VAL;
- swdctx->config.maxcmdqlen=LIBSWD_CMDQLEN_DEFAULT;
- swdctx->config.loglevel=LIBSWD_LOGLEVEL_NORMAL;
- swdctx->config.autofixerrors=LIBSWD_TRUE;
- libswd_log(swdctx, LIBSWD_LOGLEVEL_NORMAL, "LIBSWD_N: Using " PACKAGE_STRING " (http://libswd.sf.net)\nLIBSWD_N: (c) Tomasz Boleslaw CEDRO (http://www.tomek.cedro.info)\n");
- return swdctx;
+ libswdctx->config.initialized=LIBSWD_TRUE;
+ libswdctx->config.trnlen=LIBSWD_TURNROUND_DEFAULT_VAL;
+ libswdctx->config.maxcmdqlen=LIBSWD_CMDQLEN_DEFAULT;
+ libswdctx->config.loglevel=LIBSWD_LOGLEVEL_NORMAL;
+ libswdctx->config.autofixerrors=LIBSWD_TRUE;
+ libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL, "LIBSWD_N: Using " PACKAGE_STRING " (http://libswd.sf.net)\nLIBSWD_N: (c) Tomasz Boleslaw CEDRO (http://www.tomek.cedro.info)\n");
+ return libswdctx;
 }
 
 /** De-initialize selected swd context and free its memory.
  * Note: This function will not free command queue for selected context!
- * \param *swdctx swd context pointer.
+ * \param *libswdctx swd context pointer.
  * \return LIBSWD_OK on success, LIBSWD_ERROR_CODE on failure.
  */
-int libswd_deinit_ctx(libswd_ctx_t *swdctx){
- if (swdctx==NULL) return LIBSWD_ERROR_NULLPOINTER;
- free(swdctx);
+int libswd_deinit_ctx(libswd_ctx_t *libswdctx){
+ if (libswdctx==NULL) return LIBSWD_ERROR_NULLPOINTER;
+ free(libswdctx);
  return LIBSWD_OK;
 }
 
 /** De-initialize command queue and free its memory on selected swd context.
- * \param *swdctx swd context pointer.
+ * \param *libswdctx swd context pointer.
  * \return number of commands freed, or LIBSWD_ERROR_CODE on failure.
  */ 
-int libswd_deinit_cmdq(libswd_ctx_t *swdctx){
- if (swdctx==NULL) return LIBSWD_ERROR_NULLPOINTER;
+int libswd_deinit_cmdq(libswd_ctx_t *libswdctx){
+ if (libswdctx==NULL) return LIBSWD_ERROR_NULLPOINTER;
  int res;
- res=libswd_cmdq_free(swdctx->cmdq);
+ res=libswd_cmdq_free(libswdctx->cmdq);
  if (res<0) return res;
  return res;
 }
 
 /** De-initialize selected swd context and its command queue.
- * \param *swdctx swd context pointer.
+ * \param *libswdctx swd context pointer.
  * \return number of elements freed, or LIBSWD_ERROR_CODE on failure.
  */ 
-int libswd_deinit(libswd_ctx_t *swdctx){
+int libswd_deinit(libswd_ctx_t *libswdctx){
  int res, cmdcnt=0;
- res=libswd_deinit_cmdq(swdctx);
+ res=libswd_deinit_cmdq(libswdctx);
  if (res<0) return res;
  cmdcnt=res;
- res=libswd_deinit_ctx(swdctx);
+ res=libswd_deinit_ctx(libswdctx);
  if (res<0) return res;
  return cmdcnt+res;
 }

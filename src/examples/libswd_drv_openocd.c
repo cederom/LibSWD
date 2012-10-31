@@ -44,15 +44,15 @@ extern struct jtag_interface *jtag_interface;
 /**
  * Use UrJTAG's driver to write 8-bit data (char type).
  * MOSI (Master Output Slave Input) is a SWD Write Operation.
- * \param *swdctx swd context to work on.
+ * \param *libswdctx swd context to work on.
  * \param *cmd point to the actual command being sent.
  * \param *data points to the char data.
  * \bits tells how many bits to send (at most 8).
  * \bits nLSBfirst tells the shift direction: 0 = LSB first, other MSB first.
  * \return data count transferred, or negative LIBSWD_ERROR code on failure.
 ar)*/
-int libswd_drv_mosi_8(libswd_ctx_t *swdctx, libswd_cmd_t *cmd, char *data, int bits, int nLSBfirst){
- LOG_DEBUG("OpenOCD's libswd_drv_mosi_8(swdctx=@%p, cmd=@%p, data=0x%02X, bits=%d, nLSBfirst=0x%02X)", (void*)swdctx, (void*)cmd, *data, bits, nLSBfirst);
+int libswd_drv_mosi_8(libswd_ctx_t *libswdctx, libswd_cmd_t *cmd, char *data, int bits, int nLSBfirst){
+ LOG_DEBUG("OpenOCD's libswd_drv_mosi_8(libswdctx=@%p, cmd=@%p, data=0x%02X, bits=%d, nLSBfirst=0x%02X)", (void*)libswdctx, (void*)cmd, *data, bits, nLSBfirst);
  if (data==NULL) return LIBSWD_ERROR_NULLPOINTER;
  if (bits<0 && bits>8) return LIBSWD_ERROR_PARAM;
  if (nLSBfirst!=0 && nLSBfirst!=1) return LIBSWD_ERROR_PARAM;
@@ -73,15 +73,15 @@ int libswd_drv_mosi_8(libswd_ctx_t *swdctx, libswd_cmd_t *cmd, char *data, int b
 /**
  * Use UrJTAG's driver to write 32-bit data (int type).
  * MOSI (Master Output Slave Input) is a SWD Write Operation.
- * \param *swdctx swd context to work on.
+ * \param *libswdctx swd context to work on.
  * \param *cmd point to the actual command being sent.
  * \param *data points to the char buffer array.
  * \bits tells how many bits to send (at most 32).
  * \bits nLSBfirst tells the shift direction: 0 = LSB first, other MSB first.
  * \return data count transferred, or negative LIBSWD_ERROR code on failure.
  */
-int libswd_drv_mosi_32(libswd_ctx_t *swdctx, libswd_cmd_t *cmd, int *data, int bits, int nLSBfirst){
- LOG_DEBUG("OpenOCD's libswd_drv_mosi_32(swdctx=@%p, cmd=@%p, data=0x%08X, bits=%d, nLSBfirst=0x%02X)", (void*)swdctx, (void*)cmd, *data, bits, nLSBfirst);
+int libswd_drv_mosi_32(libswd_ctx_t *libswdctx, libswd_cmd_t *cmd, int *data, int bits, int nLSBfirst){
+ LOG_DEBUG("OpenOCD's libswd_drv_mosi_32(libswdctx=@%p, cmd=@%p, data=0x%08X, bits=%d, nLSBfirst=0x%02X)", (void*)libswdctx, (void*)cmd, *data, bits, nLSBfirst);
  if (data==NULL) return LIBSWD_ERROR_NULLPOINTER;
  if (bits<0 && bits>8) return LIBSWD_ERROR_PARAM;
  if (nLSBfirst!=0 && nLSBfirst!=1) return LIBSWD_ERROR_PARAM;
@@ -100,14 +100,14 @@ int libswd_drv_mosi_32(libswd_ctx_t *swdctx, libswd_cmd_t *cmd, int *data, int b
 /**
  * Use UrJTAG's driver to read 8-bit data (char type).
  * MISO (Master Input Slave Output) is a SWD Read Operation.
- * \param *swdctx swd context to work on.
+ * \param *libswdctx swd context to work on.
  * \param *cmd point to the actual command being sent.
  * \param *data points to the char buffer array.
  * \bits tells how many bits to send (at most 8).
  * \bits nLSBfirst tells the shift direction: 0 = LSB first, other MSB first.
  * \return data count transferred, or negative LIBSWD_ERROR code on failure.
  */
-int libswd_drv_miso_8(libswd_ctx_t *swdctx, libswd_cmd_t *cmd, char *data, int bits, int nLSBfirst){
+int libswd_drv_miso_8(libswd_ctx_t *libswdctx, libswd_cmd_t *cmd, char *data, int bits, int nLSBfirst){
  if (data==NULL) return LIBSWD_ERROR_NULLPOINTER;
  if (bits<0 && bits>8) return LIBSWD_ERROR_PARAM;
  if (nLSBfirst!=0 && nLSBfirst!=1) return LIBSWD_ERROR_PARAM;
@@ -121,21 +121,21 @@ int libswd_drv_miso_8(libswd_ctx_t *swdctx, libswd_cmd_t *cmd, char *data, int b
  /* Now we need to reconstruct the data byte from shifted in LSBfirst byte array. */
  *data=0;
  for (i=0;i<bits;i++) *data|=misodata[(nLSBfirst==LIBSWD_DIR_LSBFIRST)?(i):(bits-1-i)]?(1<<i):0;
- LOG_DEBUG("OpenOCD's libswd_drv_miso_8(swdctx=@%p, cmd=@%p, data=@%p, bits=%d, nLSBfirst=0x%02X) reads: 0x%02X", (void*)swdctx, (void*)cmd, (void*)data, bits, nLSBfirst, *data);
+ LOG_DEBUG("OpenOCD's libswd_drv_miso_8(libswdctx=@%p, cmd=@%p, data=@%p, bits=%d, nLSBfirst=0x%02X) reads: 0x%02X", (void*)libswdctx, (void*)cmd, (void*)data, bits, nLSBfirst, *data);
  return i;
 }
 
 /**
  * Use UrJTAG's driver to read 32-bit data (int type).
  * MISO (Master Input Slave Output) is a SWD Read Operation.
- * \param *swdctx swd context to work on.
+ * \param *libswdctx swd context to work on.
  * \param *cmd point to the actual command being sent.
  * \param *data points to the char buffer array.
  * \bits tells how many bits to send (at most 32).
  * \bits nLSBfirst tells the shift direction: 0 = LSB first, other MSB first.
  * \return data count transferred, or negative LIBSWD_ERROR code on failure.
  */
-int libswd_drv_miso_32(libswd_ctx_t *swdctx, libswd_cmd_t *cmd, int *data, int bits, int nLSBfirst){
+int libswd_drv_miso_32(libswd_ctx_t *libswdctx, libswd_cmd_t *cmd, int *data, int bits, int nLSBfirst){
  if (data==NULL) return LIBSWD_ERROR_NULLPOINTER;
  if (bits<0 && bits>8) return LIBSWD_ERROR_PARAM;
  if (nLSBfirst!=0 && nLSBfirst!=1) return LIBSWD_ERROR_PARAM;
@@ -149,7 +149,7 @@ int libswd_drv_miso_32(libswd_ctx_t *swdctx, libswd_cmd_t *cmd, int *data, int b
  /* Now we need to reconstruct the data byte from shifted in LSBfirst byte array. */
  *data=0;
  for (i=0;i<bits;i++) *data|=(misodata[(nLSBfirst==LIBSWD_DIR_LSBFIRST)?(i):(bits-1-i)]?(1<<i):0);
- LOG_DEBUG("OpenOCD's libswd_drv_miso_32(swdctx=@%p, cmd=@%p, data=@%p, bits=%d, nLSBfirst=0x%02X) reads: 0x%08X", (void*)swdctx, (void*)cmd, (void*)data, bits, nLSBfirst, *data);
+ LOG_DEBUG("OpenOCD's libswd_drv_miso_32(libswdctx=@%p, cmd=@%p, data=@%p, bits=%d, nLSBfirst=0x%02X) reads: 0x%08X", (void*)libswdctx, (void*)cmd, (void*)data, bits, nLSBfirst, *data);
  LOG_DEBUG("OpenOCD's libswd_drv_miso_32() reads: 0x%08X\n", *data);
  return i;
 }       
@@ -159,12 +159,12 @@ int libswd_drv_miso_32(libswd_ctx_t *swdctx, libswd_cmd_t *cmd, int *data, int b
  * MOSI (Master Output Slave Input) is a SWD Write operation.
  * OpenOCD use global "struct jtag_interface" pointer as interface driver.
  * OpenOCD driver must support "RnW" signal to drive output buffers for TRN.
- * \param *swdctx is the swd context to work on.
+ * \param *libswdctx is the swd context to work on.
  * \param bits specify how many clock cycles must be used for TRN.
  * \return number of bits transmitted or negative LIBSWD_ERROR code on failure. 
  */
-int libswd_drv_mosi_trn(libswd_ctx_t *swdctx, int bits){
- LOG_DEBUG("OpenOCD's libswd_drv_mosi_trn(swdctx=@%p, bits=%d)\n", (void*)swdctx, bits);
+int libswd_drv_mosi_trn(libswd_ctx_t *libswdctx, int bits){
+ LOG_DEBUG("OpenOCD's libswd_drv_mosi_trn(libswdctx=@%p, bits=%d)\n", (void*)libswdctx, bits);
  if (bits<LIBSWD_TURNROUND_MIN_VAL && bits>LIBSWD_TURNROUND_MAX_VAL)
   return LIBSWD_ERROR_TURNAROUND; 
 
@@ -186,12 +186,12 @@ int libswd_drv_mosi_trn(libswd_ctx_t *swdctx, int bits){
  * MISO (Master Input Slave Output) is a SWD Read operation.
  * OpenOCD use global "struct jtag_interface" pointer as interface driver.
  * OpenOCD driver must support "RnW" signal to drive output buffers for TRN.
- * \param *swdctx is the swd context to work on.
+ * \param *libswdctx is the swd context to work on.
  * \param bits specify how many clock cycles must be used for TRN.
  * \return number of bits transmitted or negative LIBSWD_ERROR code on failure. 
  */
-int libswd_drv_miso_trn(libswd_ctx_t *swdctx, int bits){
- LOG_DEBUG("OpenOCD's libswd_drv_miso_trn(swdctx=@%p, bits=%d)\n", (void*)swdctx, bits);
+int libswd_drv_miso_trn(libswd_ctx_t *libswdctx, int bits){
+ LOG_DEBUG("OpenOCD's libswd_drv_miso_trn(libswdctx=@%p, bits=%d)\n", (void*)libswdctx, bits);
  if (bits<LIBSWD_TURNROUND_MIN_VAL && bits>LIBSWD_TURNROUND_MAX_VAL)
   return LIBSWD_ERROR_TURNAROUND; 
 
@@ -212,14 +212,14 @@ int libswd_drv_miso_trn(libswd_ctx_t *swdctx, int bits){
 
 /**
  * Set SWD debug level according to OpenOCD settings.
- * \param *swdctx is the context to work on.
+ * \param *libswdctx is the context to work on.
  * \param loglevel is the OpenOCD numerical value of actual loglevel to force
  *  on LibSWD, or -1 to inherit from actual global settings of OpenOCD.
  * \return LIBSWD_OK on success, negative LIBSWD_ERROR code on failure. 
  */
-int libswd_log_level_inherit(libswd_ctx_t *swdctx, int loglevel){
- LOG_DEBUG("OpenOCD's libswd_log_level_inherit(swdctx=@%p, loglevel=%d)\n", (void*)swdctx, loglevel);
- if (swdctx==NULL){
+int libswd_log_level_inherit(libswd_ctx_t *libswdctx, int loglevel){
+ LOG_DEBUG("OpenOCD's libswd_log_level_inherit(libswdctx=@%p, loglevel=%d)\n", (void*)libswdctx, loglevel);
+ if (libswdctx==NULL){
   LOG_WARNING("libswd_log_level_inherit(): SWD Context not (yet) initialized...\n");
   return LIBSWD_OK;
  }
@@ -249,7 +249,7 @@ int libswd_log_level_inherit(libswd_ctx_t *swdctx, int loglevel){
    new_swdlevel=LIBSWD_LOGLEVEL_NORMAL;
  }
                                 
- int res=libswd_log_level_set(swdctx, new_swdlevel);
+ int res=libswd_log_level_set(libswdctx, new_swdlevel);
  if (res<0) {
   LOG_ERROR("libswd_log_level_set() failed (%s)\n", libswd_error_string(res));
   return ERROR_FAIL;
@@ -261,11 +261,11 @@ int libswd_log_level_inherit(libswd_ctx_t *swdctx, int loglevel){
   * log all messages at openocd level that will not block swd messages.
   * It is also possible to 'inherit' loglevel to swd from openocd.
   */
-int libswd_log(libswd_ctx_t *swdctx, libswd_loglevel_t loglevel, char *msg, ...){
- if (swdctx==NULL) return LIBSWD_ERROR_NULLCONTEXT;
+int libswd_log(libswd_ctx_t *libswdctx, libswd_loglevel_t loglevel, char *msg, ...){
+ if (libswdctx==NULL) return LIBSWD_ERROR_NULLCONTEXT;
  if (loglevel > LIBSWD_LOGLEVEL_MAX) return LIBSWD_ERROR_PARAM; 
 
- if (loglevel > swdctx->config.loglevel) return LIBSWD_OK;
+ if (loglevel > libswdctx->config.loglevel) return LIBSWD_OK;
  va_list ap;
  va_start(ap, msg);
  // Calling OpenOCD log functions here will cause program crash (va recurrent).

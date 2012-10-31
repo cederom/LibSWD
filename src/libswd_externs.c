@@ -39,7 +39,7 @@
 #include <libswd.h>
 #include <stdlib.h>
 
-int libswd_drv_mosi_8(libswd_ctx_t *swdctx, libswd_cmd_t *cmd, char *data, int bits, int nLSBfirst){
+int libswd_drv_mosi_8(libswd_ctx_t *libswdctx, libswd_cmd_t *cmd, char *data, int bits, int nLSBfirst){
  if (data==NULL) return LIBSWD_ERROR_NULLPOINTER;
  if (bits<0 && bits>8) return LIBSWD_ERROR_PARAM;
  if (nLSBfirst!=0 && nLSBfirst!=1) return LIBSWD_ERROR_PARAM;
@@ -50,7 +50,7 @@ int libswd_drv_mosi_8(libswd_ctx_t *swdctx, libswd_cmd_t *cmd, char *data, int b
 }
 
 
-int libswd_drv_mosi_32(libswd_ctx_t *swdctx, libswd_cmd_t *cmd, int *data, int bits, int nLSBfirst){
+int libswd_drv_mosi_32(libswd_ctx_t *libswdctx, libswd_cmd_t *cmd, int *data, int bits, int nLSBfirst){
  if (data==NULL) return LIBSWD_ERROR_NULLPOINTER;
  if (bits<0 && bits>8) return LIBSWD_ERROR_PARAM;
  if (nLSBfirst!=0 && nLSBfirst!=1) return LIBSWD_ERROR_PARAM;
@@ -60,7 +60,7 @@ int libswd_drv_mosi_32(libswd_ctx_t *swdctx, libswd_cmd_t *cmd, int *data, int b
  return bits;
 }
 
-int libswd_drv_miso_8(libswd_ctx_t *swdctx, libswd_cmd_t *cmd, char *data, int bits, int nLSBfirst){
+int libswd_drv_miso_8(libswd_ctx_t *libswdctx, libswd_cmd_t *cmd, char *data, int bits, int nLSBfirst){
  if (data==NULL) return LIBSWD_ERROR_NULLPOINTER;
  if (bits<0 && bits>8) return LIBSWD_ERROR_PARAM;
  if (nLSBfirst!=0 && nLSBfirst!=1) return LIBSWD_ERROR_PARAM;
@@ -70,7 +70,7 @@ int libswd_drv_miso_8(libswd_ctx_t *swdctx, libswd_cmd_t *cmd, char *data, int b
  return bits;
 }
 
-int libswd_drv_miso_32(libswd_ctx_t *swdctx, libswd_cmd_t *cmd, int *data, int bits, int nLSBfirst){
+int libswd_drv_miso_32(libswd_ctx_t *libswdctx, libswd_cmd_t *cmd, int *data, int bits, int nLSBfirst){
  if (data==NULL) return LIBSWD_ERROR_NULLPOINTER;
  if (bits<0 && bits>8) return LIBSWD_ERROR_PARAM;
  if (nLSBfirst!=0 && nLSBfirst!=1) return LIBSWD_ERROR_PARAM;
@@ -84,7 +84,7 @@ int libswd_drv_miso_32(libswd_ctx_t *swdctx, libswd_cmd_t *cmd, int *data, int b
 /* This function sets interface buffers to MOSI direction.
  * Master Output Slave Input - SWD Write operation.
  * bits specify how many clock cycles must be used. */
-int libswd_drv_mosi_trn(libswd_ctx_t *swdctx, int bits){
+int libswd_drv_mosi_trn(libswd_ctx_t *libswdctx, int bits){
  if (bits<LIBSWD_TURNROUND_MIN_VAL && bits>LIBSWD_TURNROUND_MAX_VAL)
   return LIBSWD_ERROR_TURNAROUND; 
 
@@ -93,7 +93,7 @@ int libswd_drv_mosi_trn(libswd_ctx_t *swdctx, int bits){
  return bits;
 }
 
-int libswd_drv_miso_trn(libswd_ctx_t *swdctx, int bits){
+int libswd_drv_miso_trn(libswd_ctx_t *libswdctx, int bits){
  if (bits<LIBSWD_TURNROUND_MIN_VAL && bits>LIBSWD_TURNROUND_MAX_VAL)
   return LIBSWD_ERROR_TURNAROUND; 
 
@@ -104,12 +104,12 @@ int libswd_drv_miso_trn(libswd_ctx_t *swdctx, int bits){
 
 
 /** Set debug level according to caller's application settings.
- * \params *swdctx swd context to work on.
+ * \params *libswdctx swd context to work on.
  * \params loglevel caller's application log level to be converted.
  * \return LIBSWD_OK on success, of error code on failure.
  */
-int libswd_log_level_inherit(libswd_ctx_t *swdctx, int loglevel){
- if (swdctx==NULL){
+int libswd_log_level_inherit(libswd_ctx_t *libswdctx, int loglevel){
+ if (libswdctx==NULL){
   // log(LOG_LEVEL_DEBUG, "libswd_log_level_inherit(): SWD Context not (yet) initialized...\n");
   return LIBSWD_OK;
  }
@@ -121,7 +121,7 @@ int libswd_log_level_inherit(libswd_ctx_t *swdctx, int loglevel){
    new_swdlevel=LIBSWD_LOGLEVEL_NORMAL;
  }
 
- int res=libswd_log_level_set(swdctx, new_swdlevel);
+ int res=libswd_log_level_set(libswdctx, new_swdlevel);
  if (res<0) {
   // Your error routine goes here...
   // return URJ_ERROR_SYNTAX;
@@ -131,7 +131,7 @@ int libswd_log_level_inherit(libswd_ctx_t *swdctx, int loglevel){
 /** By default we want to use internal logging mechanisms.
  * It is possible however to use target program mechanisms to log messages.
  */
-int libswd_log(libswd_ctx_t *swdctx, libswd_loglevel_t loglevel, char *msg, ...){
- return libswd_log_internal(swdctx, loglevel, msg);
+int libswd_log(libswd_ctx_t *libswdctx, libswd_loglevel_t loglevel, char *msg, ...){
+ return libswd_log_internal(libswdctx, loglevel, msg);
 }
 
