@@ -1,5 +1,6 @@
 LibSWD-0.5:
  * All functions and defines were renamed to use prefix libswd_ and LIBSWD_.
+ * This is a first and official candidate for release with OpenOCD master.
 
 LibSWD-0.4 (2012-10-14):
  * Implemented necessary data phase on ACK={WAIT,FAULT} reply from Target.

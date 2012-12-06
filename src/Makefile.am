@@ -1,5 +1,5 @@
 lib_LTLIBRARIES = libswd.la
-libswd_la_LDFLAGS = -version-info 0:2:0
+libswd_la_LDFLAGS = -version-info 0:5:0
 include_HEADERS = libswd.h
 EXTRA_DIST = \
  examples/libswd_drv_urjtag.c \
