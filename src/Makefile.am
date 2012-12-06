@@ -3,8 +3,8 @@ libswd_la_LDFLAGS = -version-info 0:5:0
 include_HEADERS = libswd.h
 EXTRA_DIST = \
  examples/libswd_drv_urjtag.c \
- examples/swd_libswd_drv_openocd.h \
- examples/swd_libswd_drv_openocd.c
+ examples/libswd_drv_openocd.h \
+ examples/libswd_drv_openocd.c
 
 libswd_la_SOURCES = \
  libswd.h \
