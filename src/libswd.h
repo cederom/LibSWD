@@ -580,7 +580,7 @@ int libswd_bin8_parity_even(char *data, char *parity);
 int libswd_bin32_parity_even(int *data, char *parity);
 int libswd_bin8_print(char *data);
 int libswd_bin32_print(int *data);
-char *bin8_string(char *data);
+char *libswd_bin8_string(char *data);
 char *libswd_bin32_string(int *data);
 int libswd_bin8_bitswap(unsigned char *buffer, int bitcount);
 int libswd_bin32_bitswap(unsigned int *buffer, int bitcount);
