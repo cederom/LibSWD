@@ -1,10 +1,8 @@
 /*
- * $Id$
- *
  * Serial Wire Debug Open Library.
  * Library Header File.
  *
- * Copyright (C) 2010-2012, Tomasz Boleslaw CEDRO (http://www.tomek.cedro.info)
+ * Copyright (C) 2010-2013, Tomasz Boleslaw CEDRO (http://www.tomek.cedro.info)
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -30,7 +28,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.*
  *
- * Written by Tomasz Boleslaw CEDRO <cederom@tlen.pl>, 2010-2012;
+ * Written by Tomasz Boleslaw CEDRO <cederom@tlen.pl>, 2010-2013;
  *
  */
 

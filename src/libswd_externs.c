@@ -1,10 +1,8 @@
 /*
- * $Id$
- *
  * Serial Wire Debug Open Library.
  * External Handlers Definition File.
  *
- * Copyright (C) 2010-2012, Tomasz Boleslaw CEDRO (http://www.tomek.cedro.info)
+ * Copyright (C) 2010-2013, Tomasz Boleslaw CEDRO (http://www.tomek.cedro.info)
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -30,11 +28,11 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.*
  *
- * Written by Tomasz Boleslaw CEDRO <cederom@tlen.pl>, 2010-2012;
+ * Written by Tomasz Boleslaw CEDRO <cederom@tlen.pl>, 2010-2013;
  *
  */
 
-/** \file liblibswd_externs.c Template for driver bridge between libswd and your application. */
+/** \file libswd_externs.c Template for driver bridge between libswd and your application. */
 
 #include <libswd.h>
 #include <stdlib.h>
