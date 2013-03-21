@@ -45,22 +45,24 @@
  * function can be defined to use target program logging mechanism.
  * To use internal logging mechanism simply wrap libswd_log_internal() around
  * this function in application specific driver bridge file,
- * see liblibswd_externs.c for examples.
+ * see liblibswd_externs.c for examples. When you want to use variable argument
+ * (printf style) invocation you can use libswd_log_internal_va() as vprintf().
  */
 extern int libswd_log(libswd_ctx_t *libswdctx, libswd_loglevel_t loglevel, char *msg, ...);
 
 /** Put a message into swd context log at specified verbosity level.
  * If specified message's log level is lower than actual context configuration,
- * message will be omitted. Verbosity level increases from 0 (silent) to 4 (debug).
+ * message will be omitted. Verbosity level increases from 0 (silent) to 6 (bitstream).
+ * This function does not put '\n' at the end of line so you need to put them by hand.
  * \param *libswdctx swd context.
  * \param loglevel at which to put selected message.
  * \param *msg message body with variable arguments as in "printf".
  * \return number of characters written or error code on failure.
  */
 int libswd_log_internal(libswd_ctx_t *libswdctx, libswd_loglevel_t loglevel, char *msg, ...){
- if (loglevel<LIBSWD_LOGLEVEL_MIN && loglevel>LIBSWD_LOGLEVEL_MAX)
+ if (loglevel<LIBSWD_LOGLEVEL_MIN || loglevel>LIBSWD_LOGLEVEL_MAX)
   return LIBSWD_ERROR_LOGLEVEL;
- if (loglevel > libswdctx->config.loglevel) return LIBSWD_OK;
+ if (loglevel < libswdctx->config.loglevel) return LIBSWD_OK;
  int res;
  va_list ap;
  va_start(ap, msg);
@@ -69,6 +71,25 @@ int libswd_log_internal(libswd_ctx_t *libswdctx, libswd_loglevel_t loglevel, cha
  return res;
 }
 
+/** Put a fmt+va_list message into swd context log at specified verbosity level.
+ * It works just as libswd_log_internal() but is intended for use instead
+ * vprintf() between va_start() and va_end()...
+ * \param *libswdctx swd context.
+ * \param loglevel at which to put selected message.
+ * \param *msg message body with variable arguments as in "printf".
+ * \return number of characters written or error code on failure.
+ */
+int libswd_log_internal_va(libswd_ctx_t *libswdctx, libswd_loglevel_t loglevel, char *fmt, va_list ap){
+ if (loglevel<LIBSWD_LOGLEVEL_MIN || loglevel>LIBSWD_LOGLEVEL_MAX)
+  return LIBSWD_ERROR_LOGLEVEL;
+ if (loglevel < libswdctx->config.loglevel) return LIBSWD_OK;
+ int res;
+ res=vprintf(fmt, ap);  
+ return res;
+}
+
+
+
 /** Change log level to increase or decrease verbosity level.
  * \param *libswdctx swd context.
  * \param loglevel is the target verbosity level to be set.
@@ -76,11 +97,11 @@ int libswd_log_internal(libswd_ctx_t *libswdctx, libswd_loglevel_t loglevel, cha
  */
 int libswd_log_level_set(libswd_ctx_t *libswdctx, libswd_loglevel_t loglevel){
  if (libswdctx==NULL) return LIBSWD_ERROR_NULLCONTEXT;
- if (loglevel<LIBSWD_LOGLEVEL_MIN && loglevel>LIBSWD_LOGLEVEL_MAX)
+ if (loglevel<LIBSWD_LOGLEVEL_MIN || loglevel>LIBSWD_LOGLEVEL_MAX)
   return LIBSWD_ERROR_LOGLEVEL;
 
  libswdctx->config.loglevel=loglevel;
- libswd_log(libswdctx, LIBSWD_LOGLEVEL_DEBUG, "LIBSWD_D: libswd_log_level_set(libswdctx=0x%p, loglevel[%d..%d]=%d/%s)", (void*)libswdctx, LIBSWD_LOGLEVEL_MIN, LIBSWD_LOGLEVEL_MAX, loglevel, libswd_log_level_string(loglevel));
+ libswd_log(libswdctx, LIBSWD_LOGLEVEL_DEBUG, "LIBSWD_D: libswd_log_level_set(libswdctx=0x%p, loglevel[%d..%d]=%d/%s)\n", (void*)libswdctx, LIBSWD_LOGLEVEL_MIN, LIBSWD_LOGLEVEL_MAX, loglevel, libswd_log_level_string(loglevel));
  return LIBSWD_OK;
 }
 

@@ -1,3 +1,6 @@
+LibSWD-0.6-devel:
+ * Major fixes in LOG functions. Introducing vprintf() like libswd_log_internal_va().
+
 LibSWD-0.5:
  * All functions and defines were renamed to use prefix libswd_ and LIBSWD_.
  * This is a first and official candidate for release with OpenOCD master.
