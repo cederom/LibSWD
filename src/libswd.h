@@ -390,6 +390,9 @@ typedef enum {
  LIBSWD_ERROR_MAXRETRY    =-43  ///< Maximum retry count exceeded.
 } libswd_error_code_t;
 
+/// Do we want autofix errors by default? Yes!
+#define LIBSWD_AUTOFIX_DEFAULT LIBSWD_TRUE
+
 /** Logging Level Codes definition */
 ///Logging Level codes definition, use this to have its name on debugger.
 typedef enum {
@@ -403,6 +406,9 @@ typedef enum {
  LIBSWD_LOGLEVEL_PAYLOAD = 6, ///< Show packet payload.
  LIBSWD_LOGLEVEL_MAX     = 6
 } libswd_loglevel_t;
+
+/// What is the default loglevel? Normal!
+#define LIBSWD_LOGLEVEL_DEFAULT LIBSWD_LOGLEVEL_NORMAL
 
 /** SWD queue and payload data definitions */
 /// What is the maximal bit length of the data.

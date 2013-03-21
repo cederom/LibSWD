@@ -1,5 +1,6 @@
 LibSWD-0.6-devel:
  * Major fixes in LOG functions. Introducing vprintf() like libswd_log_internal_va().
+ * Added DEFAULT defines for LogLevel and AutoFixErrors libswdctx->config values.
 
 LibSWD-0.5:
  * All functions and defines were renamed to use prefix libswd_ and LIBSWD_.

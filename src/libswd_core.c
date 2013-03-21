@@ -64,8 +64,8 @@ libswd_ctx_t *libswd_init(void){
  libswdctx->config.initialized=LIBSWD_TRUE;
  libswdctx->config.trnlen=LIBSWD_TURNROUND_DEFAULT_VAL;
  libswdctx->config.maxcmdqlen=LIBSWD_CMDQLEN_DEFAULT;
- libswdctx->config.loglevel=LIBSWD_LOGLEVEL_NORMAL;
- libswdctx->config.autofixerrors=LIBSWD_TRUE;
+ libswdctx->config.loglevel=LIBSWD_LOGLEVEL_DEFAULT;
+ libswdctx->config.autofixerrors=LIBSWD_AUTOFIX_DEFAULT;
  libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL, "LIBSWD_N: Using " PACKAGE_STRING " (http://libswd.sf.net)\nLIBSWD_N: (c) Tomasz Boleslaw CEDRO (http://www.tomek.cedro.info)\n");
  return libswdctx;
 }
