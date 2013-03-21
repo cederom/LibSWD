@@ -387,7 +387,8 @@ typedef enum {
  LIBSWD_ERROR_DIRECTION   =-40, ///< Direction error (LSb/MSb first).
  LIBSWD_ERROR_LOGLEVEL    =-41, ///< Invalid loglevel number.
  LIBSWD_ERROR_UNHANDLED   =-42, ///< Error cannot be fixed with error*().
- LIBSWD_ERROR_MAXRETRY    =-43  ///< Maximum retry count exceeded.
+ LIBSWD_ERROR_MAXRETRY    =-43, ///< Maximum retry count exceeded.
+ LIBSWD_ERROR_CLISYNTAX   =-44  ///< CLI Syntax Error
 } libswd_error_code_t;
 
 /// Do we want autofix errors by default? Yes!
