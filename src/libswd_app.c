@@ -98,7 +98,7 @@ int libswd_app_print_banner(void){
 
 int libswd_app_print_usage(void){
  printf(" Available options: \n");
- printf("  -q : Silent mode, no verbose output\n");
+ printf("  -s : Silent mode, no verbose output\n");
  printf("  -v : Interface VID (default 0x0403 if not specified)\n");
  printf("  -p : Interface PID (default 0xbbe2 if not specified)\n");
  printf("  -h : Display this help\n");
@@ -120,9 +120,9 @@ int main(int argc, char **argv){
 
 
  /* Handle program execution arguments. */
- while ( (i=getopt(argc,argv,"hqp:v:"))!=-1 ) {
+ while ( (i=getopt(argc,argv,"hsp:v:"))!=-1 ) {
   switch (i) {
-   case 'q':
+   case 's':
     verbose=0;
     break;
    case 'v':
