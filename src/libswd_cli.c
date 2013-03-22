@@ -44,13 +44,13 @@
 
 int libswd_cli_print_usage(libswd_ctx_t *libswdctx){
  if (libswdctx==NULL) return LIBSWD_ERROR_NULLPOINTER;
- libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL, "Available LibSWD CLI commands:\n");
- libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL, " [h]elp / [?]\n");
- libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL, " [d]etect\n");
- libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL, " [l]oglevel newloglevel\n");
- libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL, " [r]ead [d]ap/[a]p/[m]emap address count\n");
- libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL, " [w]rite [d]ap/[a]p/[m]emap address data[0] .. data[n]\n");
- libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL, "\n");
+ libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO, "LIBSWD_I: Available LibSWD CLI commands:\n");
+ libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO, "LIBSWD_I:  [h]elp / [?]\n");
+ libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO, "LIBSWD_I:  [d]etect\n");
+ libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO, "LIBSWD_I:  [l]oglevel newloglevel\n");
+ libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO, "LIBSWD_I:  [r]ead [d]ap/[a]p/[m]emap address count\n");
+ libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO, "LIBSWD_I:  [w]rite [d]ap/[a]p/[m]emap address data[0] .. data[n]\n");
+ libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO, "\n");
  return LIBSWD_OK;
 }
 
@@ -74,7 +74,7 @@ int libswd_cli(libswd_ctx_t *libswdctx, char *command){
    printf("LIBSWD READ\n");
   } else {
    libswd_log(libswdctx, LIBSWD_LOGLEVEL_ERROR, "LIBSWD_E: libswd_cli(@libswdctx=%p, @command=%p): %s\n", (void*)libswdctx, (void*)command, libswd_error_string(LIBSWD_ERROR_CLISYNTAX));
-   //libswd_cli_print_usage(libswdctx);
+   libswd_cli_print_usage(libswdctx);
    return LIBSWD_ERROR_CLISYNTAX; 
   } 
   cmd=strtok(NULL," ");
