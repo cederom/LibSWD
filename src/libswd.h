@@ -90,8 +90,8 @@
 #include <stdlib.h>
 #include <stdarg.h>
 
-#ifndef __LIBLIBSWD_H__
-#define __LIBLIBSWD_H__
+#ifndef __LIBSWD_H__
+#define __LIBSWD_H__
 
 /** SWD Packets Bit Fields and Values */
 /// Request packet Start field bitnumber, always set to 1.
