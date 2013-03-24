@@ -62,7 +62,7 @@ extern int libswd_log(libswd_ctx_t *libswdctx, libswd_loglevel_t loglevel, char 
 int libswd_log_internal(libswd_ctx_t *libswdctx, libswd_loglevel_t loglevel, char *msg, ...){
  if (loglevel<LIBSWD_LOGLEVEL_MIN || loglevel>LIBSWD_LOGLEVEL_MAX)
   return LIBSWD_ERROR_LOGLEVEL;
- if (loglevel < libswdctx->config.loglevel) return LIBSWD_OK;
+ if (loglevel > libswdctx->config.loglevel) return LIBSWD_OK;
  int res;
  va_list ap;
  va_start(ap, msg);
@@ -82,13 +82,11 @@ int libswd_log_internal(libswd_ctx_t *libswdctx, libswd_loglevel_t loglevel, cha
 int libswd_log_internal_va(libswd_ctx_t *libswdctx, libswd_loglevel_t loglevel, char *fmt, va_list ap){
  if (loglevel<LIBSWD_LOGLEVEL_MIN || loglevel>LIBSWD_LOGLEVEL_MAX)
   return LIBSWD_ERROR_LOGLEVEL;
- if (loglevel < libswdctx->config.loglevel) return LIBSWD_OK;
+ if (loglevel > libswdctx->config.loglevel) return LIBSWD_OK;
  int res;
  res=vprintf(fmt, ap);  
  return res;
 }
-
-
 
 /** Change log level to increase or decrease verbosity level.
  * \param *libswdctx swd context.
@@ -128,7 +126,7 @@ const char *libswd_log_level_string(libswd_loglevel_t loglevel){
   case LIBSWD_LOGLEVEL_DEBUG:   return "LIBSWD_LOGLEVEL_DEBUG";
   case LIBSWD_LOGLEVEL_PAYLOAD: return "LIBSWD_LOGLEVEL_PAYLOAD";
  }
- return "UNKNOWN LOGLEVEL!";
+ return "UNKNOWN_LOGLEVEL";
 };
 
 /** Helper function to produce operation name string for logging purposes.
