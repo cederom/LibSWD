@@ -6,7 +6,8 @@ LDADD = $(LIBOBJS) $(ALLOCA)
 EXTRA_DIST = \
  examples/libswd_drv_urjtag.c \
  examples/libswd_drv_openocd.h \
- examples/libswd_drv_openocd.c
+ examples/libswd_drv_openocd.c \
+ libswd_externs.c
 
 libswd_la_SOURCES = \
  libswd.h \

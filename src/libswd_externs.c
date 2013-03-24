@@ -128,8 +128,15 @@ int libswd_log_level_inherit(libswd_ctx_t *libswdctx, int loglevel){
 
 /** By default we want to use internal logging mechanisms.
  * It is possible however to use target program mechanisms to log messages.
+ * In order to correctly parse variable number of arguments we need to use
+ * dedicated libswd_log_internal_va() function...
  */
 int libswd_log(libswd_ctx_t *libswdctx, libswd_loglevel_t loglevel, char *msg, ...){
- return libswd_log_internal(libswdctx, loglevel, msg);
-}
+ int retval;
+ va_list ap;
+ va_start(ap, msg);
+ retval=libswd_log_internal_va(libswdctx, loglevel, msg, ap);
+ va_end(ap);
+ return retval;
+};
 
