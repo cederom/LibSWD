@@ -98,7 +98,8 @@ int libswd_app_print_banner(void){
 
 int libswd_app_print_usage(void){
  printf(" Available options: \n");
- printf("  -s : Silent mode, no verbose output\n");
+ printf("  -l : Use this log level (min=0..6=max)\n");
+ printf("  -s : Silent mode, no verbose output (equals '-l 0')\n");
  printf("  -v : Interface VID (default 0x0403 if not specified)\n");
  printf("  -p : Interface PID (default 0xbbe2 if not specified)\n");
  printf("  -h : Display this help\n");
@@ -114,17 +115,20 @@ int libswd_app_print_usage(void){
 int main(int argc, char **argv){
  char *cmd;
  int retval=0, vid=0, pid=0, vid_default=0x0403, pid_default=0xbbe2;
- int i, verbose=1;
+ int i, loglevel=LIBSWD_LOGLEVEL_DEFAULT;
  libswd_ctx_t *libswdctx;
  struct ftdi_context *ftdi;
 
 
  /* Handle program execution arguments. */
- while ( (i=getopt(argc,argv,"hsp:v:"))!=-1 ) {
+ while ( (i=getopt(argc,argv,"hsl:p:v:"))!=-1 ) {
   switch (i) {
    case 's':
-    verbose=0;
+    loglevel=LIBSWD_LOGLEVEL_SILENT;
     break;
+   case 'l':
+    loglevel=atol(optarg);
+    break; 
    case 'v':
     vid=strtol(optarg, (char**)NULL, 16);
     break;
@@ -143,36 +147,38 @@ int main(int argc, char **argv){
  }
 
  /* Set default values and internals. */
- if (verbose) libswd_app_print_banner();
+ if (loglevel) libswd_app_print_banner();
  if (vid==0) vid=vid_default;
  if (pid==0) pid=pid_default;
 
  /* Initialize FTDI Interface first. */
- if (verbose) printf("Initializing LibFTDI...");
+ if (loglevel) printf("Initializing LibFTDI...");
  ftdi=ftdi_new();
  if (ftdi==NULL) {
   printf("ERROR: Cannot initialize LibFTDI!\n");
   retval -1;
   goto quit;
- } else if (verbose) printf("OK\n");
+ } else if (loglevel) printf("OK\n");
+
 
  /* Open FTDI interface with given VID:PID pair. */
- if (verbose) printf("Opening FTDI interface USB[%04X:%04X]...", vid, pid);
+ if (loglevel) printf("Opening FTDI interface USB[%04X:%04X]...", vid, pid);
  retval=ftdi_usb_open(ftdi, vid, pid);
  if (retval<0){
-  if (verbose) printf("FAILED (%s)\n", ftdi_get_error_string(ftdi));
+  if (loglevel) printf("FAILED (%s)\n", ftdi_get_error_string(ftdi));
   goto quit;
- } else if (verbose) printf("OK\n");
+ } else if (loglevel) printf("OK\n");
 
  /* Initialize LibSWD. */
  libswdctx=libswd_init();
  if (libswdctx==NULL){
-  if (verbose) printf("ERROR: Cannot initialize libswd!\n");
+  if (loglevel) printf("ERROR: Cannot initialize libswd!\n");
   retval -1;
   goto quit;
  }
- if (LIBSWD_OK!=libswd_log_level_set(libswdctx, LIBSWD_LOGLEVEL_SILENT)){
-  if (verbose) printf("Cannot set silent loglevel for LibSWD!\n");
+ if (LIBSWD_OK!=libswd_log_level_set(libswdctx, loglevel)){
+  if (loglevel) printf("Cannot set %s loglevel for LibSWD!\n",\
+                       libswd_log_level_string(loglevel));
   goto quit;
  }
 
