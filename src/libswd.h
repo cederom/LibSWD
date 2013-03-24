@@ -660,6 +660,7 @@ extern int libswd_log(libswd_ctx_t *libswdctx, libswd_loglevel_t loglevel, char 
 int libswd_log_internal(libswd_ctx_t *libswdctx, libswd_loglevel_t loglevel, char *msg, ...);
 int libswd_log_internal_va(libswd_ctx_t *libswdctx, libswd_loglevel_t loglevel, char *msg, va_list ap);
 int libswd_log_level_set(libswd_ctx_t *libswdctx, libswd_loglevel_t loglevel);
+int libswd_log_level_get(libswd_ctx_t *libswdctx);
 extern int libswd_log_level_inherit(libswd_ctx_t *libswdctx, int loglevel);
 const char *libswd_log_level_string(libswd_loglevel_t loglevel);
 const char *libswd_operation_string(libswd_operation_t operation);

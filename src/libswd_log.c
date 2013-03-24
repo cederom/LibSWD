@@ -105,6 +105,15 @@ int libswd_log_level_set(libswd_ctx_t *libswdctx, libswd_loglevel_t loglevel){
  return LIBSWD_OK;
 }
 
+/** Return integer log level value.
+ * \param *libswdctx swd context.
+ * \return integer log level value or LIBSWD_ERROR code on failure.
+ */
+int libswd_log_level_get(libswd_ctx_t *libswdctx){
+ if (libswdctx==NULL) return LIBSWD_ERROR_NULLCONTEXT;
+ return libswdctx->config.loglevel;
+}
+
 /** Helper function that returns loglevel name string for logging purposes.
  * \param loglevel is the libswd_loglevel_t code to produce a string.
  * \return char* loglevel name sring array.
