@@ -80,6 +80,7 @@ char *libswd_error_string(libswd_error_code_t error){
   case LIBSWD_ERROR_QUEUENOTFREE: return "[LIBSWD_ERROR_QUEUENOTFREE] cannot free resources, queue not empty";
   case LIBSWD_ERROR_TRANSPORT:    return "[LIBSWD_ERROR_TRANSPORT] transport error or undefined";
   case LIBSWD_ERROR_DIRECTION:    return "[LIBSWD_ERROR_DIRECTION] MSb/LSb direction error";
+  case LIBSWD_ERROR_LOGLEVEL:     return "[LIBSWD_ERROR_LOGLEVEL] invalid loglevel value";
   case LIBSWD_ERROR_UNHANDLED:    return "[LIBSWD_ERROR_UNHANDLED] cannot handle that error automatically";
   case LIBSWD_ERROR_MAXRETRY:     return "[LIBSWD_ERROR_MAXRETRY] maximum retry count exceeded";
   case LIBSWD_ERROR_CLISYNTAX:    return "[LIBSWD_ERROR_CLISYNTAX] CLI syntax error, see '?' for help";
