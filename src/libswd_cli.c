@@ -45,13 +45,13 @@
 
 int libswd_cli_print_usage(libswd_ctx_t *libswdctx){
  if (libswdctx==NULL) return LIBSWD_ERROR_NULLPOINTER;
- libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO, "LIBSWD_I: Available LibSWD CLI commands:\n");
- libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO, "LIBSWD_I:  [h]elp / [?]\n");
- libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO, "LIBSWD_I:  [d]etect\n");
- libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO, "LIBSWD_I:  [l]oglevel newloglevel\n");
- libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO, "LIBSWD_I:  [r]ead [d]ap/[a]p/[m]emap address count\n");
- libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO, "LIBSWD_I:  [w]rite [d]ap/[a]p/[m]emap address data[0] .. data[n]\n");
- libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO, "\n");
+ libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL, "LIBSWD_N: Available LibSWD CLI commands:\n");
+ libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL, "LIBSWD_N:  [h]elp / [?]\n");
+ libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL, "LIBSWD_N:  [d]etect\n");
+ libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL, "LIBSWD_N:  [l]oglevel <newloglevel>\n");
+ libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL, "LIBSWD_N:  [r]ead [d]ap/[a]p/[m]emap address count\n");
+ libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL, "LIBSWD_N:  [w]rite [d]ap/[a]p/[m]emap address data[0] .. data[n]\n");
+ libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL, "\n");
  return LIBSWD_OK;
 }
 
