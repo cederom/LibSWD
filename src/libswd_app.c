@@ -99,7 +99,7 @@ int libswd_app_print_banner(void){
 int libswd_app_print_usage(void){
  printf(" Available options: \n");
  printf("  -l : Use this log level (min=0..6=max)\n");
- printf("  -s : Silent mode, no verbose output (equals '-l 0')\n");
+ printf("  -q : Quiet mode, no verbose output (equals '-l 0')\n");
  printf("  -v : Interface VID (default 0x0403 if not specified)\n");
  printf("  -p : Interface PID (default 0xbbe2 if not specified)\n");
  printf("  -h : Display this help\n");
@@ -115,15 +115,15 @@ int libswd_app_print_usage(void){
 int main(int argc, char **argv){
  char *cmd;
  int retval=0, vid=0, pid=0, vid_default=0x0403, pid_default=0xbbe2;
- int i, loglevel=LIBSWD_LOGLEVEL_DEFAULT;
+ int i, loglevel=LIBSWD_LOGLEVEL_DEFAULT, ftdi_channel=INTERFACE_ANY;
  libswd_ctx_t *libswdctx;
  struct ftdi_context *ftdi;
 
 
  /* Handle program execution arguments. */
- while ( (i=getopt(argc,argv,"hsl:p:v:"))!=-1 ) {
+ while ( (i=getopt(argc,argv,"hql:p:v:"))!=-1 ) {
   switch (i) {
-   case 's':
+   case 'q':
     loglevel=LIBSWD_LOGLEVEL_SILENT;
     break;
    case 'l':
