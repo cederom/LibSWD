@@ -87,8 +87,8 @@ int libswd_cli(libswd_ctx_t *libswdctx, char *command){
      retval=libswd_log_level_set(libswdctx, (libswd_loglevel_t)loglevel_new);
      if (retval<0) {
       libswd_log(libswdctx, LIBSWD_LOGLEVEL_ERROR, \
-                 "LIBSWD_E: libswd_cli(@libswdctx=%p, loglevel=%d/%s): %s\n", \
-                 (void*)libswdctx, loglevel_new, \
+                 "LIBSWD_E: libswd_cli(libswdctx=@%p, command=%s): Cannot set loglevel %d/%s): %s\n",\
+                 (void*)libswdctx, (void*)command, loglevel_new, \
                  libswd_log_level_string((libswd_loglevel_t)loglevel_new), \
                  libswd_error_string(retval) );
      }
@@ -102,11 +102,22 @@ int libswd_cli(libswd_ctx_t *libswdctx, char *command){
    libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL, "LOGLEVEL=%d\n", (int)libswdctx->config.loglevel);
    continue;
 
+  } else if ( strncmp(cmd,"d",1)==0 || strncmp(cmd,"detect",6)==0 ){
+   int *idcode;
+   retval=libswd_dap_detect(libswdctx, LIBSWD_OPERATION_EXECUTE, &idcode);
+   if (retval<0){
+    libswd_log(libswdctx, LIBSWD_LOGLEVEL_ERROR,\
+               "LIBSWD_E: libswd_cli(libswdctx=@%p, command=%s): Cannot read IDCODE (%s)...\n",\
+               (void*)libswdctx, command, libswd_error_string(retval)); 
+   }  
+   cmd=strtok(NULL,command);
+   continue;
+
   } else if ( strncmp(cmd,"r",1)==0 || strncmp(cmd,"read",4)==0 ){
    printf("LIBSWD READ\n");
 
   } else {
-   libswd_log(libswdctx, LIBSWD_LOGLEVEL_ERROR, "LIBSWD_E: libswd_cli(@libswdctx=%p, @command=%p): %s\n", (void*)libswdctx, (void*)command, libswd_error_string(LIBSWD_ERROR_CLISYNTAX));
+   libswd_log(libswdctx, LIBSWD_LOGLEVEL_ERROR, "LIBSWD_E: libswd_cli(libswdctx=@%p, command=%s): %s\n", (void*)libswdctx, command, libswd_error_string(LIBSWD_ERROR_CLISYNTAX));
    libswd_cli_print_usage(libswdctx);
    return LIBSWD_ERROR_CLISYNTAX; 
   } 
