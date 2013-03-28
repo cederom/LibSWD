@@ -543,9 +543,11 @@ typedef struct {
 
 /** Interface Driver structure. It holds pointer to the driver structure that
  * keeps driver information necessary to work with the physical interface.
+ * Also dedicated *ctx field is available to store driver/application context.
  */
 typedef struct {
  void *device;
+ void *ctx;
 } libswd_driver_t;
 
 /** Boolean values definition */
