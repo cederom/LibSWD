@@ -24,5 +24,6 @@ libswd_la_SOURCES = \
  libswd_cli.c
 
 libswd_SOURCES = \
+ libswd_app.h \
  libswd_app.c
 libswd_LDADD = -lswd -lreadline -lftdi
