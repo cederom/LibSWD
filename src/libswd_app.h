@@ -43,9 +43,10 @@
 #define LIBSWDAPP_INTERFACE_SIGNAL_NAME_MINLEN	1
 #define LIBSWDAPP_INTERFACE_SIGNAL_NAME_MAXLEN	32
 #define LIBSWDAPP_INTERFACE_NAME_MAXLEN           32
+#define LIBSWDAPP_INTERFACE_CONFIG_NAME_MAXLEN    32
 #define LIBSWDAPP_INTERFACE_VID_DEFAULT           0x0403
 #define LIBSWDAPP_INTERFACE_PID_DEFAULT           0xbbe2
-#define LIBSWDAPP_INTERFACE_CONFIG_NAME_MAXLEN    32
+#define LIBSWDAPP_INTERFACE_NAME_DEFAULT          "ktlink"
 
 typedef struct libswdapp_interface_signal {
 	char *name;                         /// Signal name string.
@@ -62,21 +63,26 @@ typedef struct libswdapp_context {
 } libswdapp_context_t;
 
 typedef struct libswdapp_interface {
- char *name;
+ char name[LIBSWDAPP_INTERFACE_NAME_MAXLEN];
  struct ftdi_context *ftdictx;
  enum ftdi_interface ftdi_channel;
+ unsigned char ftdi_latency;
  int vid, pid, vid_forced, pid_forced;
  libswdapp_interface_signal_t *signal;
  int (*init)(libswdapp_context_t *libswdappctx);
  int (*deinit)(libswdapp_context_t *libswdappctx);
+ int (*freq)(libswdapp_context_t *libswdappctx, int freq);
+ char initialized;
 } libswdapp_interface_t;
 
 typedef struct libswdapp_interface_config {
- char *name;
+ char name[LIBSWDAPP_INTERFACE_NAME_MAXLEN];
  char *description;
  int (*init)(libswdapp_context_t *libswdappctx);
  int (*deinit)(libswdapp_context_t *libswdappctx);
+ int (*freq)(libswdapp_context_t *libswdappctx, int freq);
  int vid, pid;
+ unsigned char ftdi_latency;
 } libswdapp_interface_config_t;
 
 typedef enum libswdapp_interface_operation {
@@ -119,6 +125,7 @@ static const libswdapp_interface_config_t libswdapp_interface_configs[] = {
   .deinit      = libswdapp_interface_ftdi_deinit,
   .vid         = 0x0403,
   .pid         = 0xbbe2, 
+  .ftdi_latency= 1,
  },
  {
    .name = NULL,

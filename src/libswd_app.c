@@ -58,6 +58,8 @@ void libswdapp_shutdown(int sig)
 {
  int retval=appctx->retval;
  printf("\nShutting down...\n");
+ if (appctx->interface->deinit) appctx->interface->deinit;
+ libswdapp_interface_signal_del(appctx,"*");
  if (appctx->interface->ftdictx!=NULL) ftdi_free(appctx->interface->ftdictx);
  if ((appctx->interface)!=NULL) free(appctx->interface);
  if (appctx->libswdctx!=NULL) libswd_deinit(appctx->libswdctx);
@@ -82,7 +84,7 @@ int libswdapp_print_usage(void){
  printf("  -v : Interface VID (default 0x0403 if not specified)\n");
  printf("  -p : Interface PID (default 0xbbe2 if not specified)\n");
  printf("  -h : Display this help\n");
- printf("\nPress Ctrl+C on prompt to exit application.\n");
+ printf("\n Press Ctrl+C on prompt to exit application.\n");
  printf("\n");
  libswdapp_handle_command_signal_usage();
  return LIBSWD_OK;
@@ -96,7 +98,7 @@ int libswdapp_print_usage(void){
  */
 int main(int argc, char **argv){
  char *cmd;
- int i, retval=0, vid_default=0x0403, pid_default=0xbbe2;
+ int i, retval=0;
  libswdapp_context_t *libswdappctx;
 
  // Initialize application context in memory.
@@ -115,9 +117,6 @@ int main(int argc, char **argv){
   goto quit;
  }
  libswdappctx->loglevel=LIBSWD_LOGLEVEL_DEFAULT;
- libswdappctx->interface->ftdi_channel=INTERFACE_ANY;
- libswdappctx->interface->vid_forced=0;
- libswdappctx->interface->pid_forced=0;
 
  // Catch SIGINT signal and call shutdown.
  appctx=libswdappctx;
@@ -142,6 +141,7 @@ int main(int argc, char **argv){
     break;
    case 'i':
     strncpy(libswdappctx->interface->name, optarg, LIBSWDAPP_INTERFACE_NAME_MAXLEN);
+printf("Interface cmdparam: %s\n", optarg);
     break;
    case 's':
     printf("S ARG: %s\n", optarg);
@@ -162,7 +162,10 @@ int main(int argc, char **argv){
  if (libswdappctx->loglevel) libswdapp_print_banner();
 
  // Initialize the Interface
- libswdapp_handle_command_interface(libswdappctx, NULL);
+ retval=libswdapp_handle_command_interface(libswdappctx, NULL);
+ if (retval!=LIBSWD_OK)
+  printf("WARNING: Cannot initialize '%s' interface!\n",
+         libswdappctx->interface->name);
 
  // Initialize LibSWD.
  libswdappctx->libswdctx=libswd_init();
@@ -172,6 +175,9 @@ int main(int argc, char **argv){
   retval=LIBSWD_ERROR_NULLCONTEXT;
   goto quit;
  }
+ // Store program Context for use with interface drivers.
+ libswdappctx->libswdctx->driver->ctx=libswdappctx;
+ // Set default LogLevel.
  if (LIBSWD_OK!=libswd_log_level_set(libswdappctx->libswdctx,libswdappctx->loglevel))
  {
   if (libswdappctx->loglevel)
@@ -332,9 +338,12 @@ int libswdapp_handle_command_signal(libswdapp_context_t *libswdappctx, char *cmd
 /** It will prepare interface for use or fail.
  * If an interface is already configured, it will check if requested interface
  * is available and reinitialize driver (remove old driver and load new one).
+ * cmd==NULL means that we need to load default interface (defined in header file)
+ * or we need to (re)initialize an interface that is already set in interface->name.
  */
 int libswdapp_handle_command_interface(libswdapp_context_t *libswdappctx, char *cmd){
  int retval, i, interface_number;
+ char *param;
 
  // Verify the working context.
  if (!libswdappctx)
@@ -342,62 +351,81 @@ int libswdapp_handle_command_interface(libswdapp_context_t *libswdappctx, char *
   printf("ERROR: libswdapp_hanle_command_interface() Null libswdappctx context!\n");
   return LIBSWD_ERROR_NULLCONTEXT;
  }
- // Check if interface structure already exist.
+
+ // If cmd==NULL check if interface name already set, if no use default.
  if (!cmd)
  {
-  printf("ERROR: You must provide an Interface name...\n");
-  return LIBSWD_ERROR_PARAM;
- }
-
- // Print out the interface in use and list of available interfaces.
- if (*cmd=='?')
- {
-  printf("Available Interfaces: ");
-  for (i=0;libswdapp_interface_configs[i].name;i++)
-   printf(" %s\n", libswdapp_interface_configs->name);
-  printf("\n");
- }
-
- retval=0;
- for (i=0;libswdapp_interface_configs[i].name;i++)
-  if (strncasecmp(cmd,libswdapp_interface_configs[i].name,LIBSWDAPP_INTERFACE_NAME_MAXLEN))
+  if (!libswdappctx->interface->name[0]) 
   {
-   retval=1;
+   printf("INFO: Using default interface '%s'...\n", LIBSWDAPP_INTERFACE_NAME_DEFAULT);
+   strncpy(
+           libswdappctx->interface->name,
+           LIBSWDAPP_INTERFACE_NAME_DEFAULT,
+           LIBSWDAPP_INTERFACE_NAME_MAXLEN
+          );
+  }
+ }
+ else
+ {
+  // If cmd!=NULL parse parameters: ? or copy interface name.
+  // But first make sure we have parsed the command already.
+  param=strchr(cmd,' ');
+  if (param) cmd=strncpy(cmd,param+1,LIBSWDAPP_INTERFACE_NAME_MAXLEN);
+  // Print out the list of available interfaces if asked.
+  if (strchr(cmd,'?') || strchr(cmd,'i'))
+  {
+   if (libswdappctx->interface->initialized)
+    printf("Active interface: %s\n", libswdappctx->interface->name);
+   printf("Available Interfaces:");
+   for (i=0;libswdapp_interface_configs[i].name[0];i++)
+    printf(" %s", libswdapp_interface_configs[i].name);
+   printf("\n");
+   return LIBSWD_OK;
+  } else strncpy(libswdappctx->interface->name,cmd,LIBSWDAPP_INTERFACE_NAME_MAXLEN);
+ } 
+
+ // At this point we have the interface name stored in the
+ // libswdappctx->interface->name. See if its supported.
+ interface_number=-1;
+ for (i=0;libswdapp_interface_configs[i].name[0];i++)
+  if (!strncasecmp(libswdappctx->interface->name,libswdapp_interface_configs[i].name,LIBSWDAPP_INTERFACE_NAME_MAXLEN) )
+  {
+   interface_number=i;
    break;
   }
- if (!retval)
+ if (interface_number==-1)
  {
-  printf("ERROR: Interface '%s' not supported!\n", cmd);
+  printf("ERROR: Interface '%s' is not supported!\n", libswdappctx->interface->name);
   return LIBSWD_ERROR_PARAM;
  }
- interface_number=i;
- printf("Loading '%s' interface...\n", libswdapp_interface_configs[interface_number]);
+ printf("Loading '%s' interface...", libswdapp_interface_configs[interface_number].name);
 
  // Unload existing interface settings if necessary.
- if (libswdappctx->interface->name)
-  if (libswdappctx->loglevel)
-   printf("Unloading existing '%s' interface...\n", libswdappctx->interface->name);
+ if (!libswdappctx->interface->name) return LIBSWD_ERROR_DRIVER;
  if (libswdappctx->interface->deinit)
   libswdappctx->interface->deinit(libswdappctx);
  if (libswdappctx->interface->ftdictx)
   ftdi_deinit(libswdappctx->interface->ftdictx);
  if (libswdappctx->interface->signal)
-  libswdapp_interface_signal_del(libswdappctx, "del:*"); 
+  libswdapp_interface_signal_del(libswdappctx, "*"); 
  libswdappctx->interface->init=NULL;
  libswdappctx->interface->deinit=NULL;
+ libswdappctx->interface->initialized=0;
 
  // Load selected interface configuration.
- libswdappctx->interface->name   = libswdapp_interface_configs[interface_number].name;
+ strncpy(libswdappctx->interface->name,libswdapp_interface_configs[interface_number].name,LIBSWDAPP_INTERFACE_NAME_MAXLEN);
  libswdappctx->interface->init   = libswdapp_interface_configs[interface_number].init;
  libswdappctx->interface->deinit = libswdapp_interface_configs[interface_number].deinit;
  libswdappctx->interface->vid    = libswdapp_interface_configs[interface_number].vid;
  libswdappctx->interface->pid    = libswdapp_interface_configs[interface_number].pid;
+ libswdappctx->interface->ftdi_latency=libswdapp_interface_configs[interface_number].ftdi_latency;
  if (libswdappctx->interface->vid_forced)
   libswdappctx->interface->vid    = libswdappctx->interface->vid_forced;
  if (libswdappctx->interface->pid_forced)
   libswdappctx->interface->pid    = libswdappctx->interface->pid_forced;
+ printf("OK\n");
 
- // Initialize FTDI Interface first.
+ // Initialize LibFTDI Context.
  if (libswdappctx->loglevel) printf("Initializing LibFTDI...");
  libswdappctx->interface->ftdictx=ftdi_new();
  if (libswdappctx->interface->ftdictx==NULL)
@@ -418,29 +446,30 @@ int libswdapp_handle_command_interface(libswdapp_context_t *libswdappctx, char *
                      );
  if (retval<0)
  {
-  if (libswdappctx->loglevel) printf("FAILED (%s)\n",
-                       ftdi_get_error_string(libswdappctx->interface->ftdictx));
+  if (libswdappctx->loglevel)
+    printf("FAILED (%s)\n",
+           ftdi_get_error_string(libswdappctx->interface->ftdictx));
   return LIBSWD_ERROR_DRIVER;
  }
  else
  {
-  if (libswdappctx->loglevel)
+  if (libswdappctx->interface->ftdictx->type==TYPE_R)
   {
-   if (libswdappctx->interface->ftdictx->type==TYPE_R)
+   unsigned int chipid;
+   retval=ftdi_read_chipid(libswdappctx->interface->ftdictx, &chipid);
+   if (retval<0)
    {
-    unsigned int chipid;
-    retval=ftdi_read_chipid(libswdappctx->interface->ftdictx, &chipid);
-    if (retval<0)
-    {
-     printf("OK\n");
-    }
-    else printf("OK (ChipId=%X)\n", chipid); 
+    if (libswdappctx->loglevel) printf("OK\n");
    }
-  }
+   else if (libswdappctx->loglevel) printf("OK (ChipId=%X)\n", chipid); 
+  } else if (libswdappctx->loglevel) printf("OK\n");
  }
 
+ libswdapp_interface_ftdi_freq(libswdappctx, 1000000);
  // Now call the interface specific initialization routine.
- return libswdappctx->interface->init(libswdappctx);
+ retval=libswdappctx->interface->init(libswdappctx);
+ if (retval==LIBSWD_OK) libswdappctx->interface->initialized=1; 
+ return retval;
 }
 
 
@@ -576,20 +605,31 @@ int libswdapp_interface_signal_add(libswdapp_context_t *libswdappctx, char *name
  */
 int libswdapp_interface_signal_del(libswdapp_context_t *libswdappctx, char *name)
 {
- printf("DEBUG: Interface signal: deleting signal '%s'...", name);
+ //printf("DEBUG: Interface signal: deleting signal '%s'...\n", name);
  // Check if interface any signal exist
  if (!libswdappctx->interface->signal)
  {
-  printf("ERROR: Interface signal - list is empty!");
-  return LIBSWD_ERROR_DRIVER;
+  //printf("WARNING: Interface signal list is empty!\n");
+  return LIBSWD_ERROR_NULLPOINTER;
  }
  // Check if signal name is correct.
  if (!name || *name==' ')
  {
-  printf("ERROR: Interface signal - name cannot be empty!");
+  printf("ERROR: Interface signal name cannot be empty!\n");
   return LIBSWD_ERROR_DRIVER;
  }
  libswdapp_interface_signal_t *delsig = NULL, *prevsig = NULL;
+ // See if we want to remove all signals ('*' name).
+ if (strchr(name,'*'))
+ {
+  for (delsig=libswdappctx->interface->signal;delsig;delsig=delsig->next)
+  {
+   free(delsig->name); 
+   free(delsig);
+  }
+  libswdappctx->interface->signal=NULL; 
+  return LIBSWD_OK;
+ }
  // look for the signal name on the list.
  delsig = libswdapp_interface_signal_find(libswdappctx, name);
  // return error if signal is not on the list.
@@ -805,6 +845,27 @@ int libswdapp_interface_transfer(libswdapp_context_t *libswdappctx, int bits, ch
  return bit;
 }
 
+
+/** Set interface frequency in Hz.
+ */
+int libswdapp_interface_ftdi_freq(libswdapp_context_t *libswdappctx, int freq)
+{
+ unsigned int reg;
+ char buf[3], bytes_written;
+
+ if (!libswdappctx || !libswdappctx->interface || !libswdappctx->interface->ftdictx)
+  return LIBSWD_ERROR_NULLPOINTER;
+
+ reg=((12000000/freq)-1)/2;
+ buf[0] = 0x86;
+ buf[1] = reg&0xff;
+ buf[2] = (reg>>8)&0xff;
+ bytes_written = ftdi_write_data(libswdappctx->interface->ftdictx, buf, 3);
+ if (bytes_written<0 || bytes_written!=3) return bytes_written;
+ return LIBSWD_OK; 
+}
+
+
 //KT-LINK Interface Init
 int libswdapp_interface_ftdi_init_ktlink(libswdapp_context_t *libswdappctx)
 {
@@ -826,7 +887,7 @@ int libswdapp_interface_ftdi_init_ktlink(libswdapp_context_t *libswdappctx)
   return LIBSWD_ERROR_DRIVER;
  }
 
- if (ftdi_set_latency_timer(libswdappctx->interface->ftdictx,ftdi_latency)<0){
+ if (ftdi_set_latency_timer(libswdappctx->interface->ftdictx,libswdappctx->interface->ftdi_latency)<0){
   printf("ERROR: Unable to set latency timer!\n");
   return LIBSWD_ERROR_DRIVER;
  }
@@ -879,7 +940,7 @@ int libswdapp_interface_ftdi_init_ktlink(libswdapp_context_t *libswdappctx)
 
  /* Additional bit-bang signals should be placed in a configuration file. */
 
- printf("KT-LINK SWD-Mode initialization complete...\n");
+ printf("KT-LINK SWD-Mode initialization complete!\n");
  return LIBSWD_OK;
 }
 
@@ -927,7 +988,7 @@ int libswd_drv_mosi_8(libswd_ctx_t *libswdctx, libswd_cmd_t *cmd, char *data, in
 	for (i = 0; i < 8; i++)
 		mosidata[(nLSBfirst == LIBSWD_DIR_LSBFIRST) ? i : (bits - 1 - i)] = ((1 << i) & (*data)) ? 1 : 0;
 	/* Then send that array into interface hardware. */
-	res = libswdapp_interface_transfer(NULL, bits, mosidata, misodata, 0);
+	res = libswdapp_interface_transfer(libswdctx->driver->ctx, bits, mosidata, misodata, 0);
 	if (res < 0)
 		return LIBSWD_ERROR_DRIVER;
 
@@ -964,7 +1025,7 @@ int libswd_drv_mosi_32(libswd_ctx_t *libswdctx, libswd_cmd_t *cmd, int *data, in
 	/* UrJTAG drivers shift data LSB-First. */
 	for (i = 0; i < 32; i++)
 		mosidata[(nLSBfirst == LIBSWD_DIR_LSBFIRST) ? i : (bits - 1 - i)] = ((1 << i) & (*data)) ? 1 : 0;
-	res = libswdapp_interface_transfer(NULL, bits, mosidata, misodata, 0);
+	res = libswdapp_interface_transfer(libswdctx->driver->ctx, bits, mosidata, misodata, 0);
 	if (res < 0)
 		return LIBSWD_ERROR_DRIVER;
 	return res;
@@ -994,7 +1055,7 @@ int libswd_drv_miso_8(libswd_ctx_t *libswdctx, libswd_cmd_t *cmd, char *data, in
 	static signed int res;
 	static char misodata[8], mosidata[8];
 
-	res = libswdapp_interface_transfer(NULL, bits, mosidata, misodata, LIBSWD_DIR_LSBFIRST);
+	res = libswdapp_interface_transfer(libswdctx->driver->ctx, bits, mosidata, misodata, LIBSWD_DIR_LSBFIRST);
 	if (res < 0)
 		return LIBSWD_ERROR_DRIVER;
 	/* Now we need to reconstruct the data byte from shifted in LSBfirst byte array. */
@@ -1031,7 +1092,7 @@ int libswd_drv_miso_32(libswd_ctx_t *libswdctx, libswd_cmd_t *cmd, int *data, in
 	static signed int res;
 	static char misodata[32], mosidata[32];
 
-	res = libswdapp_interface_transfer(NULL, bits, mosidata, misodata, LIBSWD_DIR_LSBFIRST);
+	res = libswdapp_interface_transfer(libswdctx->driver->ctx, bits, mosidata, misodata, LIBSWD_DIR_LSBFIRST);
 	if (res < 0)
 		return LIBSWD_ERROR_DRIVER;
 	/* Now we need to reconstruct the data byte from shifted in LSBfirst byte array. */
@@ -1045,8 +1106,7 @@ int libswd_drv_miso_32(libswd_ctx_t *libswdctx, libswd_cmd_t *cmd, int *data, in
 /**
  * This function sets interface buffers to MOSI direction.
  * MOSI (Master Output Slave Input) is a SWD Write operation.
- * OpenOCD use global "struct jtag_interface" pointer as interface driver.
- * OpenOCD driver must support "RnW" signal to drive output buffers for TRN.
+ * Driver must support "RnW" signal to drive output buffers for TRN.
  *
  * \param *libswdctx is the swd context to work on.
  * \param bits specify how many clock cycles must be used for TRN.
@@ -1062,12 +1122,12 @@ int libswd_drv_mosi_trn(libswd_ctx_t *libswdctx, int bits)
 	int res, val = 0;
 	static char buf[LIBSWD_TURNROUND_MAX_VAL];
 	/* Use driver method to set low (write) signal named RnW. */
-	res = libswdapp_interface_bitbang(NULL, "RnW", 0, &val);
+	res = libswdapp_interface_bitbang(libswdctx->driver->ctx, "RnW", 0, &val);
 	if (res < 0)
 		return LIBSWD_ERROR_DRIVER;
 
 	/* Clock specified number of bits for proper TRN transaction. */
-	res = libswdapp_interface_transfer(NULL, bits, buf, buf, 0);
+	res = libswdapp_interface_transfer(libswdctx->driver->ctx, bits, buf, buf, 0);
 	if (res < 0)
 		return LIBSWD_ERROR_DRIVER;
 
@@ -1095,12 +1155,12 @@ int libswd_drv_miso_trn(libswd_ctx_t *libswdctx, int bits)
  static char buf[LIBSWD_TURNROUND_MAX_VAL];
 
  /* Use driver method to set high (read) signal named RnW. */
- res = libswdapp_interface_bitbang(NULL, "RnW", 0xFFFFFFFF, &val);
+ res = libswdapp_interface_bitbang(libswdctx->driver->ctx, "RnW", 0xFFFFFFFF, &val);
  if (res < 0)
  return LIBSWD_ERROR_DRIVER;
 
  /* Clock specified number of bits for proper TRN transaction. */
- res = libswdapp_interface_transfer(NULL, bits, buf, buf, 0);
+ res = libswdapp_interface_transfer(libswdctx->driver->ctx, bits, buf, buf, 0);
  if (res < 0)
  return LIBSWD_ERROR_DRIVER;
 
