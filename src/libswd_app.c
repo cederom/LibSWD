@@ -83,10 +83,10 @@ int libswdapp_print_usage(void){
  printf("  -s : Interface Signal manipulation (multiple choice)\n");
  printf("  -v : Interface VID (default 0x0403 if not specified)\n");
  printf("  -p : Interface PID (default 0xbbe2 if not specified)\n");
- printf("  -h : Display this help\n");
- printf("\n Press Ctrl+C on prompt to exit application.\n");
- printf("\n");
+ printf("  -h : Display this help\n\n");
  libswdapp_handle_command_signal_usage();
+ printf(" Press Ctrl+C on prompt to exit application.\n");
+ printf("\n");
  return LIBSWD_OK;
 }
 
@@ -212,13 +212,12 @@ quit:
  * \return Always LIBSWD_OK.
  */
 int libswdapp_handle_command_signal_usage(void){
- printf("LibSWD Application Interface Signal ('s') usage:\n");
- printf(" list              lists available signals and cached values\n");
- printf(" add:<name>=<mask> adds signal with given <name>\n");
- printf(" del:<name>        removes signal with given <name>\n");
- printf(" find:<name>       find given signal\n");
- printf(" <name>=<value>    write <value> to given <name> signal mask\n");
- printf(" <name>            reads the <name> signal value\n");
+ printf(" LibSWD Application Interface Signal ('[s]ignal') usage:\n");
+ printf("  list              lists available signals and cached values\n");
+ printf("  add:<name>=<mask> adds signal with given <name>\n");
+ printf("  del:<name>        removes signal with given <name>\n");
+ printf("  <name>=<value>    write <value> to given <name> signal mask\n");
+ printf("  <name>            reads the <name> signal value\n");
  printf("\n");
  return LIBSWD_OK;
 }
@@ -229,109 +228,56 @@ int libswdapp_handle_command_signal_usage(void){
  * \return LIBSWD_OK on success, negative value LIBSWD_ERROR code otehrwise.
  */
 int libswdapp_handle_command_signal(libswdapp_context_t *libswdappctx, char *cmd){
- printf("DEBUG: Entering Interface Signal command handler function...");
+ int retval,sigmask;
+ char *signamep, *sigmaskp;
 
- int sigmask;
- char eqloc;
- char *signame;    //[LIBSWDAPP_INTERFACE_SIGNAL_NAME_MAXLEN];
- char *sigmaskstr; //[LIBSWDAPP_INTERFACE_SIGNAL_NAME_MAXLEN];
-
- if (!strncasecmp(cmd,"?",1))
-  return libswdapp_handle_command_signal_usage();
+ if (signamep=strchr(cmd,' '))
+ {
+  strncpy(cmd,signamep+1,LIBSWDAPP_INTERFACE_SIGNAL_NAME_MAXLEN); 
+ } else return libswdapp_handle_command_signal_usage();
 
  if (!strncasecmp(cmd,"list",4))
  {
   libswdapp_interface_signal_t *sig;
   sig = libswdappctx->interface->signal;
-  printf("      Interface Signal Name      |    Mask    |   Value   ");
-  printf("----------------------------------------------------------");
+  printf("      Interface Signal Name      |    Mask    |   Value   \n");
+  printf("----------------------------------------------------------\n");
   while (sig)
   {
-   printf("%32s | 0x%08X | 0x%08X", sig->name, sig->mask, sig->value);
+   printf("%32s | 0x%08X | 0x%08X\n", sig->name, sig->mask, sig->value);
    sig = sig->next;
   }
   return LIBSWD_OK;
  }
+  // Now split elements and parse into variables.
+  cmd=strtok(cmd,":=");
+  if (!strncmp(cmd,"del",3))
+  {
+   signamep=strtok(NULL,":");
+   if (!signamep) goto libswdapp_handle_command_signal_error;
+   retval=libswdapp_interface_signal_del(libswdappctx, signamep);
+   if (retval!=LIBSWD_OK)
+    printf("WARNING: Cannot remove signal '%s'!\n", signamep);
+    return retval;
+  }
+  else if (!strncmp(cmd,"add",3))
+  {
+   signamep=strtok(NULL,"=");
+   sigmaskp=strtok(NULL,"=");
+   if (!signamep || !sigmaskp) goto libswdapp_handle_command_signal_error;
+   errno=LIBSWD_OK;
+   sigmask=strtol(sigmaskp,NULL,16);
+   if (errno!=LIBSWD_OK) goto libswdapp_handle_command_signal_error;
+printf("SIGNAME=%s, SIGMASK=%s (%x)\n",signamep, sigmaskp, sigmask);
+   retval=libswdapp_interface_signal_add(libswdappctx, signamep, sigmask);
+   if (retval!=LIBSWD_OK)
+    printf("WARNING: Cannot add '%s' signal with '%x' mask!\n", signamep, sigmaskp, sigmask);
+   return retval;
+  } 
 
- // Extract signal name from add/del/find commands.
- if (
-     !strncasecmp(cmd,"add",3) ||
-     !strncasecmp(cmd,"del",3) ||
-     !strncasecmp(cmd,"find",4)
-    )
- {
-  if (strchr(cmd,':')==0)
-  {
-   printf("ERROR: Syntax Error, see '?' for more information...\n");
-   libswdapp_handle_command_signal_usage();
-   return LIBSWD_ERROR_CLISYNTAX; 
-  }
-  if (strlen(strncpy(signame,&cmd[4],LIBSWDAPP_INTERFACE_SIGNAL_NAME_MAXLEN))==0)
-  {
-   printf("ERROR: Cannot extract signal '%s' name!\n", cmd);  
-   return LIBSWD_ERROR_PARAM;
-  }
- }
- // At this point we have signal name in signame char array.
-
- // Handle signal delete command
- if (!strncasecmp(cmd,"del",3))
-  return libswdapp_interface_signal_add(libswdappctx, signame, sigmask);
-
- // Handle find signal command
- if (!strncasecmp(cmd,"find",4))
- {
-  libswdapp_interface_signal_t *sig;
-  sig=libswdapp_interface_signal_find(libswdappctx, signame);
-  if (sig!=NULL)
-  {
-   printf("%s: mask=0x%08X value=0x%08X\n", sig->name, sig->mask, sig->value);
-   return LIBSWD_OK;
-  } else
-  {
-   printf("Signal '%s' not found!\n", signame);
-   return LIBSWD_ERROR_PARAM;
-  }
- }
-
- if (!strncasecmp(cmd,"add",3))
- {
-  signame=strsep(&cmd,"=");
-  if (!strlen(signame) || !strlen(cmd))
-  {
-   printf("ERROR: Syntax Error, see '?' for more information...\n");
-   libswdapp_handle_command_signal_usage();
-   return LIBSWD_ERROR_CLISYNTAX; 
-  }
-/*  if ((=strchr(cmd,'='))==NULL)
-  {
-   printf("ERROR: Syntax Error, see '?' for more information...\n");
-   libswdapp_handle_command_signal_usage();
-   return LIBSWD_ERROR_CLISYNTAX; 
-  }
-  if (strlen(strncpy(signame,cmd[4],eqloc-4))==0)
-  {
-   printf("ERROR: Cannot extract signal '%s' name!\n", cmd);
-   return LIBSWD_ERROR_PARAM;     
-  }
-  if (strlen(strncpy(sigmaskstr,eqloc,LIBSWDAPP_INTERFACE_SIGNAL_NAME_MAXLEN))==0)
-  {
-   printf("ERROR: Cannot extract signal '%s' mask!\n", cmd);
-   return LIBSWD_ERROR_PARAM; 
-  }
-*/
-  errno=LIBSWD_OK;
-  sigmask=strtol(sigmaskstr,(char**)NULL,16); 
-  if (errno!=LIBSWD_OK)
-  {
-   printf("ERROR: Cannot convert '%s' mask to integer!\n", sigmaskstr);
-   return LIBSWD_ERROR_PARAM;
-  }
-  return libswdapp_interface_signal_add(libswdappctx, signame, sigmask);
- }
-
- // Not above available commands, check if asked for signal value
-  
+libswdapp_handle_command_signal_error:
+ printf("ERROR: Syntax Error, see '?' or '[s]ignal' for more information...\n");
+ return LIBSWD_ERROR_CLISYNTAX;
 }
 
 
@@ -411,6 +357,7 @@ int libswdapp_handle_command_interface(libswdapp_context_t *libswdappctx, char *
  libswdappctx->interface->init=NULL;
  libswdappctx->interface->deinit=NULL;
  libswdappctx->interface->initialized=0;
+ libswdappctx->interface->freq=0;
 
  // Load selected interface configuration.
  strncpy(libswdappctx->interface->name,libswdapp_interface_configs[interface_number].name,LIBSWDAPP_INTERFACE_NAME_MAXLEN);
@@ -465,7 +412,7 @@ int libswdapp_handle_command_interface(libswdapp_context_t *libswdappctx, char *
   } else if (libswdappctx->loglevel) printf("OK\n");
  }
 
- libswdapp_interface_ftdi_freq(libswdappctx, 1000000);
+ libswdapp_interface_ftdi_freq(libswdappctx, libswdappctx->interface->freq);
  // Now call the interface specific initialization routine.
  retval=libswdappctx->interface->init(libswdappctx);
  if (retval==LIBSWD_OK) libswdappctx->interface->initialized=1; 
@@ -852,11 +799,12 @@ int libswdapp_interface_ftdi_freq(libswdapp_context_t *libswdappctx, int freq)
 {
  unsigned int reg;
  char buf[3], bytes_written;
-
  if (!libswdappctx || !libswdappctx->interface || !libswdappctx->interface->ftdictx)
   return LIBSWD_ERROR_NULLPOINTER;
-
- reg=((12000000/freq)-1)/2;
+ if (freq!=0)
+ {
+  reg=((12000000/freq)-1)/2;
+ } else reg=0;
  buf[0] = 0x86;
  buf[1] = reg&0xff;
  buf[2] = (reg>>8)&0xff;

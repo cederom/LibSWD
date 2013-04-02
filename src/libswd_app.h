@@ -67,6 +67,7 @@ typedef struct libswdapp_interface {
  struct ftdi_context *ftdictx;
  enum ftdi_interface ftdi_channel;
  unsigned char ftdi_latency;
+ int frequency;
  int vid, pid, vid_forced, pid_forced;
  libswdapp_interface_signal_t *signal;
  int (*init)(libswdapp_context_t *libswdappctx);
@@ -83,6 +84,7 @@ typedef struct libswdapp_interface_config {
  int (*freq)(libswdapp_context_t *libswdappctx, int freq);
  int vid, pid;
  unsigned char ftdi_latency;
+ int frequency;
 } libswdapp_interface_config_t;
 
 typedef enum libswdapp_interface_operation {
@@ -125,7 +127,8 @@ static const libswdapp_interface_config_t libswdapp_interface_configs[] = {
   .deinit      = libswdapp_interface_ftdi_deinit,
   .vid         = 0x0403,
   .pid         = 0xbbe2, 
-  .ftdi_latency= 1,
+  .ftdi_latency= 10,
+  .frequency   = 10000,
  },
  {
    .name = NULL,
