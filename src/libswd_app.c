@@ -76,7 +76,7 @@ int libswdapp_print_banner(void){
 }
 
 int libswdapp_print_usage(void){
- printf(" Available options (also available via cli): \n");
+ printf(" LibSWD Application available options (also available via cli): \n");
  printf("  -l : Use this log level (min=0..6=max)\n");
  printf("  -q : Quiet mode, no verbose output (equals '-l 0')\n");
  printf("  -i : Interface selection (by name)\n");
@@ -188,15 +188,18 @@ printf("Interface cmdparam: %s\n", optarg);
 
  /* Run the Command Line Interpreter loop. */
  while ((cmd=readline("libswd>")) != NULL){
-  if ( strncmp(cmd,"q",1)==0 || strncmp(cmd,"quit",4)==0 ) break;
-  if (strncmp(cmd,"s",1)==0){
+  if (!strncmp(cmd,"q",1) || !strncmp(cmd,"quit",4)) break;
+  if (!strncmp(cmd,"s",1) || !strncmp(cmd,"signal",5)){
    libswdapp_handle_command_signal(libswdappctx, cmd);
    continue;
   }
-  if (strncmp(cmd,"i",1)==0){
+  if (!strncmp(cmd,"i",1) || !strncmp(cmd,"interface",9)){
    libswdapp_handle_command_interface(libswdappctx, cmd);
    continue;
   }
+  if (!strncmp(cmd,"h",1) || !strncmp(cmd,"help",4))
+   libswdapp_print_usage();
+
   retval=libswd_cli(libswdappctx->libswdctx, cmd);
   if (retval!=LIBSWD_OK) if (retval!=LIBSWD_ERROR_CLISYNTAX) goto quit; 
  }
@@ -223,22 +226,25 @@ int libswdapp_handle_command_signal_usage(void){
 }
 
 /** Handle signal command (cli and commandline parameter).
+ * TODO: Do we want to update cached values of other signals with common mask part.
  * \param *libswdappctx context to work on.
  * \param *cmd is the signal command argument.
  * \return LIBSWD_OK on success, negative value LIBSWD_ERROR code otehrwise.
  */
 int libswdapp_handle_command_signal(libswdapp_context_t *libswdappctx, char *cmd){
  int retval,sigmask;
- char *signamep, *sigmaskp;
+ unsigned int sigval;
+ char *signamep, *sigmaskp, *sigvalp;
+ libswdapp_interface_signal_t *sig;
 
  if (signamep=strchr(cmd,' '))
  {
   strncpy(cmd,signamep+1,LIBSWDAPP_INTERFACE_SIGNAL_NAME_MAXLEN); 
  } else return libswdapp_handle_command_signal_usage();
 
+ // Check if list command, handle if necessary.
  if (!strncasecmp(cmd,"list",4))
  {
-  libswdapp_interface_signal_t *sig;
   sig = libswdappctx->interface->signal;
   printf("      Interface Signal Name      |    Mask    |   Value   \n");
   printf("----------------------------------------------------------\n");
@@ -249,7 +255,9 @@ int libswdapp_handle_command_signal(libswdapp_context_t *libswdappctx, char *cmd
   }
   return LIBSWD_OK;
  }
-  // Now split elements and parse into variables.
+ // Check if add/delete command, handle if necessary.
+ if (strchr(cmd,':'))
+ {
   cmd=strtok(cmd,":=");
   if (!strncmp(cmd,"del",3))
   {
@@ -268,13 +276,57 @@ int libswdapp_handle_command_signal(libswdapp_context_t *libswdappctx, char *cmd
    errno=LIBSWD_OK;
    sigmask=strtol(sigmaskp,NULL,16);
    if (errno!=LIBSWD_OK) goto libswdapp_handle_command_signal_error;
-printf("SIGNAME=%s, SIGMASK=%s (%x)\n",signamep, sigmaskp, sigmask);
    retval=libswdapp_interface_signal_add(libswdappctx, signamep, sigmask);
    if (retval!=LIBSWD_OK)
     printf("WARNING: Cannot add '%s' signal with '%x' mask!\n", signamep, sigmaskp, sigmask);
    return retval;
   } 
-
+ }
+ // Check if signal read/write, handle if necessary.
+ signamep=strtok(cmd,"=");
+ sigvalp=strtok(NULL,"=");
+ if (sigvalp)
+ {
+  if (!strncmp(sigvalp,"hi",2))
+   sigval=(~0);
+  else if (!strncmp(sigvalp,"lo",2))
+   sigval=0;
+  else 
+  {
+   errno=LIBSWD_OK;
+   sigval=strtol(sigvalp,NULL,16);
+   if (errno!=LIBSWD_OK) goto libswdapp_handle_command_signal_error;
+  }
+ }
+ sig=libswdapp_interface_signal_find(libswdappctx, signamep);
+ if (!sig)
+ {
+  printf("ERROR: Signal '%s' not found!\n", signamep);
+  goto libswdapp_handle_command_signal_error;
+ } 
+ if (signamep && sigvalp)
+ {
+  retval=libswdapp_interface_bitbang(libswdappctx, sig->mask, 0, &sigval);
+  if (retval==LIBSWD_OK)
+  {
+   sig->value=sigval;
+   printf("%s[0x%X]=0x%X\n", signamep, sig->mask, sig->value);
+   return LIBSWD_OK;
+  } 
+  return retval;
+ }
+ else if (signamep)
+ {
+  retval=libswdapp_interface_bitbang(libswdappctx, sig->mask, 1, &sigval);
+  if (retval==LIBSWD_OK)
+  {
+   sig->value=sigval;
+   printf("%s[0x%X]=0x%X\n", signamep, sig->mask, sig->value);
+   return LIBSWD_OK;
+  }
+  return retval;
+ }
+ 
 libswdapp_handle_command_signal_error:
  printf("ERROR: Syntax Error, see '?' or '[s]ignal' for more information...\n");
  return LIBSWD_ERROR_CLISYNTAX;
@@ -424,21 +476,18 @@ int libswdapp_handle_command_interface(libswdapp_context_t *libswdappctx, char *
  * INTERFACE SIGNAL INFRASTRUCTURE AND OPERATIONS                             *
  ******************************************************************************/
 
-/** Check if specified signal is already defined (case insensitive) and return
- * its pointer if defined.
+/** Check if specified signal is already defined (case insensitive).
+ * Return pointer to the signal structure if found.
  * \param *name signal name to check
  * \return pointer to signal structure in memory if found, NULL otherwise.
  */
 libswdapp_interface_signal_t *libswdapp_interface_signal_find(libswdapp_context_t *libswdappctx, char *name)
 {
- printf("Interface signal - searching for '%s' signal...", name);
  // Check if interface signal to already exists
- if (!libswdappctx->interface->signal) {
-  printf("WARNING: Interface signal list is empty..\n");
-  return NULL;
- }
+ if (!libswdappctx->interface->signal) return NULL;
  //Check if signal name is correct
- if (!name || *name==' ') {
+ if (!name || *name==' ')
+ {
   printf("ERROR: Interface signal name cannot be empty!\n");
   return NULL;
  }
@@ -447,23 +496,19 @@ libswdapp_interface_signal_t *libswdapp_interface_signal_find(libswdapp_context_
  sig = libswdappctx->interface->signal;
  while (sig)
  {
-  if (!strncasecmp(sig->name, name, LIBSWDAPP_INTERFACE_SIGNAL_NAME_MAXLEN)) {
-  printf("Interface signal '%s' found.\n", sig->name);
-  return sig;
-  }
+  if (!strncasecmp(sig->name, name, LIBSWDAPP_INTERFACE_SIGNAL_NAME_MAXLEN))
+   return sig;
   sig = sig->next;
  }
  // If signal is not found return null pointer.
- printf("WARNING: Interface signal '%s' not found.\n", name);
  return NULL;
 }
 
 /** Add new signal to the interface.
- * Signal will be allocated in memory with provided name and mask.
- * There is no sense for giving value field at this time because signal create
- * can take place during initialization where interface is not yet ready, also
- * they can be used for read and write, so this is higher level script task
- * to initialize their default value with appropriate 'bitbang' call.
+ * Signal will be allocated in memory with provided name and pin mask.
+ * Note: Signal definition may take place before interface is ready to operate,
+ * therefore value will be not assigned at time of signal creation. 
+ * Signal value can be set with appropriate 'bitbang' call.
  * The default value for new signal equals provided mask to maintain Hi-Z.
  *
  * \param *name is the signal name (max 32 char).
@@ -473,75 +518,67 @@ libswdapp_interface_signal_t *libswdapp_interface_signal_find(libswdapp_context_
  */
 int libswdapp_interface_signal_add(libswdapp_context_t *libswdappctx, char *name, unsigned int mask)
 {
- printf("Interface signal adding '%s'...\n", name);
+ libswdapp_interface_signal_t *newsignal, *lastsignal;
+ int snlen;
 
  // Check if name is correct string. 
  if (!name || *name==' ')
  {
-  printf("Interface signal - name cannot be empty!");
+  printf("ERROR: Interface signal name cannot be empty!\n");
   return LIBSWD_ERROR_PARAM;
  }
-
- libswdapp_interface_signal_t *newsignal, *lastsignal;
- int snlen;
-
+ // Verify signal name length.
  snlen = strnlen(name, 2*LIBSWDAPP_INTERFACE_SIGNAL_NAME_MAXLEN);
  if (snlen < LIBSWDAPP_INTERFACE_SIGNAL_NAME_MINLEN || snlen > LIBSWDAPP_INTERFACE_SIGNAL_NAME_MAXLEN)
  {
-  printf("Interface signal name too short or too long!\n");
+  printf("ERROR: Interface signal name '%s' too short or too long!\n", name);
   return LIBSWD_ERROR_PARAM;
  }
 
  // Check if signal name already exist and return error if so.
  if (libswdapp_interface_signal_find(libswdappctx, name))
  {
-  printf("Interface signal '%s' already exist!", name);
+  printf("ERROR: Interface signal '%s' already exist!\n", name);
   return LIBSWD_ERROR_PARAM;
  }
 
  // Allocate memory for new signal structure.
  newsignal = (libswdapp_interface_signal_t*)calloc(1,sizeof(libswdapp_interface_signal_t));
  if (!newsignal)
- {
-  printf("ERROR: Interface signal - cannot allocate memory for new signal '%s'!\n", name);
-  return LIBSWD_ERROR_OUTOFMEM;
- }
- newsignal->name = (char *)calloc(1, snlen+1);
+  goto libswdapp_interface_signal_add_end;
+
+ newsignal->name = (char*)calloc(snlen,sizeof(char));
  if (!newsignal->name)
- {
-  printf("ERROR: Interface signal - cannot allocate memory '%s' name!", name);
-  return LIBSWD_ERROR_OUTOFMEM;
- }
+   goto libswdapp_interface_signal_add_end;
 
  // Initialize structure data and return or break on error. 
- for (;;)
+ if (!strncpy(newsignal->name, name, snlen))
  {
-  if (!strncpy(newsignal->name, name, snlen))
-  {
-   printf("WARNING: Interface signal cannot copy '%s' name!", name);
-   break;
-  }
-
-  newsignal->mask = mask;
-  newsignal->value = mask;
-
-  if (&libswdappctx->interface->signal!=NULL)
-  {
-   libswdappctx->interface->signal = newsignal;
-  }
-  else
-  {
-   lastsignal = libswdappctx->interface->signal;
-   while (lastsignal->next) lastsignal=lastsignal->next;
-   lastsignal->next=newsignal;
-  }
-  printf("INFO: Interface signal - '%s' added.", name);
-  return LIBSWD_OK;
+  printf("WARNING: Interface signal cannot copy '%s' name!", name);
+  goto libswdapp_interface_signal_add_end;
  }
 
+ newsignal->mask = mask;
+ newsignal->value = mask;
+
+ if (!libswdappctx->interface->signal)
+ {
+  libswdappctx->interface->signal = newsignal;
+ }
+ else
+ {
+  lastsignal = libswdappctx->interface->signal;
+  while (lastsignal->next) lastsignal=lastsignal->next;
+  lastsignal->next=newsignal;
+ }
+ printf("INFO: Interface signal '%s' added.\n", name);
+ return LIBSWD_OK;
+
  // If there was an error free up resources and return error.
- free(newsignal->name);
- free(newsignal);
+libswdapp_interface_signal_add_end:
+ printf("ERROR: Cannot add signal '%s'!\n", name);
+ if (newsignal->name) free(newsignal->name);
+ if (newsignal) free(newsignal);
  return LIBSWD_ERROR_DRIVER;
 }
 
@@ -552,20 +589,16 @@ int libswdapp_interface_signal_add(libswdapp_context_t *libswdappctx, char *name
  */
 int libswdapp_interface_signal_del(libswdapp_context_t *libswdappctx, char *name)
 {
- //printf("DEBUG: Interface signal: deleting signal '%s'...\n", name);
+ libswdapp_interface_signal_t *delsig, *prevsig;
  // Check if interface any signal exist
  if (!libswdappctx->interface->signal)
- {
-  //printf("WARNING: Interface signal list is empty!\n");
   return LIBSWD_ERROR_NULLPOINTER;
- }
  // Check if signal name is correct.
  if (!name || *name==' ')
  {
   printf("ERROR: Interface signal name cannot be empty!\n");
   return LIBSWD_ERROR_DRIVER;
  }
- libswdapp_interface_signal_t *delsig = NULL, *prevsig = NULL;
  // See if we want to remove all signals ('*' name).
  if (strchr(name,'*'))
  {
@@ -590,7 +623,9 @@ int libswdapp_interface_signal_del(libswdapp_context_t *libswdappctx, char *name
  if (prevsig == delsig)
  {
   // we need to detach first signal on the list.
-  libswdappctx->interface->signal = libswdappctx->interface->signal->next;
+  if (prevsig->next)
+   libswdappctx->interface->signal = prevsig->next;
+   else libswdappctx->interface->signal=NULL;
  }
  else
  {
@@ -598,7 +633,9 @@ int libswdapp_interface_signal_del(libswdapp_context_t *libswdappctx, char *name
   {
    if (prevsig->next == delsig)
    {
-    prevsig->next = prevsig->next->next;
+    if (prevsig->next->next)
+     prevsig->next = prevsig->next->next;
+    else prevsig->next=NULL;
     break;
    }
   }
@@ -887,6 +924,15 @@ int libswdapp_interface_ftdi_init_ktlink(libswdapp_context_t *libswdappctx)
  libswdapp_interface_bitbang(libswdappctx, port_direction, 0, &port_value);
 
  /* Additional bit-bang signals should be placed in a configuration file. */
+
+ libswdapp_interface_signal_add(libswdappctx, "RnW", 0x1000); 
+ libswdapp_interface_signal_add(libswdappctx, "LED", 0x8000);
+ libswdapp_interface_signal_add(libswdappctx, "SRST", 0x0a00);
+ libswdapp_interface_signal_add(libswdappctx, "SRSTin", 0x0040);
+ libswdapp_interface_signal_add(libswdappctx, "CLK", 0x01);
+ libswdapp_interface_signal_add(libswdappctx, "MOSI", 0x02);
+ libswdapp_interface_signal_add(libswdappctx, "MISO", 0x04);
+ libswdapp_interface_signal_add(libswdappctx, "nSWDsel", 0x20);
 
  printf("KT-LINK SWD-Mode initialization complete!\n");
  return LIBSWD_OK;

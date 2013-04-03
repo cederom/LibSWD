@@ -127,7 +127,7 @@ static const libswdapp_interface_config_t libswdapp_interface_configs[] = {
   .deinit      = libswdapp_interface_ftdi_deinit,
   .vid         = 0x0403,
   .pid         = 0xbbe2, 
-  .ftdi_latency= 10,
+  .ftdi_latency= 1,
   .frequency   = 10000,
  },
  {
