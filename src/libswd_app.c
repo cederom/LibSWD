@@ -64,6 +64,7 @@ void libswdapp_shutdown(int sig)
  if ((appctx->interface)!=NULL) free(appctx->interface);
  if (appctx->libswdctx!=NULL) libswd_deinit(appctx->libswdctx);
  if (appctx!=NULL) free(appctx);
+ printf("Exit OK\n");
  exit(retval);
 }
 
@@ -246,11 +247,9 @@ int libswdapp_handle_command_signal(libswdapp_context_t *libswdappctx, char *cmd
  if (!strncasecmp(cmd,"list",4))
  {
   sig = libswdappctx->interface->signal;
-  printf("      Interface Signal Name      |    Mask    |   Value   \n");
-  printf("----------------------------------------------------------\n");
   while (sig)
   {
-   printf("%32s | 0x%08X | 0x%08X\n", sig->name, sig->mask, sig->value);
+   printf("%s[0x%0X]=0x%0X\n", sig->name, sig->mask, sig->value);
    sig = sig->next;
   }
   return LIBSWD_OK;
@@ -341,7 +340,7 @@ libswdapp_handle_command_signal_error:
  */
 int libswdapp_handle_command_interface(libswdapp_context_t *libswdappctx, char *cmd){
  int retval, i, interface_number;
- char *param;
+ char *param, buf[8];
 
  // Verify the working context.
  if (!libswdappctx)
@@ -463,8 +462,20 @@ int libswdapp_handle_command_interface(libswdapp_context_t *libswdappctx, char *
    else if (libswdappctx->loglevel) printf("OK (ChipId=%X)\n", chipid); 
   } else if (libswdappctx->loglevel) printf("OK\n");
  }
-
+ // Reeset the FTDI device.
+ if (ftdi_usb_reset(libswdappctx->interface->ftdictx)<0)
+ {
+  printf("ERROR: Unable to reset ftdi device!\n");
+  return LIBSWD_ERROR_DRIVER;
+ }
+ // Set default interface speed/frequency
  libswdapp_interface_ftdi_freq(libswdappctx, libswdappctx->interface->freq);
+ // Reset Command Controller
+ if(ftdi_set_bitmode(libswdappctx->interface->ftdictx, 0, BITMODE_RESET)<0)
+ {
+  printf("ERROR: Cannot (re)set bitmode for FTDI interface!\n");
+  return LIBSWD_ERROR_DRIVER;
+ }
  // Now call the interface specific initialization routine.
  retval=libswdappctx->interface->init(libswdappctx);
  if (retval==LIBSWD_OK) libswdappctx->interface->initialized=1; 
@@ -547,7 +558,7 @@ int libswdapp_interface_signal_add(libswdapp_context_t *libswdappctx, char *name
  if (!newsignal)
   goto libswdapp_interface_signal_add_end;
 
- newsignal->name = (char*)calloc(snlen,sizeof(char));
+ newsignal->name = (char*)calloc(snlen+1,sizeof(char)); //Remember about trailing '\0'.
  if (!newsignal->name)
    goto libswdapp_interface_signal_add_end;
 
@@ -604,8 +615,10 @@ int libswdapp_interface_signal_del(libswdapp_context_t *libswdappctx, char *name
  {
   for (delsig=libswdappctx->interface->signal;delsig;delsig=delsig->next)
   {
+   printf("INFO: Removing Interface Signal '%s'...", delsig->name);
    free(delsig->name); 
    free(delsig);
+   printf("OK\n");
   }
   libswdappctx->interface->signal=NULL; 
   return LIBSWD_OK;
@@ -641,9 +654,10 @@ int libswdapp_interface_signal_del(libswdapp_context_t *libswdappctx, char *name
   }
  }
  // now free memory of detached element.
+ printf("INFO: Removing Interface Signal '%s'...", name);
  free(delsig->name);
  free(delsig);
- printf("INFO: Interface signal '%s' deleted.\n", name);
+ printf("OK\n");
  return LIBSWD_OK;
 }
 
@@ -763,68 +777,77 @@ int libswdapp_interface_bitbang(libswdapp_context_t *libswdappctx, unsigned int 
  */
 int libswdapp_interface_transfer(libswdapp_context_t *libswdappctx, int bits, char *mosidata, char *misodata, int nLSBfirst)
 {
- static uint8_t buf[65539], databuf;
- int i, retval, bit = 0, byte_ = 0, bytes = 0;	/* underscore in byte_ to prevent shadowing of global variable */
+ static unsigned char buf[65539], databuf;
+ int i, retval, bit = 0, byte = 0, bytes = 0;
  unsigned int bytes_written, bytes_read;
 
- if (bits > 65535) {
+ if (bits>65535)
+ {
   printf("ERROR: Cannot transfer more than 65536 bits at once!\n");
   return LIBSWD_ERROR_DRIVER;
  }
 
- if (bits >= 8) {
- /* Try to pack as many bits into bytes for better performance. */
- bytes = bits / 8;
- bytes--;		      /* MPSSE starts counting bytes from 0. */
- buf[0] = (nLSBfirst) ? 0x31 : 0x39; /* Clock Bytes In and Out LSb or MSb first. */
- buf[1] = (char)bytes & 0x0ff;
- buf[2] = (char)((bytes >> 8) & 0x0ff);
- bytes++;
- for (byte_ = 0; byte_ * 8 < bits; byte_++) {
-  databuf = 0;
-  for (i = 0; i < 8; i++)
-   databuf |= mosidata[byte_ * 8 + i] ? (1 << i) : 0;
-   buf[byte_ + 3] = databuf;
+ if (bits>=8)
+ {
+  // Try to pack as many bits into bytes for better performance.
+  bytes=bits/8;
+  bytes--;		              // MPSSE starts counting bytes from 0.
+  buf[0] = (nLSBfirst)?0x31:0x39; // Clock Bytes In and Out LSb or MSb first.
+  buf[1] = (char)bytes&0x0ff;
+  buf[2] = (char)((bytes>>8)&0x0ff);
+  bytes++;
+  for (byte=0;byte*8<bits;byte++)
+  {
+   databuf = 0;
+   for (i=0;i<8;i++) databuf|=mosidata[byte*8+i]?(1<<i):0;
+   buf[byte+3]=databuf;
   }
-  bytes_written = ftdi_write_data(libswdappctx->interface->ftdictx, buf, bytes + 3);
-  if (bytes_written<0 || bytes_written!=(bytes+3)) {
-   printf("ERROR: ft2232_write() returns %d\n", bytes_written);
+  bytes_written = ftdi_write_data(libswdappctx->interface->ftdictx, buf, bytes+3);
+  if (bytes_written<0 || bytes_written!=(bytes+3))
+  {
+   printf("ERROR: libswdapp_interface_transfer(): ft2232_write() returns %d\n", bytes_written);
    return ;
   }
-  bytes_read = ftdi_read_data(libswdappctx->interface->ftdictx, (uint8_t *)buf, bytes);
-  if (bytes_read<0 || bytes_read!=bytes) {
-   printf("ERROR: ft2232_read() returns %d\n", bytes_read);
-  return LIBSWD_ERROR_DRIVER;
- }
- /* Explode read bytes into bit array. */
- for (byte_ = 0; byte_ * 8 < bits; byte_++)
- for (bit = 0; bit < 8; bit++)
-  misodata[byte_ * 8 + bit] = buf[byte_] & (1 << bit) ? 1 : 0;
+  bytes_read = ftdi_read_data(libswdappctx->interface->ftdictx, (unsigned char*)buf, bytes);
+  if (bytes_read<0 || bytes_read!=bytes)
+  {
+   printf("ERROR: libswdapp_interface_transfer(): ft2232_read() returns %d\n", bytes_read);
+   return LIBSWD_ERROR_DRIVER;
+  }
+ // Explode read bytes into bit array.
+ for (byte=0;byte*8<bits;byte++)
+  for (bit=0;bit<8;bit++)
+   misodata[byte*8+bit]=buf[byte]&(1<<bit)?1:0;
  }
 
- /* Now send remaining bits that cannot be packed as bytes. */
- /* Because "Clock Data Bits In and Out LSB/MSB" of FTDI is a mess, pack single */
- /* bit read/writes into buffer and then flush it using single USB transfer. */
- for (bit = bytes * 8; bit < bits; bit++) {
-  buf[3 * bit + 0] = (nLSBfirst) ? 0x33 : 0x3b;     /* Clock Bits In and Out LSb or MSb first. */
-  buf[3 * bit + 1] = 0;				 /* One bit per element. */
-  buf[3 * bit + 2] = mosidata[bit] ? 0xff : 0;      /* Take data from supplied array. */
+ // Now send remaining bits that cannot be packed as bytes.
+ // Because "Clock Data Bits In and Out LSB/MSB" of FTDI is a mess, pack single
+ // bit read/writes into buffer and then flush it using single USB transfer.
+ for (bit=bytes*8;bit<bits;bit++)
+ {
+  buf[3*bit+0] = (nLSBfirst)?0x33:0x3b; // Clock Bits In and Out LSb or MSb first.
+  buf[3*bit+1] = 0;				     // One bit per element.
+  buf[3*bit+2] = mosidata[bit]?0xff:0;  // Take data from supplied array.
  }
- bytes_written = ftdi_write_data(libswdappctx->interface->ftdictx, buf, 3 * (bits - (bytes * 8)));
- if (bytes_written < 0) {
-  printf("ERROR: ft2232_write() returns %d\n", bytes_written);
+ bytes_written = ftdi_write_data(libswdappctx->interface->ftdictx,buf,3*(bits-(bytes*8)));
+ if (bytes_written<0)
+ {
+  printf("ERROR: libswdapp_interface_transfer(): ft2232_write() returns %d\n", bytes_written);
   return LIBSWD_ERROR_DRIVER;
  }
- bytes_read = ftdi_read_data(libswdappctx->interface->ftdictx, (uint8_t *)misodata, bits - (bytes * 8));
- if (bytes_read<0 || bytes_read!=(bits-(bytes*8))) {
-  printf("ERROR: ft2232_read() returns %d\n", bytes_read);
+ bytes_read = ftdi_read_data(libswdappctx->interface->ftdictx, (unsigned char*)misodata, bits-(bytes*8));
+ if (bytes_read<0 || bytes_read!=(bits-(bytes*8)))
+ {
+  printf("ERROR: libswdapp_interface_transfer(): ft2232_read() returns %d\n", bytes_read);
   return LIBSWD_ERROR_DRIVER;
  }
- /* FTDI MPSSE returns shift register value, our bit is MSb */
- for (bit = bytes * 8; bit < bits; bit++)
-  misodata[bit] = (misodata[bit] & (nLSBfirst ? 0x01 : 0x80)) ? 1 : 0;
- /* USE THIS FOR WIRE-LEVEL DEBUG */
- /* LOG_DEBUG("read 0x%02X written 0x%02X", misodata[bit], mosidata[bit]); */
+ // FTDI MPSSE returns shift register value, our bit is MSb.
+ for (bit=bytes*8;bit<bits;bit++)
+ {
+  misodata[bit]=(misodata[bit]&(nLSBfirst?0x01:0x80))?1:0;
+  // USE THIS FOR WIRE-LEVEL DEBUG */
+  printf("\n===TRANSFER: read 0x%02X written 0x%02X\n", misodata[bit], mosidata[bit]); 
+ }
 
  return bit;
 }
@@ -854,38 +877,33 @@ int libswdapp_interface_ftdi_freq(libswdapp_context_t *libswdappctx, int freq)
 //KT-LINK Interface Init
 int libswdapp_interface_ftdi_init_ktlink(libswdapp_context_t *libswdappctx)
 {
+ int retval;
  int ftdi_channel=INTERFACE_ANY;
- int ftdi_latency=0;
  unsigned char latency_timer;
- unsigned int port_direction, port_value;
+ static unsigned int port_direction, port_value;
 
- if (ftdi_channel == INTERFACE_ANY)
-  ftdi_channel = INTERFACE_A;
- if (ftdi_set_interface(libswdappctx->interface->ftdictx, ftdi_channel)<0){
+ // Set interface channel to use.
+ if (ftdi_channel == INTERFACE_ANY) ftdi_channel = INTERFACE_A;
+ if (ftdi_set_interface(libswdappctx->interface->ftdictx, ftdi_channel)<0)
+ {
   printf("ERROR: Unable to select FT2232 channel A: %s\n",
          libswdappctx->interface->ftdictx->error_str);
   return LIBSWD_ERROR_DRIVER;
  }
-
- if (ftdi_usb_reset(libswdappctx->interface->ftdictx) < 0) {
-  printf("ERROR: Unable to reset ftdi device!\n");
-  return LIBSWD_ERROR_DRIVER;
- }
-
- if (ftdi_set_latency_timer(libswdappctx->interface->ftdictx,libswdappctx->interface->ftdi_latency)<0){
+ // Set the Latency Timer.
+ if (ftdi_set_latency_timer(libswdappctx->interface->ftdictx,libswdappctx->interface->ftdi_latency)<0)
+ {
   printf("ERROR: Unable to set latency timer!\n");
   return LIBSWD_ERROR_DRIVER;
  }
-
- if (ftdi_get_latency_timer(libswdappctx->interface->ftdictx,&latency_timer)<0){
+ if (ftdi_get_latency_timer(libswdappctx->interface->ftdictx,&latency_timer)<0)
+ {
   printf("ERROR: Unable to get latency timer!\n");
   return LIBSWD_ERROR_DRIVER;
- } else
-  printf("FTDI latency timer is: %i\n", latency_timer);
+ } else printf("FTDI latency timer is: %i\n", latency_timer);
 
- ftdi_set_bitmode(libswdappctx->interface->ftdictx, 0x0b, 2); /* ctx, JTAG I/O mask */
 
- /* High Byte (ACBUS) members. */
+ /* Low Byte (ADBUS) members. */
  const unsigned int nSWCLKen=0x40, nTDIen=0x20, TRST=0x01, nTRSTen=0x04,
                      SRST=0x02, nSRSTen=0x08, LED=0x80, RnW=0x10;
  /* Low Byte (ADBUS) members. */
@@ -897,9 +915,11 @@ int libswdapp_interface_ftdi_init_ktlink(libswdapp_context_t *libswdappctx)
  //nSRSTnOE = nSRSTen;
 
  /* Set ADBUS Port Data: SWCLK=0, TDI=0,TDO=1, nSWDIOsel=0 */
+ // const unsigned int low_output = 0 | TDO ;
  const unsigned int low_output = 0 | TDO;
  /* Set ADBUS Port Direction (1=Output) */
- const unsigned int low_direction = 0 | SWCLK | TDI | nSWDIOsel;
+ //const unsigned int low_direction = 0 | SWCLK | TDI | nSWDIOsel;
+ const unsigned int low_direction = 0 | SWCLK | TDI | nSWDIOsel; 
 
  /* initialize low byte port (ADBUS) */
  //if (ft2232_set_data_bits_low_byte(low_output, low_direction) != LIBSWD_OK) {
@@ -919,20 +939,44 @@ int libswdapp_interface_ftdi_init_ktlink(libswdapp_context_t *libswdappctx)
  // printf("ERROR: couldn't initialize FT2232 ACBUS with 'ktlink_swd' layout\n");
  // return LIBSWD_ERROR_DRIVER;
  //}
- port_direction=(high_direction<<8)|low_direction;
- port_value=(high_output<<8)|low_output;
- libswdapp_interface_bitbang(libswdappctx, port_direction, 0, &port_value);
+
+ port_direction=((high_direction<<8)&0xff00)|low_direction;
+ port_value=((high_output<<8)&0xff00)|low_output;
 
  /* Additional bit-bang signals should be placed in a configuration file. */
 
- libswdapp_interface_signal_add(libswdappctx, "RnW", 0x1000); 
- libswdapp_interface_signal_add(libswdappctx, "LED", 0x8000);
- libswdapp_interface_signal_add(libswdappctx, "SRST", 0x0a00);
- libswdapp_interface_signal_add(libswdappctx, "SRSTin", 0x0040);
- libswdapp_interface_signal_add(libswdappctx, "CLK", 0x01);
- libswdapp_interface_signal_add(libswdappctx, "MOSI", 0x02);
- libswdapp_interface_signal_add(libswdappctx, "MISO", 0x04);
- libswdapp_interface_signal_add(libswdappctx, "nSWDsel", 0x20);
+ // Low Byte IO (ADBUS) Signals
+ libswdapp_interface_signal_add(libswdappctx, "CLK",      0x0001);
+ libswdapp_interface_signal_add(libswdappctx, "MOSI",     0x0002);
+ libswdapp_interface_signal_add(libswdappctx, "MISO",     0x0004);
+ libswdapp_interface_signal_add(libswdappctx, "TMS",      0x0008);
+ libswdapp_interface_signal_add(libswdappctx, "nSWDsel",  0x0020);
+ libswdapp_interface_signal_add(libswdappctx, "SRSTin",   0x0040);
+ libswdapp_interface_signal_add(libswdappctx, "RTCK",     0x0080);
+ // High Byte IO (ACBUS) Signals
+ libswdapp_interface_signal_add(libswdappctx, "TRST",     0x0100);
+ libswdapp_interface_signal_add(libswdappctx, "SRST",     0x0200);
+ libswdapp_interface_signal_add(libswdappctx, "nTRSTen",  0x0400);
+ libswdapp_interface_signal_add(libswdappctx, "nSRSTen",  0x0800);
+ libswdapp_interface_signal_add(libswdappctx, "RnW",      0x1000); 
+ libswdapp_interface_signal_add(libswdappctx, "nMOSIen",  0x2000);
+ libswdapp_interface_signal_add(libswdappctx, "nCLKen",   0x4000);
+ libswdapp_interface_signal_add(libswdappctx, "LED",      0x8000);
+
+// retval=ftdi_set_bitmode(libswdappctx->interface->ftdictx, 0x0b, BITMODE_MPSSE);
+// retval=ftdi_set_bitmode(libswdappctx->interface->ftdictx, port_direction, BITMODE_MPSSE);
+retval=ftdi_set_bitmode(libswdappctx->interface->ftdictx, 0, BITMODE_MPSSE);
+ if (retval<0)
+ {
+  printf("ERROR: Cannot set bitmode BITMODE_MPSSE for '%s' interface!\n", libswdappctx->interface->name);
+  return LIBSWD_ERROR_DRIVER;
+ } 
+ retval=libswdapp_interface_bitbang(libswdappctx, port_direction, 0, &port_value);
+ if (retval!=LIBSWD_OK)
+ {
+  printf("ERROR: Cannot perform initial bitbang of the '%s' interface!\n", libswdappctx->interface->name);
+  return LIBSWD_ERROR_DRIVER;
+ }
 
  printf("KT-LINK SWD-Mode initialization complete!\n");
  return LIBSWD_OK;
@@ -964,29 +1008,27 @@ int libswdapp_interface_ftdi_deinit(libswdapp_context_t *libswdappctx)
 ar)*/
 int libswd_drv_mosi_8(libswd_ctx_t *libswdctx, libswd_cmd_t *cmd, char *data, int bits, int nLSBfirst)
 {
- libswd_log(libswdctx, LIBSWD_LOGLEVEL_DEBUG, "LIBSWD_D: libswd_drv_mosi_8(libswdctx=@%p, cmd=@%p, data=0x%02X, bits=%d, nLSBfirst=0x%02X)",
-            (void *)libswdctx, (void *)cmd, *data, bits, nLSBfirst);
+ libswd_log(libswdctx, LIBSWD_LOGLEVEL_DEBUG,
+            "LIBSWD_D: libswd_drv_mosi_8(libswdctx=@%p, cmd=@%p, data=@%p, bits=%d, nLSBfirst=0x%02X)\n",
+            (void *)libswdctx, (void *)cmd, *data, bits, nLSBfirst
+           );
 
-	if (data == NULL)
-		return LIBSWD_ERROR_NULLPOINTER;
-	if (bits < 0 && bits > 8)
-		return LIBSWD_ERROR_PARAM;
-	if (nLSBfirst != 0 && nLSBfirst != 1)
-		return LIBSWD_ERROR_PARAM;
+ if (data == NULL) return LIBSWD_ERROR_NULLPOINTER;
+ if (bits<0 || bits>8) return LIBSWD_ERROR_PARAM;
+ if (nLSBfirst!=0 && nLSBfirst!=1) return LIBSWD_ERROR_PARAM;
 
-	static unsigned int i;
-	static signed int res;
-	static char misodata[8], mosidata[8];
+ static unsigned int i;
+ static signed int res;
+ static char misodata[8], mosidata[8];
 
-	/* Split output data into char array. */
-	for (i = 0; i < 8; i++)
-		mosidata[(nLSBfirst == LIBSWD_DIR_LSBFIRST) ? i : (bits - 1 - i)] = ((1 << i) & (*data)) ? 1 : 0;
-	/* Then send that array into interface hardware. */
-	res = libswdapp_interface_transfer(libswdctx->driver->ctx, bits, mosidata, misodata, 0);
-	if (res < 0)
-		return LIBSWD_ERROR_DRIVER;
+ // Split output data into char array.
+ for (i=0;i<8;i++)
+  mosidata[(nLSBfirst==LIBSWD_DIR_LSBFIRST)?i:(bits-1-i)]=((1<<i)&(*data))?1:0;
+ // Then send that array into interface hardware.
+ res=libswdapp_interface_transfer(libswdctx->driver->ctx,bits,mosidata,misodata,0);
+ if (res<0) return LIBSWD_ERROR_DRIVER;
 
-	return res;
+ return res;
 }
 
 /**
@@ -1002,31 +1044,29 @@ int libswd_drv_mosi_8(libswd_ctx_t *libswdctx, libswd_cmd_t *cmd, char *data, in
  */
 int libswd_drv_mosi_32(libswd_ctx_t *libswdctx, libswd_cmd_t *cmd, int *data, int bits, int nLSBfirst)
 {
- libswd_log(libswdctx, LIBSWD_LOGLEVEL_DEBUG, "LIBSWD_D: libswd_drv_mosi_32(libswdctx=@%p, cmd=@%p, data=0x%08X, bits=%d, nLSBfirst=0x%02X)",
-            (void *)libswdctx, (void *)cmd, *data, bits, nLSBfirst);
+ libswd_log(libswdctx, LIBSWD_LOGLEVEL_DEBUG,
+            "LIBSWD_D: libswd_drv_mosi_32(libswdctx=@%p, cmd=@%p, data=0x%08X, bits=%d, nLSBfirst=0x%02X)\n",
+            (void *)libswdctx, (void *)cmd, *data, bits, nLSBfirst
+           );
 
-	if (data == NULL)
-		return LIBSWD_ERROR_NULLPOINTER;
-	if (bits < 0 && bits > 8)
-		return LIBSWD_ERROR_PARAM;
-	if (nLSBfirst != 0 && nLSBfirst != 1)
-		return LIBSWD_ERROR_PARAM;
+ if (data == NULL) return LIBSWD_ERROR_NULLPOINTER;
+ if (bits<0 || bits>32) return LIBSWD_ERROR_PARAM;
+ if (nLSBfirst!=0 && nLSBfirst!=1) return LIBSWD_ERROR_PARAM;
 
-	static unsigned int i;
-	static signed int res;
-	static char misodata[32], mosidata[32];
+ static unsigned int i;
+ static signed int res;
+ static char misodata[32], mosidata[32];
 
-	/* UrJTAG drivers shift data LSB-First. */
-	for (i = 0; i < 32; i++)
-		mosidata[(nLSBfirst == LIBSWD_DIR_LSBFIRST) ? i : (bits - 1 - i)] = ((1 << i) & (*data)) ? 1 : 0;
-	res = libswdapp_interface_transfer(libswdctx->driver->ctx, bits, mosidata, misodata, 0);
-	if (res < 0)
-		return LIBSWD_ERROR_DRIVER;
-	return res;
+ // UrJTAG drivers shift data LSB-First.
+ for (i=0;i<32;i++)
+  mosidata[(nLSBfirst==LIBSWD_DIR_LSBFIRST)?i:(bits-1-i)]=((1<<i)&(*data))?1:0;
+ res=libswdapp_interface_transfer(libswdctx->driver->ctx,bits,mosidata,misodata,0);
+ if (res<0) return LIBSWD_ERROR_DRIVER;
+
+ return res;
 }
 
 /**
- * Use UrJTAG's driver to read 8-bit data (char type).
  * MISO (Master Input Slave Output) is a SWD Read Operation.
  *
  * \param *libswdctx swd context to work on.
@@ -1038,28 +1078,26 @@ int libswd_drv_mosi_32(libswd_ctx_t *libswdctx, libswd_cmd_t *cmd, int *data, in
  */
 int libswd_drv_miso_8(libswd_ctx_t *libswdctx, libswd_cmd_t *cmd, char *data, int bits, int nLSBfirst)
 {
-	if (data == NULL)
-		return LIBSWD_ERROR_NULLPOINTER;
-	if (bits < 0 && bits > 8)
-		return LIBSWD_ERROR_PARAM;
-	if (nLSBfirst != 0 && nLSBfirst != 1)
-		return LIBSWD_ERROR_PARAM;
+ if (data==NULL) return LIBSWD_ERROR_NULLPOINTER;
+ if (bits<0 || bits>8) return LIBSWD_ERROR_PARAM;
+ if (nLSBfirst!=0 && nLSBfirst!=1) return LIBSWD_ERROR_PARAM;
 
-	static int i;
-	static signed int res;
-	static char misodata[8], mosidata[8];
+ static int i;
+ static signed int res;
+ static char misodata[8], mosidata[8];
 
-	res = libswdapp_interface_transfer(libswdctx->driver->ctx, bits, mosidata, misodata, LIBSWD_DIR_LSBFIRST);
-	if (res < 0)
-		return LIBSWD_ERROR_DRIVER;
-	/* Now we need to reconstruct the data byte from shifted in LSBfirst byte array. */
-	*data = 0;
-	for (i = 0; i < bits; i++)
-		*data |= misodata[(nLSBfirst == LIBSWD_DIR_LSBFIRST) ? i : (bits - 1 - i)] ? (1 << i) : 0;
-libswd_log(libswdctx, LIBSWD_LOGLEVEL_DEBUG, "LIBSWD_D: libswd_drv_miso_8(libswdctx=@%p, cmd=@%p, data=@%p, bits=%d, nLSBfirst=0x%02X) reads: 0x%02X",
-           (void *)libswdctx, (void *)cmd, (void *)data, bits, nLSBfirst, *data);
+ res=libswdapp_interface_transfer(libswdctx->driver->ctx,bits,mosidata,misodata,LIBSWD_DIR_LSBFIRST);
+ if (res<0) return LIBSWD_ERROR_DRIVER;
+ // Now we need to reconstruct the received LSb data byte into  byte array.
+ *data = 0;
+ for (i=0;i<bits;i++)
+  *data|=misodata[(nLSBfirst==LIBSWD_DIR_LSBFIRST)?i:(bits-1-i)]?(1<<i):0;
+ libswd_log(libswdctx, LIBSWD_LOGLEVEL_DEBUG,
+            "LIBSWD_D: libswd_drv_miso_8(libswdctx=@%p, cmd=@%p, data=@%p, bits=%d, nLSBfirst=0x%02X) reads: 0x%02X\n",
+           (void *)libswdctx, (void *)cmd, (void *)data, bits, nLSBfirst, *data
+           );
 
-	return res;
+ return res;
 }
 
 /**
@@ -1075,26 +1113,25 @@ libswd_log(libswdctx, LIBSWD_LOGLEVEL_DEBUG, "LIBSWD_D: libswd_drv_miso_8(libswd
  */
 int libswd_drv_miso_32(libswd_ctx_t *libswdctx, libswd_cmd_t *cmd, int *data, int bits, int nLSBfirst)
 {
-	if (data == NULL)
-		return LIBSWD_ERROR_NULLPOINTER;
-	if (bits < 0 && bits > 8)
-		return LIBSWD_ERROR_PARAM;
-	if (nLSBfirst != 0 && nLSBfirst != 1)
-		return LIBSWD_ERROR_PARAM;
+ if (data==NULL) return LIBSWD_ERROR_NULLPOINTER;
+ if (bits<0 || bits>32) return LIBSWD_ERROR_PARAM;
+ if (nLSBfirst!=0 && nLSBfirst!=1) return LIBSWD_ERROR_PARAM;
 
-	static int i;
-	static signed int res;
-	static char misodata[32], mosidata[32];
+ static int i;
+ static signed int res;
+ static char misodata[32], mosidata[32];
 
-	res = libswdapp_interface_transfer(libswdctx->driver->ctx, bits, mosidata, misodata, LIBSWD_DIR_LSBFIRST);
-	if (res < 0)
-		return LIBSWD_ERROR_DRIVER;
-	/* Now we need to reconstruct the data byte from shifted in LSBfirst byte array. */
-	*data = 0;
-	for (i = 0; i < bits; i++)
-		*data |= (misodata[(nLSBfirst == LIBSWD_DIR_LSBFIRST) ? i : (bits - 1 - i)] ? (1 << i) : 0);
- libswd_log(libswdctx, LIBSWD_LOGLEVEL_DEBUG, "LIBSWD_D: libswd_drv_miso_32() reads: 0x%08X\n", *data);
-	return res;
+ res = libswdapp_interface_transfer(libswdctx->driver->ctx, bits, mosidata, misodata, LIBSWD_DIR_LSBFIRST);
+ if (res<0) return LIBSWD_ERROR_DRIVER;
+ // Now we need to reconstruct the data byte from shifted in LSBfirst byte array.
+ *data = 0;
+ for (i=0;i<bits;i++)
+  *data|=(misodata[(nLSBfirst==LIBSWD_DIR_LSBFIRST)?i:(bits-1-i)]?(1<<i):0);
+ libswd_log(libswdctx, LIBSWD_LOGLEVEL_DEBUG,
+            "LIBSWD_D: libswd_drv_miso_32() reads: 0x%08X\n", *data
+           );
+
+ return res;
 }
 
 /**
@@ -1108,24 +1145,34 @@ int libswd_drv_miso_32(libswd_ctx_t *libswdctx, libswd_cmd_t *cmd, int *data, in
  */
 int libswd_drv_mosi_trn(libswd_ctx_t *libswdctx, int bits)
 {
- libswd_log(libswdctx, LIBSWD_LOGLEVEL_DEBUG, "LIBSWD_D: libswd_drv_mosi_trn(libswdctx=@%p, bits=%d)\n", (void *)libswdctx, bits);
+ libswd_log(libswdctx, LIBSWD_LOGLEVEL_DEBUG,
+            "LIBSWD_D: libswd_drv_mosi_trn(libswdctx=@%p, bits=%d)\n",
+            (void *)libswdctx, bits
+           );
 
-	if (bits < LIBSWD_TURNROUND_MIN_VAL && bits > LIBSWD_TURNROUND_MAX_VAL)
-		return LIBSWD_ERROR_TURNAROUND;
+ if (bits<LIBSWD_TURNROUND_MIN_VAL || bits>LIBSWD_TURNROUND_MAX_VAL)
+  return LIBSWD_ERROR_TURNAROUND;
 
-	int res, val = 0;
-	static char buf[LIBSWD_TURNROUND_MAX_VAL];
-	/* Use driver method to set low (write) signal named RnW. */
-	res = libswdapp_interface_bitbang(libswdctx->driver->ctx, "RnW", 0, &val);
-	if (res < 0)
-		return LIBSWD_ERROR_DRIVER;
+ if (!libswdapp_interface_signal_find(libswdctx->driver->ctx, "RnW"))
+ {
+  libswd_log(libswdctx, LIBSWD_LOGLEVEL_ERROR,
+             "LIBSWD_E: libswd_drv_mosi_trn(libswdctx=@%p, bits=%d): Mandatory Interface Signal 'RnW' not defined!\n",
+             (void *)libswdctx, bits
+            );
+  return LIBSWD_ERROR_DRIVER;
+ }
 
-	/* Clock specified number of bits for proper TRN transaction. */
-	res = libswdapp_interface_transfer(libswdctx->driver->ctx, bits, buf, buf, 0);
-	if (res < 0)
-		return LIBSWD_ERROR_DRIVER;
+ int res, val = 0;
+ static char buf[LIBSWD_TURNROUND_MAX_VAL];
+ // Use driver method to set low (write) signal named RnW.
+ res = libswdapp_interface_bitbang(libswdctx->driver->ctx, "RnW", 0, &val);
+ if (res < 0) return LIBSWD_ERROR_DRIVER;
 
-	return bits;
+ // Clock specified number of bits for proper TRN transaction.
+ res = libswdapp_interface_transfer(libswdctx->driver->ctx, bits, buf, buf, 0);
+ if (res < 0) return LIBSWD_ERROR_DRIVER;
+
+ return bits;
 }
 
 /**
@@ -1140,23 +1187,33 @@ int libswd_drv_mosi_trn(libswd_ctx_t *libswdctx, int bits)
  */
 int libswd_drv_miso_trn(libswd_ctx_t *libswdctx, int bits)
 {
- libswd_log(libswdctx, LIBSWD_LOGLEVEL_DEBUG, "LIBSWD_D: libswd_drv_miso_trn(libswdctx=@%p, bits=%d)\n", (void *)libswdctx, bits);
+ libswd_log(libswdctx, LIBSWD_LOGLEVEL_DEBUG,
+            "LIBSWD_D: libswd_drv_miso_trn(libswdctx=@%p, bits=%d)\n",
+            (void *)libswdctx, bits
+           );
 
- if (bits < LIBSWD_TURNROUND_MIN_VAL || bits > LIBSWD_TURNROUND_MAX_VAL)
+ if (bits<LIBSWD_TURNROUND_MIN_VAL || bits>LIBSWD_TURNROUND_MAX_VAL)
   return LIBSWD_ERROR_TURNAROUND;
+
+ if (!libswdapp_interface_signal_find(libswdctx->driver->ctx, "RnW"))
+ {
+  libswd_log(libswdctx, LIBSWD_LOGLEVEL_ERROR,
+             "LIBSWD_E: libswd_drv_miso_trn(libswdctx=@%p, bits=%d): Mandatory Interface Signal 'RnW' not defined!\n",
+             (void *)libswdctx, bits
+            );
+  return LIBSWD_ERROR_DRIVER;
+ }
 
  static int res, val = 1;
  static char buf[LIBSWD_TURNROUND_MAX_VAL];
 
- /* Use driver method to set high (read) signal named RnW. */
- res = libswdapp_interface_bitbang(libswdctx->driver->ctx, "RnW", 0xFFFFFFFF, &val);
- if (res < 0)
- return LIBSWD_ERROR_DRIVER;
+ // Use driver method to set high (read) signal named RnW.
+ res = libswdapp_interface_bitbang(libswdctx->driver->ctx, "RnW", !0, &val);
+ if (res < 0) return LIBSWD_ERROR_DRIVER;
 
- /* Clock specified number of bits for proper TRN transaction. */
+ // Clock specified number of bits for proper TRN transaction.
  res = libswdapp_interface_transfer(libswdctx->driver->ctx, bits, buf, buf, 0);
- if (res < 0)
- return LIBSWD_ERROR_DRIVER;
+ if (res < 0) return LIBSWD_ERROR_DRIVER;
 
  return bits;
 }
