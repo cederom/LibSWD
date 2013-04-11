@@ -1298,7 +1298,8 @@ int libswd_drv_mosi_trn(libswd_ctx_t *libswdctx, int bits)
  if (bits<LIBSWD_TURNROUND_MIN_VAL || bits>LIBSWD_TURNROUND_MAX_VAL)
   return LIBSWD_ERROR_TURNAROUND;
 
- if (!libswdapp_interface_signal_find(libswdctx->driver->ctx, "RnW"))
+ libswdapp_interface_signal_t *sig;
+ if (!(sig=libswdapp_interface_signal_find(libswdctx->driver->ctx, "RnW")))
  {
   libswd_log(libswdctx, LIBSWD_LOGLEVEL_ERROR,
              "LIBSWD_E: libswd_drv_mosi_trn(libswdctx=@%p, bits=%d): Mandatory Interface Signal 'RnW' not defined!\n",
@@ -1310,7 +1311,7 @@ int libswd_drv_mosi_trn(libswd_ctx_t *libswdctx, int bits)
  int res, val = 0;
  static char buf[LIBSWD_TURNROUND_MAX_VAL];
  // Use driver method to set low (write) signal named RnW.
- res = libswdapp_interface_bitbang(libswdctx->driver->ctx, "RnW", 0, &val);
+ res = libswdapp_interface_bitbang(libswdctx->driver->ctx, sig->mask, 0, &val);
  if (res < 0) return LIBSWD_ERROR_DRIVER;
 
  // Clock specified number of bits for proper TRN transaction.
@@ -1340,7 +1341,8 @@ int libswd_drv_miso_trn(libswd_ctx_t *libswdctx, int bits)
  if (bits<LIBSWD_TURNROUND_MIN_VAL || bits>LIBSWD_TURNROUND_MAX_VAL)
   return LIBSWD_ERROR_TURNAROUND;
 
- if (!libswdapp_interface_signal_find(libswdctx->driver->ctx, "RnW"))
+ libswdapp_interface_signal_t *sig;
+ if (!(sig=libswdapp_interface_signal_find(libswdctx->driver->ctx, "RnW")))
  {
   libswd_log(libswdctx, LIBSWD_LOGLEVEL_ERROR,
              "LIBSWD_E: libswd_drv_miso_trn(libswdctx=@%p, bits=%d): Mandatory Interface Signal 'RnW' not defined!\n",
@@ -1353,7 +1355,7 @@ int libswd_drv_miso_trn(libswd_ctx_t *libswdctx, int bits)
  static char buf[LIBSWD_TURNROUND_MAX_VAL];
 
  // Use driver method to set high (read) signal named RnW.
- res = libswdapp_interface_bitbang(libswdctx->driver->ctx, "RnW", 1, &val);
+ res = libswdapp_interface_bitbang(libswdctx->driver->ctx, sig->mask, 1, &val);
  if (res < 0) return LIBSWD_ERROR_DRIVER;
 
  // Clock specified number of bits for proper TRN transaction.
