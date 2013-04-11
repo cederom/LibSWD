@@ -109,7 +109,7 @@ int libswd_cli(libswd_ctx_t *libswdctx, char *command){
     libswd_log(libswdctx, LIBSWD_LOGLEVEL_ERROR,\
                "LIBSWD_E: libswd_cli(libswdctx=@%p, command=%s): Cannot read IDCODE (%s)...\n",\
                (void*)libswdctx, command, libswd_error_string(retval)); 
-   }  
+   } else libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL, "FOUND IDCODE: 0x%08X / %s\n", *idcode, libswd_bin32_string(idcode));
    cmd=strtok(NULL,command);
    continue;
 
