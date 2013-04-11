@@ -753,12 +753,8 @@ int libswdapp_interface_bitbang(libswdapp_context_t *libswdappctx, unsigned int 
  if (!GETnSET) {
   // We will SET port pin values for selected bitmask.
   // Modify our pins value, but remember about other pins and their previous value. 
-//  low_output  = (low_output & ~bitmask) | ((*value & bitmask) & 0x0ff);
-//  high_output = (high_output & ~(bitmask >> 8)) | (((*value & bitmask) >> 8) & 0x0ff);
   gpioval = (libswdappctx->interface->gpioval & ~bitmask) | (*value & bitmask);
   // Modify our pins direction, but remember about other pins and their previous direction.
-//  low_direction  |= bitmask & 0x0ff;
-//  high_direction |= (bitmask >> 8) & 0x0ff;
   gpiodir = libswdappctx->interface->gpiodir | bitmask;
   // Now send those settings to the interface chip.
   buf[0] = 0x80;  // Set Data Bits LowByte.
@@ -778,15 +774,12 @@ int libswdapp_interface_bitbang(libswdapp_context_t *libswdappctx, unsigned int 
   libswdappctx->interface->gpioval=gpioval;
   libswdappctx->interface->gpiodir=gpiodir;
   *value = gpioval&bitmask;
-//  *value = ((high_output << 8) | low_output) & bitmask;
  } else {
   // Modify our pins value, but remember about other pins and their previous value.
   // DO WE REALLY NEED TO PULL-UP PINS TO READ THEIR STATE OR SIMPLY LEAVE AS IS?.
   // low_output  = (low_output & ~sigmask) | (sigmask & 0x0ff);
   // high_output = (high_output & ~sigmask) | (sigmask>>8) & 0x0ff);
   // Modify our pins direction to input, but remember about other pins and their previous direction.
-//  low_direction  &= ~(bitmask);
-//  high_direction &= ~(bitmask >> 8);
   gpiodir = libswdappctx->interface->gpiodir & ~bitmask;
   gpioval = libswdappctx->interface->gpioval;
   // Now send those settings to the interface chip.
@@ -915,36 +908,36 @@ int libswdapp_interface_transfer(libswdapp_context_t *libswdappctx, int bits, ch
  // Now send remaining bits that cannot be packed as bytes.
  // Because "Clock Data Bits In and Out LSB/MSB" of FTDI is a mess, pack single
  // bit read/writes into buffer and then flush it using single USB transfer.
-  for (bit=bytes*8;bit<bits;bit++)
-  {
-   buf[3*bit+0] = (nLSBfirst)?0x33:0x3b; // Clock Bits In and Out LSb or MSb first.
-   buf[3*bit+1] = 0;				     // One bit per element.
-   buf[3*bit+2] = mosidata[bit]?0xff:0;  // Take data from supplied array.
-  }
-  bytes_written = ftdi_write_data(libswdappctx->interface->ftdictx,buf,3*(bits-(bytes*8)));
-  if (bytes_written<0)
-  {
-   printf("ERROR: libswdapp_interface_transfer(): ft2232_write() returns invalid bytes count: %d\n", bytes_written);
-   return LIBSWD_ERROR_DRIVER;
-  }
-  // This retry is necessary because sometimes FTDI Chip returns 0 bytes.
-  for (retry=0;retry<LIBSWD_RETRY_COUNT_DEFAULT;retry++)
-  {
-   bytes_read=ftdi_read_data(libswdappctx->interface->ftdictx, (unsigned char*)buf, bits-(bytes*8));
-   if (bytes_read>0) break;
-  }
-  if (bytes_read<0 || bytes_read!=(bits-(bytes*8)))
-  {
-   printf("ERROR: libswdapp_interface_transfer(): ft2232_read() returns invalid bytes count: %d\n", bytes_read);
-   return LIBSWD_ERROR_DRIVER;
-  }
-  // FTDI MPSSE returns shift register value, our bit is MSb.
-  for (bit=bytes*8;bit<bits;bit++)
-  {
-   misodata[bit]=(buf[bit]&(nLSBfirst?0x01:0x80))?1:0;
-   // USE THIS FOR WIRE-LEVEL DEBUG */
-   //printf("\n===TRANSFER: Bit %d read 0x%02X written 0x%02X\n", bit, misodata[bit], mosidata[bit]); 
-  }
+ for (bit=bytes*8;bit<bits;bit++)
+ {
+  buf[3*bit+0] = (nLSBfirst)?0x33:0x3b; // Clock Bits In and Out LSb or MSb first.
+  buf[3*bit+1] = 0;				     // One bit per element.
+  buf[3*bit+2] = mosidata[bit]?0xff:0;  // Take data from supplied array.
+ }
+ bytes_written = ftdi_write_data(libswdappctx->interface->ftdictx,buf,3*(bits-(bytes*8)));
+ if (bytes_written<0)
+ {
+  printf("ERROR: libswdapp_interface_transfer(): ft2232_write() returns invalid bytes count: %d\n", bytes_written);
+  return LIBSWD_ERROR_DRIVER;
+ }
+ // This retry is necessary because sometimes FTDI Chip returns 0 bytes.
+ for (retry=0;retry<LIBSWD_RETRY_COUNT_DEFAULT;retry++)
+ {
+  bytes_read=ftdi_read_data(libswdappctx->interface->ftdictx, (unsigned char*)buf, bits-(bytes*8));
+  if (bytes_read>0) break;
+ }
+ if (bytes_read<0 || bytes_read!=(bits-(bytes*8)))
+ {
+  printf("ERROR: libswdapp_interface_transfer(): ft2232_read() returns invalid bytes count: %d\n", bytes_read);
+  return LIBSWD_ERROR_DRIVER;
+ }
+ // FTDI MPSSE returns shift register value, our bit is MSb.
+ for (bit=bytes*8;bit<bits;bit++)
+ {
+  misodata[bit]=(buf[bit]&(nLSBfirst?0x01:0x80))?1:0;
+  // USE THIS FOR WIRE-LEVEL DEBUG */
+  //printf("\n===TRANSFER: Bit %d read 0x%02X written 0x%02X\n", bit, misodata[bit], mosidata[bit]); 
+ }
  return bit;
 }
 
