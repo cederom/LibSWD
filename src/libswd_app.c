@@ -235,102 +235,129 @@ int libswdapp_handle_command_signal_usage(void){
 int libswdapp_handle_command_signal(libswdapp_context_t *libswdappctx, char *cmd){
  int retval,sigmask;
  unsigned int sigval;
- char *signamep, *sigmaskp, *sigvalp;
+ char *command, *signamep, *sigmaskp, *sigvalp, *cmdp, *cmdip, *cmdap, *cmdvp;
  libswdapp_interface_signal_t *sig;
 
- if (signamep=strchr(cmd,' '))
+ command=(char*)calloc(strlen(cmd),sizeof(char));
+ if (!command)
  {
-  strncpy(cmd,signamep+1,LIBSWDAPP_INTERFACE_SIGNAL_NAME_MAXLEN); 
- } else return libswdapp_handle_command_signal_usage();
+  printf("ERROR: Cannot allocate memory for command anaysis!\n");
+  return LIBSWD_ERROR_OUTOFMEM;
+ }
+ strncpy(command, cmd, strlen(cmd));
 
- // Check if list command, handle if necessary.
- if (!strncasecmp(cmd,"list",4))
+ cmdp=strsep(&command," ");
+ if (!cmd)
+  return libswdapp_handle_command_signal_usage();
+
+ while (cmdp=strsep(&command," "))
  {
-  sig = libswdappctx->interface->signal;
-  while (sig)
+  // Check if list command, handle if necessary.
+  if (!strncasecmp(cmdp,"list",4))
   {
-   printf("%s[0x%0X]=0x%0X\n", sig->name, sig->mask, sig->value);
-   sig = sig->next;
+   sig = libswdappctx->interface->signal;
+   while (sig)
+   {
+    printf("%s[0x%0X]=0x%0X\n", sig->name, sig->mask, sig->value);
+    sig = sig->next;
+   }
+   continue;
   }
-  return LIBSWD_OK;
- }
- // Check if add/delete command, handle if necessary.
- if (strchr(cmd,':'))
- {
-  cmd=strtok(cmd,":=");
-  if (!strncmp(cmd,"del",3))
+  // Check if add/delete command, handle if necessary.
+  if (strchr(cmdp,':'))
   {
-   signamep=strtok(NULL,":");
-   if (!signamep) goto libswdapp_handle_command_signal_error;
-   retval=libswdapp_interface_signal_del(libswdappctx, signamep);
-   if (retval!=LIBSWD_OK)
-    printf("WARNING: Cannot remove signal '%s'!\n", signamep);
-    return retval;
+   cmdip=strsep(&cmdp,":");
+   if (!strncmp(cmdip,"del",3))
+   {
+    signamep=cmdp;
+    if (!*signamep)
+    {
+     printf("WARNING: Syntax Error, see '?' or '[s]ignal' for more information...\n");
+     continue;
+    }
+    retval=libswdapp_interface_signal_del(libswdappctx, signamep);
+    if (retval!=LIBSWD_OK)
+     printf("WARNING: Cannot remove signal '%s'!\n", signamep);
+    continue;
+   }
+   else if (!strncmp(cmdip,"add",3))
+   {
+    signamep=strsep(&cmdp,"=");
+    sigmaskp=cmdp;
+    if (!signamep || !sigmaskp)
+    {
+     printf("WARNING: Syntax Error, see '?' or '[s]ignal' for more information...\n");
+     continue;
+    }
+    errno=LIBSWD_OK;
+    sigmask=strtol(sigmaskp,NULL,16);
+    if (errno!=LIBSWD_OK)
+    {
+     printf("WARNING: Syntax Error, see '?' or '[s]ignal' for more information...\n");
+     continue;
+    }
+    retval=libswdapp_interface_signal_add(libswdappctx, signamep, sigmask);
+    if (retval!=LIBSWD_OK)
+     printf("WARNING: Cannot add '%s' signal with '%x' mask!\n", signamep, sigmaskp, sigmask);
+    continue;
+   } 
   }
-  else if (!strncmp(cmd,"add",3))
+  // Check if signal read/write, handle if necessary.
+  signamep=strsep(&cmdp,"=");
+  sigvalp=cmdp;
+  if (sigvalp)
   {
-   signamep=strtok(NULL,"=");
-   sigmaskp=strtok(NULL,"=");
-   if (!signamep || !sigmaskp) goto libswdapp_handle_command_signal_error;
-   errno=LIBSWD_OK;
-   sigmask=strtol(sigmaskp,NULL,16);
-   if (errno!=LIBSWD_OK) goto libswdapp_handle_command_signal_error;
-   retval=libswdapp_interface_signal_add(libswdappctx, signamep, sigmask);
-   if (retval!=LIBSWD_OK)
-    printf("WARNING: Cannot add '%s' signal with '%x' mask!\n", signamep, sigmaskp, sigmask);
-   return retval;
+   if (!strncmp(sigvalp,"hi",2))
+    sigval=~0;
+   else if (!strncmp(sigvalp,"lo",2))
+    sigval=0;
+   else 
+   {
+    errno=LIBSWD_OK;
+    sigval=strtol(sigvalp,NULL,16);
+    if (errno!=LIBSWD_OK)
+    {
+     printf("WARNING: Syntax Error, see '?' or '[s]ignal' for more information...\n");
+     continue;
+    }
+   }
+  }
+  sig=libswdapp_interface_signal_find(libswdappctx, signamep);
+  if (!sig)
+  {
+   printf("WARNING: Signal '%s' not found!\n", signamep);
+   continue;
   } 
- }
- // Check if signal read/write, handle if necessary.
- signamep=strtok(cmd,"=");
- sigvalp=strtok(NULL,"=");
- if (sigvalp)
- {
-  if (!strncmp(sigvalp,"hi",2))
-   sigval=(~0);
-  else if (!strncmp(sigvalp,"lo",2))
-   sigval=0;
-  else 
+  if (signamep && sigvalp)
   {
-   errno=LIBSWD_OK;
-   sigval=strtol(sigvalp,NULL,16);
-   if (errno!=LIBSWD_OK) goto libswdapp_handle_command_signal_error;
+   retval=libswdapp_interface_bitbang(libswdappctx, sig->mask, 0, &sigval);
+   if (retval==LIBSWD_OK)
+   {
+    sig->value=sigval;
+    printf("%s[0x%X]=0x%X\n", signamep, sig->mask, sig->value);
+   } else printf("WARNING: Cannot set signal '%s' value!\n", signamep);
+   continue;
+  }
+  else if (signamep)
+  {
+   retval=libswdapp_interface_bitbang(libswdappctx, sig->mask, 1, &sigval);
+   if (retval==LIBSWD_OK)
+   {
+    sig->value=sigval;
+    printf("%s[0x%X]=0x%X\n", signamep, sig->mask, sig->value);
+   } else printf("WARNING: Cannot read signal '%s' value!\n", signamep);
+   continue;
   }
  }
- sig=libswdapp_interface_signal_find(libswdappctx, signamep);
- if (!sig)
- {
-  printf("ERROR: Signal '%s' not found!\n", signamep);
-  goto libswdapp_handle_command_signal_error;
- } 
- if (signamep && sigvalp)
- {
-  retval=libswdapp_interface_bitbang(libswdappctx, sig->mask, 0, &sigval);
-  if (retval==LIBSWD_OK)
-  {
-   sig->value=sigval;
-   printf("%s[0x%X]=0x%X\n", signamep, sig->mask, sig->value);
-   return LIBSWD_OK;
-  } 
-  return retval;
- }
- else if (signamep)
- {
-  retval=libswdapp_interface_bitbang(libswdappctx, sig->mask, 1, &sigval);
-  if (retval==LIBSWD_OK)
-  {
-   sig->value=sigval;
-   printf("%s[0x%X]=0x%X\n", signamep, sig->mask, sig->value);
-   return LIBSWD_OK;
-  }
-  return retval;
- }
- 
+ free(command);
+ return LIBSWD_OK;
+  
 libswdapp_handle_command_signal_error:
- printf("ERROR: Syntax Error, see '?' or '[s]ignal' for more information...\n");
- return LIBSWD_ERROR_CLISYNTAX;
+  free(command);
+  printf("ERROR: Syntax Error, see '?' or '[s]ignal' for more information...\n");
+  return LIBSWD_ERROR_CLISYNTAX;
 }
-
+ 
 
 /** It will prepare interface for use or fail.
  * If an interface is already configured, it will check if requested interface
@@ -407,16 +434,18 @@ int libswdapp_handle_command_interface(libswdapp_context_t *libswdappctx, char *
   libswdapp_interface_signal_del(libswdappctx, "*"); 
  libswdappctx->interface->init=NULL;
  libswdappctx->interface->deinit=NULL;
+ libswdappctx->interface->set_freq=NULL;
+ libswdappctx->interface->frequency=-1;
  libswdappctx->interface->initialized=0;
- libswdappctx->interface->freq=0;
 
  // Load selected interface configuration.
  strncpy(libswdappctx->interface->name,libswdapp_interface_configs[interface_number].name,LIBSWDAPP_INTERFACE_NAME_MAXLEN);
  libswdappctx->interface->init   = libswdapp_interface_configs[interface_number].init;
  libswdappctx->interface->deinit = libswdapp_interface_configs[interface_number].deinit;
+ libswdappctx->interface->set_freq = libswdapp_interface_configs[interface_number].set_freq;
  libswdappctx->interface->vid    = libswdapp_interface_configs[interface_number].vid;
  libswdappctx->interface->pid    = libswdapp_interface_configs[interface_number].pid;
- libswdappctx->interface->ftdi_latency=libswdapp_interface_configs[interface_number].ftdi_latency;
+ libswdappctx->interface->latency= libswdapp_interface_configs[interface_number].latency;
  if (libswdappctx->interface->vid_forced)
   libswdappctx->interface->vid    = libswdappctx->interface->vid_forced;
  if (libswdappctx->interface->pid_forced)
@@ -468,17 +497,29 @@ int libswdapp_handle_command_interface(libswdapp_context_t *libswdappctx, char *
   printf("ERROR: Unable to reset ftdi device!\n");
   return LIBSWD_ERROR_DRIVER;
  }
- // Set default interface speed/frequency
- libswdapp_interface_ftdi_freq(libswdappctx, libswdappctx->interface->freq);
- // Reset Command Controller
+// Reset Command Controller
  if(ftdi_set_bitmode(libswdappctx->interface->ftdictx, 0, BITMODE_RESET)<0)
  {
   printf("ERROR: Cannot (re)set bitmode for FTDI interface!\n");
   return LIBSWD_ERROR_DRIVER;
  }
- // Now call the interface specific initialization routine.
+ // Call the interface specific binary initialization routine.
  retval=libswdappctx->interface->init(libswdappctx);
- if (retval==LIBSWD_OK) libswdappctx->interface->initialized=1; 
+ if (retval!=LIBSWD_OK)
+ {
+  printf("ERROR: Interface specific intialization routine failed!\n");
+  return retval;
+ }
+ // Set default interface speed/frequency
+ libswdapp_interface_ftdi_set_freq(libswdappctx, libswdapp_interface_configs[interface_number].frequency);
+ // Call the interface specific signal configuration command string.
+ retval=libswdapp_handle_command_signal(libswdappctx, libswdapp_interface_configs[interface_number].sigsetupstr);
+ if (retval!=LIBSWD_OK)
+ {
+  printf("ERROR: Cannot setup Interface specific signals!\n");
+  return retval;
+ }
+ libswdappctx->interface->initialized=1; 
  return retval;
 }
 
@@ -705,62 +746,107 @@ int libswdapp_interface_signal_del(libswdapp_context_t *libswdappctx, char *name
 int libswdapp_interface_bitbang(libswdapp_context_t *libswdappctx, unsigned int bitmask, int GETnSET, unsigned int *value)
 {
  unsigned char  buf[3];
- int retval, vall = 0, valh = 0;
+ int retval, retry;
  unsigned int bytes_written, bytes_read;
- unsigned int low_output, high_output, low_direction, high_direction; 
+ unsigned int vall=0, valh=0, gpioval=0, gpiodir=0; 
 
  if (!GETnSET) {
-  /* We will SET port pins selected by bitmask. */
-  /* Modify our pins value, but remember about other pins and their previous value */
-  low_output  = (low_output & ~bitmask) | ((*value & bitmask) & 0x0ff);
-  high_output = (high_output & ~(bitmask >> 8)) | (((*value & bitmask) >> 8) & 0x0ff);
-  /* Modify our pins direction, but remember about other pins and their previous direction */
-  low_direction  |= bitmask & 0x0ff;
-  high_direction |= (bitmask >> 8) & 0x0ff;
-  /* Now send those settings to the interface chip */
-  buf[0] = 0x80;  /* Set Data Bits LowByte */
-  buf[1] = low_output;
-  buf[2] = low_direction;
+  // We will SET port pin values for selected bitmask.
+  // Modify our pins value, but remember about other pins and their previous value. 
+//  low_output  = (low_output & ~bitmask) | ((*value & bitmask) & 0x0ff);
+//  high_output = (high_output & ~(bitmask >> 8)) | (((*value & bitmask) >> 8) & 0x0ff);
+  gpioval = (libswdappctx->interface->gpioval & ~bitmask) | (*value & bitmask);
+  // Modify our pins direction, but remember about other pins and their previous direction.
+//  low_direction  |= bitmask & 0x0ff;
+//  high_direction |= (bitmask >> 8) & 0x0ff;
+  gpiodir = libswdappctx->interface->gpiodir | bitmask;
+  // Now send those settings to the interface chip.
+  buf[0] = 0x80;  // Set Data Bits LowByte.
+  buf[1] = gpioval&0x00ff;
+  buf[2] = gpiodir&0x00ff;
   bytes_written = ftdi_write_data(libswdappctx->interface->ftdictx, buf, 3);
   if (bytes_written<0 || bytes_written!=3) return bytes_written;
-  buf[0] = 0x82;   /* Set Data Bits HighByte */
-  buf[1] = high_output;
-  buf[2] = high_direction;
+  buf[0] = 0x82;   // Set Data Bits HighByte.
+  buf[1] = (gpioval>>8)&0x00ff;
+  buf[2] = (gpiodir>>8)&0x00ff;
   bytes_written = ftdi_write_data(libswdappctx->interface->ftdictx, buf, 3);
-  if (bytes_written<0 || bytes_written!=3) return bytes_written;
-  *value = ((high_output << 8) | low_output) & bitmask;
+  if (bytes_written<0 || bytes_written!=3)
+  {
+   printf("ERROR: Interface bitbang error!\n");
+   return bytes_written;
+  }
+  libswdappctx->interface->gpioval=gpioval;
+  libswdappctx->interface->gpiodir=gpiodir;
+  *value = gpioval&bitmask;
+//  *value = ((high_output << 8) | low_output) & bitmask;
  } else {
-  /* Modify our pins value, but remember about other pins and their previous value */
-  /* DO WE REALLY NEED TO PULL-UP PINS TO READ THEIR STATE OR SIMPLY LEAVE AS IS? */
-  /* low_output  = (low_output & ~sigmask) | (sigmask & 0x0ff); */
-  /* high_output = (high_output & ~sigmask) | (sigmask>>8) & 0x0ff); */
-  /* Modify our pins direction to input, but remember about other pins and their previous direction */
-  low_direction  &= ~(bitmask);
-  high_direction &= ~(bitmask >> 8);
-  /* Now send those settings to the interface chip */
-  /* First change desired pins to input */
-  buf[0] = 0x80;  /* Set Data Bits LowByte */
-  buf[1] = low_output;
-  buf[2] = low_direction;
+  // Modify our pins value, but remember about other pins and their previous value.
+  // DO WE REALLY NEED TO PULL-UP PINS TO READ THEIR STATE OR SIMPLY LEAVE AS IS?.
+  // low_output  = (low_output & ~sigmask) | (sigmask & 0x0ff);
+  // high_output = (high_output & ~sigmask) | (sigmask>>8) & 0x0ff);
+  // Modify our pins direction to input, but remember about other pins and their previous direction.
+//  low_direction  &= ~(bitmask);
+//  high_direction &= ~(bitmask >> 8);
+  gpiodir = libswdappctx->interface->gpiodir & ~bitmask;
+  gpioval = libswdappctx->interface->gpioval;
+  // Now send those settings to the interface chip.
+  // First change desired pins to input.
+  buf[0] = 0x80;  // Set Data Bits LowByte.
+  buf[1] = gpioval&0x00ff;
+  buf[2] = gpiodir&0x00ff;
   bytes_written = ftdi_write_data(libswdappctx->interface->ftdictx, buf, 3);
-  if (bytes_written<0 || bytes_written!=3) return bytes_written;
-  buf[0] = 0x82;   /* Set Data Bits HighByte */
-  buf[1] = high_output;
-  buf[2] = high_direction;
+  if (bytes_written<0 || bytes_written!=3)
+  {
+   printf("ERROR: libswdapp_interface_transfer(): ftdi_write_data() returns invalid bytes count: %d\n", bytes_written);
+   return LIBSWD_ERROR_DRIVER;
+  }
+  buf[0] = 0x82;   // Set Data Bits HighByte.
+  buf[1] = (gpioval>>8)&0x00ff;
+  buf[2] = (gpiodir>>8)&0x00ff;
   bytes_written = ftdi_write_data(libswdappctx->interface->ftdictx, buf, 3);
-  if (bytes_written<0 || bytes_written!=3) return bytes_written;
-  /* Then read pins designated by a signal mask */
-  buf[0] = 0x81;    /* Read Data Bits LowByte. */
+  if (bytes_written<0 || bytes_written!=3)
+  {
+   printf("ERROR: libswdapp_interface_transfer(): ftdi_write_data() returns invalid bytes count: %d\n", bytes_written);
+   return LIBSWD_ERROR_DRIVER;
+  }
+  // Then read pins designated by a signal mask.
+  buf[0] = 0x81;    // Read Data Bits LowByte.
   bytes_written = ftdi_write_data(libswdappctx->interface->ftdictx, buf, 1);
-  if (bytes_written<0 || bytes_written!=1) return bytes_written;
-  bytes_read = ftdi_read_data(libswdappctx->interface->ftdictx, (unsigned char*)&vall, 1);
-  if (bytes_read<0 || bytes_read!=1) return bytes_read;
-  buf[0] = 0x83;    /* Read Data Bits HighByte. */
+  if (bytes_written<0 || bytes_written!=1)
+  {
+   printf("ERROR: libswdapp_interface_transfer(): ftdi_write_data() returns invalid bytes count: %d\n", bytes_written);
+   return LIBSWD_ERROR_DRIVER;
+  }
+  for (retry=0;retry<LIBSWD_RETRY_COUNT_DEFAULT;retry++)
+  {
+   bytes_read = ftdi_read_data(libswdappctx->interface->ftdictx, (unsigned char*)&vall, 1);
+   if (bytes_read>0) break;
+  }
+  if (bytes_read<0 || bytes_read!=1)
+  {
+   printf("ERROR: libswdapp_interface_transfer(): ftdi_read_data() returns invalid bytes count: %d\n", bytes_read);
+   return LIBSWD_ERROR_DRIVER;
+  }
+  buf[0] = 0x83;    // Read Data Bits HighByte.
   bytes_written = ftdi_write_data(libswdappctx->interface->ftdictx, buf, 1);
-  if (bytes_written<0 || bytes_written!=1) return bytes_written;
-  bytes_read = ftdi_read_data(libswdappctx->interface->ftdictx, (unsigned char*)&valh, 1);
-  if (bytes_read<0 || bytes_read!=1) return bytes_read;
-  *value = ((valh << 8) | vall) & bitmask; /* Join result bytes and apply signal bitmask */
+  if (bytes_written<0 || bytes_written!=1)
+  {
+   printf("ERROR: libswdapp_interface_transfer(): ftdi_write_data() returns invalid bytes count: %d\n", bytes_written);
+   return LIBSWD_ERROR_DRIVER;
+  }
+  for (retry=0;retry<LIBSWD_RETRY_COUNT_DEFAULT;retry++)
+  {
+   bytes_read = ftdi_read_data(libswdappctx->interface->ftdictx, (unsigned char*)&valh, 1);
+   if (bytes_read>0) break;
+  }
+  if (bytes_read<0 || bytes_read!=1)
+  {
+   printf("ERROR: libswdapp_interface_transfer(): ftdi_read_data() returns invalid bytes count: %d\n", bytes_read);
+   return LIBSWD_ERROR_DRIVER;
+  }
+  *value = ((valh << 8) | vall) & bitmask; // Join result bytes and apply signal bitmask.
+  libswdappctx->interface->gpioval = (libswdappctx->interface->gpioval & ~bitmask) | (*value & bitmask);
+  libswdappctx->interface->gpiodir = gpiodir;
  }
  return LIBSWD_OK;
 }
@@ -778,7 +864,7 @@ int libswdapp_interface_bitbang(libswdapp_context_t *libswdappctx, unsigned int 
 int libswdapp_interface_transfer(libswdapp_context_t *libswdappctx, int bits, char *mosidata, char *misodata, int nLSBfirst)
 {
  static unsigned char buf[65539], databuf;
- int i, retval, bit = 0, byte = 0, bytes = 0;
+ int i, retval, bit=0, byte=0, bytes=0, retry;
  unsigned int bytes_written, bytes_read;
 
  if (bits>65535)
@@ -796,6 +882,7 @@ int libswdapp_interface_transfer(libswdapp_context_t *libswdappctx, int bits, ch
   buf[1] = (char)bytes&0x0ff;
   buf[2] = (char)((bytes>>8)&0x0ff);
   bytes++;
+  // Fill in the data buffer.
   for (byte=0;byte*8<bits;byte++)
   {
    databuf = 0;
@@ -808,68 +895,126 @@ int libswdapp_interface_transfer(libswdapp_context_t *libswdappctx, int bits, ch
    printf("ERROR: libswdapp_interface_transfer(): ft2232_write() returns %d\n", bytes_written);
    return ;
   }
-  bytes_read = ftdi_read_data(libswdappctx->interface->ftdictx, (unsigned char*)buf, bytes);
+  // This retry is necessary because sometimes FTDI Chip returns 0 bytes.
+  for (retry=0;retry<LIBSWD_RETRY_COUNT_DEFAULT;retry++)
+  {
+   bytes_read=ftdi_read_data(libswdappctx->interface->ftdictx, (unsigned char*)buf, bytes);
+   if (bytes_read>0) break;
+  }
   if (bytes_read<0 || bytes_read!=bytes)
   {
    printf("ERROR: libswdapp_interface_transfer(): ft2232_read() returns %d\n", bytes_read);
    return LIBSWD_ERROR_DRIVER;
   }
- // Explode read bytes into bit array.
- for (byte=0;byte*8<bits;byte++)
-  for (bit=0;bit<8;bit++)
-   misodata[byte*8+bit]=buf[byte]&(1<<bit)?1:0;
+  // Explode read bytes into bit array.
+  for (byte=0;byte*8<bits;byte++)
+   for (bit=0;bit<8;bit++)
+    misodata[byte*8+bit]=buf[byte]&(1<<bit)?1:0;
  }
 
  // Now send remaining bits that cannot be packed as bytes.
  // Because "Clock Data Bits In and Out LSB/MSB" of FTDI is a mess, pack single
  // bit read/writes into buffer and then flush it using single USB transfer.
- for (bit=bytes*8;bit<bits;bit++)
- {
-  buf[3*bit+0] = (nLSBfirst)?0x33:0x3b; // Clock Bits In and Out LSb or MSb first.
-  buf[3*bit+1] = 0;				     // One bit per element.
-  buf[3*bit+2] = mosidata[bit]?0xff:0;  // Take data from supplied array.
- }
- bytes_written = ftdi_write_data(libswdappctx->interface->ftdictx,buf,3*(bits-(bytes*8)));
- if (bytes_written<0)
- {
-  printf("ERROR: libswdapp_interface_transfer(): ft2232_write() returns %d\n", bytes_written);
-  return LIBSWD_ERROR_DRIVER;
- }
- bytes_read = ftdi_read_data(libswdappctx->interface->ftdictx, (unsigned char*)misodata, bits-(bytes*8));
- if (bytes_read<0 || bytes_read!=(bits-(bytes*8)))
- {
-  printf("ERROR: libswdapp_interface_transfer(): ft2232_read() returns %d\n", bytes_read);
-  return LIBSWD_ERROR_DRIVER;
- }
- // FTDI MPSSE returns shift register value, our bit is MSb.
- for (bit=bytes*8;bit<bits;bit++)
- {
-  misodata[bit]=(misodata[bit]&(nLSBfirst?0x01:0x80))?1:0;
-  // USE THIS FOR WIRE-LEVEL DEBUG */
-  printf("\n===TRANSFER: read 0x%02X written 0x%02X\n", misodata[bit], mosidata[bit]); 
- }
-
+  for (bit=bytes*8;bit<bits;bit++)
+  {
+   buf[3*bit+0] = (nLSBfirst)?0x33:0x3b; // Clock Bits In and Out LSb or MSb first.
+   buf[3*bit+1] = 0;				     // One bit per element.
+   buf[3*bit+2] = mosidata[bit]?0xff:0;  // Take data from supplied array.
+  }
+  bytes_written = ftdi_write_data(libswdappctx->interface->ftdictx,buf,3*(bits-(bytes*8)));
+  if (bytes_written<0)
+  {
+   printf("ERROR: libswdapp_interface_transfer(): ft2232_write() returns invalid bytes count: %d\n", bytes_written);
+   return LIBSWD_ERROR_DRIVER;
+  }
+  // This retry is necessary because sometimes FTDI Chip returns 0 bytes.
+  for (retry=0;retry<LIBSWD_RETRY_COUNT_DEFAULT;retry++)
+  {
+   bytes_read=ftdi_read_data(libswdappctx->interface->ftdictx, (unsigned char*)buf, bits-(bytes*8));
+   if (bytes_read>0) break;
+  }
+  if (bytes_read<0 || bytes_read!=(bits-(bytes*8)))
+  {
+   printf("ERROR: libswdapp_interface_transfer(): ft2232_read() returns invalid bytes count: %d\n", bytes_read);
+   return LIBSWD_ERROR_DRIVER;
+  }
+  // FTDI MPSSE returns shift register value, our bit is MSb.
+  for (bit=bytes*8;bit<bits;bit++)
+  {
+   misodata[bit]=(buf[bit]&(nLSBfirst?0x01:0x80))?1:0;
+   // USE THIS FOR WIRE-LEVEL DEBUG */
+   //printf("\n===TRANSFER: Bit %d read 0x%02X written 0x%02X\n", bit, misodata[bit], mosidata[bit]); 
+  }
  return bit;
 }
 
 
+int libswdapp_interface_ftdi_init(libswdapp_context_t *libswdappctx)
+{
+ int retval;
+ int ftdi_channel=INTERFACE_ANY;
+ unsigned char latency_timer;
+ static unsigned int port_direction, port_value;
+
+ // Set interface channel to use.
+ if (ftdi_channel == INTERFACE_ANY) ftdi_channel = INTERFACE_A;
+ if (ftdi_set_interface(libswdappctx->interface->ftdictx, ftdi_channel)<0)
+ {
+  printf("ERROR: Unable to select FT2232 channel A: %s\n",
+         libswdappctx->interface->ftdictx->error_str);
+  return LIBSWD_ERROR_DRIVER;
+ }
+ // Set the Latency Timer.
+ if (ftdi_set_latency_timer(libswdappctx->interface->ftdictx,libswdappctx->interface->latency)<0)
+ {
+  printf("ERROR: Unable to set latency timer!\n");
+  return LIBSWD_ERROR_DRIVER;
+ }
+ if (ftdi_get_latency_timer(libswdappctx->interface->ftdictx,&latency_timer)<0)
+ {
+  printf("ERROR: Unable to get latency timer!\n");
+  return LIBSWD_ERROR_DRIVER;
+ } else printf("FTDI latency timer is: %i\n", latency_timer);
+
+retval=ftdi_set_bitmode(libswdappctx->interface->ftdictx, 0, BITMODE_MPSSE);
+ if (retval<0)
+ {
+  printf("ERROR: Cannot set bitmode BITMODE_MPSSE for '%s' interface!\n", libswdappctx->interface->name);
+  return LIBSWD_ERROR_DRIVER;
+ } 
+ printf("FTDI MPSSE initialization complete!\n");
+ return LIBSWD_OK;
+}
+
+
+
 /** Set interface frequency in Hz.
+ * Warning: Passing zero as freq parameter means maximum available frequency.
+ * \param *libswdappctx pointer to the LibSWD Application Context.
+ * \param freq desired frequency in Hz (0 means maximum frequency).
+ * \return LIBSWD_OK on success, negative error code otherwise. 
  */
-int libswdapp_interface_ftdi_freq(libswdapp_context_t *libswdappctx, int freq)
+int libswdapp_interface_ftdi_set_freq(libswdapp_context_t *libswdappctx, int freq)
 {
  unsigned int reg;
  char buf[3], bytes_written;
  if (!libswdappctx || !libswdappctx->interface || !libswdappctx->interface->ftdictx)
   return LIBSWD_ERROR_NULLPOINTER;
+ if (freq<0)
+ {
+  printf("ERROR: Invalid interface frequency value '%d'!\n", freq);
+  return LIBSWD_ERROR_PARAM;
+ }
  if (freq!=0)
  {
   reg=((12000000/freq)-1)/2;
  } else reg=0;
  buf[0] = 0x86;
- buf[1] = reg&0xff;
+ buf[1] = reg&0x0ff;
  buf[2] = (reg>>8)&0xff;
  bytes_written = ftdi_write_data(libswdappctx->interface->ftdictx, buf, 3);
  if (bytes_written<0 || bytes_written!=3) return bytes_written;
+ libswdappctx->interface->frequency=freq;
  return LIBSWD_OK; 
 }
 
@@ -891,7 +1036,7 @@ int libswdapp_interface_ftdi_init_ktlink(libswdapp_context_t *libswdappctx)
   return LIBSWD_ERROR_DRIVER;
  }
  // Set the Latency Timer.
- if (ftdi_set_latency_timer(libswdappctx->interface->ftdictx,libswdappctx->interface->ftdi_latency)<0)
+ if (ftdi_set_latency_timer(libswdappctx->interface->ftdictx,libswdappctx->interface->latency)<0)
  {
   printf("ERROR: Unable to set latency timer!\n");
   return LIBSWD_ERROR_DRIVER;
@@ -1208,7 +1353,7 @@ int libswd_drv_miso_trn(libswd_ctx_t *libswdctx, int bits)
  static char buf[LIBSWD_TURNROUND_MAX_VAL];
 
  // Use driver method to set high (read) signal named RnW.
- res = libswdapp_interface_bitbang(libswdctx->driver->ctx, "RnW", !0, &val);
+ res = libswdapp_interface_bitbang(libswdctx->driver->ctx, "RnW", 1, &val);
  if (res < 0) return LIBSWD_ERROR_DRIVER;
 
  // Clock specified number of bits for proper TRN transaction.

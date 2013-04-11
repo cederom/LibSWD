@@ -65,26 +65,32 @@ typedef struct libswdapp_context {
 typedef struct libswdapp_interface {
  char name[LIBSWDAPP_INTERFACE_NAME_MAXLEN];
  struct ftdi_context *ftdictx;
- enum ftdi_interface ftdi_channel;
- unsigned char ftdi_latency;
- int frequency;
  int vid, pid, vid_forced, pid_forced;
  libswdapp_interface_signal_t *signal;
  int (*init)(libswdapp_context_t *libswdappctx);
  int (*deinit)(libswdapp_context_t *libswdappctx);
- int (*freq)(libswdapp_context_t *libswdappctx, int freq);
+ int (*set_freq)(libswdapp_context_t *libswdappctx, int freq);
+ char *sigsetupstr;
+ // Below are CACHED values changed only by the interface functions.
+
+ unsigned char latency;
+ enum ftdi_interface ftdi_channel;
+ int frequency; /// This value shall only be changed by set_freq() routine.
  char initialized;
+ unsigned int gpioval, gpiodir;
 } libswdapp_interface_t;
 
 typedef struct libswdapp_interface_config {
  char name[LIBSWDAPP_INTERFACE_NAME_MAXLEN];
  char *description;
+ char *sigsetupstr;
  int (*init)(libswdapp_context_t *libswdappctx);
  int (*deinit)(libswdapp_context_t *libswdappctx);
- int (*freq)(libswdapp_context_t *libswdappctx, int freq);
+ int (*set_freq)(libswdapp_context_t *libswdappctx, int freq);
  int vid, pid;
- unsigned char ftdi_latency;
+ unsigned char latency;
  int frequency;
+ unsigned int gpioval, gpiodir; //Shouldnt we use array?
 } libswdapp_interface_config_t;
 
 typedef enum libswdapp_interface_operation {
@@ -105,6 +111,7 @@ int libswdapp_print_banner(void);
 int libswdapp_print_usage(void);
 int libswdapp_handle_command_signal(libswdapp_context_t *libswdappctx, char *cmd);
 int libswdapp_handle_command_interface(libswdapp_context_t *libswdappctx, char *cmd);
+int libswdapp_interface_ftdi_set_freq(libswdapp_context_t *libswdappctx, int freq);
 
 int ftdi_bitbang(void *device, char *signal_name, int GETnSET, int *value);
 int ftdi_transfer(void *device, int bits, char *mosidata, char *misodata, int nLSBfirst);
@@ -116,19 +123,22 @@ int libswd_drv_mosi_trn(libswd_ctx_t *libswdctx, int clks);
 int libswd_drv_miso_trn(libswd_ctx_t *libswdctx, int clks);
 int libswd_log(libswd_ctx_t *libswdctx, libswd_loglevel_t loglevel, char *msg, ...);
 
-static int libswdapp_interface_ftdi_init_ktlink(libswdapp_context_t *libswdappctx);
+static int libswdapp_interface_ftdi_init(libswdapp_context_t *libswdappctx);
 static int libswdapp_interface_ftdi_deinit(libswdapp_context_t *libswdappctx);
+static int libswdapp_interface_ftdi_init_ktlink(libswdapp_context_t *libswdappctx);
 
 static const libswdapp_interface_config_t libswdapp_interface_configs[] = {
  {
   .name        = "ktlink",
   .description = "KT-LINK FT2232H based device",
-  .init        = libswdapp_interface_ftdi_init_ktlink,
+  .init        = libswdapp_interface_ftdi_init,
   .deinit      = libswdapp_interface_ftdi_deinit,
+  .set_freq    = libswdapp_interface_ftdi_set_freq,
   .vid         = 0x0403,
   .pid         = 0xbbe2, 
-  .ftdi_latency= 1,
+  .latency     = 1,
   .frequency   = 10000,
+  .sigsetupstr = "signal add:CLK=0x0001 add:MOSI=0x0002 add:MISO=0x0004 add:TMS=0x0008 add:nSWDsel=0x0020 add:SRSTin=0x0040 add:RTCK=0x0080 add:TRST=0x0100 add:SRST=0x0200 add:nTRSTen=0x0400 add:nSRSTen=0x0800 add:RnW=0x1000 add:nMOSIen=0x2000 add:nCLKen=0x4000 add:LED=0x8000 CLK=lo MOSI=lo SRST=hi nCLKen=lo nSWDsel=lo RnW=lo nSRSTen=lo LED=lo MISO SRSTin RTCK",
  },
  {
    .name = NULL,
