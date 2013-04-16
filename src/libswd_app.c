@@ -846,9 +846,9 @@ int libswdapp_interface_bitbang(libswdapp_context_t *libswdappctx, unsigned int 
  return LIBSWD_OK;
 }
 
-/** Transfer bits in/out stored in char array starting from LSB first or MSB first,
- * alternatively if you want to make MSB-first shift on LSB-first mode put data
- * in reverse order into input/output array.
+/** Transfer bits in/out stored in char array each bit starting from LSB first
+ * or MSB first, alternatively if you want to make MSB-first shift on
+ * LSB-first mode put data in reverse order into input/output array.
  * \param *device void pointer to pass driver details to the function.
  * \param bits is the number of bits (char array elements) to transfer.
  * \param *mosidata pointer to char array with data to be send.
@@ -856,7 +856,7 @@ int libswdapp_interface_bitbang(libswdapp_context_t *libswdappctx, unsigned int 
  * \param nLSBfirst if zero shift data LSB-first, otherwise MSB-first.
  * \return number of bits sent on success, or ERROR_FAIL on failure.
  */
-int libswdapp_interface_transfer(libswdapp_context_t *libswdappctx, int bits, char *mosidata, char *misodata, int nLSBfirst)
+int libswdapp_interface_transfer_bits(libswdapp_context_t *libswdappctx, int bits, char *mosidata, char *misodata, int nLSBfirst)
 {
  static unsigned char buf[65539], databuf;
  int i, retval, bit=0, byte=0, bytes=0, retry;
@@ -887,7 +887,7 @@ int libswdapp_interface_transfer(libswdapp_context_t *libswdappctx, int bits, ch
   bytes_written = ftdi_write_data(libswdappctx->interface->ftdictx, buf, bytes+3);
   if (bytes_written<0 || bytes_written!=(bytes+3))
   {
-   printf("ERROR: libswdapp_interface_transfer(): ft2232_write() returns %d\n", bytes_written);
+   printf("ERROR: libswdapp_interface_transfer_bits(): ft2232_write() returns %d\n", bytes_written);
    return ;
   }
   // This retry is necessary because sometimes FTDI Chip returns 0 bytes.
@@ -898,7 +898,7 @@ int libswdapp_interface_transfer(libswdapp_context_t *libswdappctx, int bits, ch
   }
   if (bytes_read<0 || bytes_read!=bytes)
   {
-   printf("ERROR: libswdapp_interface_transfer(): ft2232_read() returns %d\n", bytes_read);
+   printf("ERROR: libswdapp_interface_transfer_bits(): ft2232_read() returns %d\n", bytes_read);
    return LIBSWD_ERROR_DRIVER;
   }
   // Explode read bytes into bit array.
@@ -919,7 +919,7 @@ int libswdapp_interface_transfer(libswdapp_context_t *libswdappctx, int bits, ch
  bytes_written = ftdi_write_data(libswdappctx->interface->ftdictx,buf,3*(bits-(bytes*8)));
  if (bytes_written<0)
  {
-  printf("ERROR: libswdapp_interface_transfer(): ft2232_write() returns invalid bytes count: %d\n", bytes_written);
+  printf("ERROR: libswdapp_interface_transfer_bits(): ft2232_write() returns invalid bytes count: %d\n", bytes_written);
   return LIBSWD_ERROR_DRIVER;
  }
  // This retry is necessary because sometimes FTDI Chip returns 0 bytes.
@@ -930,7 +930,7 @@ int libswdapp_interface_transfer(libswdapp_context_t *libswdappctx, int bits, ch
  }
  if (bytes_read<0 || bytes_read!=(bits-(bytes*8)))
  {
-  printf("ERROR: libswdapp_interface_transfer(): ft2232_read() returns invalid bytes count: %d\n", bytes_read);
+  printf("ERROR: libswdapp_interface_transfer_bits(): ft2232_read() returns invalid bytes count: %d\n", bytes_read);
   return LIBSWD_ERROR_DRIVER;
  }
  // FTDI MPSSE returns shift register value, our bit is MSb.
@@ -1165,7 +1165,7 @@ int libswd_drv_mosi_8(libswd_ctx_t *libswdctx, libswd_cmd_t *cmd, char *data, in
  for (i=0;i<8;i++)
   mosidata[(nLSBfirst==LIBSWD_DIR_LSBFIRST)?i:(bits-1-i)]=((1<<i)&(*data))?1:0;
  // Then send that array into interface hardware.
- res=libswdapp_interface_transfer(libswdctx->driver->ctx,bits,mosidata,misodata,0);
+ res=libswdapp_interface_transfer_bits(libswdctx->driver->ctx,bits,mosidata,misodata,0);
  if (res<0) return LIBSWD_ERROR_DRIVER;
 
  return res;
@@ -1200,7 +1200,7 @@ int libswd_drv_mosi_32(libswd_ctx_t *libswdctx, libswd_cmd_t *cmd, int *data, in
  // UrJTAG drivers shift data LSB-First.
  for (i=0;i<32;i++)
   mosidata[(nLSBfirst==LIBSWD_DIR_LSBFIRST)?i:(bits-1-i)]=((1<<i)&(*data))?1:0;
- res=libswdapp_interface_transfer(libswdctx->driver->ctx,bits,mosidata,misodata,0);
+ res=libswdapp_interface_transfer_bits(libswdctx->driver->ctx,bits,mosidata,misodata,0);
  if (res<0) return LIBSWD_ERROR_DRIVER;
 
  return res;
@@ -1226,7 +1226,7 @@ int libswd_drv_miso_8(libswd_ctx_t *libswdctx, libswd_cmd_t *cmd, char *data, in
  static signed int res;
  static char misodata[8], mosidata[8];
 
- res=libswdapp_interface_transfer(libswdctx->driver->ctx,bits,mosidata,misodata,LIBSWD_DIR_LSBFIRST);
+ res=libswdapp_interface_transfer_bits(libswdctx->driver->ctx,bits,mosidata,misodata,LIBSWD_DIR_LSBFIRST);
  if (res<0) return LIBSWD_ERROR_DRIVER;
  // Now we need to reconstruct the received LSb data byte into  byte array.
  *data = 0;
@@ -1261,7 +1261,7 @@ int libswd_drv_miso_32(libswd_ctx_t *libswdctx, libswd_cmd_t *cmd, int *data, in
  static signed int res;
  static char misodata[32], mosidata[32];
 
- res = libswdapp_interface_transfer(libswdctx->driver->ctx, bits, mosidata, misodata, LIBSWD_DIR_LSBFIRST);
+ res = libswdapp_interface_transfer_bits(libswdctx->driver->ctx, bits, mosidata, misodata, LIBSWD_DIR_LSBFIRST);
  if (res<0) return LIBSWD_ERROR_DRIVER;
  // Now we need to reconstruct the data byte from shifted in LSBfirst byte array.
  *data = 0;
@@ -1310,7 +1310,7 @@ int libswd_drv_mosi_trn(libswd_ctx_t *libswdctx, int bits)
  if (res < 0) return LIBSWD_ERROR_DRIVER;
 
  // Clock specified number of bits for proper TRN transaction.
- res = libswdapp_interface_transfer(libswdctx->driver->ctx, bits, buf, buf, 0);
+ res = libswdapp_interface_transfer_bits(libswdctx->driver->ctx, bits, buf, buf, 0);
  if (res < 0) return LIBSWD_ERROR_DRIVER;
 
  return bits;
@@ -1354,7 +1354,7 @@ int libswd_drv_miso_trn(libswd_ctx_t *libswdctx, int bits)
  if (res < 0) return LIBSWD_ERROR_DRIVER;
 
  // Clock specified number of bits for proper TRN transaction.
- res = libswdapp_interface_transfer(libswdctx->driver->ctx, bits, buf, buf, 0);
+ res = libswdapp_interface_transfer_bits(libswdctx->driver->ctx, bits, buf, buf, 0);
  if (res < 0) return LIBSWD_ERROR_DRIVER;
 
  return bits;
