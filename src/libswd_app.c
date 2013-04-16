@@ -190,17 +190,23 @@ printf("Interface cmdparam: %s\n", optarg);
  /* Run the Command Line Interpreter loop. */
  while ((cmd=readline("libswd>")) != NULL){
   if (!strncmp(cmd,"q",1) || !strncmp(cmd,"quit",4)) break;
-  if (!strncmp(cmd,"s",1) || !strncmp(cmd,"signal",5)){
+  if (!strncmp(cmd,"s",1) || !strncmp(cmd,"signal",5))
+  {
    libswdapp_handle_command_signal(libswdappctx, cmd);
    continue;
   }
-  if (!strncmp(cmd,"i",1) || !strncmp(cmd,"interface",9)){
+  if (!strncmp(cmd,"i",1) || !strncmp(cmd,"interface",9))
+  {
    libswdapp_handle_command_interface(libswdappctx, cmd);
+   continue;
+  }
+  if (!strncmp(cmd,"m",1) || !strncmp(cmd,"memory",6))
+  {
+   libswdapp_handle_command_memory(libswdappctx, cmd);
    continue;
   }
   if (!strncmp(cmd,"h",1) || !strncmp(cmd,"help",4))
    libswdapp_print_usage();
-
   retval=libswd_cli(libswdappctx->libswdctx, cmd);
   if (retval!=LIBSWD_OK) if (retval!=LIBSWD_ERROR_CLISYNTAX) goto quit; 
  }
@@ -220,14 +226,41 @@ int libswdapp_handle_command_signal_usage(void){
  printf("  list              lists available signals and cached values\n");
  printf("  add:<name>=<mask> adds signal with given <name>\n");
  printf("  del:<name>        removes signal with given <name>\n");
- printf("  <name>=<value>    write <value> to given <name> signal mask\n");
+ printf("  <name>=<value>    write hex <value> to given <name> signal mask\n");
  printf("  <name>            reads the <name> signal value\n");
  printf("\n");
  return LIBSWD_OK;
 }
 
+
+/** Memory routine to help memory-file operations.
+ * \param *libswdappctx context to work on.
+ * \param *cmd is the memory command argument.
+ * \return LIBSWD_OK on success, negative value LIBSWD_ERROR code otherwise.
+ */
+int libswdapp_handle_command_memory(libswdapp_context_t *libswdappctx, char *cmd)
+{
+ char *cmdp, mosidata[5000], misodata[5000];
+ int i, retval, chunksize=1024; 
+
+ if (!libswdappctx || !cmd)
+ {
+  printf("ERROR: libswdapp_handle_command_memory(): NULL pointer parameter!\n");
+  return LIBSWD_ERROR_NULLPOINTER;
+ }
+ cmdp=strsep(&cmd, " ");
+ printf("Reading SPI memory...\n");
+
+ if (!strncmp(cmdp,"r",1) || !strncmp(cmdp,"read",4))
+ {
+
+ }
+ 
+ return LIBSWD_OK;
+}
+
 /** Handle signal command (cli and commandline parameter).
- * TODO: Do we want to update cached values of other signals with common mask part.
+ * Multiple signal operations are allowed separated by a space in a single line.
  * \param *libswdappctx context to work on.
  * \param *cmd is the signal command argument.
  * \return LIBSWD_OK on success, negative value LIBSWD_ERROR code otehrwise.
