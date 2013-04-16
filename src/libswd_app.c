@@ -86,7 +86,7 @@ int libswdapp_print_usage(void){
  printf("  -p : Interface PID (default 0xbbe2 if not specified)\n");
  printf("  -h : Display this help\n\n");
  libswdapp_handle_command_signal_usage();
- printf(" Press Ctrl+C on prompt to exit application.\n");
+ printf(" Press Ctrl+C or type [q]uit on prompt to exit LibSWD Application.\n");
  printf("\n");
  return LIBSWD_OK;
 }
@@ -190,17 +190,18 @@ printf("Interface cmdparam: %s\n", optarg);
  /* Run the Command Line Interpreter loop. */
  while ((cmd=readline("libswd>")) != NULL){
   if (!strncmp(cmd,"q",1) || !strncmp(cmd,"quit",4)) break;
-  if (!strncmp(cmd,"s",1) || !strncmp(cmd,"signal",5)){
+  if (!strncmp(cmd,"s",1) || !strncmp(cmd,"signal",5))
+  {
    libswdapp_handle_command_signal(libswdappctx, cmd);
    continue;
   }
-  if (!strncmp(cmd,"i",1) || !strncmp(cmd,"interface",9)){
+  if (!strncmp(cmd,"i",1) || !strncmp(cmd,"interface",9))
+  {
    libswdapp_handle_command_interface(libswdappctx, cmd);
    continue;
   }
-  if (!strncmp(cmd,"h",1) || !strncmp(cmd,"help",4))
+  if (!strncmp(cmd,"h",1) || !strncmp(cmd,"help",4) || !strncmp(cmd,"?",1))
    libswdapp_print_usage();
-
   retval=libswd_cli(libswdappctx->libswdctx, cmd);
   if (retval!=LIBSWD_OK) if (retval!=LIBSWD_ERROR_CLISYNTAX) goto quit; 
  }
@@ -220,14 +221,15 @@ int libswdapp_handle_command_signal_usage(void){
  printf("  list              lists available signals and cached values\n");
  printf("  add:<name>=<mask> adds signal with given <name>\n");
  printf("  del:<name>        removes signal with given <name>\n");
- printf("  <name>=<value>    write <value> to given <name> signal mask\n");
+ printf("  <name>=<value>    write hex <value> to given <name> signal mask\n");
  printf("  <name>            reads the <name> signal value\n");
  printf("\n");
  return LIBSWD_OK;
 }
 
+
 /** Handle signal command (cli and commandline parameter).
- * TODO: Do we want to update cached values of other signals with common mask part.
+ * Multiple signal operations are allowed separated by a space in a single line.
  * \param *libswdappctx context to work on.
  * \param *cmd is the signal command argument.
  * \return LIBSWD_OK on success, negative value LIBSWD_ERROR code otehrwise.
@@ -790,7 +792,7 @@ int libswdapp_interface_bitbang(libswdapp_context_t *libswdappctx, unsigned int 
   bytes_written = ftdi_write_data(libswdappctx->interface->ftdictx, buf, 3);
   if (bytes_written<0 || bytes_written!=3)
   {
-   printf("ERROR: libswdapp_interface_transfer(): ftdi_write_data() returns invalid bytes count: %d\n", bytes_written);
+   printf("ERROR: libswdapp_interface_bitbang(): ftdi_write_data() returns invalid bytes count: %d\n", bytes_written);
    return LIBSWD_ERROR_DRIVER;
   }
   buf[0] = 0x82;   // Set Data Bits HighByte.
@@ -799,7 +801,7 @@ int libswdapp_interface_bitbang(libswdapp_context_t *libswdappctx, unsigned int 
   bytes_written = ftdi_write_data(libswdappctx->interface->ftdictx, buf, 3);
   if (bytes_written<0 || bytes_written!=3)
   {
-   printf("ERROR: libswdapp_interface_transfer(): ftdi_write_data() returns invalid bytes count: %d\n", bytes_written);
+   printf("ERROR: libswdapp_interface_bitbang(): ftdi_write_data() returns invalid bytes count: %d\n", bytes_written);
    return LIBSWD_ERROR_DRIVER;
   }
   // Then read pins designated by a signal mask.
@@ -807,7 +809,7 @@ int libswdapp_interface_bitbang(libswdapp_context_t *libswdappctx, unsigned int 
   bytes_written = ftdi_write_data(libswdappctx->interface->ftdictx, buf, 1);
   if (bytes_written<0 || bytes_written!=1)
   {
-   printf("ERROR: libswdapp_interface_transfer(): ftdi_write_data() returns invalid bytes count: %d\n", bytes_written);
+   printf("ERROR: libswdapp_interface_bitbang(): ftdi_write_data() returns invalid bytes count: %d\n", bytes_written);
    return LIBSWD_ERROR_DRIVER;
   }
   for (retry=0;retry<LIBSWD_RETRY_COUNT_DEFAULT;retry++)
@@ -817,14 +819,14 @@ int libswdapp_interface_bitbang(libswdapp_context_t *libswdappctx, unsigned int 
   }
   if (bytes_read<0 || bytes_read!=1)
   {
-   printf("ERROR: libswdapp_interface_transfer(): ftdi_read_data() returns invalid bytes count: %d\n", bytes_read);
+   printf("ERROR: libswdapp_interface_bitbang(): ftdi_read_data() returns invalid bytes count: %d\n", bytes_read);
    return LIBSWD_ERROR_DRIVER;
   }
   buf[0] = 0x83;    // Read Data Bits HighByte.
   bytes_written = ftdi_write_data(libswdappctx->interface->ftdictx, buf, 1);
   if (bytes_written<0 || bytes_written!=1)
   {
-   printf("ERROR: libswdapp_interface_transfer(): ftdi_write_data() returns invalid bytes count: %d\n", bytes_written);
+   printf("ERROR: libswdapp_interface_bitbang(): ftdi_write_data() returns invalid bytes count: %d\n", bytes_written);
    return LIBSWD_ERROR_DRIVER;
   }
   for (retry=0;retry<LIBSWD_RETRY_COUNT_DEFAULT;retry++)
@@ -834,7 +836,7 @@ int libswdapp_interface_bitbang(libswdapp_context_t *libswdappctx, unsigned int 
   }
   if (bytes_read<0 || bytes_read!=1)
   {
-   printf("ERROR: libswdapp_interface_transfer(): ftdi_read_data() returns invalid bytes count: %d\n", bytes_read);
+   printf("ERROR: libswdapp_interface_bitbang(): ftdi_read_data() returns invalid bytes count: %d\n", bytes_read);
    return LIBSWD_ERROR_DRIVER;
   }
   *value = ((valh << 8) | vall) & bitmask; // Join result bytes and apply signal bitmask.
