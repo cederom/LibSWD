@@ -943,6 +943,56 @@ int libswdapp_interface_transfer_bits(libswdapp_context_t *libswdappctx, int bit
  return bit;
 }
 
+/** Transfer bytes in/out stored in char array starting from LSB first
+ * or MSB first, alternatively if you want to make MSB-first shift on
+ * LSB-first mode put data in reverse order into input/output array.
+ * \param *device void pointer to pass driver details to the function.
+ * \param bits is the number of bits (char array elements) to transfer.
+ * \param *mosidata pointer to char array with data to be send.
+ * \param *misodata pointer to char array with data to be received.
+ * \param nLSBfirst if zero shift data LSB-first, otherwise MSB-first.
+ * \return number of bits sent on success, or ERROR_FAIL on failure.
+ */
+int libswdapp_interface_transfer_bytes(libswdapp_context_t *libswdappctx, int bytes, char *mosidata, char *misodata, int nLSBfirst)
+{
+ static unsigned char buf[65539], databuf;
+ int i, retval, byte=0, retry;
+ unsigned int bytes_written, bytes_read;
+
+ if (bytes>65535)
+ {
+  printf("ERROR: Cannot transfer more than 65536 bits at once!\n");
+  return LIBSWD_ERROR_DRIVER;
+ }
+
+ bytes--;		                  // MPSSE starts counting bytes from 0.
+ buf[0] = (nLSBfirst)?0x31:0x39; // Clock Bytes In and Out MSb or LSb first.
+ buf[1] = (char)bytes&0x0ff;
+ buf[2] = (char)((bytes>>8)&0x0ff);
+ bytes++;
+ // Fill in the data buffer.
+ for (byte=0;byte<bytes;byte++) buf[byte+3]=*mosidata;
+ bytes_written = ftdi_write_data(libswdappctx->interface->ftdictx, buf, bytes+3);
+ if (bytes_written<0 || bytes_written!=(bytes+3))
+ {
+  printf("ERROR: libswdapp_interface_transfer_bytes(): ft2232_write() returns %d\n", bytes_written);
+  return ;
+ }
+ // This retry is necessary because sometimes FTDI Chip returns 0 bytes.
+ for (retry=0;retry<LIBSWD_RETRY_COUNT_DEFAULT;retry++)
+ {
+  bytes_read=ftdi_read_data(libswdappctx->interface->ftdictx, buf, bytes);
+  if (bytes_read>0) break;
+ }
+ if (bytes_read<0 || bytes_read!=bytes)
+ {
+  printf("ERROR: libswdapp_interface_transfer_bytes(): ft2232_read() returns %d\n", bytes_read);
+  return LIBSWD_ERROR_DRIVER;
+ }
+ // Return incoming data.
+ for (byte=0;byte<bytes;byte++) misodata[byte]=buf[byte];
+ return byte;
+}
 
 int libswdapp_interface_ftdi_init(libswdapp_context_t *libswdappctx)
 {
