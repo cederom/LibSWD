@@ -823,7 +823,7 @@ int libswdapp_interface_bitbang(libswdapp_context_t *libswdappctx, unsigned int 
   bytes_written = ftdi_write_data(libswdappctx->interface->ftdictx, buf, 3);
   if (bytes_written<0 || bytes_written!=3)
   {
-   printf("ERROR: libswdapp_interface_transfer(): ftdi_write_data() returns invalid bytes count: %d\n", bytes_written);
+   printf("ERROR: libswdapp_interface_bitbang(): ftdi_write_data() returns invalid bytes count: %d\n", bytes_written);
    return LIBSWD_ERROR_DRIVER;
   }
   buf[0] = 0x82;   // Set Data Bits HighByte.
@@ -832,7 +832,7 @@ int libswdapp_interface_bitbang(libswdapp_context_t *libswdappctx, unsigned int 
   bytes_written = ftdi_write_data(libswdappctx->interface->ftdictx, buf, 3);
   if (bytes_written<0 || bytes_written!=3)
   {
-   printf("ERROR: libswdapp_interface_transfer(): ftdi_write_data() returns invalid bytes count: %d\n", bytes_written);
+   printf("ERROR: libswdapp_interface_bitbang(): ftdi_write_data() returns invalid bytes count: %d\n", bytes_written);
    return LIBSWD_ERROR_DRIVER;
   }
   // Then read pins designated by a signal mask.
@@ -840,7 +840,7 @@ int libswdapp_interface_bitbang(libswdapp_context_t *libswdappctx, unsigned int 
   bytes_written = ftdi_write_data(libswdappctx->interface->ftdictx, buf, 1);
   if (bytes_written<0 || bytes_written!=1)
   {
-   printf("ERROR: libswdapp_interface_transfer(): ftdi_write_data() returns invalid bytes count: %d\n", bytes_written);
+   printf("ERROR: libswdapp_interface_bitbang(): ftdi_write_data() returns invalid bytes count: %d\n", bytes_written);
    return LIBSWD_ERROR_DRIVER;
   }
   for (retry=0;retry<LIBSWD_RETRY_COUNT_DEFAULT;retry++)
@@ -850,14 +850,14 @@ int libswdapp_interface_bitbang(libswdapp_context_t *libswdappctx, unsigned int 
   }
   if (bytes_read<0 || bytes_read!=1)
   {
-   printf("ERROR: libswdapp_interface_transfer(): ftdi_read_data() returns invalid bytes count: %d\n", bytes_read);
+   printf("ERROR: libswdapp_interface_bitbang(): ftdi_read_data() returns invalid bytes count: %d\n", bytes_read);
    return LIBSWD_ERROR_DRIVER;
   }
   buf[0] = 0x83;    // Read Data Bits HighByte.
   bytes_written = ftdi_write_data(libswdappctx->interface->ftdictx, buf, 1);
   if (bytes_written<0 || bytes_written!=1)
   {
-   printf("ERROR: libswdapp_interface_transfer(): ftdi_write_data() returns invalid bytes count: %d\n", bytes_written);
+   printf("ERROR: libswdapp_interface_bitbang(): ftdi_write_data() returns invalid bytes count: %d\n", bytes_written);
    return LIBSWD_ERROR_DRIVER;
   }
   for (retry=0;retry<LIBSWD_RETRY_COUNT_DEFAULT;retry++)
@@ -867,7 +867,7 @@ int libswdapp_interface_bitbang(libswdapp_context_t *libswdappctx, unsigned int 
   }
   if (bytes_read<0 || bytes_read!=1)
   {
-   printf("ERROR: libswdapp_interface_transfer(): ftdi_read_data() returns invalid bytes count: %d\n", bytes_read);
+   printf("ERROR: libswdapp_interface_bitbang(): ftdi_read_data() returns invalid bytes count: %d\n", bytes_read);
    return LIBSWD_ERROR_DRIVER;
   }
   *value = ((valh << 8) | vall) & bitmask; // Join result bytes and apply signal bitmask.

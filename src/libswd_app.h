@@ -113,8 +113,7 @@ int libswdapp_handle_command_signal(libswdapp_context_t *libswdappctx, char *cmd
 int libswdapp_handle_command_interface(libswdapp_context_t *libswdappctx, char *cmd);
 int libswdapp_interface_ftdi_set_freq(libswdapp_context_t *libswdappctx, int freq);
 
-int ftdi_bitbang(void *device, char *signal_name, int GETnSET, int *value);
-int ftdi_transfer(void *device, int bits, char *mosidata, char *misodata, int nLSBfirst);
+int libswdapp_interface_bitbang(libswdapp_context_t *libswdappctx, unsigned int bitmask, int GETnSET, unsigned int *value);
 int libswd_drv_mosi_8(libswd_ctx_t *libswdctx, libswd_cmd_t *cmd, char *data, int bits, int nLSBfirst);
 int libswd_drv_mosi_32(libswd_ctx_t *libswdctx, libswd_cmd_t *cmd, int *data, int bits, int nLSBfirst);
 int libswd_drv_miso_8(libswd_ctx_t *libswdctx, libswd_cmd_t *cmd, char *data, int bits, int nLSBfirst);
