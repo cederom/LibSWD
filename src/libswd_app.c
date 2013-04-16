@@ -86,7 +86,7 @@ int libswdapp_print_usage(void){
  printf("  -p : Interface PID (default 0xbbe2 if not specified)\n");
  printf("  -h : Display this help\n\n");
  libswdapp_handle_command_signal_usage();
- printf(" Press Ctrl+C on prompt to exit application.\n");
+ printf(" Press Ctrl+C or type [q]uit on prompt to exit LibSWD Application.\n");
  printf("\n");
  return LIBSWD_OK;
 }
@@ -205,7 +205,7 @@ printf("Interface cmdparam: %s\n", optarg);
    libswdapp_handle_command_memory(libswdappctx, cmd);
    continue;
   }
-  if (!strncmp(cmd,"h",1) || !strncmp(cmd,"help",4))
+  if (!strncmp(cmd,"h",1) || !strncmp(cmd,"help",4) || !strncmp(cmd,"?",1))
    libswdapp_print_usage();
   retval=libswd_cli(libswdappctx->libswdctx, cmd);
   if (retval!=LIBSWD_OK) if (retval!=LIBSWD_ERROR_CLISYNTAX) goto quit; 
