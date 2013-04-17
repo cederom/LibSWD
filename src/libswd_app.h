@@ -158,5 +158,32 @@ static const libswdapp_interface_config_t libswdapp_interface_configs[] = {
  }
 };
 
+// Experimental code for LibSPI
+// SPI sends MSb FIRST!!!
+
+#define LIBSPI_CMD_MX_WREN      0x06
+#define LIBSPI_CMD_MX_WRDI      0x04
+#define LIBSPI_CMD_MX_WRSR      0x01
+#define LIBSPI_CMD_MX_RDID      0x9f
+#define LIBSPI_CMD_MX_RDSR      0x05 // Read Status Register
+#define LIBSPI_CMD_MX_READ      0x03
+#define LIBSPI_CMD_MX_FASTREAD  0x0b
+#define LIBSPI_CMD_MX_RDSFDP    0x5a
+#define LIBSPI_CMD_MX_RES       0x1b 
+#define LIBSPI_CMD_MX_REMS      0x90
+#define LIBSPI_CMD_MX_DREAD     0x3b
+#define LIBSPI_CMD_MX_SE        0x20
+#define LIBSPI_CMD_MX_BE        0x52
+#define LIBSPI_CMD_MC_BE2       0xd8
+#define LIBSPI_CMD_MX_CE        0x60
+#define LIBSPI_CMD_MC_CE2       0xc7
+#define LIBSPI_CMD_MX_PP        0x02
+#define LIBSPI_CMD_MX_RDSCUR    0x2b
+#define LIBSPI_CMD_MX_WRSCUR    0x2f
+#define LIBSPI_CMD_MX_ENSO      0xb1
+#define LIBSPI_CMD_MX_EXSO      0xc1
+#define LIBSPI_CMD_MX_DP        0xb9
+#define LIBSPI_CMD_MX_RDP       0xab
+
 
 #endif

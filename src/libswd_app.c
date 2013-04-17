@@ -241,22 +241,78 @@ int libswdapp_handle_command_signal_usage(void){
 int libswdapp_handle_command_memory(libswdapp_context_t *libswdappctx, char *cmd)
 {
  char *cmdp, mosidata[5000], misodata[5000];
- int i, retval, chunksize=1024; 
+ int i, j, retval, chunksize=1024; 
+ unsigned int spicsval;
+ libswdapp_interface_signal_t *sig;
+
+ cmdp=strsep(&cmd, " ");
+ if (strncmp(cmdp,"m",1) && strncmp(cmdp,"memory",6))
+ {
+  printf("ERROR: Memory operation must start with '[m]emory' string!\n");
+  return LIBSWD_ERROR_PARAM;
+ }
 
  if (!libswdappctx || !cmd)
  {
   printf("ERROR: libswdapp_handle_command_memory(): NULL pointer parameter!\n");
   return LIBSWD_ERROR_NULLPOINTER;
  }
- cmdp=strsep(&cmd, " ");
- printf("Reading SPI memory...\n");
 
+ sig=libswdapp_interface_signal_find(libswdappctx, "SPICS");
+ if (!sig)
+ {
+  printf("ERROR: Mandatory inteface signal SPICS not defined!\n");
+  return LIBSWD_ERROR_DRIVER;
+ } 
+ cmdp=strsep(&cmd, " ");
+printf("CMDP=%s\n", cmdp);
  if (!strncmp(cmdp,"r",1) || !strncmp(cmdp,"read",4))
  {
+  printf("Reading SPI memory...\n");
+  // Read Status Register first.
+  mosidata[0]=LIBSPI_CMD_MX_RDSR;
+  spicsval=0;
+  retval=libswdapp_interface_bitbang(libswdappctx, sig->mask, 0, &spicsval);
+  if (retval!=LIBSWD_OK) goto libswdapp_handle_command_memory_error;
+  retval=libswdapp_interface_transfer_bytes(libswdappctx, 3, mosidata, misodata, 1); 
+  if (retval<0) goto libswdapp_handle_command_memory_error;
+  printf("SPI_RDSR=0x%x%x\n", misodata[1], misodata[2]); 
 
+  // Read Memory ID and OTP Area Content.
+  mosidata[0]=LIBSPI_CMD_MX_READ;
+  mosidata[1]=0;
+  mosidata[2]=0;
+  mosidata[3]=0;
+  retval=libswdapp_interface_transfer_bytes(libswdappctx, 0x3f+4, mosidata, misodata, 1);
+  if (retval<0) goto libswdapp_handle_command_memory_error;
+  printf("MEMORY DUMP BELOW:");
+  for (i=0;i<0x3f;i+=16)
+  {
+   printf("\n%08X: ", i);
+   for (j=0;j<16;j++) printf("%02X ", misodata[i+j]);
+  }
+  printf("\n");
+  // Check if we want to dump memory to a file.
+  cmdp=strsep(&cmd," ");
+  if (cmdp)
+  {
+   FILE *fp;
+   fp=fopen(cmdp,"w");
+   if (!fp)
+   {
+    printf("ERROR: Cannot open given file (%s)!\n", cmdp);
+    return LIBSWD_ERROR_PARAM;
+   } 
+   retval=fwrite(misodata, sizeof(char), 0x3f, fp);
+   if (retval<0) goto libswdapp_handle_command_memory_error;   
+   fclose(fp);
+  }
  }
- 
  return LIBSWD_OK;
+
+libswdapp_handle_command_memory_error:
+ printf("ERROR: libswdapp_handle_command_memory() got %d (%s)!\n", retval, libswd_error_string(retval));
+ return retval; 
 }
 
 /** Handle signal command (cli and commandline parameter).
