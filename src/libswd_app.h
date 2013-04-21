@@ -168,29 +168,56 @@ static const libswdapp_interface_config_t libswdapp_interface_configs[] = {
 // Experimental code for LibSPI
 // SPI sends MSb FIRST!!!
 
-#define LIBSPI_CMD_MX_WREN      0x06
-#define LIBSPI_CMD_MX_WRDI      0x04
-#define LIBSPI_CMD_MX_WRSR      0x01
-#define LIBSPI_CMD_MX_RDID      0x9f
-#define LIBSPI_CMD_MX_RDSR      0x05 // Read Status Register
-#define LIBSPI_CMD_MX_READ      0x03
-#define LIBSPI_CMD_MX_FASTREAD  0x0b
-#define LIBSPI_CMD_MX_RDSFDP    0x5a
-#define LIBSPI_CMD_MX_RES       0x1b 
-#define LIBSPI_CMD_MX_REMS      0x90
-#define LIBSPI_CMD_MX_DREAD     0x3b
-#define LIBSPI_CMD_MX_SE        0x20
-#define LIBSPI_CMD_MX_BE        0x52
-#define LIBSPI_CMD_MC_BE2       0xd8
-#define LIBSPI_CMD_MX_CE        0x60
-#define LIBSPI_CMD_MC_CE2       0xc7
-#define LIBSPI_CMD_MX_PP        0x02
-#define LIBSPI_CMD_MX_RDSCUR    0x2b
-#define LIBSPI_CMD_MX_WRSCUR    0x2f
-#define LIBSPI_CMD_MX_ENSO      0xb1
-#define LIBSPI_CMD_MX_EXSO      0xc1
-#define LIBSPI_CMD_MX_DP        0xb9
-#define LIBSPI_CMD_MX_RDP       0xab
+struct spi_command
+{
+int req_start, req_len;
+ int mosidata_start, mosidata_len;
+ int misodata_start, misodata_len;
+ unsigned char *request;
+ unsigned char *mosidata;
+ unsigned char *misodata;
+};
 
+#define LIBSPI_MX_CMD_WREN_REQ  0x06 //Sets WEL bit in STATUS. WEL cleared by WRDI, WRSR, PP, SE, BE, CE, PowerUp.
+#define LIBSPI_MX_CMD_WREN_LEN  1
+#define LIBSPI_MX_CMD_WRDI_REQ      0x04
+#define LIBSPI_MX_CMD_WRDI_LEN  1
+#define LIBSPI_MX_CMD_WRSR_REQ      0x01
+#define LIBSPI_MX_CMD_WRSR_LEN  2
+#define LIBSPI_MX_CMD_RDID_REQ  0x9f
+#define LIBSPI_MX_CMD_RDID_LEN  4
+#define LIBSPI_MX_CMD_RDSR_REQ  0x05 // Read Status Register
+#define LIBSPI_MX_CMD_RDSR_LEN  3
+#define LIBSPI_MX_CMD_READ_REQ  0x03
+#define LIBSPI_MX_CMD_READ_LEN  0x1FFFFF+4 //MX25L1606
+//#define LIBSPI_MX_CMD_READ_LEN  0x1FFF
+#define LIBSPI_MX_CMD_FASTREAD_REQ  0x0b
+#define LIBSPI_MX_CMD_FASTREAD_LEN 0x1FFFFF+5
+#define LIBSPI_MX_CMD_RDSFDP_REQ    0x5a
+#define LIBSPI_MX_CMD_RDSFDP_LEN 7
+#define LIBSPI_MX_CMD_RES_REQ   0xab 
+#define LIBSPI_MX_CMD_RES_LEN   5
+#define LIBSPI_MX_CMD_REMS_REQ      0x90
+#define LIBSPI_MX_CMD_DREAD_REQ     0x3b
+#define LIBSPI_MX_CMD_SE_REQ        0x20
+#define LIBSPI_MX_CMD_BE_REQ        0x52
+#define LIBSPI_MX_CMD_BE2_REQ       0xd8
+#define LIBSPI_MX_CMD_CE_REQ        0x60
+#define LIBSPI_MX_CMD_CE2_REQ       0xc7
+#define LIBSPI_MX_CMD_PP_REQ        0x02
+#define LIBSPI_MX_CMD_PP_LEN   256+4 
+#define LIBSPI_MX_CMD_RDSCUR_REQ    0x2b
+#define LIBSPI_MX_CMD_WRSCUR_REQ    0x2f
+#define LIBSPI_MX_CMD_ENSO_REQ      0xb1
+#define LIBSPI_MX_CMD_EXSO_REQ      0xc1
+#define LIBSPI_MX_CMD_DP_REQ        0xb9
+#define LIBSPI_MX_CMD_RDP_REQ       0xab
+#define LIBSPI_MX_REG_STATUS_WP     1
+#define LIBSPI_MX_REG_STATUS_WEL    1<<1
+#define LIBSPI_MX_REG_STATUS_BP0    1<<2
+#define LIBSPI_MX_REG_STATUS_BP1    1<<3
+#define LIBSPI_MX_REG_STATUS_BP2    1<<4
+#define LIBSPI_MX_REG_STATUS_BP3    1<<5
+#define LIBSPI_MX_REG_STATUS_SRWD   1<<7
 
 #endif
