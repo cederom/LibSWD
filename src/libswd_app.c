@@ -1113,8 +1113,8 @@ int libswdapp_interface_ftdi_init_ktlink(libswdapp_context_t *libswdappctx)
 // Generic FTDI interface deinit routine (all GPIO=Input=HI-Z)
 int libswdapp_interface_ftdi_deinit(libswdapp_context_t *libswdappctx)
 {
- unsigned int dir,val;
- return libswdapp_interface_bitbang(libswdappctx, dir, 0, &val); 
+ unsigned int dir=0,val;
+ return libswdapp_interface_bitbang(libswdappctx, dir, 1, &val); 
 } 
 
 
