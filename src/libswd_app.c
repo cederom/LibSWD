@@ -1102,7 +1102,7 @@ int libswdapp_interface_transfer_bytes(libswdapp_context_t *libswdappctx, int by
  }
 
  bytes--;		                  // MPSSE starts counting bytes from 0.
- buf[0] = (nLSBfirst)?0x31:0x39; // Clock Bytes In and Out LSb or MSb first.
+ buf[0] = (nLSBfirst)?0x31:0x39; // Clock Bytes In and Out MSb or LSb first.
  buf[1] = (char)bytes&0x0ff;
  buf[2] = (char)((bytes>>8)&0x0ff);
  bytes++;
@@ -1117,7 +1117,7 @@ int libswdapp_interface_transfer_bytes(libswdapp_context_t *libswdappctx, int by
  // This retry is necessary because sometimes FTDI Chip returns 0 bytes.
  for (retry=0;retry<LIBSWD_RETRY_COUNT_DEFAULT;retry++)
  {
-  bytes_read=ftdi_read_data(libswdappctx->interface->ftdictx, (unsigned char*)buf, bytes);
+  bytes_read=ftdi_read_data(libswdappctx->interface->ftdictx, buf, bytes);
   if (bytes_read>0) break;
  }
  if (bytes_read<0 || bytes_read!=bytes)
