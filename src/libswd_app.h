@@ -135,29 +135,33 @@ static const libswdapp_interface_config_t libswdapp_interface_configs[] = {
  {
   .name        = "ktlink",
   .description = "KT-LINK FT2232H based device",
-  .init        = libswdapp_interface_ftdi_init,
+  .init        = libswdapp_interface_ftdi_init_ktlink,
   .deinit      = libswdapp_interface_ftdi_deinit,
   .set_freq    = libswdapp_interface_ftdi_set_freq,
   .vid         = 0x0403,
   .pid         = 0xbbe2, 
   .latency     = 1,
+  .maxfrequency= 6000000,
   .frequency   = 10000,
+  .chunksize   = 32768,
   .sigsetupstr = "signal add:CLK=0x0001 add:MOSI=0x0002 add:MISO=0x0004 add:TMS=0x0008 add:nSWDsel=0x0020 add:SRSTin=0x0040 add:RTCK=0x0080 add:TRST=0x0100 add:SRST=0x0200 add:nTRSTen=0x0400 add:nSRSTen=0x0800 add:RnW=0x1000 add:nMOSIen=0x2000 add:nCLKen=0x4000 add:LED=0x8000 CLK=lo MOSI=lo SRST=hi nCLKen=lo nSWDsel=lo RnW=lo nSRSTen=lo LED=lo MISO SRSTin RTCK",
  },
  {
   .name        = "ktlink-spi",
   .description = "KT-LINK FT2232H based device, SPI mode.",
-  .init        = libswdapp_interface_ftdi_init,
+  .init        = libswdapp_interface_ftdi_init_ktlink,
   .deinit      = libswdapp_interface_ftdi_deinit,
   .set_freq    = libswdapp_interface_ftdi_set_freq,
   .vid         = 0x0403,
   .pid         = 0xbbe2, 
   .latency     = 1,
-  .frequency   = 10000,
-  .sigsetupstr = "signal add:led=0x8000 add:SPICLK=0x0001 add:SPIMOSI=0x0002 add:SPIMISO=0x0004 add:SPICS=0x0008 add:SPIWP=0x0200 add:SPIWPen=0x0800 add:SPICLKen=0x4000 add:SPIHOLD=0x0100 add:SPIHOLDen=0x0400 SPICLK=lo SPICLKen=lo SPIWP=lo SPIWPen=lo SPIHOLD=hi SPIHOLDen=lo SPIMOSI=lo SPIMISO", 
+  .maxfrequency= 30000000,
+  .frequency   = 30000000,
+  .chunksize   = 4096,
+  .sigsetupstr = "signal add:LED=0x8000 add:SPILED=0x8000 add:SPICLK=0x0001 add:SPIMOSI=0x0002 add:SPIMOSIen=0x2000 add:SPIMISO=0x0004 add:SPICS=0x0008 add:SPICSen=0x1000 add:SPIWP=0x0200 add:SPIWPen=0x0800 add:SPICLKen=0x4000 add:SPIHOLD=0x0100 add:SPIHOLDen=0x0400 add:SPISWDsel=0x0020 SPISWDsel=hi SPICLK=lo SPICLKen=lo SPIWP=lo SPIWPen=lo SPIHOLD=hi SPIHOLDen=lo SPIMOSIen=lo SPIMOSI=lo SPICS=hi SPICSen=lo SPIMISO", 
  }, 
  {
-   .name = NULL,
+   .name = 0,
  }
 };
 
