@@ -75,7 +75,9 @@ typedef struct libswdapp_interface {
 
  unsigned char latency;
  enum ftdi_interface ftdi_channel;
+ int maxfrequency; /// Set by init. Used for frequency calculation.
  int frequency; /// This value shall only be changed by set_freq() routine.
+ unsigned int chunksize;
  char initialized;
  unsigned int gpioval, gpiodir;
 } libswdapp_interface_t;
@@ -89,8 +91,9 @@ typedef struct libswdapp_interface_config {
  int (*set_freq)(libswdapp_context_t *libswdappctx, int freq);
  int vid, pid;
  unsigned char latency;
- int frequency;
+ int frequency, maxfrequency;
  unsigned int gpioval, gpiodir; //Shouldnt we use array?
+ unsigned int chunksize;
 } libswdapp_interface_config_t;
 
 typedef enum libswdapp_interface_operation {

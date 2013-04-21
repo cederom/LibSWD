@@ -437,7 +437,9 @@ int libswdapp_handle_command_interface(libswdapp_context_t *libswdappctx, char *
  libswdappctx->interface->init=NULL;
  libswdappctx->interface->deinit=NULL;
  libswdappctx->interface->set_freq=NULL;
+ libswdappctx->interface->maxfrequency=0;
  libswdappctx->interface->frequency=-1;
+ libswdappctx->interface->chunksize=0;
  libswdappctx->interface->initialized=0;
 
  // Load selected interface configuration.
@@ -448,6 +450,8 @@ int libswdapp_handle_command_interface(libswdapp_context_t *libswdappctx, char *
  libswdappctx->interface->vid    = libswdapp_interface_configs[interface_number].vid;
  libswdappctx->interface->pid    = libswdapp_interface_configs[interface_number].pid;
  libswdappctx->interface->latency= libswdapp_interface_configs[interface_number].latency;
+ libswdappctx->interface->maxfrequency=libswdapp_interface_configs[interface_number].maxfrequency;
+ libswdappctx->interface->chunksize=libswdapp_interface_configs[interface_number].chunksize;
  if (libswdappctx->interface->vid_forced)
   libswdappctx->interface->vid    = libswdappctx->interface->vid_forced;
  if (libswdappctx->interface->pid_forced)
@@ -1020,13 +1024,29 @@ int libswdapp_interface_ftdi_init(libswdapp_context_t *libswdappctx)
   printf("ERROR: Unable to get latency timer!\n");
   return LIBSWD_ERROR_DRIVER;
  } else printf("FTDI latency timer is: %i\n", latency_timer);
-
-retval=ftdi_set_bitmode(libswdappctx->interface->ftdictx, 0, BITMODE_MPSSE);
+ // Set MPSSE mode for FT2232 chip.
+ retval=ftdi_set_bitmode(libswdappctx->interface->ftdictx, 0, BITMODE_MPSSE);
  if (retval<0)
  {
   printf("ERROR: Cannot set bitmode BITMODE_MPSSE for '%s' interface!\n", libswdappctx->interface->name);
   return LIBSWD_ERROR_DRIVER;
  } 
+ // Set large chunksize for faster transfers of large data.
+ retval=ftdi_write_data_set_chunksize(libswdappctx->interface->ftdictx, libswdappctx->interface->chunksize);
+  if (retval<0)
+ {
+  printf("ERROR: Cannot set %d write chunksize for '%s' interface!\n", libswdappctx->interface->chunksize, libswdappctx->interface->name);
+  return LIBSWD_ERROR_DRIVER;
+ } 
+ retval=ftdi_read_data_set_chunksize(libswdappctx->interface->ftdictx, libswdappctx->interface->chunksize);
+  if (retval<0)
+ {
+  printf("ERROR: Cannot set %d read chunksize for '%s' interface!\n", libswdappctx->interface->chunksize, libswdappctx->interface->name);
+  return LIBSWD_ERROR_DRIVER;
+ } 
+ // Set default max clock frequency (6MHz backward compatible).
+ libswdappctx->interface->maxfrequency=6000000;
+
  printf("FTDI MPSSE initialization complete!\n");
  return LIBSWD_OK;
 }
@@ -1041,7 +1061,7 @@ retval=ftdi_set_bitmode(libswdappctx->interface->ftdictx, 0, BITMODE_MPSSE);
  */
 int libswdapp_interface_ftdi_set_freq(libswdapp_context_t *libswdappctx, int freq)
 {
- unsigned int reg;
+ unsigned int reg, maxfreq;
  char buf[3], bytes_written;
  if (!libswdappctx || !libswdappctx->interface || !libswdappctx->interface->ftdictx)
   return LIBSWD_ERROR_NULLPOINTER;
@@ -1050,9 +1070,11 @@ int libswdapp_interface_ftdi_set_freq(libswdapp_context_t *libswdappctx, int fre
   printf("ERROR: Invalid interface frequency value '%d'!\n", freq);
   return LIBSWD_ERROR_PARAM;
  }
+ maxfreq=libswdappctx->interface->maxfrequency;
+ if (!maxfreq) maxfreq=6000000;
  if (freq!=0)
  {
-  reg=((12000000/freq)-1)/2;
+  reg=(((maxfreq*2)/freq)-1)/2;
  } else reg=0;
  buf[0] = 0x86;
  buf[1] = reg&0x0ff;
