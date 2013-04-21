@@ -232,6 +232,51 @@ int libswdapp_handle_command_signal_usage(void){
  return LIBSWD_OK;
 }
 
+int libspi_transfer(void *ctx, unsigned char *mosidata, unsigned char *misodata, int bytes)
+{
+ if (!ctx || bytes<=0)
+ {
+  printf("ERRROR: libspi_transfer(): bad inocation!\n");
+  return LIBSWD_ERROR_PARAM;
+ }
+
+ int retval, spicsval;
+ libswdapp_interface_signal_t *sigcs, *sigled;
+ libswdapp_context_t *libswdappctx=(libswdapp_context_t*)ctx;
+
+ sigcs=libswdapp_interface_signal_find(libswdappctx, "SPICS");
+ sigled=libswdapp_interface_signal_find(libswdappctx, "SPILED");
+ if (!sigcs || !sigled)
+ {
+  printf("ERROR: Mandatory inteface signal SPICS/SIGLED not defined!\n");
+  return LIBSWD_ERROR_DRIVER;
+ } 
+
+ // Chip Select Low (CS#=0).
+ spicsval=0;
+ retval=libswdapp_interface_bitbang(libswdappctx, sigcs->mask, 0, &spicsval);
+ if (retval!=LIBSWD_OK) goto libspi_transfer_error;
+ retval=libswdapp_interface_bitbang(libswdappctx, sigled->mask, 0, &spicsval);
+ if (retval!=LIBSWD_OK) goto libspi_transfer_error;
+
+ // Transfer Bytes In/Out.
+ retval=libswdapp_interface_transfer_bytes(libswdappctx, bytes, mosidata, misodata, 1);
+ if (retval<0) goto libspi_transfer_error;
+
+ // Chip Select High (CS#=1). 
+ spicsval=~0;
+ retval=libswdapp_interface_bitbang(libswdappctx, sigcs->mask, 0, &spicsval);
+ if (retval!=LIBSWD_OK) goto libspi_transfer_error;
+ retval=libswdapp_interface_bitbang(libswdappctx, sigled->mask, 0, &spicsval);
+ if (retval!=LIBSWD_OK) goto libspi_transfer_error;
+
+ return LIBSWD_OK; 
+
+libspi_transfer_error:
+ printf("ERROR: libspi_transfer() error, underlying call returns %d (%s)!\n", retval, libswd_error_string(retval));
+ return retval;
+}
+
 
 /** Memory routine to help memory-file operations.
  * \param *libswdappctx context to work on.
