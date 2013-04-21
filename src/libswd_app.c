@@ -748,6 +748,7 @@ int libswdapp_interface_signal_del(libswdapp_context_t *libswdappctx, char *name
  * \param GETnSET if zero then perform read operation, write otherwise.
  * \param *value is the pointer that holds the value.
  * \return ERROR_OK on success, or ERROR_FAIL on failure.
+ * TODO: Bitbang Read must also update other bits status, otherwise cached values are invalid and aboguous!!!
  */
 int libswdapp_interface_bitbang(libswdapp_context_t *libswdappctx, unsigned int bitmask, int GETnSET, unsigned int *value)
 {
