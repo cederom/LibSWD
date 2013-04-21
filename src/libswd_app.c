@@ -287,10 +287,10 @@ libspi_transfer_error:
  */
 int libswdapp_handle_command_memory(libswdapp_context_t *libswdappctx, char *cmd)
 {
- char *cmdp, mosidata[5000], misodata[5000];
- int i, j, retval, chunksize=1024; 
- unsigned int spicsval;
- libswdapp_interface_signal_t *sig;
+ const int chunksize=libswdappctx->interface->chunksize, pagesize=256;
+ unsigned char *cmdp, *membuf, mosidata[chunksize], misodata[chunksize];
+ int i, j, retval, filesize, page, pages; 
+ unsigned int addr, chunk;
 
  cmdp=strsep(&cmd, " ");
  if (strncmp(cmdp,"m",1) && strncmp(cmdp,"memory",6))
@@ -305,38 +305,51 @@ int libswdapp_handle_command_memory(libswdapp_context_t *libswdappctx, char *cmd
   return LIBSWD_ERROR_NULLPOINTER;
  }
 
- sig=libswdapp_interface_signal_find(libswdappctx, "SPICS");
- if (!sig)
- {
-  printf("ERROR: Mandatory inteface signal SPICS not defined!\n");
-  return LIBSWD_ERROR_DRIVER;
- } 
  cmdp=strsep(&cmd, " ");
-printf("CMDP=%s\n", cmdp);
  if (!strncmp(cmdp,"r",1) || !strncmp(cmdp,"read",4))
  {
-  printf("Reading SPI memory...\n");
-  // Read Status Register first.
-  mosidata[0]=LIBSPI_CMD_MX_RDSR;
-  spicsval=0;
-  retval=libswdapp_interface_bitbang(libswdappctx, sig->mask, 0, &spicsval);
-  if (retval!=LIBSWD_OK) goto libswdapp_handle_command_memory_error;
-  retval=libswdapp_interface_transfer_bytes(libswdappctx, 3, mosidata, misodata, 1); 
+  // Read Identification.
+  mosidata[0]=LIBSPI_MX_CMD_RDID_REQ;
+  retval=libspi_transfer(libswdappctx, mosidata, misodata, LIBSPI_MX_CMD_RDID_LEN);
   if (retval<0) goto libswdapp_handle_command_memory_error;
-  printf("SPI_RDSR=0x%x%x\n", misodata[1], misodata[2]); 
+  printf("SPI_RDID: %02X %02X %02X\n", misodata[1], misodata[2], misodata[3]); 
+ 
+  // Read Electronic ID of the component to verify communications.
+  mosidata[0]=LIBSPI_MX_CMD_RES_REQ;
+  retval=libspi_transfer(libswdappctx, mosidata, misodata, LIBSPI_MX_CMD_RES_LEN);
+  if (retval<0) goto libswdapp_handle_command_memory_error;
+  printf("SPI_RES:  %02X %02X %02X %02X\n", misodata[1], misodata[2], misodata[3], misodata[4], misodata[5]);
 
-  // Read Memory ID and OTP Area Content.
-  mosidata[0]=LIBSPI_CMD_MX_READ;
-  mosidata[1]=0;
-  mosidata[2]=0;
-  mosidata[3]=0;
-  retval=libswdapp_interface_transfer_bytes(libswdappctx, 0x3f+4, mosidata, misodata, 1);
+ // Read Status Register first.
+  mosidata[0]=LIBSPI_MX_CMD_RDSR_REQ;
+  retval=libspi_transfer(libswdappctx,mosidata, misodata, LIBSPI_MX_CMD_RDSR_LEN); 
   if (retval<0) goto libswdapp_handle_command_memory_error;
-  printf("MEMORY DUMP BELOW:");
-  for (i=0;i<0x3f;i+=16)
+  printf("SPI_RDSR: %02X %02X\n", misodata[1], misodata[2]); 
+
+  // Read Memory Contents.
+  membuf=(char*)calloc(LIBSPI_MX_CMD_READ_LEN,sizeof(unsigned char));
+  retval=LIBSWD_ERROR_OUTOFMEM;
+  if (!membuf) goto libswdapp_handle_command_memory_error;
+printf("\n");
+  int chunks=LIBSPI_MX_CMD_READ_LEN;
+  chunks=chunks/chunksize;
+  for (chunk=0;chunk<chunks;chunk++)
+  {
+   addr=chunk*chunksize;
+   printf("\rReading memory chunk %d/%d...", chunk, chunks); fflush(stdout);
+   mosidata[0]=LIBSPI_MX_CMD_READ_REQ;
+   mosidata[1]=(addr>>16)&0x0ff;
+   mosidata[2]=(addr>>8)&0x0ff;
+   mosidata[3]=(addr)&0x0ff;
+   retval=libspi_transfer(libswdappctx, mosidata, misodata, chunksize+4);
+   if (retval<0) goto libswdapp_handle_command_memory_error;
+   memcpy(membuf+addr,misodata+4,chunksize);
+  } 
+  printf("OK\n");
+  for (i=0;i<LIBSPI_MX_CMD_READ_LEN-4;i+=16)
   {
    printf("\n%08X: ", i);
-   for (j=0;j<16;j++) printf("%02X ", misodata[i+j]);
+   for (j=0;j<16;j++) printf("%02X ", membuf[i+j]);
   }
   printf("\n");
   // Check if we want to dump memory to a file.
@@ -347,12 +360,146 @@ printf("CMDP=%s\n", cmdp);
    fp=fopen(cmdp,"w");
    if (!fp)
    {
-    printf("ERROR: Cannot open given file (%s)!\n", cmdp);
+    printf("ERROR: Cannot open memory output file (%s)!\n", cmdp);
     return LIBSWD_ERROR_PARAM;
    } 
-   retval=fwrite(misodata, sizeof(char), 0x3f, fp);
+   retval=fwrite(membuf, sizeof(char), LIBSPI_MX_CMD_READ_LEN-4, fp);
    if (retval<0) goto libswdapp_handle_command_memory_error;   
    fclose(fp);
+  }
+  free(membuf);
+ }
+ else if (!strncmp(cmdp,"w",1) || !strncmp(cmdp,"write",5))
+ {
+  cmdp=strsep(&cmd," ");
+  if (cmdp)
+  {
+   FILE *fp;
+   fp=fopen(cmdp,"r");
+   if (!fp)
+   {
+    printf("ERROR: Cannot open memory input file (%s)!\n", cmdp);
+    return LIBSWD_ERROR_PARAM;
+   }
+   fseek(fp, 0, SEEK_END);
+   filesize=ftell(fp);
+   if(filesize>LIBSPI_MX_CMD_READ_LEN)
+   {
+    printf("ERROR: File is too large to fit into memory!\n");
+    return LIBSWD_ERROR_PARAM;
+   } else rewind(fp);
+   unsigned char *membuf;
+   membuf=(unsigned char*)calloc(LIBSPI_MX_CMD_READ_LEN,sizeof(unsigned char));
+   retval=LIBSWD_ERROR_OUTOFMEM;
+   if (!membuf) return retval;
+   retval=fread(membuf,(sizeof(unsigned char)),filesize,fp);
+   if (!retval)
+   {
+    printf("ERROR: Cannot load input data file!\n");
+    return LIBSWD_ERROR_PARAM;
+   }
+
+   // Bring WP# pin up to enable Write Access.
+   unsigned int sigwpval;
+   libswdapp_interface_signal_t *sigwp;
+   sigwp=libswdapp_interface_signal_find(libswdappctx, "SPIWP");
+   if (!sigwp)
+   {
+    printf("ERROR: Cannot find mandatory interface signal 'SPIWP'!\n");
+    return LIBSWD_ERROR_DRIVER;
+   }
+   sigwpval=~0;
+   retval=libswdapp_interface_bitbang(libswdappctx, sigwp->mask, 0, &sigwpval);
+   if (retval!=LIBSWD_OK)
+   {
+    printf("ERROR: Cannot bitbang SPIWP signal to enable write access!\n");
+    return retval;
+   }
+
+   // Read Identification.
+   mosidata[0]=LIBSPI_MX_CMD_RDID_REQ;
+   retval=libspi_transfer(libswdappctx, mosidata, misodata, LIBSPI_MX_CMD_RDID_LEN);
+   if (retval<0) goto libswdapp_handle_command_memory_error;
+   printf("SPI_RDID: %02X %02X %02X\n", misodata[1], misodata[2], misodata[3]); 
+ 
+   // Read Electronic ID of the component to verify communications.
+   mosidata[0]=LIBSPI_MX_CMD_RES_REQ;
+   retval=libspi_transfer(libswdappctx, mosidata, misodata, LIBSPI_MX_CMD_RES_LEN);
+   if (retval<0) goto libswdapp_handle_command_memory_error;
+   printf("SPI_RES:  %02X %02X %02X %02X\n", misodata[1], misodata[2], misodata[3], misodata[4], misodata[5]);
+
+   // Read Status Register.
+   mosidata[0]=LIBSPI_MX_CMD_RDSR_REQ;
+   retval=libspi_transfer(libswdappctx,mosidata, misodata, LIBSPI_MX_CMD_RDSR_LEN); 
+   if (retval<0) goto libswdapp_handle_command_memory_error;
+   printf("SPI_RDSR: %02X %02X\n", misodata[1], misodata[2]); 
+
+   // Send Write-Enable command.
+   mosidata[0]=LIBSPI_MX_CMD_WREN_REQ;
+   retval=libspi_transfer(libswdappctx,mosidata,misodata, LIBSPI_MX_CMD_WREN_LEN);
+   if (retval<0) goto libswdapp_handle_command_memory_error;
+   printf("SPI_WREN: SET\n");
+
+   // Verify if WEL bit was set by WREN command.
+   mosidata[0]=LIBSPI_MX_CMD_RDSR_REQ;
+   retval=libspi_transfer(libswdappctx,mosidata, misodata, LIBSPI_MX_CMD_RDSR_LEN); 
+   if (retval<0) goto libswdapp_handle_command_memory_error;
+   printf("SPI_RDSR: %02X %02X\n", misodata[1], misodata[2]); 
+
+   // Clear all STATUS bits.
+   mosidata[0]=LIBSPI_MX_CMD_WRSR_REQ;
+   mosidata[1]=0;
+   retval=libspi_transfer(libswdappctx,mosidata, misodata, LIBSPI_MX_CMD_WRSR_LEN); 
+   if (retval<0) goto libswdapp_handle_command_memory_error;
+   printf("SPI_WRSR: %02X\n", mosidata[1]); 
+
+   // Read Status Register.
+   mosidata[0]=LIBSPI_MX_CMD_RDSR_REQ;
+   retval=libspi_transfer(libswdappctx,mosidata, misodata, LIBSPI_MX_CMD_RDSR_LEN); 
+   if (retval<0) goto libswdapp_handle_command_memory_error;
+   printf("SPI_RDSR: %02X %02X\n", misodata[1], misodata[2]); 
+
+   // Clear WP# pin and enable memory write protection.
+   sigwpval=0;
+   retval=libswdapp_interface_bitbang(libswdappctx, sigwp->mask, 0, &sigwpval);
+   if (retval!=LIBSWD_OK)
+   {
+    printf("ERROR: Cannot bitbang SPIWP signal to disable write access!\n");
+    return retval;
+   }
+
+   pages=filesize/pagesize;
+   for (page=0;page<pages;page++)
+   {
+    addr=page*pagesize;
+    printf("\rWriting page %d/%d...", page, pages); fflush(stdout);
+    // Send Write-Enable command.
+    mosidata[0]=LIBSPI_MX_CMD_WREN_REQ;
+    retval=libspi_transfer(libswdappctx,mosidata,misodata, LIBSPI_MX_CMD_WREN_LEN);
+    if (retval<0) goto libswdapp_handle_command_memory_error;
+    // Send PP command with payload data.
+    mosidata[0]=LIBSPI_MX_CMD_PP_REQ;
+    mosidata[1]=(addr>>16)&0x0ff;
+    mosidata[2]=(addr>>8)&0x0ff;
+    mosidata[3]=(addr)&0x0ff;
+    memcpy(mosidata+4,membuf+page*pagesize,pagesize); 
+    retval=libspi_transfer(libswdappctx,mosidata,misodata, LIBSPI_MX_CMD_PP_LEN);
+    if (retval<0) goto libswdapp_handle_command_memory_error;
+    // Read Status Register.
+    mosidata[0]=LIBSPI_MX_CMD_RDSR_REQ;
+    retval=libspi_transfer(libswdappctx,mosidata, misodata, LIBSPI_MX_CMD_RDSR_LEN); 
+    if (retval<0) goto libswdapp_handle_command_memory_error;
+    printf("SPI_RDSR: %02X %02X\n", misodata[1], misodata[2]); 
+   }
+   printf("OK\n");
+
+   // Free memory buffer. 
+   if (membuf) free(membuf);
+  }
+  else
+  {
+   printf("ERROR: You need to provide source file name to flash the memory!\n");
+   return LIBSWD_ERROR_PARAM;
   }
  }
  return LIBSWD_OK;
