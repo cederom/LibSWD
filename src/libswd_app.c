@@ -1090,107 +1090,22 @@ int libswdapp_interface_ftdi_set_freq(libswdapp_context_t *libswdappctx, int fre
 int libswdapp_interface_ftdi_init_ktlink(libswdapp_context_t *libswdappctx)
 {
  int retval;
- int ftdi_channel=INTERFACE_ANY;
- unsigned char latency_timer;
- static unsigned int port_direction, port_value;
+ unsigned char buf[4];
 
- // Set interface channel to use.
- if (ftdi_channel == INTERFACE_ANY) ftdi_channel = INTERFACE_A;
- if (ftdi_set_interface(libswdappctx->interface->ftdictx, ftdi_channel)<0)
+ retval=libswdapp_interface_ftdi_init(libswdappctx);
+ if (retval<0) return retval;
+
+ printf("Disabling CLK/5 (set max CLK=30MHz)...");
+ buf[0]=0x8A; 
+ retval=ftdi_write_data(libswdappctx->interface->ftdictx, buf, 1);
+ if (retval<0 || retval!=1)
  {
-  printf("ERROR: Unable to select FT2232 channel A: %s\n",
-         libswdappctx->interface->ftdictx->error_str);
-  return LIBSWD_ERROR_DRIVER;
- }
- // Set the Latency Timer.
- if (ftdi_set_latency_timer(libswdappctx->interface->ftdictx,libswdappctx->interface->latency)<0)
- {
-  printf("ERROR: Unable to set latency timer!\n");
-  return LIBSWD_ERROR_DRIVER;
- }
- if (ftdi_get_latency_timer(libswdappctx->interface->ftdictx,&latency_timer)<0)
- {
-  printf("ERROR: Unable to get latency timer!\n");
-  return LIBSWD_ERROR_DRIVER;
- } else printf("FTDI latency timer is: %i\n", latency_timer);
-
-
- /* Low Byte (ADBUS) members. */
- const unsigned int nSWCLKen=0x40, nTDIen=0x20, TRST=0x01, nTRSTen=0x04,
-                     SRST=0x02, nSRSTen=0x08, LED=0x80, RnW=0x10;
- /* Low Byte (ADBUS) members. */
- const unsigned int SWCLK=0x01, TDI=0x02, TDO=0x04, nSWDIOsel=0x20;
-
- //nTRST    = TRST;
- //nSRST    = SRST;
- //nTRSTnOE = nTRSTen;
- //nSRSTnOE = nSRSTen;
-
- /* Set ADBUS Port Data: SWCLK=0, TDI=0,TDO=1, nSWDIOsel=0 */
- // const unsigned int low_output = 0 | TDO ;
- const unsigned int low_output = 0 | TDO;
- /* Set ADBUS Port Direction (1=Output) */
- //const unsigned int low_direction = 0 | SWCLK | TDI | nSWDIOsel;
- const unsigned int low_direction = 0 | SWCLK | TDI | nSWDIOsel; 
-
- /* initialize low byte port (ADBUS) */
- //if (ft2232_set_data_bits_low_byte(low_output, low_direction) != LIBSWD_OK) {
- //printf("ERROR: couldn't initialize FT2232 ADBUS with ktlink_swd layout!");
- // return LIBSWD_ERROR_DRIVER;
- //}
-
- /* Set Data Bits High Byte (ACBUS)                                */
- /* Enable SWD pins  : nTCKen=0, RnW=1, nSRSTen=0, nLED=0, SRST=1  */
- /* Disable JTAG pins: nTDIen=1, nSWDIOen=1, nTRSTen=1             */
- const unsigned int high_output = 0 | RnW | SRST | nTDIen | nTRSTen;
- /* Set ACBUS Port Direction (1=Output) */
- const unsigned int high_direction = 0 | RnW | nSWCLKen | nTDIen | nTRSTen | nSRSTen | SRST | LED;
-
- /* initialize high byte port (ACBUS) */
- //if (ft2232_set_data_bits_high_byte(high_output, high_direction) != LIBSWD_OK) {
- // printf("ERROR: couldn't initialize FT2232 ACBUS with 'ktlink_swd' layout\n");
- // return LIBSWD_ERROR_DRIVER;
- //}
-
- port_direction=((high_direction<<8)&0xff00)|low_direction;
- port_value=((high_output<<8)&0xff00)|low_output;
-
- /* Additional bit-bang signals should be placed in a configuration file. */
-
- // Low Byte IO (ADBUS) Signals
- libswdapp_interface_signal_add(libswdappctx, "CLK",      0x0001);
- libswdapp_interface_signal_add(libswdappctx, "MOSI",     0x0002);
- libswdapp_interface_signal_add(libswdappctx, "MISO",     0x0004);
- libswdapp_interface_signal_add(libswdappctx, "TMS",      0x0008);
- libswdapp_interface_signal_add(libswdappctx, "nSWDsel",  0x0020);
- libswdapp_interface_signal_add(libswdappctx, "SRSTin",   0x0040);
- libswdapp_interface_signal_add(libswdappctx, "RTCK",     0x0080);
- // High Byte IO (ACBUS) Signals
- libswdapp_interface_signal_add(libswdappctx, "TRST",     0x0100);
- libswdapp_interface_signal_add(libswdappctx, "SRST",     0x0200);
- libswdapp_interface_signal_add(libswdappctx, "nTRSTen",  0x0400);
- libswdapp_interface_signal_add(libswdappctx, "nSRSTen",  0x0800);
- libswdapp_interface_signal_add(libswdappctx, "RnW",      0x1000); 
- libswdapp_interface_signal_add(libswdappctx, "nMOSIen",  0x2000);
- libswdapp_interface_signal_add(libswdappctx, "nCLKen",   0x4000);
- libswdapp_interface_signal_add(libswdappctx, "LED",      0x8000);
-
-// retval=ftdi_set_bitmode(libswdappctx->interface->ftdictx, 0x0b, BITMODE_MPSSE);
-// retval=ftdi_set_bitmode(libswdappctx->interface->ftdictx, port_direction, BITMODE_MPSSE);
-retval=ftdi_set_bitmode(libswdappctx->interface->ftdictx, 0, BITMODE_MPSSE);
- if (retval<0)
- {
-  printf("ERROR: Cannot set bitmode BITMODE_MPSSE for '%s' interface!\n", libswdappctx->interface->name);
-  return LIBSWD_ERROR_DRIVER;
+  printf("FAILED!\nERROR: Cannot switch off clock divisor!\n");
+  return retval;
  } 
- retval=libswdapp_interface_bitbang(libswdappctx, port_direction, 0, &port_value);
- if (retval!=LIBSWD_OK)
- {
-  printf("ERROR: Cannot perform initial bitbang of the '%s' interface!\n", libswdappctx->interface->name);
-  return LIBSWD_ERROR_DRIVER;
- }
+ libswdappctx->interface->maxfrequency=30000000;
+ printf("OK\n");
 
- printf("KT-LINK SWD-Mode initialization complete!\n");
  return LIBSWD_OK;
 }
 
