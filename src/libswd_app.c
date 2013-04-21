@@ -252,10 +252,11 @@ int libspi_transfer(void *ctx, unsigned char *mosidata, unsigned char *misodata,
   return LIBSWD_ERROR_DRIVER;
  } 
 
- // Chip Select Low (CS#=0).
+ // Chip Select Low (CS#=0), LED marks operation.
  spicsval=0;
  retval=libswdapp_interface_bitbang(libswdappctx, sigcs->mask, 0, &spicsval);
  if (retval!=LIBSWD_OK) goto libspi_transfer_error;
+ spicsval=0;
  retval=libswdapp_interface_bitbang(libswdappctx, sigled->mask, 0, &spicsval);
  if (retval!=LIBSWD_OK) goto libspi_transfer_error;
 
@@ -267,6 +268,7 @@ int libspi_transfer(void *ctx, unsigned char *mosidata, unsigned char *misodata,
  spicsval=~0;
  retval=libswdapp_interface_bitbang(libswdappctx, sigcs->mask, 0, &spicsval);
  if (retval!=LIBSWD_OK) goto libspi_transfer_error;
+ spicsval=~0;
  retval=libswdapp_interface_bitbang(libswdappctx, sigled->mask, 0, &spicsval);
  if (retval!=LIBSWD_OK) goto libspi_transfer_error;
 
@@ -880,6 +882,7 @@ int libswdapp_interface_signal_del(libswdapp_context_t *libswdappctx, char *name
  * \param GETnSET if zero then perform read operation, write otherwise.
  * \param *value is the pointer that holds the value.
  * \return ERROR_OK on success, or ERROR_FAIL on failure.
+ * TODO: Bitbang Read must also update other bits status, otherwise cached values are invalid and aboguous!!!
  */
 int libswdapp_interface_bitbang(libswdapp_context_t *libswdappctx, unsigned int bitmask, int GETnSET, unsigned int *value)
 {
