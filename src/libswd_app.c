@@ -461,15 +461,6 @@ printf("\n");
    if (retval<0) goto libswdapp_handle_command_memory_error;
    printf("SPI_RDSR: %02X %02X\n", misodata[1], misodata[2]); 
 
-   // Clear WP# pin and enable memory write protection.
-   sigwpval=0;
-   retval=libswdapp_interface_bitbang(libswdappctx, sigwp->mask, 0, &sigwpval);
-   if (retval!=LIBSWD_OK)
-   {
-    printf("ERROR: Cannot bitbang SPIWP signal to disable write access!\n");
-    return retval;
-   }
-
    pages=filesize/pagesize;
    for (page=0;page<pages;page++)
    {
@@ -484,7 +475,7 @@ printf("\n");
     mosidata[1]=(addr>>16)&0x0ff;
     mosidata[2]=(addr>>8)&0x0ff;
     mosidata[3]=(addr)&0x0ff;
-    memcpy(mosidata+4,membuf+page*pagesize,pagesize); 
+    memcpy(mosidata+4,membuf+(page*pagesize),pagesize); 
     retval=libspi_transfer(libswdappctx,mosidata,misodata, LIBSPI_MX_CMD_PP_LEN);
     if (retval<0) goto libswdapp_handle_command_memory_error;
     // Read Status Register.
@@ -497,6 +488,16 @@ printf("\n");
 
    // Free memory buffer. 
    if (membuf) free(membuf);
+
+   // Clear WP# pin and enable memory write protection.
+   sigwpval=0;
+   retval=libswdapp_interface_bitbang(libswdappctx, sigwp->mask, 0, &sigwpval);
+   if (retval!=LIBSWD_OK)
+   {
+    printf("ERROR: Cannot bitbang SPIWP signal to disable write access!\n");
+    return retval;
+   }
+ 
   }
   else
   {
