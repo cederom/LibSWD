@@ -346,12 +346,6 @@ printf("\n");
    memcpy(membuf+addr,misodata+4,chunksize);
   } 
   printf("OK\n");
-  for (i=0;i<LIBSPI_MX_CMD_READ_LEN-4;i+=16)
-  {
-   printf("\n%08X: ", i);
-   for (j=0;j<16;j++) printf("%02X ", membuf[i+j]);
-  }
-  printf("\n");
   // Check if we want to dump memory to a file.
   cmdp=strsep(&cmd," ");
   if (cmdp)
@@ -367,6 +361,14 @@ printf("\n");
    if (retval<0) goto libswdapp_handle_command_memory_error;   
    fclose(fp);
   }
+  // Display hex dump.
+  for (i=0;i<LIBSPI_MX_CMD_READ_LEN-4;i+=16)
+  {
+   printf("\n%08X: ", i);
+   for (j=0;j<16;j++) printf("%02X ", membuf[i+j]);
+  }
+  printf("\n");
+  // Free memory buffer.
   free(membuf);
  }
  else if (!strncmp(cmdp,"w",1) || !strncmp(cmdp,"write",5))
