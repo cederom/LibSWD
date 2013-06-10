@@ -658,6 +658,7 @@ int libswd_dp_write(libswd_ctx_t *libswdctx, libswd_operation_t operation, char 
 int libswd_ap_read(libswd_ctx_t *libswdctx, libswd_operation_t operation, char addr, int **data);
 int libswd_ap_write(libswd_ctx_t *libswdctx, libswd_operation_t operation, char addr, int *data);
 
+int libswd_cli(libswd_ctx_t *libswdctx, char *command);
 extern int libswd_log(libswd_ctx_t *libswdctx, libswd_loglevel_t loglevel, char *msg, ...);
 int libswd_log_internal(libswd_ctx_t *libswdctx, libswd_loglevel_t loglevel, char *msg, ...);
 int libswd_log_internal_va(libswd_ctx_t *libswdctx, libswd_loglevel_t loglevel, char *msg, va_list ap);
