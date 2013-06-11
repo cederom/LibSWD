@@ -57,20 +57,29 @@ int libswd_cli_print_usage(libswd_ctx_t *libswdctx)
 }
 
 /** Command Line Interface parse and execution engine.
+ * Only one command should be given per invocation, but multiple commands
+ * per line are possible, one after another, separated with space.
  * \param *libswdctx libswd context
  * \param *cmd command string pointer
  * \return LIBSWD_ERROR_OK on success or negative value error code otherwise.
  */
 int libswd_cli(libswd_ctx_t *libswdctx, char *command)
 {
+ libswd_log(libswdctx, LIBSWD_LOGLEVEL_DEBUG,
+            "LIBSWD_D: libswd_cli(libswdctx=@%p, command=@%p/\"%s\"): Entring function...\n",
+            (void*)libswdctx, (void*)command, command);
+
  if (libswdctx==NULL) return LIBSWD_ERROR_NULLCONTEXT;
  if (command==NULL) return LIBSWD_ERROR_NULLPOINTER;
 
  int retval;
- char *cmd;
- cmd=strtok(command," ");
- while (cmd!=NULL)
+ char *cmd, *commandstart;
+ commandstart=command;
+
+ while ( cmd=strsep(&command," ") )
  {
+  // Strip trailing spaces.
+  if (cmd && command) if (!cmd[0] && command[0]) continue;
   // Check for HELP invocation.
   if ( strncmp(cmd,"?",1)==0 || strncmp(cmd,"help",4)==0 || strncmp(cmd,"h",1)==0 )
   {
@@ -80,13 +89,13 @@ int libswd_cli(libswd_ctx_t *libswdctx, char *command)
   else if ( strncmp(cmd,"l",1)==0 || strncmp(cmd,"loglevel",8)==0 )
   {
    int loglevel_new=LIBSWD_LOGLEVEL_DEFAULT;
-   cmd=strtok(NULL," ");
+   cmd=strsep(&command," ");
    if (cmd==NULL)
    {
     libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO,
-     "LIBSWD_I: Current loglevel is: %d (%s)\n",
-     (int)libswdctx->config.loglevel,
-     libswd_log_level_string(libswdctx->config.loglevel) );
+               "LIBSWD_I: libswd_cli(): Current loglevel is: %d (%s)\n",
+               (int)libswdctx->config.loglevel,
+               libswd_log_level_string(libswdctx->config.loglevel) );
    }
    else
    {
@@ -98,17 +107,16 @@ int libswd_cli(libswd_ctx_t *libswdctx, char *command)
      if (retval<0)
      {
       libswd_log(libswdctx, LIBSWD_LOGLEVEL_ERROR,
-                 "LIBSWD_E: libswd_cli(libswdctx=@%p, command=%s): Cannot set loglevel %d/%s): %s\n",
-                 (void*)libswdctx, (void*)command, loglevel_new,
+                 "LIBSWD_E: libswd_cli(): Cannot set loglevel %d/%s): %s.\n",
+                 loglevel_new,
                  libswd_log_level_string((libswd_loglevel_t)loglevel_new),
                  libswd_error_string(retval) );
      }
-     cmd=strtok(NULL,command);
     }
     else if (errno!=LIBSWD_OK)
     {
      libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO,
-                "LIBSWD_I: Current loglevel is: %d (%s)\n",
+                "LIBSWD_I: libswd_cli(): Current loglevel is: %d (%s)\n",
                 (int)libswdctx->config.loglevel,
                 libswd_log_level_string(libswdctx->config.loglevel) );
     }
@@ -125,36 +133,35 @@ int libswd_cli(libswd_ctx_t *libswdctx, char *command)
    if (retval<0)
    {
     libswd_log(libswdctx, LIBSWD_LOGLEVEL_ERROR,
-     "LIBSWD_E: libswd_cli(libswdctx=@%p, command=%s): Cannot read IDCODE (%s)...\n",
-     (void*)libswdctx, command, libswd_error_string(retval) ); 
+               "LIBSWD_E: libswd_cli(): Cannot read IDCODE! %s.\n",
+               libswd_error_string(retval) ); 
    }
    else libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL,
-         "FOUND IDCODE: 0x%08X / %s\n", *idcode, libswd_bin32_string(idcode) );
-   cmd=strtok(NULL,command);
+                   "LIBSWD_N: FOUND IDCODE: 0x%08X / %s\n",
+                   *idcode, libswd_bin32_string(idcode) );
    continue;
   }
   // Check for READ invocation.
   else if ( strncmp(cmd,"r",1)==0 || strncmp(cmd,"read",4)==0 )
   {
    printf("LIBSWD READ not yet implemented, stay tuned :-)\n");
-   return LIBSWD_OK;
+   continue;
   }
   // Check for WRITE invocation.
   else if ( strncmp(cmd,"w",1)==0 || strncmp(cmd,"write",5)==0 )
   {
    printf("LIBSWD WRITE not yet implemented, stay tuned :-)\n");
-   return LIBSWD_OK;
+   continue;
   }
   // No known command was invoked, show usage message and return message.
   else
   {
    libswd_log(libswdctx, LIBSWD_LOGLEVEL_ERROR,
-    "LIBSWD_E: libswd_cli(libswdctx=@%p, command=%s): %s\n",
-    (void*)libswdctx, command, libswd_error_string(LIBSWD_ERROR_CLISYNTAX) );
-   libswd_cli_print_usage(libswdctx);
+              "LIBSWD_E: libswd_cli(): %s.\n",
+              libswd_error_string(LIBSWD_ERROR_CLISYNTAX) );
+              libswd_cli_print_usage(libswdctx);
    return LIBSWD_ERROR_CLISYNTAX; 
   } 
-  cmd=strtok(NULL," ");
  }
  return LIBSWD_OK;
 };
