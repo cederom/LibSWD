@@ -50,9 +50,9 @@ int libswd_cli_print_usage(libswd_ctx_t *libswdctx)
  libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL, "LIBSWD_N:  [h]elp / [?]\n");
  libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL, "LIBSWD_N:  [d]etect\n");
  libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL, "LIBSWD_N:  [l]oglevel <newloglevel>\n");
- libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL, "LIBSWD_N:  [r]ead [d]ap/[a]p/[m]emap address count\n");
+ libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL, "LIBSWD_N:  [r]ead [d]ap/[a]p/[m]emap address\n");
  libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL, "LIBSWD_N:  [w]rite [d]ap/[a]p/[m]emap address data[0] .. data[n]\n");
- libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL, "\n");
+// libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL, "\n");
  return LIBSWD_OK;
 }
 
@@ -72,19 +72,21 @@ int libswd_cli(libswd_ctx_t *libswdctx, char *command)
  if (libswdctx==NULL) return LIBSWD_ERROR_NULLCONTEXT;
  if (command==NULL) return LIBSWD_ERROR_NULLPOINTER;
 
- int retval;
- char *cmd, *commandstart;
- commandstart=command;
+ int retval, addrstart, addrstop, count, *data;
+ char *cmd, ap;
 
  while ( cmd=strsep(&command," ") )
  {
-  // Strip trailing spaces.
+  // Strip heading and trailing spaces.
   if (cmd && command) if (!cmd[0] && command[0]) continue;
+  if (cmd && command) if (!cmd[0] && !command[0]) break;
+
   // Check for HELP invocation.
   if ( strncmp(cmd,"?",1)==0 || strncmp(cmd,"help",4)==0 || strncmp(cmd,"h",1)==0 )
   {
    return libswd_cli_print_usage(libswdctx); 
   }
+
   // Check for LOGLEVEL invocation.
   else if ( strncmp(cmd,"l",1)==0 || strncmp(cmd,"loglevel",8)==0 )
   {
@@ -125,6 +127,7 @@ int libswd_cli(libswd_ctx_t *libswdctx, char *command)
               (int)libswdctx->config.loglevel);
    continue;
   }
+
   // Check for DETECT invocation.
   else if ( strncmp(cmd,"d",1)==0 || strncmp(cmd,"detect",6)==0 )
   {
@@ -141,18 +144,82 @@ int libswd_cli(libswd_ctx_t *libswdctx, char *command)
                    *idcode, libswd_bin32_string(idcode) );
    continue;
   }
+
   // Check for READ invocation.
   else if ( strncmp(cmd,"r",1)==0 || strncmp(cmd,"read",4)==0 )
   {
-   printf("LIBSWD READ not yet implemented, stay tuned :-)\n");
+   // Parse access port name parameter.
+   cmd=strsep(&command," ");
+   if (!cmd) goto libswd_cli_syntaxerror;
+   if ( strncmp(cmd,"d",1)==0 || strncmp(cmd,"dap",3)==0 )
+   {
+    ap='d';
+   }
+   else if ( strncmp(cmd,"a",1)==0 || strncmp(cmd,"ap",2)==0 )
+   {
+    ap='a';
+   }
+   else if ( strncmp(cmd,"m",1)==0 || strncmp(cmd,"memap",5)==0 )
+   {
+    ap='m';
+    printf("MEM-AP READ\n");
+   } else goto libswd_cli_syntaxerror;
+
+   // Parse address parameter.
+   cmd=strsep(&command," ");
+   if (!cmd) goto libswd_cli_syntaxerror;
+   errno=LIBSWD_OK;
+   addrstart=strtol(cmd, (char**)NULL, 16);
+   if (errno!=LIBSWD_OK) goto libswd_cli_syntaxerror;
+
+   // Parse count parameter.
+   if (command)
+   {
+    cmd=strsep(&command," ");
+    errno=LIBSWD_OK;
+    count=strtol(cmd, (char**)NULL, 16); 
+    if (errno!=LIBSWD_OK || count<=0)
+    {
+     libswd_log(libswdctx, LIBSWD_LOGLEVEL_WARNING,
+                "LIBSWD_W: libswd_cli(): Bad 'count' value (0x%X -> 0x04).\n",
+                count);
+     count=4;
+    }
+   } else count=4;
+   // Only one word (4 bytes) readout at the moment
+   count=4;
+   addrstop=addrstart+count;
+
+   switch (ap)
+   {
+    case 'd':
+     retval=libswd_dp_read(libswdctx, LIBSWD_OPERATION_EXECUTE, addrstart, &data); 
+     if (retval<0) goto libswd_cli_error;
+     printf("0x%0X: %X\n", addrstart, *data);
+     break;
+
+    case 'a':
+     retval=libswd_ap_read(libswdctx, LIBSWD_OPERATION_EXECUTE, addrstart, &data);
+     if (retval<0) goto libswd_cli_error;
+     printf("0x%0X: %X\n", addrstart, *data);
+     break;
+
+    default:
+     libswd_log(libswdctx, LIBSWD_LOGLEVEL_ERROR,
+                "LIBSWD_E: libswd_cli(): Unknown Access Port given!\n");
+     goto libswd_cli_syntaxerror;
+   }
+
    continue;
   }
+
   // Check for WRITE invocation.
   else if ( strncmp(cmd,"w",1)==0 || strncmp(cmd,"write",5)==0 )
   {
    printf("LIBSWD WRITE not yet implemented, stay tuned :-)\n");
    continue;
   }
+
   // No known command was invoked, show usage message and return message.
   else
   {
@@ -164,6 +231,17 @@ int libswd_cli(libswd_ctx_t *libswdctx, char *command)
   } 
  }
  return LIBSWD_OK;
+
+libswd_cli_syntaxerror:
+ retval=LIBSWD_ERROR_CLISYNTAX;
+libswd_cli_error:
+ libswd_log(libswdctx, LIBSWD_LOGLEVEL_ERROR,
+            "LIBSWD_E: libswd_cli(): %s.\n",
+            libswd_error_string(retval) );
+ libswd_log(libswdctx, LIBSWD_LOGLEVEL_DEBUG,
+            "LIBSWD_D: libswd_cli(): CMD=%s COMMAND=%s.\n",
+            cmd, command );
+ return retval;
 };
 
 
