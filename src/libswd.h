@@ -556,6 +556,12 @@ typedef enum {
  LIBSWD_TRUE=1   ///< True is 1.
 } libswd_bool_t;
 
+/** Memory buffer and scratchpad region */
+typedef struct {
+ unsigned char *data;
+ int size;
+} libswd_membuf_t;
+
 /** SWD Context Structure definition. It stores all the information about
  * the library, drivers and interface configuration, target status along
  * with DAP/AHBAP data/instruction internal registers, and the command
@@ -569,6 +575,7 @@ typedef struct {
  libswd_cmd_t *cmdq;             ///< Command queue, stores all bus operations.
  libswd_context_config_t config; ///< Target specific configuration.
  libswd_driver_t *driver;        ///< Pointer to the interface driver structure.
+ libswd_membuf_t membuf;         ///< Memory related scratchpad.
  struct {
   libswd_swdp_t dp;              ///< Last known value of the SW-DP registers.
   libswd_ahbap_t ap;             ///< Last known value of the AHB-AP registers.

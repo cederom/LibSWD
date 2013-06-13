@@ -99,6 +99,7 @@ int libswd_deinit_cmdq(libswd_ctx_t *libswdctx){
  */ 
 int libswd_deinit(libswd_ctx_t *libswdctx){
  int res, cmdcnt=0;
+ if (libswdctx->membuf.data) free(libswdctx->membuf.data);
  res=libswd_deinit_cmdq(libswdctx);
  if (res<0) return res;
  cmdcnt=res;
