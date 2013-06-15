@@ -331,6 +331,8 @@
 /// MEM-AP Identification Register address.
 #define LIBSWD_MEMAP_IDR_ADDR  0xFC
 
+/// MEM-AP APSEL value.
+#define LIBSWD_MEMAP_APSEL_VAL          0x00
 /// MEM-AP CSW register bank location.
 #define LIBSWD_MEMAP_CSW_APBANKSEL_VAL  0x00
 /// MEM-AP TAR register bank location.
@@ -381,9 +383,17 @@
 /// MEM-AP CSW DeviceEn bitmask.
 #define LIBSWD_MEMAP_CSW_DEVICEEN           (1 << LIBSWD_MEMAP_CSW_DEVICEEN_BITNUM)
 /// MEM-AP CSW AddrInc bitmask.
-#define LIBSWD_MEMAP_CSW_ADDRINC            (1 << LIBSWD_MEMAP_CSW_ADDRINC_BITNUM)
+#define LIBSWD_MEMAP_CSW_ADDRINC            (3 << LIBSWD_MEMAP_CSW_ADDRINC_BITNUM)
 /// MEM-AP CSW Size bitmask.
-#define LIBSWD_MEMAP_CSW_SIZE               (1 << LIBSWD_MEMAP_CSW_SIZE_BITNUM)
+#define LIBSWD_MEMAP_CSW_SIZE               (7 << LIBSWD_MEMAP_CSW_SIZE_BITNUM)
+/// MEM-AP CSW Size values.
+#define LIBSWD_MEMAP_CSW_SIZE_8BIT          (0x0 << LIBSWD_MEMAP_CSW_SIZE_BITNUM)
+#define LIBSWD_MEMAP_CSW_SIZE_16BIT         (0x1 << LIBSWD_MEMAP_CSW_SIZE_BITNUM)
+#define LIBSWD_MEMAP_CSW_SIZE_32BIT         (0x2 << LIBSWD_MEMAP_CSW_SIZE_BITNUM)
+/// MEM-AP CSW AddrInc values.
+#define LIBSWD_MEMAP_CSW_ADDRINC_OFF        (0x0 << LIBSWD_MEMAP_CSW_ADDRINC_BITNUM)
+#define LIBSWD_MEMAP_CSW_ADDRINC_SINGLE     (0x1 << LIBSWD_MEMAP_CSW_ADDRINC_BITNUM)
+#define LIBSWD_MEMAP_CSW_ADDRINC_PACKEG     (0x2 << LIBSWD_MEMAP_CSW_ADDRINC_BITNUM)
 
 /// MEM-AP CFG Big-endian bitnumber.
 #define LIBSWD_MEMAP_CFG_BIGENDIAN_BITNUM   0
@@ -612,17 +622,18 @@ typedef struct {
 
 /** Most actual Advanced High Bandwidth Access Peripherial Bus Reisters */
 typedef struct {
- char ack;     ///< Last known state of ACK response.
- int controlstatus; ///< Last known CONTROLSTATUS register value.
- int tar;           ///< Last known TAR register value.
- int drw;           ///< Last known DRW register value.
- int bd0;           ///< Last known BD0 register value.
- int bd1;           ///< Last known BD1 register value.
- int bd2;           ///< Last known BD2 register value.
- int bd3;           ///< Last known BD3 register value.
- int dromt;         ///< Last known DROMT register value.
- int idr;           ///< Last known IDR register value.
-} libswd_ahbap_t;
+ char ack;        ///< Last known state of ACK response.
+ int csw;         ///< Last known CONTROLSTATUS register value.
+ int tar;         ///< Last known TAR register value.
+ int drw;         ///< Last known DRW register value.
+ int bd0;         ///< Last known BD0 register value.
+ int bd1;         ///< Last known BD1 register value.
+ int bd2;         ///< Last known BD2 register value.
+ int bd3;         ///< Last known BD3 register value.
+ int cfg;         ///< Last known CFG register value.
+ int base;        ///< Last known BASE register value.
+ int idr;         ///< Last known IDR register value.
+} libswd_memap_t;
 
 /** Most actual SWD bus transaction/packet data.
  * This structure is updated by libswd_drv_transmit() function.
@@ -674,7 +685,7 @@ typedef struct {
  libswd_membuf_t membuf;         ///< Memory related scratchpad.
  struct {
   libswd_swdp_t dp;              ///< Last known value of the SW-DP registers.
-  libswd_ahbap_t ap;             ///< Last known value of the AHB-AP registers.
+  libswd_memap_t memap;         ///< Last known value of the MEM-AP registers.
   libswd_transaction_t read;     ///< Last read operation fields.
   libswd_transaction_t write;    ///< Last write operation fields.
  } log;
