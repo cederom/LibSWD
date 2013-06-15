@@ -308,6 +308,102 @@
 /// Default TRN length is one CLK.
 #define LIBSWD_TURNROUND_DEFAULT_VAL LIBSWD_TURNROUND_1_VAL ///< Default TRN length is one CLK.
 
+
+/** MEM-AP Register Map, based on ADIv5 (ARM IHI 0031A). */
+/// MEM-AP Control/Status Word register address.
+#define LIBSWD_MEMAP_CSW_ADDR  0x00
+/// MEM-AP Transfer Address Register address.
+#define LIBSWD_MEMAP_TAR_ADDR  0x04
+/// MEM-AP Data Read/Write Register address.
+#define LIBSWD_MEMAP_DRW_ADDR  0x0C
+/// MEM-AP Banked Data Register 0 address.
+#define LIBSWD_MEMAP_BD0_ADDR  0x10
+/// MEM-AP Banked Data Register 1 address.
+#define LIBSWD_MEMAP_BD1_ADDR  0x14
+/// MEM-AP Banked Data Register 2 address.
+#define LIBSWD_MEMAP_BD2_ADDR  0x18
+/// MEM-AP Banked Data Register 3 address.
+#define LIBSWD_MEMAP_BD3_ADDR  0x1C
+/// MEM-AP Configuration Register address.
+#define LIBSWD_MEMAP_CFG_ADDR  0xF4
+/// MEM-AP Debug Base Address Register address.
+#define LIBSWD_MEMAP_BASE_ADDR 0xF8
+/// MEM-AP Identification Register address.
+#define LIBSWD_MEMAP_IDR_ADDR  0xFC
+
+/// MEM-AP CSW register bank location.
+#define LIBSWD_MEMAP_CSW_APBANKSEL_VAL  0x00
+/// MEM-AP TAR register bank location.
+#define LIBSWD_MEMAP_TAR_APBANKSEL_VAL  0x00
+/// MEM-AP DRW register bank location.
+#define LIBSWD_MEMAP_DRW_APBANKSEL_VAL  0x00
+/// MEM-AP Banked Data Register 0 bank location.
+#define LIBSWD_MEMAP_BD0_APBANKSEL_VAL  0x01
+/// MEM-AP Banked Data Register 1 bank location.
+#define LIBSWD_MEMAP_BD1_APBANKSEL_VAL  0x01
+/// MEM-AP Banked Data Register 2 bank location.
+#define LIBSWD_MEMAP_BD2_APBANKSEL_VAL  0x01
+/// MEM-AP Banked Data Register 3 bank location.
+#define LIBSWD_MEMAP_BD3_APBANKSEL_VAL  0x01
+/// MEM-AP CFG register bank location.
+#define LIBSWD_MEMAP_CFG_APBANKSEL_VAL  0x0F
+/// MEM-AP BASE register bank location.
+#define LIBSWD_MEMAP_BASE_APBANKSEL_VAL 0x0F
+/// MEM-AP IDR register bank location.
+#define LIBSWD_MEMAP_IDR_APBANKSEL_VAL  0x0F
+
+/// MEM-AP CSW DbgSwEnable bitnumer.
+#define LIBSWD_MEMAP_CSW_DBGSWENABLE_BITNUM 31
+/// MEM-AP CSW Prot bitnumber.
+#define LIBSWD_MEMAP_CSW_PROT_BITNUM        24
+/// MEM-AP CSW SPIDEN bitnumber.
+#define LIBSWD_MEMAP_CSW_SPIDEN_BITNUM      23
+/// MEM-AP CSW Mode bitnumber.
+#define LIBSWD_MEMAP_CSW_MODE_BITNUM        8
+/// MEM-AP CSW TrInProg bitnumber.
+#define LIBSWD_MEMAP_CSW_TRINPROG_BITNUM    7
+/// MEM-AP CSW DeviceEn bitnumber.
+#define LIBSWD_MEMAP_CSW_DEVICEEN_BITNUM    6
+/// MEM-AP CSW AddrInc bitnumber.
+#define LIBSWD_MEMAP_CSW_ADDRINC_BITNUM     4
+/// MEM-AP CSW Size bitnumber.
+#define LIBSWD_MEMAP_CSW_SIZE_BITNUM        0
+/// MEM-AP CSW DbgSwEnable bitmask.
+#define LIBSWD_MEMAP_CSW_DBGSWENABLE        (1 << LIBSWD_MEMAP_CSW_DBGSWENABLE_BITNUM)
+/// MEM-AP CSW Prot bitmask.
+#define LIBSWD_MEMAP_CSW_PROT               (1 << LIBSWD_MEMAP_CSW_PROT_BITNUM)
+/// MEM-AP CSW SPIDEN bitmask.
+#define LIBSWD_MEMAP_CSW_SPIDEN             (1 << LIBSWD_MEMAP_CSW_SPIDEN_BITNUM)
+/// MEM-AP CSW Mode bitmask.
+#define LIBSWD_MEMAP_CSW_MODE               (1 << LIBSWD_MEMAP_CSW_MODE_BITNUM)
+/// MEM-AP CSW TrInProg bitmask.
+#define LIBSWD_MEMAP_CSW_TRINPROG           (1 << LIBSWD_MEMAP_CSW_TRINPROG_BITNUM)
+/// MEM-AP CSW DeviceEn bitmask.
+#define LIBSWD_MEMAP_CSW_DEVICEEN           (1 << LIBSWD_MEMAP_CSW_DEVICEEN_BITNUM)
+/// MEM-AP CSW AddrInc bitmask.
+#define LIBSWD_MEMAP_CSW_ADDRINC            (1 << LIBSWD_MEMAP_CSW_ADDRINC_BITNUM)
+/// MEM-AP CSW Size bitmask.
+#define LIBSWD_MEMAP_CSW_SIZE               (1 << LIBSWD_MEMAP_CSW_SIZE_BITNUM)
+
+/// MEM-AP CFG Big-endian bitnumber.
+#define LIBSWD_MEMAP_CFG_BIGENDIAN_BITNUM   0
+/// MEM-AP CFG Big-endian bitmask.
+#define LIBSWD_MEMAP_CFG_BIGENDIAN          (1 << LIBSWD_MEMAP_CFG_BIGENDIAN_BITNUM)
+
+/// MEM-AP BASE BASEADDR bitnumber.
+#define LIBSWD_MEMAP_BASE_BASEADDR_BITNUM     12
+/// MEM-AP BASE Format bitnumber.
+#define LIBSWD_MEMAP_BASE_FORMAT_BITNUM       1
+/// MEM-AP BASE EntryPresent bitnumber.
+#define LIBSWD_MEMAP_BASE_ENTRYPRESENT_BITNUM 0
+/// MEM-AP BASE BASEADDR bitmask.
+#define LIBSWD_MEMAP_BASE_BASEADDR            (1 << LIBSWD_MEMAP_BASE_BASEADDR_BITNUM)
+/// MEM-AP BASE Format bitmask.
+#define LIBSWD_MEMAP_BASE_FORMAT              (1 << LIBSWD_MEMAP_BASE_FORMAT_BITNUM)
+/// MEM-AP BASE EntryPresent bitmask.
+#define LIBSWD_MEMAP_BASE_ENTRYPRESENT        (1 << LIBSWD_MEMAP_BASE_ENTRYPRESENT_BITNUM)
+
+
 /** AHB-AP Registers Map. TODO!!!! */
 /// R/W, 32bit, reset value: 0x43800042
 #define AHB_AP_CONTROLSTATUS 0x00  ///< R/W, 32bit, reset value: 0x43800042 
