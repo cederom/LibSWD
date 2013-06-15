@@ -37,6 +37,7 @@
 #include <libswd.h>
 #include <string.h>
 #include <errno.h>
+#include <stdio.h>
 
 /*******************************************************************************
  * \defgroup libswd_cli Command Line Interface functions.
@@ -50,9 +51,11 @@ int libswd_cli_print_usage(libswd_ctx_t *libswdctx)
  libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL, "LIBSWD_N:  [h]elp / [?]\n");
  libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL, "LIBSWD_N:  [d]etect\n");
  libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL, "LIBSWD_N:  [l]oglevel <newloglevel>\n");
- libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL, "LIBSWD_N:  [r]ead [d]ap/[a]p/[m]emap address\n");
- libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL, "LIBSWD_N:  [w]rite [d]ap/[a]p/[m]emap address data[0] .. data[n]\n");
-// libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL, "\n");
+ libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL, "LIBSWD_N:  [r]ead [d]ap/[a]p 0xAddress\n");
+ libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL, "LIBSWD_N:  [w]rite [d]ap/[a]p 0xAddress\n");
+ libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL, "LIBSWD_N:  [r]ead [m]emap 0xAddress <0xCount>|4 <filename>\n");
+ libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL, "LIBSWD_N:  [w]rite [m]emap 0xAddress 0x32BitData[]|filename\n");
+ libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL, "\n");
  return LIBSWD_OK;
 }
 
@@ -72,8 +75,8 @@ int libswd_cli(libswd_ctx_t *libswdctx, char *command)
  if (libswdctx==NULL) return LIBSWD_ERROR_NULLCONTEXT;
  if (command==NULL) return LIBSWD_ERROR_NULLPOINTER;
 
- int retval, addrstart, addrstop, count, *data;
- char *cmd, ap;
+ int retval, addrstart, addrstop, count, *data32, i, j;
+ char *cmd, ap, *filename;
 
  while ( cmd=strsep(&command," ") )
  {
@@ -162,17 +165,38 @@ int libswd_cli(libswd_ctx_t *libswdctx, char *command)
    else if ( strncmp(cmd,"m",1)==0 || strncmp(cmd,"memap",5)==0 )
    {
     ap='m';
-    printf("MEM-AP READ\n");
    } else goto libswd_cli_syntaxerror;
-
    // Parse address parameter.
    cmd=strsep(&command," ");
    if (!cmd) goto libswd_cli_syntaxerror;
    errno=LIBSWD_OK;
    addrstart=strtol(cmd, (char**)NULL, 16);
    if (errno!=LIBSWD_OK) goto libswd_cli_syntaxerror;
-
-   // Parse count parameter.
+   // Perform operations on a given access port.
+   switch (ap)
+   {
+    case 'd':
+     retval=libswd_dp_read(libswdctx, LIBSWD_OPERATION_EXECUTE,
+                           addrstart, &data32 );
+     if (retval<0) goto libswd_cli_error;
+     libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL,
+                "LIBSWD_N: DP[0x%08X]=0x%08X\n",
+                addrstart, *data32 );
+     break;
+    case 'a':
+     retval=libswd_ap_read(libswdctx, LIBSWD_OPERATION_EXECUTE,
+                           addrstart, &data32 );
+     if (retval<0) goto libswd_cli_error;
+     libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL,
+                "LIBSWD_N: AP[0x%08X]=0x%08X\n",
+                addrstart, *data32 );
+     break;
+    case 'm':
+     libswd_log(libswdctx, LIBSWD_LOGLEVEL_WARNING,
+                "LIBSWD_W: libswd_cli(): MEM-AP support comming soon...\n" );
+     break;
+/*
+    // Parse count parameter for MEM-AP operation.
    if (command)
    {
     cmd=strsep(&command," ");
@@ -186,30 +210,83 @@ int libswd_cli(libswd_ctx_t *libswdctx, char *command)
      count=4;
     }
    } else count=4;
-   // Only one word (4 bytes) readout at the moment
-   count=4;
    addrstop=addrstart+count;
-
-   switch (ap)
+ 
+   // Parse count parameter for MEM-AP operation.
+   if (command)
    {
-    case 'd':
-     retval=libswd_dp_read(libswdctx, LIBSWD_OPERATION_EXECUTE, addrstart, &data); 
-     if (retval<0) goto libswd_cli_error;
-     printf("0x%0X: %X\n", addrstart, *data);
+    cmd=strsep(&command," ");
+    errno=LIBSWD_OK;
+    count=strtol(cmd, (char**)NULL, 16); 
+    if (errno!=LIBSWD_OK || count<=0)
+    {
+     libswd_log(libswdctx, LIBSWD_LOGLEVEL_WARNING,
+                "LIBSWD_W: libswd_cli(): Bad 'count' value (0x%X -> 0x04).\n",
+                count);
+     count=4;
+    }
+   } else count=4;
+   addrstop=addrstart+count;
+   // Parse filename parameter for MEM-AP operation.
+   if (command && ap=='m')
+   {
+    cmd=strsep(&command," ");
+    filename=cmd;
+   } else filename=NULL;
+   // Take care of proper memory (re)allocation.
+   if (ap=='m' && (libswdctx->membuf.size<count) )
+   {
+    char *membuf;
+    membuf=(char*)libswdctx->membuf.data;
+    if (membuf) free(membuf);
+    membuf=(char*)calloc(count,sizeof(char));
+    if (!membuf)
+    {
+     libswdctx->membuf.size=0;
+     libswd_log(libswdctx, LIBSWD_ERROR_OUTOFMEM, 
+                "LIBSWD_E: libswd_cli(): Cannot (re)allocate memory buffer!\n");
+     return LIBSWD_ERROR_OUTOFMEM;
+    }
+    libswdctx->membuf.data=membuf;
+    libswdctx->membuf.size=count*sizeof(char);
+   } 
+ */
+//Wait until this function is implemented in LibSWD...
+//When its done the rest should work fine...
+//     retval=libswd_memap_read(libswdctx, LIBSWD_OPERATION_EXECUTE,
+//                              addrstart, count,
+//                              &libswdctx->membuf.data);
+     // Store result to a file if requested.
+     if (filename)
+     {
+      FILE *fp;
+      fp=fopen(filename,"w");
+      if (!fp)
+      {
+       libswd_log(libswdctx, LIBSWD_LOGLEVEL_WARNING,
+                  "LIBSWD_W: libswd_cli(): Cannot open '%s' resul file!\n",
+                  filename);
+       break;
+      }
+      retval=fwrite(libswdctx->membuf.data, count, sizeof(char), filename);
+      if (!retval)
+       libswd_log(libswdctx, LIBSWD_LOGLEVEL_WARNING, 
+                  "LIBSWD_W: libswd_cli(): Cannot write result to file '%s'!\n",
+                  filename);
+     }
+     // Print out the result.
+     for (i=0; i<libswdctx->membuf.size; i++)
+     {
+      if (!(i%16)) printf("\n%08X: ", i);
+      printf("%02X ", (unsigned char)libswdctx->membuf.data[i]);
+     }
+     printf("\n");
      break;
-
-    case 'a':
-     retval=libswd_ap_read(libswdctx, LIBSWD_OPERATION_EXECUTE, addrstart, &data);
-     if (retval<0) goto libswd_cli_error;
-     printf("0x%0X: %X\n", addrstart, *data);
-     break;
-
     default:
      libswd_log(libswdctx, LIBSWD_LOGLEVEL_ERROR,
                 "LIBSWD_E: libswd_cli(): Unknown Access Port given!\n");
      goto libswd_cli_syntaxerror;
    }
-
    continue;
   }
 
