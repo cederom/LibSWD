@@ -143,7 +143,7 @@ int libswd_cli(libswd_ctx_t *libswdctx, char *command)
                libswd_error_string(retval) ); 
    }
    else libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL,
-                   "LIBSWD_N: FOUND IDCODE: 0x%08X / %s\n",
+                   "LIBSWD_N: IDCODE=0x%08X/%s\n",
                    *idcode, libswd_bin32_string(idcode) );
    continue;
   }
