@@ -447,7 +447,7 @@ int libswd_ap_read(libswd_ctx_t *libswdctx, libswd_operation_t operation, char a
   res=libswd_bus_read_ack(libswdctx, operation, (char**)&libswdctx->qlog.read.ack);
   if (res<1) return res;
   cmdcnt=+res;
-  res=libswd_bus_read_data_p(libswdctx, operation, (char**)&libswdctx->qlog.read.data, (char**)&libswdctx->qlog.read.parity);
+  res=libswd_bus_read_data_p(libswdctx, operation, (int**)&libswdctx->qlog.read.data, (char**)&libswdctx->qlog.read.parity);
   if (res<1) return res;
   cmdcnt=+res;
   return cmdcnt;
