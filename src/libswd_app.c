@@ -186,6 +186,8 @@ printf("Interface cmdparam: %s\n", optarg);
           libswd_log_level_string(libswdappctx->loglevel));
   goto quit;
  }
+ // We don't want the automatic error fix.
+ libswdappctx->libswdctx->config.autofixerrors=0;
 
  /* Run the Command Line Interpreter loop. */
  while ((cmd=readline("libswd>")) != NULL){

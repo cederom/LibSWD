@@ -496,8 +496,8 @@ typedef enum {
  LIBSWD_ERROR_CLISYNTAX   =-44  ///< CLI Syntax Error
 } libswd_error_code_t;
 
-/// Do we want autofix errors by default? Yes!
-#define LIBSWD_AUTOFIX_DEFAULT LIBSWD_TRUE
+/// Do we want autofix errors by default? Not at this point...
+#define LIBSWD_AUTOFIX_DEFAULT LIBSWD_FALSE
 
 /** Logging Level Codes definition */
 ///Logging Level codes definition, use this to have its name on debugger.
