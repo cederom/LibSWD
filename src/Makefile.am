@@ -7,6 +7,9 @@ EXTRA_DIST = \
  examples/libswd_drv_openocd.h \
  examples/libswd_drv_openocd.c \
  libswd_externs.c
+if DEBUG
+AM_CFLAGS = -g3
+endif
 
 libswd_la_SOURCES = \
  libswd.h \

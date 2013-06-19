@@ -1,6 +1,7 @@
 AC_INIT([libswd], [master-GIT-devel], [tomek@cedro.info])
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_MACRO_DIR([m4])
+
 AC_ARG_ENABLE([application],
  AS_HELP_STRING([--disable-application], [do not build the LibSWD Application]),
   [],
@@ -27,6 +28,18 @@ AS_IF([test "x$enable_application" != xno],
    )
   ]
 )
+
+AC_ARG_ENABLE(debug,
+ AS_HELP_STRING([--enable-debug], [build with Debug Symbols (default: no)]),
+ [case "${enableval}" in
+   yes) debug=true ;;
+   no)  debug=false ;;
+   *)   AC_MSG_ERROR([bad value ${enableval} for --enable-debug]) ;;
+  esac],
+ [debug=false]
+)
+AM_CONDITIONAL(DEBUG, test x"$debug" = x"true")
+
 AM_INIT_AUTOMAKE([foreign -Wall -Werror])
 DX_PDF_FEATURE(ON)
 DX_HTML_FEATURE(ON)
