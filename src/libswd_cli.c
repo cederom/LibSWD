@@ -126,8 +126,9 @@ int libswd_cli(libswd_ctx_t *libswdctx, char *command)
                 libswd_log_level_string(libswdctx->config.loglevel) );
     }
    }
-   libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL, "LOGLEVEL=%d\n",
-              (int)libswdctx->config.loglevel);
+   libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL, "LOGLEVEL=%d/%s\n",
+              (int)libswdctx->config.loglevel,
+              libswd_log_level_string(libswdctx->config.loglevel));
    continue;
   }
 
