@@ -622,6 +622,7 @@ typedef struct {
 /** Most actual Advanced High Bandwidth Access Peripherial Bus Reisters */
 typedef struct {
  char ack;        ///< Last known state of ACK response.
+ char issetup;    ///< Is MEM-AP already setup flag.
  int csw;         ///< Last known CONTROLSTATUS register value.
  int tar;         ///< Last known TAR register value.
  int drw;         ///< Last known DRW register value.
