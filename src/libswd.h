@@ -504,9 +504,9 @@ typedef enum {
 typedef enum {
  LIBSWD_LOGLEVEL_MIN     = 0,
  LIBSWD_LOGLEVEL_SILENT  = 0, ///< Remain silent.
- LIBSWD_LOGLEVEL_ERROR   = 1, ///< Show errors.
- LIBSWD_LOGLEVEL_WARNING = 2, ///< Show warnings.
- LIBSWD_LOGLEVEL_NORMAL  = 3, ///< Normal verbosity.
+ LIBSWD_LOGLEVEL_NORMAL  = 1, ///< Normal verbosity.
+ LIBSWD_LOGLEVEL_ERROR   = 2, ///< Show errors.
+ LIBSWD_LOGLEVEL_WARNING = 3, ///< Show warnings.
  LIBSWD_LOGLEVEL_INFO    = 4, ///< Show messages.
  LIBSWD_LOGLEVEL_DEBUG   = 5, ///< Show debug information.
  LIBSWD_LOGLEVEL_PAYLOAD = 6, ///< Show packet payload.
@@ -514,7 +514,7 @@ typedef enum {
 } libswd_loglevel_t;
 
 /// What is the default loglevel? Normal!
-#define LIBSWD_LOGLEVEL_DEFAULT LIBSWD_LOGLEVEL_NORMAL
+#define LIBSWD_LOGLEVEL_DEFAULT LIBSWD_LOGLEVEL_ERROR
 
 /** SWD queue and payload data definitions */
 /// What is the maximal bit length of the data.

@@ -103,7 +103,7 @@ int libswd_error_handle(libswd_ctx_t *libswdctx){
   return LIBSWD_ERROR_QUEUE;
  }
  if (exectail!=libswdctx->cmdq){
-  libswd_log(libswdctx, LIBSWD_LOGLEVEL_WARNING, "LIBSWD_W: libswd_error_handle(libswdctx=@%p): Correcting libswdctx->cmdq to match last executed element...\n", (void*)libswdctx);
+  libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO, "LIBSWD_I: libswd_error_handle(libswdctx=@%p): Correcting libswdctx->cmdq to match last executed element...\n", (void*)libswdctx);
   libswdctx->cmdq=exectail;
  } 
 
@@ -116,7 +116,7 @@ int libswd_error_handle(libswd_ctx_t *libswdctx){
  }
 
  if (retval<0){
-  libswd_log(libswdctx, LIBSWD_LOGLEVEL_ERROR, "LIBSWD_E: libswd_error_handle(@%p) failed! on cmdq=@%p", (void*)libswdctx, (void*)libswdctx->cmdq); 
+  libswd_log(libswdctx, LIBSWD_LOGLEVEL_WARNING, "LIBSWD_W: libswd_error_handle(@%p) failed! on cmdq=@%p", (void*)libswdctx, (void*)libswdctx->cmdq); 
  }
  return retval;
 }
@@ -150,12 +150,12 @@ int libswd_error_handle_ack_wait(libswd_ctx_t *libswdctx){
  if (libswdctx==NULL) return LIBSWD_ERROR_NULLCONTEXT;
  // Make sure we are working on the ACK cmdq element.
  if (libswdctx->cmdq->cmdtype!=LIBSWD_CMDTYPE_MISO_ACK){
-  libswd_log(libswdctx, LIBSWD_LOGLEVEL_ERROR, "LIBSWD_E: libswd_error_handle_ack_wait(libswdctx=@%p):libswdctx->cmdq does not point to ACK!", (void*)libswdctx);
+  libswd_log(libswdctx, LIBSWD_LOGLEVEL_WARNING, "LIBSWD_W: libswd_error_handle_ack_wait(libswdctx=@%p):libswdctx->cmdq does not point to ACK!", (void*)libswdctx);
   return LIBSWD_ERROR_UNHANDLED; //do we want to handle this kind of error here?
  }
  // Make sure the ACK contains WAIT response.
  if (libswdctx->cmdq->ack!=LIBSWD_ACK_WAIT_VAL){
-  libswd_log(libswdctx, LIBSWD_LOGLEVEL_ERROR, "LIBSWD_E: libswd_error_handle_ack_wait(libswdctx=@%p):libswdctx->cmdq->ack does not contain WAIT response!", (void*)libswdctx);
+  libswd_log(libswdctx, LIBSWD_LOGLEVEL_WARNING, "LIBSWD_W: libswd_error_handle_ack_wait(libswdctx=@%p):libswdctx->cmdq->ack does not contain WAIT response!", (void*)libswdctx);
   return LIBSWD_ERROR_ACKMISMATCH;
  }
 

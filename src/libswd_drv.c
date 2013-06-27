@@ -68,7 +68,7 @@ int libswd_drv_transmit(libswd_ctx_t *libswdctx, libswd_cmd_t *cmd){
  switch (cmd->cmdtype){
   case LIBSWD_CMDTYPE_MOSI:
   case LIBSWD_CMDTYPE_MISO:
-   libswd_log(libswdctx, LIBSWD_LOGLEVEL_WARNING, "This command does not contain payload.");
+   libswd_log(libswdctx, LIBSWD_LOGLEVEL_WARNING, "LIBSWD_W: libswd_drv_transmit(): This command does not contain payload.");
    break;
 
   case LIBSWD_CMDTYPE_MOSI_CONTROL:
@@ -180,20 +180,20 @@ int libswd_drv_transmit(libswd_ctx_t *libswdctx, libswd_cmd_t *cmd){
    case LIBSWD_ACK_OK_VAL: return res;
    // For other ACK codes produce a warning and remember the code.
    case LIBSWD_ACK_FAULT_VAL:
-    libswd_log(libswdctx, LIBSWD_LOGLEVEL_WARNING,
-      "LIBSWD_W: libswd_drv_transmit(libswdctx=@%p, cmd=@%p): LIBSWD_ACK_FAULT detected!\n",
+    libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO,
+      "LIBSWD_I: libswd_drv_transmit(libswdctx=@%p, cmd=@%p): LIBSWD_ACK_FAULT detected!\n",
       (void*)libswdctx, (void*)cmd );
     errcode=LIBSWD_ERROR_ACK_FAULT;
     break;
    case LIBSWD_ACK_WAIT_VAL:
-    libswd_log(libswdctx, LIBSWD_LOGLEVEL_WARNING,
-      "LIBSWD_W: libswd_drv_transmit(libswdctx=@%p, cmd=@%p): LIBSWD_ACK_WAIT detectd!\n",
+    libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO,
+      "LIBSWD_I: libswd_drv_transmit(libswdctx=@%p, cmd=@%p): LIBSWD_ACK_WAIT detectd!\n",
       (void*)libswdctx, (void*)cmd );
     errcode=LIBSWD_ERROR_ACK_WAIT;
     break;
    default:
-    libswd_log(libswdctx, LIBSWD_LOGLEVEL_ERROR,
-      "LIBSWD_E: libswd_drv_transmit(libswdctx=@%p, cmd=@%p): Unknown ACK detected / Protocol Error Sequence! DAP Stalled or Target Power Off?\n",
+    libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO,
+      "LIBSWD_I: libswd_drv_transmit(libswdctx=@%p, cmd=@%p): UnknownACK/ProtocolErrorSequence! DAP Stall / Power Off?\n",
       (void*)libswdctx, (void*)cmd );
     errcode=LIBSWD_ERROR_ACKUNKNOWN;
   }
@@ -204,8 +204,8 @@ int libswd_drv_transmit(libswd_ctx_t *libswdctx, libswd_cmd_t *cmd){
      "LIBSWD_D: libswd_drv_transmit(libswdctx=@%p, cmd=@%p): ACK!=OK, clearing cmdq tail to preserve synchronization...\n",
      (void*)libswdctx, (void*)cmd );
    if (libswd_cmdq_free_tail(cmd)<0) {
-    libswd_log(libswdctx, LIBSWD_LOGLEVEL_ERROR,
-      "LIBSWD_E: libswd_drv_transmit(libswdctx=@%p, cmd=@%p): Cannot free cmdq tail in ACK error handling routine, Protocol Error Sequence imminent...\n",
+    libswd_log(libswdctx, LIBSWD_LOGLEVEL_WARNING,
+      "LIBSWD_W: libswd_drv_transmit(libswdctx=@%p, cmd=@%p): Cannot free cmdq tail in ACK error handling routine, Protocol Error Sequence imminent...\n",
       (void*)libswdctx, (void*)cmd );
     return LIBSWD_ERROR_QUEUENOTFREE;
    }
@@ -217,8 +217,8 @@ int libswd_drv_transmit(libswd_ctx_t *libswdctx, libswd_cmd_t *cmd){
     int data=0, parity=0;
     res=libswd_bus_write_data_p(libswdctx, LIBSWD_OPERATION_EXECUTE, &data, &parity);
     if (res<0){
-     libswd_log(libswdctx, LIBSWD_LOGLEVEL_ERROR,
-       "LIBSWD_E: libswd_drv_transmit(libswdctx=@%p, cmd=@%p): Cannot perform data phase after ACK=WAIT/FAIL, Protocol Error Sequence imminent...\n",
+     libswd_log(libswdctx, LIBSWD_LOGLEVEL_WARNING,
+       "LIBSWD_W: libswd_drv_transmit(libswdctx=@%p, cmd=@%p): Cannot perform data phase after ACK=WAIT/FAIL, Protocol Error Sequence imminent...\n",
        (void*)libswdctx, (void*)cmd );
     }
     // Caller now should read CTRL/STAT and clear STICKY Error Flags at this point.
@@ -260,8 +260,8 @@ int libswd_drv_transmit(libswd_ctx_t *libswdctx, libswd_cmd_t *cmd){
       "LIBSWD_W: libswd_drv_transmit(libswdctx=@%p, cmd=@%p): Bad PARITY, clearing cmdq tail to preserve synchronization...\n",
       (void*)libswdctx, (void*)cmd );
     if (libswd_cmdq_free_tail(cmd)<0) {
-     libswd_log(libswdctx, LIBSWD_LOGLEVEL_ERROR,
-       "LIBSWD_E: libswd_drv_transmit(libswdctx=@%p, cmd=@%p): Cannot free cmdq tail in PARITY error hanlig routine!\n",
+     libswd_log(libswdctx, LIBSWD_LOGLEVEL_WARNING,
+       "LIBSWD_W: libswd_drv_transmit(libswdctx=@%p, cmd=@%p): Cannot free cmdq tail in PARITY error hanlig routine!\n",
        (void*)libswdctx, (void*)cmd);
      return LIBSWD_ERROR_QUEUENOTFREE;
     }
