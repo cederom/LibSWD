@@ -194,70 +194,63 @@ int libswd_cli(libswd_ctx_t *libswdctx, char *command)
                 addrstart, *data32 );
      break;
     case 'm':
-     libswd_log(libswdctx, LIBSWD_LOGLEVEL_WARNING,
-                "LIBSWD_W: libswd_cli(): MEM-AP support comming soon...\n" );
-     break;
-/*
-    // Parse count parameter for MEM-AP operation.
-   if (command)
-   {
-    cmd=strsep(&command," ");
-    errno=LIBSWD_OK;
-    count=strtol(cmd, (char**)NULL, 16); 
-    if (errno!=LIBSWD_OK || count<=0)
-    {
-     libswd_log(libswdctx, LIBSWD_LOGLEVEL_WARNING,
-                "LIBSWD_W: libswd_cli(): Bad 'count' value (0x%X -> 0x04).\n",
-                count);
-     count=4;
-    }
-   } else count=4;
-   addrstop=addrstart+count;
- 
-   // Parse count parameter for MEM-AP operation.
-   if (command)
-   {
-    cmd=strsep(&command," ");
-    errno=LIBSWD_OK;
-    count=strtol(cmd, (char**)NULL, 16); 
-    if (errno!=LIBSWD_OK || count<=0)
-    {
-     libswd_log(libswdctx, LIBSWD_LOGLEVEL_WARNING,
-                "LIBSWD_W: libswd_cli(): Bad 'count' value (0x%X -> 0x04).\n",
-                count);
-     count=4;
-    }
-   } else count=4;
-   addrstop=addrstart+count;
-   // Parse filename parameter for MEM-AP operation.
-   if (command && ap=='m')
-   {
-    cmd=strsep(&command," ");
-    filename=cmd;
-   } else filename=NULL;
-   // Take care of proper memory (re)allocation.
-   if (ap=='m' && (libswdctx->membuf.size<count) )
-   {
-    char *membuf;
-    membuf=(char*)libswdctx->membuf.data;
-    if (membuf) free(membuf);
-    membuf=(char*)calloc(count,sizeof(char));
-    if (!membuf)
-    {
-     libswdctx->membuf.size=0;
-     libswd_log(libswdctx, LIBSWD_ERROR_OUTOFMEM, 
-                "LIBSWD_E: libswd_cli(): Cannot (re)allocate memory buffer!\n");
-     return LIBSWD_ERROR_OUTOFMEM;
-    }
-    libswdctx->membuf.data=membuf;
-    libswdctx->membuf.size=count*sizeof(char);
-   } 
- */
-//Wait until this function is implemented in LibSWD...
-//When its done the rest should work fine...
-//     retval=libswd_memap_read(libswdctx, LIBSWD_OPERATION_EXECUTE,
-//                              addrstart, count,
-//                              &libswdctx->membuf.data);
+     // Parse count parameter for MEM-AP operation.
+     if (command)
+     {
+      cmd=strsep(&command," ");
+      errno=LIBSWD_OK;
+      count=strtol(cmd, (char**)NULL, 16); 
+      if (errno!=LIBSWD_OK || count<=0)
+      {
+       libswd_log(libswdctx, LIBSWD_LOGLEVEL_WARNING,
+                  "LIBSWD_W: libswd_cli(): Bad 'count' value (0x%X -> 0x04).\n",
+                  count);
+       count=4;
+      }
+     } else count=4;
+     addrstop=addrstart+count;
+     // Parse count parameter for MEM-AP operation.
+     if (command)
+     {
+      cmd=strsep(&command," ");
+      errno=LIBSWD_OK;
+      count=strtol(cmd, (char**)NULL, 16); 
+      if (errno!=LIBSWD_OK || count<=0)
+      {
+       libswd_log(libswdctx, LIBSWD_LOGLEVEL_WARNING,
+                  "LIBSWD_W: libswd_cli(): Bad 'count' value (0x%X -> 0x04).\n",
+                  count);
+       count=4;
+      }
+     } else count=4;
+     addrstop=addrstart+count;
+     // Parse filename parameter for MEM-AP operation.
+     if (command && ap=='m')
+     {
+      cmd=strsep(&command," ");
+      filename=cmd;
+     } else filename=NULL;
+     // Take care of proper memory (re)allocation.
+     if (ap=='m' && (libswdctx->membuf.size<count) )
+     {
+      char *membuf;
+      membuf=(char*)libswdctx->membuf.data;
+      if (membuf) free(membuf);
+      membuf=(char*)calloc(count,sizeof(char));
+      if (!membuf)
+      {
+       libswdctx->membuf.size=0;
+       libswd_log(libswdctx, LIBSWD_ERROR_OUTOFMEM, 
+                  "LIBSWD_E: libswd_cli(): Cannot (re)allocate memory buffer!\n");
+       return LIBSWD_ERROR_OUTOFMEM;
+      }
+      libswdctx->membuf.data=membuf;
+      libswdctx->membuf.size=count*sizeof(char);
+     } 
+     retval=libswd_memap_read(libswdctx, LIBSWD_OPERATION_EXECUTE,
+                              addrstart, count,
+                              (int**)&libswdctx->membuf.data);
+     if (retval<0) goto libswd_cli_error;
      // Store result to a file if requested.
      if (filename)
      {
