@@ -225,6 +225,7 @@ int libswd_dp_read(libswd_ctx_t *libswdctx, libswd_operation_t operation, char a
  libswd_log(libswdctx, LIBSWD_LOGLEVEL_DEBUG, "LIBSWD_D: libswd_dp_read(libswdctx=@%p, operation=%s, addr=0x%X, **data=%p) entering function...\n", (void*)libswdctx, libswd_operation_string(operation), addr, (void**)&data);
  
  if (libswdctx==NULL) return LIBSWD_ERROR_NULLCONTEXT; 
+ if (data==NULL) return LIBSWD_ERROR_NULLPOINTER;
  if (operation!=LIBSWD_OPERATION_ENQUEUE && operation!=LIBSWD_OPERATION_EXECUTE)
   return LIBSWD_ERROR_BADOPCODE;
 
@@ -390,14 +391,16 @@ int libswd_ap_bank_select(libswd_ctx_t *libswdctx, libswd_operation_t operation,
  // If the correct AP bank is already selected no need to change it.
  // Verify against cached DP SELECT register value.
  // Unfortunately SELECT register is read only so we need to work on cached values...
- if ( (addr&0x000000F0) != (libswdctx->log.dp.select&0x00000F0) ){
-  int retval;
-  int new_select=libswdctx->log.dp.select;
-  new_select=(new_select&0xFFFFF0F)|(addr&0xF0); 
-  retval=libswd_dp_write(libswdctx, operation, LIBSWD_DP_SELECT_ADDR, &new_select);
-  if (retval<0) libswd_log(libswdctx, LIBSWD_LOGLEVEL_ERROR, "libswd_ap_bank_select(%p, %0x02X): cannot update DP SELECT register (%s)\n", (void*)libswdctx, addr, libswd_error_string(retval));
-  return retval;
- } else return 0;
+ int retval;
+ int new_select=libswdctx->log.dp.select;
+ new_select&= ~LIBSWD_DP_SELECT_APBANKSEL;
+ new_select|= apbank&0x00F0; 
+ retval=libswd_dp_write(libswdctx, operation, LIBSWD_DP_SELECT_ADDR, &new_select);
+ if (retval<0){
+  libswd_log(libswdctx, LIBSWD_LOGLEVEL_WARNING, "libswd_ap_bank_select(%p, %0x02X): cannot update DP SELECT register (%s)\n", (void*)libswdctx, apbank, libswd_error_string(retval));
+ } else libswdctx->log.dp.select=new_select;
+ libswd_log(libswdctx, LIBSWD_LOGLEVEL_DEBUG, "LIBSWD_D: libswd_ap_bank_select(*libswdctx=%p, operation=%s, apbank=0x%02X) execution OK.\n", (void*)libswdctx, libswd_operation_string(operation), apbank);
+ return retval;
 }
 
 
@@ -436,6 +439,7 @@ int libswd_ap_read(libswd_ctx_t *libswdctx, libswd_operation_t operation, char a
  libswd_log(libswdctx, LIBSWD_LOGLEVEL_DEBUG, "LIBSWD_D: libswd_ap_read(*libswdctx=%p, command=%s, addr=0x%X, *data=%p) entering function...\n", (void*)libswdctx, libswd_operation_string(operation), (unsigned char)addr, (void**)data);
 
  if (libswdctx==NULL) return LIBSWD_ERROR_NULLCONTEXT; 
+ if (data==NULL) return LIBSWD_ERROR_NULLPOINTER;
  if (operation!=LIBSWD_OPERATION_ENQUEUE && operation!=LIBSWD_OPERATION_EXECUTE)
   return LIBSWD_ERROR_BADOPCODE;
 
