@@ -583,56 +583,56 @@ int libswd_ap_write(libswd_ctx_t *libswdctx, libswd_operation_t operation, char 
  * \param *libswdctx swd context to work on.
  * \return LIBSWD_OK on success or LIBSWD_ERROR code on failure.
  */
-int libswd_dap_setup(libswd_ctx_t *libswdctx){
+int libswd_dap_init(libswd_ctx_t *libswdctx){
  libswd_log(libswdctx, LIBSWD_LOGLEVEL_DEBUG,
-            "LIBSWD_D: libswd_dap_setup(*libswdctx=%p) entring function...\n",
+            "LIBSWD_D: libswd_dap_init(*libswdctx=%p) entring function...\n",
             (void*)libswdctx );
  if (libswdctx==NULL) return LIBSWD_ERROR_NULLCONTEXT;
  int i, res, dpctrlstat, *dpctrlstatp;
  // Select MEM-AP.
  res=libswd_ap_select(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_APSEL_VAL);
- if (res<0) goto libswd_dap_setup_error;
+ if (res<0) goto libswd_dap_init_error;
  // Initialize DAP to work with MEM-AP.
  dpctrlstat=LIBSWD_DP_CTRLSTAT_STICKYERR;
  res=libswd_dp_write(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_DP_CTRLSTAT_ADDR, &dpctrlstat);
- if (res<0) goto libswd_dap_setup_error;
+ if (res<0) goto libswd_dap_init_error;
  res=libswd_dp_read(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_DP_CTRLSTAT_ADDR, &dpctrlstatp);
- if (res<0) goto libswd_dap_setup_error;
+ if (res<0) goto libswd_dap_init_error;
  dpctrlstat=LIBSWD_DP_CTRLSTAT_CDBGPWRUPREQ|LIBSWD_DP_CTRLSTAT_CSYSPWRUPREQ;
  res=libswd_dp_write(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_DP_CTRLSTAT_ADDR, &dpctrlstat);
- if (res<0) goto libswd_dap_setup_error;
+ if (res<0) goto libswd_dap_init_error;
  res=libswd_dp_read(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_DP_CTRLSTAT_ADDR, &dpctrlstatp);
- if (res<0) goto libswd_dap_setup_error;
+ if (res<0) goto libswd_dap_init_error;
  // Wait for Debug Unit powerup.
  for (i=0;i<LIBSWD_RETRY_COUNT_DEFAULT;i++)
  {
   res=libswd_dp_read(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_DP_CTRLSTAT_ADDR, &dpctrlstatp); 
-  if (res<0) goto libswd_dap_setup_error;
+  if (res<0) goto libswd_dap_init_error;
   if (*dpctrlstatp&LIBSWD_DP_CTRLSTAT_CDBGPWRUPACK) break;
   usleep(100);
  }
  if (!(*dpctrlstatp&LIBSWD_DP_CTRLSTAT_CDBGPWRUPACK))
   libswd_log(libswdctx, LIBSWD_LOGLEVEL_WARNING,
-             "LIBSWD_W: libswd_dap_setup(): DP CTRL/STAT CDBGPWRUPACK not set!\n");
+             "LIBSWD_W: libswd_dap_init(): DP CTRL/STAT CDBGPWRUPACK not set!\n");
  // Wait for System powerup.
  for (i=0;i<LIBSWD_RETRY_COUNT_DEFAULT;i++)
  {
   res=libswd_dp_read(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_DP_CTRLSTAT_ADDR, (int**)&dpctrlstat);
-  if (res<0) goto libswd_dap_setup_error;
+  if (res<0) goto libswd_dap_init_error;
   if (*dpctrlstatp&LIBSWD_DP_CTRLSTAT_CSYSPWRUPACK) break;
   usleep(100);
  }
  if (!(*dpctrlstatp&LIBSWD_DP_CTRLSTAT_CSYSPWRUPACK))
   libswd_log(libswdctx, LIBSWD_LOGLEVEL_WARNING,
-             "LIBSWD_W: libswd_dap_setup(): DP CTRL/STAT CSYSPWRUPACK not set!\n");
- libswdctx->log.memap.issetup=1;
+             "LIBSWD_W: libswd_dap_init(): DP CTRL/STAT CSYSPWRUPACK not set!\n");
+ libswdctx->log.memap.initialized=1;
  libswd_log(libswdctx, LIBSWD_LOGLEVEL_DEBUG,
-            "LIBSWD_D: libswd_dap_setup(*libswdctx=%p) execution OK.\n",
+            "LIBSWD_D: libswd_dap_init(*libswdctx=%p) execution OK.\n",
             (void*)libswdctx );
  return LIBSWD_OK;
-libswd_dap_setup_error:
+libswd_dap_init_error:
  libswd_log(libswdctx, LIBSWD_LOGLEVEL_ERROR,
-            "LIBSWD_E: libswd_dap_setup(): Cannot setup SW-DAP (%s)!\n",
+            "LIBSWD_E: libswd_dap_init(): Cannot setup SW-DAP (%s)!\n",
              libswd_error_string(res) );
  return res;
 }
@@ -642,22 +642,22 @@ libswd_dap_setup_error:
  * \param *libswdctx swd context to work on.
  * \return LIBSWD_OK on success or LIBSWD_ERROR code on failure.
  */
-int libswd_memap_setup(libswd_ctx_t *libswdctx){
+int libswd_memap_init(libswd_ctx_t *libswdctx){
  libswd_log(libswdctx, LIBSWD_LOGLEVEL_DEBUG,
-            "LIBSWD_D: libswd_memap_setup(*libswdctx=%p) entering function...\n",
+            "LIBSWD_D: libswd_memap_init(*libswdctx=%p) entering function...\n",
             (void*)libswdctx );
  if (libswdctx==NULL) return LIBSWD_ERROR_NULLCONTEXT;
  int res, *memapidr, *memapbase, *memapcsw; 
  // Setup Debug Access Port first.
- res=libswd_dap_setup(libswdctx);
- if (res<0) goto libswd_memap_setup_error;
+ res=libswd_dap_init(libswdctx);
+ if (res<0) goto libswd_memap_init_error;
  // Check IDentification Register, use cached value if possible.
  if (!libswdctx->log.memap.idr)
  {
   res=libswd_ap_read(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_IDR_ADDR, &memapidr);
-  if (res<0) goto libswd_memap_setup_error;
+  if (res<0) goto libswd_memap_init_error;
   libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO,
-             "LIBSWD_I: libswd_memap_setup(): Read MEM-AP IDR=0x%08X\n",
+             "LIBSWD_I: libswd_memap_init(): Read MEM-AP IDR=0x%08X\n",
              *memapidr );
   libswdctx->log.memap.idr=*memapidr;
  }
@@ -665,9 +665,9 @@ int libswd_memap_setup(libswd_ctx_t *libswdctx){
  if (!libswdctx->log.memap.base)
  {
   res=libswd_ap_read(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_BASE_ADDR, &memapbase);
-  if (res<0) goto libswd_memap_setup_error;
+  if (res<0) goto libswd_memap_init_error;
   libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO,
-             "LIBSWD_I: libswd_memap_setup(): Read MEM-AP BASE=0x%08X\n",
+             "LIBSWD_I: libswd_memap_init(): Read MEM-AP BASE=0x%08X\n",
              *memapbase );
   libswdctx->log.memap.base=*memapbase;
  }
@@ -675,9 +675,9 @@ int libswd_memap_setup(libswd_ctx_t *libswdctx){
  if (!libswdctx->log.memap.base)
  {
   res=libswd_ap_read(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_BASE_ADDR, &memapbase);
-  if (res<0) goto libswd_memap_setup_error;
+  if (res<0) goto libswd_memap_init_error;
   libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO,
-             "LIBSWD_I: libswd_memap_setup(): Read MEM-AP BASE=0x%08X\n",
+             "LIBSWD_I: libswd_memap_init(): Read MEM-AP BASE=0x%08X\n",
              *memapbase );
   libswdctx->log.memap.base=*memapbase;
  }
@@ -687,37 +687,37 @@ int libswd_memap_setup(libswd_ctx_t *libswdctx){
  if (!libswdctx->log.memap.csw)
  {
   res=libswd_ap_read(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_CSW_ADDR, &memapcsw); 
-  if (res<0) goto libswd_memap_setup_error;
+  if (res<0) goto libswd_memap_init_error;
   libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO,
-             "LIBSWD_I: libswd_memap_setup(): Read MEM-AP CSW=0x%08X\n",
+             "LIBSWD_I: libswd_memap_init(): Read MEM-AP CSW=0x%08X\n",
              *memapcsw);
   libswdctx->log.memap.csw=*memapcsw; 
  }
  // Check if DeviceEN bit in CSW is set. 
  if (!libswdctx->log.memap.csw&LIBSWD_MEMAP_CSW_DEVICEEN)
   libswd_log(libswdctx, LIBSWD_LOGLEVEL_WARNING,
-             "LIBSWD_W: libswd_memap_setup(): MEM-AP:CSW[DeviceEN] bit is not set! Using MEM-AP may fail!\n",
+             "LIBSWD_W: libswd_memap_init(): MEM-AP:CSW[DeviceEN] bit is not set! Using MEM-AP may fail!\n",
              *memapcsw);
  // Check if DbgSwEnable bit is set, set if necessary.
  if (!libswdctx->log.memap.csw&LIBSWD_MEMAP_CSW_DBGSWENABLE)
  {
   *memapcsw=libswdctx->log.memap.csw|LIBSWD_MEMAP_CSW_DBGSWENABLE;
   res=libswd_ap_write(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_CSW_ADDR, memapcsw);
-  if (res<0) goto libswd_memap_setup_error;
+  if (res<0) goto libswd_memap_init_error;
   libswdctx->log.memap.csw=*memapcsw;
   libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO,
-             "LIBSWD_I: libswd_memap_setup(): Read MEM-AP CSW=0x%08X\n",
+             "LIBSWD_I: libswd_memap_init(): Read MEM-AP CSW=0x%08X\n",
              *memapcsw);
  }
  // Mark MEM-AP as configured in cache.
- libswdctx->log.memap.issetup=1;
+ libswdctx->log.memap.initialized=1;
  libswd_log(libswdctx, LIBSWD_LOGLEVEL_DEBUG,
-            "LIBSWD_D: libswd_memap_setup(*libswdctx=%p) execution OK.\n",
+            "LIBSWD_D: libswd_memap_init(*libswdctx=%p) execution OK.\n",
             (void*)libswdctx );
  return LIBSWD_OK;
-libswd_memap_setup_error:
+libswd_memap_init_error:
  libswd_log(libswdctx, LIBSWD_LOGLEVEL_ERROR,
-            "LIBSWD_E: libswd_memap_setup(): Cannot setup MEM-AP (%s)!\n",
+            "LIBSWD_E: libswd_memap_init(): Cannot setup MEM-AP (%s)!\n",
             libswd_error_string(res) );
  return res;
 }
@@ -738,7 +738,7 @@ int libswd_memap_read(libswd_ctx_t *libswdctx, libswd_operation_t operation, int
  int i, res, *memapcsw, *memaptar, *memapdrw;
 
  // Initialize the DAP (System and Debug powerup).
- if (!libswdctx->log.memap.issetup) res=libswd_memap_setup(libswdctx);
+ if (!libswdctx->log.memap.initialized) res=libswd_memap_init(libswdctx);
  if (res<0) goto libswd_memap_read_error;
 
  // Pass address to TAR register.
