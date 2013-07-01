@@ -385,8 +385,8 @@ int libswd_dp_write(libswd_ctx_t *libswdctx, libswd_operation_t operation, char 
  * \param addr is the target AP register address, bank will be calculated based on this value.
  * \return number of cmdq operations on success, or LIBSWD_ERROR code on failure.
  */
-int libswd_ap_bank_select(libswd_ctx_t *libswdctx, libswd_operation_t operation, int apbank){
- libswd_log(libswdctx, LIBSWD_LOGLEVEL_DEBUG, "LIBSWD_D: libswd_ap_bank_select(*libswdctx=%p, operation=%s, apbank=0x%02X) entering function...\n", (void*)libswdctx, libswd_operation_string(operation), apbank);
+int libswd_ap_bank_select(libswd_ctx_t *libswdctx, libswd_operation_t operation, int addr){
+ libswd_log(libswdctx, LIBSWD_LOGLEVEL_DEBUG, "LIBSWD_D: libswd_ap_bank_select(*libswdctx=%p, operation=%s, addr=0x%02X) entering function...\n", (void*)libswdctx, libswd_operation_string(operation), addr);
 
  // If the correct AP bank is already selected no need to change it.
  // Verify against cached DP SELECT register value.
@@ -394,12 +394,12 @@ int libswd_ap_bank_select(libswd_ctx_t *libswdctx, libswd_operation_t operation,
  int retval;
  int new_select=libswdctx->log.dp.select;
  new_select&= ~LIBSWD_DP_SELECT_APBANKSEL;
- new_select|= apbank&0x00F0; 
+ new_select|= addr&0x00F0; 
  retval=libswd_dp_write(libswdctx, operation, LIBSWD_DP_SELECT_ADDR, &new_select);
  if (retval<0){
-  libswd_log(libswdctx, LIBSWD_LOGLEVEL_WARNING, "libswd_ap_bank_select(%p, %0x02X): cannot update DP SELECT register (%s)\n", (void*)libswdctx, apbank, libswd_error_string(retval));
+  libswd_log(libswdctx, LIBSWD_LOGLEVEL_WARNING, "libswd_ap_bank_select(%p, %0x02X): cannot update DP SELECT register (%s)\n", (void*)libswdctx, addr, libswd_error_string(retval));
  } else libswdctx->log.dp.select=new_select;
- libswd_log(libswdctx, LIBSWD_LOGLEVEL_DEBUG, "LIBSWD_D: libswd_ap_bank_select(*libswdctx=%p, operation=%s, apbank=0x%02X) execution OK.\n", (void*)libswdctx, libswd_operation_string(operation), apbank);
+ libswd_log(libswdctx, LIBSWD_LOGLEVEL_DEBUG, "LIBSWD_D: libswd_ap_bank_select(*libswdctx=%p, operation=%s, addr=0x%02X) execution OK.\n", (void*)libswdctx, libswd_operation_string(operation), addr);
  return retval;
 }
 
