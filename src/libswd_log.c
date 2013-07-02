@@ -160,7 +160,7 @@ const char *libswd_request_string(libswd_ctx_t *libswdctx, char request){
  int addr=0;
  addr|=((request&LIBSWD_REQUEST_A3)?1<<3:0);
  addr|=((request&LIBSWD_REQUEST_A2)?1<<2:0);
- addr|=(libswdctx->log.dp.select&LIBSWD_DP_SELECT_APBANKSEL);
+ if (apndp) addr|=(libswdctx->log.dp.select&LIBSWD_DP_SELECT_APBANKSEL);
  int rnw=request&LIBSWD_REQUEST_RnW;
  int parity=request&LIBSWD_REQUEST_PARITY;
 
