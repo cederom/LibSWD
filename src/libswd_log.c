@@ -147,6 +147,7 @@ const char *libswd_operation_string(libswd_operation_t operation){
 } 
 
 /** Helper function that can print name of the request fields.
+ * DP SELECT APBANKSEL fields are also taken into account here for APACC.
  * \param libswdctx points to the swd context and its necessary to know 
     DP SELECT register value as it determines CTRL/STAT or WCR access.
  * \param RnW is the read/write bit of the request packet.
@@ -156,7 +157,10 @@ const char *libswd_operation_string(libswd_operation_t operation){
 const char *libswd_request_string(libswd_ctx_t *libswdctx, char request){
  static char string[100], tmp[8]; string[0]=0;
  int apndp=request&LIBSWD_REQUEST_APnDP;
- int addr=((request&LIBSWD_REQUEST_A3)?1<<3:0)|((request&LIBSWD_REQUEST_A2)?1<<2:0);
+ int addr=0;
+ addr|=((request&LIBSWD_REQUEST_A3)?1<<3:0);
+ addr|=((request&LIBSWD_REQUEST_A2)?1<<2:0);
+ addr|=(libswdctx->log.dp.select&LIBSWD_DP_SELECT_APBANKSEL);
  int rnw=request&LIBSWD_REQUEST_RnW;
  int parity=request&LIBSWD_REQUEST_PARITY;
 
