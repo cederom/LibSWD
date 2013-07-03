@@ -193,16 +193,21 @@ int libswd_drv_transmit(libswd_ctx_t *libswdctx, libswd_cmd_t *cmd){
     break;
    default:
     libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO,
-      "LIBSWD_I: libswd_drv_transmit(libswdctx=@%p, cmd=@%p): UnknownACK/ProtocolErrorSequence! DAP Stall / Power Off?\n",
+      "LIBSWD_I: libswd_drv_transmit(libswdctx=@%p, cmd=@%p): UnknownACK/ProtocolErrorSequence! Target Powered Off?\n",
       (void*)libswdctx, (void*)cmd );
     errcode=LIBSWD_ERROR_ACKUNKNOWN;
   }
   // If libswdctx.config.autofixerrors is not set, on error truncate cmdq, append+execute dummy data phase, then let caller handle situation.
   // The reason for clearing out the queue is to preserve synchronization with Target.
+  // As data phase is required in some situations and data are already enqueued use data pointers not to crash applications that rely on that poiters...
   if (!libswdctx->config.autofixerrors){
    libswd_log(libswdctx, LIBSWD_LOGLEVEL_DEBUG,
      "LIBSWD_D: libswd_drv_transmit(libswdctx=@%p, cmd=@%p): ACK!=OK, clearing cmdq tail to preserve synchronization...\n",
      (void*)libswdctx, (void*)cmd );
+   // Save DATA and PARITY queue elements for ACK={WAIT,FAULT} as they may be referenced by application.
+   if (errcode==LIBSWD_ERROR_ACK_WAIT || errcode==LIBSWD_ERROR_ACK_FAULT)
+    if (cmd->next) if(cmd->next->next) cmd=cmd->next->next;
+   // Now free the queue tail.
    if (libswd_cmdq_free_tail(cmd)<0) {
     libswd_log(libswdctx, LIBSWD_LOGLEVEL_WARNING,
       "LIBSWD_W: libswd_drv_transmit(libswdctx=@%p, cmd=@%p): Cannot free cmdq tail in ACK error handling routine, Protocol Error Sequence imminent...\n",
