@@ -629,7 +629,7 @@ int libswd_dap_init(libswd_ctx_t *libswdctx){
  if (res<0) goto libswd_dap_init_error;
  libswdctx->log.dp.ctrlstat=*dpctrlstatp;
  libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO,
-           "LIBSWD_I: libswd_dap_init(): DP CTRL/STAT=0x%08X\n", libswdctx->log.dp.ctrlstat);
+           "LIBSWD_I:   libswd_dap_init(): DP CTRL/STAT=0x%08X\n", libswdctx->log.dp.ctrlstat);
  libswd_log(libswdctx, LIBSWD_LOGLEVEL_DEBUG,
             "LIBSWD_D: libswd_dap_init(*libswdctx=%p) execution OK.\n",
             (void*)libswdctx );
@@ -661,7 +661,7 @@ int libswd_memap_init(libswd_ctx_t *libswdctx){
   res=libswd_ap_read(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_IDR_ADDR, &memapidr);
   if (res<0) goto libswd_memap_init_error;
   libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO,
-             "LIBSWD_I: libswd_memap_init(): Read MEM-AP IDR=0x%08X\n",
+             "LIBSWD_I: libswd_memap_init(): MEM-AP   IDR=0x%08X\n",
              *memapidr );
   libswdctx->log.memap.idr=*memapidr;
  }
@@ -671,17 +671,7 @@ int libswd_memap_init(libswd_ctx_t *libswdctx){
   res=libswd_ap_read(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_BASE_ADDR, &memapbase);
   if (res<0) goto libswd_memap_init_error;
   libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO,
-             "LIBSWD_I: libswd_memap_init(): Read MEM-AP BASE=0x%08X\n",
-             *memapbase );
-  libswdctx->log.memap.base=*memapbase;
- }
- // Check ROM Table, use cached value if possible.
- if (!libswdctx->log.memap.base)
- {
-  res=libswd_ap_read(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_BASE_ADDR, &memapbase);
-  if (res<0) goto libswd_memap_init_error;
-  libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO,
-             "LIBSWD_I: libswd_memap_init(): Read MEM-AP BASE=0x%08X\n",
+             "LIBSWD_I: libswd_memap_init(): MEM-AP  BASE=0x%08X\n",
              *memapbase );
   libswdctx->log.memap.base=*memapbase;
  }
@@ -693,7 +683,7 @@ int libswd_memap_init(libswd_ctx_t *libswdctx){
   res=libswd_ap_read(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_CSW_ADDR, &memapcsw); 
   if (res<0) goto libswd_memap_init_error;
   libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO,
-             "LIBSWD_I: libswd_memap_init(): Read MEM-AP CSW=0x%08X\n",
+             "LIBSWD_I: libswd_memap_init(): MEM-AP   CSW=0x%08X\n",
              *memapcsw);
   libswdctx->log.memap.csw=*memapcsw; 
  }
@@ -713,7 +703,7 @@ int libswd_memap_init(libswd_ctx_t *libswdctx){
              "LIBSWD_I: libswd_memap_init(): Read MEM-AP CSW=0x%08X\n",
              *memapcsw);
  }
- // Mark MEM-AP as configured in cache.
+ // Mark MEM-AP as configured.
  libswdctx->log.memap.initialized=1;
  libswd_log(libswdctx, LIBSWD_LOGLEVEL_DEBUG,
             "LIBSWD_D: libswd_memap_init(*libswdctx=%p) execution OK.\n",
