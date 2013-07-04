@@ -209,21 +209,6 @@ int libswd_cli(libswd_ctx_t *libswdctx, char *command)
       }
      } else count=4;
      addrstop=addrstart+count;
-     // Parse count parameter for MEM-AP operation.
-     if (command)
-     {
-      cmd=strsep(&command," ");
-      errno=LIBSWD_OK;
-      count=strtol(cmd, (char**)NULL, 16); 
-      if (errno!=LIBSWD_OK || count<=0)
-      {
-       libswd_log(libswdctx, LIBSWD_LOGLEVEL_WARNING,
-                  "LIBSWD_W: libswd_cli(): Bad 'count' value (0x%X -> 0x04).\n",
-                  count);
-       count=4;
-      }
-     } else count=4;
-     addrstop=addrstart+count;
      // Parse filename parameter for MEM-AP operation.
      if (command && ap=='m')
      {
