@@ -218,23 +218,20 @@ int libswd_cli(libswd_ctx_t *libswdctx, char *command)
      // Take care of proper memory (re)allocation.
      if (ap=='m' && (libswdctx->membuf.size<count) )
      {
-      char *membuf;
-      membuf=(char*)libswdctx->membuf.data;
-      if (membuf) free(membuf);
-      membuf=(char*)calloc(count,sizeof(char));
-      if (!membuf)
+      if (libswdctx->membuf.data) free(libswdctx->membuf.data);
+      libswdctx->membuf.data=(char*)calloc(count,sizeof(char));
+      if (!libswdctx->membuf.data)
       {
        libswdctx->membuf.size=0;
        libswd_log(libswdctx, LIBSWD_ERROR_OUTOFMEM, 
                   "LIBSWD_E: libswd_cli(): Cannot (re)allocate memory buffer!\n");
        return LIBSWD_ERROR_OUTOFMEM;
       }
-      libswdctx->membuf.data=membuf;
       libswdctx->membuf.size=count*sizeof(char);
      } 
      retval=libswd_memap_read(libswdctx, LIBSWD_OPERATION_EXECUTE,
                               addrstart, count,
-                              (int**)&libswdctx->membuf.data);
+                              (char**)&libswdctx->membuf.data);
      if (retval<0) goto libswd_cli_error;
      // Store result to a file if requested.
      if (filename)
