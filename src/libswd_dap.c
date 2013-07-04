@@ -491,12 +491,11 @@ int libswd_ap_read(libswd_ctx_t *libswdctx, libswd_operation_t operation, char a
     if (res<0) continue;
     res=libswd_bus_read_data_p(libswdctx, LIBSWD_OPERATION_EXECUTE, data, &parity);
     if (res<0) continue;
-    res=libswd_dp_read(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_DP_RDBUFF_ADDR, data);
-    if (res<0) continue;
     break;
    }
    if (retry==0) return LIBSWD_ERROR_MAXRETRY;
   }
+  res=libswd_dp_read(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_DP_RDBUFF_ADDR, data);
   if (res<0) {
    libswd_log(libswdctx, LIBSWD_LOGLEVEL_ERROR, "LIBSWD_E: libswd_ap_read(libswdctx=@%p, operation=%s, addr=0x%X, **data=0x%X/%s) failed: %s.\n", (void*)libswdctx, libswd_operation_string(operation), addr, **data, libswd_bin32_string(*data), libswd_error_string(res));
    return res;
