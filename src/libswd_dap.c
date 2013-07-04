@@ -729,23 +729,31 @@ int libswd_memap_read(libswd_ctx_t *libswdctx, libswd_operation_t operation, int
  if (operation!=LIBSWD_OPERATION_ENQUEUE && operation!=LIBSWD_OPERATION_EXECUTE)
   return LIBSWD_ERROR_BADOPCODE;
 
- int i, res, *memapcsw, *memaptar, *memapdrw;
+ int i, loc, res, *memapcsw, *memaptar, *memapdrw;
 
  // Initialize the DAP (System and Debug powerup).
  if (!libswdctx->log.memap.initialized) res=libswd_memap_init(libswdctx);
  if (res<0) goto libswd_memap_read_error;
 
- // Pass address to TAR register.
- res=libswd_ap_write(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_TAR_ADDR, &addr);
- if (res<0) goto libswd_memap_read_error;
- libswdctx->log.memap.tar=addr;
- // Read data from DRW register.
- // DOES NOT RETURN VALID DATA! WHY?
- res=libswd_ap_read(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_DRW_ADDR, &memapdrw);
- if (res<0) goto libswd_memap_read_error;
- res=libswd_ap_read(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_DRW_ADDR, &memapdrw);
- if (res<0) goto libswd_memap_read_error;
-printf("MEM-AP DRW: 0x%08X\n", *memapdrw);
+ for (i=0;i<=count/4;i++)
+ {
+  loc=addr+i;
+  libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL, "LIBSWD_N: libswd_memap_read() reading address 0x%08X\r", addr+i*4);
+  fflush();
+  // Pass address to TAR register.
+  res=libswd_ap_write(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_TAR_ADDR, &loc);
+  if (res<0) goto libswd_memap_read_error;
+  libswdctx->log.memap.tar=loc;
+  // Read data from DRW register.
+  res=libswd_ap_read(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_DRW_ADDR, &memapdrw);
+  if (res<0) goto libswd_memap_read_error;
+  libswdctx->log.memap.drw=*memapdrw;
+  //printf("MEM-AP[addr=0x%08X] DRWptr=0x%08X, DRWcache=0x%08X\n", loc, *memapdrw, libswdctx->log.memap.drw);
+  data[0][4*i+0]=(char)(*memapdrw);
+  data[0][4*i+1]=(char)(*memapdrw>>8);
+  data[0][4*i+2]=(char)(*memapdrw>>16);
+  data[0][4*i+3]=(char)(*memapdrw>>24);
+ }
 
  libswd_log(libswdctx, LIBSWD_LOGLEVEL_DEBUG, "LIBSWD_D: libswd_memap_read(*libswdctx=%p, operation=%s, addr=0x%08X, count=0x%08X, **data=%p) execution OK...\n", (void*)libswdctx, libswd_operation_string(operation), addr, count, (void**)data); 
  return LIBSWD_OK;
