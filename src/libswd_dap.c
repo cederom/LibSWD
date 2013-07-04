@@ -263,7 +263,7 @@ int libswd_dp_read(libswd_ctx_t *libswdctx, libswd_operation_t operation, char a
    //We got ACK==WAIT, retry last transfer until success or failure.
    int retry, ctrlstat, abort;
    for (retry=LIBSWD_RETRY_COUNT_DEFAULT; retry>0; retry--){
-    abort=0xFFFFFFFF;
+    abort=0xFFFFFFFE;
     res=libswd_dap_errors_handle(libswdctx, LIBSWD_OPERATION_EXECUTE, &ctrlstat, &abort); 
     if (res<0) continue;
     res=libswd_bus_write_request_raw(libswdctx, LIBSWD_OPERATION_ENQUEUE, &request);
