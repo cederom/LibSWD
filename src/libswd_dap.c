@@ -387,10 +387,11 @@ int libswd_dp_write(libswd_ctx_t *libswdctx, libswd_operation_t operation, char 
  */
 int libswd_ap_bank_select(libswd_ctx_t *libswdctx, libswd_operation_t operation, int addr){
  libswd_log(libswdctx, LIBSWD_LOGLEVEL_DEBUG, "LIBSWD_D: libswd_ap_bank_select(*libswdctx=%p, operation=%s, addr=0x%02X) entering function...\n", (void*)libswdctx, libswd_operation_string(operation), addr);
-
  // If the correct AP bank is already selected no need to change it.
  // Verify against cached DP SELECT register value.
  // Unfortunately SELECT register is read only so we need to work on cached values...
+ if ( (libswdctx->log.dp.select&LIBSWD_DP_SELECT_APBANKSEL)==(addr&LIBSWD_DP_SELECT_APBANKSEL) ) return LIBSWD_OK;
+ // If the cached value of APBANKSEL is different from addr, set it up.
  int retval;
  int new_select=libswdctx->log.dp.select;
  new_select&= ~LIBSWD_DP_SELECT_APBANKSEL;
