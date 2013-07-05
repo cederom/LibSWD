@@ -259,10 +259,14 @@ int libswd_cli(libswd_ctx_t *libswdctx, char *command)
       }
      }
      // Print out the result.
-     for (i=0; i<libswdctx->membuf.size; i++)
+     for (i=0; i<libswdctx->membuf.size; i=i+16)
      {
-      if (!(i%16)) printf("\n%08X: ", i);
-      printf("%02X ", (unsigned char)libswdctx->membuf.data[i]);
+      printf("\n%08X: ", i+addrstart);
+      for (j=0;j<16&&i+j<libswdctx->membuf.size;j++) printf("%02X ", (unsigned char)libswdctx->membuf.data[i+j]);
+      if (j<16) for(;j<16;j++) printf("   ");
+      printf(" ");
+      for (j=0;j<16&&i+j<libswdctx->membuf.size;j++) printf("%c", isprint(libswdctx->membuf.data[i+j])?libswdctx->membuf.data[i+j]:'.');
+      if (j<16) for (;j<16;j++) printf(".");
      }
      printf("\n");
      break;
