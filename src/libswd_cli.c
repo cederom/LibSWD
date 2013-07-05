@@ -52,7 +52,7 @@ int libswd_cli_print_usage(libswd_ctx_t *libswdctx)
  libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL, "LIBSWD_N:  [d]etect\n");
  libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL, "LIBSWD_N:  [l]oglevel <newloglevel>\n");
  libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL, "LIBSWD_N:  [r]ead [d]ap/[a]p 0xAddress\n");
- libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL, "LIBSWD_N:  [w]rite [d]ap/[a]p 0xAddress\n");
+ libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL, "LIBSWD_N:  [w]rite [d]ap/[a]p 0xAddress 0x32BitData\n");
  libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL, "LIBSWD_N:  [r]ead [m]emap 0xAddress <0xCount>|4 <filename>\n");
  libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL, "LIBSWD_N:  [w]rite [m]emap 0xAddress 0x32BitData[]|filename\n");
  libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL, "\n");
@@ -241,16 +241,22 @@ int libswd_cli(libswd_ctx_t *libswdctx, char *command)
       if (!fp)
       {
        libswd_log(libswdctx, LIBSWD_LOGLEVEL_WARNING,
-                  "LIBSWD_W: libswd_cli(): Cannot open '%s' resul file!\n",
-                  filename);
+                  "LIBSWD_W: libswd_cli(): Cannot open '%s' data file!\n",
+                  filename, strerror(errno) );
        break;
       }
       retval=fwrite(libswdctx->membuf.data, sizeof(char), count, fp);
-      fclose(fp);
       if (!retval)
        libswd_log(libswdctx, LIBSWD_LOGLEVEL_WARNING, 
-                  "LIBSWD_W: libswd_cli(): Cannot write result to file '%s'!\n",
-                  filename);
+                  "LIBSWD_W: libswd_cli(): Cannot write to data file '%s' (%s)!\n",
+                  filename, strerror(errno) );
+      retval=fclose(fp);
+      if (retval)
+      {
+       libswd_log(libswdctx, LIBSWD_LOGLEVEL_WARNING, 
+                  "LIBSWD_W: libswd_cli(): Cannot close data file '%s' (%s)!\n",
+                  filename, strerror(errno) );
+      }
      }
      // Print out the result.
      for (i=0; i<libswdctx->membuf.size; i++)
