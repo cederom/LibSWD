@@ -84,6 +84,7 @@ char *libswd_error_string(libswd_error_code_t error){
   case LIBSWD_ERROR_UNHANDLED:    return "[LIBSWD_ERROR_UNHANDLED] cannot handle that error automatically";
   case LIBSWD_ERROR_MAXRETRY:     return "[LIBSWD_ERROR_MAXRETRY] maximum retry count exceeded";
   case LIBSWD_ERROR_CLISYNTAX:    return "[LIBSWD_ERROR_CLISYNTAX] CLI syntax error, see '?' for help";
+  case LIBSWD_ERROR_FILE:         return "[LIBSWD_ERROR_FILE] file I/O related problem";
   default:                        return "undefined error";
  }
  return "undefined error";
