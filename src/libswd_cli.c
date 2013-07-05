@@ -75,8 +75,8 @@ int libswd_cli(libswd_ctx_t *libswdctx, char *command)
  if (libswdctx==NULL) return LIBSWD_ERROR_NULLCONTEXT;
  if (command==NULL) return LIBSWD_ERROR_NULLPOINTER;
 
- int retval, addrstart, addrstop, count, *data32, i, j;
- char *cmd, ap, *filename;
+ int res, retval, addrstart, addrstop, count, data, *data32, i, j;
+ char *cmd, ap, *filename, *endptr;
 
  while ( cmd=strsep(&command," ") )
  {
@@ -281,7 +281,144 @@ int libswd_cli(libswd_ctx_t *libswdctx, char *command)
   // Check for WRITE invocation.
   else if ( strncmp(cmd,"w",1)==0 || strncmp(cmd,"write",5)==0 )
   {
-   printf("LIBSWD WRITE not yet implemented, stay tuned :-)\n");
+   // Parse access port name parameter.
+   cmd=strsep(&command," ");
+   if (!cmd) goto libswd_cli_syntaxerror;
+   if ( strncmp(cmd,"d",1)==0 || strncmp(cmd,"dap",3)==0 )
+   {
+    ap='d';
+   }
+   else if ( strncmp(cmd,"a",1)==0 || strncmp(cmd,"ap",2)==0 )
+   {
+    ap='a';
+   }
+   else if ( strncmp(cmd,"m",1)==0 || strncmp(cmd,"memap",5)==0 )
+   {
+    ap='m';
+   } else goto libswd_cli_syntaxerror;
+   // Parse address parameter.
+   cmd=strsep(&command," ");
+   if (!cmd) goto libswd_cli_syntaxerror;
+   errno=LIBSWD_OK;
+   addrstart=strtol(cmd, (char**)NULL, 16);
+   if (errno!=LIBSWD_OK) goto libswd_cli_syntaxerror;
+   // Parse integer (DP/AP) or filename (MEM-AP).
+   cmd=strsep(&command," ");
+   if (!cmd) goto libswd_cli_syntaxerror;
+   errno=LIBSWD_OK;
+   data=strtol(cmd, &endptr, 0);
+   if (errno!=LIBSWD_OK && (ap=='d' || ap=='a')) goto libswd_cli_syntaxerror;
+   filename=*endptr?cmd:NULL;
+   // Perform operations on a given access port.
+   switch (ap)
+   {
+    case 'd':
+     retval=libswd_dp_write(libswdctx, LIBSWD_OPERATION_EXECUTE,
+                           addrstart, &data );
+     if (retval<0) goto libswd_cli_error;
+     libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL,
+                "LIBSWD_N: DP[0x%08X]=0x%08X\n",
+                addrstart, data );
+     break;
+    case 'a':
+     retval=libswd_ap_write(libswdctx, LIBSWD_OPERATION_EXECUTE,
+                           addrstart, &data );
+     if (retval<0) goto libswd_cli_error;
+     libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL,
+                "LIBSWD_N: AP[0x%08X]=0x%08X\n",
+                addrstart, data );
+     break;
+    case 'm':
+     // Load data into libswdctx->membuf, either from a file or commandline...
+     // See if filename was given, if so load data from a file.
+     if (filename)
+     {
+      res=LIBSWD_OK;
+      FILE *fp;
+      fp=fopen(filename,"r");
+      if (!fp)
+      {
+       libswd_log(libswdctx, LIBSWD_LOGLEVEL_ERROR,
+                  "LIBSWD_E: libswd_cli(): Cannot open '%s' data file (%s), aborting!\n",
+                  filename, strerror(errno));
+       return LIBSWD_ERROR_FILE;
+      }
+      // Take care of (re)allocating memory for membuf based on a file size.
+      if (libswdctx->membuf.size) free(libswdctx->membuf.data);
+      fseek(fp, 0, SEEK_END);
+      libswdctx->membuf.size=ftell(fp);
+      libswdctx->membuf.data=(char*)malloc(libswdctx->membuf.size*sizeof(char));
+      fseek(fp, 0, SEEK_SET);
+      if (!libswdctx->membuf.data)
+      {
+       libswd_log(libswdctx, LIBSWD_LOGLEVEL_ERROR,
+                  "LIBSWD_E: libswd_cli(): Cannot allocate memory to load '%s' file, aborting!\n",
+                  filename );
+       res=LIBSWD_ERROR_OUTOFMEM;
+       goto libswd_cli_write_memap_file_load_error;
+      }
+      // Load file content into memory.
+      retval=fread(libswdctx->membuf.data, sizeof(char), libswdctx->membuf.size, fp);
+      if (!retval)
+      {
+       libswd_log(libswdctx, LIBSWD_LOGLEVEL_WARNING, 
+                  "LIBSWD_E: libswd_cli(): Cannot load data from '%s' file (%s), aborting!\n",
+                  filename, strerror(errno) );
+       res=LIBSWD_ERROR_FILE;
+       goto libswd_cli_write_memap_file_load_error;
+      }
+libswd_cli_write_memap_file_load_error:
+      retval=fclose(fp);
+      if (retval)
+      {
+       libswd_log(libswdctx, LIBSWD_LOGLEVEL_WARNING, 
+                  "LIBSWD_E: libswd_cli(): Cannot close data file '%s' (%s), aborting!\n",
+                  filename, strerror(errno) );
+       return LIBSWD_ERROR_FILE;
+      }
+      if (res!=LIBSWD_OK) return res;
+libswd_cli_write_memap_file_load_ok:
+      libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO,
+                 "LIBSWD_I: libswd_cli(): %d bytes of data from '%s' file loaded!\n",
+                 libswdctx->membuf.size, filename );
+     }
+     // Otherwise try to load data from a commandline parameter list.
+     else
+     {
+       cmd=strsep(&command," ");
+       errno=LIBSWD_OK;
+       count=strtol(cmd, (char**)NULL, 16); 
+       if (errno!=LIBSWD_OK || count<=0)
+       {
+        libswd_log(libswdctx, LIBSWD_LOGLEVEL_WARNING,
+                   "LIBSWD_W: libswd_cli(): Bad 'count' value (0x%X -> 0x04).\n",
+                   count);
+        count=4;
+       }
+     }
+    // At this point data are in membuf, sent them to MEM-AP.
+//    retval=libswd_memap_write(libswdctx, LIBSWD_OPERATION_EXECUTE,
+//                              addrstart, count,
+//                              (char**)&libswdctx->membuf.data);
+//     if (retval<0) goto libswd_cli_error;
+     // Print out the data.
+     for (i=0; i<libswdctx->membuf.size; i=i+16)
+     {
+      printf("\n%08X: ", i+addrstart);
+      for (j=0;j<16&&i+j<libswdctx->membuf.size;j++) printf("%02X ", (unsigned char)libswdctx->membuf.data[i+j]);
+      if (j<16) for(;j<16;j++) printf("   ");
+      printf(" ");
+      for (j=0;j<16&&i+j<libswdctx->membuf.size;j++) printf("%c", isprint(libswdctx->membuf.data[i+j])?libswdctx->membuf.data[i+j]:'.');
+      if (j<16) for (;j<16;j++) printf(".");
+     }
+     printf("\n");
+     break;
+    default:
+     libswd_log(libswdctx, LIBSWD_LOGLEVEL_ERROR,
+                "LIBSWD_E: libswd_cli(): Unknown Access Port given!\n");
+     goto libswd_cli_syntaxerror;
+   }
+   //TODO! MAKE MEMORY BUFFER SIZE ALIGNED!!!
    continue;
   }
 
