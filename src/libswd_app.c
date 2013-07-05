@@ -205,7 +205,7 @@ printf("Interface cmdparam: %s\n", optarg);
   if (!strncmp(cmd,"h",1) || !strncmp(cmd,"help",4) || !strncmp(cmd,"?",1))
    libswdapp_print_usage();
   retval=libswd_cli(libswdappctx->libswdctx, cmd);
-  if (retval!=LIBSWD_OK) if (retval!=LIBSWD_ERROR_CLISYNTAX) goto quit; 
+  //if (retval!=LIBSWD_OK) if (retval!=LIBSWD_ERROR_CLISYNTAX) goto quit; 
  }
 
  /* Cleanup and quit. */
