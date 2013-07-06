@@ -172,7 +172,7 @@ int libswd_cli(libswd_ctx_t *libswdctx, char *command)
    cmd=strsep(&command," ");
    if (!cmd) goto libswd_cli_syntaxerror;
    errno=LIBSWD_OK;
-   addrstart=strtol(cmd, (char**)NULL, 16);
+   addrstart=strtol(cmd, (char**)NULL, 0);
    if (errno!=LIBSWD_OK) goto libswd_cli_syntaxerror;
    // Perform operations on a given access port.
    switch (ap)
@@ -199,7 +199,7 @@ int libswd_cli(libswd_ctx_t *libswdctx, char *command)
      {
       cmd=strsep(&command," ");
       errno=LIBSWD_OK;
-      count=strtol(cmd, (char**)NULL, 16); 
+      count=strtol(cmd, (char**)NULL, 0); 
       if (errno!=LIBSWD_OK || count<=0)
       {
        libswd_log(libswdctx, LIBSWD_LOGLEVEL_WARNING,
@@ -300,7 +300,7 @@ int libswd_cli(libswd_ctx_t *libswdctx, char *command)
    cmd=strsep(&command," ");
    if (!cmd) goto libswd_cli_syntaxerror;
    errno=LIBSWD_OK;
-   addrstart=strtol(cmd, (char**)NULL, 16);
+   addrstart=strtol(cmd, (char**)NULL, 0);
    if (errno!=LIBSWD_OK) goto libswd_cli_syntaxerror;
    // Parse integer (DP/AP) or filename (MEM-AP).
    cmd=strsep(&command," ");
