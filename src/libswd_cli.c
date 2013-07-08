@@ -437,11 +437,11 @@ libswd_cli_write_memap_file_load_ok:
                  "LIBSWD_I: libswd_cli(): %d bytes of data from '%s' file loaded!\n",
                  libswdctx->membuf.size, filename );
      }
-    // At this point data are in membuf, sent them to MEM-AP.
-//    retval=libswd_memap_write(libswdctx, LIBSWD_OPERATION_EXECUTE,
-//                              addrstart, count,
-//                              (char**)&libswdctx->membuf.data);
-//     if (retval<0) goto libswd_cli_error;
+     // At this point data are in membuf, sent them to MEM-AP.
+     retval=libswd_memap_write(libswdctx, LIBSWD_OPERATION_EXECUTE,
+                               addrstart, count,
+                               (char*)libswdctx->membuf.data);
+     if (retval<0) goto libswd_cli_error;
      // Print out the data.
      for (i=0; i<libswdctx->membuf.size; i=i+16)
      {
