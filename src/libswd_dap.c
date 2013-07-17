@@ -222,6 +222,8 @@ int libswd_dap_detect(libswd_ctx_t *libswdctx, libswd_operation_t operation, int
  * \return Target's IDCODE, or LIBSWD_ERROR_CODE on failure.
  */ 
 int libswd_dap_init(libswd_ctx_t *libswdctx, libswd_operation_t operation, int **idcode){
+ if (!libswdctx) return LIBSWD_ERROR_NULLCONTEXT;
+ if (!idcode) return LIBSWD_ERROR_NULLPOINTER;
  int res;
  res=libswd_dap_detect(libswdctx, operation, idcode);
  if (res<0) return res;

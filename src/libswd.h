@@ -768,6 +768,8 @@ extern int libswd_drv_miso_32(libswd_ctx_t *libswdctx, libswd_cmd_t *cmd, int *d
 extern int libswd_drv_mosi_trn(libswd_ctx_t *libswdctx, int clks);
 extern int libswd_drv_miso_trn(libswd_ctx_t *libswdctx, int clks);
 
+int libswd_dap_init(libswd_ctx_t *libswdctx, libswd_operation_t operation, int **idcode);
+int libswd_dap_setup(libswd_ctx_t *libswdctx, libswd_operation_t operation, int *dpabort, int *dpctrlstat);
 int libswd_dap_reset(libswd_ctx_t *libswdctx, libswd_operation_t operation);
 int libswd_dap_select(libswd_ctx_t *libswdctx, libswd_operation_t operation);
 int libswd_dap_detect(libswd_ctx_t *libswdctx, libswd_operation_t operation, int **idcode);
