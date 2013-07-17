@@ -147,8 +147,112 @@ static const libswdapp_interface_config_t libswdapp_interface_configs[] = {
   .sigsetupstr = "signal add:CLK=0x0001 add:MOSI=0x0002 add:MISO=0x0004 add:TMS=0x0008 add:nSWDsel=0x0020 add:SRSTin=0x0040 add:RTCK=0x0080 add:TRST=0x0100 add:SRST=0x0200 add:nTRSTen=0x0400 add:nSRSTen=0x0800 add:RnW=0x1000 add:nMOSIen=0x2000 add:nCLKen=0x4000 add:LED=0x8000 CLK=lo MOSI=lo SRST=hi nCLKen=lo nSWDsel=lo RnW=lo nSRSTen=lo LED=lo MISO SRSTin RTCK",
  },
  {
-   .name = NULL,
+   .name = '\0',
  }
+};
+
+typedef struct libswdapp_flash_stm32f1_memmap
+{
+ int page_start;
+ int page_size;
+ int page_end;
+ int system_memory_start;
+ int system_memory_size;
+ int option_bytes_start;
+ int option_bytes_size;
+ int FLASH_ACR_ADDR;
+ int FLASH_KEYR_ADDR;
+ int FLASH_OPTKEYR_ADDR;
+ int FLASH_SR_ADDR;
+ int FLASH_CR_ADDR;
+ int FLASH_AR_ADDR;
+ int FLASH_OBR_ADDR;
+ int FLASH_WRPR_ADDR;
+ int idcode[];
+} libswdapp_flash_stm32f1_memmap_t;
+
+static const libswdapp_flash_stm32f1_memmap_t libswdapp_flash_stm321f_lowdensity = {
+ .page_start          = 0x08000000,
+ .page_size           = 0x000003FF,
+ .page_end            = 0x08007FFF,
+ .system_memory_start = 0x1FFFF000,
+ .system_memory_size  = 0x000007FF,
+ .option_bytes_start  = 0x1FFFF800,
+ .option_bytes_size   = 0x0000000F,
+ .FLASH_ACR_ADDR      = 0x40022000,
+ .FLASH_KEYR_ADDR     = 0x40022004,
+ .FLASH_OPTKEYR_ADDR  = 0x40022008,
+ .FLASH_SR_ADDR       = 0x4002200C,
+ .FLASH_CR_ADDR       = 0x40022010,
+ .FLASH_AR_ADDR       = 0x40022014,
+ .FLASH_OBR_ADDR      = 0x4002201C,
+ .FLASH_WRPR_ADDR     = 0x40022020,
+ .idcode              = 0
+};
+
+static const libswdapp_flash_stm32f1_memmap_t libswdapp_flash_stm321f_mediumdensity = {
+ .page_start          = 0x08000000,
+ .page_size           = 0x000003FF,
+ .page_end            = 0x0801FFFF,
+ .system_memory_start = 0x1FFFF000,
+ .system_memory_size  = 0x000007FF,
+ .option_bytes_start  = 0x1FFFF800,
+ .option_bytes_size   = 0x0000000F,
+ .FLASH_ACR_ADDR      = 0x40022000,
+ .FLASH_KEYR_ADDR     = 0x40022004,
+ .FLASH_OPTKEYR_ADDR  = 0x40022008,
+ .FLASH_SR_ADDR       = 0x4002200C,
+ .FLASH_CR_ADDR       = 0x40022010,
+ .FLASH_AR_ADDR       = 0x40022014,
+ .FLASH_OBR_ADDR      = 0x4002201C,
+ .FLASH_WRPR_ADDR     = 0x40022020,
+ .idcode              = 0
+};
+
+static const libswdapp_flash_stm32f1_memmap_t libswdapp_flash_stm321f_highdensity = {
+ .page_start          = 0x08000000,
+ .page_size           = 0x000007FF,
+ .page_end            = 0x0807FFFF,
+ .system_memory_start = 0x1FFFF000,
+ .system_memory_size  = 0x000007FF,
+ .option_bytes_start  = 0x1FFFF800,
+ .option_bytes_size   = 0x0000000F,
+ .FLASH_ACR_ADDR      = 0x40022000,
+ .FLASH_KEYR_ADDR     = 0x40022004,
+ .FLASH_OPTKEYR_ADDR  = 0x40022008,
+ .FLASH_SR_ADDR       = 0x4002200C,
+ .FLASH_CR_ADDR       = 0x40022010,
+ .FLASH_AR_ADDR       = 0x40022014,
+ .FLASH_OBR_ADDR      = 0x4002201C,
+ .FLASH_WRPR_ADDR     = 0x40022020,
+ .idcode              = {0x1BA01477,0}
+};
+
+static const libswdapp_flash_stm32f1_memmap_t libswdapp_flash_stm321f_connectivityline = {
+ .page_start          = 0x08000000,
+ .page_size           = 0x000007FF,
+ .page_end            = 0x0803FFFF,
+ .system_memory_start = 0x1FFFB000,
+ .system_memory_size  = 0x000047FF,
+ .option_bytes_start  = 0x1FFFF800,
+ .option_bytes_size   = 0x0000000F,
+ .FLASH_ACR_ADDR      = 0x40022000,
+ .FLASH_KEYR_ADDR     = 0x40022004,
+ .FLASH_OPTKEYR_ADDR  = 0x40022008,
+ .FLASH_SR_ADDR       = 0x4002200C,
+ .FLASH_CR_ADDR       = 0x40022010,
+ .FLASH_AR_ADDR       = 0x40022014,
+ .FLASH_OBR_ADDR      = 0x4002201C,
+ .FLASH_WRPR_ADDR     = 0x40022020,
+ .idcode              = 0
+};
+
+static const libswdapp_flash_stm32f1_memmap_t *libswdapp_flash_stm32f1_devices[] = {
+ &libswdapp_flash_stm321f_lowdensity,
+ &libswdapp_flash_stm321f_mediumdensity,
+ &libswdapp_flash_stm321f_highdensity,
+ &libswdapp_flash_stm321f_connectivityline,
+ NULL 
 };
 
 #endif
