@@ -894,8 +894,9 @@ int libswdapp_interface_transfer_bits(libswdapp_context_t *libswdappctx, int bit
   bytes_written = ftdi_write_data(libswdappctx->interface->ftdictx, buf, bytes+3);
   if (bytes_written<0 || bytes_written!=(bytes+3))
   {
-   printf("ERROR: libswdapp_interface_transfer_bits(): ft2232_write() returns %d\n", bytes_written);
-   return ;
+   // TODO: LibFTDI transfer failed, try to know why!
+   printf("ERROR: libswdapp_interface_transfer_bits(): ft2232_write() returns %d not %d!\n", bytes_written, bytes+3);
+   return LIBSWD_ERROR_DRIVER;
   }
   // This retry is necessary because sometimes FTDI Chip returns 0 bytes.
   for (retry=0;retry<LIBSWD_RETRY_COUNT_DEFAULT;retry++)
