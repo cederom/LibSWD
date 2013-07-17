@@ -62,6 +62,7 @@ int libswd_dap_reset(libswd_ctx_t *libswdctx, libswd_operation_t operation){
   return LIBSWD_ERROR_BADOPCODE;  
 
  int res, qcmdcnt=0, tcmdcnt=0;
+ libswdctx->log.memap.initialized=0;
  res=libswd_bus_setdir_mosi(libswdctx);
  if (res<0) return res;
  res=libswd_cmd_enqueue_mosi_dap_reset(libswdctx);
@@ -212,6 +213,23 @@ int libswd_dap_detect(libswd_ctx_t *libswdctx, libswd_operation_t operation, int
  if (res<0) return res;
  return LIBSWD_OK;
 }
+
+/** Macro: DAP INIT (Reset DAP, select SW-DP, read out IDCODE, Setup DAP).
+ * This is the full initialization and setup of the SW-DP.
+ * It may come handy to bring DAP to a known state on error/stall etc.
+ * \param *libswdctx swd context pointer.
+ * \param operation type (LIBSWD_OPERATION_ENQUEUE or LIBSWD_OPERATION_EXECUTE).
+ * \return Target's IDCODE, or LIBSWD_ERROR_CODE on failure.
+ */ 
+int libswd_dap_init(libswd_ctx_t *libswdctx, libswd_operation_t operation, int **idcode){
+ int res;
+ res=libswd_dap_detect(libswdctx, operation, idcode);
+ if (res<0) return res;
+ res=libswd_dap_setup(libswdctx, operation, NULL, NULL);
+ if (res<0) return res;
+ return LIBSWD_OK;
+}
+
 
 /** Macro: Generic read of the DP register.
  * When operation is LIBSWD_OPERATION_EXECUTE it also caches register values.
@@ -579,64 +597,78 @@ int libswd_ap_write(libswd_ctx_t *libswdctx, libswd_operation_t operation, char 
 } 
 
 
-/** Initialize the DAP.
+/** Setup the DAP. Terget CTRL/STAT 
+ * This function will:
+ * 1. Clear errors by writing to DP ABORT, 2. Power up the System and Debug
+ * by writing to DP CTRL/STAT, 3. Set the desired DP CTRL/STAT value.
  * \param *libswdctx swd context to work on.
+ * \param *dpabort write only value to store in DP ABORT if not NULL.
+ * \param *dpctrlstat desired DP CTRL/STAT value if not NULL.
  * \return LIBSWD_OK on success or LIBSWD_ERROR code on failure.
  */
-int libswd_dap_init(libswd_ctx_t *libswdctx){
+int libswd_dap_setup(libswd_ctx_t *libswdctx, libswd_operation_t operation, int *dpabort, int *dpctrlstat){
  libswd_log(libswdctx, LIBSWD_LOGLEVEL_DEBUG,
-            "LIBSWD_D: libswd_dap_init(*libswdctx=%p) entring function...\n",
+            "LIBSWD_D: libswd_dap_setup(*libswdctx=%p) entring function...\n",
             (void*)libswdctx );
  if (libswdctx==NULL) return LIBSWD_ERROR_NULLCONTEXT;
- int i, res, dpctrlstat, *dpctrlstatp, dpabort;
- // Check if there are any errors to handle first.
- dpabort=0xFFFFFFFE;
- res=libswd_dap_errors_handle(libswdctx, LIBSWD_OPERATION_EXECUTE, &dpctrlstat, &dpabort);
- libswdctx->log.dp.ctrlstat=dpctrlstat;
- if (res<0) goto libswd_dap_init_error;
- // Select MEM-AP.
- res=libswd_ap_select(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_APSEL_VAL);
- if (res<0) goto libswd_dap_init_error;
- // Activate System and Debug Unit power domains if not already active.
- if ( !(dpctrlstat&LIBSWD_DP_CTRLSTAT_CDBGPWRUPACK && dpctrlstat|LIBSWD_DP_CTRLSTAT_CSYSPWRUPACK) )
+ int i, res, dpabortval, dpctrlstatval, *dpctrlstatp;
+ // Handle errors first by writing to DP ABORT.
+ if (!dpabort)
  {
-  dpctrlstat=libswdctx->log.dp.ctrlstat|LIBSWD_DP_CTRLSTAT_CDBGPWRUPREQ|LIBSWD_DP_CTRLSTAT_CSYSPWRUPREQ;
-  res=libswd_dp_write(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_DP_CTRLSTAT_ADDR, &dpctrlstat);
-  if (res<0) goto libswd_dap_init_error;
+  // If we got NULL then clear all error flags, except ABORT.
+  dpabortval=0xFFFFFFFE;
+ } else dpabortval=(*dpabort);
+ // This will write DP ABORT and read out the DP CTRL/STAT registers.
+ res=libswd_dap_errors_handle(libswdctx, operation, &dpctrlstatval, &dpabortval);
+ if (res<0) goto libswd_dap_setup_error;
+ libswdctx->log.dp.ctrlstat=dpctrlstatval;
+ libswdctx->log.dp.abort=dpabortval;
+ libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO,
+           "LIBSWD_I: libswd_dap_setup(): DP CTRL/STAT=0x%08X\nLIBSWD_I: libswd_dap_setup(): DP ABORT=0x%08X\n",
+           libswdctx->log.dp.ctrlstat, libswdctx->log.dp.abort );
+ // Activate System and Debug Unit power domains if not already active.
+ if ( !(libswdctx->log.dp.ctrlstat&LIBSWD_DP_CTRLSTAT_CDBGPWRUPACK && libswdctx->log.dp.ctrlstat|LIBSWD_DP_CTRLSTAT_CSYSPWRUPACK) )
+ {
+  dpctrlstatval=libswdctx->log.dp.ctrlstat|LIBSWD_DP_CTRLSTAT_CDBGPWRUPREQ|LIBSWD_DP_CTRLSTAT_CSYSPWRUPREQ;
+  res=libswd_dp_write(libswdctx, operation, LIBSWD_DP_CTRLSTAT_ADDR, &dpctrlstatval);
+  if (res<0) goto libswd_dap_setup_error;
+  libswdctx->log.dp.ctrlstat=dpctrlstatval;
   // Wait for System and Debug Unit powerup.
   for (i=0;i<LIBSWD_RETRY_COUNT_DEFAULT;i++)
   {
-   res=libswd_dp_read(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_DP_CTRLSTAT_ADDR, &dpctrlstatp); 
-   if (res<0) goto libswd_dap_init_error;
+   res=libswd_dp_read(libswdctx, operation, LIBSWD_DP_CTRLSTAT_ADDR, &dpctrlstatp); 
+   if (res<0) goto libswd_dap_setup_error;
    if (*dpctrlstatp&(LIBSWD_DP_CTRLSTAT_CDBGPWRUPACK|LIBSWD_DP_CTRLSTAT_CSYSPWRUPACK)) break;
-   usleep(100);
+   usleep(LIBSWD_RETRY_DELAY_DEFAULT);
   }
-  if (!(*dpctrlstatp&LIBSWD_DP_CTRLSTAT_CDBGPWRUPACK))
+  libswdctx->log.dp.ctrlstat=*dpctrlstatp;
+  if (!(libswdctx->log.dp.ctrlstat&LIBSWD_DP_CTRLSTAT_CDBGPWRUPACK))
    libswd_log(libswdctx, LIBSWD_LOGLEVEL_WARNING,
-              "LIBSWD_W: libswd_dap_init(): DP CTRL/STAT CDBGPWRUPACK not set!\n");
-  if (!(*dpctrlstatp&LIBSWD_DP_CTRLSTAT_CSYSPWRUPACK))
+              "LIBSWD_W: libswd_dap_setup(): DP CTRL/STAT CDBGPWRUPACK not set!\n");
+  if (!(libswdctx->log.dp.ctrlstat&LIBSWD_DP_CTRLSTAT_CSYSPWRUPACK))
    libswd_log(libswdctx, LIBSWD_LOGLEVEL_WARNING,
-              "LIBSWD_W: libswd_dap_init(): DP CTRL/STAT CSYSPWRUPACK not set!\n");
+              "LIBSWD_W: libswd_dap_setup(): DP CTRL/STAT CSYSPWRUPACK not set!\n");
  } else libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO,
-                   "LIBSWD_I: libswd_dap_init(): CDBGPWRUP and CSYSPWRUP already set!\n");
- // Enable Overrun detection and set valid TRNMODE.
- dpctrlstat=libswdctx->log.dp.ctrlstat;
- dpctrlstat|=LIBSWD_DP_CTRLSTAT_ORUNDETECT;
- dpctrlstat&=~LIBSWD_DP_CTRLSTAT_TRNMODE;
- res=libswd_dp_write(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_DP_CTRLSTAT_ADDR, &dpctrlstat);
- if (res<0) goto libswd_dap_init_error;
- res=libswd_dp_read(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_DP_CTRLSTAT_ADDR, &dpctrlstatp); 
- if (res<0) goto libswd_dap_init_error;
- libswdctx->log.dp.ctrlstat=*dpctrlstatp;
- libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO,
-           "LIBSWD_I:   libswd_dap_init(): DP CTRL/STAT=0x%08X\n", libswdctx->log.dp.ctrlstat);
+                   "LIBSWD_I: libswd_dap_setup(): CDBGPWRUP and CSYSPWRUP already set!\n");
+ // Set desired CTRL/STAT value and read the register back if dpctrlstat!=NULL.
+ // Warning: This can also disable the Debug unit that was just enabled!
+ if (dpctrlstat)
+ {
+  res=libswd_dp_write(libswdctx, operation, LIBSWD_DP_CTRLSTAT_ADDR, dpctrlstat);
+  if (res<0) goto libswd_dap_setup_error;
+  res=libswd_dp_read(libswdctx, operation, LIBSWD_DP_CTRLSTAT_ADDR, &dpctrlstat);
+  if (res<0) goto libswd_dap_setup_error;
+  libswdctx->log.dp.ctrlstat=*dpctrlstat;
+  libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO,
+           "LIBSWD_I: libswd_dap_setup(): DP CTRL/STAT=0x%08X\n", libswdctx->log.dp.ctrlstat);
+ }
  libswd_log(libswdctx, LIBSWD_LOGLEVEL_DEBUG,
-            "LIBSWD_D: libswd_dap_init(*libswdctx=%p) execution OK.\n",
+            "LIBSWD_D: libswd_dap_setup(*libswdctx=%p) execution OK.\n",
             (void*)libswdctx );
  return LIBSWD_OK;
-libswd_dap_init_error:
+libswd_dap_setup_error:
  libswd_log(libswdctx, LIBSWD_LOGLEVEL_ERROR,
-            "LIBSWD_E: libswd_dap_init(): Cannot setup SW-DAP (%s)!\n",
+            "LIBSWD_E: libswd_dap_setup(): Cannot setup SW-DAP (%s)!\n",
              libswd_error_string(res) );
  return res;
 }
@@ -646,19 +678,27 @@ libswd_dap_init_error:
  * \param *libswdctx swd context to work on.
  * \return LIBSWD_OK on success or LIBSWD_ERROR code on failure.
  */
-int libswd_memap_init(libswd_ctx_t *libswdctx){
+int libswd_memap_init(libswd_ctx_t *libswdctx, libswd_operation_t operation){
  libswd_log(libswdctx, LIBSWD_LOGLEVEL_DEBUG,
             "LIBSWD_D: libswd_memap_init(*libswdctx=%p) entering function...\n",
             (void*)libswdctx );
  if (libswdctx==NULL) return LIBSWD_ERROR_NULLCONTEXT;
- int res, *memapidr, *memapbase, *memapcsw; 
+ int res, *memapidr, *memapbase, *memapcsw, dpabort, dpctrlstat; 
  // Setup Debug Access Port first.
- res=libswd_dap_init(libswdctx);
+ dpabort=0xFFFFFFFF;
+ dpctrlstat=0xF0000001;
+ res=libswd_dap_setup(libswdctx, operation, &dpabort, &dpctrlstat);
  if (res<0) goto libswd_memap_init_error;
+ dpctrlstat=libswdctx->log.dp.ctrlstat|LIBSWD_DP_CTRLSTAT_ORUNDETECT;
+ res=libswd_dap_setup(libswdctx, operation, NULL, &dpctrlstat);
+ if (res<0) goto libswd_memap_init_error;
+ // Select MEM-AP.
+ res=libswd_ap_select(libswdctx, operation, LIBSWD_MEMAP_APSEL_VAL);  
+ if (res<0) goto libswd_memap_init_error; 
  // Check IDentification Register, use cached value if possible.
  if (!libswdctx->log.memap.idr)
  {
-  res=libswd_ap_read(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_IDR_ADDR, &memapidr);
+  res=libswd_ap_read(libswdctx, operation, LIBSWD_MEMAP_IDR_ADDR, &memapidr);
   if (res<0) goto libswd_memap_init_error;
   libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO,
              "LIBSWD_I: libswd_memap_init(): MEM-AP   IDR=0x%08X\n",
@@ -668,7 +708,7 @@ int libswd_memap_init(libswd_ctx_t *libswdctx){
  // Check Debug BASE Address Register, use chached value if possible.
  if (!libswdctx->log.memap.base)
  {
-  res=libswd_ap_read(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_BASE_ADDR, &memapbase);
+  res=libswd_ap_read(libswdctx, operation, LIBSWD_MEMAP_BASE_ADDR, &memapbase);
   if (res<0) goto libswd_memap_init_error;
   libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO,
              "LIBSWD_I: libswd_memap_init(): MEM-AP  BASE=0x%08X\n",
@@ -680,7 +720,7 @@ int libswd_memap_init(libswd_ctx_t *libswdctx){
  // Read the CSW register if we don't have it yet.
  if (!libswdctx->log.memap.csw)
  {
-  res=libswd_ap_read(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_CSW_ADDR, &memapcsw); 
+  res=libswd_ap_read(libswdctx, operation, LIBSWD_MEMAP_CSW_ADDR, &memapcsw); 
   if (res<0) goto libswd_memap_init_error;
   libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO,
              "LIBSWD_I: libswd_memap_init(): MEM-AP   CSW=0x%08X\n",
@@ -696,7 +736,7 @@ int libswd_memap_init(libswd_ctx_t *libswdctx){
  if (!libswdctx->log.memap.csw&LIBSWD_MEMAP_CSW_DBGSWENABLE)
  {
   *memapcsw=libswdctx->log.memap.csw|LIBSWD_MEMAP_CSW_DBGSWENABLE;
-  res=libswd_ap_write(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_CSW_ADDR, memapcsw);
+  res=libswd_ap_write(libswdctx, operation, LIBSWD_MEMAP_CSW_ADDR, memapcsw);
   if (res<0) goto libswd_memap_init_error;
   libswdctx->log.memap.csw=*memapcsw;
   libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO,
@@ -732,7 +772,7 @@ int libswd_memap_read(libswd_ctx_t *libswdctx, libswd_operation_t operation, int
  int i, loc, res, *memapcsw, *memaptar, *memapdrw;
 
  // Initialize the DAP (System and Debug powerup).
- if (!libswdctx->log.memap.initialized) res=libswd_memap_init(libswdctx);
+ if (!libswdctx->log.memap.initialized) res=libswd_memap_init(libswdctx, operation);
  if (res<0) goto libswd_memap_read_error;
 
  for (i=0;i<=count/4;i++)
@@ -781,7 +821,7 @@ int libswd_memap_write(libswd_ctx_t *libswdctx, libswd_operation_t operation, in
  int i, loc, res, *memapcsw, *memaptar, *memapdrw;
 
  // Initialize the DAP (System and Debug powerup).
- if (!libswdctx->log.memap.initialized) res=libswd_memap_init(libswdctx);
+ if (!libswdctx->log.memap.initialized) res=libswd_memap_init(libswdctx, operation);
  if (res<0) goto libswd_memap_write_error;
 
  for (i=0;i<=count/4;i++)

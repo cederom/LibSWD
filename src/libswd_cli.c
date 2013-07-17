@@ -133,19 +133,21 @@ int libswd_cli(libswd_ctx_t *libswdctx, char *command)
   }
 
   // Check for DETECT invocation.
+  // Detect command will call libswd_dap_setup that will also setup DAP.
+  // This is important as this will also remove any pending error condition.
   else if ( strncmp(cmd,"d",1)==0 || strncmp(cmd,"detect",6)==0 )
   {
    int *idcode;
-   retval=libswd_dap_detect(libswdctx, LIBSWD_OPERATION_EXECUTE, &idcode);
+   retval=libswd_dap_init(libswdctx, LIBSWD_OPERATION_EXECUTE, &idcode);
    if (retval<0)
    {
     libswd_log(libswdctx, LIBSWD_LOGLEVEL_ERROR,
-               "LIBSWD_E: libswd_cli(): Cannot read IDCODE! %s.\n",
+               "LIBSWD_E: libswd_cli(): Cannot Setup DAP! %s.\n",
                libswd_error_string(retval) ); 
     libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL,
-               "LIBSWD_N: libswd_cli(): IDCODE READ ERROR!\n" );
+               "LIBSWD_N: libswd_cli(): DAP SETUP ERROR!\n" );
    } else libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL,
-                     "LIBSWD_N: IDCODE=0x%08X/%s\n",
+                     "LIBSWD_N: DAP SETUP OK, IDCODE=0x%08X/%s\n",
                      *idcode, libswd_bin32_string(idcode) );
    continue;
   }
