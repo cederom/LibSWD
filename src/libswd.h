@@ -702,6 +702,93 @@ typedef struct {
  } qlog;
 } libswd_ctx_t;
 
+/** ARM CoreSight Debug defines. **/
+
+typedef struct libswd_arm_romtable_register {
+ const int address;
+ const char name[16];
+ const int default_value;
+ int value;
+} libswd_arm_romtable_register_t;
+
+static const libswd_arm_romtable_register_t libswd_arm_debug_CortexM3_ROMtable_PeripheralID[] = {
+ { .address=0xE00FFFD0, .name="Peripheral ID4", .default_value=0x00000004 }, 
+ { .address=0xE00FFFD4, .name="Peripheral ID5", .default_value=0x00000000 },
+ { .address=0xE00FFFD8, .name="Peripheral ID6", .default_value=0x00000000 },
+ { .address=0xE00FFFDC, .name="Peripheral ID7", .default_value=0x00000000 },
+ { .address=0xE00FFFE0, .name="Peripheral ID0", .default_value=0x000000C3 },
+ { .address=0xE00FFFE4, .name="Peripheral ID1", .default_value=0x000000B4 },
+ { .address=0xE00FFFE8, .name="Peripheral ID2", .default_value=0x0000000B },
+ { .address=0xE00FFFEC, .name="Peripheral ID3", .default_value=0x00000000 },
+};
+
+static const libswd_arm_romtable_register_t libswd_arm_debug_CortexM3_ROMtable_ComponentID[] = {
+ { .address=0xE00FFFF0, .name="Component ID0", .default_value=0x0000000D },
+ { .address=0xE00FFFF4, .name="Component ID1", .default_value=0x00000010 },
+ { .address=0xE00FFFF8, .name="Component ID2", .default_value=0x00000005 },
+ { .address=0xE00FFFFC, .name="Component ID3", .default_value=0x000000B1 },
+};
+
+static const libswd_arm_romtable_register_t libswd_arm_debug_CortexM3_Components[] = {
+ { .address=0xE00FF000, .name="SCS", .default_value=0xFFF0F003 },
+ { .address=0xE00FF004, .name="DWT", .default_value=0xFFF02003 },
+ { .address=0xE00FF008, .name="FPB", .default_value=0xFFF03003 },
+ { .address=0xE00FF00C, .name="ITM", .default_value=0xFFF01003 },
+ { .address=0xE00FF010, .name="TPIU", .default_value=0xFFF41003 },
+ { .address=0xE00FF014, .name="ETM", .default_value=0xFFF42003 },
+ { .address=0xE00FF018, .name="End marker", .default_value=0x00000000 },
+ { .address=0xE00FFFCC, .name="SYSTEM ACCESS", .default_value=0x00000001 },
+};
+
+static const libswd_arm_romtable_register_t libswd_arm_debug_CortexM3_SCS_PeripheralID[] = {
+ { .address=0xE000EFD0, .name="Peripheral ID4", .default_value=0x00000004 }, 
+ { .address=0xE000EFE0, .name="Peripheral ID0", .default_value=0x00000000 },
+ { .address=0xE000EFE4, .name="Peripheral ID1", .default_value=0x000000B0 },
+ { .address=0xE000EFE8, .name="Peripheral ID2", .default_value=0x0000000B },
+ { .address=0xE000EFEC, .name="Peripheral ID3", .default_value=0x00000000 },
+};
+
+static const libswd_arm_romtable_register_t libswd_arm_debug_CortexM3_SCS_ComponentID[] = {
+ { .address=0xE000EFF0, .name="Component ID0", .default_value=0x0000000D },
+ { .address=0xE000EFF4, .name="Component ID1", .default_value=0x000000E0 },
+ { .address=0xE000EFF8, .name="Component ID2", .default_value=0x00000005 },
+ { .address=0xE000EFFC, .name="Component ID3", .default_value=0x000000B1 },
+};
+
+#define LIBSWD_ARM_DEBUG_DFSR_ADDR   0xE000ED30 
+#define LIBSWD_ARM_DEBUG_DHCSR_ADDR  0xE000EDF0 
+#define LIBSWD_ARM_DEBUG_DCRSR_ADDR  0xE000EDF4 
+#define LIBSWD_ARM_DEBUG_DCRDR_ADDR  0xE000EDF8 
+#define LIBSWD_ARM_DEBUG_DEMCR_ADDR  0xE000EDFC 
+
+#define LIBSWD_ARM_DEBUG_DHCSR_DBGKEY_BITNUM     16
+#define LIBSWD_ARM_DEBUG_DHCSR_DBGKEY_VAL        0xA05F /* Remember to write this key every time DHCSR is written. */
+#define LIBSWD_ARM_DEBUG_DHCSR_SRESETST_BITNUM   25
+#define LIBSWD_ARM_DEBUG_DHCSR_SRETIREST_BITNUM  24
+#define LIBSWD_ARM_DEBUG_DHCSR_SLOCKUP_BITNUM    19
+#define LIBSWD_ARM_DEBUG_DHCSR_SSLEEP_BITNUM     18
+#define LIBSWD_ARM_DEBUG_DHCSR_SHALT_BITNUM      17
+#define LIBSWD_ARM_DEBUG_DHCSR_SREGRDY_BITNUM    16
+#define LIBSWD_ARM_DEBUG_DHCSR_CSNAPSTALL_BITNUM 5
+#define LIBSWD_ARM_DEBUG_DHCSR_CMASKINTS_BITNUM  3
+#define LIBSWD_ARM_DEBUG_DHCSR_CSTEP_BITNUM      2
+#define LIBSWD_ARM_DEBUG_DHCSR_CHALT_BITNUM      1
+#define LIBSWD_ARM_DEBUG_DHCSR_CDEBUGEN_BITNUM   0
+#define LIBSWD_ARM_DEBUG_DHCSR_DBGKEY            (LIBSWD_ARM_DEBUG_DHCSR_DBGKEY_VAL << LIBSWD_ARM_DEBUG_DHCSR_DBGKEY_BITNUM)
+#define LIBSWD_ARM_DEBUG_DHCSR_SRESETST          (1 << LIBSWD_ARM_DEBUG_DHCSR_SRESETST_BITNUM)
+#define LIBSWD_ARM_DEBUG_DHCSR_SRETIREST         (1 << LIBSWD_ARM_DEBUG_DHCSR_SRETIREST_BITNUM)
+#define LIBSWD_ARM_DEBUG_DHCSR_SLOCKUP           (1 << LIBSWD_ARM_DEBUG_DHCSR_SLOCKUP_BITNUM)
+#define LIBSWD_ARM_DEBUG_DHCSR_SSLEEP            (1 << LIBSWD_ARM_DEBUG_DHCSR_SSLEEP_BITNUM)
+#define LIBSWD_ARM_DEBUG_DHCSR_SHALT             (1 << LIBSWD_ARM_DEBUG_DHCSR_SHALT_BITNUM)
+#define LIBSWD_ARM_DEBUG_DHCSR_SREGRDY           (1 << LIBSWD_ARM_DEBUG_DHCSR_SREGRDY_BITNUM)
+#define LIBSWD_ARM_DEBUG_DHCSR_CSNAPSTALL        (1 << LIBSWD_ARM_DEBUG_DHCSR_CSNAPSTALL_BITNUM)
+#define LIBSWD_ARM_DEBUG_DHCSR_CMASKINTS         (1 << LIBSWD_ARM_DEBUG_DHCRS_CMASKINTS_BITNUM)
+#define LIBSWD_ARM_DEBUG_DHCSR_CSTEP             (1 << LIBSWD_ARM_DEBUG_DHCSR_CSTEP_BITNUM)
+#define LIBSWD_ARM_DEBUG_DHCSR_CHALT             (1 << LIBSWD_ARM_DEBUG_DHCSR_CHALT_BITNUM)
+#define LIBSWD_ARM_DEBUG_DHCSR_CDEBUGEN          (1 << LIBSWD_ARM_DEBUG_DHCSR_CDEBUGEN_BITNUM)
+
+
+
 /** Some comments on the function behavior **/
 
 int libswd_bin8_parity_even(char *data, char *parity);
