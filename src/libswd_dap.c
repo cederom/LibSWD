@@ -736,15 +736,17 @@ int libswd_memap_init(libswd_ctx_t *libswdctx, libswd_operation_t operation){
              *memapcsw);
  // Check if DbgSwEnable bit is set, set if necessary.
  if (!libswdctx->log.memap.csw&LIBSWD_MEMAP_CSW_DBGSWENABLE)
- {
   *memapcsw=libswdctx->log.memap.csw|LIBSWD_MEMAP_CSW_DBGSWENABLE;
-  res=libswd_ap_write(libswdctx, operation, LIBSWD_MEMAP_CSW_ADDR, memapcsw);
-  if (res<0) goto libswd_memap_init_error;
-  libswdctx->log.memap.csw=*memapcsw;
-  libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO,
-             "LIBSWD_I: libswd_memap_init(): Read MEM-AP CSW=0x%08X\n",
-             *memapcsw);
- }
+ // Setup Word access size.
+ *memapcsw&=~LIBSWD_MEMAP_CSW_SIZE;
+ *memapcsw|=LIBSWD_MEMAP_CSW_SIZE_32BIT;
+ // Write new CSW value.
+ res=libswd_ap_write(libswdctx, operation, LIBSWD_MEMAP_CSW_ADDR, memapcsw);
+ if (res<0) goto libswd_memap_init_error;
+ libswdctx->log.memap.csw=*memapcsw;
+ libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO,
+            "LIBSWD_I: libswd_memap_init(): Read MEM-AP CSW=0x%08X\n",
+            *memapcsw);
  // Mark MEM-AP as configured.
  libswdctx->log.memap.initialized=1;
  libswd_log(libswdctx, LIBSWD_LOGLEVEL_DEBUG,
