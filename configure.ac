@@ -1,4 +1,4 @@
-AC_INIT([libswd], [master-GIT-devel], [tomek@cedro.info])
+AC_INIT([libswd], [GIT-MASTER], [tomek@cedro.info])
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_MACRO_DIR([m4])
 

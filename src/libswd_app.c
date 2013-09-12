@@ -45,6 +45,7 @@
 #include <readline/history.h>
 #include <errno.h>
 #include <signal.h>
+#include <config.h>
 
 /*******************************************************************************
  * \defgroup libswd_app LibSWD Application functions.
@@ -70,8 +71,9 @@ void libswdapp_shutdown(int sig)
 
 int libswdapp_print_banner(void){
  printf("*******************************************************************\n");
- printf("* Welcome to LibSWD CLI application! Type '?' or 'help' for help. *\n");
- printf("* See http://libswd.sf.net for more information. (C) CeDeROM 2013 *\n");
+ printf("* Welcome to LibSWD CLI Application! Type '?' or 'help' for help. *\n");
+ printf("* See project website http://libswd.sf.net for more information.. *\n");
+ printf("* (C) CeDeROM (http://www.tomek.cedro.info)   Version: %10Ls *\n", VERSION);
  printf("*******************************************************************\n\n");
  return LIBSWD_OK;
 }
