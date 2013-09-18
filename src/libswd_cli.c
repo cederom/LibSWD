@@ -151,7 +151,7 @@ int libswd_cli(libswd_ctx_t *libswdctx, char *command)
                      *idcode, libswd_bin32_string(idcode) );
    continue;
   }
-
+ 
   // Check for READ invocation.
   else if ( strncmp(cmd,"r",1)==0 || strncmp(cmd,"read",4)==0 )
   {
@@ -231,9 +231,10 @@ int libswd_cli(libswd_ctx_t *libswdctx, char *command)
       }
       libswdctx->membuf.size=count*sizeof(char);
      } 
-     retval=libswd_memap_read(libswdctx, LIBSWD_OPERATION_EXECUTE,
+     // Perform MEM-AP read.
+     retval=libswd_memap_read_char(libswdctx, LIBSWD_OPERATION_EXECUTE,
                               addrstart, count,
-                              (char**)&libswdctx->membuf.data);
+                              libswdctx->membuf.data);
      if (retval<0) goto libswd_cli_error;
      // Store result to a file if requested.
      if (filename)
@@ -440,8 +441,8 @@ libswd_cli_write_memap_file_load_ok:
                  libswdctx->membuf.size, filename );
      }
      // At this point data are in membuf, sent them to MEM-AP.
-     retval=libswd_memap_write(libswdctx, LIBSWD_OPERATION_EXECUTE,
-                               addrstart, count,
+     retval=libswd_memap_write_char(libswdctx, LIBSWD_OPERATION_EXECUTE,
+                               addrstart, libswdctx->membuf.size,
                                (char*)libswdctx->membuf.data);
      if (retval<0) goto libswd_cli_error;
      // Print out the data.

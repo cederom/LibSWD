@@ -856,20 +856,6 @@ extern int libswd_drv_miso_32(libswd_ctx_t *libswdctx, libswd_cmd_t *cmd, int *d
 extern int libswd_drv_mosi_trn(libswd_ctx_t *libswdctx, int clks);
 extern int libswd_drv_miso_trn(libswd_ctx_t *libswdctx, int clks);
 
-int libswd_dap_init(libswd_ctx_t *libswdctx, libswd_operation_t operation, int **idcode);
-int libswd_dap_setup(libswd_ctx_t *libswdctx, libswd_operation_t operation, int *dpabort, int *dpctrlstat);
-int libswd_dap_reset(libswd_ctx_t *libswdctx, libswd_operation_t operation);
-int libswd_dap_select(libswd_ctx_t *libswdctx, libswd_operation_t operation);
-int libswd_dap_detect(libswd_ctx_t *libswdctx, libswd_operation_t operation, int **idcode);
-int libswd_dap_errors_handle(libswd_ctx_t *libswdctx, libswd_operation_t operation, int *ctrlstat, int *abort);
-
-int libswd_dp_read_idcode(libswd_ctx_t *libswdctx, libswd_operation_t operation, int **idcode);
-int libswd_dp_read(libswd_ctx_t *libswdctx, libswd_operation_t operation, char addr, int **data);
-int libswd_dp_write(libswd_ctx_t *libswdctx, libswd_operation_t operation, char addr, int *data);
-int libswd_ap_read(libswd_ctx_t *libswdctx, libswd_operation_t operation, char addr, int **data);
-int libswd_ap_write(libswd_ctx_t *libswdctx, libswd_operation_t operation, char addr, int *data);
-
-int libswd_cli(libswd_ctx_t *libswdctx, char *command);
 extern int libswd_log(libswd_ctx_t *libswdctx, libswd_loglevel_t loglevel, char *msg, ...);
 int libswd_log_internal(libswd_ctx_t *libswdctx, libswd_loglevel_t loglevel, char *msg, ...);
 int libswd_log_internal_va(libswd_ctx_t *libswdctx, libswd_loglevel_t loglevel, char *msg, va_list ap);
@@ -889,5 +875,28 @@ libswd_ctx_t *libswd_init(void);
 int libswd_deinit_ctx(libswd_ctx_t *libswdctx);
 int libswd_deinit_cmdq(libswd_ctx_t *libswdctx);
 int libswd_deinit(libswd_ctx_t *libswdctx);
+
+int libswd_dp_read_idcode(libswd_ctx_t *libswdctx, libswd_operation_t operation, int **idcode);
+int libswd_dp_read(libswd_ctx_t *libswdctx, libswd_operation_t operation, char addr, int **data);
+int libswd_dp_write(libswd_ctx_t *libswdctx, libswd_operation_t operation, char addr, int *data);
+int libswd_ap_read(libswd_ctx_t *libswdctx, libswd_operation_t operation, char addr, int **data);
+int libswd_ap_write(libswd_ctx_t *libswdctx, libswd_operation_t operation, char addr, int *data);
+
+
+int libswd_dap_init(libswd_ctx_t *libswdctx, libswd_operation_t operation, int **idcode);
+int libswd_dap_setup(libswd_ctx_t *libswdctx, libswd_operation_t operation, int *dpabort, int *dpctrlstat);
+int libswd_dap_reset(libswd_ctx_t *libswdctx, libswd_operation_t operation);
+int libswd_dap_select(libswd_ctx_t *libswdctx, libswd_operation_t operation);
+int libswd_dap_detect(libswd_ctx_t *libswdctx, libswd_operation_t operation, int **idcode);
+int libswd_dap_errors_handle(libswd_ctx_t *libswdctx, libswd_operation_t operation, int *abort, int *ctrlstat);
+
+int libswd_memap_init(libswd_ctx_t *libswdctx, libswd_operation_t operation);
+int libswd_memap_setup(libswd_ctx_t *libswdctx, libswd_operation_t operation, int csw, int tar);
+int libswd_memap_read_char(libswd_ctx_t *libswdctx, libswd_operation_t operation, int addr, int count, char *data);
+int libswd_memap_read_int(libswd_ctx_t *libswdctx, libswd_operation_t operation, int addr, int count, int *data);
+int libswd_memap_write_char(libswd_ctx_t *libswdctx, libswd_operation_t operation, int addr, int count, char *data);
+int libswd_memap_write_int(libswd_ctx_t *libswdctx, libswd_operation_t operation, int addr, int count, int *data);
+
+int libswd_cli(libswd_ctx_t *libswdctx, char *command);
 
 #endif

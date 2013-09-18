@@ -16,6 +16,7 @@ libswd_la_SOURCES = \
  libswd_bin.c \
  libswd_bitgen.c \
  libswd_bus.c \
+ libswd_cli.c \
  libswd_cmd.c \
  libswd_cmdq.c \
  libswd_core.c \
@@ -23,7 +24,7 @@ libswd_la_SOURCES = \
  libswd_drv.c \
  libswd_error.c \
  libswd_log.c \
- libswd_cli.c
+ libswd_memap.c
 
 if APPLICATION
  bin_PROGRAMS = libswd
