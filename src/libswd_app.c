@@ -79,19 +79,27 @@ int libswdapp_print_banner(void){
 }
 
 int libswdapp_print_usage(void){
- printf(" LibSWD Application available options (also available via cli): \n");
- printf("  -l : Use this log level (min=0..6=max)\n");
- printf("  -q : Quiet mode, no verbose output (equals '-l 0')\n");
- printf("  -i : Interface selection (by name)\n");
- printf("  -s : Interface Signal manipulation (multiple choice)\n");
- printf("  -v : Interface VID (default 0x0403 if not specified)\n");
- printf("  -p : Interface PID (default 0xbbe2 if not specified)\n");
- printf("  -h : Display this help\n\n");
- libswdapp_handle_command_signal_usage();
- printf(" Press Ctrl+C or type [q]uit on prompt to exit LibSWD Application.\n");
+ printf(" LibSWD Application available options ('*' also available via cli): \n");
+ printf("  * -l : Use this log level (min=0..6=max)\n");
+ printf("    -q : Quiet mode, no verbose output (equals '-l 0')\n");
+ printf("    -i : Interface Driver selection (by name)\n");
+ printf("  * -s : Interface Signal manipulation (multiple choice)\n");
+ printf("    -v : Interface VID (default 0x0403 if not specified)\n");
+ printf("    -p : Interface PID (default 0xbbe2 if not specified)\n");
+ printf("  * -f : Flash Memory related operations\n");
+ printf("  * -h : Display this help\n\n");
+ // List available interface drivers.
+ int i;
+ printf(" Available Interface Drivers:\n");
+ for (i=0;libswdapp_interface_configs[i].name[0];i++)
+  printf("  %s\n", libswdapp_interface_configs[i].name);
  printf("\n");
+ libswdapp_handle_command_signal_usage();
+ printf(" Note: Parameters marked with '< >' are optional.\n");
+ printf(" Press Ctrl+C or type [q]uit on prompt to exit LibSWD Application.\n\n");
  return LIBSWD_OK;
 }
+
 
 
 /** LibSWD Application
@@ -144,7 +152,6 @@ int main(int argc, char **argv){
     break;
    case 'i':
     strncpy(libswdappctx->interface->name, optarg, LIBSWDAPP_INTERFACE_NAME_MAXLEN);
-printf("Interface cmdparam: %s\n", optarg);
     break;
    case 's':
     printf("S ARG: %s\n", optarg);
@@ -166,9 +173,7 @@ printf("Interface cmdparam: %s\n", optarg);
 
  // Initialize the Interface
  retval=libswdapp_handle_command_interface(libswdappctx, NULL);
- if (retval!=LIBSWD_OK)
-  printf("WARNING: Cannot initialize '%s' interface!\n",
-         libswdappctx->interface->name);
+ if (retval!=LIBSWD_OK) return retval;
 
  // Initialize LibSWD.
  libswdappctx->libswdctx=libswd_init();
@@ -199,11 +204,6 @@ printf("Interface cmdparam: %s\n", optarg);
    libswdapp_handle_command_signal(libswdappctx, cmd);
    continue;
   }
-  if (!strncmp(cmd,"i",1) || !strncmp(cmd,"interface",9))
-  {
-   libswdapp_handle_command_interface(libswdappctx, cmd);
-   continue;
-  }
   if (!strncmp(cmd,"h",1) || !strncmp(cmd,"help",4) || !strncmp(cmd,"?",1))
    libswdapp_print_usage();
   retval=libswd_cli(libswdappctx->libswdctx, cmd);
@@ -217,16 +217,21 @@ quit:
 }
 
 
+/******************************************************************************
+ * LibSWD APPLICATION COMMAND HANDLERS                                        *
+ ******************************************************************************/
+
+
 /** Print out the Interface Signal command usage.
  * \return Always LIBSWD_OK.
  */
 int libswdapp_handle_command_signal_usage(void){
  printf(" LibSWD Application Interface Signal ('[s]ignal') usage:\n");
- printf("  list              lists available signals and cached values\n");
- printf("  add:<name>=<mask> adds signal with given <name>\n");
- printf("  del:<name>        removes signal with given <name>\n");
- printf("  <name>=<value>    write hex <value> to given <name> signal mask\n");
- printf("  <name>            reads the <name> signal value\n");
+ printf("  list            lists available signals and cached values\n");
+ printf("  add:name=mask   adds signal with given <name>\n");
+ printf("  del:name        removes signal with given <name>\n");
+ printf("  name=value      write hex <value> to given <name> signal mask\n");
+ printf("  name            reads the <name> signal value\n");
  printf("\n");
  return LIBSWD_OK;
 }
@@ -382,37 +387,15 @@ int libswdapp_handle_command_interface(libswdapp_context_t *libswdappctx, char *
   return LIBSWD_ERROR_NULLCONTEXT;
  }
 
- // If cmd==NULL check if interface name already set, if no use default.
- if (!cmd)
+ if (!libswdappctx->interface->name[0]) 
  {
-  if (!libswdappctx->interface->name[0]) 
-  {
-   printf("INFO: Using default interface '%s'...\n", LIBSWDAPP_INTERFACE_NAME_DEFAULT);
-   strncpy(
-           libswdappctx->interface->name,
-           LIBSWDAPP_INTERFACE_NAME_DEFAULT,
-           LIBSWDAPP_INTERFACE_NAME_MAXLEN
-          );
-  }
- }
- else
- {
-  // If cmd!=NULL parse parameters: ? or copy interface name.
-  // But first make sure we have parsed the command already.
-  param=strchr(cmd,' ');
-  if (param) cmd=strncpy(cmd,param+1,LIBSWDAPP_INTERFACE_NAME_MAXLEN);
-  // Print out the list of available interfaces if asked.
-  if (strchr(cmd,'?') || strchr(cmd,'i'))
-  {
-   if (libswdappctx->interface->initialized)
-    printf("Active interface: %s\n", libswdappctx->interface->name);
-   printf("Available Interfaces:");
-   for (i=0;libswdapp_interface_configs[i].name[0];i++)
-    printf(" %s", libswdapp_interface_configs[i].name);
-   printf("\n");
-   return LIBSWD_OK;
-  } else strncpy(libswdappctx->interface->name,cmd,LIBSWDAPP_INTERFACE_NAME_MAXLEN);
- } 
+  printf("Trying the default interface '%s'...\n", LIBSWDAPP_INTERFACE_NAME_DEFAULT);
+  strncpy(
+          libswdappctx->interface->name,
+          LIBSWDAPP_INTERFACE_NAME_DEFAULT,
+          LIBSWDAPP_INTERFACE_NAME_MAXLEN
+         );
+ } else printf("Selected interface: %s\n", libswdappctx->interface->name);
 
  // At this point we have the interface name stored in the
  // libswdappctx->interface->name. See if its supported.

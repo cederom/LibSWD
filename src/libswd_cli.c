@@ -49,7 +49,7 @@ int libswd_cli_print_usage(libswd_ctx_t *libswdctx)
  if (libswdctx==NULL) return LIBSWD_ERROR_NULLPOINTER;
  libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL, "LIBSWD_N: Available LibSWD CLI commands:\n");
  libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL, "LIBSWD_N:  [h]elp / [?]\n");
- libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL, "LIBSWD_N:  [d]etect\n");
+ libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL, "LIBSWD_N:  [i]nit [target]|memap|debug\n");
  libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL, "LIBSWD_N:  [l]oglevel <newloglevel>\n");
  libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL, "LIBSWD_N:  [r]ead [d]ap/[a]p 0xAddress\n");
  libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL, "LIBSWD_N:  [w]rite [d]ap/[a]p 0xAddress 0x32BitData\n");
@@ -132,26 +132,37 @@ int libswd_cli(libswd_ctx_t *libswdctx, char *command)
    continue;
   }
 
-  // Check for DETECT invocation.
-  // Detect command will call libswd_dap_setup that will also setup DAP.
-  // This is important as this will also remove any pending error condition.
-  else if ( strncmp(cmd,"d",1)==0 || strncmp(cmd,"detect",6)==0 )
+  // Initialize Target subsystems.
+  // This will bring components into known state and remove any pending errors.
+  else if ( strncmp(cmd,"i",1)==0 || strncmp(cmd,"init",4)==0 )
   {
-   int *idcode;
-   retval=libswd_dap_init(libswdctx, LIBSWD_OPERATION_EXECUTE, &idcode);
-   if (retval<0)
+   cmd=strsep(&command," ");
+   if (!cmd || strncmp(cmd,"da",2)==0 || strncmp(cmd,"dap",3)==0 )
    {
-    libswd_log(libswdctx, LIBSWD_LOGLEVEL_ERROR,
-               "LIBSWD_E: libswd_cli(): Cannot Setup DAP! %s.\n",
-               libswd_error_string(retval) ); 
-    libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL,
-               "LIBSWD_N: libswd_cli(): DAP SETUP ERROR!\n" );
-   } else libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL,
-                     "LIBSWD_N: DAP SETUP OK, IDCODE=0x%08X/%s\n",
-                     *idcode, libswd_bin32_string(idcode) );
+    int *idcode;
+    retval=libswd_dap_init(libswdctx, LIBSWD_OPERATION_EXECUTE, &idcode);
+    if (retval<0)
+    {
+     libswd_log(libswdctx, LIBSWD_LOGLEVEL_ERROR,
+                "LIBSWD_E: libswd_cli(): Cannot Initialize DAP! (%s)\n",
+                libswd_error_string(retval) ); 
+      libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL,
+                "LIBSWD_N: libswd_cli(): DAP INIT ERROR!\n" );
+    } else libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL,
+                      "LIBSWD_N: DAP INIT OK, IDCODE=0x%08X/%s\n",
+                      *idcode, libswd_bin32_string(idcode) );
+   }
+   else if ( strncmp(cmd,"m",1)==0 || strncmp(cmd,"memap",5)==0 )
+   {
+    retval=libswd_memap_init(libswdctx, LIBSWD_OPERATION_EXECUTE);
+    if (retval<0)
+    {
+     libswd_log(libswdctx, LIBSWD_LOGLEVEL_ERROR,
+                "LIBSWD_E: libswd_cli(): MEM-AP INIT ERROR!\n");
+    }
+   }
    continue;
   }
- 
   // Check for READ invocation.
   else if ( strncmp(cmd,"r",1)==0 || strncmp(cmd,"read",4)==0 )
   {
