@@ -180,20 +180,20 @@ int libswd_drv_transmit(libswd_ctx_t *libswdctx, libswd_cmd_t *cmd){
    case LIBSWD_ACK_OK_VAL: return res;
    // For other ACK codes produce a warning and remember the code.
    case LIBSWD_ACK_FAULT_VAL:
-    libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO,
-      "LIBSWD_I: libswd_drv_transmit(libswdctx=@%p, cmd=@%p): LIBSWD_ACK_FAULT detected!\n",
+    libswd_log(libswdctx, LIBSWD_LOGLEVEL_WARNING,
+      "LIBSWD_W: libswd_drv_transmit(libswdctx=@%p, cmd=@%p): LIBSWD_ACK_FAULT detected!\n",
       (void*)libswdctx, (void*)cmd );
     errcode=LIBSWD_ERROR_ACK_FAULT;
     break;
    case LIBSWD_ACK_WAIT_VAL:
-    libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO,
-      "LIBSWD_I: libswd_drv_transmit(libswdctx=@%p, cmd=@%p): LIBSWD_ACK_WAIT detectd!\n",
+    libswd_log(libswdctx, LIBSWD_LOGLEVEL_DEBUG,
+      "LIBSWD_D: libswd_drv_transmit(libswdctx=@%p, cmd=@%p): LIBSWD_ACK_WAIT detectd!\n",
       (void*)libswdctx, (void*)cmd );
     errcode=LIBSWD_ERROR_ACK_WAIT;
     break;
    default:
-    libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO,
-      "LIBSWD_I: libswd_drv_transmit(libswdctx=@%p, cmd=@%p): UnknownACK/ProtocolErrorSequence! Target Powered Off?\n",
+    libswd_log(libswdctx, LIBSWD_LOGLEVEL_WARNING,
+      "LIBSWD_W: libswd_drv_transmit(libswdctx=@%p, cmd=@%p): UnknownACK/ProtocolErrorSequence! Target Powered Off?\n",
       (void*)libswdctx, (void*)cmd );
     errcode=LIBSWD_ERROR_ACKUNKNOWN;
   }
