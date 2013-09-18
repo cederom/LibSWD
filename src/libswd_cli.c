@@ -54,7 +54,7 @@ int libswd_cli_print_usage(libswd_ctx_t *libswdctx)
  libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL, "LIBSWD_N:  [r]ead [d]ap/[a]p 0xAddress\n");
  libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL, "LIBSWD_N:  [w]rite [d]ap/[a]p 0xAddress 0x32BitData\n");
  libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL, "LIBSWD_N:  [r]ead [m]emap 0xAddress <0xCount>|4 <filename>\n");
- libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL, "LIBSWD_N:  [w]rite [m]emap 0xAddress 0x32BitData[]|filename\n");
+ libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL, "LIBSWD_N:  [w]rite [m]emap 0xAddress 0xData[]|filename\n");
  libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL, "\n");
  return LIBSWD_OK;
 }
@@ -221,6 +221,8 @@ int libswd_cli(libswd_ctx_t *libswdctx, char *command)
        count=4;
       }
      } else count=4;
+     // Make sure count is 32-bit boundary.
+     if (count%4) count=count-(count%4);
      addrstop=addrstart+count;
      // Parse filename parameter for MEM-AP operation.
      if (command && ap=='m')
@@ -317,17 +319,17 @@ int libswd_cli(libswd_ctx_t *libswdctx, char *command)
    addrstart=strtol(cmd, (char**)NULL, 0);
    if (errno!=LIBSWD_OK) goto libswd_cli_syntaxerror;
    // At this point parse for DP/AP and MEM-AP will vary, so skip it here.
-  // Perform operations on a given access port.
+   // Perform operations on a given access port.
    switch (ap)
    {
-    case 'd'||'a':
-     // Parse integer (DP/AP) or filename (MEM-AP).
+    case 'd':
+     // Parse data parameter.
+     if (!command) goto libswd_cli_syntaxerror;
      cmd=strsep(&command," ");
      if (!cmd) goto libswd_cli_syntaxerror;
      errno=LIBSWD_OK;
      data=strtol(cmd, &endptr, 0);
      if (errno!=LIBSWD_OK) goto libswd_cli_syntaxerror;
-    case 'd':
      retval=libswd_dp_write(libswdctx, LIBSWD_OPERATION_EXECUTE,
                            addrstart, &data );
      if (retval<0) goto libswd_cli_error;
@@ -336,26 +338,37 @@ int libswd_cli(libswd_ctx_t *libswdctx, char *command)
                 addrstart, data );
      break;
     case 'a':
+     // Parse data parameter.
+     if (!command) goto libswd_cli_syntaxerror;
+     cmd=strsep(&command," ");
+     if (!cmd) goto libswd_cli_syntaxerror;
+     errno=LIBSWD_OK;
+     data=strtol(cmd, &endptr, 0);
+     if (errno!=LIBSWD_OK) goto libswd_cli_syntaxerror;
      retval=libswd_ap_write(libswdctx, LIBSWD_OPERATION_EXECUTE,
                            addrstart, &data );
      if (retval<0) goto libswd_cli_error;
+     // Read-back the register value as it may differ from original request.
+     retval=libswd_ap_read(libswdctx, LIBSWD_OPERATION_EXECUTE, addrstart, &data32);
+     if (retval<0) goto libswd_cli_error;
      libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL,
                 "LIBSWD_N: AP[0x%08X]=0x%08X\n",
-                addrstart, data );
+                addrstart, *data32 );
      break;
     case 'm':
      // First data parameter can be a number or filename.
-     if (!command) goto libswd_cli_syntaxerror;
      // If number, it will also deretmine data type (char/int).
+     // Parse data parameter.
+     if (!command) goto libswd_cli_syntaxerror;
      errno=LIBSWD_OK;
-     data=strtol(command, &endptr, 0);
+     data=strtol(cmd, &endptr, 0);
      if (!*endptr || endptr==strstr(command," "))
      {
       // 'command' variable holds the data list.
-      // First element length determines data type (char or int).
+      // First element length determines data type (char or int), variable l.
       for (l=0;command[l]&&command[l]!=' ';l++);
-      // Count the number of elements on the list.
-      j=1; for (i=1;command[i];i++) if (command[i]==' ') j++;
+      // Count the number of elements on the list, variable j.
+      j=1; for (i=0;command[i];i++) if (command[i]==' ') j++;
       if (l<1 || l>10) goto libswd_cli_syntaxerror;
       if (libswdctx->membuf.data) free(libswdctx->membuf.data);
       libswdctx->membuf.size=0;
@@ -370,7 +383,7 @@ int libswd_cli(libswd_ctx_t *libswdctx, char *command)
       // Load char type data.
       if (l<=4)
       {
-       for (i=0;i<libswdctx->membuf.size&&command;i++)
+       for (i=0;(i<libswdctx->membuf.size)&&command;i++)
        {
         cmd=strsep(&command," ");
         errno=LIBSWD_OK;
@@ -382,7 +395,7 @@ int libswd_cli(libswd_ctx_t *libswdctx, char *command)
       // Load int type data.
       else
       {
-       for (i=0;i<libswdctx->membuf.size&&command;i++)
+       for (i=0;(i<libswdctx->membuf.size/4)&&command;i++)
        {
         cmd=strsep(&command," ");
         errno=LIBSWD_OK;
