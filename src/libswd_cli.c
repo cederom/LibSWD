@@ -49,7 +49,7 @@ int libswd_cli_print_usage(libswd_ctx_t *libswdctx)
  if (libswdctx==NULL) return LIBSWD_ERROR_NULLPOINTER;
  libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL, "LIBSWD_N: Available LibSWD CLI commands:\n");
  libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL, "LIBSWD_N:  [h]elp / [?]\n");
- libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL, "LIBSWD_N:  [i]nit [target]|memap|debug\n");
+ libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL, "LIBSWD_N:  [i]nit [dap]|memap|debug\n");
  libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL, "LIBSWD_N:  [l]oglevel <newloglevel>\n");
  libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL, "LIBSWD_N:  [r]ead [d]ap/[a]p 0xAddress\n");
  libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL, "LIBSWD_N:  [w]rite [d]ap/[a]p 0xAddress 0x32BitData\n");
@@ -75,7 +75,7 @@ int libswd_cli(libswd_ctx_t *libswdctx, char *command)
  if (libswdctx==NULL) return LIBSWD_ERROR_NULLCONTEXT;
  if (command==NULL) return LIBSWD_ERROR_NULLPOINTER;
 
- int res, retval, addrstart, addrstop, count, data, *data32, i, j, k, l;
+ int res, retval, addrstart, addrstop, count, data, *data32, i, j;
  char *cmd, ap, *filename, *endptr;
 
  while ( cmd=strsep(&command," ") )
@@ -149,7 +149,7 @@ int libswd_cli(libswd_ctx_t *libswdctx, char *command)
       libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL,
                 "LIBSWD_N: libswd_cli(): DAP INIT ERROR!\n" );
     } else libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL,
-                      "LIBSWD_N: DAP INIT OK, IDCODE=0x%08X/%s\n",
+                      "LIBSWD_N: DAP INIT OK! IDCODE=0x%08X/%s\n",
                       *idcode, libswd_bin32_string(idcode) );
    }
    else if ( strncmp(cmd,"m",1)==0 || strncmp(cmd,"memap",5)==0 )
@@ -159,7 +159,8 @@ int libswd_cli(libswd_ctx_t *libswdctx, char *command)
     {
      libswd_log(libswdctx, LIBSWD_LOGLEVEL_ERROR,
                 "LIBSWD_E: libswd_cli(): MEM-AP INIT ERROR!\n");
-    }
+    } else  libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL,
+                       "LIBSWD_N: MEM-AP INIT OK!\n");
    }
    continue;
   }
@@ -212,38 +213,33 @@ int libswd_cli(libswd_ctx_t *libswdctx, char *command)
      {
       cmd=strsep(&command," ");
       errno=LIBSWD_OK;
-      count=strtol(cmd, (char**)NULL, 0); 
-      if (errno!=LIBSWD_OK || count<=0)
-      {
-       libswd_log(libswdctx, LIBSWD_LOGLEVEL_WARNING,
-                  "LIBSWD_W: libswd_cli(): Bad 'count' value (0x%X -> 0x04).\n",
-                  count);
-       count=4;
-      }
+      count=strtol(cmd, &endptr, 0); 
+      if (errno!=LIBSWD_OK || count<=0) goto libswd_cli_syntaxerror;
      } else count=4;
      // Make sure count is 32-bit boundary.
      if (count%4) count=count-(count%4);
      addrstop=addrstart+count;
      // Parse filename parameter for MEM-AP operation.
-     if (command && ap=='m')
+     if (command)
      {
       cmd=strsep(&command," ");
       filename=cmd;
      } else filename=NULL;
      // Take care of proper memory (re)allocation.
-     if (ap=='m' && (libswdctx->membuf.size<count) )
+     if (libswdctx->membuf.size<count)
      {
       if (libswdctx->membuf.data) free(libswdctx->membuf.data);
-      libswdctx->membuf.data=(char*)calloc(count,sizeof(char));
+      libswdctx->membuf.size=count*sizeof(char);
+      libswdctx->membuf.data=(char*)malloc(libswdctx->membuf.size);
       if (!libswdctx->membuf.data)
       {
        libswdctx->membuf.size=0;
        libswd_log(libswdctx, LIBSWD_ERROR_OUTOFMEM, 
                   "LIBSWD_E: libswd_cli(): Cannot (re)allocate memory buffer!\n");
-       return LIBSWD_ERROR_OUTOFMEM;
-      }
-      libswdctx->membuf.size=count*sizeof(char);
-     } 
+       retval=LIBSWD_ERROR_OUTOFMEM;
+       goto libswd_cli_error;
+      } else memset((void*)libswdctx->membuf.data, 0xFF, libswdctx->membuf.size);
+     } else libswdctx->membuf.size=count*sizeof(char); 
      // Perform MEM-AP read.
      retval=libswd_memap_read_char(libswdctx, LIBSWD_OPERATION_EXECUTE,
                               addrstart, count,
@@ -275,7 +271,7 @@ int libswd_cli(libswd_ctx_t *libswdctx, char *command)
       }
      }
      // Print out the result.
-     for (i=0; i<libswdctx->membuf.size; i=i+16)
+     for (i=0; i<count; i=i+16)
      {
       printf("\n%08X: ", i+addrstart);
       for (j=0;j<16&&i+j<libswdctx->membuf.size;j++) printf("%02X ", (unsigned char)libswdctx->membuf.data[i+j]);
@@ -361,27 +357,35 @@ int libswd_cli(libswd_ctx_t *libswdctx, char *command)
      // Parse data parameter.
      if (!command) goto libswd_cli_syntaxerror;
      errno=LIBSWD_OK;
-     data=strtol(cmd, &endptr, 0);
+     data=strtol(command, &endptr, 0);
      if (!*endptr || endptr==strstr(command," "))
      {
       // 'command' variable holds the data list.
-      // First element length determines data type (char or int), variable l.
-      for (l=0;command[l]&&command[l]!=' ';l++);
-      // Count the number of elements on the list, variable j.
-      j=1; for (i=0;command[i];i++) if (command[i]==' ') j++;
-      if (l<1 || l>10) goto libswd_cli_syntaxerror;
+      // First element length determines data type (char or int).
+      int elmcnt, elmlen, elmbytes;
+      for (elmlen=0;command[elmlen]&&command[elmlen]!=' ';elmlen++);
+      // Count the number of elements on the list.
+      elmcnt=1; for (i=0;command[i];i++) if (command[i]==' ') elmcnt++;
+      if (elmlen<1 || elmlen>10) goto libswd_cli_syntaxerror;
+      // Calculate and allocate memory buffer.
+      // Buffer is char based, round up size to match 32-bit align if necessary.
       if (libswdctx->membuf.data) free(libswdctx->membuf.data);
       libswdctx->membuf.size=0;
-      libswdctx->membuf.data=(char*)calloc(j,(l>4)?4*sizeof(char):sizeof(char));
+      elmbytes=elmcnt*((elmlen>4)?(4*sizeof(char)):(sizeof(char)));
+      if (elmbytes%4) elmbytes+=elmbytes%4;
+      libswdctx->membuf.size=elmbytes;
+      libswdctx->membuf.data=(char*)malloc(libswdctx->membuf.size);
       if (!libswdctx->membuf.data)
       {
+       libswdctx->membuf.size=0;
        libswd_log(libswdctx, LIBSWD_LOGLEVEL_ERROR,
                   "LIBSWD_E: libswd_cli(): Cannot allocate memory for data, aborting!\n" );
-       return LIBSWD_ERROR_OUTOFMEM;
-      } else libswdctx->membuf.size=(l>4)?j*4:j;
+       retval=LIBSWD_ERROR_OUTOFMEM;
+       goto libswd_cli_syntaxerror;
+      } else memset((void*)libswdctx->membuf.data, 0xFF, libswdctx->membuf.size);
       // Fill the memory buffer with provided data.
       // Load char type data.
-      if (l<=4)
+      if (elmlen<=4)
       {
        for (i=0;(i<libswdctx->membuf.size)&&command;i++)
        {
@@ -389,7 +393,7 @@ int libswd_cli(libswd_ctx_t *libswdctx, char *command)
         errno=LIBSWD_OK;
         data=strtol(cmd,(char**)NULL, 0);
         if (errno!=LIBSWD_OK) goto libswd_cli_syntaxerror;
-        libswdctx->membuf.data[i]=(char)data;
+        libswdctx->membuf.data[i]=(unsigned char)data;
        }
       }
       // Load int type data.
@@ -401,14 +405,14 @@ int libswd_cli(libswd_ctx_t *libswdctx, char *command)
         errno=LIBSWD_OK;
         data=strtol(cmd,(char**)NULL, 0);
         if (errno!=LIBSWD_OK) goto libswd_cli_syntaxerror;
-        libswdctx->membuf.data[i*4+0]=(char)data;
-        libswdctx->membuf.data[i*4+1]=(char)(data>>8);
-        libswdctx->membuf.data[i*4+2]=(char)(data>>16);
-        libswdctx->membuf.data[i*4+3]=(char)(data>>24);
+        libswdctx->membuf.data[i*4+0]=(unsigned char)data;
+        libswdctx->membuf.data[i*4+1]=(unsigned char)(data>>8);
+        libswdctx->membuf.data[i*4+2]=(unsigned char)(data>>16);
+        libswdctx->membuf.data[i*4+3]=(unsigned char)(data>>24);
        }
       }
       libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO,
-                 "LIBSWD_I: libswd_cli(): Parsed %d bytes of data into memory!\n",
+                 "LIBSWD_I: libswd_cli(): Parsed %d bytes of data into memory buffer!\n",
                  libswdctx->membuf.size );
      }
      // Given data parameter is a filename. Load file into memory.
@@ -429,16 +433,17 @@ int libswd_cli(libswd_ctx_t *libswdctx, char *command)
       if (libswdctx->membuf.size) free(libswdctx->membuf.data);
       fseek(fp, 0, SEEK_END);
       libswdctx->membuf.size=ftell(fp);
-      libswdctx->membuf.data=(char*)malloc(libswdctx->membuf.size*sizeof(char));
+      libswdctx->membuf.data=(char*)malloc(libswdctx->membuf.size);
       fseek(fp, 0, SEEK_SET);
       if (!libswdctx->membuf.data)
       {
+       libswdctx->membuf.size=0;
        libswd_log(libswdctx, LIBSWD_LOGLEVEL_ERROR,
                   "LIBSWD_E: libswd_cli(): Cannot allocate memory to load '%s' file, aborting!\n",
                   filename );
        res=LIBSWD_ERROR_OUTOFMEM;
        goto libswd_cli_write_memap_file_load_error;
-      }
+      } else memset((void*)libswdctx->membuf.data, 0xFF, libswdctx->membuf.size);
       // Load file content into memory.
       retval=fread(libswdctx->membuf.data, sizeof(char), libswdctx->membuf.size, fp);
       if (!retval)
@@ -467,7 +472,7 @@ libswd_cli_write_memap_file_load_ok:
      // At this point data are in membuf, sent them to MEM-AP.
      retval=libswd_memap_write_char(libswdctx, LIBSWD_OPERATION_EXECUTE,
                                addrstart, libswdctx->membuf.size,
-                               (char*)libswdctx->membuf.data);
+                               libswdctx->membuf.data);
      if (retval<0) goto libswd_cli_error;
      // Print out the data.
      for (i=0; i<libswdctx->membuf.size; i=i+16)
@@ -486,7 +491,6 @@ libswd_cli_write_memap_file_load_ok:
                 "LIBSWD_E: libswd_cli(): Unknown Access Port given!\n");
      goto libswd_cli_syntaxerror;
    }
-   //TODO! MAKE MEMORY BUFFER SIZE ALIGNED!!!
    break;
   }
   // No known command was invoked, show usage message and return message.
