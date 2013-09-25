@@ -162,7 +162,42 @@ int libswd_cli(libswd_ctx_t *libswdctx, char *command)
     } else  libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL,
                        "LIBSWD_N: MEM-AP INIT OK!\n");
    }
+   else if ( strncmp(cmd,"de",2)==0 || strncmp(cmd,"debug",5)==0 )
+   {
+    retval=libswd_debug_init(libswdctx, LIBSWD_OPERATION_EXECUTE);
+    if (retval<0)
+    {
+     libswd_log(libswdctx, LIBSWD_LOGLEVEL_ERROR,
+                "LIBSWD_E: libswd_cli(): DEBUG INIT ERROR!\n" );
+    }
+   }
    continue;
+  }
+  // Check for DEBUG invocation.
+  else if ( strncmp(cmd,"d",1)==0 || strncmp(cmd,"debug",5)==0 )
+  {
+   cmd=strsep(&command," ");
+   if (!cmd) goto libswd_cli_syntaxerror;
+   if ( strncmp(cmd,"h",1)==0 || strncmp(cmd,"halt",4)==0 )
+   {
+    retval=libswd_debug_halt(libswdctx, LIBSWD_OPERATION_EXECUTE);
+    if (retval<0)
+    {
+     libswd_log(libswdctx, LIBSWD_LOGLEVEL_ERROR,
+                "LIBSWD_E: libswd_cli(): DEBUG HALT ERROR! (%s).\n",
+                libswd_error_string(retval) );
+    }
+   }
+   else if ( strncmp(cmd,"r",1)==0 || strncmp(cmd,"run",3)==0 )
+   {
+    retval=libswd_debug_run(libswdctx, LIBSWD_OPERATION_EXECUTE);
+    if (retval<0)
+    {
+     libswd_log(libswdctx, LIBSWD_LOGLEVEL_ERROR,
+                "LIBSWD_E: libswd_cli(); DEBUG RUN ERROR! (%s)\n",
+                libswd_error_string(retval) );
+    }
+   }
   }
   // Check for READ invocation.
   else if ( strncmp(cmd,"r",1)==0 || strncmp(cmd,"read",4)==0 )

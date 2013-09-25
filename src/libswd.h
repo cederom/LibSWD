@@ -678,42 +678,18 @@ typedef struct {
  int size;
 } libswd_membuf_t;
 
-/** SWD Context Structure definition. It stores all the information about
- * the library, drivers and interface configuration, target status along
- * with DAP/AHBAP data/instruction internal registers, and the command
- * queue. Bus operations are stored on the command queue. There may be
- * more than one context in use by a host software, each one for single
- * interface-target pair. Most of the target operations made with libswd
- * are required to pass libswd_ctx_t pointer structure that also remembers
- * last known state of the target's internal registers.
- */
-typedef struct {
- libswd_cmd_t *cmdq;             ///< Command queue, stores all bus operations.
- libswd_context_config_t config; ///< Target specific configuration.
- libswd_driver_t *driver;        ///< Pointer to the interface driver structure.
- libswd_membuf_t membuf;         ///< Memory related scratchpad.
- struct {
-  libswd_swdp_t dp;              ///< Last known value of the SW-DP registers.
-  libswd_memap_t memap;         ///< Last known value of the MEM-AP registers.
-  libswd_transaction_t read;     ///< Last read operation fields.
-  libswd_transaction_t write;    ///< Last write operation fields.
- } log;
- struct {
-  libswd_transaction_t read;     ///< Data queued for read.
-  libswd_transaction_t write;    ///< Data queued for write.
- } qlog;
-} libswd_ctx_t;
-
 /** ARM CoreSight Debug defines. **/
 
-typedef struct libswd_arm_romtable_register {
- const int address;
- const char name[16];
- const int default_value;
- int value;
-} libswd_arm_romtable_register_t;
+#define LIBSWD_ARM_REGISTER_NAME_MAXLEN 32
 
-static const libswd_arm_romtable_register_t libswd_arm_debug_CortexM3_ROMtable_PeripheralID[] = {
+typedef struct libswd_arm_romtable_register {
+ int address;
+ char name[LIBSWD_ARM_REGISTER_NAME_MAXLEN];
+ int default_value;
+ int value;
+} libswd_arm_register_t;
+
+static const libswd_arm_register_t libswd_arm_debug_CortexM3_ROMtable_PeripheralID[] = {
  { .address=0xE00FFFD0, .name="Peripheral ID4", .default_value=0x00000004 }, 
  { .address=0xE00FFFD4, .name="Peripheral ID5", .default_value=0x00000000 },
  { .address=0xE00FFFD8, .name="Peripheral ID6", .default_value=0x00000000 },
@@ -724,14 +700,14 @@ static const libswd_arm_romtable_register_t libswd_arm_debug_CortexM3_ROMtable_P
  { .address=0xE00FFFEC, .name="Peripheral ID3", .default_value=0x00000000 },
 };
 
-static const libswd_arm_romtable_register_t libswd_arm_debug_CortexM3_ROMtable_ComponentID[] = {
+static const libswd_arm_register_t libswd_arm_debug_CortexM3_ROMtable_ComponentID[] = {
  { .address=0xE00FFFF0, .name="Component ID0", .default_value=0x0000000D },
  { .address=0xE00FFFF4, .name="Component ID1", .default_value=0x00000010 },
  { .address=0xE00FFFF8, .name="Component ID2", .default_value=0x00000005 },
  { .address=0xE00FFFFC, .name="Component ID3", .default_value=0x000000B1 },
 };
 
-static const libswd_arm_romtable_register_t libswd_arm_debug_CortexM3_Components[] = {
+static const libswd_arm_register_t libswd_arm_debug_CortexM3_Components[] = {
  { .address=0xE00FF000, .name="SCS", .default_value=0xFFF0F003 },
  { .address=0xE00FF004, .name="DWT", .default_value=0xFFF02003 },
  { .address=0xE00FF008, .name="FPB", .default_value=0xFFF03003 },
@@ -742,7 +718,7 @@ static const libswd_arm_romtable_register_t libswd_arm_debug_CortexM3_Components
  { .address=0xE00FFFCC, .name="SYSTEM ACCESS", .default_value=0x00000001 },
 };
 
-static const libswd_arm_romtable_register_t libswd_arm_debug_CortexM3_SCS_PeripheralID[] = {
+static const libswd_arm_register_t libswd_arm_debug_CortexM3_SCS_PeripheralID[] = {
  { .address=0xE000EFD0, .name="Peripheral ID4", .default_value=0x00000004 }, 
  { .address=0xE000EFE0, .name="Peripheral ID0", .default_value=0x00000000 },
  { .address=0xE000EFE4, .name="Peripheral ID1", .default_value=0x000000B0 },
@@ -750,12 +726,25 @@ static const libswd_arm_romtable_register_t libswd_arm_debug_CortexM3_SCS_Periph
  { .address=0xE000EFEC, .name="Peripheral ID3", .default_value=0x00000000 },
 };
 
-static const libswd_arm_romtable_register_t libswd_arm_debug_CortexM3_SCS_ComponentID[] = {
+static const libswd_arm_register_t libswd_arm_debug_CortexM3_SCS_ComponentID[] = {
  { .address=0xE000EFF0, .name="Component ID0", .default_value=0x0000000D },
  { .address=0xE000EFF4, .name="Component ID1", .default_value=0x000000E0 },
  { .address=0xE000EFF8, .name="Component ID2", .default_value=0x00000005 },
  { .address=0xE000EFFC, .name="Component ID3", .default_value=0x000000B1 },
 };
+
+static const libswd_arm_register_t libswd_arm_debug_CPUID[] = {
+ { .address=0xE000ED00, .name="ARM Cortex-M3 r1p2",     .default_value=0x411FC231 },
+ { .address=0xE000ED00, .name="ARM Cortex-M3 r2p1",     .default_value=0x412FC231 }, 
+ 0
+};
+
+typedef struct libswd_debug {
+ char initialized;
+ int dhcsr;
+ libswd_arm_register_t cpuid;
+ libswd_arm_register_t romtable[];
+} libswd_debug_t;
 
 #define LIBSWD_ARM_DEBUG_DFSR_ADDR   0xE000ED30 
 #define LIBSWD_ARM_DEBUG_DHCSR_ADDR  0xE000EDF0 
@@ -784,11 +773,38 @@ static const libswd_arm_romtable_register_t libswd_arm_debug_CortexM3_SCS_Compon
 #define LIBSWD_ARM_DEBUG_DHCSR_SHALT             (1 << LIBSWD_ARM_DEBUG_DHCSR_SHALT_BITNUM)
 #define LIBSWD_ARM_DEBUG_DHCSR_SREGRDY           (1 << LIBSWD_ARM_DEBUG_DHCSR_SREGRDY_BITNUM)
 #define LIBSWD_ARM_DEBUG_DHCSR_CSNAPSTALL        (1 << LIBSWD_ARM_DEBUG_DHCSR_CSNAPSTALL_BITNUM)
-#define LIBSWD_ARM_DEBUG_DHCSR_CMASKINTS         (1 << LIBSWD_ARM_DEBUG_DHCRS_CMASKINTS_BITNUM)
+#define LIBSWD_ARM_DEBUG_DHCSR_CMASKINTS         (1 << LIBSWD_ARM_DEBUG_DHCSR_CMASKINTS_BITNUM)
 #define LIBSWD_ARM_DEBUG_DHCSR_CSTEP             (1 << LIBSWD_ARM_DEBUG_DHCSR_CSTEP_BITNUM)
 #define LIBSWD_ARM_DEBUG_DHCSR_CHALT             (1 << LIBSWD_ARM_DEBUG_DHCSR_CHALT_BITNUM)
 #define LIBSWD_ARM_DEBUG_DHCSR_CDEBUGEN          (1 << LIBSWD_ARM_DEBUG_DHCSR_CDEBUGEN_BITNUM)
 
+
+/** SWD Context Structure definition. It stores all the information about
+ * the library, drivers and interface configuration, target status along
+ * with DAP/AHBAP data/instruction internal registers, and the command
+ * queue. Bus operations are stored on the command queue. There may be
+ * more than one context in use by a host software, each one for single
+ * interface-target pair. Most of the target operations made with libswd
+ * are required to pass libswd_ctx_t pointer structure that also remembers
+ * last known state of the target's internal registers.
+ */
+typedef struct {
+ libswd_cmd_t *cmdq;             ///< Command queue, stores all bus operations.
+ libswd_context_config_t config; ///< Target specific configuration.
+ libswd_driver_t *driver;        ///< Pointer to the interface driver structure.
+ libswd_membuf_t membuf;         ///< Memory related scratchpad.
+ struct {
+  libswd_swdp_t dp;              ///< Last known value of the SW-DP registers.
+  libswd_memap_t memap;          ///< Last known value of the MEM-AP registers.
+  libswd_debug_t debug;          ///< Last known of Debug registers.
+  libswd_transaction_t read;     ///< Last read operation fields.
+  libswd_transaction_t write;    ///< Last write operation fields.
+ } log;
+ struct {
+  libswd_transaction_t read;     ///< Data queued for read.
+  libswd_transaction_t write;    ///< Data queued for write.
+ } qlog;
+} libswd_ctx_t;
 
 
 /** Some comments on the function behavior **/
@@ -897,6 +913,12 @@ int libswd_memap_read_char(libswd_ctx_t *libswdctx, libswd_operation_t operation
 int libswd_memap_read_int(libswd_ctx_t *libswdctx, libswd_operation_t operation, int addr, int count, int *data);
 int libswd_memap_write_char(libswd_ctx_t *libswdctx, libswd_operation_t operation, int addr, int count, char *data);
 int libswd_memap_write_int(libswd_ctx_t *libswdctx, libswd_operation_t operation, int addr, int count, int *data);
+
+int libswd_debug_detect(libswd_ctx_t *libswdctx, libswd_operation_t operation);
+int libswd_debug_init(libswd_ctx_t *libswdctx, libswd_operation_t operation);
+int libswd_debug_halt(libswd_ctx_t *libswdctx, libswd_operation_t operation);
+int libswd_debug_run(libswd_ctx_t *libswdctx, libswd_operation_t operation);
+int libswd_debug_is_halted(libswd_ctx_t *libswdctx, libswd_operation_t operation);
 
 int libswd_cli(libswd_ctx_t *libswdctx, char *command);
 
