@@ -615,22 +615,23 @@ typedef struct {
 
 /** Most actual Serial Wire Debug Port Registers */
 typedef struct {
- char ack;     ///< Last known state of ACK response.
- char parity;  ///< Parity bit of the data transfer.
- int idcode;   ///< Target's IDCODE register value.
- int abort;    ///< Last known ABORT register value.
- int ctrlstat; ///< Last known CTRLSTAT register value.
- int wcr;      ///< Last known WCR register value.
- int select;   ///< Last known SELECT register value.
- int resend;   ///< Last known RESEND register value.
- int rdbuff;   ///< Last known RDBUFF register (payload data) value.
- int routesel; ///< Last known ROUTESEL register value.
+ char initialized;///< Is SW-DP initialized?
+ char ack;        ///< Last known state of ACK response.
+ char parity;     ///< Parity bit of the data transfer.
+ int idcode;      ///< Target's IDCODE register value.
+ int abort;       ///< Last known ABORT register value.
+ int ctrlstat;    ///< Last known CTRLSTAT register value.
+ int wcr;         ///< Last known WCR register value.
+ int select;      ///< Last known SELECT register value.
+ int resend;      ///< Last known RESEND register value.
+ int rdbuff;      ///< Last known RDBUFF register (payload data) value.
+ int routesel;    ///< Last known ROUTESEL register value.
 } libswd_swdp_t;
 
 /** Most actual MEM-AP (Memory Access Port) register values (cache). */
 typedef struct {
  char ack;        ///< Last known state of ACK response.
- char initialized;///< Is MEM-AP already setup flag.
+ char initialized;///< Is MEM-AP initialized?
  int csw;         ///< Last known CONTROLSTATUS register value.
  int tar;         ///< Last known TAR register value.
  int drw;         ///< Last known DRW register value.

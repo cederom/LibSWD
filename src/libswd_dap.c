@@ -66,12 +66,14 @@ int libswd_dap_init(libswd_ctx_t *libswdctx, libswd_operation_t operation, int *
  dpctrlstat|=LIBSWD_DP_CTRLSTAT_ORUNDETECT;
  dpctrlstat|=LIBSWD_DP_CTRLSTAT_CSYSPWRUPREQ;
  dpctrlstat|=LIBSWD_DP_CTRLSTAT_CDBGPWRUPREQ;
+ libswdctx->log.dp.initialized=0;
  res=libswd_dap_detect(libswdctx, operation, idcode);
  if (res<0) return res;
  res=libswd_dap_setup(libswdctx, operation, &dpabort, &dpctrlstat);
  if (res<0) return res;
  res=libswd_dp_write(libswdctx, operation, LIBSWD_DP_SELECT_ADDR, &dpselect);
  if (res<0) return res;
+ libswdctx->log.dp.initialized=1;
  return LIBSWD_OK;
 }
 
