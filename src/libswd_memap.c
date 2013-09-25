@@ -302,8 +302,6 @@ int libswd_memap_write_char(libswd_ctx_t *libswdctx, libswd_operation_t operatio
  // Setup MEM-AP for 32-bit access.
  res=libswd_memap_setup(libswdctx, operation, LIBSWD_MEMAP_CSW_SIZE_32BIT, 0);
  if (res<0) goto libswd_memap_write_char_error;
- // Verify the count parameter to be 32-bit boundary.
- if (count%4) count=count-(count%4);
 
  for (i=0;i<count/4;i++)
  {
@@ -315,7 +313,7 @@ int libswd_memap_write_char(libswd_ctx_t *libswdctx, libswd_operation_t operatio
   if (res<0) goto libswd_memap_write_char_error;
   libswdctx->log.memap.tar=loc;
   // Implode and Write data to DRW register.
-  memcpy(&libswdctx->log.memap.drw, data, (i*4)+4);
+  memcpy((void*)&libswdctx->log.memap.drw, data+(i*4), 4);
   res=libswd_ap_write(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_DRW_ADDR, &libswdctx->log.memap.drw);
   if (res<0) goto libswd_memap_write_char_error;
  }
@@ -355,13 +353,11 @@ int libswd_memap_write_int(libswd_ctx_t *libswdctx, libswd_operation_t operation
  // Setup MEM-AP for 32-bit access.
  res=libswd_memap_setup(libswdctx, operation, LIBSWD_MEMAP_CSW_SIZE_32BIT, 0);
  if (res<0) goto libswd_memap_write_int_error;
- // Verify the count parameter to be 32-bit boundary.
- if (count%4) count=count-(count%4);
 
  for (i=0;i<count;i++)
  {
-  loc=addr+i;
-  libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO, "LIBSWD_I: libswd_memap_write_int() writing address 0x%08X\r", addr+i*4);
+  loc=addr+i*4;
+  libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO, "LIBSWD_I: libswd_memap_write_int() writing address 0x%08X\r", loc);
   fflush();
   // Pass address to TAR register.
   res=libswd_ap_write(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_TAR_ADDR, &loc);
