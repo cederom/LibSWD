@@ -121,11 +121,12 @@ int libswd_debug_halt(libswd_ctx_t *libswdctx, libswd_operation_t operation)
   if (dbgdhcsr&LIBSWD_ARM_DEBUG_DHCSR_SHALT)
   {
    libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO, "LIBSWD_I: libswd_debug_halt(): DHCSR=0x%08X\n", dbgdhcsr);
-   libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL, "LIBSWD_N: libswd_debug_halt(): TARGET HALTED!\n");
+   libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL, "LIBSWD_N: libswd_debug_halt(): TARGET HALT OK!\n");
    libswdctx->log.debug.dhcsr=dbgdhcsr;
    return LIBSWD_OK;
   }
  }
+ libswd_log(libswdctx, LIBSWD_LOGLEVEL_ERROR, "LIBSWD_E: libswd_debug_halt(): TARGET HALT ERROR!\n");
  return LIBSWD_ERROR_MAXRETRY;
 }
 
@@ -150,19 +151,19 @@ int libswd_debug_run(libswd_ctx_t *libswdctx, libswd_operation_t operation)
   dbgdhcsr=LIBSWD_ARM_DEBUG_DHCSR_DBGKEY;
   dbgdhcsr|=LIBSWD_ARM_DEBUG_DHCSR_CDEBUGEN;
   dbgdhcsr&=~LIBSWD_ARM_DEBUG_DHCSR_CHALT;
-printf("Writing DHCSR=%X\n", dbgdhcsr);
   retval=libswd_memap_write_int(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_ARM_DEBUG_DHCSR_ADDR, 1, &dbgdhcsr);
   if (retval<0) return retval;
   retval=libswd_memap_read_int(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_ARM_DEBUG_DHCSR_ADDR, 1, &dbgdhcsr);
   if (retval<0) return retval;
   if (!(dbgdhcsr&LIBSWD_ARM_DEBUG_DHCSR_SHALT))
   {
-   libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO, "LIBSWD_I: libswd_debug_halt(): Target running!\n");
+   libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL, "LIBSWD_N: libswd_debug_run(): TARGET RUN OK!\n");
    libswdctx->log.debug.dhcsr=dbgdhcsr;
    return LIBSWD_OK;
   }
 
  }
+ libswd_log(libswdctx, LIBSWD_LOGLEVEL_ERROR, "LIBSWD_E: libswd_debug_run(): TARGET RUN ERROR!\n");
  return LIBSWD_ERROR_MAXRETRY;
 }
 
