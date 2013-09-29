@@ -2,6 +2,9 @@ LibSWD-0.6-devel:
  * Introducing CLI (Command Line Interface) parser framework. Updated error defines.
  * Major fixes in LOG functions. Introducing vprintf() like libswd_log_internal_va().
  * Added DEFAULT defines for LogLevel and AutoFixErrors libswdctx->config values.
+ * Introducing MEM-AP routines.
+ * Introducing Standalone LibSWD Aplication.
+ * Introducing initial support for Debug and Flash access.
 
 LibSWD-0.5 (2012-12-06):
  * All functions and defines were renamed to use prefix libswd_ and LIBSWD_.
