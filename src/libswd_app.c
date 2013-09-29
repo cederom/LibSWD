@@ -95,6 +95,7 @@ int libswdapp_print_usage(void){
   printf("  %s\n", libswdapp_interface_configs[i].name);
  printf("\n");
  libswdapp_handle_command_signal_usage();
+ libswdapp_handle_command_flash_usage();
  printf(" Note: Parameters marked with '< >' are optional.\n");
  printf(" Press Ctrl+C or type [q]uit on prompt to exit LibSWD Application.\n\n");
  return LIBSWD_OK;
@@ -204,6 +205,11 @@ int main(int argc, char **argv){
    libswdapp_handle_command_signal(libswdappctx, cmd);
    continue;
   }
+  if (!strncmp(cmd,"f",1) || !strncmp(cmd,"flash",5))
+  {
+   libswdapp_handle_command_flash(libswdappctx, cmd);
+   continue;
+  }
   if (!strncmp(cmd,"h",1) || !strncmp(cmd,"help",4) || !strncmp(cmd,"?",1))
    libswdapp_print_usage();
   retval=libswd_cli(libswdappctx->libswdctx, cmd);
@@ -220,6 +226,188 @@ quit:
 /******************************************************************************
  * LibSWD APPLICATION COMMAND HANDLERS                                        *
  ******************************************************************************/
+
+/** Print out the Flash command usage.
+ * \return Always LIBSWD_OK.
+ */
+int libswdapp_handle_command_flash_usage(void){
+ printf(" LibSWD Application Flash ('[f]lash') usage:\n");
+ printf("  [r]ead <filename> <count>\n");
+ printf("  [w]rite filename\n");
+ printf("  [m]ass[e]rase\n");
+ printf("  Note: Target will be detected automaticaly to verify flash support.\n"); 
+ printf("\n");
+ return LIBSWD_OK;
+}
+
+/** Handle Flash command invocation.
+ * \param *libswdappctx LibSWD Application Context to work on.
+ * \param *command to be parsed and executed.
+ * \return LIBSWD_OK on success or LIBSWD_ERROR code otherwise.
+ */
+
+int libswdapp_handle_command_flash(libswdapp_context_t *libswdappctx, char *command)
+{
+ if (!libswdappctx) return LIBSWD_ERROR_NULLCONTEXT;
+ int i, j, retval, *idcode, flashdrvidx=0, dbgdhcsr, data, count, addr, addrstart;
+ char buf[4], *cmd, *filename;
+ libswd_ctx_t *libswdctx;
+ libswdapp_flash_stm32f1_memmap_t flash_memmap;
+ libswdctx=(libswd_ctx_t*)libswdappctx->libswdctx;
+
+ // Initialize the MEM-AP and DAP if not yet initialized...
+ if (!libswdctx->log.memap.initialized)
+ {
+  retval=libswd_memap_init(libswdctx, LIBSWD_OPERATION_EXECUTE); 
+  if (retval<0) goto libswdapp_handle_command_flash_error;
+ }
+
+ // Setup Flash configuration, routines, memmap etc.
+ // At the moment only STM32F10x is supported/hardcoded.
+ libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO, "Using STM32F1 configuration...\n");
+ flash_memmap=libswdapp_flash_stm321f_mediumdensity;
+ addrstart=flash_memmap.page_start;
+ count=(flash_memmap.page_end-flash_memmap.page_start);
+
+ // Check if target is halted, halt if necessary. 
+ if (!libswd_debug_is_halted(libswdctx, LIBSWD_OPERATION_EXECUTE))
+ {
+  retval=libswd_debug_halt(libswdctx, LIBSWD_OPERATION_EXECUTE);
+  if (retval<0) goto libswdapp_handle_command_flash_error;
+ }
+
+ // Target is ready to perform Flash operations.
+ if (command) cmd=strsep(&command," ");
+ if (command) cmd=strsep(&command," ");
+ // Check for READ invocation.
+ if ( strncmp(cmd,"r",1)==0 || strncmp(cmd,"read",4)==0 )
+ {
+  // Parse filename parameter.
+  if (command)
+  {
+   cmd=strsep(&command," ");
+   filename=cmd;
+  } else filename=NULL;
+  // Parse optional count parameter.
+  if (command)
+  {
+   cmd=strsep(&command," ");
+   errno=LIBSWD_OK;
+   i=strtol(cmd, (char**)NULL, 0);
+   if (errno==LIBSWD_OK) count=i-(i%4);
+  } 
+  // Take care of proper memory (re)allocation.
+  if (libswdctx->membuf.data) free(libswdctx->membuf.data);
+  libswdctx->membuf.data=(char*)malloc(count*sizeof(char));
+  if (!libswdctx->membuf.data)
+  {
+   libswdctx->membuf.size=0;
+   libswd_log(libswdctx, LIBSWD_ERROR_OUTOFMEM, 
+              "FLASH ERROR: Cannot (re)allocate memory buffer!\n");
+   return LIBSWD_ERROR_OUTOFMEM;
+  } else memset((void*)libswdctx->membuf.data, 0xFF, count);
+  libswdctx->membuf.size=count*sizeof(char);
+  retval=libswd_memap_read_char(libswdctx, LIBSWD_OPERATION_EXECUTE,
+                           addrstart, count,
+                           libswdctx->membuf.data);
+  if (retval<0) goto libswdapp_handle_command_flash_error;
+  // Store result to a file if requested.
+  if (filename)
+  {
+   FILE *fp;
+   fp=fopen(filename,"w");
+   if (!fp)
+   {
+    libswd_log(libswdctx, LIBSWD_LOGLEVEL_ERROR,
+               "FLASH ERROR: Cannot open '%s' data file!\n",
+               filename, strerror(errno) );
+    retval=LIBSWD_ERROR_FILE;
+    goto libswdapp_handle_command_flash_error;
+   }
+   retval=fwrite(libswdctx->membuf.data, sizeof(char), count, fp);
+   if (!retval)
+   {
+    libswd_log(libswdctx, LIBSWD_LOGLEVEL_ERROR, 
+               "FLASH ERROR: Cannot write to data file '%s' (%s)!\n",
+               filename, strerror(errno) );
+    goto libswdapp_handle_command_flash_error;
+   }
+   i=fclose(fp);
+   if (i)
+   {
+    libswd_log(libswdctx, LIBSWD_LOGLEVEL_ERROR, 
+               "FLASH ERROR: Cannot close data file '%s' (%s)!\n",
+               filename, strerror(errno) );
+    goto libswdapp_handle_command_flash_error;
+   }
+  }
+  // Print out the result.
+  for (i=0; i<libswdctx->membuf.size; i=i+16)
+  {
+   printf("\n%08X: ", i+addrstart);
+   for (j=0;j<16&&i+j<libswdctx->membuf.size;j++) printf("%02X ", (unsigned char)libswdctx->membuf.data[i+j]);
+   if (j<16) for(;j<16;j++) printf("   ");
+   printf(" ");
+   for (j=0;j<16&&i+j<libswdctx->membuf.size;j++) printf("%c", isprint(libswdctx->membuf.data[i+j])?libswdctx->membuf.data[i+j]:'.');
+   if (j<16) for (;j<16;j++) printf(".");
+  }
+  printf("\n");
+  return LIBSWD_OK;
+ }
+
+ // Check for ERASE invocation.
+ else if ( strncmp(cmd,"me",2)==0 || strncmp(cmd,"masserase",9)==0 )
+ {
+  // Unlock the Flash Controller.
+  libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO, "FLASH: Unlocking STM32 FPEC...\n");
+  data=LIBSWDAPP_FLASH_STM32F1_FLASH_KEYR_KEY1_VAL;
+  retval=libswd_memap_write_int(libswdctx, LIBSWD_OPERATION_EXECUTE, flash_memmap.FLASH_KEYR_ADDR, 1, &data);
+  if (retval<0) goto libswdapp_handle_command_flash_error;
+  data=LIBSWDAPP_FLASH_STM32F1_FLASH_KEYR_KEY2_VAL;
+  retval=libswd_memap_write_int(libswdctx, LIBSWD_OPERATION_EXECUTE, flash_memmap.FLASH_KEYR_ADDR, 1, &data);
+  if (retval<0) goto libswdapp_handle_command_flash_error;
+  // Perform Mass-Erase operation.
+  //Wait for BSY flag clearance.
+  for (i=LIBSWD_RETRY_COUNT_DEFAULT;i;i--)
+  {
+   retval=libswd_memap_read_int(libswdctx, LIBSWD_OPERATION_EXECUTE, flash_memmap.FLASH_SR_ADDR, 1, &data);
+   if (!(data&LIBSWDAPP_FLASH_STM32F1_FLASH_SR_BSY)) break;
+   usleep(100);
+  }
+  if (!i)
+  {
+   retval=LIBSWD_ERROR_MAXRETRY;
+   goto libswdapp_handle_command_flash_error; 
+  }
+  //Set MER bit in FLASH_CR
+  retval=libswd_memap_read_int(libswdctx, LIBSWD_OPERATION_EXECUTE, flash_memmap.FLASH_CR_ADDR, 1, &data);
+  if (retval<0) goto libswdapp_handle_command_flash_error;
+  data|=LIBSWDAPP_FLASH_STM32F1_FLASH_CR_MER;
+  retval=libswd_memap_write_int(libswdctx, LIBSWD_OPERATION_EXECUTE, flash_memmap.FLASH_CR_ADDR, 1, &data);
+  if (retval<0) goto libswdapp_handle_command_flash_error;
+  data|=LIBSWDAPP_FLASH_STM32F1_FLASH_CR_STRT;
+  retval=libswd_memap_write_int(libswdctx, LIBSWD_OPERATION_EXECUTE, flash_memmap.FLASH_CR_ADDR, 1, &data);
+  if (retval<0) goto libswdapp_handle_command_flash_error;
+  //Wait for BSY flag clearance.
+  for (i=LIBSWD_RETRY_COUNT_DEFAULT;i;i--)
+  {
+   retval=libswd_memap_read_int(libswdctx, LIBSWD_OPERATION_EXECUTE, flash_memmap.FLASH_SR_ADDR, 1, &data);
+   if (!(data&LIBSWDAPP_FLASH_STM32F1_FLASH_SR_BSY)) break;
+   usleep(100);
+  }
+  if (!i)
+  {
+   retval=LIBSWD_ERROR_MAXRETRY;
+   goto libswdapp_handle_command_flash_error; 
+  }
+  libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL, "FLASH MASS-ERASE OK!\n");
+ }
+ return LIBSWD_OK;
+
+libswdapp_handle_command_flash_error:
+ printf("FLASH ERROR: %s.\n", libswd_error_string(retval));
+ return retval;
+}
 
 
 /** Print out the Interface Signal command usage.
