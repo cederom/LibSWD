@@ -169,7 +169,8 @@ int libswd_cli(libswd_ctx_t *libswdctx, char *command)
     {
      libswd_log(libswdctx, LIBSWD_LOGLEVEL_ERROR,
                 "LIBSWD_E: libswd_cli(): DEBUG INIT ERROR!\n" );
-    }
+    } else libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL,
+                      "LIBSWD_N: DEBUG INIT OK!\n");
    }
    continue;
   }
