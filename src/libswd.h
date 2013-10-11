@@ -501,7 +501,8 @@ typedef enum {
  LIBSWD_ERROR_MAXRETRY    =-43, ///< Maximum retry count exceeded.
  LIBSWD_ERROR_CLISYNTAX   =-44, ///< CLI Syntax Error.
  LIBSWD_ERROR_FILE        =-45, ///< File I/O related problem.
- LIBSWD_ERROR_UNSUPPORTED =-46  ///< Target not supported.
+ LIBSWD_ERROR_UNSUPPORTED =-46, ///< Target not supported.
+ LIBSWD_ERROR_MEMAPACCSIZE=-47  ///< Invalid MEM-AP access size.
 } libswd_error_code_t;
 
 /// Do we want autofix errors by default? Not at this point...
