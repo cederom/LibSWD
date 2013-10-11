@@ -249,7 +249,7 @@ int libswdapp_handle_command_flash_usage(void){
 int libswdapp_handle_command_flash(libswdapp_context_t *libswdappctx, char *command)
 {
  if (!libswdappctx) return LIBSWD_ERROR_NULLCONTEXT;
- int i, j, retval, *idcode, flashdrvidx=0, dbgdhcsr, data, count, addr, addrstart;
+ int i, j, retval, *idcode, flashdrvidx=0, dbgdhcsr, data, *datap, count, addr, addrstart;
  char buf[4], *cmd, *filename;
  libswd_ctx_t *libswdctx;
  libswdapp_flash_stm32f1_memmap_t flash_memmap;
@@ -307,7 +307,7 @@ int libswdapp_handle_command_flash(libswdapp_context_t *libswdappctx, char *comm
    return LIBSWD_ERROR_OUTOFMEM;
   } else memset((void*)libswdctx->membuf.data, 0xFF, count);
   libswdctx->membuf.size=count*sizeof(char);
-  retval=libswd_memap_read_char(libswdctx, LIBSWD_OPERATION_EXECUTE,
+  retval=libswd_memap_read_char_32(libswdctx, LIBSWD_OPERATION_EXECUTE,
                            addrstart, count,
                            libswdctx->membuf.data);
   if (retval<0) goto libswdapp_handle_command_flash_error;
@@ -361,16 +361,16 @@ int libswdapp_handle_command_flash(libswdapp_context_t *libswdappctx, char *comm
   // Unlock the Flash Controller.
   libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO, "FLASH: Unlocking STM32 FPEC...\n");
   data=LIBSWDAPP_FLASH_STM32F1_FLASH_KEYR_KEY1_VAL;
-  retval=libswd_memap_write_int(libswdctx, LIBSWD_OPERATION_EXECUTE, flash_memmap.FLASH_KEYR_ADDR, 1, &data);
+  retval=libswd_memap_write_int_32(libswdctx, LIBSWD_OPERATION_EXECUTE, flash_memmap.FLASH_KEYR_ADDR, 1, &data);
   if (retval<0) goto libswdapp_handle_command_flash_error;
   data=LIBSWDAPP_FLASH_STM32F1_FLASH_KEYR_KEY2_VAL;
-  retval=libswd_memap_write_int(libswdctx, LIBSWD_OPERATION_EXECUTE, flash_memmap.FLASH_KEYR_ADDR, 1, &data);
+  retval=libswd_memap_write_int_32(libswdctx, LIBSWD_OPERATION_EXECUTE, flash_memmap.FLASH_KEYR_ADDR, 1, &data);
   if (retval<0) goto libswdapp_handle_command_flash_error;
   // Perform Mass-Erase operation.
   //Wait for BSY flag clearance.
   for (i=LIBSWD_RETRY_COUNT_DEFAULT;i;i--)
   {
-   retval=libswd_memap_read_int(libswdctx, LIBSWD_OPERATION_EXECUTE, flash_memmap.FLASH_SR_ADDR, 1, &data);
+   retval=libswd_memap_read_int_32(libswdctx, LIBSWD_OPERATION_EXECUTE, flash_memmap.FLASH_SR_ADDR, 1, &data);
    if (!(data&LIBSWDAPP_FLASH_STM32F1_FLASH_SR_BSY)) break;
    usleep(100);
   }
@@ -380,18 +380,18 @@ int libswdapp_handle_command_flash(libswdapp_context_t *libswdappctx, char *comm
    goto libswdapp_handle_command_flash_error; 
   }
   //Set MER bit in FLASH_CR
-  retval=libswd_memap_read_int(libswdctx, LIBSWD_OPERATION_EXECUTE, flash_memmap.FLASH_CR_ADDR, 1, &data);
+  retval=libswd_memap_read_int_32(libswdctx, LIBSWD_OPERATION_EXECUTE, flash_memmap.FLASH_CR_ADDR, 1, &data);
   if (retval<0) goto libswdapp_handle_command_flash_error;
   data|=LIBSWDAPP_FLASH_STM32F1_FLASH_CR_MER;
-  retval=libswd_memap_write_int(libswdctx, LIBSWD_OPERATION_EXECUTE, flash_memmap.FLASH_CR_ADDR, 1, &data);
+  retval=libswd_memap_write_int_32(libswdctx, LIBSWD_OPERATION_EXECUTE, flash_memmap.FLASH_CR_ADDR, 1, &data);
   if (retval<0) goto libswdapp_handle_command_flash_error;
   data|=LIBSWDAPP_FLASH_STM32F1_FLASH_CR_STRT;
-  retval=libswd_memap_write_int(libswdctx, LIBSWD_OPERATION_EXECUTE, flash_memmap.FLASH_CR_ADDR, 1, &data);
+  retval=libswd_memap_write_int_32(libswdctx, LIBSWD_OPERATION_EXECUTE, flash_memmap.FLASH_CR_ADDR, 1, &data);
   if (retval<0) goto libswdapp_handle_command_flash_error;
   //Wait for BSY flag clearance.
   for (i=LIBSWD_RETRY_COUNT_DEFAULT;i;i--)
   {
-   retval=libswd_memap_read_int(libswdctx, LIBSWD_OPERATION_EXECUTE, flash_memmap.FLASH_SR_ADDR, 1, &data);
+   retval=libswd_memap_read_int_32(libswdctx, LIBSWD_OPERATION_EXECUTE, flash_memmap.FLASH_SR_ADDR, 1, &data);
    if (!(data&LIBSWDAPP_FLASH_STM32F1_FLASH_SR_BSY)) break;
    usleep(100);
   }

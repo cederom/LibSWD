@@ -911,9 +911,17 @@ int libswd_dap_errors_handle(libswd_ctx_t *libswdctx, libswd_operation_t operati
 int libswd_memap_init(libswd_ctx_t *libswdctx, libswd_operation_t operation);
 int libswd_memap_setup(libswd_ctx_t *libswdctx, libswd_operation_t operation, int csw, int tar);
 int libswd_memap_read_char(libswd_ctx_t *libswdctx, libswd_operation_t operation, int addr, int count, char *data);
+int libswd_memap_read_char_csw(libswd_ctx_t *libswdctx, libswd_operation_t operation, int addr, int count, char *data, int csw);
+int libswd_memap_read_char_32(libswd_ctx_t *libswdctx, libswd_operation_t operation, int addr, int count, char *data);
 int libswd_memap_read_int(libswd_ctx_t *libswdctx, libswd_operation_t operation, int addr, int count, int *data);
+int libswd_memap_read_int_csw(libswd_ctx_t *libswdctx, libswd_operation_t operation, int addr, int count, int *data, int csw);
+int libswd_memap_read_int_32(libswd_ctx_t *libswdctx, libswd_operation_t operation, int addr, int count, int *data);
 int libswd_memap_write_char(libswd_ctx_t *libswdctx, libswd_operation_t operation, int addr, int count, char *data);
+int libswd_memap_write_char_csw(libswd_ctx_t *libswdctx, libswd_operation_t operation, int addr, int count, char *data, int csw);
+int libswd_memap_write_char_32(libswd_ctx_t *libswdctx, libswd_operation_t operation, int addr, int count, char *data);
 int libswd_memap_write_int(libswd_ctx_t *libswdctx, libswd_operation_t operation, int addr, int count, int *data);
+int libswd_memap_write_int_csw(libswd_ctx_t *libswdctx, libswd_operation_t operation, int addr, int count, int *data, int csw);
+int libswd_memap_write_int_32(libswd_ctx_t *libswdctx, libswd_operation_t operation, int addr, int count, int *data);
 
 int libswd_debug_detect(libswd_ctx_t *libswdctx, libswd_operation_t operation);
 int libswd_debug_init(libswd_ctx_t *libswdctx, libswd_operation_t operation);

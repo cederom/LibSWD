@@ -63,7 +63,7 @@ int libswd_debug_detect(libswd_ctx_t *libswdctx, libswd_operation_t operation)
 
  for (reg=libswd_arm_debug_CPUID[i=0];reg.address;reg=libswd_arm_debug_CPUID[i++])
  {
-  retval=libswd_memap_read_int(libswdctx, LIBSWD_OPERATION_EXECUTE, reg.address, 1, &cpuid);
+  retval=libswd_memap_read_int_32(libswdctx, LIBSWD_OPERATION_EXECUTE, reg.address, 1, &cpuid);
   if (retval<0) return retval; 
   if (cpuid==reg.default_value)
   {
@@ -106,7 +106,7 @@ int libswd_debug_halt(libswd_ctx_t *libswdctx, libswd_operation_t operation)
   if (retval<0) return retval;
  }
  // Halt the CPU.
- retval=libswd_memap_read_int(libswdctx, operation, LIBSWD_ARM_DEBUG_DHCSR_ADDR, 1, &dbgdhcsr); 
+ retval=libswd_memap_read_int_32(libswdctx, operation, LIBSWD_ARM_DEBUG_DHCSR_ADDR, 1, &dbgdhcsr); 
  if (retval<0) return retval;
  for (i=LIBSWD_RETRY_COUNT_DEFAULT;i;i--)
  {
@@ -114,9 +114,9 @@ int libswd_debug_halt(libswd_ctx_t *libswdctx, libswd_operation_t operation)
   dbgdhcsr|=LIBSWD_ARM_DEBUG_DHCSR_CDEBUGEN;
   dbgdhcsr|=LIBSWD_ARM_DEBUG_DHCSR_CHALT;
   dbgdhcsr&=~LIBSWD_ARM_DEBUG_DHCSR_CMASKINTS;
-  retval=libswd_memap_write_int(libswdctx, operation, LIBSWD_ARM_DEBUG_DHCSR_ADDR, 1, &dbgdhcsr);
+  retval=libswd_memap_write_int_32(libswdctx, operation, LIBSWD_ARM_DEBUG_DHCSR_ADDR, 1, &dbgdhcsr);
   if (retval<0) return retval;
-  retval=libswd_memap_read_int(libswdctx, operation, LIBSWD_ARM_DEBUG_DHCSR_ADDR, 1, &dbgdhcsr);
+  retval=libswd_memap_read_int_32(libswdctx, operation, LIBSWD_ARM_DEBUG_DHCSR_ADDR, 1, &dbgdhcsr);
   if (retval<0) return retval;
   if (dbgdhcsr&LIBSWD_ARM_DEBUG_DHCSR_SHALT)
   {
@@ -144,16 +144,16 @@ int libswd_debug_run(libswd_ctx_t *libswdctx, libswd_operation_t operation)
   if (retval<0) return retval;
  }
  // UnHalt the CPU.
- retval=libswd_memap_read_int(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_ARM_DEBUG_DHCSR_ADDR, 1, &dbgdhcsr); 
+ retval=libswd_memap_read_int_32(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_ARM_DEBUG_DHCSR_ADDR, 1, &dbgdhcsr); 
  if (retval<0) return retval;
  for (i=LIBSWD_RETRY_COUNT_DEFAULT;i;i--)
  {
   dbgdhcsr=LIBSWD_ARM_DEBUG_DHCSR_DBGKEY;
   dbgdhcsr|=LIBSWD_ARM_DEBUG_DHCSR_CDEBUGEN;
   dbgdhcsr&=~LIBSWD_ARM_DEBUG_DHCSR_CHALT;
-  retval=libswd_memap_write_int(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_ARM_DEBUG_DHCSR_ADDR, 1, &dbgdhcsr);
+  retval=libswd_memap_write_int_32(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_ARM_DEBUG_DHCSR_ADDR, 1, &dbgdhcsr);
   if (retval<0) return retval;
-  retval=libswd_memap_read_int(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_ARM_DEBUG_DHCSR_ADDR, 1, &dbgdhcsr);
+  retval=libswd_memap_read_int_32(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_ARM_DEBUG_DHCSR_ADDR, 1, &dbgdhcsr);
   if (retval<0) return retval;
   if (!(dbgdhcsr&LIBSWD_ARM_DEBUG_DHCSR_SHALT))
   {
