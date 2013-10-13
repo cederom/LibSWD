@@ -252,6 +252,7 @@ int libswd_dap_errors_handle(libswd_ctx_t *libswdctx, libswd_operation_t operati
   res=libswd_bin32_parity_even(ctrlstat, &cparity);
   if (res<0) return res;
   if (*parity!=cparity) return LIBSWD_ERROR_PARITY;
+  libswdctx->log.dp.ctrlstat=*ctrlstat;
  }
  return LIBSWD_OK;
 }
@@ -564,7 +565,7 @@ int libswd_ap_read(libswd_ctx_t *libswdctx, libswd_operation_t operation, char a
  int res, cmdcnt=0, retry, ctrlstat, abort;
  char APnDP, RnW, cparity, *ack, *parity, request;
 
- res=libswd_ap_bank_select(libswdctx, operation, addr);
+ res=libswd_ap_bank_select(libswdctx, LIBSWD_OPERATION_ENQUEUE, addr);
  if (res<0) return res;
 
  APnDP=1;
@@ -594,7 +595,7 @@ int libswd_ap_read(libswd_ctx_t *libswdctx, libswd_operation_t operation, char a
    //We got ACK==WAIT, retry last transfer until success or failure.
    for (retry=LIBSWD_RETRY_COUNT_DEFAULT; retry>0; retry--){
     abort=0xFFFFFFFE;
-    res=libswd_dap_errors_handle(libswdctx, LIBSWD_OPERATION_EXECUTE, &abort, &ctrlstat); 
+    res=libswd_dap_errors_handle(libswdctx, LIBSWD_OPERATION_EXECUTE, &abort, NULL);
     if (res<0) continue;
     res=libswd_bus_write_request_raw(libswdctx, LIBSWD_OPERATION_ENQUEUE, &request);
     if (res<0) continue; 
@@ -638,7 +639,7 @@ int libswd_ap_write(libswd_ctx_t *libswdctx, libswd_operation_t operation, char 
  int res, cmdcnt=0, retry, ctrlstat, abort;
  char APnDP, RnW, cparity, *ack, *parity, request;
 
- res=libswd_ap_bank_select(libswdctx, operation, addr);
+ res=libswd_ap_bank_select(libswdctx, LIBSWD_OPERATION_ENQUEUE, addr);
  if (res<0) return res;
 
  APnDP=1;
@@ -671,7 +672,7 @@ int libswd_ap_write(libswd_ctx_t *libswdctx, libswd_operation_t operation, char 
    //We got ACK==WAIT, retry last transfer until success or failure.
    for (retry=LIBSWD_RETRY_COUNT_DEFAULT; retry>0; retry--){
     abort=0xFFFFFFFE;
-    res=libswd_dap_errors_handle(libswdctx, LIBSWD_OPERATION_EXECUTE, &abort, &ctrlstat); 
+    res=libswd_dap_errors_handle(libswdctx, LIBSWD_OPERATION_EXECUTE, &abort, NULL);
     if (res<0) continue;
     res=libswd_bus_write_request_raw(libswdctx, LIBSWD_OPERATION_ENQUEUE, &request);
     if (res<0) continue; 
