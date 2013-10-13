@@ -277,7 +277,7 @@ int libswd_cli(libswd_ctx_t *libswdctx, char *command)
       } else memset((void*)libswdctx->membuf.data, 0xFF, libswdctx->membuf.size);
      } else libswdctx->membuf.size=count*sizeof(char); 
      // Perform MEM-AP read.
-     retval=libswd_memap_read_char(libswdctx, LIBSWD_OPERATION_EXECUTE,
+     retval=libswd_memap_read_char_32(libswdctx, LIBSWD_OPERATION_EXECUTE,
                               addrstart, count,
                               libswdctx->membuf.data);
      if (retval<0) goto libswd_cli_error;
@@ -506,7 +506,7 @@ libswd_cli_write_memap_file_load_ok:
                  libswdctx->membuf.size, filename );
      }
      // At this point data are in membuf, sent them to MEM-AP.
-     retval=libswd_memap_write_char(libswdctx, LIBSWD_OPERATION_EXECUTE,
+     retval=libswd_memap_write_char_32(libswdctx, LIBSWD_OPERATION_EXECUTE,
                                addrstart, libswdctx->membuf.size,
                                libswdctx->membuf.data);
      if (retval<0) goto libswd_cli_error;
