@@ -279,6 +279,7 @@ int libswdapp_handle_command_flash(libswdapp_context_t *libswdappctx, char *comm
  // Target is ready to perform Flash operations.
  if (command) cmd=strsep(&command," ");
  if (command) cmd=strsep(&command," ");
+
  // Check for READ invocation.
  if ( strncmp(cmd,"r",1)==0 || strncmp(cmd,"read",4)==0 )
  {
@@ -402,6 +403,150 @@ int libswdapp_handle_command_flash(libswdapp_context_t *libswdappctx, char *comm
   }
   libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL, "FLASH MASS-ERASE OK!\n");
  }
+
+  // Check for WRITE invocation.
+  else if ( strncmp(cmd,"w",1)==0 || strncmp(cmd,"write",5)==0 )
+  {
+   if (command)
+   {
+    cmd=strsep(&command," ");
+    filename=cmd;
+   }
+   else
+   {
+    retval=LIBSWD_ERROR_CLISYNTAX;
+    goto libswdapp_handle_command_flash_error;
+   }
+   retval=LIBSWD_OK;
+   FILE *fp;
+   fp=fopen(filename,"r");
+   if (!fp)
+   {
+    libswd_log(libswdctx, LIBSWD_LOGLEVEL_ERROR,
+               "FLASH ERROR: Cannot open '%s' data file (%s)!\n",
+               filename, strerror(errno));
+    retval=LIBSWD_ERROR_FILE;
+    goto libswdapp_handle_command_flash_error;
+   }
+   // Take care of (re)allocating memory for membuf based on a file size.
+   if (libswdctx->membuf.size) free(libswdctx->membuf.data);
+   fseek(fp, 0, SEEK_END);
+   // Verify if filesize fits in Flash meory.
+   if (ftell(fp)>count)
+   {
+    libswd_log(libswdctx, LIBSWD_LOGLEVEL_ERROR,
+               "FLASH ERROR: File (0x%X) won't fit in memory (0x%X)!\n",
+               ftell(fp), count);
+    retval=LIBSWD_ERROR_OUTOFMEM; 
+    goto libswdapp_handle_command_flash_error;
+   }
+   // Allocate memory for file content.
+   libswdctx->membuf.size=ftell(fp);
+   libswdctx->membuf.data=(char*)malloc(libswdctx->membuf.size*sizeof(char));
+   fseek(fp, 0, SEEK_SET);
+   if (!libswdctx->membuf.data)
+   {
+    libswd_log(libswdctx, LIBSWD_LOGLEVEL_ERROR,
+               "FLASH ERROR: Cannot allocate memory to load '%s' file, aborting!\n",
+               filename );
+    retval=LIBSWD_ERROR_OUTOFMEM;
+    goto libswdapp_handle_command_flash_file_load_error;
+   }
+   // Load file content into memory.
+   retval=fread(libswdctx->membuf.data, sizeof(char), libswdctx->membuf.size, fp);
+   if (!retval)
+   {
+    libswd_log(libswdctx, LIBSWD_LOGLEVEL_ERROR, 
+               "FLASH ERROR: Cannot load data from '%s' file (%s)!\n",
+               filename, strerror(errno) );
+    retval=LIBSWD_ERROR_FILE;
+   }
+libswdapp_handle_command_flash_file_load_error:
+   retval=fclose(fp);
+   if (retval)
+   {
+    libswd_log(libswdctx, LIBSWD_LOGLEVEL_ERROR, 
+               "FLASH ERROR: libswd_cli(): Cannot close data file '%s' (%s)!\n",
+               filename, strerror(errno) );
+    retval=LIBSWD_ERROR_FILE;
+    goto libswdapp_handle_command_flash_file_load_error;
+   }
+libswdapp_handle_command_flash_file_load_ok:
+   libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL,
+              "FLASH: %d bytes of data from '%s' file loaded!\n",
+              libswdctx->membuf.size, filename );
+   count=libswdctx->membuf.size;
+   // At this point data are in membuf, sent them to MEM-AP.
+
+   // FLASH WRITE 
+   // Unlock the Flash Controller.
+   libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO, "FLASH: Unlocking STM32 FPEC...\n");
+   data=LIBSWDAPP_FLASH_STM32F1_FLASH_KEYR_KEY1_VAL;
+   retval=libswd_memap_write_int_32(libswdctx, LIBSWD_OPERATION_ENQUEUE, flash_memmap.FLASH_KEYR_ADDR, 1, &data);
+   if (retval<0) goto libswdapp_handle_command_flash_error;
+   data=LIBSWDAPP_FLASH_STM32F1_FLASH_KEYR_KEY2_VAL;
+   retval=libswd_memap_write_int_32(libswdctx, LIBSWD_OPERATION_ENQUEUE, flash_memmap.FLASH_KEYR_ADDR, 1, &data);
+   if (retval<0) goto libswdapp_handle_command_flash_error;
+   // Perform Mass-Erase operation.
+   libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL, "FLASH: Performing Flash Mass-Erase...\n");
+   //Wait for BSY flag clearance.
+   for (i=LIBSWD_RETRY_COUNT_DEFAULT;i;i--)
+   {
+    retval=libswd_memap_read_int_32(libswdctx, LIBSWD_OPERATION_EXECUTE, flash_memmap.FLASH_SR_ADDR, 1, &data);
+    if (!(data&LIBSWDAPP_FLASH_STM32F1_FLASH_SR_BSY)) break;
+    usleep(LIBSWD_RETRY_DELAY_DEFAULT);
+   }
+   if (!i)
+   {
+    retval=LIBSWD_ERROR_MAXRETRY;
+    goto libswdapp_handle_command_flash_error; 
+   }
+   //Set MER bit in FLASH_CR
+   retval=libswd_memap_read_int_32(libswdctx, LIBSWD_OPERATION_EXECUTE, flash_memmap.FLASH_CR_ADDR, 1, &data);
+   if (retval<0) goto libswdapp_handle_command_flash_error;
+   data|=LIBSWDAPP_FLASH_STM32F1_FLASH_CR_MER;
+   retval=libswd_memap_write_int_32(libswdctx, LIBSWD_OPERATION_EXECUTE, flash_memmap.FLASH_CR_ADDR, 1, &data);
+   if (retval<0) goto libswdapp_handle_command_flash_error;
+   data|=LIBSWDAPP_FLASH_STM32F1_FLASH_CR_STRT;
+   retval=libswd_memap_write_int_32(libswdctx, LIBSWD_OPERATION_EXECUTE, flash_memmap.FLASH_CR_ADDR, 1, &data);
+   if (retval<0) goto libswdapp_handle_command_flash_error;
+   //Wait for BSY flag clearance.
+   for (i=LIBSWD_RETRY_COUNT_DEFAULT;i;i--)
+   {
+    retval=libswd_memap_read_int_32(libswdctx, LIBSWD_OPERATION_EXECUTE, flash_memmap.FLASH_SR_ADDR, 1, &data);
+    if (!(data&LIBSWDAPP_FLASH_STM32F1_FLASH_SR_BSY)) break;
+    usleep(100);
+   }
+   if (!i)
+   {
+    retval=LIBSWD_ERROR_MAXRETRY;
+    goto libswdapp_handle_command_flash_error; 
+   }
+   // Perform Flash write.
+   libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL, "FLASH: Performing Flash Write...\n");
+   retval=libswd_memap_read_int_32(libswdctx, LIBSWD_OPERATION_EXECUTE, flash_memmap.FLASH_CR_ADDR, 1, &data);
+   if (retval<0) goto libswdapp_handle_command_flash_error;
+   data=LIBSWDAPP_FLASH_STM32F1_FLASH_CR_PG;
+   retval=libswd_memap_write_int_32(libswdctx, LIBSWD_OPERATION_EXECUTE, flash_memmap.FLASH_CR_ADDR, 1, &data);
+   if (retval<0) goto libswdapp_handle_command_flash_error;
+   // Perform the data write phase using MEM-AP.
+   int accsize=4;
+   addr=flash_memmap.page_start;
+   retval=libswd_memap_write_char_csw(libswdctx, LIBSWD_OPERATION_EXECUTE, addr, count, libswdctx->membuf.data, LIBSWD_MEMAP_CSW_SIZE_16BIT|LIBSWD_MEMAP_CSW_ADDRINC_PACKED);
+    if (retval<0) goto libswdapp_handle_command_flash_error; 
+   // Print out the data.
+   for (i=0; i<libswdctx->membuf.size; i=i+16)
+   {
+    printf("\n%08X: ", i+addrstart);
+    for (j=0;j<16&&i+j<libswdctx->membuf.size;j++) printf("%02X ", (unsigned char)libswdctx->membuf.data[i+j]);
+    if (j<16) for(;j<16;j++) printf("   ");
+    printf(" ");
+    for (j=0;j<16&&i+j<libswdctx->membuf.size;j++) printf("%c", isprint(libswdctx->membuf.data[i+j])?libswdctx->membuf.data[i+j]:'.');
+    if (j<16) for (;j<16;j++) printf(".");
+   }
+   printf("\n\nFLASH: WRITE OK!\n");
+  }
+
  return LIBSWD_OK;
 
 libswdapp_handle_command_flash_error:
