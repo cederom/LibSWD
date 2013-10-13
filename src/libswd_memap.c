@@ -209,6 +209,7 @@ int libswd_memap_read_char(libswd_ctx_t *libswdctx, libswd_operation_t operation
   return LIBSWD_ERROR_BADOPCODE;
 
  int i, loc, res=0, accsize=0, *memapcsw, *memaptar, *memapdrw;
+ int chunk, chunks, chunksize=1024;
 
  // Initialize MEM-AP if necessary.
  if (!libswdctx->log.memap.initialized)
@@ -236,27 +237,58 @@ int libswd_memap_read_char(libswd_ctx_t *libswdctx, libswd_operation_t operation
  if (count%accsize) count=count-(count%accsize);
 
  // Perform word-by-word read operation and implode result into char array.
- for (i=0;i<count/accsize;i++)
+ if (!(libswdctx->log.memap.csw&LIBSWD_MEMAP_CSW_ADDRINC))
  {
-  loc=addr+i*accsize;
-  libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO,
-             "LIBSWD_I: libswd_memap_read_char() reading address 0x%08X\r",
-             loc );
-  fflush();
-  // Pass address to TAR register.
-  res=libswd_ap_write(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_TAR_ADDR, &loc);
-  if (res<0) goto libswd_memap_read_char_error;
-  libswdctx->log.memap.tar=loc;
-  // Read data from DRW register.
-  res=libswd_ap_read(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_DRW_ADDR, &memapdrw);
-  if (res<0) goto libswd_memap_read_char_error;
-  libswdctx->log.memap.drw=*memapdrw;
-  data[4*i+0]=(unsigned char)(*memapdrw);
-  data[4*i+1]=(unsigned char)(*memapdrw>>8);
-  data[4*i+2]=(unsigned char)(*memapdrw>>16);
-  data[4*i+3]=(unsigned char)(*memapdrw>>24);
+  // Use manual TAR incrementation (slower).
+  for (i=0;i<count;i+=accsize)
+  {
+   loc=addr+i;
+   libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO,
+              "LIBSWD_I: libswd_memap_read_char() reading address 0x%08X\r",
+              loc );
+   fflush();
+   // Pass address to TAR register.
+   res=libswd_ap_write(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_TAR_ADDR, &loc);
+   if (res<0) goto libswd_memap_read_char_error;
+   libswdctx->log.memap.tar=loc;
+   // Read data from DRW register.
+   res=libswd_ap_read(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_DRW_ADDR, &memapdrw);
+   if (res<0) goto libswd_memap_read_char_error;
+   libswdctx->log.memap.drw=*memapdrw;
+   memcpy((void*)data+i, memapdrw, accsize);
+  }
+  libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO, "\n");
  }
- libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO, "\n");
+ else
+ {
+  // Use TAR Auto Increment (faster).
+  // 2^10 chunks are used due to TAR Auto Increment limitations.
+  // Check if packed transfer, if so use word access.
+  if (libswdctx->log.memap.csw&LIBSWD_MEMAP_CSW_ADDRINC_PACKED) accsize=4;
+  chunks=count/chunksize;
+  for (chunk=0;chunk*chunksize<count;chunk++)
+  {
+   loc=addr+chunk*chunksize;
+   // Pass address to TAR register.
+   res=libswd_ap_write(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_TAR_ADDR, &loc);
+   if (res<0) goto libswd_memap_read_char_error;
+   libswdctx->log.memap.tar=loc;
+   for (i=0;i<chunksize;i+=accsize)
+   {
+    if ((chunk*chunksize)+i>=count) break;
+    libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO,
+               "LIBSWD_I: libswd_memap_read_char() reading address 0x%08X (chunk 0x%X/0x%X)\r",
+               loc+i, chunk, chunks );
+    fflush();
+    // Implode and Write data to DRW register.
+    res=libswd_ap_read(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_DRW_ADDR, &memapdrw);
+    if (res<0) goto libswd_memap_read_char_error;
+    libswdctx->log.memap.drw=*memapdrw;
+    memcpy((void*)data+(chunk*chunksize)+i, memapdrw, accsize);
+   }
+  }
+  libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO, "\n");
+ }
 
  return LIBSWD_OK;
 
@@ -266,6 +298,7 @@ libswd_memap_read_char_error:
             libswd_error_string(res) );
  return res;
 }
+
 
 /** Generic read using MEM-AP to char array, with prior CSW setup.
  * Data are stored into char array.
@@ -350,7 +383,7 @@ int libswd_memap_read_char_32(libswd_ctx_t *libswdctx, libswd_operation_t operat
             (void*)libswdctx, libswd_operation_string(operation),
             addr, count, (void**)data );
 
- return libswd_memap_read_char_csw(libswdctx, operation, addr, count, data, LIBSWD_MEMAP_CSW_SIZE_32BIT);
+ return libswd_memap_read_char_csw(libswdctx, operation, addr, count, data, LIBSWD_MEMAP_CSW_SIZE_32BIT|LIBSWD_MEMAP_CSW_ADDRINC_SINGLE);
 }
 
 /** Generic read using MEM-AP into int array.
@@ -364,7 +397,7 @@ int libswd_memap_read_char_32(libswd_ctx_t *libswdctx, libswd_operation_t operat
  */
 int libswd_memap_read_int(libswd_ctx_t *libswdctx, libswd_operation_t operation, int addr, int count, int *data){
  libswd_log(libswdctx, LIBSWD_LOGLEVEL_DEBUG,
-            "LIBSWD_D: Entering libswd_memap_read_int(*libswdctx=%p, operation=%s, addr=0x%08X, count=0x%08X, *data=%p) entering function...\n",
+            "LIBSWD_D: Entering libswd_memap_read_int(*libswdctx=%p, operation=%s, addr=0x%08X, count=0x%08X, *data=%p)...\n",
             (void*)libswdctx, libswd_operation_string(operation),
             addr, count, (void**)data); 
 
@@ -373,6 +406,7 @@ int libswd_memap_read_int(libswd_ctx_t *libswdctx, libswd_operation_t operation,
   return LIBSWD_ERROR_BADOPCODE;
 
  int i, loc, res, *memapcsw, *memaptar, *memapdrw;
+ int chunk, chunks, chunksize=1024;
 
  // Initialize MEM-AP if necessary.
  if (!libswdctx->log.memap.initialized)
@@ -382,30 +416,63 @@ int libswd_memap_read_int(libswd_ctx_t *libswdctx, libswd_operation_t operation,
  }
 
  // Perform word-by-word read operation and store result into int array.
- for (i=0;i<count;i++)
+ if (!(libswdctx->log.memap.csw&LIBSWD_MEMAP_CSW_ADDRINC))
  {
-  loc=addr+i*4;
-  libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO,
-             "LIBSWD_I: libswd_memap_read_int() reading address 0x%08X\r",
-             loc );
-  fflush();
-  // Pass address to TAR register.
-  res=libswd_ap_write(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_TAR_ADDR, &loc);
-  if (res<0) goto libswd_memap_read_int_error;
-  libswdctx->log.memap.tar=loc;
-  // Read data from DRW register.
-  res=libswd_ap_read(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_DRW_ADDR, &memapdrw);
-  if (res<0) goto libswd_memap_read_int_error;
-  libswdctx->log.memap.drw=*memapdrw;
-  data[i]=*memapdrw;
+  // Use manual TAR incrementation (slower).
+  for (i=0;i<count;i++)
+  {
+   loc=addr+i*4;
+   libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO,
+              "LIBSWD_I: libswd_memap_read_int() reading address 0x%08X\r",
+              loc );
+   fflush();
+   // Pass address to TAR register.
+   res=libswd_ap_write(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_TAR_ADDR, &loc);
+   if (res<0) goto libswd_memap_read_int_error;
+   libswdctx->log.memap.tar=loc;
+   // Read data from DRW register.
+   res=libswd_ap_read(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_DRW_ADDR, &memapdrw);
+   if (res<0) goto libswd_memap_read_int_error;
+   libswdctx->log.memap.drw=*memapdrw;
+   data[i]=*memapdrw;
+  }
+  libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO, "\n");
  }
- libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO, "\n");
+ else
+ {
+  // Use TAR Auto Increment (faster).
+  // 2^10 chunks are used due to TAR Auto Increment limitations.
+  // Check if packed transfer, if so use word access.
+  chunks=count/chunksize;
+  for (chunk=0;chunk*chunksize<count;chunk++)
+  {
+   loc=addr+chunk*chunksize;
+   // Pass address to TAR register.
+   res=libswd_ap_write(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_TAR_ADDR, &loc);
+   if (res<0) goto libswd_memap_read_int_error;
+   libswdctx->log.memap.tar=loc;
+   for (i=0;i<chunksize;i++)
+   {
+    if ((chunk*chunksize)+(i*4)>=count) break;
+    libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO,
+               "LIBSWD_I: libswd_memap_read_int() reading address 0x%08X (chunk 0x%X/0x%X)\r",
+               loc+(i*4), chunk, chunks );
+    fflush();
+    // Write data to DRW register.
+    res=libswd_ap_read(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_DRW_ADDR, &memapdrw);
+    if (res<0) goto libswd_memap_read_int_error;
+    libswdctx->log.memap.drw=*memapdrw;
+    data[chunk*chunksize+i]=*memapdrw;
+   }
+  }
+  libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO, "\n");
+ }
 
  return LIBSWD_OK;
 
 libswd_memap_read_int_error:
- libswd_log(libswdctx, LIBSWD_LOGLEVEL_WARNING,
-            "\nLIBSWD_W: libswd_memap_read_int(): %s\n",
+ libswd_log(libswdctx, LIBSWD_LOGLEVEL_ERROR,
+            "\nLIBSWD_E: libswd_memap_read_int(): %s\n",
             libswd_error_string(res) );
  return res;
 }
@@ -468,8 +535,8 @@ int libswd_memap_read_int_csw(libswd_ctx_t *libswdctx, libswd_operation_t operat
  return LIBSWD_OK;
 
 libswd_memap_read_int_csw_error:
- libswd_log(libswdctx, LIBSWD_LOGLEVEL_WARNING,
-            "\nLIBSWD_W: libswd_memap_read_int_csw(): %s\n",
+ libswd_log(libswdctx, LIBSWD_LOGLEVEL_ERROR,
+            "\nLIBSWD_E: libswd_memap_read_int_csw(): %s\n",
             libswd_error_string(res) );
  return res;
 }
@@ -487,11 +554,11 @@ libswd_memap_read_int_csw_error:
  */
 int libswd_memap_read_int_32(libswd_ctx_t *libswdctx, libswd_operation_t operation, int addr, int count, int *data){
  libswd_log(libswdctx, LIBSWD_LOGLEVEL_DEBUG,
-            "LIBSWD_D: Entering libswd_memap_read_int(*libswdctx=%p, operation=%s, addr=0x%08X, count=0x%08X, *data=%p)...\n",
+            "LIBSWD_D: Entering libswd_memap_read_int_32(*libswdctx=%p, operation=%s, addr=0x%08X, count=0x%08X, *data=%p)...\n",
             (void*)libswdctx, libswd_operation_string(operation),
             addr, count, (void**)data);
 
- return libswd_memap_read_int_csw(libswdctx, operation, addr, count, data, LIBSWD_MEMAP_CSW_SIZE_32BIT);
+ return libswd_memap_read_int_csw(libswdctx, operation, addr, count, data, LIBSWD_MEMAP_CSW_SIZE_32BIT|LIBSWD_MEMAP_CSW_ADDRINC_SINGLE);
 } 
 
 
@@ -515,6 +582,7 @@ int libswd_memap_write_char(libswd_ctx_t *libswdctx, libswd_operation_t operatio
   return LIBSWD_ERROR_BADOPCODE;
 
  int i, loc, res=0, accsize=0, *memapcsw, *memaptar, *memapdrw;
+ int chunk, chunks, chunksize=1024;
 
  // Initialize MEM-AP if neessary.
  if (!libswdctx->log.memap.initialized)
@@ -542,19 +610,55 @@ int libswd_memap_write_char(libswd_ctx_t *libswdctx, libswd_operation_t operatio
  if (count%accsize) count=count-(count%accsize);
 
  // Perform word-by-word write operation from char array.
- for (i=0;i<count/accsize;i++)
+ // Use write method that match the CSW AddrInc configuration.
+ if (!(libswdctx->log.memap.csw&LIBSWD_MEMAP_CSW_ADDRINC))
  {
-  loc=addr+i*accsize;
-  libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO, "LIBSWD_I: libswd_memap_write_char() writing address 0x%08X\r", loc);
-  fflush();
-  // Pass address to TAR register.
-  res=libswd_ap_write(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_TAR_ADDR, &loc);
-  if (res<0) goto libswd_memap_write_char_error;
-  libswdctx->log.memap.tar=loc;
-  // Implode and Write data to DRW register.
-  memcpy((void*)&libswdctx->log.memap.drw, data+(i*accsize), accsize);
-  res=libswd_ap_write(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_DRW_ADDR, &libswdctx->log.memap.drw);
-  if (res<0) goto libswd_memap_write_char_error;
+  // Use manual TAR incrementation (slower).
+  for (i=0;i<count;i+=accsize)
+  {
+   loc=addr+i;
+   libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO,
+              "LIBSWD_I: libswd_memap_write_char() writing address 0x%08X\r",
+              loc );
+   fflush();
+   // Pass address to TAR register.
+   res=libswd_ap_write(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_TAR_ADDR, &loc);
+   if (res<0) goto libswd_memap_write_char_error;
+   libswdctx->log.memap.tar=loc;
+   // Implode and Write data to DRW register.
+   memcpy((void*)&libswdctx->log.memap.drw, data+i, accsize);
+   res=libswd_ap_write(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_DRW_ADDR, &libswdctx->log.memap.drw);
+   if (res<0) goto libswd_memap_write_char_error;
+  }
+ }
+ else
+ {
+  // Use TAR Auto Increment (faster).
+  // 2^10 chunks are used due to TAR Auto Increment limitations.
+  // Check if packed transfer, if so use word access.
+  if (libswdctx->log.memap.csw&LIBSWD_MEMAP_CSW_ADDRINC_PACKED) accsize=4;
+  chunks=count/chunksize;
+  for (chunk=0;chunk*chunksize<count;chunk++)
+  {
+   loc=addr+chunk*chunksize;
+   // Pass address to TAR register.
+   res=libswd_ap_write(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_TAR_ADDR, &loc);
+   if (res<0) goto libswd_memap_write_char_error;
+   libswdctx->log.memap.tar=loc;
+   for (i=0;i<chunksize;i+=accsize)
+   {
+    if ((chunk*chunksize)+i>=count) break;
+    libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO,
+               "LIBSWD_I: libswd_memap_write_char() writing address 0x%08X (chunk 0x%X/0x%X)\r",
+               loc+i, chunk, chunks );
+    fflush();
+    // Implode and Write data to DRW register.
+    memcpy((void*)&libswdctx->log.memap.drw, data+(chunk*chunksize)+i, accsize);
+    res=libswd_ap_write(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_DRW_ADDR, &libswdctx->log.memap.drw);
+    if (res<0) goto libswd_memap_write_char_error;
+   }
+  }
+  libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO, "\n");
  }
 
  return LIBSWD_OK;
@@ -577,7 +681,10 @@ libswd_memap_write_char_error:
  * \return number of elements/words processed or LIBSWD_ERROR code on failure.
  */
 int libswd_memap_write_char_csw(libswd_ctx_t *libswdctx, libswd_operation_t operation, int addr, int count, char *data, int csw){
- libswd_log(libswdctx, LIBSWD_LOGLEVEL_DEBUG, "LIBSWD_D: libswd_memap_write_char_csw(*libswdctx=%p, operation=%s, addr=0x%08X, count=0x%08X, **data=%p, csw=0x%X) entering function...\n", (void*)libswdctx, libswd_operation_string(operation), addr, count, (void**)data, csw); 
+ libswd_log(libswdctx, LIBSWD_LOGLEVEL_DEBUG,
+            "LIBSWD_D: Entring libswd_memap_write_char_csw(*libswdctx=%p, operation=%s, addr=0x%08X, count=0x%08X, **data=%p, csw=0x%X)...\n",
+            (void*)libswdctx, libswd_operation_string(operation),
+            addr, count, (void**)data, csw );
  if (libswdctx==NULL) return LIBSWD_ERROR_NULLCONTEXT; 
  if (operation!=LIBSWD_OPERATION_ENQUEUE && operation!=LIBSWD_OPERATION_EXECUTE)
   return LIBSWD_ERROR_BADOPCODE;
@@ -621,7 +728,7 @@ int libswd_memap_write_char_csw(libswd_ctx_t *libswdctx, libswd_operation_t oper
 
 libswd_memap_write_char_csw_error:
  libswd_log(libswdctx, LIBSWD_LOGLEVEL_ERROR,
-            "LIBSWD_E: libswd_memap_write_char(): %s\n",
+            "LIBSWD_E: libswd_memap_write_char_csw(): %s\n",
             libswd_error_string(res) );
  return res;
 }
@@ -636,9 +743,12 @@ libswd_memap_write_char_csw_error:
  * \return number of elements/words processed or LIBSWD_ERROR code on failure.
  */
 int libswd_memap_write_char_32(libswd_ctx_t *libswdctx, libswd_operation_t operation, int addr, int count, char *data){
- libswd_log(libswdctx, LIBSWD_LOGLEVEL_DEBUG, "LIBSWD_D: libswd_memap_write_char_32(*libswdctx=%p, operation=%s, addr=0x%08X, count=0x%08X, **data=%p) entering function...\n", (void*)libswdctx, libswd_operation_string(operation), addr, count, (void**)data); 
+ libswd_log(libswdctx, LIBSWD_LOGLEVEL_DEBUG,
+            "LIBSWD_D: Entering libswd_memap_write_char_32(*libswdctx=%p, operation=%s, addr=0x%08X, count=0x%08X, **data=%p)...\n",
+            (void*)libswdctx, libswd_operation_string(operation),
+            addr, count, (void**)data); 
 
- return libswd_memap_write_char_csw(libswdctx, operation, addr, count, data, LIBSWD_MEMAP_CSW_SIZE_32BIT);
+ return libswd_memap_write_char_csw(libswdctx, operation, addr, count, data, LIBSWD_MEMAP_CSW_SIZE_32BIT|LIBSWD_MEMAP_CSW_ADDRINC_SINGLE);
 }
 
 
@@ -663,6 +773,7 @@ int libswd_memap_write_int(libswd_ctx_t *libswdctx, libswd_operation_t operation
   return LIBSWD_ERROR_BADOPCODE;
 
  int i, loc, res=0, *memapcsw, *memaptar, *memapdrw;
+ int chunk, chunks, chunksize=1024;
 
  // Initialize MEM-AP if necessary.
  if (!libswdctx->log.memap.initialized)
@@ -672,23 +783,55 @@ int libswd_memap_write_int(libswd_ctx_t *libswdctx, libswd_operation_t operation
  }
 
  // Perform word-by-word write operation from int array.
- for (i=0;i<count;i++)
+ if (!(libswdctx->log.memap.csw&LIBSWD_MEMAP_CSW_ADDRINC))
  {
-  loc=addr+i*4;
-  libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO,
-             "LIBSWD_I: libswd_memap_write_int() writing address 0x%08X\r",
-             loc );
-  fflush();
-  // Pass address to TAR register.
-  res=libswd_ap_write(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_TAR_ADDR, &loc);
-  if (res<0) goto libswd_memap_write_int_error;
-  libswdctx->log.memap.tar=loc;
-  // Implode and Write data to DRW register.
-  res=libswd_ap_write(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_DRW_ADDR, &data[i]);
-  if (res<0) goto libswd_memap_write_int_error;
-  libswdctx->log.memap.drw=data[i];
+  // Use manual TAR incrementation (slower).
+  for (i=0;i<count;i++)
+  {
+   loc=addr+i*4;
+   libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO,
+              "LIBSWD_I: libswd_memap_write_int() writing address 0x%08X\r",
+              loc );
+   fflush();
+   // Pass address to TAR register.
+   res=libswd_ap_write(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_TAR_ADDR, &loc);
+   if (res<0) goto libswd_memap_write_int_error;
+   libswdctx->log.memap.tar=loc;
+   // Implode and Write data to DRW register.
+   res=libswd_ap_write(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_DRW_ADDR, data+i);
+   if (res<0) goto libswd_memap_write_int_error;
+   libswdctx->log.memap.drw=data[i];
+  }
+  libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO, "\n");
  }
- libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO, "\n");
+ else
+ {
+  // Use TAR Auto Increment (faster).
+  // 2^10 chunks are used due to TAR Auto Increment limitations.
+  // Check if packed transfer, if so use word access.
+  chunks=count/chunksize;
+  for (chunk=0;chunk*chunksize<count;chunk++)
+  {
+   loc=addr+chunk*chunksize;
+   // Pass address to TAR register.
+   res=libswd_ap_write(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_TAR_ADDR, &loc);
+   if (res<0) goto libswd_memap_write_int_error;
+   libswdctx->log.memap.tar=loc;
+   for (i=0;i<chunksize;i++)
+   {
+    if ((chunk*chunksize)+(i*4)>=count) break;
+    libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO,
+               "LIBSWD_I: libswd_memap_write_int() writing address 0x%08X (chunk 0x%X/0x%X)\r",
+               loc+(i*4), chunk, chunks );
+    fflush();
+    // Implode and Write data to DRW register.
+    libswdctx->log.memap.drw=data[chunk*chunksize+i];
+    res=libswd_ap_write(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_DRW_ADDR, &libswdctx->log.memap.drw);
+    if (res<0) goto libswd_memap_write_int_error;
+   }
+  }
+  libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO, "\n");
+ }
 
  return LIBSWD_OK;
 
@@ -710,7 +853,7 @@ libswd_memap_write_int_error:
  */
 int libswd_memap_write_int_csw(libswd_ctx_t *libswdctx, libswd_operation_t operation, int addr, int count, int *data, int csw){
  libswd_log(libswdctx, LIBSWD_LOGLEVEL_DEBUG,
-            "LIBSWD_D: Entering libswd_memap_write_int(*libswdctx=%p, operation=%s, addr=0x%08X, count=0x%08X, **data=%p, csw=0x%X)...\n",
+            "LIBSWD_D: Entering libswd_memap_write_int_csw(*libswdctx=%p, operation=%s, addr=0x%08X, count=0x%08X, **data=%p, csw=0x%X)...\n",
             (void*)libswdctx, libswd_operation_string(operation),
             addr, count, (void**)data, csw );
 
@@ -755,8 +898,8 @@ int libswd_memap_write_int_csw(libswd_ctx_t *libswdctx, libswd_operation_t opera
  return LIBSWD_OK;
 
 libswd_memap_write_int_csw_error:
- libswd_log(libswdctx, LIBSWD_LOGLEVEL_WARNING,
-            "\nLIBSWD_W: libswd_memap_write_int_csw(): %s\n",
+ libswd_log(libswdctx, LIBSWD_LOGLEVEL_ERROR,
+            "\nLIBSWD_E: libswd_memap_write_int_csw(): %s\n",
             libswd_error_string(res) );
  return res;
 }
@@ -771,11 +914,11 @@ libswd_memap_write_int_csw_error:
  */
 int libswd_memap_write_int_32(libswd_ctx_t *libswdctx, libswd_operation_t operation, int addr, int count, int *data){
  libswd_log(libswdctx, LIBSWD_LOGLEVEL_DEBUG,
-            "LIBSWD_D: Entering libswd_memap_write_32(*libswdctx=%p, operation=%s, addr=0x%08X, count=0x%08X, **data=%p)...\n",
+            "LIBSWD_D: Entering libswd_memap_write_int_32(*libswdctx=%p, operation=%s, addr=0x%08X, count=0x%08X, **data=%p)...\n",
             (void*)libswdctx, libswd_operation_string(operation),
             addr, count, (void**)data);
  
- return libswd_memap_write_int_csw(libswdctx, operation, addr, count, data, LIBSWD_MEMAP_CSW_SIZE_32BIT);
+ return libswd_memap_write_int_csw(libswdctx, operation, addr, count, data, LIBSWD_MEMAP_CSW_SIZE_32BIT|LIBSWD_MEMAP_CSW_ADDRINC_SINGLE);
 }
 
 
