@@ -257,8 +257,8 @@ int libswd_drv_transmit(libswd_ctx_t *libswdctx, libswd_cmd_t *cmd){
    // Verify calculated data parity with value received from target.
    if (cmd->parity!=testparity){
     // Give error message.
-    libswd_log(libswdctx, LIBSWD_LOGLEVEL_ERROR,
-      "LIBSWD_E: libswd_drv_transmit(libswdctx=@%p, cmd=@%p): Parity mismatch detected (%s/%d)!\n",
+    libswd_log(libswdctx, LIBSWD_LOGLEVEL_WARNING,
+      "LIBSWD_W: libswd_drv_transmit(libswdctx=@%p, cmd=@%p): Parity mismatch detected (%s/%d)!\n",
       (void*)libswdctx, (void*)cmd, libswd_bin32_string(&cmd->prev->misodata), cmd->parity );
     // Clean the cmdq tail (as it contains invalid operations).
     libswd_log(libswdctx, LIBSWD_LOGLEVEL_WARNING,
