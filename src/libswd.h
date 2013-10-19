@@ -89,6 +89,9 @@
 
 #include <stdlib.h>
 #include <stdarg.h>
+#include <string.h>
+#include <math.h>
+#include <sys/time.h>
 
 #ifndef __LIBSWD_H__
 #define __LIBSWD_H__
