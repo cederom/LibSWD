@@ -73,7 +73,7 @@ int libswdapp_print_banner(void){
  printf("*******************************************************************\n");
  printf("* Welcome to LibSWD CLI Application! Type '?' or 'help' for help. *\n");
  printf("* See project website http://libswd.sf.net for more information.. *\n");
- printf("* (C) CeDeROM (http://www.tomek.cedro.info)   Version: %10Ls *\n", VERSION);
+ printf("* (C) CeDeROM (http://www.tomek.cedro.info)  Version: %10Ls *\n", VERSION);
  printf("*******************************************************************\n\n");
  return LIBSWD_OK;
 }
