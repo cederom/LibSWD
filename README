@@ -14,7 +14,7 @@ LibSWD can be considered almost standalone to be easily integrated into third pa
 
 The first approach and practical tests were performed on simple STM32Primer development kits using UrJTAG and OpenOCD utilities as described on the http://stm32primer2.sf.net project webstie. Major parts of this research were conducted as a cooperation between Orange Labs Warsaw and Orange Labs Paris, and some additionally by Cybernetic Research Student Group from Warsaw University of Technology in Poland that I am founder and member.
 
-For more information please visit project website at http://libswd.sf.net. In case of problems use ticket system on a website or contact author (Tomasz CEDRO) directly at cederom@tlen.pl.
+For more information please visit project website at http://libswd.sf.net. In case of problems use ticket system on a website or contact author (Tomasz Bolesław CEDRO) directly at cederom@tlen.pl or http://www.tomek.cedro.info.
 
 
 ----------------------------
@@ -47,3 +47,8 @@ To know more build options that can be set before compilation:
 
  ./configure --help
 
+Features enabled/disabled by configure:
+ --enable-debug
+ --disable-application
+
+In order to build the Library and the Application you need: gcc, autogen, automake, autoconf, libtool, libftdi, libreadline development packages installed on your system.
