@@ -53,6 +53,7 @@
  ******************************************************************************/
 
 libswdapp_context_t *appctx;
+char history_filename[128];
 
 
 void libswdapp_shutdown(int sig)
@@ -65,6 +66,9 @@ void libswdapp_shutdown(int sig)
  if ((appctx->interface)!=NULL) free(appctx->interface);
  if (appctx->libswdctx!=NULL) libswd_deinit(appctx->libswdctx);
  if (appctx!=NULL) free(appctx);
+ stifle_history(LIBSWDAPP_CLI_HISTORY_MAXLEN);
+ if (retval=write_history(history_filename))
+  printf("WARNING: Cannot save CLI history to file (error %d)!\n", retval);
  printf("Exit OK\n");
  exit(retval);
 }
@@ -193,10 +197,19 @@ int main(int argc, char **argv){
  retval=libswdapp_handle_command_interface(libswdappctx, NULL);
  if (retval!=LIBSWD_OK) return retval;
 
+ // Setup the Readline
+ rl_bind_key('\t',rl_abort); //disable auto-complete
+ sprintf(history_filename, "%s%s", getenv("HOME"),LIBSWDAPP_CLI_HISTORY_FILENAME);
+ if (retval=read_history(history_filename))
+  libswd_log(libswdappctx->libswdctx, LIBSWD_LOGLEVEL_WARNING,
+             "WARNING: Cannot load CLI history from file (error %d)!\n",
+             retval );
+
  /* Run the Command Line Interpreter loop. */
  while ((command=readline("libswd>")) != NULL){
   while (cmd=strsep(&command, "\n;") )
   {
+   if (cmd[0]!=0) add_history(cmd);
    if (!strncmp(cmd,"q",1) || !strncmp(cmd,"quit",4)) goto quit;
    if (!strncmp(cmd,"s",1) || !strncmp(cmd,"signal",5))
    {

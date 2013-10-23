@@ -48,6 +48,9 @@
 #define LIBSWDAPP_INTERFACE_PID_DEFAULT           0xbbe2
 #define LIBSWDAPP_INTERFACE_NAME_DEFAULT          "ktlink"
 
+#define LIBSWDAPP_CLI_HISTORY_FILENAME "/.libswd/libswdapp_cli_history"
+#define LIBSWDAPP_CLI_HISTORY_MAXLEN  1024
+
 typedef struct libswdapp_interface_signal {
 	char *name;                         /// Signal name string.
 	unsigned int mask;                  /// Mask value for selected signal.
