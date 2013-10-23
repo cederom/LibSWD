@@ -157,7 +157,6 @@ int main(int argc, char **argv){
     strncpy(libswdappctx->interface->name, optarg, LIBSWDAPP_INTERFACE_NAME_MAXLEN);
     break;
    case 'h':
-   case '?':
    default:
     libswdapp_print_banner();
     libswdapp_print_usage();
@@ -222,9 +221,12 @@ int main(int argc, char **argv){
     continue;
    }
    if (!strncmp(cmd,"h",1) || !strncmp(cmd,"help",4) || !strncmp(cmd,"?",1))
+   {
+    libswdapp_print_banner();
     libswdapp_print_usage();
+   }
    retval=libswd_cli(libswdappctx->libswdctx, cmd);
-  if (retval!=LIBSWD_OK) if (retval!=LIBSWD_ERROR_CLISYNTAX) goto quit; 
+   if (retval!=LIBSWD_OK) if (retval!=LIBSWD_ERROR_CLISYNTAX) goto quit; 
   }
  }
 
