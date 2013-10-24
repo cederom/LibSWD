@@ -178,8 +178,6 @@ int main(int argc, char **argv){
   retval=LIBSWD_ERROR_NULLCONTEXT;
   goto quit;
  }
- // Store program Context for use with interface drivers.
- libswdappctx->libswdctx->driver->ctx=libswdappctx;
  // Set default LogLevel.
  if (LIBSWD_OK!=libswd_log_level_set(libswdappctx->libswdctx,libswdappctx->loglevel))
  {
@@ -193,8 +191,12 @@ int main(int argc, char **argv){
  libswdappctx->libswdctx->config.autofixerrors=0;
 
  // Initialize the Interface
- retval=libswdapp_handle_command_interface(libswdappctx, NULL);
+ retval=libswdapp_handle_command_interface_init(libswdappctx, NULL);
  if (retval!=LIBSWD_OK) return retval;
+ // Store program Context for use with interface drivers.
+ libswdappctx->libswdctx->driver->ctx=libswdappctx;
+ // Store interface structure in libswd driver. 
+ libswdappctx->libswdctx->driver->interface=libswdappctx->interface;
 
  // Setup the Readline
  rl_bind_key('\t',rl_abort); //disable auto-complete
@@ -723,7 +725,7 @@ int libswdapp_handle_command_signal(libswdapp_context_t *libswdappctx, char *cmd
   } 
   if (signamep && sigvalp)
   {
-   retval=libswdapp_interface_bitbang(libswdappctx, sig->mask, 0, &sigval);
+   retval=libswdappctx->interface->bitbang(libswdappctx, sig->mask, 0, &sigval);
    if (retval==LIBSWD_OK)
    {
     sig->value=sigval;
@@ -735,7 +737,7 @@ int libswdapp_handle_command_signal(libswdapp_context_t *libswdappctx, char *cmd
   }
   else if (signamep)
   {
-   retval=libswdapp_interface_bitbang(libswdappctx, sig->mask, 1, &sigval);
+   retval=libswdappctx->interface->bitbang(libswdappctx, sig->mask, 1, &sigval);
    if (retval==LIBSWD_OK)
    {
     sig->value=sigval;
@@ -763,7 +765,7 @@ libswdapp_handle_command_signal_error:
  * cmd==NULL means that we need to load default interface (defined in header file)
  * or we need to (re)initialize an interface that is already set in interface->name.
  */
-int libswdapp_handle_command_interface(libswdapp_context_t *libswdappctx, char *cmd){
+int libswdapp_handle_command_interface_init(libswdapp_context_t *libswdappctx, char *cmd){
  int retval, i, interface_number;
  char *param, buf[8];
 
@@ -778,6 +780,7 @@ int libswdapp_handle_command_interface(libswdapp_context_t *libswdappctx, char *
   return LIBSWD_ERROR_NULLCONTEXT;
  }
 
+ // Verify selected interface name or try the dedault.
  if (!libswdappctx->interface->name[0]) 
  {
   libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL,
@@ -822,6 +825,9 @@ int libswdapp_handle_command_interface(libswdapp_context_t *libswdappctx, char *
  libswdappctx->interface->init=NULL;
  libswdappctx->interface->deinit=NULL;
  libswdappctx->interface->set_freq=NULL;
+ libswdappctx->interface->bitbang=NULL;
+ libswdappctx->interface->transfer_bits=NULL;
+ libswdappctx->interface->transfer_bytes=NULL;
  libswdappctx->interface->maxfrequency=0;
  libswdappctx->interface->frequency=-1;
  libswdappctx->interface->chunksize=0;
@@ -832,6 +838,9 @@ int libswdapp_handle_command_interface(libswdapp_context_t *libswdappctx, char *
  libswdappctx->interface->init   = libswdapp_interface_configs[interface_number].init;
  libswdappctx->interface->deinit = libswdapp_interface_configs[interface_number].deinit;
  libswdappctx->interface->set_freq = libswdapp_interface_configs[interface_number].set_freq;
+ libswdappctx->interface->bitbang  = libswdapp_interface_configs[interface_number].bitbang;
+ libswdappctx->interface->transfer_bits  = libswdapp_interface_configs[interface_number].transfer_bits;
+ libswdappctx->interface->transfer_bytes = libswdapp_interface_configs[interface_number].transfer_bytes;
  libswdappctx->interface->vid    = libswdapp_interface_configs[interface_number].vid;
  libswdappctx->interface->pid    = libswdapp_interface_configs[interface_number].pid;
  libswdappctx->interface->latency= libswdapp_interface_configs[interface_number].latency;
@@ -1160,7 +1169,7 @@ int libswdapp_interface_signal_del(libswdapp_context_t *libswdappctx, char *name
  * \return ERROR_OK on success, or ERROR_FAIL on failure.
  * TODO: Bitbang Read must also update other bits status, otherwise cached values are invalid and abiguous!!!
  */
-int libswdapp_interface_bitbang(libswdapp_context_t *libswdappctx, unsigned int bitmask, int GETnSET, unsigned int *value)
+int libswdapp_interface_ftdi_bitbang(libswdapp_context_t *libswdappctx, unsigned int bitmask, int GETnSET, unsigned int *value)
 {
  unsigned char  buf[3];
  int retval, retry;
@@ -1284,7 +1293,7 @@ int libswdapp_interface_bitbang(libswdapp_context_t *libswdappctx, unsigned int 
  * \param nLSBfirst if zero shift data LSB-first, otherwise MSB-first.
  * \return number of bits sent on success, or ERROR_FAIL on failure.
  */
-int libswdapp_interface_transfer_bits(libswdapp_context_t *libswdappctx, int bits, char *mosidata, char *misodata, int nLSBfirst)
+int libswdapp_interface_ftdi_transfer_bits(libswdapp_context_t *libswdappctx, int bits, char *mosidata, char *misodata, int nLSBfirst)
 {
  static unsigned char buf[65539], databuf;
  int i, retval, bit=0, byte=0, bytes=0, retry;
@@ -1391,7 +1400,7 @@ int libswdapp_interface_transfer_bits(libswdapp_context_t *libswdappctx, int bit
  * \param nLSBfirst if zero shift data LSB-first, otherwise MSB-first.
  * \return number of bits sent on success, or ERROR_FAIL on failure.
  */
-int libswdapp_interface_transfer_bytes(libswdapp_context_t *libswdappctx, int bytes, char *mosidata, char *misodata, int nLSBfirst)
+int libswdapp_interface_ftdi_transfer_bytes(libswdapp_context_t *libswdappctx, int bytes, char *mosidata, char *misodata, int nLSBfirst)
 {
  static unsigned char buf[65539], databuf;
  int i, retval, byte=0, retry;
@@ -1574,7 +1583,7 @@ int libswdapp_interface_ftdi_init_ktlink(libswdapp_context_t *libswdappctx)
 int libswdapp_interface_ftdi_deinit(libswdapp_context_t *libswdappctx)
 {
  unsigned int dir=0,val;
- return libswdapp_interface_bitbang(libswdappctx, dir, 1, &val); 
+ return libswdappctx->interface->bitbang(libswdappctx, dir, 1, &val); 
 } 
 
 
@@ -1608,12 +1617,13 @@ int libswd_drv_mosi_8(libswd_ctx_t *libswdctx, libswd_cmd_t *cmd, char *data, in
  static unsigned int i;
  static signed int res;
  static char misodata[8], mosidata[8];
+ libswdapp_interface_t *interface=(libswdapp_interface_t*)libswdctx->driver->interface;
 
  // Split output data into char array.
  for (i=0;i<8;i++)
   mosidata[(nLSBfirst==LIBSWD_DIR_LSBFIRST)?i:(bits-1-i)]=((1<<i)&(*data))?1:0;
  // Then send that array into interface hardware.
- res=libswdapp_interface_transfer_bits(libswdctx->driver->ctx,bits,mosidata,misodata,0);
+ res=interface->transfer_bits(libswdctx->driver->ctx,bits,mosidata,misodata,0);
  if (res<0) return LIBSWD_ERROR_DRIVER;
 
  return res;
@@ -1644,11 +1654,12 @@ int libswd_drv_mosi_32(libswd_ctx_t *libswdctx, libswd_cmd_t *cmd, int *data, in
  static unsigned int i;
  static signed int res;
  static char misodata[32], mosidata[32];
+ libswdapp_interface_t *interface=(libswdapp_interface_t*)libswdctx->driver->interface;
 
  // UrJTAG drivers shift data LSB-First.
  for (i=0;i<32;i++)
   mosidata[(nLSBfirst==LIBSWD_DIR_LSBFIRST)?i:(bits-1-i)]=((1<<i)&(*data))?1:0;
- res=libswdapp_interface_transfer_bits(libswdctx->driver->ctx,bits,mosidata,misodata,0);
+ res=interface->transfer_bits(libswdctx->driver->ctx,bits,mosidata,misodata,0);
  if (res<0) return LIBSWD_ERROR_DRIVER;
 
  return res;
@@ -1673,8 +1684,9 @@ int libswd_drv_miso_8(libswd_ctx_t *libswdctx, libswd_cmd_t *cmd, char *data, in
  static int i;
  static signed int res;
  static char misodata[8], mosidata[8];
+ libswdapp_interface_t *interface=(libswdapp_interface_t*)libswdctx->driver->interface;
 
- res=libswdapp_interface_transfer_bits(libswdctx->driver->ctx,bits,mosidata,misodata,LIBSWD_DIR_LSBFIRST);
+ res=interface->transfer_bits(libswdctx->driver->ctx,bits,mosidata,misodata,LIBSWD_DIR_LSBFIRST);
  if (res<0) return LIBSWD_ERROR_DRIVER;
  // Now we need to reconstruct the received LSb data byte into  byte array.
  *data = 0;
@@ -1708,8 +1720,9 @@ int libswd_drv_miso_32(libswd_ctx_t *libswdctx, libswd_cmd_t *cmd, int *data, in
  static int i;
  static signed int res;
  static char misodata[32], mosidata[32];
+ libswdapp_interface_t *interface=(libswdapp_interface_t*)libswdctx->driver->interface;
 
- res = libswdapp_interface_transfer_bits(libswdctx->driver->ctx, bits, mosidata, misodata, LIBSWD_DIR_LSBFIRST);
+ res = interface->transfer_bits(libswdctx->driver->ctx, bits, mosidata, misodata, LIBSWD_DIR_LSBFIRST);
  if (res<0) return LIBSWD_ERROR_DRIVER;
  // Now we need to reconstruct the data byte from shifted in LSBfirst byte array.
  *data = 0;
@@ -1737,6 +1750,7 @@ int libswd_drv_mosi_trn(libswd_ctx_t *libswdctx, int bits)
             "LIBSWD_D: libswd_drv_mosi_trn(libswdctx=@%p, bits=%d)\n",
             (void *)libswdctx, bits
            );
+ libswdapp_interface_t *interface=(libswdapp_interface_t*)libswdctx->driver->interface;
 
  if (bits<LIBSWD_TURNROUND_MIN_VAL || bits>LIBSWD_TURNROUND_MAX_VAL)
   return LIBSWD_ERROR_TURNAROUND;
@@ -1754,11 +1768,11 @@ int libswd_drv_mosi_trn(libswd_ctx_t *libswdctx, int bits)
  int res, val = 0;
  static char buf[LIBSWD_TURNROUND_MAX_VAL];
  // Use driver method to set low (write) signal named RnW.
- res = libswdapp_interface_bitbang(libswdctx->driver->ctx, sig->mask, 0, &val);
+ res = interface->bitbang(libswdctx->driver->ctx, sig->mask, 0, &val);
  if (res < 0) return LIBSWD_ERROR_DRIVER;
 
  // Clock specified number of bits for proper TRN transaction.
- res = libswdapp_interface_transfer_bits(libswdctx->driver->ctx, bits, buf, buf, 0);
+ res = interface->transfer_bits(libswdctx->driver->ctx, bits, buf, buf, 0);
  if (res < 0) return LIBSWD_ERROR_DRIVER;
 
  return bits;
@@ -1780,6 +1794,7 @@ int libswd_drv_miso_trn(libswd_ctx_t *libswdctx, int bits)
             "LIBSWD_D: libswd_drv_miso_trn(libswdctx=@%p, bits=%d)\n",
             (void *)libswdctx, bits
            );
+ libswdapp_interface_t *interface=(libswdapp_interface_t*)libswdctx->driver->interface;
 
  if (bits<LIBSWD_TURNROUND_MIN_VAL || bits>LIBSWD_TURNROUND_MAX_VAL)
   return LIBSWD_ERROR_TURNAROUND;
@@ -1798,11 +1813,11 @@ int libswd_drv_miso_trn(libswd_ctx_t *libswdctx, int bits)
  static char buf[LIBSWD_TURNROUND_MAX_VAL];
 
  // Use driver method to set high (read) signal named RnW.
- res = libswdapp_interface_bitbang(libswdctx->driver->ctx, sig->mask, 1, &val);
+ res = interface->bitbang(libswdctx->driver->ctx, sig->mask, 1, &val);
  if (res < 0) return LIBSWD_ERROR_DRIVER;
 
  // Clock specified number of bits for proper TRN transaction.
- res = libswdapp_interface_transfer_bits(libswdctx->driver->ctx, bits, buf, buf, 0);
+ res = interface->transfer_bits(libswdctx->driver->ctx, bits, buf, buf, 0);
  if (res < 0) return LIBSWD_ERROR_DRIVER;
 
  return bits;

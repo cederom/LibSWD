@@ -73,6 +73,9 @@ typedef struct libswdapp_interface {
  int (*init)(libswdapp_context_t *libswdappctx);
  int (*deinit)(libswdapp_context_t *libswdappctx);
  int (*set_freq)(libswdapp_context_t *libswdappctx, int freq);
+ int (*bitbang)(libswdapp_context_t *libswdappctx, unsigned int bitmask, int GETnSET, unsigned int *value);
+ int (*transfer_bits)(libswdapp_context_t *libswdappctx, int bits, char *mosidata, char *misodata, int nLSBfirst);
+ int (*transfer_bytes)(libswdapp_context_t *libswdappctx, int bytes, char *mosidata, char *misodata, int nLSBfirst);
  char *sigsetupstr;
  // Below are CACHED values changed only by the interface functions.
 
@@ -92,6 +95,9 @@ typedef struct libswdapp_interface_config {
  int (*init)(libswdapp_context_t *libswdappctx);
  int (*deinit)(libswdapp_context_t *libswdappctx);
  int (*set_freq)(libswdapp_context_t *libswdappctx, int freq);
+ int (*bitbang)(libswdapp_context_t *libswdappctx, unsigned int bitmask, int GETnSET, unsigned int *value);
+ int (*transfer_bits)(libswdapp_context_t *libswdappctx, int bits, char *mosidata, char *misodata, int nLSBfirst);
+ int (*transfer_bytes)(libswdapp_context_t *libswdappctx, int bytes, char *mosidata, char *misodata, int nLSBfirst);
  int vid, pid;
  unsigned char latency;
  int frequency, maxfrequency;
@@ -116,12 +122,12 @@ libswdapp_interface_signal_t *libswdapp_interface_signal_find(libswdapp_context_
 int libswdapp_print_banner(void);
 int libswdapp_print_usage(void);
 int libswdapp_handle_command_signal(libswdapp_context_t *libswdappctx, char *cmd);
-int libswdapp_handle_command_interface(libswdapp_context_t *libswdappctx, char *cmd);
+int libswdapp_handle_command_interface_init(libswdapp_context_t *libswdappctx, char *cmd);
 int libswdapp_interface_ftdi_set_freq(libswdapp_context_t *libswdappctx, int freq);
 
-int libswdapp_interface_bitbang(libswdapp_context_t *libswdappctx, unsigned int bitmask, int GETnSET, unsigned int *value);
-int libswdapp_interface_transfer_bits(libswdapp_context_t *libswdappctx, int bits, char *mosidata, char *misodata, int nLSBfirst);
-int libswdapp_interface_transfer_bytes(libswdapp_context_t *libswdappctx, int bytes, char *mosidata, char *misodata, int nLSBfirst);
+int libswdapp_interface_ftdi_bitbang(libswdapp_context_t *libswdappctx, unsigned int bitmask, int GETnSET, unsigned int *value);
+int libswdapp_interface_ftdi_transfer_bits(libswdapp_context_t *libswdappctx, int bits, char *mosidata, char *misodata, int nLSBfirst);
+int libswdapp_interface_ftdi_transfer_bytes(libswdapp_context_t *libswdappctx, int bytes, char *mosidata, char *misodata, int nLSBfirst);
 int libswd_drv_mosi_8(libswd_ctx_t *libswdctx, libswd_cmd_t *cmd, char *data, int bits, int nLSBfirst);
 int libswd_drv_mosi_32(libswd_ctx_t *libswdctx, libswd_cmd_t *cmd, int *data, int bits, int nLSBfirst);
 int libswd_drv_miso_8(libswd_ctx_t *libswdctx, libswd_cmd_t *cmd, char *data, int bits, int nLSBfirst);
@@ -136,18 +142,21 @@ static int libswdapp_interface_ftdi_init_ktlink(libswdapp_context_t *libswdappct
 
 static const libswdapp_interface_config_t libswdapp_interface_configs[] = {
  {
-  .name        = "ktlink",
-  .description = "KT-LINK FT2232H based device",
-  .init        = libswdapp_interface_ftdi_init_ktlink,
-  .deinit      = libswdapp_interface_ftdi_deinit,
-  .set_freq    = libswdapp_interface_ftdi_set_freq,
-  .vid         = 0x0403,
-  .pid         = 0xbbe2, 
-  .latency     = 1,
-  .maxfrequency= 6000000,
-  .frequency   = 10000,
-  .chunksize   = 32768,
-  .sigsetupstr = "signal add:CLK=0x0001 add:MOSI=0x0002 add:MISO=0x0004 add:TMS=0x0008 add:nSWDsel=0x0020 add:SRSTin=0x0040 add:RTCK=0x0080 add:TRST=0x0100 add:SRST=0x0200 add:nTRSTen=0x0400 add:nSRSTen=0x0800 add:RnW=0x1000 add:nMOSIen=0x2000 add:nCLKen=0x4000 add:LED=0x8000 CLK=lo MOSI=lo SRST=hi nCLKen=lo nSWDsel=lo RnW=lo nSRSTen=lo LED=lo MISO SRSTin RTCK",
+  .name           = "ktlink",
+  .description    = "KT-LINK FT2232H based device (using LibFTDI)",
+  .init           = libswdapp_interface_ftdi_init_ktlink,
+  .deinit         = libswdapp_interface_ftdi_deinit,
+  .set_freq       = libswdapp_interface_ftdi_set_freq,
+  .bitbang        = libswdapp_interface_ftdi_bitbang,
+  .transfer_bits  = libswdapp_interface_ftdi_transfer_bits,
+  .transfer_bytes = libswdapp_interface_ftdi_transfer_bytes, 
+  .vid            = 0x0403,
+  .pid            = 0xbbe2, 
+  .latency        = 1,
+  .maxfrequency   = 30000000,
+  .frequency      = 1000000,
+  .chunksize      = 32768,
+  .sigsetupstr    = "signal add:CLK=0x0001 add:MOSI=0x0002 add:MISO=0x0004 add:TMS=0x0008 add:nSWDsel=0x0020 add:SRSTin=0x0040 add:RTCK=0x0080 add:TRST=0x0100 add:SRST=0x0200 add:nTRSTen=0x0400 add:nSRSTen=0x0800 add:RnW=0x1000 add:nMOSIen=0x2000 add:nCLKen=0x4000 add:LED=0x8000 CLK=lo MOSI=lo SRST=hi nCLKen=lo nSWDsel=lo RnW=lo nSRSTen=lo LED=lo MISO SRSTin RTCK",
  },
  {
    .name = '\0',

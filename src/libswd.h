@@ -668,6 +668,7 @@ typedef struct {
 typedef struct {
  void *device;
  void *ctx;
+ void *interface;
 } libswd_driver_t;
 
 /** Boolean values definition */
