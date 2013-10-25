@@ -32,5 +32,5 @@ if APPLICATION
  libswd_SOURCES = \
   libswd_app.h \
   libswd_app.c
- libswd_LDADD = -lswd $(LIBREADLINE) $(LIBFTDI) 
+ libswd_LDADD = -lswd $(LIBREADLINE) $(LIBFTDI) $(LIBUSB) 
 endif

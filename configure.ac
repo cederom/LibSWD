@@ -5,12 +5,16 @@ AC_CONFIG_MACRO_DIR([m4])
 AC_ARG_ENABLE([application],
  AS_HELP_STRING([--enable-application],
   [build the LibSWD Application (default: no)]),
-  [application=yes],
-  [application=no]
+  [case "${enableval}" in
+   yes) enable_application=true ;;
+   no)  enable_application=false ;;
+   *)   AC_MSG_ERROR([bad value ${enableval} for --enable-application]) ;;
+  esac],
+  [enable_application=false]
 )
-AM_CONDITIONAL([APPLICATION], [test x$application = xyes])
+AM_CONDITIONAL([APPLICATION], [test x"$enable_application" = x"true"])
 LIBREADLINE=
-AS_IF([test "x$enable_application" != xno],
+AS_IF([test x"$enable_application" == x"true"],
   [
    AC_CHECK_LIB([readline], [readline],
      [AC_SUBST([LIBREADLINE], ["-lreadline"])
@@ -20,14 +24,36 @@ AS_IF([test "x$enable_application" != xno],
   ]
 )
 LIBFTDI=
-AS_IF([test "x$enable_application" != xno],
+AS_IF([test x"$enable_application" == x"true"],
   [
-   AC_CHECK_LIB([ftdi], [ftdi_new], 
+   AC_CHECK_LIB([ftdi], [ftdi_new],
      [AC_SUBST([LIBFTDI], ["-lftdi"])
       AC_DEFINE([HAVE_FTDI], [1], [Define if you have libftdi])],
      [AC_MSG_FAILURE([LibFTDI not found, required by LibSWD Application!])]
    )
   ]
+)
+LIBUSB=
+AS_IF([test x"$enable_application" == x"true"],
+  [
+   AS_IF(
+   [test `uname` == "FreeBSD"],
+   [
+    AC_CHECK_LIB([usb], [libusb_init],
+      [AC_SUBST([LIBUSB], ["-lusb"])
+       AC_DEFINE([HAVE_USB], [1], [Define if you have libusb-1])],
+       [AC_MSG_FAILURE([LibUSB-1 not found, required by LibSWD Application!])]
+    )
+   ],
+   [
+    AC_CHECK_LIB([usb-1.0], [libusb_init],
+      [AC_SUBST([LIBUSB], ["-lusb-1.0"])
+       AC_DEFINE([HAVE_USB], [1], [Define if you have libusb-1])],
+       [AC_MSG_FAILURE([LibUSB-1 not found, required by LibSWD Application!])]
+    )
+   ]
+  )
+ ]
 )
 
 AC_ARG_ENABLE(debug,
