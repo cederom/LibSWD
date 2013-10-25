@@ -3,9 +3,10 @@ AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_MACRO_DIR([m4])
 
 AC_ARG_ENABLE([application],
- AS_HELP_STRING([--disable-application], [do not build the LibSWD Application]),
-  [],
-  [application=yes]
+ AS_HELP_STRING([--enable-application],
+  [build the LibSWD Application (default: no)]),
+  [application=yes],
+  [application=no]
 )
 AM_CONDITIONAL([APPLICATION], [test x$application = xyes])
 LIBREADLINE=
