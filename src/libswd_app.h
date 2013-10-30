@@ -68,7 +68,8 @@ typedef struct libswdapp_context {
 typedef struct libswdapp_interface {
  char name[LIBSWDAPP_INTERFACE_NAME_MAXLEN];
  char description[LIBSWDAPP_INTERFACE_NAME_MAXLEN];
- struct ftdi_context *ftdictx;
+ void *ctx;
+ void *handle;
  int vid, pid, vid_forced, pid_forced;
  libswdapp_interface_signal_t *signal;
  int (*init)(libswdapp_context_t *libswdappctx);
