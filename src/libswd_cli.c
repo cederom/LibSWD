@@ -2,7 +2,7 @@
  * Serial Wire Debug Open Library.
  * Command Line Interface Body File.
  *
- * Copyright (C) 2010-2013, Tomasz Boleslaw CEDRO (http://www.tomek.cedro.info)
+ * Copyright (C) 2010-2014, Tomasz Boleslaw CEDRO (http://www.tomek.cedro.info)
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -28,7 +28,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.*
  *
- * Written by Tomasz Boleslaw CEDRO <cederom@tlen.pl>, 2010-2013;
+ * Written by Tomasz Boleslaw CEDRO <cederom@tlen.pl>, 2010-2014;
  *
  */
 
@@ -38,6 +38,7 @@
 #include <string.h>
 #include <errno.h>
 #include <stdio.h>
+#include <ctype.h>
 
 /*******************************************************************************
  * \defgroup libswd_cli Command Line Interface functions.
@@ -77,9 +78,9 @@ int libswd_cli(libswd_ctx_t *libswdctx, char *command)
  int res, retval, addrstart, addrstop, count, data, *data32, i, j;
  char *cmd, *thiscommand, ap, *filename, *endptr;
 
- while ( thiscommand=strsep(&command,"\n;"))
+ while ( (thiscommand=strsep(&command,"\n;")) )
  {
-  while ( cmd=strsep(&thiscommand," ") )
+  while ( (cmd=strsep(&thiscommand," ")) )
   {
    // Strip heading and trailing spaces.
    if (cmd && thiscommand) if (!cmd[0] && thiscommand[0]) continue;
@@ -260,7 +261,7 @@ int libswd_cli(libswd_ctx_t *libswdctx, char *command)
       if (thiscommand)
       {
        cmd=strsep(&thiscommand," ");
-       if (cmd && cmd!='\0' && cmd!=" ")
+       if (cmd && cmd!='\0' && !isspace(*cmd))
        {
         filename=cmd;
        } else filename=NULL;
@@ -270,7 +271,7 @@ int libswd_cli(libswd_ctx_t *libswdctx, char *command)
       {
        if (libswdctx->membuf.data) free(libswdctx->membuf.data);
        libswdctx->membuf.size=count*sizeof(char);
-       libswdctx->membuf.data=(char*)malloc(libswdctx->membuf.size);
+       libswdctx->membuf.data=(unsigned char*)malloc(libswdctx->membuf.size);
        if (!libswdctx->membuf.data)
        {
         libswdctx->membuf.size=0;
@@ -283,7 +284,7 @@ int libswd_cli(libswd_ctx_t *libswdctx, char *command)
       // Perform MEM-AP read.
       retval=libswd_memap_read_char_32(libswdctx, LIBSWD_OPERATION_EXECUTE,
                                        addrstart, count,
-                                       libswdctx->membuf.data );
+                                       (char*)libswdctx->membuf.data );
       if (retval<0) goto libswd_cli_error;
       // Store result to a file if requested.
       if (filename)
@@ -414,7 +415,7 @@ int libswd_cli(libswd_ctx_t *libswdctx, char *command)
        elmbytes=elmcnt*((elmlen>4)?(4*sizeof(char)):(sizeof(char)));
        if (elmbytes%4) elmbytes+=elmbytes%4;
        libswdctx->membuf.size=elmbytes;
-       libswdctx->membuf.data=(char*)malloc(libswdctx->membuf.size);
+       libswdctx->membuf.data=(unsigned char*)malloc(libswdctx->membuf.size);
        if (!libswdctx->membuf.data)
        {
         libswdctx->membuf.size=0;
@@ -473,7 +474,7 @@ int libswd_cli(libswd_ctx_t *libswdctx, char *command)
        if (libswdctx->membuf.size) free(libswdctx->membuf.data);
        fseek(fp, 0, SEEK_END);
        libswdctx->membuf.size=ftell(fp);
-       libswdctx->membuf.data=(char*)malloc(libswdctx->membuf.size);
+       libswdctx->membuf.data=(unsigned char*)malloc(libswdctx->membuf.size);
        fseek(fp, 0, SEEK_SET);
        if (!libswdctx->membuf.data)
        {
@@ -512,7 +513,7 @@ libswd_cli_write_memap_file_load_ok:
       // At this point data are in membuf, sent them to MEM-AP.
       retval=libswd_memap_write_char_32(libswdctx, LIBSWD_OPERATION_EXECUTE,
                                         addrstart, libswdctx->membuf.size,
-                                        libswdctx->membuf.data );
+                                        (char*)libswdctx->membuf.data );
       if (retval<0) goto libswd_cli_error;
       // Print out the data.
       for (i=0; i<libswdctx->membuf.size; i=i+16)

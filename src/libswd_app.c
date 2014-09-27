@@ -2,7 +2,7 @@
  * Serial Wire Debug Open Library.
  * Application Body File.
  *
- * Copyright (C) 2010-2013, Tomasz Boleslaw CEDRO (http://www.tomek.cedro.info)
+ * Copyright (C) 2010-2014, Tomasz Boleslaw CEDRO (http://www.tomek.cedro.info)
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -28,7 +28,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.*
  *
- * Written by Tomasz Boleslaw CEDRO <cederom@tlen.pl>, 2010-2013;
+ * Written by Tomasz Boleslaw CEDRO <cederom@tlen.pl>, 2010-2014;
  *
  */
 
@@ -40,6 +40,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
+#include <ctype.h>
 #include <ftdi.h>
 #include <readline/readline.h>
 #include <readline/history.h>
@@ -67,7 +68,7 @@ void libswdapp_shutdown(int sig)
  if (appctx->libswdctx!=NULL) libswd_deinit(appctx->libswdctx);
  if (appctx!=NULL) free(appctx);
  stifle_history(LIBSWDAPP_CLI_HISTORY_MAXLEN);
- if (retval=write_history(history_filename))
+ if ( (retval=write_history(history_filename)) )
   printf("WARNING: Cannot save CLI history to file (error %d)!\n", retval);
  printf("Exit OK\n");
  exit(retval);
@@ -203,14 +204,14 @@ int main(int argc, char **argv){
  // Setup the Readline
  rl_bind_key('\t',rl_abort); //disable auto-complete
  sprintf(history_filename, "%s%s", getenv("HOME"),LIBSWDAPP_CLI_HISTORY_FILENAME);
- if (retval=read_history(history_filename))
+ if ( (retval=read_history(history_filename)) )
   libswd_log(libswdappctx->libswdctx, LIBSWD_LOGLEVEL_WARNING,
              "WARNING: Cannot load CLI history from file (error %d)!\n",
              retval );
 
  /* Run the Command Line Interpreter loop. */
  while ((command=readline("libswd>")) != NULL){
-  while (cmd=strsep(&command, "\n;") )
+  while ( (cmd=strsep(&command, "\n;")) )
   {
    if (cmd[0]!=0) add_history(cmd);
    if (!strncmp(cmd,"q",1) || !strncmp(cmd,"quit",4)) goto quit;
@@ -305,7 +306,7 @@ int libswdapp_handle_command_flash(libswdapp_context_t *libswdappctx, char *comm
   if (command)
   {
    cmd=strsep(&command," ");
-   if (cmd && cmd!='\0' && cmd !=" ") filename=cmd;
+   if (cmd && cmd!='\0' && !isspace(*cmd)) filename=cmd;
   }
   // Parse optional count parameter.
   if (command)
@@ -325,7 +326,7 @@ int libswdapp_handle_command_flash(libswdapp_context_t *libswdappctx, char *comm
   } 
   // Take care of proper memory (re)allocation.
   if (libswdctx->membuf.data) free(libswdctx->membuf.data);
-  libswdctx->membuf.data=(char*)malloc(count*sizeof(char));
+  libswdctx->membuf.data=(unsigned char*)malloc(count*sizeof(char));
   if (!libswdctx->membuf.data)
   {
    libswdctx->membuf.size=0;
@@ -336,7 +337,7 @@ int libswdapp_handle_command_flash(libswdapp_context_t *libswdappctx, char *comm
   libswdctx->membuf.size=count*sizeof(char);
   retval=libswd_memap_read_char_32(libswdctx, LIBSWD_OPERATION_EXECUTE,
                            addrstart, count,
-                           libswdctx->membuf.data);
+                           (char *)libswdctx->membuf.data);
   if (retval<0) goto libswdapp_handle_command_flash_error;
   // Store result to a file if requested.
   if (filename)
@@ -476,7 +477,7 @@ int libswdapp_handle_command_flash(libswdapp_context_t *libswdappctx, char *comm
    }
    // Allocate memory for file content.
    libswdctx->membuf.size=ftell(fp);
-   libswdctx->membuf.data=(char*)malloc(libswdctx->membuf.size*sizeof(char));
+   libswdctx->membuf.data=(unsigned char*)malloc(libswdctx->membuf.size*sizeof(char));
    fseek(fp, 0, SEEK_SET);
    if (!libswdctx->membuf.data)
    {
@@ -566,7 +567,7 @@ libswdapp_handle_command_flash_file_load_ok:
    // Perform the data write phase using MEM-AP.
    int accsize=4;
    addr=flash_memmap.page_start;
-   retval=libswd_memap_write_char_csw(libswdctx, LIBSWD_OPERATION_EXECUTE, addr, count, libswdctx->membuf.data, LIBSWD_MEMAP_CSW_SIZE_16BIT|LIBSWD_MEMAP_CSW_ADDRINC_PACKED);
+   retval=libswd_memap_write_char_csw(libswdctx, LIBSWD_OPERATION_EXECUTE, addr, count, (char *)libswdctx->membuf.data, LIBSWD_MEMAP_CSW_SIZE_16BIT|LIBSWD_MEMAP_CSW_ADDRINC_PACKED);
     if (retval<0) goto libswdapp_handle_command_flash_error; 
    // Print out the data.
    for (i=0; i<libswdctx->membuf.size; i=i+16)
@@ -638,7 +639,7 @@ int libswdapp_handle_command_signal(libswdapp_context_t *libswdappctx, char *cmd
  if (!cmd)
   return libswdapp_handle_command_signal_usage();
 
- while (cmdp=strsep(&command," "))
+ while ( (cmdp=strsep(&command," ")) )
  {
   // Check if list command, handle if necessary.
   if (!strncasecmp(cmdp,"list",4))
@@ -1109,7 +1110,7 @@ int libswdapp_interface_ftdi_bitbang(libswdapp_context_t *libswdappctx, unsigned
 {
  unsigned char  buf[3];
  int retval, retry;
- unsigned int bytes_written, bytes_read;
+ int bytes_written, bytes_read;
  unsigned int vall=0, valh=0, gpioval=0, gpiodir=0; 
  struct ftdi_context *ftdictx=(struct ftdi_context*)libswdappctx->interface->ctx;
 
@@ -1234,7 +1235,7 @@ int libswdapp_interface_ftdi_transfer_bits(libswdapp_context_t *libswdappctx, in
 {
  static unsigned char buf[65539], databuf;
  int i, retval, bit=0, byte=0, bytes=0, retry;
- unsigned int bytes_written, bytes_read;
+ int bytes_written, bytes_read;
  struct ftdi_context *ftdictx=(struct ftdi_context*)libswdappctx->interface->ctx;
 
  if (bits>65535)
@@ -1342,7 +1343,7 @@ int libswdapp_interface_ftdi_transfer_bytes(libswdapp_context_t *libswdappctx, i
 {
  static unsigned char buf[65539], databuf;
  int i, retval, byte=0, retry;
- unsigned int bytes_written, bytes_read;
+ int bytes_written, bytes_read;
  struct ftdi_context *ftdictx=(struct ftdi_context*)libswdappctx->interface->ctx;
 
  if (bytes>65535)
@@ -1365,7 +1366,7 @@ int libswdapp_interface_ftdi_transfer_bytes(libswdapp_context_t *libswdappctx, i
   libswd_log(libswdappctx->libswdctx, LIBSWD_LOGLEVEL_ERROR,
              "ERROR: libswdapp_interface_transfer_bytes(): ft2232_write() returns %d\n",
              bytes_written );
-  return ;
+  return LIBSWD_ERROR_DRIVER;
  }
  // This retry is necessary because sometimes FTDI Chip returns 0 bytes.
  for (retry=0;retry<LIBSWD_RETRY_COUNT_DEFAULT;retry++)
@@ -1531,7 +1532,8 @@ int libswdapp_interface_ftdi_init(libswdapp_context_t *libswdappctx)
 int libswdapp_interface_ftdi_set_freq(libswdapp_context_t *libswdappctx, int freq)
 {
  unsigned int reg, maxfreq;
- char buf[3], bytes_written;
+ unsigned char buf[3];
+ char bytes_written;
  struct ftdi_context *ftdictx=(struct ftdi_context*)libswdappctx->interface->ctx;
  if (!libswdappctx || !libswdappctx->interface || !libswdappctx->interface->ctx)
   return LIBSWD_ERROR_NULLPOINTER;
@@ -1778,7 +1780,8 @@ int libswd_drv_mosi_trn(libswd_ctx_t *libswdctx, int bits)
   return LIBSWD_ERROR_DRIVER;
  }
 
- int res, val = 0;
+ static int res;
+ static unsigned int val = 0;
  static char buf[LIBSWD_TURNROUND_MAX_VAL];
  // Use driver method to set low (write) signal named RnW.
  res = interface->bitbang(libswdctx->driver->ctx, sig->mask, 0, &val);
@@ -1822,7 +1825,8 @@ int libswd_drv_miso_trn(libswd_ctx_t *libswdctx, int bits)
   return LIBSWD_ERROR_DRIVER;
  }
 
- static int res, val = 1;
+ static int res;
+ static unsigned int val = 1;
  static char buf[LIBSWD_TURNROUND_MAX_VAL];
 
  // Use driver method to set high (read) signal named RnW.

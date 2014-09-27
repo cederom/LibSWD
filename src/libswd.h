@@ -2,7 +2,7 @@
  * Serial Wire Debug Open Library.
  * Library Header File.
  *
- * Copyright (C) 2010-2013, Tomasz Boleslaw CEDRO (http://www.tomek.cedro.info)
+ * Copyright (C) 2010-2014, Tomasz Boleslaw CEDRO (http://www.tomek.cedro.info)
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -28,7 +28,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.*
  *
- * Written by Tomasz Boleslaw CEDRO <cederom@tlen.pl>, 2010-2013;
+ * Written by Tomasz Boleslaw CEDRO <cederom@tlen.pl>, 2010-2014;
  *
  */
 
@@ -88,10 +88,12 @@
  */
 
 #include <stdlib.h>
+#include <stdio.h>
 #include <stdarg.h>
 #include <string.h>
 #include <math.h>
 #include <sys/time.h>
+#include <unistd.h>
 
 #ifndef __LIBSWD_H__
 #define __LIBSWD_H__
@@ -692,6 +694,7 @@ typedef struct libswd_arm_romtable_register {
  char name[LIBSWD_ARM_REGISTER_NAME_MAXLEN];
  int default_value;
  int value;
+ struct libswd_arm_romtable_register *next;
 } libswd_arm_register_t;
 
 static const libswd_arm_register_t libswd_arm_debug_CortexM3_ROMtable_PeripheralID[] = {
@@ -748,7 +751,7 @@ typedef struct libswd_debug {
  char initialized;
  int dhcsr;
  libswd_arm_register_t cpuid;
- libswd_arm_register_t romtable[];
+ libswd_arm_register_t *romtable;
 } libswd_debug_t;
 
 #define LIBSWD_ARM_DEBUG_DFSR_ADDR   0xE000ED30 

@@ -123,8 +123,11 @@ int libswdapp_interface_signal_del(libswdapp_context_t *libswdappctx, char *name
 libswdapp_interface_signal_t *libswdapp_interface_signal_find(libswdapp_context_t *libswdappctx, char *name);
 int libswdapp_print_banner(void);
 int libswdapp_print_usage(void);
+int libswdapp_handle_command_signal_usage(void);
 int libswdapp_handle_command_signal(libswdapp_context_t *libswdappctx, char *cmd);
 int libswdapp_handle_command_interface_init(libswdapp_context_t *libswdappctx, char *cmd);
+int libswdapp_handle_command_flash_usage(void);
+int libswdapp_handle_command_flash(libswdapp_context_t *libswdappctx, char *command);
 
 int libswd_drv_mosi_8(libswd_ctx_t *libswdctx, libswd_cmd_t *cmd, char *data, int bits, int nLSBfirst);
 int libswd_drv_mosi_32(libswd_ctx_t *libswdctx, libswd_cmd_t *cmd, int *data, int bits, int nLSBfirst);
@@ -228,7 +231,7 @@ static const libswdapp_flash_stm32f1_memmap_t libswdapp_flash_stm321f_lowdensity
  .FLASH_AR_ADDR       = 0x40022014,
  .FLASH_OBR_ADDR      = 0x4002201C,
  .FLASH_WRPR_ADDR     = 0x40022020,
- .idcode              = 0
+ .idcode              = {0}
 };
 
 static const libswdapp_flash_stm32f1_memmap_t libswdapp_flash_stm321f_mediumdensity = {
@@ -247,7 +250,7 @@ static const libswdapp_flash_stm32f1_memmap_t libswdapp_flash_stm321f_mediumdens
  .FLASH_AR_ADDR       = 0x40022014,
  .FLASH_OBR_ADDR      = 0x4002201C,
  .FLASH_WRPR_ADDR     = 0x40022020,
- .idcode              = 0
+ .idcode              = {0}
 };
 
 static const libswdapp_flash_stm32f1_memmap_t libswdapp_flash_stm321f_highdensity = {
@@ -285,7 +288,7 @@ static const libswdapp_flash_stm32f1_memmap_t libswdapp_flash_stm321f_connectivi
  .FLASH_AR_ADDR       = 0x40022014,
  .FLASH_OBR_ADDR      = 0x4002201C,
  .FLASH_WRPR_ADDR     = 0x40022020,
- .idcode              = 0
+ .idcode              = {0}
 };
 
 static const libswdapp_flash_stm32f1_memmap_t *libswdapp_flash_stm32f1_devices[] = {

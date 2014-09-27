@@ -245,7 +245,7 @@ libswd_error_handle_ack_wait_end:
  }
 
  libswdctx->cmdq=mastercmdq;
- while (1) {printf("ACK WAIT HANDLER\n");sleep(1);}
+ while (1) {printf("ACK WAIT HANDLER\n");usleep(1000);}
  return retval;
 }
 /** @} */

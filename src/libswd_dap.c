@@ -2,7 +2,7 @@
  * Serial Wire Debug Open Library.
  * Library Body File.
  *
- * Copyright (C) 2010-2013, Tomasz Boleslaw CEDRO (http://www.tomek.cedro.info)
+ * Copyright (C) 2010-2014, Tomasz Boleslaw CEDRO (http://www.tomek.cedro.info)
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -28,7 +28,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.*
  *
- * Written by Tomasz Boleslaw CEDRO <cederom@tlen.pl>, 2010-2013;
+ * Written by Tomasz Boleslaw CEDRO <cederom@tlen.pl>, 2010-2014;
  *
  */
 
@@ -91,7 +91,7 @@ int libswd_dap_init(libswd_ctx_t *libswdctx, libswd_operation_t operation, int *
 int libswd_dap_setup(libswd_ctx_t *libswdctx, libswd_operation_t operation, int *abort, int *ctrlstat){
  libswd_log(libswdctx, LIBSWD_LOGLEVEL_DEBUG,
             "LIBSWD_D: libswd_dap_setup(*libswdctx=@%p, operation=%s, *abort=0x%X@%p, *ctrlstat=0x%X@%p) entring function...\n",
-            (void*)libswdctx, libswd_operation_string(operation), abort?*abort:NULL, (void*)abort, ctrlstat?*ctrlstat:NULL, (void*)ctrlstat );
+            (void*)libswdctx, libswd_operation_string(operation), abort?*abort:0, (void*)abort, ctrlstat?*ctrlstat:0, (void*)ctrlstat );
  if (libswdctx==NULL) return LIBSWD_ERROR_NULLCONTEXT;
  int i, res;
  if (abort)
@@ -225,7 +225,7 @@ int libswd_dap_errors_handle(libswd_ctx_t *libswdctx, libswd_operation_t operati
  libswd_log(libswdctx, LIBSWD_LOGLEVEL_DEBUG,
             "LIBSWD_D: Executing libswd_dap_errors_handle(*libswdctx=@%p, operation=%s, *abort=0x%X@%p, *ctrlstat=0x%X@%p)\n",
             (void*)libswdctx, libswd_operation_string(operation),
-            (void*)abort, abort?*abort:NULL, ctrlstat?*ctrlstat:NULL, 
+            (void*)abort, abort?*abort:0, ctrlstat?*ctrlstat:0, 
             (void*)ctrlstat );
 
  if (libswdctx==NULL) return LIBSWD_ERROR_NULLCONTEXT;

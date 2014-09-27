@@ -2,7 +2,7 @@
  * Serial Wire Debug Open Library.
  * Library Body File.
  *
- * Copyright (C) 2010-2013, Tomasz Boleslaw CEDRO (http://www.tomek.cedro.info)
+ * Copyright (C) 2010-2014, Tomasz Boleslaw CEDRO (http://www.tomek.cedro.info)
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -28,7 +28,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.*
  *
- * Written by Tomasz Boleslaw CEDRO <cederom@tlen.pl>, 2010-2013;
+ * Written by Tomasz Boleslaw CEDRO <cederom@tlen.pl>, 2010-2014;
  *
  */
 
@@ -219,7 +219,8 @@ int libswd_drv_transmit(libswd_ctx_t *libswdctx, libswd_cmd_t *cmd){
    // MOSI_TRN + 33 zero data cycles should be universal for STICKYORUN={0,1} ???
    if (errcode==LIBSWD_ERROR_ACK_WAIT || errcode==LIBSWD_ERROR_ACK_FAULT){
     libswd_log(libswdctx, LIBSWD_LOGLEVEL_DEBUG, "LIBSWD_D: libswd_drv_transmit(libswdctx=@%p, cmd=@%p): Performing data phase after ACK={WAIT,FAULT}...\n", (void*)libswdctx, (void*)cmd);
-    int data=0, parity=0;
+    int data=0;
+    char parity=0;
     res=libswd_bus_write_data_p(libswdctx, LIBSWD_OPERATION_EXECUTE, &data, &parity);
     if (res<0){
      libswd_log(libswdctx, LIBSWD_LOGLEVEL_WARNING,

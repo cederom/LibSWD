@@ -2,7 +2,7 @@
  * Serial Wire Debug Open Library.
  * MEM-AP Routines Body File.
  *
- * Copyright (C) 2010-2013, Tomasz Boleslaw CEDRO (http://www.tomek.cedro.info)
+ * Copyright (C) 2010-2014, Tomasz Boleslaw CEDRO (http://www.tomek.cedro.info)
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -28,7 +28,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.*
  *
- * Written by Tomasz Boleslaw CEDRO <cederom@tlen.pl>, 2010-2013;
+ * Written by Tomasz Boleslaw CEDRO <cederom@tlen.pl>, 2010-2014;
  *
  */
 
@@ -68,8 +68,9 @@ int libswd_memap_init(libswd_ctx_t *libswdctx, libswd_operation_t operation){
  }
 
  // Select MEM-AP.
- res=libswd_ap_select(libswdctx, operation, LIBSWD_MEMAP_APSEL_VAL);  
- if (res<0) goto libswd_memap_init_error; 
+ //res=libswd_ap_select(libswdctx, operation, LIBSWD_MEMAP_APSEL_VAL);  
+ //if (res<0) goto libswd_memap_init_error; 
+ // TODO: DO WE NEED LIBSWD_AP_SELECT ???
 
  // Check IDentification Register, use cached value if possible.
  if (!libswdctx->log.memap.idr)
@@ -254,7 +255,7 @@ int libswd_memap_read_char(libswd_ctx_t *libswdctx, libswd_operation_t operation
    libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO,
               "LIBSWD_I: libswd_memap_read_char() reading address 0x%08X (speed %fKB/s)\r",
               loc, count/tdeltam );
-   fflush();
+   fflush(0);
    // Pass address to TAR register.
    res=libswd_ap_write(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_TAR_ADDR, &loc);
    if (res<0) goto libswd_memap_read_char_error;
@@ -290,7 +291,7 @@ int libswd_memap_read_char(libswd_ctx_t *libswdctx, libswd_operation_t operation
     libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO,
                "LIBSWD_I: libswd_memap_read_char() reading address 0x%08X (chunk 0x%X/0x%X, speed %fKB/s)\r",
                loc+i, chunk, chunks, count/tdeltam);
-    fflush();
+    fflush(0);
     // Implode and Write data to DRW register.
     res=libswd_ap_read(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_DRW_ADDR, &memapdrw);
     if (res<0) goto libswd_memap_read_char_error;
@@ -444,7 +445,7 @@ int libswd_memap_read_int(libswd_ctx_t *libswdctx, libswd_operation_t operation,
    libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO,
               "LIBSWD_I: libswd_memap_read_int() reading address 0x%08X (speed %fKB/s)\r",
               loc, count*4/tdeltam );
-   fflush();
+   fflush(0);
    // Pass address to TAR register.
    res=libswd_ap_write(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_TAR_ADDR, &loc);
    if (res<0) goto libswd_memap_read_int_error;
@@ -479,7 +480,7 @@ int libswd_memap_read_int(libswd_ctx_t *libswdctx, libswd_operation_t operation,
     libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO,
                "LIBSWD_I: libswd_memap_read_int() reading address 0x%08X (chunk 0x%X/0x%X, speed %fKB/s)\r",
                loc+(i*4), chunk, chunks, count*4/tdeltam );
-    fflush();
+    fflush(0);
     // Write data to DRW register.
     res=libswd_ap_read(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_DRW_ADDR, &memapdrw);
     if (res<0) goto libswd_memap_read_int_error;
@@ -650,7 +651,7 @@ int libswd_memap_write_char(libswd_ctx_t *libswdctx, libswd_operation_t operatio
    libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO,
               "LIBSWD_I: libswd_memap_write_char() writing address 0x%08X (speed %fKB/s)\r",
               loc, count/tdeltam );
-   fflush();
+   fflush(0);
    // Pass address to TAR register.
    res=libswd_ap_write(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_TAR_ADDR, &loc);
    if (res<0) goto libswd_memap_write_char_error;
@@ -684,7 +685,7 @@ int libswd_memap_write_char(libswd_ctx_t *libswdctx, libswd_operation_t operatio
     libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO,
                "LIBSWD_I: libswd_memap_write_char() writing address 0x%08X (chunk 0x%X/0x%X, speed %fKB/s)\r",
                loc+i, chunk, chunks, count/tdeltam );
-    fflush();
+    fflush(0);
     // Implode and Write data to DRW register.
     memcpy((void*)&libswdctx->log.memap.drw, data+(chunk*chunksize)+i, accsize);
     res=libswd_ap_write(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_DRW_ADDR, &libswdctx->log.memap.drw);
@@ -833,7 +834,7 @@ int libswd_memap_write_int(libswd_ctx_t *libswdctx, libswd_operation_t operation
    libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO,
               "LIBSWD_I: libswd_memap_write_int() writing address 0x%08X (speed %fKB/s)\r",
               loc, count*4/tdeltam );
-   fflush();
+   fflush(0);
    // Pass address to TAR register.
    res=libswd_ap_write(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_TAR_ADDR, &loc);
    if (res<0) goto libswd_memap_write_int_error;
@@ -867,7 +868,7 @@ int libswd_memap_write_int(libswd_ctx_t *libswdctx, libswd_operation_t operation
     libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO,
                "LIBSWD_I: libswd_memap_write_int() writing address 0x%08X (chunk 0x%X/0x%X speed %fKB/s)\r",
                loc+(i*4), chunk, chunks, count*4/tdeltam );
-    fflush();
+    fflush(0);
     // Implode and Write data to DRW register.
     libswdctx->log.memap.drw=data[chunk*chunksize+i];
     res=libswd_ap_write(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_DRW_ADDR, &libswdctx->log.memap.drw);
