@@ -6,7 +6,7 @@ EXTRA_DIST = Doxyfile
 MOSTLYCLEANFILES = DX_CLEANFILES
 
 dist_pkgdata_DATA = \
-	README \
+	README.md \
 	COPYING \
 	ChangeLog \
 	NEWS
