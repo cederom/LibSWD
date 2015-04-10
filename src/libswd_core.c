@@ -61,6 +61,7 @@ libswd_ctx_t *libswd_init(void){
   libswd_deinit_ctx(libswdctx);
   return NULL;
  }
+ libswdctx->cmdq->next = NULL;
  libswdctx->config.initialized=LIBSWD_TRUE;
  libswdctx->config.trnlen=LIBSWD_TURNROUND_DEFAULT_VAL;
  libswdctx->config.maxcmdqlen=LIBSWD_CMDQLEN_DEFAULT;

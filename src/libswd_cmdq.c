@@ -113,6 +113,7 @@ int libswd_cmdq_append(libswd_cmd_t *cmdq, libswd_cmd_t *cmd){
   cmdq->next=cmd;
   cmd->prev=cmdq;
  }
+ cmd->next = NULL;
  return 1;
 }
 
