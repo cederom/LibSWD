@@ -658,6 +658,12 @@ int libswd_memap_write_char(libswd_ctx_t *libswdctx, libswd_operation_t operatio
    libswdctx->log.memap.tar=loc;
    // Implode and Write data to DRW register.
    memcpy((void*)&libswdctx->log.memap.drw, data+i, accsize);
+   if (accsize == 2 && (loc % 4) == 2)
+   {
+    // 16 bit accesses at offsets of 2, use the upper 16 bits
+    libswdctx->log.memap.drw <<= 16;
+   }
+   // TODO probably need something similar for 8 bit accesses
    res=libswd_ap_write(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_DRW_ADDR, &libswdctx->log.memap.drw);
    if (res<0) goto libswd_memap_write_char_error;
   }
@@ -688,6 +694,12 @@ int libswd_memap_write_char(libswd_ctx_t *libswdctx, libswd_operation_t operatio
     fflush(0);
     // Implode and Write data to DRW register.
     memcpy((void*)&libswdctx->log.memap.drw, data+(chunk*chunksize)+i, accsize);
+    if (accsize == 2 && ((loc+i) % 4) == 2)
+    {
+     // 16 bit accesses at offsets of 2, use the upper 16 bits
+     libswdctx->log.memap.drw <<= 16;
+    }
+    // TODO probably need something similar for 8 bit accesses
     res=libswd_ap_write(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_DRW_ADDR, &libswdctx->log.memap.drw);
     if (res<0) goto libswd_memap_write_char_error;
    }
