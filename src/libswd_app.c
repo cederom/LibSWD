@@ -202,7 +202,7 @@ int main(int argc, char **argv){
  libswdappctx->libswdctx->driver->interface=libswdappctx->interface;
 
  // Setup the Readline
- rl_bind_key('\t',rl_abort); //disable auto-complete
+ rl_completion_append_character='\0'; //disable auto-complete
  sprintf(history_filename, "%s%s", getenv("HOME"),LIBSWDAPP_CLI_HISTORY_FILENAME);
  if ( (retval=read_history(history_filename)) )
   libswd_log(libswdappctx->libswdctx, LIBSWD_LOGLEVEL_WARNING,
