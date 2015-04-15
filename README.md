@@ -4,6 +4,7 @@ Welcome to https://GitHub.com/CeDeROM/LibSWD :-)
 
 ## Table of Contents
  * [About](#about)
+ * [Credits](#credits)
  * [Releases](#releases)
  * [Source Code](#source-code-repository)
  * [Documentation](#documentation)
@@ -47,12 +48,17 @@ LibSWD can be considered generic and fully featured solution that contains simpl
 
 Initial research and practical tests were performed back in 2010 on STM32 family ARM Cortex-M3 based devices using [UrJTAG](http://urjtag.sf.net) and [OpenOCD](http://openocd.sf.net) utilities with [FT2232](http://www.ftdichip.com/Products/ICs/FT2232D.htm) based hardware interfaces. At this moment I am using [KT-LINK](http://shop.kristech.pl/p/24/257/kt-link-.html) interface for communication with various Targets, trying to integrate LibSWD into my [iCeDeROM](https://github.com/cederom/icederom) project that would replace simple commandline application with fully featured extensible GUI environment for low-level development and analysis of embedded electronics and computer systems.
 
-Various parts of this research project were thankfully conducted and supported by:
+## Credits
+
+Various parts of this research project were thankfully conducted, contributed and supported by:
+* [Tomasz Bolesław CEDRO](http://www.tomek.cedro.info) (me) that is Inventor, Developer and Maintainer of LibSWD.
 * [Orange Labs Warsaw](http://www.orange.com/en_EN/group/global_footprint/countries/poland/poland-lab.jsp) and [Orange Labs Paris](http://www.orange.com/en_EN/group/global_footprint/countries/france/france-lab.jsp) that I work for as R&D Specialist.
 * [Cybernetic Research Student Group](http://cyber.ise.pw.edu.pl/) that I am founder, at [Warsaw University of Technology](http://www.pw.edu.pl).
 * [Polish Interdisciplinary NEUROSCIENCE Group](http://www.neuroscience.pl) that I am founder.
-* Andras Ketskes of [BodyTrace Inc.](http://www.bodytrace.com/)
-* Individuals from all around the world.
+* Krzysztof Kajstura of [Kristech](http://kristech.eu/).
+* Andras Ketskes of [BodyTrace Inc](http://www.bodytrace.com/).
+* Andrew Parlane of [Carallon Ltd](http://www.carallon.com/).
+* Individuals from all around the world, including [Freddie Chopin](http://www.freddiechopin.info), [Akos Vandra](https://github.com/axos88), [Evan Foss](https://sites.google.com/site/evanfoss).
 * My "free" time :-)
 
 
@@ -112,6 +118,13 @@ LibSWD is documented using Doxygen. Documentation body is included within the so
 
 ## History
 
+### Upcoming release improvements
+* ARM Cortex-M0 support.
+* AP read fix (ABORT after READ).
+* MEMAP support for 16-bit non-packed writes.
+* LibSWD Application CLI improvements.
+* Special thanks to Andrew Parlane of [Carallon Ltd.](http://www.carallon.com/)! :-)
+
 ### 2015-04-10:
 * LibSWD Project moves out from SourceForge to GitHub and is now available at https://github.com/cederom/LibSWD.
 
@@ -124,6 +137,7 @@ LibSWD is documented using Doxygen. Documentation body is included within the so
 * Introducing MEM-AP routines.
 * Introducing Standalone LibSWD Aplication.
 * Introducing initial support for Debug and Flash access.
+* Special thanks to Andras Ketskes of [BodyTrace Inc.](http://www.bodytrace.com/)! :-)
 
 ### 012-12-06:
 
@@ -259,6 +273,8 @@ To know more build options that can be set before compilation:
 Important configure parameters:
 * `--enable-debug` will build the binary with debug symbols (useful for development and bug-tracking, disabled by default).
 * `--enable-application` will also build the commandline application (disabled by default).
+* `CFLAGS=...` will pass important flags to the compiler (i.e. `CFLAGS="-I/usr/local/include/libftdi1"` on FreeBSD or `CFLAGS="-I/opt/local/include/libftdi1"` on MacOSX may come handy when includes are missing during compilation).
+* `LDFLAGS=...` will pass important flags to the linker (i.e. `LDFLAGS="-L/usr/local/lib"` on FreeBSD or `LDFLAGS="-L/opt/local/lib"` on MacOSX may come handy when required libraries are found missing during configure or compilation).
 
 #### Build Dependencies
 
