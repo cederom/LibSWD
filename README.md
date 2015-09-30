@@ -157,7 +157,7 @@ LibSWD is documented using Doxygen. Documentation body is included within the so
 * swd_drv_transmit() updates swdctx->log values only on successful transmit.
 * DP and AP operations including MEM-AP now works.
 * OpenOCD integration is almost done, flashing works (1938B/18.6s with FT2232).
-* By the way, I express my admiration to Felix Baumgartner and the whole Redbull STRATOS team for their pioneer achievments and today aerospace/skydive records!! :-)
+* By the way, I express my admiration to Felix Baumgartner and the whole Redbull STRATOS team for their pioneer achievements and today aerospace/skydive records!! :-)
 
 ### 2011-11-11
 
