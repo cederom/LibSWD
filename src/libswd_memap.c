@@ -255,7 +255,13 @@ int libswd_memap_read_char(libswd_ctx_t *libswdctx, libswd_operation_t operation
   // Use manual TAR incrementation (slower).
   for (i=0;i<count;i+=accsize)
   {
+   int tmp;
+   int drw_shift;
    loc=addr+i;
+   // Calculate the offset in DRW where the data should be
+   // see Data byte-laning in the ARM debug interface v5 documentation
+   // note: this only works for little endian systems.
+   drw_shift=8*(loc%4);
    // Measure transfer speed.
    gettimeofday(&tstop, NULL);
    tdeltam=fabsf((tstop.tv_sec-tstart.tv_sec)*1000+(tstop.tv_usec-tstart.tv_usec)/1000);
@@ -271,7 +277,9 @@ int libswd_memap_read_char(libswd_ctx_t *libswdctx, libswd_operation_t operation
    res=libswd_ap_read(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_DRW_ADDR, &memapdrw);
    if (res<0) goto libswd_memap_read_char_error;
    libswdctx->log.memap.drw=*memapdrw;
-   memcpy((void*)data+i, memapdrw, accsize);
+   // apply the data byte-laning shift
+   tmp=*memapdrw >>= drw_shift;
+   memcpy((void*)data+i, &tmp, accsize);
   }
   libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO, "\n");
  }
@@ -284,7 +292,13 @@ int libswd_memap_read_char(libswd_ctx_t *libswdctx, libswd_operation_t operation
   chunks=count/chunksize;
   for (chunk=0;chunk*chunksize<count;chunk++)
   {
+   int tmp;
+   int drw_shift;
    loc=addr+chunk*chunksize;
+   // Calculate the offset in DRW where the data should be
+   // see Data byte-laning in the ARM debug interface v5 documentation
+   // note: this only works for little endian systems.
+   drw_shift=8*(loc%4);
    // Pass address to TAR register.
    res=libswd_ap_write(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_TAR_ADDR, &loc);
    if (res<0) goto libswd_memap_read_char_error;
@@ -303,7 +317,9 @@ int libswd_memap_read_char(libswd_ctx_t *libswdctx, libswd_operation_t operation
     res=libswd_ap_read(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_DRW_ADDR, &memapdrw);
     if (res<0) goto libswd_memap_read_char_error;
     libswdctx->log.memap.drw=*memapdrw;
-    memcpy((void*)data+(chunk*chunksize)+i, memapdrw, accsize);
+    // apply the data byte-laning shift
+    tmp=*memapdrw >>= drw_shift;
+    memcpy((void*)data+(chunk*chunksize)+i, &tmp, accsize);
    }
   }
   libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO, "\n");
@@ -658,7 +674,12 @@ int libswd_memap_write_char(libswd_ctx_t *libswdctx, libswd_operation_t operatio
   // Use manual TAR incrementation (slower).
   for (i=0;i<count;i+=accsize)
   {
+   int drw_shift;
    loc=addr+i;
+   // Calculate the offset in DRW where the data should go
+   // see Data byte-laning in the ARM debug interface v5 documentation
+   // note: this only works for little endian systems.
+   drw_shift=8*(loc%4);
    // Measure transfer speed.
    gettimeofday(&tstop, NULL);
    tdeltam=fabsf((tstop.tv_sec-tstart.tv_sec)*1000+(tstop.tv_usec-tstart.tv_usec)/1000);
@@ -672,12 +693,8 @@ int libswd_memap_write_char(libswd_ctx_t *libswdctx, libswd_operation_t operatio
    libswdctx->log.memap.tar=loc;
    // Implode and Write data to DRW register.
    memcpy((void*)&libswdctx->log.memap.drw, data+i, accsize);
-   if (accsize == 2 && (loc % 4) == 2)
-   {
-    // 16 bit accesses at offsets of 2, use the upper 16 bits
-    libswdctx->log.memap.drw <<= 16;
-   }
-   // TODO probably need something similar for 8 bit accesses
+   // apply the data byte-laning shift
+   libswdctx->log.memap.drw <<= drw_shift;
    res=libswd_ap_write(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_DRW_ADDR, &libswdctx->log.memap.drw);
    if (res<0) goto libswd_memap_write_char_error;
   }
@@ -691,7 +708,12 @@ int libswd_memap_write_char(libswd_ctx_t *libswdctx, libswd_operation_t operatio
   chunks=count/chunksize;
   for (chunk=0;chunk*chunksize<count;chunk++)
   {
+   int drw_shift;
    loc=addr+chunk*chunksize;
+   // Calculate the offset in DRW where the data should go
+   // see Data byte-laning in the ARM debug interface v5 documentation
+   // note: this only works for little endian systems.
+   drw_shift=8*(loc%4);
    // Pass address to TAR register.
    res=libswd_ap_write(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_TAR_ADDR, &loc);
    if (res<0) goto libswd_memap_write_char_error;
@@ -708,12 +730,8 @@ int libswd_memap_write_char(libswd_ctx_t *libswdctx, libswd_operation_t operatio
     fflush(0);
     // Implode and Write data to DRW register.
     memcpy((void*)&libswdctx->log.memap.drw, data+(chunk*chunksize)+i, accsize);
-    if (accsize == 2 && ((loc+i) % 4) == 2)
-    {
-     // 16 bit accesses at offsets of 2, use the upper 16 bits
-     libswdctx->log.memap.drw <<= 16;
-    }
-    // TODO probably need something similar for 8 bit accesses
+    // apply the data byte-laning shift
+    libswdctx->log.memap.drw <<= drw_shift;
     res=libswd_ap_write(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_DRW_ADDR, &libswdctx->log.memap.drw);
     if (res<0) goto libswd_memap_write_char_error;
    }
