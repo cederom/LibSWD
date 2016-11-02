@@ -507,7 +507,8 @@ typedef enum {
  LIBSWD_ERROR_CLISYNTAX   =-44, ///< CLI Syntax Error.
  LIBSWD_ERROR_FILE        =-45, ///< File I/O related problem.
  LIBSWD_ERROR_UNSUPPORTED =-46, ///< Target not supported.
- LIBSWD_ERROR_MEMAPACCSIZE=-47  ///< Invalid MEM-AP access size.
+ LIBSWD_ERROR_MEMAPACCSIZE=-47, ///< Invalid MEM-AP access size.
+ LIBSWD_ERROR_MEMAPALIGN  =-48  ///< Invalid MEM-AP allignment.
 } libswd_error_code_t;
 
 /// Do we want autofix errors by default? Not at this point...

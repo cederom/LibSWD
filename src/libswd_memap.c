@@ -239,6 +239,13 @@ int libswd_memap_read_char(libswd_ctx_t *libswdctx, libswd_operation_t operation
  }
  if (count%accsize) count=count-(count%accsize);
 
+ // Check for alignment issues.
+ if ((addr%accsize)!=0)
+ {
+  res=LIBSWD_ERROR_MEMAPALIGN;
+  goto libswd_memap_read_char_error;
+ }
+
  // Mark start time for transfer speed measurement.
  gettimeofday(&tstart, NULL);
 
@@ -633,6 +640,13 @@ int libswd_memap_write_char(libswd_ctx_t *libswdctx, libswd_operation_t operatio
    goto libswd_memap_write_char_error;
  }
  if (count%accsize) count=count-(count%accsize);
+
+ // check for alignment issues.
+ if ((addr%accsize)!=0)
+ {
+  res=LIBSWD_ERROR_MEMAPALIGN;
+  goto libswd_memap_write_char_error;
+ }
 
  // Mark start time for transfer speed measurement.
  gettimeofday(&tstart, NULL);
