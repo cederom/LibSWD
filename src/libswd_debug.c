@@ -53,7 +53,6 @@ int libswd_debug_detect(libswd_ctx_t *libswdctx, libswd_operation_t operation)
 
  if (!libswdctx) return LIBSWD_ERROR_NULLCONTEXT;
  int retval=0, i, cpuid;
- libswd_arm_register_t reg;
 
  if (!libswdctx->log.memap.initialized)
  {
@@ -61,16 +60,16 @@ int libswd_debug_detect(libswd_ctx_t *libswdctx, libswd_operation_t operation)
   if (retval<0) return retval;
  }
 
+ retval=libswd_memap_read_int_32(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_ARM_DEBUG_CPUID_ADDR, 1, &cpuid);
+ if (retval<0) return retval;
+
  for (i=0;i<LIBSWD_NUM_SUPPORTED_CPUIDS;i++)
  {
-  reg=libswd_arm_debug_CPUID[i];
-  retval=libswd_memap_read_int_32(libswdctx, LIBSWD_OPERATION_EXECUTE, reg.address, 1, &cpuid);
-  if (retval<0) return retval;
-  if (cpuid==reg.default_value)
+  if (cpuid==libswd_arm_debug_CPUID[i].default_value)
   {
    libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO,
               "LIBSWD_I: libswd_debug_detect(): Found supported CPUID=0x%08X (%s).\n",
-              reg.default_value, reg.name );
+              libswd_arm_debug_CPUID[i].default_value, libswd_arm_debug_CPUID[i].name );
    break;
   }
  }

@@ -743,10 +743,10 @@ static const libswd_arm_register_t libswd_arm_debug_CortexM3_SCS_ComponentID[] =
 };
 
 static const libswd_arm_register_t libswd_arm_debug_CPUID[] = {
- { .address=0xE000ED00, .name="ARM Cortex-M3 r1p2",     .default_value=0x411FC231 },
- { .address=0xE000ED00, .name="ARM Cortex-M3 r2p1",     .default_value=0x412FC231 },
- { .address=0xE000ED00, .name="ARM Cortex-M0 r0p0",     .default_value=0x410CC200 },
- { .address=0xE000ED00, .name="ARM Cortex-M4 r0p1",     .default_value=0x410FC241 },
+ { .name="ARM Cortex-M3 r1p2",     .default_value=0x411FC231 },
+ { .name="ARM Cortex-M3 r2p1",     .default_value=0x412FC231 },
+ { .name="ARM Cortex-M0 r0p0",     .default_value=0x410CC200 },
+ { .name="ARM Cortex-M4 r0p1",     .default_value=0x410FC241 },
 };
 
 #define LIBSWD_NUM_SUPPORTED_CPUIDS     (sizeof(libswd_arm_debug_CPUID) / sizeof(libswd_arm_debug_CPUID[0]))
@@ -758,6 +758,7 @@ typedef struct libswd_debug {
  libswd_arm_register_t *romtable;
 } libswd_debug_t;
 
+#define LIBSWD_ARM_DEBUG_CPUID_ADDR  0xE000ED00
 #define LIBSWD_ARM_DEBUG_DFSR_ADDR   0xE000ED30
 #define LIBSWD_ARM_DEBUG_DHCSR_ADDR  0xE000EDF0
 #define LIBSWD_ARM_DEBUG_DCRSR_ADDR  0xE000EDF4
