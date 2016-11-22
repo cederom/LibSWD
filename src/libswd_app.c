@@ -1249,7 +1249,7 @@ int libswdapp_interface_ftdi_transfer_bits(libswdapp_context_t *libswdappctx, in
  {
   // Try to pack as many bits into bytes for better performance.
   bytes=bits/8;
-  bytes--;		              // MPSSE starts counting bytes from 0.
+  bytes--;                        // MPSSE starts counting bytes from 0.
   buf[0] = (nLSBfirst)?0x31:0x39; // Clock Bytes In and Out LSb or MSb first.
   buf[1] = (char)bytes&0x0ff;
   buf[2] = (char)((bytes>>8)&0x0ff);
@@ -1295,7 +1295,7 @@ int libswdapp_interface_ftdi_transfer_bits(libswdapp_context_t *libswdappctx, in
  for (bit=bytes*8;bit<bits;bit++)
  {
   buf[3*bit+0] = (nLSBfirst)?0x33:0x3b; // Clock Bits In and Out LSb or MSb first.
-  buf[3*bit+1] = 0;				     // One bit per element.
+  buf[3*bit+1] = 0;                     // One bit per element.
   buf[3*bit+2] = mosidata[bit]?0xff:0;  // Take data from supplied array.
  }
  bytes_written = ftdi_write_data(ftdictx,buf,3*(bits-(bytes*8)));
@@ -1353,7 +1353,7 @@ int libswdapp_interface_ftdi_transfer_bytes(libswdapp_context_t *libswdappctx, i
   return LIBSWD_ERROR_DRIVER;
  }
 
- bytes--;		                  // MPSSE starts counting bytes from 0.
+ bytes--;                        // MPSSE starts counting bytes from 0.
  buf[0] = (nLSBfirst)?0x31:0x39; // Clock Bytes In and Out MSb or LSb first.
  buf[1] = (char)bytes&0x0ff;
  buf[2] = (char)((bytes>>8)&0x0ff);

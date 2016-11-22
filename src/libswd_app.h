@@ -40,8 +40,8 @@
 #include <libswd.h>
 #include <ftdi.h>
 
-#define LIBSWDAPP_INTERFACE_SIGNAL_NAME_MINLEN	1
-#define LIBSWDAPP_INTERFACE_SIGNAL_NAME_MAXLEN	32
+#define LIBSWDAPP_INTERFACE_SIGNAL_NAME_MINLEN    1
+#define LIBSWDAPP_INTERFACE_SIGNAL_NAME_MAXLEN    32
 #define LIBSWDAPP_INTERFACE_NAME_MAXLEN           32
 #define LIBSWDAPP_INTERFACE_CONFIG_NAME_MAXLEN    32
 #define LIBSWDAPP_INTERFACE_VID_DEFAULT           0x0403
@@ -52,10 +52,10 @@
 #define LIBSWDAPP_CLI_HISTORY_MAXLEN  1024
 
 typedef struct libswdapp_interface_signal {
-	char *name;                         /// Signal name string.
-	unsigned int mask;                  /// Mask value for selected signal.
-	int value;                          /// Cached signal value.
-	struct libswdapp_interface_signal *next; /// Next signal on the list.
+ char *name;                         /// Signal name string.
+ unsigned int mask;                  /// Mask value for selected signal.
+ int value;                          /// Cached signal value.
+ struct libswdapp_interface_signal *next; /// Next signal on the list.
 } libswdapp_interface_signal_t;
 
 typedef struct libswdapp_context {
@@ -108,11 +108,11 @@ typedef struct libswdapp_interface_config {
 } libswdapp_interface_config_t;
 
 typedef enum libswdapp_interface_operation {
-	OOCD_INTERFACE_SIGNAL_OPERATION_UNDEFINED = 0,
-	OOCD_INTERFACE_SIGNAL_OPERATION_READ,
-	OOCD_INTERFACE_SIGNAL_OPERATION_WRITE,
-	OOCD_INTERFACE_SIGNAL_OPERATION_SET,
-	OOCD_INTERFACE_SIGNAL_OPERATION_CLEAR
+ OOCD_INTERFACE_SIGNAL_OPERATION_UNDEFINED = 0,
+ OOCD_INTERFACE_SIGNAL_OPERATION_READ,
+ OOCD_INTERFACE_SIGNAL_OPERATION_WRITE,
+ OOCD_INTERFACE_SIGNAL_OPERATION_SET,
+ OOCD_INTERFACE_SIGNAL_OPERATION_CLEAR
 } libswdapp_interface_operation_t;
 
 
