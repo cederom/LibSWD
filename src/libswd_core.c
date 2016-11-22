@@ -84,7 +84,7 @@ int libswd_deinit_ctx(libswd_ctx_t *libswdctx){
 /** De-initialize command queue and free its memory on selected swd context.
  * \param *libswdctx swd context pointer.
  * \return number of commands freed, or LIBSWD_ERROR_CODE on failure.
- */ 
+ */
 int libswd_deinit_cmdq(libswd_ctx_t *libswdctx){
  if (libswdctx==NULL) return LIBSWD_ERROR_NULLPOINTER;
  int res;
@@ -96,7 +96,7 @@ int libswd_deinit_cmdq(libswd_ctx_t *libswdctx){
 /** De-initialize selected swd context and its command queue.
  * \param *libswdctx swd context pointer.
  * \return number of elements freed, or LIBSWD_ERROR_CODE on failure.
- */ 
+ */
 int libswd_deinit(libswd_ctx_t *libswdctx){
  int res, cmdcnt=0;
  if (libswdctx->membuf.data) free(libswdctx->membuf.data);

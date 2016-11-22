@@ -46,7 +46,7 @@
  *
  * \section doc_details How it works
  * \subsection doc_context SWD Context
- * The most important data type in LibSWD is libswd_ctx_t structure, a context that represents logical entity of the swd bus (transport layer between host and target) with all its parameters, configuration and command queue. Context is being created with libswd_init() function that returns pointer to allocated virgin structure, and it can be destroyed with libswd_deinit() function taking the pointer as argument. Context can be set only for one interface-target pair, but there might be many different contexts in use if necessary, so amount of devices in use is not limited. 
+ * The most important data type in LibSWD is libswd_ctx_t structure, a context that represents logical entity of the swd bus (transport layer between host and target) with all its parameters, configuration and command queue. Context is being created with libswd_init() function that returns pointer to allocated virgin structure, and it can be destroyed with libswd_deinit() function taking the pointer as argument. Context can be set only for one interface-target pair, but there might be many different contexts in use if necessary, so amount of devices in use is not limited.
  *
  * \subsection doc_functions Functions
  * All functions in general operates on pointer type and returns number of processed elements on success or negative value with libswd_error_code_t on failure. Functions are grouped by functionality that is denoted by function name prefix (ie. libswd_bin* are for binary operations, libswd_cmdq* deals with command queue, libswd_cmd_enqueue* deals with creating commands and attaching them to queue, libswd_bus* performs operation on the swd transport system, libswd_drv* are the interface drivers, etc). Because programs using libswd for transport can queue multiple operations and don't handle errors of each transaction apropriately, libswd_drv_transmit() function verifies the ACK and PARITY operation results directly after execution (read from target) and return error code if necessary. When error is detected and there were some pending perations enqueued for execution, they are discarded and removed from the queue (they would not be accepted by the target anyway), the queue is then again ready to accept new transactions (i.e. error handling operations).
@@ -58,13 +58,13 @@
  *
  * Payload is stored within union type and its data can be accessed according to payload name, or simply with data8 (char) and data32 (int) fields. Payload for write (MOSI) operations is stored on command creation, but payload for read (MISO) operations becomes available only after command is executed by the interface driver. There are 3 methods of accessing read data - flushing the queue into driver then reading queue directly, single stepping queue execution (flush one-by-one) then reading context log of last executed command results (there are separate fields of type libswd_transaction_t in libswd_ctx_t's log structure for read and write operations that are updated by libswd_drv_transmit() function before write and after read), or  providing a double pointer on command creation to have constant access to its data after execution.
  *
- * After all commands are enqueued with libswd_cmd_enqueue* function set, it is time to send them into physical device with libswd_cmdq_flush() funtion. According to the libswd_operation_t parameter commands can be flushed one-by-one, all of them, only to the selected command or only after selected command. For low level functions all of these options are available, but for high-level functions only two of them can be used - LIBSWD_OPERATION_ENQUEUE (but not send to the driver) and LIBSWD_OPERATION_EXECUTE (all unexecuted commands on the queue are executed by the driver sequentially) - that makes it possible to perform bus operations one after another having their result just at function return, or compose more advanced sequences leading to preferred result at execution time. Because high-level functions provide simple and elegant manner to get the operation result, it is advised to use them instead dealing with low-level functions (implementing memory management, data allocation and queue operation) that exist only to make high-level functions possible. 
+ * After all commands are enqueued with libswd_cmd_enqueue* function set, it is time to send them into physical device with libswd_cmdq_flush() funtion. According to the libswd_operation_t parameter commands can be flushed one-by-one, all of them, only to the selected command or only after selected command. For low level functions all of these options are available, but for high-level functions only two of them can be used - LIBSWD_OPERATION_ENQUEUE (but not send to the driver) and LIBSWD_OPERATION_EXECUTE (all unexecuted commands on the queue are executed by the driver sequentially) - that makes it possible to perform bus operations one after another having their result just at function return, or compose more advanced sequences leading to preferred result at execution time. Because high-level functions provide simple and elegant manner to get the operation result, it is advised to use them instead dealing with low-level functions (implementing memory management, data allocation and queue operation) that exist only to make high-level functions possible.
  *
  * \section doc_drivers Drivers
  * Calling the libswd_cmdq_flush() function leads to execution of not yet executed commands from the queue (in a manner specified by the operation parameter) on the SWD bus (transport layer between interface and target, not the bus of the target itself) by libswd_drv_transmit() function that use application specific "extern" functions defined in external file (ie. liblibswd_drv_urjtag.c) to operate on a real hardware using drivers from existing application. LibSWD use only libswd_drv_{mosi,miso}_{8,32} (separate for 8-bit char and 32-bit int data cast type) and libswd_drv_{mosi,miso}_trn functions to interact with drivers, so it is possible to easily reuse low-level and high-level devices for communications, as they have all information necessary to perform exact actions - number of bits, payload, command type, shift direction and bus direction. It is even possible to send raw bytes on the bus (control command) or bitbang the bus (bitbang command) if necessary. MOSI (Master Output Slave Input) and MISO (Master Input Slave Output) was used to clearly distinguish transfer direction (from master-interface to target-slave), as opposed to ambiguous read/write statements, so after libswd_drv_mosi_trn() master should have its buffers set to output and target inputs active. Drivers, as most of the LibSWD functions, works on data pointers instead data copy and returns number of elements processed (bits in this case) or negative error code on failure.
  *
  * \section Error and Retry handling
- * LibSWD is equipped with optional automatic error handling in order to make error and retry handling easier for external applications that were meant for JTAG applications (such as OpenOCD) which first enqueue lots of operations and then flushes them into hardware loosing information on where the target reported problem with ACK!=OK. The default behavior of LibSWD for ACK!=OK response from Target is to truncate the queue right after the bad ACK (eventually executing the necessary data phase before doing that) to preserve synchronization between command queue (libswd_ctx_t->cmdq) and the Target state. This can be changed by clearing out the libswd_ctx_t.config.autofixerrors field that disables queue truncate on error, then applying the libswd_dap_retry() in the application flush mechanism for both DP and AP operations. libswd_dap_retry() will try to find the ACK!=OK on the queue that caused an error then perform operation retry to fix the situation, or fail permanently (Protocol Error Sequence, Retry Count, etc). Note that retry will be handled in a different way than it was performed on the original command queue and it will use separate command queue attached to a bad ACK command element on the queue. This approach gives ability to handle different situations accordingly, does not interfere with the original queue and does not loose information what additional operations had been performed, in perfect situation it should end up in having the original queue executed as there was no error/retry. 
+ * LibSWD is equipped with optional automatic error handling in order to make error and retry handling easier for external applications that were meant for JTAG applications (such as OpenOCD) which first enqueue lots of operations and then flushes them into hardware loosing information on where the target reported problem with ACK!=OK. The default behavior of LibSWD for ACK!=OK response from Target is to truncate the queue right after the bad ACK (eventually executing the necessary data phase before doing that) to preserve synchronization between command queue (libswd_ctx_t->cmdq) and the Target state. This can be changed by clearing out the libswd_ctx_t.config.autofixerrors field that disables queue truncate on error, then applying the libswd_dap_retry() in the application flush mechanism for both DP and AP operations. libswd_dap_retry() will try to find the ACK!=OK on the queue that caused an error then perform operation retry to fix the situation, or fail permanently (Protocol Error Sequence, Retry Count, etc). Note that retry will be handled in a different way than it was performed on the original command queue and it will use separate command queue attached to a bad ACK command element on the queue. This approach gives ability to handle different situations accordingly, does not interfere with the original queue and does not loose information what additional operations had been performed, in perfect situation it should end up in having the original queue executed as there was no error/retry.
  *
  * \section doc_example Example
  * \code
@@ -74,7 +74,7 @@
  *   int res, *idcode;
  *   libswdctx=libswd_init();
  *   if (libswdctx==NULL) return -1;
- *   //we might need to pass external driver structure to libswd_drv* functions 
+ *   //we might need to pass external driver structure to libswd_drv* functions
  *   //libswdctx->driver->device=...
  *   res=libswd_dap_detect(libswdctx, LIBSWD_OPERATION_EXECUTE, &idcode);
  *   if (res<0){
@@ -149,7 +149,7 @@
 /// Address field minimal value.
 #define LIBSWD_ADDR_MINVAL       0
 /// Address field maximal value.
-#define LIBSWD_ADDR_MAXVAL       0xC 
+#define LIBSWD_ADDR_MAXVAL       0xC
 
 /// Number of bits in Acknowledge packet.
 #define LIBSWD_ACK_BITLEN        3
@@ -298,7 +298,7 @@
 
 /** SW-DP WCR TURNROUND available values */
 /// TRN takes one CLK cycle.
-#define LIBSWD_TURNROUND_1_CODE  0              ///< TRN takes one CLK cycle. 
+#define LIBSWD_TURNROUND_1_CODE  0              ///< TRN takes one CLK cycle.
 #define LIBSWD_TURNROUND_1_VAL   1
 /// TRN takes two CLK cycles.
 #define LIBSWD_TURNROUND_2_CODE  1                    ///< TRN takes two CLK cycles.
@@ -426,7 +426,7 @@
 
 /** AHB-AP Registers Map. TODO!!!! */
 /// R/W, 32bit, reset value: 0x43800042
-#define AHB_AP_CONTROLSTATUS 0x00  ///< R/W, 32bit, reset value: 0x43800042 
+#define AHB_AP_CONTROLSTATUS 0x00  ///< R/W, 32bit, reset value: 0x43800042
 /// R/W, 32bit, reset value: 0x00000000
 #define AHB_AP_TAR           0x04  ///< R/W, 32bit, reset value: 0x00000000
 /// R/W, 32bit
@@ -451,8 +451,8 @@
 
 /** Payload for commands that will not change, transmitted MSBFirst */
 /// SW-DP Reset sequence.
-static const char LIBSWD_CMD_SWDPRESET[] = {0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0x00}; 
-/// Switches DAP from JTAG to SWD. 
+static const char LIBSWD_CMD_SWDPRESET[] = {0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0x00};
+/// Switches DAP from JTAG to SWD.
 static const char LIBSWD_CMD_JTAG2SWD[]  = {0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0x9e, 0xe7};
 /// Switches DAP from SWD to JTAG.
 static const char LIBSWD_CMD_SWD2JTAG[]  = {0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0x3c, 0xe7};
@@ -585,7 +585,7 @@ typedef enum {
 
 /** SWD Command Element Structure.
  * In libswd each operation is split into separate commands (request, trn, ack,
- * data, parity) that can be appended to the command queue and later executed. 
+ * data, parity) that can be appended to the command queue and later executed.
  * This organization allows better granularity for tracing bugs and makes
  * possible to compose complete bus/target operations made of simple commands.
  */
@@ -604,7 +604,7 @@ typedef struct libswd_cmd_t {
   char data8;     ///< Holds "char" data type for inspection.
  };
  char bits;       ///< Payload bit count == clk pulses on the bus.
- libswd_cmdtype_t cmdtype; ///< Command type as defined by libswd_cmdtype_t. 
+ libswd_cmdtype_t cmdtype; ///< Command type as defined by libswd_cmdtype_t.
  char done;       ///< Non-zero if operation already executed.
  struct libswd_cmd_t *errors;///<Pointer to the error/retry handling command/queue.
  struct libswd_cmd_t *prev; ///< Pointer to the previous command.
@@ -699,7 +699,7 @@ typedef struct libswd_arm_romtable_register {
 } libswd_arm_register_t;
 
 static const libswd_arm_register_t libswd_arm_debug_CortexM3_ROMtable_PeripheralID[] = {
- { .address=0xE00FFFD0, .name="Peripheral ID4", .default_value=0x00000004 }, 
+ { .address=0xE00FFFD0, .name="Peripheral ID4", .default_value=0x00000004 },
  { .address=0xE00FFFD4, .name="Peripheral ID5", .default_value=0x00000000 },
  { .address=0xE00FFFD8, .name="Peripheral ID6", .default_value=0x00000000 },
  { .address=0xE00FFFDC, .name="Peripheral ID7", .default_value=0x00000000 },
@@ -728,7 +728,7 @@ static const libswd_arm_register_t libswd_arm_debug_CortexM3_Components[] = {
 };
 
 static const libswd_arm_register_t libswd_arm_debug_CortexM3_SCS_PeripheralID[] = {
- { .address=0xE000EFD0, .name="Peripheral ID4", .default_value=0x00000004 }, 
+ { .address=0xE000EFD0, .name="Peripheral ID4", .default_value=0x00000004 },
  { .address=0xE000EFE0, .name="Peripheral ID0", .default_value=0x00000000 },
  { .address=0xE000EFE4, .name="Peripheral ID1", .default_value=0x000000B0 },
  { .address=0xE000EFE8, .name="Peripheral ID2", .default_value=0x0000000B },
@@ -744,7 +744,7 @@ static const libswd_arm_register_t libswd_arm_debug_CortexM3_SCS_ComponentID[] =
 
 static const libswd_arm_register_t libswd_arm_debug_CPUID[] = {
  { .address=0xE000ED00, .name="ARM Cortex-M3 r1p2",     .default_value=0x411FC231 },
- { .address=0xE000ED00, .name="ARM Cortex-M3 r2p1",     .default_value=0x412FC231 }, 
+ { .address=0xE000ED00, .name="ARM Cortex-M3 r2p1",     .default_value=0x412FC231 },
  { .address=0xE000ED00, .name="ARM Cortex-M0 r0p0",     .default_value=0x410CC200 },
  { .address=0xE000ED00, .name="ARM Cortex-M4 r0p1",     .default_value=0x410FC241 },
  { .address=0,          .name=""                  ,     .default_value=0 },
@@ -757,11 +757,11 @@ typedef struct libswd_debug {
  libswd_arm_register_t *romtable;
 } libswd_debug_t;
 
-#define LIBSWD_ARM_DEBUG_DFSR_ADDR   0xE000ED30 
-#define LIBSWD_ARM_DEBUG_DHCSR_ADDR  0xE000EDF0 
-#define LIBSWD_ARM_DEBUG_DCRSR_ADDR  0xE000EDF4 
-#define LIBSWD_ARM_DEBUG_DCRDR_ADDR  0xE000EDF8 
-#define LIBSWD_ARM_DEBUG_DEMCR_ADDR  0xE000EDFC 
+#define LIBSWD_ARM_DEBUG_DFSR_ADDR   0xE000ED30
+#define LIBSWD_ARM_DEBUG_DHCSR_ADDR  0xE000EDF0
+#define LIBSWD_ARM_DEBUG_DCRSR_ADDR  0xE000EDF4
+#define LIBSWD_ARM_DEBUG_DCRDR_ADDR  0xE000EDF8
+#define LIBSWD_ARM_DEBUG_DEMCR_ADDR  0xE000EDFC
 
 #define LIBSWD_ARM_DEBUG_DHCSR_DBGKEY_BITNUM     16
 #define LIBSWD_ARM_DEBUG_DHCSR_DBGKEY_VAL        0xA05F /* Remember to write this key every time DHCSR is written. */

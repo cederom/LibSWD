@@ -60,7 +60,7 @@ typedef struct libswdapp_interface_signal {
 
 typedef struct libswdapp_context {
  libswd_ctx_t *libswdctx;
- struct libswdapp_interface *interface; 
+ struct libswdapp_interface *interface;
  int loglevel;
  int retval;
 } libswdapp_context_t;
@@ -163,9 +163,9 @@ static const libswdapp_interface_config_t libswdapp_interface_configs[] = {
   .set_freq       = libswdapp_interface_ftdi_set_freq,
   .bitbang        = libswdapp_interface_ftdi_bitbang,
   .transfer_bits  = libswdapp_interface_ftdi_transfer_bits,
-  .transfer_bytes = libswdapp_interface_ftdi_transfer_bytes, 
+  .transfer_bytes = libswdapp_interface_ftdi_transfer_bytes,
   .vid            = 0x0403,
-  .pid            = 0xbbe2, 
+  .pid            = 0xbbe2,
   .latency        = 1,
   .maxfrequency   = 30000000,
   .frequency      = 1000000,
@@ -180,9 +180,9 @@ static const libswdapp_interface_config_t libswdapp_interface_configs[] = {
   .set_freq       = libswdapp_interface_aftdi_set_freq,
   .bitbang        = libswdapp_interface_aftdi_bitbang,
   .transfer_bits  = libswdapp_interface_aftdi_transfer_bits,
-  .transfer_bytes = libswdapp_interface_aftdi_transfer_bytes, 
+  .transfer_bytes = libswdapp_interface_aftdi_transfer_bytes,
   .vid            = 0x0403,
-  .pid            = 0xbbe2, 
+  .pid            = 0xbbe2,
   .latency        = 1,
   .maxfrequency   = 30000000,
   .frequency      = 1000000,
@@ -296,7 +296,7 @@ static const libswdapp_flash_stm32f1_memmap_t *libswdapp_flash_stm32f1_devices[]
  &libswdapp_flash_stm321f_mediumdensity,
  &libswdapp_flash_stm321f_highdensity,
  &libswdapp_flash_stm321f_connectivityline,
- NULL 
+ NULL
 };
 
 #define LIBSWDAPP_FLASH_STM32F1_FLASH_OBR_RDPRT_VAL 0x000000A5

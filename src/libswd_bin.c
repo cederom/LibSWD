@@ -66,7 +66,7 @@ int libswd_bin32_parity_even(int *data, char *parity){
  int i;
  unsigned int test=*data;
  *parity=0;
- for (i=0;i<32;i++) *parity ^= ((test>>i)&1); 
+ for (i=0;i<32;i++) *parity ^= ((test>>i)&1);
  if (*parity<0 || *parity>1) return LIBSWD_ERROR_PARITY;
  return (int)*parity;
 }
@@ -78,7 +78,7 @@ int libswd_bin32_parity_even(int *data, char *parity){
  */
 int libswd_bin8_print(char *data){
  unsigned char i, bits=*data;
- for (i=0;i<8;i++) putchar(((bits<<i)&0x80)?'1':'0'); 
+ for (i=0;i<8;i++) putchar(((bits<<i)&0x80)?'1':'0');
  return i;
 }
 
@@ -101,7 +101,7 @@ int libswd_bin32_print(int *data){
 char *libswd_bin8_string(char *data){
  static char string[9]; string[8]=0;
  unsigned char i, bits=*data;
- for (i=0;i<8;i++) string[7-i]=(bits&(1<<i))?'1':'0'; 
+ for (i=0;i<8;i++) string[7-i]=(bits&(1<<i))?'1':'0';
  return string;
 }
 
@@ -118,12 +118,12 @@ char *libswd_bin32_string(int *data){
 }
 
 /**
- * Bit swap helper function that reverse bit order in char *buffer. 
+ * Bit swap helper function that reverse bit order in char *buffer.
  * Most Significant Bit becomes Least Significant Bit.
  * It is possible to  swap only n-bits from char (8-bit) *buffer.
  * \param *buffer unsigned char (8-bit) data pointer.
  * \param bitcount how many bits to swap.
- * \return swapped bit count (positive) or error code (negative). 
+ * \return swapped bit count (positive) or error code (negative).
  */
 int libswd_bin8_bitswap(unsigned char *buffer, int bitcount){
  if (buffer==NULL) return LIBSWD_ERROR_NULLPOINTER;
@@ -133,7 +133,7 @@ int libswd_bin8_bitswap(unsigned char *buffer, int bitcount){
  printf("|LIBSWD_DEBUG: libswd_bin8_bitswap(%02X, %d);\n", *buffer, bitcount);
  #endif
  for (bit=0;bit<bitcount;bit++) {
-  result=(result<<1)|(((*buffer>>bit)&1)?1:0); 
+  result=(result<<1)|(((*buffer>>bit)&1)?1:0);
   #ifdef __SWDDEBUG__
   printf("|LIBSWD_DEBUG: libswd_bin8_bitswap: in=%02X out=%02X bit=%d\n", *buffer, result, bit);
   #endif
@@ -143,12 +143,12 @@ int libswd_bin8_bitswap(unsigned char *buffer, int bitcount){
 }
 
 /**
- * Bit swap helper function that reverse bit order in int *buffer. 
+ * Bit swap helper function that reverse bit order in int *buffer.
  * Most Significant Bit becomes Least Significant Bit.
  * It is possible to  swap only n-bits from int (32-bit) *buffer.
  * \param *buffer unsigned char (32-bit) data pointer.
  * \param bitcount how many bits to swap.
- * \return swapped bit count (positive) or error code (negative). 
+ * \return swapped bit count (positive) or error code (negative).
  */
 int libswd_bin32_bitswap(unsigned int *buffer, int bitcount){
  if (buffer==NULL) return LIBSWD_ERROR_NULLPOINTER;
@@ -158,7 +158,7 @@ int libswd_bin32_bitswap(unsigned int *buffer, int bitcount){
  printf("|LIBSWD_DEBUG: libswd_bin32_bitswap(%08X, %d);\n", *buffer, bitcount);
  #endif
  for (bit=0;bit<bitcount;bit++) {
-  result=(result<<1)|(((*buffer>>bit)&1)?1:0); 
+  result=(result<<1)|(((*buffer>>bit)&1)?1:0);
   #ifdef __SWDDEBUG__
   printf("|LIBSWD_DEBUG: libswd_bin32_bitswap: in=%08X out=%08X bit=%d\n", *buffer, result, bit);
   #endif

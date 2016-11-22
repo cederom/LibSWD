@@ -62,7 +62,7 @@ int libswd_drv_mosi_8(libswd_ctx_t *libswdctx, libswd_cmd_t *cmd, char *data, in
  static char misodata[8], mosidata[8];
 
  /* Split output data into char array. */
- for (i=0;i<8;i++) mosidata[(nLSBfirst==LIBSWD_DIR_LSBFIRST)?(i):(bits-1-i)]=((1<<i)&(*data))?1:0; 
+ for (i=0;i<8;i++) mosidata[(nLSBfirst==LIBSWD_DIR_LSBFIRST)?(i):(bits-1-i)]=((1<<i)&(*data))?1:0;
  /* Then send that array into interface hardware. */
  res=jtag_interface->transfer(NULL, bits, mosidata, misodata, 0);
  if (res<0) return LIBSWD_ERROR_DRIVER;
@@ -91,7 +91,7 @@ int libswd_drv_mosi_32(libswd_ctx_t *libswdctx, libswd_cmd_t *cmd, int *data, in
  static char misodata[32], mosidata[32];
 
  //UrJTAG drivers shift data LSB-First.
- for (i=0;i<32;i++) mosidata[(nLSBfirst==LIBSWD_DIR_LSBFIRST)?(i):(bits-1-i)]=((1<<i)&(*data))?1:0; 
+ for (i=0;i<32;i++) mosidata[(nLSBfirst==LIBSWD_DIR_LSBFIRST)?(i):(bits-1-i)]=((1<<i)&(*data))?1:0;
  res=jtag_interface->transfer(NULL, bits, mosidata, misodata, 0);
  if (res<0) return LIBSWD_ERROR_DRIVER;
  return i;
@@ -152,7 +152,7 @@ int libswd_drv_miso_32(libswd_ctx_t *libswdctx, libswd_cmd_t *cmd, int *data, in
  LOG_DEBUG("OpenOCD's libswd_drv_miso_32(libswdctx=@%p, cmd=@%p, data=@%p, bits=%d, nLSBfirst=0x%02X) reads: 0x%08X", (void*)libswdctx, (void*)cmd, (void*)data, bits, nLSBfirst, *data);
  LOG_DEBUG("OpenOCD's libswd_drv_miso_32() reads: 0x%08X\n", *data);
  return i;
-}       
+}
 
 /**
  * This function sets interface buffers to MOSI direction.
@@ -161,12 +161,12 @@ int libswd_drv_miso_32(libswd_ctx_t *libswdctx, libswd_cmd_t *cmd, int *data, in
  * OpenOCD driver must support "RnW" signal to drive output buffers for TRN.
  * \param *libswdctx is the swd context to work on.
  * \param bits specify how many clock cycles must be used for TRN.
- * \return number of bits transmitted or negative LIBSWD_ERROR code on failure. 
+ * \return number of bits transmitted or negative LIBSWD_ERROR code on failure.
  */
 int libswd_drv_mosi_trn(libswd_ctx_t *libswdctx, int bits){
  LOG_DEBUG("OpenOCD's libswd_drv_mosi_trn(libswdctx=@%p, bits=%d)\n", (void*)libswdctx, bits);
  if (bits<LIBSWD_TURNROUND_MIN_VAL && bits>LIBSWD_TURNROUND_MAX_VAL)
-  return LIBSWD_ERROR_TURNAROUND; 
+  return LIBSWD_ERROR_TURNAROUND;
 
  int res, val=0;
  static char buf[LIBSWD_TURNROUND_MAX_VAL];
@@ -175,7 +175,7 @@ int libswd_drv_mosi_trn(libswd_ctx_t *libswdctx, int bits){
  if (res<0) return LIBSWD_ERROR_DRIVER;
 
  /* Clock specified number of bits for proper TRN transaction. */
- res=jtag_interface->transfer(NULL, bits, buf, buf, 0); 
+ res=jtag_interface->transfer(NULL, bits, buf, buf, 0);
  if (res<0) return LIBSWD_ERROR_DRIVER;
 
  return bits;
@@ -188,12 +188,12 @@ int libswd_drv_mosi_trn(libswd_ctx_t *libswdctx, int bits){
  * OpenOCD driver must support "RnW" signal to drive output buffers for TRN.
  * \param *libswdctx is the swd context to work on.
  * \param bits specify how many clock cycles must be used for TRN.
- * \return number of bits transmitted or negative LIBSWD_ERROR code on failure. 
+ * \return number of bits transmitted or negative LIBSWD_ERROR code on failure.
  */
 int libswd_drv_miso_trn(libswd_ctx_t *libswdctx, int bits){
  LOG_DEBUG("OpenOCD's libswd_drv_miso_trn(libswdctx=@%p, bits=%d)\n", (void*)libswdctx, bits);
  if (bits<LIBSWD_TURNROUND_MIN_VAL && bits>LIBSWD_TURNROUND_MAX_VAL)
-  return LIBSWD_ERROR_TURNAROUND; 
+  return LIBSWD_ERROR_TURNAROUND;
 
  static int res, val=1;
  static char buf[LIBSWD_TURNROUND_MAX_VAL];
@@ -203,9 +203,9 @@ int libswd_drv_miso_trn(libswd_ctx_t *libswdctx, int bits){
  if (res<0) return LIBSWD_ERROR_DRIVER;
 
  /* Clock specified number of bits for proper TRN transaction. */
- res=jtag_interface->transfer(NULL, bits, buf, buf, 0); 
+ res=jtag_interface->transfer(NULL, bits, buf, buf, 0);
  if (res<0) return LIBSWD_ERROR_DRIVER;
- 
+
  return bits;
 }
 
@@ -215,7 +215,7 @@ int libswd_drv_miso_trn(libswd_ctx_t *libswdctx, int bits){
  * \param *libswdctx is the context to work on.
  * \param loglevel is the OpenOCD numerical value of actual loglevel to force
  *  on LibSWD, or -1 to inherit from actual global settings of OpenOCD.
- * \return LIBSWD_OK on success, negative LIBSWD_ERROR code on failure. 
+ * \return LIBSWD_OK on success, negative LIBSWD_ERROR code on failure.
  */
 int libswd_log_level_inherit(libswd_ctx_t *libswdctx, int loglevel){
  LOG_DEBUG("OpenOCD's libswd_log_level_inherit(libswdctx=@%p, loglevel=%d)\n", (void*)libswdctx, loglevel);
@@ -248,7 +248,7 @@ int libswd_log_level_inherit(libswd_ctx_t *libswdctx, int loglevel){
   default:
    new_swdlevel=LIBSWD_LOGLEVEL_NORMAL;
  }
-                                
+
  int res=libswd_log_level_set(libswdctx, new_swdlevel);
  if (res<0) {
   LOG_ERROR("libswd_log_level_set() failed (%s)\n", libswd_error_string(res));
@@ -263,7 +263,7 @@ int libswd_log_level_inherit(libswd_ctx_t *libswdctx, int loglevel){
   */
 int libswd_log(libswd_ctx_t *libswdctx, libswd_loglevel_t loglevel, char *msg, ...){
  if (libswdctx==NULL) return LIBSWD_ERROR_NULLCONTEXT;
- if (loglevel > LIBSWD_LOGLEVEL_MAX) return LIBSWD_ERROR_PARAM; 
+ if (loglevel > LIBSWD_LOGLEVEL_MAX) return LIBSWD_ERROR_PARAM;
 
  if (loglevel > libswdctx->config.loglevel) return LIBSWD_OK;
  va_list ap;
