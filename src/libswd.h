@@ -747,8 +747,9 @@ static const libswd_arm_register_t libswd_arm_debug_CPUID[] = {
  { .address=0xE000ED00, .name="ARM Cortex-M3 r2p1",     .default_value=0x412FC231 },
  { .address=0xE000ED00, .name="ARM Cortex-M0 r0p0",     .default_value=0x410CC200 },
  { .address=0xE000ED00, .name="ARM Cortex-M4 r0p1",     .default_value=0x410FC241 },
- { .address=0,          .name=""                  ,     .default_value=0 },
 };
+
+#define LIBSWD_NUM_SUPPORTED_CPUIDS     (sizeof(libswd_arm_debug_CPUID) / sizeof(libswd_arm_debug_CPUID[0]))
 
 typedef struct libswd_debug {
  char initialized;

@@ -61,8 +61,9 @@ int libswd_debug_detect(libswd_ctx_t *libswdctx, libswd_operation_t operation)
   if (retval<0) return retval;
  }
 
- for (reg=libswd_arm_debug_CPUID[i=0];reg.address;reg=libswd_arm_debug_CPUID[i++])
+ for (i=0;i<LIBSWD_NUM_SUPPORTED_CPUIDS;i++)
  {
+  reg=libswd_arm_debug_CPUID[i];
   retval=libswd_memap_read_int_32(libswdctx, LIBSWD_OPERATION_EXECUTE, reg.address, 1, &cpuid);
   if (retval<0) return retval;
   if (cpuid==reg.default_value)
@@ -73,7 +74,7 @@ int libswd_debug_detect(libswd_ctx_t *libswdctx, libswd_operation_t operation)
    break;
   }
  }
- if (!reg.address) return LIBSWD_ERROR_UNSUPPORTED;
+ if (i==LIBSWD_NUM_SUPPORTED_CPUIDS) return LIBSWD_ERROR_UNSUPPORTED;
  libswd_log(libswdctx, LIBSWD_LOGLEVEL_DEBUG, "LIBSWD_I: libswd_debug_detect(*libswdctx=%p, operation=%s) execution OK...\n", (void*)libswdctx, libswd_operation_string(operation));
  return LIBSWD_OK;
 }
