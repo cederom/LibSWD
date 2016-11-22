@@ -181,7 +181,7 @@ int libswd_error_handle_ack_wait(libswd_ctx_t *libswdctx){
  if (libswdctx->cmdq->errors==NULL) goto libswd_error_handle_ack_wait_end;
  libswdctx->cmdq=libswdctx->cmdq->errors; // From now, this becomes out main cmdq for use with standard functions.
  libswd_log(libswdctx, LIBSWD_LOGLEVEL_DEBUG, "LIBSWD_D: libswd_error_handle_ack_wait(libswdctx=@%p): Performing data phase after ACK={WAIT,FAULT}...\n", (void*)libswdctx);
- int res, data=0;
+ int data=0;
  retval=libswd_bus_write_data_p(libswdctx, LIBSWD_OPERATION_EXECUTE, &data, &parity);
  if (retval<0) goto libswd_error_handle_ack_wait_end;
 

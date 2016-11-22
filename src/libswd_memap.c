@@ -57,7 +57,6 @@ int libswd_memap_init(libswd_ctx_t *libswdctx, libswd_operation_t operation){
  if (libswdctx==NULL) return LIBSWD_ERROR_NULLCONTEXT;
 
  int res=0, *memapidr, *memapbase, *memapcswp, memapcsw;
- int dpabort, dpctrlstat, *dpctrlstatp;
 
  // Verify if DAP is already initialized, do so in necessary.
  if (!libswdctx->log.dp.initialized)
@@ -209,7 +208,7 @@ int libswd_memap_read_char(libswd_ctx_t *libswdctx, libswd_operation_t operation
  if (operation!=LIBSWD_OPERATION_ENQUEUE && operation!=LIBSWD_OPERATION_EXECUTE)
   return LIBSWD_ERROR_BADOPCODE;
 
- int i, loc, res=0, accsize=0, *memapcsw, *memaptar, *memapdrw;
+ int i, loc, res=0, accsize=0, *memapdrw;
  int chunk, chunks, chunksize=1024;
  float tdeltam;
  struct timeval tstart, tstop;
@@ -356,7 +355,7 @@ int libswd_memap_read_char_csw(libswd_ctx_t *libswdctx, libswd_operation_t opera
  if (operation!=LIBSWD_OPERATION_ENQUEUE && operation!=LIBSWD_OPERATION_EXECUTE)
   return LIBSWD_ERROR_BADOPCODE;
 
- int i, j, loc, res=0, accsize=0, *memapcsw, *memaptar, *memapdrw;
+ int res=0, accsize=0;
 
  // Calculate required access size based on CSW value.
  switch (csw&LIBSWD_MEMAP_CSW_SIZE)
@@ -440,7 +439,7 @@ int libswd_memap_read_int(libswd_ctx_t *libswdctx, libswd_operation_t operation,
  if (operation!=LIBSWD_OPERATION_ENQUEUE && operation!=LIBSWD_OPERATION_EXECUTE)
   return LIBSWD_ERROR_BADOPCODE;
 
- int i, loc, res, *memapcsw, *memaptar, *memapdrw;
+ int i, loc, res, *memapdrw;
  int chunk, chunks, chunksize=1024;
  float tdeltam;
  struct timeval tstart, tstop;
@@ -544,7 +543,7 @@ int libswd_memap_read_int_csw(libswd_ctx_t *libswdctx, libswd_operation_t operat
  if (operation!=LIBSWD_OPERATION_ENQUEUE && operation!=LIBSWD_OPERATION_EXECUTE)
   return LIBSWD_ERROR_BADOPCODE;
 
- int i, loc, res=0, accsize=0, *memapcsw, *memaptar, *memapdrw;
+ int res=0, accsize=0;
 
  // Calculate required access size based on CSW value.
  switch (csw&LIBSWD_MEMAP_CSW_SIZE)
@@ -627,7 +626,7 @@ int libswd_memap_write_char(libswd_ctx_t *libswdctx, libswd_operation_t operatio
  if (operation!=LIBSWD_OPERATION_ENQUEUE && operation!=LIBSWD_OPERATION_EXECUTE)
   return LIBSWD_ERROR_BADOPCODE;
 
- int i, loc, res=0, accsize=0, *memapcsw, *memaptar, *memapdrw;
+ int i, loc, res=0, accsize=0;
  int chunk, chunks, chunksize=1024;
  float tdeltam;
  struct timeval tstart, tstop;
@@ -767,7 +766,7 @@ int libswd_memap_write_char_csw(libswd_ctx_t *libswdctx, libswd_operation_t oper
  if (operation!=LIBSWD_OPERATION_ENQUEUE && operation!=LIBSWD_OPERATION_EXECUTE)
   return LIBSWD_ERROR_BADOPCODE;
 
- int i, loc, res=0, accsize=0, *memapcsw, *memaptar, *memapdrw;
+ int res=0, accsize=0;
 
  // Calculate required access size based on CSW value.
  switch (csw&LIBSWD_MEMAP_CSW_SIZE)
@@ -850,7 +849,7 @@ int libswd_memap_write_int(libswd_ctx_t *libswdctx, libswd_operation_t operation
  if (operation!=LIBSWD_OPERATION_ENQUEUE && operation!=LIBSWD_OPERATION_EXECUTE)
   return LIBSWD_ERROR_BADOPCODE;
 
- int i, loc, res=0, *memapcsw, *memaptar, *memapdrw;
+ int i, loc, res=0;
  int chunk, chunks, chunksize=1024;
  float tdeltam;
  struct timeval tstart, tstop;
@@ -950,7 +949,7 @@ int libswd_memap_write_int_csw(libswd_ctx_t *libswdctx, libswd_operation_t opera
  if (operation!=LIBSWD_OPERATION_ENQUEUE && operation!=LIBSWD_OPERATION_EXECUTE)
   return LIBSWD_ERROR_BADOPCODE;
 
- int i, loc, res=0, accsize=0, *memapcsw, *memaptar, *memapdrw;
+ int res=0, accsize=0;
 
  // Calculate required access size based on CSW value.
  switch (csw&LIBSWD_MEMAP_CSW_SIZE)

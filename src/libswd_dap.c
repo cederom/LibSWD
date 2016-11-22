@@ -231,7 +231,7 @@ int libswd_dap_errors_handle(libswd_ctx_t *libswdctx, libswd_operation_t operati
  if (libswdctx==NULL) return LIBSWD_ERROR_NULLCONTEXT;
  if (operation!=LIBSWD_OPERATION_EXECUTE && operation!=LIBSWD_OPERATION_ENQUEUE) return LIBSWD_ERROR_BADOPCODE;
 
- int res, abortreg;
+ int res;
  char APnDP=0, R=1, W=0, ctrlstat_addr=LIBSWD_DP_CTRLSTAT_ADDR, abort_addr=LIBSWD_DP_ABORT_ADDR, *ack, *parity, cparity;
  if (abort) {
   *abort=*abort&(LIBSWD_DP_ABORT_STKCMPCLR|LIBSWD_DP_ABORT_STKERRCLR|LIBSWD_DP_ABORT_WDERRCLR|LIBSWD_DP_ABORT_ORUNERRCLR);
@@ -428,7 +428,7 @@ int libswd_dp_write(libswd_ctx_t *libswdctx, libswd_operation_t operation, char 
   return LIBSWD_ERROR_BADOPCODE;
 
  int res, cmdcnt=0;
- char APnDP, RnW, cparity, *ack, *parity, request;
+ char APnDP, RnW, *ack, request;
 
  APnDP=0;
  RnW=0;
@@ -563,7 +563,7 @@ int libswd_ap_read(libswd_ctx_t *libswdctx, libswd_operation_t operation, char a
   return LIBSWD_ERROR_BADOPCODE;
 
  int res, cmdcnt=0, retry, ctrlstat, abort;
- char APnDP, RnW, cparity, *ack, *parity, request;
+ char APnDP, RnW, *ack, *parity, request;
 
  res=libswd_ap_bank_select(libswdctx, LIBSWD_OPERATION_ENQUEUE, addr);
  if (res<0) return res;
@@ -637,7 +637,7 @@ int libswd_ap_write(libswd_ctx_t *libswdctx, libswd_operation_t operation, char 
   return LIBSWD_ERROR_BADOPCODE;
 
  int res, cmdcnt=0, retry, ctrlstat, abort;
- char APnDP, RnW, cparity, *ack, *parity, request;
+ char APnDP, RnW, *ack, request;
 
  res=libswd_ap_bank_select(libswdctx, LIBSWD_OPERATION_ENQUEUE, addr);
  if (res<0) return res;

@@ -98,7 +98,6 @@ int libswd_debug_halt(libswd_ctx_t *libswdctx, libswd_operation_t operation)
  if (operation!=LIBSWD_OPERATION_EXECUTE && operation!=LIBSWD_OPERATION_ENQUEUE) return LIBSWD_ERROR_PARAM;
 
  int retval, i, dbgdhcsr;
- char buf[4];
 
  if (!libswdctx->log.debug.initialized)
  {
@@ -136,7 +135,6 @@ int libswd_debug_run(libswd_ctx_t *libswdctx, libswd_operation_t operation)
  if (operation!=LIBSWD_OPERATION_EXECUTE && operation!=LIBSWD_OPERATION_ENQUEUE) return LIBSWD_ERROR_PARAM;
 
  int retval, i, dbgdhcsr;
- char buf[4];
 
  if (!libswdctx->log.debug.initialized)
  {
