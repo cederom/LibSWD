@@ -543,19 +543,14 @@ int libswd_memap_read_int_csw(libswd_ctx_t *libswdctx, libswd_operation_t operat
  if (operation!=LIBSWD_OPERATION_ENQUEUE && operation!=LIBSWD_OPERATION_EXECUTE)
   return LIBSWD_ERROR_BADOPCODE;
 
- int res=0, accsize=0;
+ int res=0;
 
  // Calculate required access size based on CSW value.
  switch (csw&LIBSWD_MEMAP_CSW_SIZE)
  {
   case LIBSWD_MEMAP_CSW_SIZE_8BIT:
-   accsize=1;
-   break;
   case LIBSWD_MEMAP_CSW_SIZE_16BIT:
-   accsize=2;
-   break;
   case LIBSWD_MEMAP_CSW_SIZE_32BIT:
-   accsize=4;
    break;
   default:
    res=LIBSWD_ERROR_MEMAPACCSIZE;
@@ -949,19 +944,14 @@ int libswd_memap_write_int_csw(libswd_ctx_t *libswdctx, libswd_operation_t opera
  if (operation!=LIBSWD_OPERATION_ENQUEUE && operation!=LIBSWD_OPERATION_EXECUTE)
   return LIBSWD_ERROR_BADOPCODE;
 
- int res=0, accsize=0;
+ int res=0;
 
  // Calculate required access size based on CSW value.
  switch (csw&LIBSWD_MEMAP_CSW_SIZE)
  {
   case LIBSWD_MEMAP_CSW_SIZE_8BIT:
-   accsize=1;
-   break;
   case LIBSWD_MEMAP_CSW_SIZE_16BIT:
-   accsize=2;
-   break;
   case LIBSWD_MEMAP_CSW_SIZE_32BIT:
-   accsize=4;
    break;
   default:
    res=LIBSWD_ERROR_MEMAPACCSIZE;

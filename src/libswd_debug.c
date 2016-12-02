@@ -52,7 +52,8 @@ int libswd_debug_detect(libswd_ctx_t *libswdctx, libswd_operation_t operation)
  libswd_log(libswdctx, LIBSWD_LOGLEVEL_DEBUG, "LIBSWD_I: Executing libswd_debug_detect(*libswdctx=%p, operation=%s)\n", (void*)libswdctx, libswd_operation_string(operation));
 
  if (!libswdctx) return LIBSWD_ERROR_NULLCONTEXT;
- int retval=0, i, cpuid;
+ int retval=0, cpuid;
+ unsigned int i;
 
  if (!libswdctx->log.memap.initialized)
  {

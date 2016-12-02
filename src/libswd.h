@@ -828,8 +828,8 @@ int libswd_bin8_print(char *data);
 int libswd_bin32_print(int *data);
 char *libswd_bin8_string(char *data);
 char *libswd_bin32_string(int *data);
-int libswd_bin8_bitswap(unsigned char *buffer, int bitcount);
-int libswd_bin32_bitswap(unsigned int *buffer, int bitcount);
+int libswd_bin8_bitswap(unsigned char *buffer, unsigned int bitcount);
+int libswd_bin32_bitswap(unsigned int *buffer, unsigned int bitcount);
 
 int libswd_cmdq_init(libswd_cmd_t *cmdq);
 libswd_cmd_t* libswd_cmdq_find_head(libswd_cmd_t *cmdq);

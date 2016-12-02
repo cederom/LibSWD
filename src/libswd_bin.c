@@ -125,7 +125,7 @@ char *libswd_bin32_string(int *data){
  * \param bitcount how many bits to swap.
  * \return swapped bit count (positive) or error code (negative).
  */
-int libswd_bin8_bitswap(unsigned char *buffer, int bitcount){
+int libswd_bin8_bitswap(unsigned char *buffer, unsigned int bitcount){
  if (buffer==NULL) return LIBSWD_ERROR_NULLPOINTER;
  if (bitcount>8) return LIBSWD_ERROR_PARAM;
  unsigned char bit, result=0; //res must be unsigned for proper shifting result
@@ -150,7 +150,7 @@ int libswd_bin8_bitswap(unsigned char *buffer, int bitcount){
  * \param bitcount how many bits to swap.
  * \return swapped bit count (positive) or error code (negative).
  */
-int libswd_bin32_bitswap(unsigned int *buffer, int bitcount){
+int libswd_bin32_bitswap(unsigned int *buffer, unsigned int bitcount){
  if (buffer==NULL) return LIBSWD_ERROR_NULLPOINTER;
  if (bitcount>32) return LIBSWD_ERROR_PARAM;
  unsigned int bit, result=0; //res must be unsigned for proper shifting result

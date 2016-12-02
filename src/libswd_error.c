@@ -174,7 +174,7 @@ int libswd_error_handle_ack_wait(libswd_ctx_t *libswdctx){
  libswd_cmd_t *mastercmdq = libswdctx->cmdq;
 
  // Append dummy data phase, fix sticky flags and retry operation.
- int retval, *ctrlstat, *rdata, abort;
+ int retval=0, *ctrlstat, *rdata, abort, retrycnt=50;
 // retval=libswd_cmdq_init(errors);
  libswdctx->cmdq->errors=(libswd_cmd_t*)calloc(1,sizeof(libswd_cmd_t));
  //retval = LIBSWD_ERROR_OUTOFMEM;
@@ -191,7 +191,6 @@ int libswd_error_handle_ack_wait(libswd_ctx_t *libswdctx){
  // 3. RETRY MEM-AP DRW READ - now it must be ACK=OK (it will return last mem-ap read result).
  // 4. READ DP RDBUFF TO OBTAIN READ DATA
 
- int retrycnt;
  for (retrycnt=50/*LIBSWD_RETRY_COUNT_DEFAULT*/; retrycnt>0; retrycnt--){
   retval=libswd_dp_read(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_DP_CTRLSTAT_ADDR, &ctrlstat);
   if (retval<0) goto libswd_error_handle_ack_wait_end;
