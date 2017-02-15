@@ -149,7 +149,7 @@ int main(int argc, char **argv){
     break;
    case 'l':
     libswdappctx->loglevel=atol(optarg);
-    break; 
+    break;
    case 'v':
     libswdappctx->interface->vid_forced=strtol(optarg, (char**)NULL, 16);
     break;
@@ -198,7 +198,7 @@ int main(int argc, char **argv){
  if (retval!=LIBSWD_OK) return retval;
  // Store program Context for use with interface drivers.
  libswdappctx->libswdctx->driver->ctx=libswdappctx;
- // Store interface structure in libswd driver. 
+ // Store interface structure in libswd driver.
  libswdappctx->libswdctx->driver->interface=libswdappctx->interface;
 
  // Setup the Readline
@@ -231,7 +231,7 @@ int main(int argc, char **argv){
     libswdapp_print_usage();
    }
    retval=libswd_cli(libswdappctx->libswdctx, cmd);
-   if (retval!=LIBSWD_OK) if (retval!=LIBSWD_ERROR_CLISYNTAX) goto quit; 
+   if (retval!=LIBSWD_OK) if (retval!=LIBSWD_ERROR_CLISYNTAX) goto quit;
   }
  }
 
@@ -254,7 +254,7 @@ int libswdapp_handle_command_flash_usage(void){
  printf("  [r]ead <filename> <count>\n");
  printf("  [w]rite filename\n");
  printf("  [m]ass[e]rase\n");
- printf("  Note: Target will be detected automaticaly to verify flash support.\n"); 
+ printf("  Note: Target will be detected automaticaly to verify flash support.\n");
  printf("\n");
  return LIBSWD_OK;
 }
@@ -276,7 +276,7 @@ int libswdapp_handle_command_flash(libswdapp_context_t *libswdappctx, char *comm
  // Initialize the MEM-AP and DAP if not yet initialized...
  if (!libswdctx->log.memap.initialized)
  {
-  retval=libswd_memap_init(libswdctx, LIBSWD_OPERATION_EXECUTE); 
+  retval=libswd_memap_init(libswdctx, LIBSWD_OPERATION_EXECUTE);
   if (retval<0) goto libswdapp_handle_command_flash_error;
  }
 
@@ -287,7 +287,7 @@ int libswdapp_handle_command_flash(libswdapp_context_t *libswdappctx, char *comm
  addrstart=flash_memmap.page_start;
  count=(flash_memmap.page_end-flash_memmap.page_start);
 
- // Check if target is halted, halt if necessary. 
+ // Check if target is halted, halt if necessary.
  if (!libswd_debug_is_halted(libswdctx, LIBSWD_OPERATION_EXECUTE))
  {
   retval=libswd_debug_halt(libswdctx, LIBSWD_OPERATION_EXECUTE);
@@ -323,14 +323,14 @@ int libswdapp_handle_command_flash(libswdapp_context_t *libswdappctx, char *comm
     retval=LIBSWD_ERROR_CLISYNTAX;
     goto libswdapp_handle_command_flash_error;
    }
-  } 
+  }
   // Take care of proper memory (re)allocation.
   if (libswdctx->membuf.data) free(libswdctx->membuf.data);
   libswdctx->membuf.data=(unsigned char*)malloc(count*sizeof(char));
   if (!libswdctx->membuf.data)
   {
    libswdctx->membuf.size=0;
-   libswd_log(libswdctx, LIBSWD_ERROR_OUTOFMEM, 
+   libswd_log(libswdctx, LIBSWD_ERROR_OUTOFMEM,
               "FLASH ERROR: Cannot (re)allocate memory buffer!\n");
    return LIBSWD_ERROR_OUTOFMEM;
   } else memset((void*)libswdctx->membuf.data, 0xFF, count);
@@ -355,7 +355,7 @@ int libswdapp_handle_command_flash(libswdapp_context_t *libswdappctx, char *comm
    retval=fwrite(libswdctx->membuf.data, sizeof(char), count, fp);
    if (!retval)
    {
-    libswd_log(libswdctx, LIBSWD_LOGLEVEL_ERROR, 
+    libswd_log(libswdctx, LIBSWD_LOGLEVEL_ERROR,
                "FLASH ERROR: Cannot write to data file '%s' (%s)!\n",
                filename, strerror(errno) );
     goto libswdapp_handle_command_flash_error;
@@ -363,7 +363,7 @@ int libswdapp_handle_command_flash(libswdapp_context_t *libswdappctx, char *comm
    i=fclose(fp);
    if (i)
    {
-    libswd_log(libswdctx, LIBSWD_LOGLEVEL_ERROR, 
+    libswd_log(libswdctx, LIBSWD_LOGLEVEL_ERROR,
                "FLASH ERROR: Cannot close data file '%s' (%s)!\n",
                filename, strerror(errno) );
     goto libswdapp_handle_command_flash_error;
@@ -413,7 +413,7 @@ int libswdapp_handle_command_flash(libswdapp_context_t *libswdappctx, char *comm
   if (!i)
   {
    retval=LIBSWD_ERROR_MAXRETRY;
-   goto libswdapp_handle_command_flash_error; 
+   goto libswdapp_handle_command_flash_error;
   }
   //Set MER bit in FLASH_CR
   retval=libswd_memap_read_int_32(libswdctx, LIBSWD_OPERATION_EXECUTE, flash_memmap.FLASH_CR_ADDR, 1, &data);
@@ -434,7 +434,7 @@ int libswdapp_handle_command_flash(libswdapp_context_t *libswdappctx, char *comm
   if (!i)
   {
    retval=LIBSWD_ERROR_MAXRETRY;
-   goto libswdapp_handle_command_flash_error; 
+   goto libswdapp_handle_command_flash_error;
   }
   libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL, "FLASH MASS-ERASE OK!\n");
  }
@@ -472,7 +472,7 @@ int libswdapp_handle_command_flash(libswdapp_context_t *libswdappctx, char *comm
     libswd_log(libswdctx, LIBSWD_LOGLEVEL_ERROR,
                "FLASH ERROR: File (0x%X) won't fit in memory (0x%X)!\n",
                ftell(fp), count);
-    retval=LIBSWD_ERROR_OUTOFMEM; 
+    retval=LIBSWD_ERROR_OUTOFMEM;
     goto libswdapp_handle_command_flash_error;
    }
    // Allocate memory for file content.
@@ -491,7 +491,7 @@ int libswdapp_handle_command_flash(libswdapp_context_t *libswdappctx, char *comm
    retval=fread(libswdctx->membuf.data, sizeof(char), libswdctx->membuf.size, fp);
    if (!retval)
    {
-    libswd_log(libswdctx, LIBSWD_LOGLEVEL_ERROR, 
+    libswd_log(libswdctx, LIBSWD_LOGLEVEL_ERROR,
                "FLASH ERROR: Cannot load data from '%s' file (%s)!\n",
                filename, strerror(errno) );
     retval=LIBSWD_ERROR_FILE;
@@ -500,7 +500,7 @@ libswdapp_handle_command_flash_file_load_error:
    retval=fclose(fp);
    if (retval)
    {
-    libswd_log(libswdctx, LIBSWD_LOGLEVEL_ERROR, 
+    libswd_log(libswdctx, LIBSWD_LOGLEVEL_ERROR,
                "FLASH ERROR: libswd_cli(): Cannot close data file '%s' (%s)!\n",
                filename, strerror(errno) );
     retval=LIBSWD_ERROR_FILE;
@@ -513,7 +513,7 @@ libswdapp_handle_command_flash_file_load_ok:
    count=libswdctx->membuf.size;
    // At this point data are in membuf, sent them to MEM-AP.
 
-   // FLASH WRITE 
+   // FLASH WRITE
    // Unlock the Flash Controller.
    libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO, "FLASH: Unlocking STM32 FPEC...\n");
    data=LIBSWDAPP_FLASH_STM32F1_FLASH_KEYR_KEY1_VAL;
@@ -534,7 +534,7 @@ libswdapp_handle_command_flash_file_load_ok:
    if (!i)
    {
     retval=LIBSWD_ERROR_MAXRETRY;
-    goto libswdapp_handle_command_flash_error; 
+    goto libswdapp_handle_command_flash_error;
    }
    //Set MER bit in FLASH_CR
    retval=libswd_memap_read_int_32(libswdctx, LIBSWD_OPERATION_EXECUTE, flash_memmap.FLASH_CR_ADDR, 1, &data);
@@ -555,7 +555,7 @@ libswdapp_handle_command_flash_file_load_ok:
    if (!i)
    {
     retval=LIBSWD_ERROR_MAXRETRY;
-    goto libswdapp_handle_command_flash_error; 
+    goto libswdapp_handle_command_flash_error;
    }
    // Perform Flash write.
    libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL, "FLASH: Performing Flash Write...\n");
@@ -568,7 +568,7 @@ libswdapp_handle_command_flash_file_load_ok:
    int accsize=4;
    addr=flash_memmap.page_start;
    retval=libswd_memap_write_char_csw(libswdctx, LIBSWD_OPERATION_EXECUTE, addr, count, (char *)libswdctx->membuf.data, LIBSWD_MEMAP_CSW_SIZE_16BIT|LIBSWD_MEMAP_CSW_ADDRINC_PACKED);
-    if (retval<0) goto libswdapp_handle_command_flash_error; 
+    if (retval<0) goto libswdapp_handle_command_flash_error;
    // Print out the data.
    for (i=0; i<libswdctx->membuf.size; i=i+16)
    {
@@ -695,7 +695,7 @@ int libswdapp_handle_command_signal(libswdapp_context_t *libswdappctx, char *cmd
      libswd_log(libswdctx, LIBSWD_LOGLEVEL_WARNING,
                 "WARNING: Cannot add '%s' signal with '%x' mask!\n", signamep, sigmaskp, sigmask );
     continue;
-   } 
+   }
   }
   // Check if signal read/write, handle if necessary.
   signamep=strsep(&cmdp,"=");
@@ -706,7 +706,7 @@ int libswdapp_handle_command_signal(libswdapp_context_t *libswdappctx, char *cmd
     sigval=~0;
    else if (!strncmp(sigvalp,"lo",2))
     sigval=0;
-   else 
+   else
    {
     errno=LIBSWD_OK;
     sigval=strtol(sigvalp,NULL,16);
@@ -724,7 +724,7 @@ int libswdapp_handle_command_signal(libswdapp_context_t *libswdappctx, char *cmd
    libswd_log(libswdctx, LIBSWD_LOGLEVEL_WARNING,
               "WARNING: Signal '%s' not found!\n", signamep );
    continue;
-  } 
+  }
   if (signamep && sigvalp)
   {
    retval=libswdappctx->interface->bitbang(libswdappctx, sig->mask, 0, &sigval);
@@ -752,14 +752,14 @@ int libswdapp_handle_command_signal(libswdapp_context_t *libswdappctx, char *cmd
  }
  free(command);
  return LIBSWD_OK;
-  
+
 libswdapp_handle_command_signal_error:
   free(command);
   libswd_log(libswdctx, LIBSWD_LOGLEVEL_ERROR,
              "ERROR: Syntax Error, see '?' or '[s]ignal' for more information...\n" );
   return LIBSWD_ERROR_CLISYNTAX;
 }
- 
+
 
 /** It will prepare interface for use or fail.
  * If an interface is already configured, it will check if requested interface
@@ -781,7 +781,7 @@ int libswdapp_handle_command_interface_init(libswdapp_context_t *libswdappctx, c
  }
 
  // Verify selected interface name or try the dedault.
- if (!libswdappctx->interface->name[0]) 
+ if (!libswdappctx->interface->name[0])
  {
   libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL,
              "Trying the default interface '%s'...\n",
@@ -821,7 +821,7 @@ int libswdapp_handle_command_interface_init(libswdapp_context_t *libswdappctx, c
  if (libswdappctx->interface->ctx!=NULL && libswdappctx->interface->deinit)
   libswdappctx->interface->deinit(libswdappctx);
  if (libswdappctx->interface->signal)
-  libswdapp_interface_signal_del(libswdappctx, "*"); 
+  libswdapp_interface_signal_del(libswdappctx, "*");
  libswdappctx->interface->description[0]=0;
  libswdappctx->interface->init=NULL;
  libswdappctx->interface->deinit=NULL;
@@ -866,7 +866,7 @@ int libswdapp_handle_command_interface_init(libswdapp_context_t *libswdappctx, c
   return retval;
  }
 
- libswdappctx->interface->initialized=1; 
+ libswdappctx->interface->initialized=1;
  return retval;
 }
 
@@ -906,7 +906,7 @@ libswdapp_interface_signal_t *libswdapp_interface_signal_find(libswdapp_context_
 /** Add new signal to the interface.
  * Signal will be allocated in memory with provided name and pin mask.
  * Note: Signal definition may take place before interface is ready to operate,
- * therefore value will be not assigned at time of signal creation. 
+ * therefore value will be not assigned at time of signal creation.
  * Signal value can be set with appropriate 'bitbang' call.
  * The default value for new signal equals provided mask to maintain Hi-Z.
  *
@@ -922,7 +922,7 @@ int libswdapp_interface_signal_add(libswdapp_context_t *libswdappctx, char *name
 
  libswd_ctx_t *libswdctx=(libswd_ctx_t*)libswdappctx->libswdctx;
 
- // Check if name is correct string. 
+ // Check if name is correct string.
  if (!name || *name==' ')
  {
   libswd_log(libswdctx, LIBSWD_LOGLEVEL_ERROR,
@@ -956,7 +956,7 @@ int libswdapp_interface_signal_add(libswdapp_context_t *libswdappctx, char *name
  if (!newsignal->name)
    goto libswdapp_interface_signal_add_end;
 
- // Initialize structure data and return or break on error. 
+ // Initialize structure data and return or break on error.
  if (!strncpy(newsignal->name, name, snlen))
  {
   libswd_log(libswdctx, LIBSWD_LOGLEVEL_WARNING,
@@ -1017,11 +1017,11 @@ int libswdapp_interface_signal_del(libswdapp_context_t *libswdappctx, char *name
   {
    libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO,
               "INFO: Removing Interface Signal '%s'...", delsig->name );
-   free(delsig->name); 
+   free(delsig->name);
    free(delsig);
    libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO, "OK\n");
   }
-  libswdappctx->interface->signal=NULL; 
+  libswdappctx->interface->signal=NULL;
   return LIBSWD_OK;
  }
  // look for the signal name on the list.
@@ -1111,12 +1111,12 @@ int libswdapp_interface_ftdi_bitbang(libswdapp_context_t *libswdappctx, unsigned
  unsigned char  buf[3];
  int retval, retry;
  int bytes_written, bytes_read;
- unsigned int vall=0, valh=0, gpioval=0, gpiodir=0; 
+ unsigned int vall=0, valh=0, gpioval=0, gpiodir=0;
  struct ftdi_context *ftdictx=(struct ftdi_context*)libswdappctx->interface->ctx;
 
  if (!GETnSET) {
   // We will SET port pin values for selected bitmask.
-  // Modify our pins value, but remember about other pins and their previous value. 
+  // Modify our pins value, but remember about other pins and their previous value.
   gpioval = (libswdappctx->interface->gpioval & ~bitmask) | (*value & bitmask);
   // Modify our pins direction, but remember about other pins and their previous direction.
   gpiodir = libswdappctx->interface->gpiodir | bitmask;
@@ -1249,7 +1249,7 @@ int libswdapp_interface_ftdi_transfer_bits(libswdapp_context_t *libswdappctx, in
  {
   // Try to pack as many bits into bytes for better performance.
   bytes=bits/8;
-  bytes--;		              // MPSSE starts counting bytes from 0.
+  bytes--;                        // MPSSE starts counting bytes from 0.
   buf[0] = (nLSBfirst)?0x31:0x39; // Clock Bytes In and Out LSb or MSb first.
   buf[1] = (char)bytes&0x0ff;
   buf[2] = (char)((bytes>>8)&0x0ff);
@@ -1295,7 +1295,7 @@ int libswdapp_interface_ftdi_transfer_bits(libswdapp_context_t *libswdappctx, in
  for (bit=bytes*8;bit<bits;bit++)
  {
   buf[3*bit+0] = (nLSBfirst)?0x33:0x3b; // Clock Bits In and Out LSb or MSb first.
-  buf[3*bit+1] = 0;				     // One bit per element.
+  buf[3*bit+1] = 0;                     // One bit per element.
   buf[3*bit+2] = mosidata[bit]?0xff:0;  // Take data from supplied array.
  }
  bytes_written = ftdi_write_data(ftdictx,buf,3*(bits-(bytes*8)));
@@ -1324,7 +1324,7 @@ int libswdapp_interface_ftdi_transfer_bits(libswdapp_context_t *libswdappctx, in
  {
   misodata[bit]=(buf[bit]&(nLSBfirst?0x01:0x80))?1:0;
   // USE THIS FOR WIRE-LEVEL DEBUG */
-  //printf("\n===TRANSFER: Bit %d read 0x%02X written 0x%02X\n", bit, misodata[bit], mosidata[bit]); 
+  //printf("\n===TRANSFER: Bit %d read 0x%02X written 0x%02X\n", bit, misodata[bit], mosidata[bit]);
  }
  return bit;
 }
@@ -1353,7 +1353,7 @@ int libswdapp_interface_ftdi_transfer_bytes(libswdapp_context_t *libswdappctx, i
   return LIBSWD_ERROR_DRIVER;
  }
 
- bytes--;		                  // MPSSE starts counting bytes from 0.
+ bytes--;                        // MPSSE starts counting bytes from 0.
  buf[0] = (nLSBfirst)?0x31:0x39; // Clock Bytes In and Out MSb or LSb first.
  buf[1] = (char)bytes&0x0ff;
  buf[2] = (char)((bytes>>8)&0x0ff);
@@ -1435,8 +1435,8 @@ int libswdapp_interface_ftdi_init(libswdapp_context_t *libswdappctx)
     if (libswdappctx->loglevel)
      libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL, "OK\n");
    }
-   else if (libswdappctx->loglevel) 
-    libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL, "OK (ChipId=%X)\n", chipid); 
+   else if (libswdappctx->loglevel)
+    libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL, "OK (ChipId=%X)\n", chipid);
   } else if (libswdappctx->loglevel)
      libswd_log(libswdctx, LIBSWD_LOGLEVEL_NORMAL, "OK\n");
  }
@@ -1484,7 +1484,7 @@ int libswdapp_interface_ftdi_init(libswdapp_context_t *libswdappctx)
              "ERROR: Cannot set bitmode BITMODE_MPSSE for '%s' interface!\n",
              libswdappctx->interface->name );
   return LIBSWD_ERROR_DRIVER;
- } 
+ }
  // Set large chunksize for faster transfers of large data.
  retval=ftdi_write_data_set_chunksize(ftdictx, libswdappctx->interface->chunksize);
   if (retval<0)
@@ -1494,7 +1494,7 @@ int libswdapp_interface_ftdi_init(libswdapp_context_t *libswdappctx)
              libswdappctx->interface->chunksize,
              libswdappctx->interface->name );
   return LIBSWD_ERROR_DRIVER;
- } 
+ }
  retval=ftdi_read_data_set_chunksize(ftdictx, libswdappctx->interface->chunksize);
   if (retval<0)
  {
@@ -1503,7 +1503,7 @@ int libswdapp_interface_ftdi_init(libswdapp_context_t *libswdappctx)
              libswdappctx->interface->chunksize,
              libswdappctx->interface->name );
   return LIBSWD_ERROR_DRIVER;
- } 
+ }
  // Set default interface speed/frequency
  libswdapp_interface_ftdi_set_freq(libswdappctx, libswdappctx->interface->frequency);
 
@@ -1527,7 +1527,7 @@ int libswdapp_interface_ftdi_init(libswdapp_context_t *libswdappctx)
  * Warning: Passing zero as freq parameter means maximum available frequency.
  * \param *libswdappctx pointer to the LibSWD Application Context.
  * \param freq desired frequency in Hz (0 means maximum frequency).
- * \return LIBSWD_OK on success, negative error code otherwise. 
+ * \return LIBSWD_OK on success, negative error code otherwise.
  */
 int libswdapp_interface_ftdi_set_freq(libswdapp_context_t *libswdappctx, int freq)
 {
@@ -1557,7 +1557,7 @@ int libswdapp_interface_ftdi_set_freq(libswdapp_context_t *libswdappctx, int fre
  libswdappctx->interface->frequency=freq;
  libswd_log(libswdappctx->libswdctx, LIBSWD_LOGLEVEL_INFO,
             "INFO: Interface frequency set to %d\n", freq);
- return LIBSWD_OK; 
+ return LIBSWD_OK;
 }
 
 
@@ -1574,7 +1574,7 @@ int libswdapp_interface_ftdi_init_ktlink(libswdapp_context_t *libswdappctx)
 
  libswd_log(libswdappctx->libswdctx, LIBSWD_LOGLEVEL_INFO,
             "INFO: Disabling CLK/5 (set max CLK=30MHz)...");
- buf[0]=0x8A; 
+ buf[0]=0x8A;
  retval=ftdi_write_data(ftdictx, buf, 1);
  if (retval<0 || retval!=1)
  {
@@ -1583,7 +1583,7 @@ int libswdapp_interface_ftdi_init_ktlink(libswdapp_context_t *libswdappctx)
   libswd_log(libswdappctx->libswdctx, LIBSWD_LOGLEVEL_ERROR,
              "ERROR: Cannot switch off clock divisor!\n");
   return retval;
- } 
+ }
  libswdappctx->interface->maxfrequency=30000000;
  libswd_log(libswdappctx->libswdctx, LIBSWD_LOGLEVEL_INFO, "OK\n");
 
@@ -1596,10 +1596,10 @@ int libswdapp_interface_ftdi_deinit(libswdapp_context_t *libswdappctx)
 {
  unsigned int dir=0,val;
  struct ftdi_context *ftdictx=(struct ftdi_context*)libswdappctx->interface->ctx;
- libswdappctx->interface->bitbang(libswdappctx, dir, 1, &val); 
+ libswdappctx->interface->bitbang(libswdappctx, dir, 1, &val);
  ftdi_deinit(ftdictx);
  return LIBSWD_OK;
-} 
+}
 
 
 

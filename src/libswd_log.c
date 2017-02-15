@@ -66,7 +66,7 @@ int libswd_log_internal(libswd_ctx_t *libswdctx, libswd_loglevel_t loglevel, cha
  int res;
  va_list ap;
  va_start(ap, msg);
- res=vprintf(msg, ap);  
+ res=vprintf(msg, ap);
  va_end(ap);
  return res;
 }
@@ -84,7 +84,7 @@ int libswd_log_internal_va(libswd_ctx_t *libswdctx, libswd_loglevel_t loglevel, 
   return LIBSWD_ERROR_LOGLEVEL;
  if (loglevel > libswdctx->config.loglevel) return LIBSWD_OK;
  int res;
- res=vprintf(fmt, ap);  
+ res=vprintf(fmt, ap);
  return res;
 }
 
@@ -141,14 +141,14 @@ const char *libswd_operation_string(libswd_operation_t operation){
   case LIBSWD_OPERATION_TRANSMIT_TAIL: return "LIBSWD_OPERATION_TRANSMIT_TAIL";
   case LIBSWD_OPERATION_TRANSMIT_ALL:  return "LIBSWD_OPERATION_TRANSMIT_ALL";
   case LIBSWD_OPERATION_TRANSMIT_ONE:  return "LIBSWD_OPERATION_TRANSMIT_ONE";
-  case LIBSWD_OPERATION_TRANSMIT_LAST: return "LIBSWD_OPERATION_TRANSMIT_LAST"; 
+  case LIBSWD_OPERATION_TRANSMIT_LAST: return "LIBSWD_OPERATION_TRANSMIT_LAST";
  }
  return "UNKNOWN_LIBSWD_OPERATION";
-} 
+}
 
 /** Helper function that can print name of the request fields.
  * DP SELECT APBANKSEL fields are also taken into account here for APACC.
- * \param libswdctx points to the swd context and its necessary to know 
+ * \param libswdctx points to the swd context and its necessary to know
     DP SELECT register value as it determines CTRL/STAT or WCR access.
  * \param RnW is the read/write bit of the request packet.
  * \param addr is the address of the register.

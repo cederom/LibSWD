@@ -58,7 +58,7 @@ int libswd_drv_mosi_8(libswd_ctx_t *libswdctx, libswd_cmd_t *cmd, char *data, in
  static char misodata[8], mosidata[8];
 
  //UrJTAG drivers shift data LSB-First.
- for (i=0;i<8;i++) mosidata[(nLSBfirst==LIBSWD_DIR_LSBFIRST)?(i):(7-i)]=((1<<i)&(*data))?1:0; 
+ for (i=0;i<8;i++) mosidata[(nLSBfirst==LIBSWD_DIR_LSBFIRST)?(i):(7-i)]=((1<<i)&(*data))?1:0;
  res=urj_tap_cable_transfer((urj_cable_t *)libswdctx->driver->device, bits, mosidata, misodata);
  if (res<0) return LIBSWD_ERROR_DRIVER;
  urj_tap_cable_flush((urj_cable_t *)libswdctx->driver->device, URJ_TAP_CABLE_COMPLETELY);
@@ -85,7 +85,7 @@ int libswd_drv_mosi_32(libswd_ctx_t *libswdctx, libswd_cmd_t *cmd, int *data, in
  static char misodata[32], mosidata[32];
 
  //UrJTAG drivers shift data LSB-First.
- for (i=0;i<32;i++) mosidata[(nLSBfirst==LIBSWD_DIR_LSBFIRST)?(i):(31-i)]=((1<<i)&(*data))?1:0; 
+ for (i=0;i<32;i++) mosidata[(nLSBfirst==LIBSWD_DIR_LSBFIRST)?(i):(31-i)]=((1<<i)&(*data))?1:0;
  res=urj_tap_cable_transfer((urj_cable_t *)libswdctx->driver->device, bits, mosidata, misodata);
  if (res<0) return LIBSWD_ERROR_DRIVER;
  urj_tap_cable_flush((urj_cable_t *)libswdctx->driver->device, URJ_TAP_CABLE_COMPLETELY);
@@ -146,24 +146,24 @@ int libswd_drv_miso_32(libswd_ctx_t *libswdctx, libswd_cmd_t *cmd, int *data, in
  *data=0;
  for (i=0;i<bits;i++) *data|=(misodata[(nLSBfirst==LIBSWD_DIR_LSBFIRST)?(bits-1-i):(i)]?(1<<i):0);
  return i;
-}       
+}
 
 /**
  * This function sets interface buffers to MOSI direction.
  * MOSI (Master Output Slave Input) is a SWD Write operation.
  * \param *libswdctx is the swd context to work on.
  * \param bits specify how many clock cycles must be used for TRN.
- * \return number of bits transmitted or negative LIBSWD_ERROR code on failure. 
+ * \return number of bits transmitted or negative LIBSWD_ERROR code on failure.
  */
 int libswd_drv_mosi_trn(libswd_ctx_t *libswdctx, int bits){
  if (bits<LIBSWD_TURNROUND_MIN_VAL && bits>LIBSWD_TURNROUND_MAX_VAL)
-  return LIBSWD_ERROR_TURNAROUND; 
+  return LIBSWD_ERROR_TURNAROUND;
 
  int res;
- res=urj_tap_cable_set_signal((urj_cable_t *)libswdctx->driver->device, URJ_POD_CS_RnW, 0); 
+ res=urj_tap_cable_set_signal((urj_cable_t *)libswdctx->driver->device, URJ_POD_CS_RnW, 0);
  if (res<0) return LIBSWD_ERROR_DRIVER;
  /* void urj_tap_cable_clock (urj_cable_t *cable, int tms, int tdi, int n); */
- urj_tap_cable_clock((urj_cable_t *)libswdctx->driver->device, 1, 1, bits); 
+ urj_tap_cable_clock((urj_cable_t *)libswdctx->driver->device, 1, 1, bits);
 
  return bits;
 }
@@ -173,20 +173,20 @@ int libswd_drv_mosi_trn(libswd_ctx_t *libswdctx, int bits){
  * MISO (Master Input Slave Output) is a SWD Read operation.
  * \param *libswdctx is the swd context to work on.
  * \param bits specify how many clock cycles must be used for TRN.
- * \return number of bits transmitted or negative LIBSWD_ERROR code on failure. 
+ * \return number of bits transmitted or negative LIBSWD_ERROR code on failure.
  */
 int libswd_drv_miso_trn(libswd_ctx_t *libswdctx, int bits){
  if (bits<LIBSWD_TURNROUND_MIN_VAL && bits>LIBSWD_TURNROUND_MAX_VAL)
-  return LIBSWD_ERROR_TURNAROUND; 
+  return LIBSWD_ERROR_TURNAROUND;
 
  static int res;
 
- res=urj_tap_cable_set_signal((urj_cable_t *)libswdctx->driver->device, URJ_POD_CS_RnW, URJ_POD_CS_RnW); 
+ res=urj_tap_cable_set_signal((urj_cable_t *)libswdctx->driver->device, URJ_POD_CS_RnW, URJ_POD_CS_RnW);
  if (res<0) return LIBSWD_ERROR_DRIVER;
 
  /* void urj_tap_cable_clock (urj_cable_t *cable, int tms, int tdi, int n); */
- urj_tap_cable_clock((urj_cable_t *)libswdctx->driver->device, 1, 1, bits); 
- 
+ urj_tap_cable_clock((urj_cable_t *)libswdctx->driver->device, 1, 1, bits);
+
  return bits;
 }
 
@@ -195,7 +195,7 @@ int libswd_drv_miso_trn(libswd_ctx_t *libswdctx, int bits){
  * Set debug level according to UrJTAG settings.
  * \param *libswdctx is the context to work on.
  * \param loglevel is the UrJTAG's lovleve to be transformed into LibSWD one.
- * \return LIBSWD_OK on success, negative LIBSWD_ERROR code on failure. 
+ * \return LIBSWD_OK on success, negative LIBSWD_ERROR code on failure.
  */
 int libswd_log_level_inherit(libswd_ctx_t *libswdctx, int loglevel){
  if (libswdctx==NULL){
@@ -228,7 +228,7 @@ int libswd_log_level_inherit(libswd_ctx_t *libswdctx, int loglevel){
   default:
    new_swdlevel=LIBSWD_LOGLEVEL_NORMAL;
  }
-                                
+
  int res=libswd_log_level_set(libswdctx, new_swdlevel);
  if (res<0) {
   urj_log(URJ_LOG_LEVEL_ERROR, "libswd_log_level_set() failed (%s)\n", libswd_error_string(res));

@@ -58,11 +58,11 @@ extern int libswd_drv_miso_trn(libswd_ctx_t *libswdctx, int bits);
  * \param *libswdctx swd context pointer.
  * \param *cmd pointer to the command to be sent.
  * \return number of commands transmitted (1), or LIBSWD_ERROR_CODE on failure.
- */ 
+ */
 int libswd_drv_transmit(libswd_ctx_t *libswdctx, libswd_cmd_t *cmd){
  if (libswdctx==NULL) return LIBSWD_ERROR_NULLCONTEXT;
  if (cmd==NULL) return LIBSWD_ERROR_NULLPOINTER;
-  
+
  int res=LIBSWD_ERROR_BADCMDTYPE, errcode=LIBSWD_ERROR_RESULT;
 
  switch (cmd->cmdtype){
@@ -113,7 +113,7 @@ int libswd_drv_transmit(libswd_ctx_t *libswdctx, libswd_cmd_t *cmd){
 
   case LIBSWD_CMDTYPE_MOSI_DATA:
    // 32 clock cycles.
-   if (cmd->bits!=LIBSWD_DATA_BITLEN) return LIBSWD_ERROR_BADCMDDATA; 
+   if (cmd->bits!=LIBSWD_DATA_BITLEN) return LIBSWD_ERROR_BADCMDDATA;
    res=libswd_drv_mosi_32(libswdctx, cmd, &cmd->mosidata, 32, LIBSWD_DIR_LSBFIRST);
    if (res>=0) libswdctx->log.write.data=cmd->mosidata;
    break;
@@ -155,11 +155,11 @@ int libswd_drv_transmit(libswd_ctx_t *libswdctx, libswd_cmd_t *cmd){
 
   case LIBSWD_CMDTYPE_UNDEFINED:
    res=0;
-   break; 
+   break;
 
   default:
    return LIBSWD_ERROR_BADCMDTYPE;
- } 
+ }
 
  libswd_log(libswdctx, LIBSWD_LOGLEVEL_PAYLOAD,
   "LIBSWD_P: libswd_drv_transmit(libswdctx=@%p, cmd=@%p) bits=%-2d cmdtype=%-12s returns=%-3d payload=0x%08x (%s)\n",

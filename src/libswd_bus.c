@@ -41,7 +41,7 @@
  * These functions generate payloads and queue up all elements/commands
  * necessary to perform requested operations on the SWD bus. Depending
  * on "operation" type, elements can be only enqueued on the queue (operation ==
- * LIBSWD_OPERATION_ENQUEUE) or queued and then flushed into hardware driver 
+ * LIBSWD_OPERATION_ENQUEUE) or queued and then flushed into hardware driver
  * (operation == LIBSWD_OPERATION_EXECUTE) for immediate effect on the target.
  * Other operations are not allowed for these functions and will produce error.
  * This group of functions is intelligent, so they will react on errors, when
@@ -67,7 +67,7 @@ int libswd_bus_setdir_mosi(libswd_ctx_t *libswdctx){
  }
  return cmdcnt;
 }
- 
+
 /** Append command queue with TRN READ/MISO, if previous command was WRITE/MOSI.
  * \param *libswdctx swd context pointer.
  * \return number of elements appended, or LIBSWD_ERROR_CODE on failure.
@@ -112,7 +112,7 @@ int libswd_bus_write_request_raw
  qcmdcnt+=res;
 
  if (operation==LIBSWD_OPERATION_ENQUEUE){
-  return qcmdcnt; 
+  return qcmdcnt;
  } else if (operation==LIBSWD_OPERATION_EXECUTE){
   res=libswd_cmdq_flush(libswdctx, &libswdctx->cmdq, operation);
   if (res<0) return res;
@@ -142,7 +142,7 @@ int libswd_bus_write_request
  int res, qcmdcnt=0, tcmdcnt=0;
  char request;
 
- /* Generate request bitstream. */ 
+ /* Generate request bitstream. */
  res=libswd_bitgen8_request(libswdctx, APnDP, RnW, addr, &request);
  if (res<0) return res;
 
@@ -157,7 +157,7 @@ int libswd_bus_write_request
  qcmdcnt+=res;
 
  if (operation==LIBSWD_OPERATION_ENQUEUE){
-  return qcmdcnt; 
+  return qcmdcnt;
  } else if (operation==LIBSWD_OPERATION_EXECUTE){
   res=libswd_cmdq_flush(libswdctx, &libswdctx->cmdq, operation);
   if (res<0) return res;
@@ -168,9 +168,9 @@ int libswd_bus_write_request
 
 /** Perform ACK read into *ack and verify received data.
  * \param *libswdctx swd context pointer.
- * \param operation type of action to perform with generated request. 
+ * \param operation type of action to perform with generated request.
  * \param *ack pointer to the result location.
- * \return number of commands processed, or LIBSWD_ERROR_CODE on failure. 
+ * \return number of commands processed, or LIBSWD_ERROR_CODE on failure.
  */
 int libswd_bus_read_ack(libswd_ctx_t *libswdctx, libswd_operation_t operation, char **ack){
  if (libswdctx==NULL) return LIBSWD_ERROR_NULLCONTEXT;
@@ -218,13 +218,13 @@ int libswd_bus_read_ack(libswd_ctx_t *libswdctx, libswd_operation_t operation, c
  /* Search backward for ACK command on the queue (ack we have just appended). */
  while (tmpcmdq->cmdtype!=LIBSWD_CMDTYPE_MISO_ACK){
   if (tmpcmdq->prev==NULL) return LIBSWD_ERROR_ACKMISSING;
-  tmpcmdq=tmpcmdq->prev; 
+  tmpcmdq=tmpcmdq->prev;
  }
  /* If command was found and executed, read received ACK code, or error code. */
  if (tmpcmdq->cmdtype==LIBSWD_CMDTYPE_MISO_ACK && tmpcmdq->done){
   /* Verify data address found on the queue, with pointer selected before run.*/
   if (&tmpcmdq->ack!=*ack) return LIBSWD_ERROR_ACKMISMATCH;
-  return qcmdcnt+tcmdcnt; 
+  return qcmdcnt+tcmdcnt;
  } else return LIBSWD_ERROR_ACKNOTDONE;
 }
 
@@ -253,7 +253,7 @@ int libswd_bus_write_data_p
  qcmdcnt=+res;
 
  if (operation==LIBSWD_OPERATION_ENQUEUE){
-  return qcmdcnt;       
+  return qcmdcnt;
  } else if (operation==LIBSWD_OPERATION_EXECUTE){
   res=libswd_cmdq_flush(libswdctx, &libswdctx->cmdq, operation);
   if (res<0) return res;
@@ -286,7 +286,7 @@ int libswd_bus_write_data_ap(libswd_ctx_t *libswdctx, libswd_operation_t operati
  qcmdcnt=+res;
 
  if (operation==LIBSWD_OPERATION_ENQUEUE){
-  return qcmdcnt;       
+  return qcmdcnt;
  } else if (operation==LIBSWD_OPERATION_EXECUTE) {
   res=libswd_cmdq_flush(libswdctx, &libswdctx->cmdq, operation);
   if (res<0) return res;
@@ -306,7 +306,7 @@ int libswd_bus_read_data_p(libswd_ctx_t *libswdctx, libswd_operation_t operation
  if (libswdctx==NULL) return LIBSWD_ERROR_NULLCONTEXT;
  if (operation!=LIBSWD_OPERATION_ENQUEUE && operation!=LIBSWD_OPERATION_EXECUTE)
   return LIBSWD_ERROR_BADOPCODE;
- 
+
  int res, qcmdcnt=0, tcmdcnt=0;
  libswd_cmd_t *tmpcmdq;
 
@@ -319,7 +319,7 @@ int libswd_bus_read_data_p(libswd_ctx_t *libswdctx, libswd_operation_t operation
  qcmdcnt=+res;
 
  if (operation==LIBSWD_OPERATION_ENQUEUE){
-  return qcmdcnt;        
+  return qcmdcnt;
  } else if (operation==LIBSWD_OPERATION_EXECUTE){
   res=libswd_cmdq_flush(libswdctx, &libswdctx->cmdq, operation);
   if (res<2) return res;
@@ -334,7 +334,7 @@ int libswd_bus_read_data_p(libswd_ctx_t *libswdctx, libswd_operation_t operation
  /* Search backward for our MISO_DATA command on the queue. */
  while (tmpcmdq->cmdtype!=LIBSWD_CMDTYPE_MISO_DATA){
   if (tmpcmdq->prev==NULL) return LIBSWD_ERROR_NODATACMD;
-  tmpcmdq=tmpcmdq->prev; 
+  tmpcmdq=tmpcmdq->prev;
  }
  /* There should be parity bit (command) just after data (command). */
  if (tmpcmdq->next->cmdtype!=LIBSWD_CMDTYPE_MISO_PARITY)
@@ -344,7 +344,7 @@ int libswd_bus_read_data_p(libswd_ctx_t *libswdctx, libswd_operation_t operation
   if (tmpcmdq->next->cmdtype==LIBSWD_CMDTYPE_MISO_PARITY && tmpcmdq->next->done){
    if (*data!=&tmpcmdq->misodata) return LIBSWD_ERROR_DATAPTR;
    if (*parity!=&tmpcmdq->next->parity) return LIBSWD_ERROR_PARITYPTR;
-   return qcmdcnt+tcmdcnt; 
+   return qcmdcnt+tcmdcnt;
   } else return LIBSWD_ERROR_NOTDONE;
  }
  return LIBSWD_OK;
@@ -355,7 +355,7 @@ int libswd_bus_read_data_p(libswd_ctx_t *libswdctx, libswd_operation_t operation
  * \param operation can be LIBSWD_OPERATION_ENQUEUE or LIBSWD_OPERATION_EXECUTE.
  * \param *ctlmsg byte/char array that contains control payload.
  * \param len number of bytes in the *ctlmsg to send.
- * \return number of bytes sent or LIBSWD_ERROR_CODE on failure. 
+ * \return number of bytes sent or LIBSWD_ERROR_CODE on failure.
  */
 int libswd_bus_write_control(libswd_ctx_t *libswdctx, libswd_operation_t operation, char *ctlmsg, int len){
  if (libswdctx==NULL) return LIBSWD_ERROR_NULLCONTEXT;
@@ -376,7 +376,7 @@ int libswd_bus_write_control(libswd_ctx_t *libswdctx, libswd_operation_t operati
  qcmdcnt=+res;
 
  if (operation==LIBSWD_OPERATION_ENQUEUE){
-  return qcmdcnt;        
+  return qcmdcnt;
  } else if (operation==LIBSWD_OPERATION_EXECUTE){
   res=libswd_cmdq_flush(libswdctx, &libswdctx->cmdq, operation);
   if (res<0) return res;

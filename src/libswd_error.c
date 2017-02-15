@@ -87,6 +87,7 @@ char *libswd_error_string(libswd_error_code_t error){
   case LIBSWD_ERROR_FILE:         return "[LIBSWD_ERROR_FILE] file I/O related problem";
   case LIBSWD_ERROR_UNSUPPORTED:  return "[LIBSWD_ERROR_UNSUPPORTED] Target not supported";
   case LIBSWD_ERROR_MEMAPACCSIZE: return "[LIBSWD_ERROR_MEMAPACCSIZE] Invalid MEM-AP access size";
+  case LIBSWD_ERROR_MEMAPALIGN:   return "[LIBSWD_ERROR_MEMAPALIGN] Invalid address alignment for access size";
   default:                        return "undefined error";
  }
  return "undefined error";
@@ -108,7 +109,7 @@ int libswd_error_handle(libswd_ctx_t *libswdctx){
  if (exectail!=libswdctx->cmdq){
   libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO, "LIBSWD_I: libswd_error_handle(libswdctx=@%p): Correcting libswdctx->cmdq to match last executed element...\n", (void*)libswdctx);
   libswdctx->cmdq=exectail;
- } 
+ }
 
  switch (libswdctx->cmdq->cmdtype){
   case LIBSWD_CMDTYPE_MISO_ACK:
@@ -119,7 +120,7 @@ int libswd_error_handle(libswd_ctx_t *libswdctx){
  }
 
  if (retval<0){
-  libswd_log(libswdctx, LIBSWD_LOGLEVEL_WARNING, "LIBSWD_W: libswd_error_handle(@%p) failed! on cmdq=@%p", (void*)libswdctx, (void*)libswdctx->cmdq); 
+  libswd_log(libswdctx, LIBSWD_LOGLEVEL_WARNING, "LIBSWD_W: libswd_error_handle(@%p) failed! on cmdq=@%p", (void*)libswdctx, (void*)libswdctx->cmdq);
  }
  return retval;
 }
@@ -165,7 +166,7 @@ int libswd_error_handle_ack_wait(libswd_ctx_t *libswdctx){
  //TODO: NOW DECIDE IF AN OPERATION WAS READ OR WRITE AND PERFORM RETRY ACCORDINGLY
  // READ AND WRITE WILL HAVE DIFFERENT RETRY SEQUENCES
 
- char request = libswdctx->cmdq->prev->prev->request; 
+ char request = libswdctx->cmdq->prev->prev->request;
  char *ack, *rparity;
  char parity=0;
 
@@ -173,24 +174,23 @@ int libswd_error_handle_ack_wait(libswd_ctx_t *libswdctx){
  libswd_cmd_t *mastercmdq = libswdctx->cmdq;
 
  // Append dummy data phase, fix sticky flags and retry operation.
- int retval, *ctrlstat, *rdata, abort;
+ int retval=0, *ctrlstat, *rdata, abort, retrycnt=50;
 // retval=libswd_cmdq_init(errors);
  libswdctx->cmdq->errors=(libswd_cmd_t*)calloc(1,sizeof(libswd_cmd_t));
  //retval = LIBSWD_ERROR_OUTOFMEM;
  if (libswdctx->cmdq->errors==NULL) goto libswd_error_handle_ack_wait_end;
  libswdctx->cmdq=libswdctx->cmdq->errors; // From now, this becomes out main cmdq for use with standard functions.
  libswd_log(libswdctx, LIBSWD_LOGLEVEL_DEBUG, "LIBSWD_D: libswd_error_handle_ack_wait(libswdctx=@%p): Performing data phase after ACK={WAIT,FAULT}...\n", (void*)libswdctx);
- int res, data=0;
+ int data=0;
  retval=libswd_bus_write_data_p(libswdctx, LIBSWD_OPERATION_EXECUTE, &data, &parity);
  if (retval<0) goto libswd_error_handle_ack_wait_end;
 
  // NOW WE CAN HANDLE MEM-AP READ RETRY:
  // 1. READ STICKY FLAGS FROM CTRL/STAT
  // 2. CLEAR STICKY FLAGS IN ABORT - this will discard AP transaction
- // 3. RETRY MEM-AP DRW READ - now it must be ACK=OK (it will return last mem-ap read result). 
+ // 3. RETRY MEM-AP DRW READ - now it must be ACK=OK (it will return last mem-ap read result).
  // 4. READ DP RDBUFF TO OBTAIN READ DATA
 
- int retrycnt;
  for (retrycnt=50/*LIBSWD_RETRY_COUNT_DEFAULT*/; retrycnt>0; retrycnt--){
   retval=libswd_dp_read(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_DP_CTRLSTAT_ADDR, &ctrlstat);
   if (retval<0) goto libswd_error_handle_ack_wait_end;
@@ -233,9 +233,9 @@ int libswd_error_handle_ack_wait(libswd_ctx_t *libswdctx){
   libswdctx->cmdq->done=1;
   return LIBSWD_OK;
  } else libswd_log(libswdctx, LIBSWD_LOGLEVEL_ERROR, "LIBSWD_E: UNSUPPORTED COMMAND SEQUENCE ON CMDQ (NOT ACK->RDATA->PARITY)\n");
- 
-  
- // At this point we should have the read result from RDBUFF ready for MEM-AP read fix. 
+
+
+ // At this point we should have the read result from RDBUFF ready for MEM-AP read fix.
 
 
 libswd_error_handle_ack_wait_end:

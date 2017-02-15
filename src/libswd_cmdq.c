@@ -97,7 +97,7 @@ libswd_cmd_t* libswd_cmdq_find_exectail(libswd_cmd_t *cmdq){
 /** Append element pointed by *cmd at the end of the quque pointed by *cmdq.
  * After this operation queue will be pointed by appended element (ie. last
  * element added becomes actual quque pointer to show what was added recently).
- * \param *cmdq pointer to any element on command queue 
+ * \param *cmdq pointer to any element on command queue
  * \param *cmd pointer to the command to be appended
  * \return number of appended elements (one), LIBSWD_ERROR_CODE on failure
  */
@@ -163,7 +163,7 @@ int libswd_cmdq_free_tail(libswd_cmd_t *cmdq){
  libswd_cmd_t *cmdqend;
  if (cmdq->next==NULL) return 0;
  cmdqend=libswd_cmdq_find_tail(cmdq->next);
- if (cmdqend==NULL) return LIBSWD_ERROR_QUEUE; 
+ if (cmdqend==NULL) return LIBSWD_ERROR_QUEUE;
  while(cmdqend!=cmdq){
   cmdqend=cmdqend->prev;
   free(cmdqend->next);
@@ -238,11 +238,11 @@ int libswd_cmdq_flush(libswd_ctx_t *libswdctx, libswd_cmd_t **cmdq, libswd_opera
     continue;
    } else break;
   }
-  res=libswd_drv_transmit(libswdctx, cmd); 
+  res=libswd_drv_transmit(libswdctx, cmd);
   if (res<0) return res;
   cmdcnt=+res;
   if (cmd==lastcmd) break;
- } 
+ }
  *cmdq=cmd;
  return cmdcnt;
 }

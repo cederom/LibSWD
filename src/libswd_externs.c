@@ -64,7 +64,7 @@ int libswd_drv_miso_8(libswd_ctx_t *libswdctx, libswd_cmd_t *cmd, char *data, in
  if (nLSBfirst!=0 && nLSBfirst!=1) return LIBSWD_ERROR_PARAM;
 
  // Your code goes here...
- 
+
  return bits;
 }
 
@@ -84,7 +84,7 @@ int libswd_drv_miso_32(libswd_ctx_t *libswdctx, libswd_cmd_t *cmd, int *data, in
  * bits specify how many clock cycles must be used. */
 int libswd_drv_mosi_trn(libswd_ctx_t *libswdctx, int bits){
  if (bits<LIBSWD_TURNROUND_MIN_VAL && bits>LIBSWD_TURNROUND_MAX_VAL)
-  return LIBSWD_ERROR_TURNAROUND; 
+  return LIBSWD_ERROR_TURNAROUND;
 
  // Your code goes here...
 
@@ -93,7 +93,7 @@ int libswd_drv_mosi_trn(libswd_ctx_t *libswdctx, int bits){
 
 int libswd_drv_miso_trn(libswd_ctx_t *libswdctx, int bits){
  if (bits<LIBSWD_TURNROUND_MIN_VAL && bits>LIBSWD_TURNROUND_MAX_VAL)
-  return LIBSWD_ERROR_TURNAROUND; 
+  return LIBSWD_ERROR_TURNAROUND;
 
  // Your code goes here...
 

@@ -55,7 +55,7 @@
  * \param *libswdctx swd context pointer.
  * \param operation type (LIBSWD_OPERATION_ENQUEUE or LIBSWD_OPERATION_EXECUTE).
  * \return Target's IDCODE, or LIBSWD_ERROR_CODE on failure.
- */ 
+ */
 int libswd_dap_init(libswd_ctx_t *libswdctx, libswd_operation_t operation, int **idcode){
  libswd_log(libswdctx, LIBSWD_LOGLEVEL_DEBUG,
             "LIBSWD_D: libswd_dap_init(*libswdctx=@%p, operation=%s, **idcode=@%p) entring function...\n",
@@ -78,7 +78,7 @@ int libswd_dap_init(libswd_ctx_t *libswdctx, libswd_operation_t operation, int *
 }
 
 
-/** Setup the DAP. Terget CTRL/STAT 
+/** Setup the DAP. Terget CTRL/STAT
  * This function will:
  * 1. Clear errors by writing to DP ABORT, 2. Power up the System and Debug
  * by writing to DP CTRL/STAT, 3. Set the desired DP CTRL/STAT value.
@@ -105,7 +105,7 @@ int libswd_dap_setup(libswd_ctx_t *libswdctx, libswd_operation_t operation, int 
   *ctrlstat|=LIBSWD_DP_CTRLSTAT_CDBGPWRUPREQ|LIBSWD_DP_CTRLSTAT_CSYSPWRUPREQ;
   // Write to CTRL/STAT register.
   res=libswd_dp_write(libswdctx, operation, LIBSWD_DP_CTRLSTAT_ADDR, ctrlstat);
-  if (res<0) goto libswd_dap_setup_error; 
+  if (res<0) goto libswd_dap_setup_error;
   // Wait for System and Debug Unit powerup.
   for (i=LIBSWD_RETRY_COUNT_DEFAULT;i;i--)
   {
@@ -124,7 +124,7 @@ int libswd_dap_setup(libswd_ctx_t *libswdctx, libswd_operation_t operation, int 
    libswd_log(libswdctx, LIBSWD_LOGLEVEL_WARNING,
               "LIBSWD_W: libswd_dap_setup(): CDBGPWRUPACK/CSYSPWRUPACK not set in DP CTRL/STAT!\n",
               libswdctx->log.dp.ctrlstat );
-   res=LIBSWD_ERROR_MAXRETRY; 
+   res=LIBSWD_ERROR_MAXRETRY;
    goto libswd_dap_setup_error;
   }
  }
@@ -153,7 +153,7 @@ int libswd_dap_reset(libswd_ctx_t *libswdctx, libswd_operation_t operation){
 
  if (libswdctx==NULL) return LIBSWD_ERROR_NULLCONTEXT;
  if (operation!=LIBSWD_OPERATION_ENQUEUE && operation!=LIBSWD_OPERATION_EXECUTE)
-  return LIBSWD_ERROR_BADOPCODE;  
+  return LIBSWD_ERROR_BADOPCODE;
 
  int res, qcmdcnt=0, tcmdcnt=0;
  libswdctx->log.memap.initialized=0;
@@ -200,7 +200,7 @@ int libswd_dap_select(libswd_ctx_t *libswdctx, libswd_operation_t operation){
 
  if (operation==LIBSWD_OPERATION_ENQUEUE)
  {
-  return qcmdcnt;       
+  return qcmdcnt;
  }
  else if (operation==LIBSWD_OPERATION_EXECUTE)
  {
@@ -225,16 +225,16 @@ int libswd_dap_errors_handle(libswd_ctx_t *libswdctx, libswd_operation_t operati
  libswd_log(libswdctx, LIBSWD_LOGLEVEL_DEBUG,
             "LIBSWD_D: Executing libswd_dap_errors_handle(*libswdctx=@%p, operation=%s, *abort=0x%X@%p, *ctrlstat=0x%X@%p)\n",
             (void*)libswdctx, libswd_operation_string(operation),
-            (void*)abort, abort?*abort:0, ctrlstat?*ctrlstat:0, 
+            (void*)abort, abort?*abort:0, ctrlstat?*ctrlstat:0,
             (void*)ctrlstat );
 
  if (libswdctx==NULL) return LIBSWD_ERROR_NULLCONTEXT;
  if (operation!=LIBSWD_OPERATION_EXECUTE && operation!=LIBSWD_OPERATION_ENQUEUE) return LIBSWD_ERROR_BADOPCODE;
 
- int res, abortreg;
+ int res;
  char APnDP=0, R=1, W=0, ctrlstat_addr=LIBSWD_DP_CTRLSTAT_ADDR, abort_addr=LIBSWD_DP_ABORT_ADDR, *ack, *parity, cparity;
  if (abort) {
-  *abort=*abort&(LIBSWD_DP_ABORT_STKCMPCLR|LIBSWD_DP_ABORT_STKERRCLR|LIBSWD_DP_ABORT_WDERRCLR|LIBSWD_DP_ABORT_ORUNERRCLR); 
+  *abort=*abort&(LIBSWD_DP_ABORT_STKCMPCLR|LIBSWD_DP_ABORT_STKERRCLR|LIBSWD_DP_ABORT_WDERRCLR|LIBSWD_DP_ABORT_ORUNERRCLR);
   res=libswd_bus_write_request(libswdctx, operation, &APnDP, &W, &abort_addr);
   if (res<0) return res;
   res=libswd_bus_read_ack(libswdctx, operation, &ack);
@@ -243,7 +243,7 @@ int libswd_dap_errors_handle(libswd_ctx_t *libswdctx, libswd_operation_t operati
   if (res<0) return res;
  }
  if (ctrlstat){
-  res=libswd_bus_write_request(libswdctx, operation, &APnDP, &R, &ctrlstat_addr); 
+  res=libswd_bus_write_request(libswdctx, operation, &APnDP, &R, &ctrlstat_addr);
   if (res<0) return res;
   res=libswd_bus_read_ack(libswdctx, operation, &ack);
   if (res<0) return res;
@@ -266,7 +266,7 @@ int libswd_dap_errors_handle(libswd_ctx_t *libswdctx, libswd_operation_t operati
 int libswd_dp_read_idcode(libswd_ctx_t *libswdctx, libswd_operation_t operation, int **idcode){
  libswd_log(libswdctx, LIBSWD_LOGLEVEL_DEBUG, "LIBSWD_D: libswd_dp_read_idcode(*libswdctx=%p, operation=%s): entering function...\n", (void*)libswdctx, libswd_operation_string(operation));
 
- if (libswdctx==NULL) return LIBSWD_ERROR_NULLCONTEXT; 
+ if (libswdctx==NULL) return LIBSWD_ERROR_NULLCONTEXT;
  if (operation!=LIBSWD_OPERATION_ENQUEUE && operation!=LIBSWD_OPERATION_EXECUTE)
          return LIBSWD_ERROR_BADOPCODE;
 
@@ -300,7 +300,7 @@ int libswd_dp_read_idcode(libswd_ctx_t *libswdctx, libswd_operation_t operation,
   libswdctx->log.dp.idcode=**idcode;
   libswdctx->log.dp.parity=*parity;
   libswdctx->log.dp.ack   =*ack;
-  res=libswd_bin32_parity_even(*idcode, &cparity); 
+  res=libswd_bin32_parity_even(*idcode, &cparity);
   if (res<0) return res;
   if (cparity!=*parity) return LIBSWD_ERROR_PARITY;
   libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO, "LIBSWD_I: libswd_dp_read_idcode(libswdctx=@%p, operation=%s, **idcode=0x%X/%s).\n", (void*)libswdctx, libswd_operation_string(operation), **idcode, libswd_bin32_string(*idcode));
@@ -313,7 +313,7 @@ int libswd_dp_read_idcode(libswd_ctx_t *libswdctx, libswd_operation_t operation,
  * \param *libswdctx swd context pointer.
  * \param operation type (LIBSWD_OPERATION_ENQUEUE or LIBSWD_OPERATION_EXECUTE).
  * \return Target's IDCODE, or LIBSWD_ERROR_CODE on failure.
- */ 
+ */
 int libswd_dap_detect(libswd_ctx_t *libswdctx, libswd_operation_t operation, int **idcode){
  int res;
  res=libswd_dap_select(libswdctx, operation);
@@ -336,8 +336,8 @@ int libswd_dap_detect(libswd_ctx_t *libswdctx, libswd_operation_t operation, int
  */
 int libswd_dp_read(libswd_ctx_t *libswdctx, libswd_operation_t operation, char addr, int **data){
  libswd_log(libswdctx, LIBSWD_LOGLEVEL_DEBUG, "LIBSWD_D: libswd_dp_read(libswdctx=@%p, operation=%s, addr=0x%X, **data=%p) entering function...\n", (void*)libswdctx, libswd_operation_string(operation), addr, (void**)&data);
- 
- if (libswdctx==NULL) return LIBSWD_ERROR_NULLCONTEXT; 
+
+ if (libswdctx==NULL) return LIBSWD_ERROR_NULLCONTEXT;
  if (data==NULL) return LIBSWD_ERROR_NULLPOINTER;
  if (operation!=LIBSWD_OPERATION_ENQUEUE && operation!=LIBSWD_OPERATION_EXECUTE)
   return LIBSWD_ERROR_BADOPCODE;
@@ -368,7 +368,7 @@ int libswd_dp_read(libswd_ctx_t *libswdctx, libswd_operation_t operation, char a
   if (res>=0) {
    res=libswd_bus_read_data_p(libswdctx, operation, data, &parity);
    if (res<0) return res;
-   res=libswd_bin32_parity_even(*data, &cparity); 
+   res=libswd_bin32_parity_even(*data, &cparity);
    if (res<0) return res;
    if (cparity!=*parity) return LIBSWD_ERROR_PARITY;
    cmdcnt=+res;
@@ -380,7 +380,7 @@ int libswd_dp_read(libswd_ctx_t *libswdctx, libswd_operation_t operation, char a
     res=libswd_dap_errors_handle(libswdctx, LIBSWD_OPERATION_EXECUTE, &abort, &ctrlstat);
     if (res<0) continue;
     res=libswd_bus_write_request_raw(libswdctx, LIBSWD_OPERATION_ENQUEUE, &request);
-    if (res<0) continue; 
+    if (res<0) continue;
     res=libswd_bus_read_ack(libswdctx, LIBSWD_OPERATION_EXECUTE, &ack);
     if (res<0) continue;
     res=libswd_bus_read_data_p(libswdctx, LIBSWD_OPERATION_EXECUTE, data, &parity);
@@ -409,7 +409,7 @@ int libswd_dp_read(libswd_ctx_t *libswdctx, libswd_operation_t operation, char a
   }
   return cmdcnt;
  } else return LIBSWD_ERROR_BADOPCODE;
-} 
+}
 
 /** Macro function: Generic write of the DP register.
  * When operation is LIBSWD_OPERATION_EXECUTE it also caches register values.
@@ -422,19 +422,19 @@ int libswd_dp_read(libswd_ctx_t *libswdctx, libswd_operation_t operation, char a
 int libswd_dp_write(libswd_ctx_t *libswdctx, libswd_operation_t operation, char addr, int *data){
  libswd_log(libswdctx, LIBSWD_LOGLEVEL_DEBUG, "LIBSWD_D: libswd_dp_write(*libswdctx=%p, operation=%s, addr=0x%X, *data=%p) entering function...\n", (void*)libswdctx, libswd_operation_string(operation), addr, (void*)data);
 
- if (libswdctx==NULL) return LIBSWD_ERROR_NULLCONTEXT; 
+ if (libswdctx==NULL) return LIBSWD_ERROR_NULLCONTEXT;
  if (data==NULL) return LIBSWD_ERROR_NULLPOINTER;
  if (operation!=LIBSWD_OPERATION_ENQUEUE && operation!=LIBSWD_OPERATION_EXECUTE)
   return LIBSWD_ERROR_BADOPCODE;
 
  int res, cmdcnt=0;
- char APnDP, RnW, cparity, *ack, *parity, request;
+ char APnDP, RnW, *ack, request;
 
  APnDP=0;
  RnW=0;
 
  res=libswd_bitgen8_request(libswdctx, &APnDP, &RnW, &addr, &request);
- if (res<0) return res; 
+ if (res<0) return res;
  res=libswd_bus_write_request_raw(libswdctx, LIBSWD_OPERATION_ENQUEUE, &request);
  if (res<1) return res;
  cmdcnt=+res;
@@ -459,10 +459,10 @@ int libswd_dp_write(libswd_ctx_t *libswdctx, libswd_operation_t operation, char 
    int retry, ctrlstat, abort;
    for (retry=LIBSWD_RETRY_COUNT_DEFAULT; retry>0; retry--){
     abort=0xFFFFFFFF;
-    res=libswd_dap_errors_handle(libswdctx, LIBSWD_OPERATION_EXECUTE, &abort, &ctrlstat); 
+    res=libswd_dap_errors_handle(libswdctx, LIBSWD_OPERATION_EXECUTE, &abort, &ctrlstat);
     if (res<0) continue;
     res=libswd_bus_write_request_raw(libswdctx, LIBSWD_OPERATION_ENQUEUE, &request);
-    if (res<0) continue; 
+    if (res<0) continue;
     res=libswd_bus_read_ack(libswdctx, LIBSWD_OPERATION_EXECUTE, &ack);
     if (res<0) continue;
     res=libswd_bus_write_data_ap(libswdctx, LIBSWD_OPERATION_EXECUTE, data);
@@ -489,7 +489,7 @@ int libswd_dp_write(libswd_ctx_t *libswdctx, libswd_operation_t operation, char 
   }
   return cmdcnt;
  } else return LIBSWD_ERROR_BADOPCODE;
-} 
+}
 
 /** Macro function: Selects APBANK based on provided address value.
  * Bank number is calculated from [7..4] bits of the address.
@@ -509,7 +509,7 @@ int libswd_ap_bank_select(libswd_ctx_t *libswdctx, libswd_operation_t operation,
  int retval;
  int new_select=libswdctx->log.dp.select;
  new_select&=~LIBSWD_DP_SELECT_APBANKSEL;
- new_select|=addr&LIBSWD_DP_SELECT_APBANKSEL; 
+ new_select|=addr&LIBSWD_DP_SELECT_APBANKSEL;
  retval=libswd_dp_write(libswdctx, operation, LIBSWD_DP_SELECT_ADDR, &new_select);
  if (retval<0){
   libswd_log(libswdctx, LIBSWD_LOGLEVEL_WARNING, "libswd_ap_bank_select(%p, %0x02X): cannot update DP SELECT register (%s)\n", (void*)libswdctx, addr, libswd_error_string(retval));
@@ -557,13 +557,13 @@ int libswd_ap_select(libswd_ctx_t *libswdctx, libswd_operation_t operation, int 
 int libswd_ap_read(libswd_ctx_t *libswdctx, libswd_operation_t operation, char addr, int **data){
  libswd_log(libswdctx, LIBSWD_LOGLEVEL_DEBUG, "LIBSWD_D: libswd_ap_read(*libswdctx=%p, command=%s, addr=0x%X, *data=%p) entering function...\n", (void*)libswdctx, libswd_operation_string(operation), (unsigned char)addr, (void**)data);
 
- if (libswdctx==NULL) return LIBSWD_ERROR_NULLCONTEXT; 
+ if (libswdctx==NULL) return LIBSWD_ERROR_NULLCONTEXT;
  if (data==NULL) return LIBSWD_ERROR_NULLPOINTER;
  if (operation!=LIBSWD_OPERATION_ENQUEUE && operation!=LIBSWD_OPERATION_EXECUTE)
   return LIBSWD_ERROR_BADOPCODE;
 
  int res, cmdcnt=0, retry, ctrlstat, abort;
- char APnDP, RnW, cparity, *ack, *parity, request;
+ char APnDP, RnW, *ack, *parity, request;
 
  res=libswd_ap_bank_select(libswdctx, LIBSWD_OPERATION_ENQUEUE, addr);
  if (res<0) return res;
@@ -598,7 +598,7 @@ int libswd_ap_read(libswd_ctx_t *libswdctx, libswd_operation_t operation, char a
     res=libswd_dap_errors_handle(libswdctx, LIBSWD_OPERATION_EXECUTE, &abort, NULL);
     if (res<0) continue;
     res=libswd_bus_write_request_raw(libswdctx, LIBSWD_OPERATION_ENQUEUE, &request);
-    if (res<0) continue; 
+    if (res<0) continue;
     res=libswd_bus_read_ack(libswdctx, LIBSWD_OPERATION_EXECUTE, &ack);
     if (res<0) continue;
     res=libswd_bus_read_data_p(libswdctx, LIBSWD_OPERATION_EXECUTE, data, &parity);
@@ -619,7 +619,7 @@ int libswd_ap_read(libswd_ctx_t *libswdctx, libswd_operation_t operation, char a
   libswd_log(libswdctx, LIBSWD_LOGLEVEL_DEBUG, "LIBSWD_D: libswd_ap_read(libswdctx=@%p, command=%s, addr=0x%X, **data=0x%X/%s) execution OK.\n", (void*)libswdctx, libswd_operation_string(operation), addr, **data, libswd_bin32_string(*data));
   return cmdcnt;
  } else return LIBSWD_ERROR_BADOPCODE;
-} 
+}
 
 /** Macro function: Generic write of the AP register.
  * Address field should contain AP BANK on bits [4..7].
@@ -631,13 +631,13 @@ int libswd_ap_read(libswd_ctx_t *libswdctx, libswd_operation_t operation, char a
  */
 int libswd_ap_write(libswd_ctx_t *libswdctx, libswd_operation_t operation, char addr, int *data){
  libswd_log(libswdctx, LIBSWD_LOGLEVEL_DEBUG, "LIBSWD_D: libswd_ap_write(libswdctx=@%p, operation=%s, addr=0x%X, *data=0x%X).\n", (void*)libswdctx, libswd_operation_string(operation), addr, (void**)data);
- 
- if (libswdctx==NULL) return LIBSWD_ERROR_NULLCONTEXT; 
+
+ if (libswdctx==NULL) return LIBSWD_ERROR_NULLCONTEXT;
  if (operation!=LIBSWD_OPERATION_ENQUEUE && operation!=LIBSWD_OPERATION_EXECUTE)
   return LIBSWD_ERROR_BADOPCODE;
 
  int res, cmdcnt=0, retry, ctrlstat, abort;
- char APnDP, RnW, cparity, *ack, *parity, request;
+ char APnDP, RnW, *ack, request;
 
  res=libswd_ap_bank_select(libswdctx, LIBSWD_OPERATION_ENQUEUE, addr);
  if (res<0) return res;
@@ -675,7 +675,7 @@ int libswd_ap_write(libswd_ctx_t *libswdctx, libswd_operation_t operation, char 
     res=libswd_dap_errors_handle(libswdctx, LIBSWD_OPERATION_EXECUTE, &abort, NULL);
     if (res<0) continue;
     res=libswd_bus_write_request_raw(libswdctx, LIBSWD_OPERATION_ENQUEUE, &request);
-    if (res<0) continue; 
+    if (res<0) continue;
     res=libswd_bus_read_ack(libswdctx, LIBSWD_OPERATION_EXECUTE, &ack);
     if (res<0) continue;
     res=libswd_bus_write_data_ap(libswdctx, LIBSWD_OPERATION_EXECUTE, data);
@@ -687,14 +687,14 @@ int libswd_ap_write(libswd_ctx_t *libswdctx, libswd_operation_t operation, char 
   if (res<0) {
    libswd_log(libswdctx, LIBSWD_LOGLEVEL_ERROR, "LIBSWD_E: libswd_ap_write(libswdctx=@%p, operation=%s, addr=0x%X, *data=0x%X/%s) failed: %s.\n", (void*)libswdctx, libswd_operation_string(operation), addr, *data, libswd_bin32_string(data), libswd_error_string(res));
    abort=0xFFFFFFFE;
-   res=libswd_dap_errors_handle(libswdctx, LIBSWD_OPERATION_EXECUTE, &abort, &ctrlstat); 
+   res=libswd_dap_errors_handle(libswdctx, LIBSWD_OPERATION_EXECUTE, &abort, &ctrlstat);
    return res;
   }
   libswd_log(libswdctx, LIBSWD_LOGLEVEL_DEBUG, "LIBSWD_D: libswd_ap_write(libswdctx=@%p, operation=%s, addr=0x%X, *data=0x%X/%s) execution OK.\n", (void*)libswdctx, libswd_operation_string(operation), addr, *data, libswd_bin32_string(data));
   return cmdcnt;
  } else return LIBSWD_ERROR_BADOPCODE;
  return LIBSWD_OK;
-} 
+}
 
 
 

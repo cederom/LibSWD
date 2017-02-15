@@ -40,8 +40,8 @@
 #include <libswd.h>
 #include <ftdi.h>
 
-#define LIBSWDAPP_INTERFACE_SIGNAL_NAME_MINLEN	1
-#define LIBSWDAPP_INTERFACE_SIGNAL_NAME_MAXLEN	32
+#define LIBSWDAPP_INTERFACE_SIGNAL_NAME_MINLEN    1
+#define LIBSWDAPP_INTERFACE_SIGNAL_NAME_MAXLEN    32
 #define LIBSWDAPP_INTERFACE_NAME_MAXLEN           32
 #define LIBSWDAPP_INTERFACE_CONFIG_NAME_MAXLEN    32
 #define LIBSWDAPP_INTERFACE_VID_DEFAULT           0x0403
@@ -52,15 +52,15 @@
 #define LIBSWDAPP_CLI_HISTORY_MAXLEN  1024
 
 typedef struct libswdapp_interface_signal {
-	char *name;                         /// Signal name string.
-	unsigned int mask;                  /// Mask value for selected signal.
-	int value;                          /// Cached signal value.
-	struct libswdapp_interface_signal *next; /// Next signal on the list.
+ char *name;                         /// Signal name string.
+ unsigned int mask;                  /// Mask value for selected signal.
+ int value;                          /// Cached signal value.
+ struct libswdapp_interface_signal *next; /// Next signal on the list.
 } libswdapp_interface_signal_t;
 
 typedef struct libswdapp_context {
  libswd_ctx_t *libswdctx;
- struct libswdapp_interface *interface; 
+ struct libswdapp_interface *interface;
  int loglevel;
  int retval;
 } libswdapp_context_t;
@@ -108,11 +108,11 @@ typedef struct libswdapp_interface_config {
 } libswdapp_interface_config_t;
 
 typedef enum libswdapp_interface_operation {
-	OOCD_INTERFACE_SIGNAL_OPERATION_UNDEFINED = 0,
-	OOCD_INTERFACE_SIGNAL_OPERATION_READ,
-	OOCD_INTERFACE_SIGNAL_OPERATION_WRITE,
-	OOCD_INTERFACE_SIGNAL_OPERATION_SET,
-	OOCD_INTERFACE_SIGNAL_OPERATION_CLEAR
+ OOCD_INTERFACE_SIGNAL_OPERATION_UNDEFINED = 0,
+ OOCD_INTERFACE_SIGNAL_OPERATION_READ,
+ OOCD_INTERFACE_SIGNAL_OPERATION_WRITE,
+ OOCD_INTERFACE_SIGNAL_OPERATION_SET,
+ OOCD_INTERFACE_SIGNAL_OPERATION_CLEAR
 } libswdapp_interface_operation_t;
 
 
@@ -163,9 +163,9 @@ static const libswdapp_interface_config_t libswdapp_interface_configs[] = {
   .set_freq       = libswdapp_interface_ftdi_set_freq,
   .bitbang        = libswdapp_interface_ftdi_bitbang,
   .transfer_bits  = libswdapp_interface_ftdi_transfer_bits,
-  .transfer_bytes = libswdapp_interface_ftdi_transfer_bytes, 
+  .transfer_bytes = libswdapp_interface_ftdi_transfer_bytes,
   .vid            = 0x0403,
-  .pid            = 0xbbe2, 
+  .pid            = 0xbbe2,
   .latency        = 1,
   .maxfrequency   = 30000000,
   .frequency      = 1000000,
@@ -180,9 +180,9 @@ static const libswdapp_interface_config_t libswdapp_interface_configs[] = {
   .set_freq       = libswdapp_interface_aftdi_set_freq,
   .bitbang        = libswdapp_interface_aftdi_bitbang,
   .transfer_bits  = libswdapp_interface_aftdi_transfer_bits,
-  .transfer_bytes = libswdapp_interface_aftdi_transfer_bytes, 
+  .transfer_bytes = libswdapp_interface_aftdi_transfer_bytes,
   .vid            = 0x0403,
-  .pid            = 0xbbe2, 
+  .pid            = 0xbbe2,
   .latency        = 1,
   .maxfrequency   = 30000000,
   .frequency      = 1000000,
@@ -296,7 +296,7 @@ static const libswdapp_flash_stm32f1_memmap_t *libswdapp_flash_stm32f1_devices[]
  &libswdapp_flash_stm321f_mediumdensity,
  &libswdapp_flash_stm321f_highdensity,
  &libswdapp_flash_stm321f_connectivityline,
- NULL 
+ NULL
 };
 
 #define LIBSWDAPP_FLASH_STM32F1_FLASH_OBR_RDPRT_VAL 0x000000A5

@@ -43,7 +43,7 @@
  ******************************************************************************/
 
 /** Initialize the MEM-AP.
- * This function will set DbgSwEnable, DeviceEn, 32-bit Size in CSW. 
+ * This function will set DbgSwEnable, DeviceEn, 32-bit Size in CSW.
  * This function will disable Tar Auto Increment.
  * Use libswd_memap_setup() to set specific CSW and TAR values.
  * \param *libswdctx swd context to work on.
@@ -57,7 +57,6 @@ int libswd_memap_init(libswd_ctx_t *libswdctx, libswd_operation_t operation){
  if (libswdctx==NULL) return LIBSWD_ERROR_NULLCONTEXT;
 
  int res=0, *memapidr, *memapbase, *memapcswp, memapcsw;
- int dpabort, dpctrlstat, *dpctrlstatp; 
 
  // Verify if DAP is already initialized, do so in necessary.
  if (!libswdctx->log.dp.initialized)
@@ -68,8 +67,8 @@ int libswd_memap_init(libswd_ctx_t *libswdctx, libswd_operation_t operation){
  }
 
  // Select MEM-AP.
- //res=libswd_ap_select(libswdctx, operation, LIBSWD_MEMAP_APSEL_VAL);  
- //if (res<0) goto libswd_memap_init_error; 
+ //res=libswd_ap_select(libswdctx, operation, LIBSWD_MEMAP_APSEL_VAL);
+ //if (res<0) goto libswd_memap_init_error;
  // TODO: DO WE NEED LIBSWD_AP_SELECT ???
 
  // Check IDentification Register, use cached value if possible.
@@ -128,7 +127,7 @@ libswd_memap_init_error:
  * Use this function to setup CSW and TAR values for given MEM-AP operations.
  * This setup needs to be done before MEM-AP with different access size.
  * Function will try to compare agains chahed values to save bus traffic.
- * This function will set DBGSWENABLE and PROT bits in CSW by default. 
+ * This function will set DBGSWENABLE and PROT bits in CSW by default.
  * \param *libswd LibSWD context to work on.
  * \param operation is the LIBSWD_OPERATION type.
  * \param csw is the CSW register value to be set.
@@ -142,7 +141,7 @@ int libswd_memap_setup(libswd_ctx_t *libswdctx, libswd_operation_t operation, in
 
  if (libswdctx==NULL) return LIBSWD_ERROR_NULLCONTEXT;
 
- int res, *memapcswp, memapcsw, *memaptarp; 
+ int res, *memapcswp, memapcsw, *memaptarp;
 
  // Verify if MEM-AP is already initialized, do so in necessary.
  if (!libswdctx->log.memap.initialized)
@@ -153,7 +152,7 @@ int libswd_memap_setup(libswd_ctx_t *libswdctx, libswd_operation_t operation, in
 
  // Remember to set these bits not to lock-out the Debug...
  memapcsw=csw|LIBSWD_MEMAP_CSW_DBGSWENABLE;
- memapcsw|=LIBSWD_MEMAP_CSW_PROT; // PROT ENABLES DEBUG!! 
+ memapcsw|=LIBSWD_MEMAP_CSW_PROT; // PROT ENABLES DEBUG!!
 
  // Update MEM-AP CSW register if necessary.
  if (memapcsw!=libswdctx->log.memap.csw)
@@ -205,11 +204,11 @@ int libswd_memap_read_char(libswd_ctx_t *libswdctx, libswd_operation_t operation
             (void*)libswdctx, libswd_operation_string(operation),
             addr, count, (void*)data );
 
- if (libswdctx==NULL) return LIBSWD_ERROR_NULLCONTEXT; 
+ if (libswdctx==NULL) return LIBSWD_ERROR_NULLCONTEXT;
  if (operation!=LIBSWD_OPERATION_ENQUEUE && operation!=LIBSWD_OPERATION_EXECUTE)
   return LIBSWD_ERROR_BADOPCODE;
 
- int i, loc, res=0, accsize=0, *memapcsw, *memaptar, *memapdrw;
+ int i, loc, res=0, accsize=0, *memapdrw;
  int chunk, chunks, chunksize=1024;
  float tdeltam;
  struct timeval tstart, tstop;
@@ -239,6 +238,13 @@ int libswd_memap_read_char(libswd_ctx_t *libswdctx, libswd_operation_t operation
  }
  if (count%accsize) count=count-(count%accsize);
 
+ // Check for alignment issues.
+ if ((addr%accsize)!=0)
+ {
+  res=LIBSWD_ERROR_MEMAPALIGN;
+  goto libswd_memap_read_char_error;
+ }
+
  // Mark start time for transfer speed measurement.
  gettimeofday(&tstart, NULL);
 
@@ -248,7 +254,13 @@ int libswd_memap_read_char(libswd_ctx_t *libswdctx, libswd_operation_t operation
   // Use manual TAR incrementation (slower).
   for (i=0;i<count;i+=accsize)
   {
+   int tmp;
+   int drw_shift;
    loc=addr+i;
+   // Calculate the offset in DRW where the data should be
+   // see Data byte-laning in the ARM debug interface v5 documentation
+   // note: this only works for little endian systems.
+   drw_shift=8*(loc%4);
    // Measure transfer speed.
    gettimeofday(&tstop, NULL);
    tdeltam=fabsf((tstop.tv_sec-tstart.tv_sec)*1000+(tstop.tv_usec-tstart.tv_usec)/1000);
@@ -264,7 +276,9 @@ int libswd_memap_read_char(libswd_ctx_t *libswdctx, libswd_operation_t operation
    res=libswd_ap_read(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_DRW_ADDR, &memapdrw);
    if (res<0) goto libswd_memap_read_char_error;
    libswdctx->log.memap.drw=*memapdrw;
-   memcpy((void*)data+i, memapdrw, accsize);
+   // apply the data byte-laning shift
+   tmp=*memapdrw >>= drw_shift;
+   memcpy((void*)data+i, &tmp, accsize);
   }
   libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO, "\n");
  }
@@ -277,7 +291,13 @@ int libswd_memap_read_char(libswd_ctx_t *libswdctx, libswd_operation_t operation
   chunks=count/chunksize;
   for (chunk=0;chunk*chunksize<count;chunk++)
   {
+   int tmp;
+   int drw_shift;
    loc=addr+chunk*chunksize;
+   // Calculate the offset in DRW where the data should be
+   // see Data byte-laning in the ARM debug interface v5 documentation
+   // note: this only works for little endian systems.
+   drw_shift=8*(loc%4);
    // Pass address to TAR register.
    res=libswd_ap_write(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_TAR_ADDR, &loc);
    if (res<0) goto libswd_memap_read_char_error;
@@ -296,7 +316,9 @@ int libswd_memap_read_char(libswd_ctx_t *libswdctx, libswd_operation_t operation
     res=libswd_ap_read(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_DRW_ADDR, &memapdrw);
     if (res<0) goto libswd_memap_read_char_error;
     libswdctx->log.memap.drw=*memapdrw;
-    memcpy((void*)data+(chunk*chunksize)+i, memapdrw, accsize);
+    // apply the data byte-laning shift
+    tmp=*memapdrw >>= drw_shift;
+    memcpy((void*)data+(chunk*chunksize)+i, &tmp, accsize);
    }
   }
   libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO, "\n");
@@ -327,13 +349,13 @@ int libswd_memap_read_char_csw(libswd_ctx_t *libswdctx, libswd_operation_t opera
  libswd_log(libswdctx, LIBSWD_LOGLEVEL_DEBUG,
             "LIBSWD_D: Entering libswd_memap_read_char_csw(*libswdctx=%p, operation=%s, addr=0x%08X, count=0x%08X, *data=%p, csw=0x%X)...\n",
             (void*)libswdctx, libswd_operation_string(operation),
-            addr, count, (void**)data, csw); 
+            addr, count, (void**)data, csw);
 
- if (libswdctx==NULL) return LIBSWD_ERROR_NULLCONTEXT; 
+ if (libswdctx==NULL) return LIBSWD_ERROR_NULLCONTEXT;
  if (operation!=LIBSWD_OPERATION_ENQUEUE && operation!=LIBSWD_OPERATION_EXECUTE)
   return LIBSWD_ERROR_BADOPCODE;
 
- int i, j, loc, res=0, accsize=0, *memapcsw, *memaptar, *memapdrw;
+ int res=0, accsize=0;
 
  // Calculate required access size based on CSW value.
  switch (csw&LIBSWD_MEMAP_CSW_SIZE)
@@ -349,7 +371,7 @@ int libswd_memap_read_char_csw(libswd_ctx_t *libswdctx, libswd_operation_t opera
    break;
   default:
    res=LIBSWD_ERROR_MEMAPACCSIZE;
-   goto libswd_memap_read_char_csw_error; 
+   goto libswd_memap_read_char_csw_error;
  }
  // Verify the count parameter to be access boundary.
  if (count%accsize) count=count-(count%accsize);
@@ -411,13 +433,13 @@ int libswd_memap_read_int(libswd_ctx_t *libswdctx, libswd_operation_t operation,
  libswd_log(libswdctx, LIBSWD_LOGLEVEL_DEBUG,
             "LIBSWD_D: Entering libswd_memap_read_int(*libswdctx=%p, operation=%s, addr=0x%08X, count=0x%08X, *data=%p)...\n",
             (void*)libswdctx, libswd_operation_string(operation),
-            addr, count, (void**)data); 
+            addr, count, (void**)data);
 
- if (libswdctx==NULL) return LIBSWD_ERROR_NULLCONTEXT; 
+ if (libswdctx==NULL) return LIBSWD_ERROR_NULLCONTEXT;
  if (operation!=LIBSWD_OPERATION_ENQUEUE && operation!=LIBSWD_OPERATION_EXECUTE)
   return LIBSWD_ERROR_BADOPCODE;
 
- int i, loc, res, *memapcsw, *memaptar, *memapdrw;
+ int i, loc, res, *memapdrw;
  int chunk, chunks, chunksize=1024;
  float tdeltam;
  struct timeval tstart, tstop;
@@ -515,29 +537,24 @@ int libswd_memap_read_int_csw(libswd_ctx_t *libswdctx, libswd_operation_t operat
  libswd_log(libswdctx, LIBSWD_LOGLEVEL_DEBUG,
             "LIBSWD_D: Entering libswd_memap_read_int_csw(*libswdctx=%p, operation=%s, addr=0x%08X, count=0x%08X, *data=%p, csw=0x%X)...\n",
             (void*)libswdctx, libswd_operation_string(operation),
-            addr, count, (void**)data, csw ); 
+            addr, count, (void**)data, csw );
 
- if (libswdctx==NULL) return LIBSWD_ERROR_NULLCONTEXT; 
+ if (libswdctx==NULL) return LIBSWD_ERROR_NULLCONTEXT;
  if (operation!=LIBSWD_OPERATION_ENQUEUE && operation!=LIBSWD_OPERATION_EXECUTE)
   return LIBSWD_ERROR_BADOPCODE;
 
- int i, loc, res=0, accsize=0, *memapcsw, *memaptar, *memapdrw;
+ int res=0;
 
  // Calculate required access size based on CSW value.
  switch (csw&LIBSWD_MEMAP_CSW_SIZE)
  {
   case LIBSWD_MEMAP_CSW_SIZE_8BIT:
-   accsize=1;
-   break;
   case LIBSWD_MEMAP_CSW_SIZE_16BIT:
-   accsize=2;
-   break;
   case LIBSWD_MEMAP_CSW_SIZE_32BIT:
-   accsize=4;
    break;
   default:
    res=LIBSWD_ERROR_MEMAPACCSIZE;
-   goto libswd_memap_read_int_csw_error; 
+   goto libswd_memap_read_int_csw_error;
  }
 
  // Initialize MEM-AP if necessary.
@@ -554,7 +571,7 @@ int libswd_memap_read_int_csw(libswd_ctx_t *libswdctx, libswd_operation_t operat
  // Perform the read operation.
  res=libswd_memap_read_int(libswdctx, operation, addr, count, data);
  if (res<0) goto libswd_memap_read_int_csw_error;
- 
+
  return LIBSWD_OK;
 
 libswd_memap_read_int_csw_error:
@@ -582,7 +599,7 @@ int libswd_memap_read_int_32(libswd_ctx_t *libswdctx, libswd_operation_t operati
             addr, count, (void**)data);
 
  return libswd_memap_read_int_csw(libswdctx, operation, addr, count, data, LIBSWD_MEMAP_CSW_SIZE_32BIT|LIBSWD_MEMAP_CSW_ADDRINC_SINGLE);
-} 
+}
 
 
 /** Generic write using MEM-AP from char array.
@@ -598,13 +615,13 @@ int libswd_memap_write_char(libswd_ctx_t *libswdctx, libswd_operation_t operatio
  libswd_log(libswdctx, LIBSWD_LOGLEVEL_DEBUG,
             "LIBSWD_D: Entering libswd_memap_write_char(*libswdctx=%p, operation=%s, addr=0x%08X, count=0x%08X, **data=%p)...\n",
             (void*)libswdctx, libswd_operation_string(operation),
-            addr, count, (void*)data ); 
+            addr, count, (void*)data );
 
- if (libswdctx==NULL) return LIBSWD_ERROR_NULLCONTEXT; 
+ if (libswdctx==NULL) return LIBSWD_ERROR_NULLCONTEXT;
  if (operation!=LIBSWD_OPERATION_ENQUEUE && operation!=LIBSWD_OPERATION_EXECUTE)
   return LIBSWD_ERROR_BADOPCODE;
 
- int i, loc, res=0, accsize=0, *memapcsw, *memaptar, *memapdrw;
+ int i, loc, res=0, accsize=0;
  int chunk, chunks, chunksize=1024;
  float tdeltam;
  struct timeval tstart, tstop;
@@ -634,6 +651,13 @@ int libswd_memap_write_char(libswd_ctx_t *libswdctx, libswd_operation_t operatio
  }
  if (count%accsize) count=count-(count%accsize);
 
+ // check for alignment issues.
+ if ((addr%accsize)!=0)
+ {
+  res=LIBSWD_ERROR_MEMAPALIGN;
+  goto libswd_memap_write_char_error;
+ }
+
  // Mark start time for transfer speed measurement.
  gettimeofday(&tstart, NULL);
 
@@ -644,7 +668,12 @@ int libswd_memap_write_char(libswd_ctx_t *libswdctx, libswd_operation_t operatio
   // Use manual TAR incrementation (slower).
   for (i=0;i<count;i+=accsize)
   {
+   int drw_shift;
    loc=addr+i;
+   // Calculate the offset in DRW where the data should go
+   // see Data byte-laning in the ARM debug interface v5 documentation
+   // note: this only works for little endian systems.
+   drw_shift=8*(loc%4);
    // Measure transfer speed.
    gettimeofday(&tstop, NULL);
    tdeltam=fabsf((tstop.tv_sec-tstart.tv_sec)*1000+(tstop.tv_usec-tstart.tv_usec)/1000);
@@ -658,12 +687,8 @@ int libswd_memap_write_char(libswd_ctx_t *libswdctx, libswd_operation_t operatio
    libswdctx->log.memap.tar=loc;
    // Implode and Write data to DRW register.
    memcpy((void*)&libswdctx->log.memap.drw, data+i, accsize);
-   if (accsize == 2 && (loc % 4) == 2)
-   {
-    // 16 bit accesses at offsets of 2, use the upper 16 bits
-    libswdctx->log.memap.drw <<= 16;
-   }
-   // TODO probably need something similar for 8 bit accesses
+   // apply the data byte-laning shift
+   libswdctx->log.memap.drw <<= drw_shift;
    res=libswd_ap_write(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_DRW_ADDR, &libswdctx->log.memap.drw);
    if (res<0) goto libswd_memap_write_char_error;
   }
@@ -677,7 +702,12 @@ int libswd_memap_write_char(libswd_ctx_t *libswdctx, libswd_operation_t operatio
   chunks=count/chunksize;
   for (chunk=0;chunk*chunksize<count;chunk++)
   {
+   int drw_shift;
    loc=addr+chunk*chunksize;
+   // Calculate the offset in DRW where the data should go
+   // see Data byte-laning in the ARM debug interface v5 documentation
+   // note: this only works for little endian systems.
+   drw_shift=8*(loc%4);
    // Pass address to TAR register.
    res=libswd_ap_write(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_TAR_ADDR, &loc);
    if (res<0) goto libswd_memap_write_char_error;
@@ -694,12 +724,8 @@ int libswd_memap_write_char(libswd_ctx_t *libswdctx, libswd_operation_t operatio
     fflush(0);
     // Implode and Write data to DRW register.
     memcpy((void*)&libswdctx->log.memap.drw, data+(chunk*chunksize)+i, accsize);
-    if (accsize == 2 && ((loc+i) % 4) == 2)
-    {
-     // 16 bit accesses at offsets of 2, use the upper 16 bits
-     libswdctx->log.memap.drw <<= 16;
-    }
-    // TODO probably need something similar for 8 bit accesses
+    // apply the data byte-laning shift
+    libswdctx->log.memap.drw <<= drw_shift;
     res=libswd_ap_write(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_DRW_ADDR, &libswdctx->log.memap.drw);
     if (res<0) goto libswd_memap_write_char_error;
    }
@@ -721,7 +747,7 @@ libswd_memap_write_char_error:
  * \param *libswdctx swd context to work on.
  * \param operation can be LIBSWD_OPERATION_ENQUEUE or LIBSWD_OPERATION_EXECUTE.
  * \param addr is the start address of the data to write with MEM-AP.
- * \param count is the number of bytes to write. 
+ * \param count is the number of bytes to write.
  * \param *data is the pointer to data to be written.
  * \param csw is the value of csw register to write prior data write.
  * \return number of elements/words processed or LIBSWD_ERROR code on failure.
@@ -731,11 +757,11 @@ int libswd_memap_write_char_csw(libswd_ctx_t *libswdctx, libswd_operation_t oper
             "LIBSWD_D: Entring libswd_memap_write_char_csw(*libswdctx=%p, operation=%s, addr=0x%08X, count=0x%08X, **data=%p, csw=0x%X)...\n",
             (void*)libswdctx, libswd_operation_string(operation),
             addr, count, (void**)data, csw );
- if (libswdctx==NULL) return LIBSWD_ERROR_NULLCONTEXT; 
+ if (libswdctx==NULL) return LIBSWD_ERROR_NULLCONTEXT;
  if (operation!=LIBSWD_OPERATION_ENQUEUE && operation!=LIBSWD_OPERATION_EXECUTE)
   return LIBSWD_ERROR_BADOPCODE;
 
- int i, loc, res=0, accsize=0, *memapcsw, *memaptar, *memapdrw;
+ int res=0, accsize=0;
 
  // Calculate required access size based on CSW value.
  switch (csw&LIBSWD_MEMAP_CSW_SIZE)
@@ -751,7 +777,7 @@ int libswd_memap_write_char_csw(libswd_ctx_t *libswdctx, libswd_operation_t oper
    break;
   default:
    res=LIBSWD_ERROR_MEMAPACCSIZE;
-   goto libswd_memap_write_char_csw_error; 
+   goto libswd_memap_write_char_csw_error;
  }
  // Verify the count parameter to be access boundary.
  if (count%accsize) count=count-(count%accsize);
@@ -792,7 +818,7 @@ int libswd_memap_write_char_32(libswd_ctx_t *libswdctx, libswd_operation_t opera
  libswd_log(libswdctx, LIBSWD_LOGLEVEL_DEBUG,
             "LIBSWD_D: Entering libswd_memap_write_char_32(*libswdctx=%p, operation=%s, addr=0x%08X, count=0x%08X, **data=%p)...\n",
             (void*)libswdctx, libswd_operation_string(operation),
-            addr, count, (void**)data); 
+            addr, count, (void**)data);
 
  return libswd_memap_write_char_csw(libswdctx, operation, addr, count, data, LIBSWD_MEMAP_CSW_SIZE_32BIT|LIBSWD_MEMAP_CSW_ADDRINC_SINGLE);
 }
@@ -812,13 +838,13 @@ int libswd_memap_write_int(libswd_ctx_t *libswdctx, libswd_operation_t operation
  libswd_log(libswdctx, LIBSWD_LOGLEVEL_DEBUG,
             "LIBSWD_D: Entering libswd_memap_write_int(*libswdctx=%p, operation=%s, addr=0x%08X, count=0x%08X, **data=%p)...\n",
             (void*)libswdctx, libswd_operation_string(operation),
-            addr, count, (void*)data); 
+            addr, count, (void*)data);
 
- if (libswdctx==NULL) return LIBSWD_ERROR_NULLCONTEXT; 
+ if (libswdctx==NULL) return LIBSWD_ERROR_NULLCONTEXT;
  if (operation!=LIBSWD_OPERATION_ENQUEUE && operation!=LIBSWD_OPERATION_EXECUTE)
   return LIBSWD_ERROR_BADOPCODE;
 
- int i, loc, res=0, *memapcsw, *memaptar, *memapdrw;
+ int i, loc, res=0;
  int chunk, chunks, chunksize=1024;
  float tdeltam;
  struct timeval tstart, tstop;
@@ -914,29 +940,24 @@ int libswd_memap_write_int_csw(libswd_ctx_t *libswdctx, libswd_operation_t opera
             (void*)libswdctx, libswd_operation_string(operation),
             addr, count, (void**)data, csw );
 
- if (libswdctx==NULL) return LIBSWD_ERROR_NULLCONTEXT; 
+ if (libswdctx==NULL) return LIBSWD_ERROR_NULLCONTEXT;
  if (operation!=LIBSWD_OPERATION_ENQUEUE && operation!=LIBSWD_OPERATION_EXECUTE)
   return LIBSWD_ERROR_BADOPCODE;
 
- int i, loc, res=0, accsize=0, *memapcsw, *memaptar, *memapdrw;
+ int res=0;
 
  // Calculate required access size based on CSW value.
  switch (csw&LIBSWD_MEMAP_CSW_SIZE)
  {
   case LIBSWD_MEMAP_CSW_SIZE_8BIT:
-   accsize=1;
-   break;
   case LIBSWD_MEMAP_CSW_SIZE_16BIT:
-   accsize=2;
-   break;
   case LIBSWD_MEMAP_CSW_SIZE_32BIT:
-   accsize=4;
    break;
   default:
    res=LIBSWD_ERROR_MEMAPACCSIZE;
-   goto libswd_memap_write_int_csw_error; 
+   goto libswd_memap_write_int_csw_error;
  }
- 
+
  // Initialize MEM-AP if necessary.
  if (!libswdctx->log.memap.initialized)
  {
@@ -974,7 +995,7 @@ int libswd_memap_write_int_32(libswd_ctx_t *libswdctx, libswd_operation_t operat
             "LIBSWD_D: Entering libswd_memap_write_int_32(*libswdctx=%p, operation=%s, addr=0x%08X, count=0x%08X, **data=%p)...\n",
             (void*)libswdctx, libswd_operation_string(operation),
             addr, count, (void**)data);
- 
+
  return libswd_memap_write_int_csw(libswdctx, operation, addr, count, data, LIBSWD_MEMAP_CSW_SIZE_32BIT|LIBSWD_MEMAP_CSW_ADDRINC_SINGLE);
 }
 

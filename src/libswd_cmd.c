@@ -80,12 +80,12 @@ int libswd_cmd_enqueue_mosi_request(libswd_ctx_t *libswdctx, char *request){
  res=libswd_cmd_enqueue(libswdctx, cmd);
  if (res<1) free(cmd);
  return res;
-} 
+}
 
 /** Append command queue with Turnaround activating MOSI mode.
  * \param *libswdctx swd context pointer.
  * \return return number elements appended (1), or LIBSWD_ERROR_CODE on failure.
- */ 
+ */
 int libswd_cmd_enqueue_mosi_trn(libswd_ctx_t *libswdctx){
  if (libswdctx==NULL) return LIBSWD_ERROR_NULLCONTEXT;
  int res;
@@ -198,7 +198,7 @@ int i;
  * \param *libswdctx swd context pointer.
  * \param *parity parity value pointer.
  * \return number of elements appended (1), or LIBSWD_ERROR_CODE on failure.
- */ 
+ */
 int libswd_cmd_enqueue_mosi_parity(libswd_ctx_t *libswdctx, char *parity){
  if (libswdctx==NULL) return LIBSWD_ERROR_NULLCONTEXT;
  if (*parity!=0 && *parity!=1) return LIBSWD_ERROR_PARAM;
@@ -430,7 +430,7 @@ int libswd_cmd_enqueue_mosi_control(libswd_ctx_t *libswdctx, char *ctlmsg, int l
   cmd->control=ctlmsg[elm];
   cmd->cmdtype=LIBSWD_CMDTYPE_MOSI_CONTROL;
   cmd->bits=sizeof(ctlmsg[elm])*LIBSWD_DATA_BYTESIZE;
-  res=libswd_cmd_enqueue(libswdctx, cmd); 
+  res=libswd_cmd_enqueue(libswdctx, cmd);
   if (res<1) break;
   cmdcnt=+res;
  }
