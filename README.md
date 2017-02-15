@@ -51,19 +51,20 @@ Initial research and practical tests were performed back in 2010 on STM32 family
 ## Credits
 
 Various parts of this research project were thankfully conducted, contributed and supported by:
-* [Tomasz Bolesław CEDRO](http://www.tomek.cedro.info) (me) that is Inventor, Developer and Maintainer of LibSWD.
-* [Orange Labs Warsaw](http://www.orange.com/en_EN/group/global_footprint/countries/poland/poland-lab.jsp) and [Orange Labs Paris](http://www.orange.com/en_EN/group/global_footprint/countries/france/france-lab.jsp) that I work for as R&D Specialist.
+* [Tomasz Bolesław CEDRO aka CeDeROM](http://www.tomek.cedro.info) (me) that is Inventor, Developer and Maintainer of LibSWD.
+* [Orange Labs Warsaw](http://www.orange.com/en_EN/group/global_footprint/countries/poland/poland-lab.jsp) and [Orange Labs Paris](http://www.orange.com/en_EN/group/global_footprint/countries/france/france-lab.jsp) that I worked for as R&D Architect.
 * [Cybernetic Research Student Group](http://cyber.ise.pw.edu.pl/) that I am founder, at [Warsaw University of Technology](http://www.pw.edu.pl).
 * [Polish Interdisciplinary NEUROSCIENCE Group](http://www.neuroscience.pl) that I am founder.
 * Krzysztof Kajstura of [Kristech](http://kristech.eu/).
 * Andras Ketskes of [BodyTrace Inc](http://www.bodytrace.com/).
 * Andrew Parlane of [Carallon Ltd](http://www.carallon.com/).
 * Individuals from all around the world, including [Freddie Chopin](http://www.freddiechopin.info), [Akos Vandra](https://github.com/axos88), [Evan Foss](https://sites.google.com/site/evanfoss).
-* My "free" time :-)
+* My so called "free" time :-)
 
 
 ## Releases
 
+### 2017-02-15: [libswd-0.7.tar.gz](https://github.com/cederom/LibSWD/releases/download/libswd-0.7/libswd-0.7.tar.gz) / [libswd-0.7.pdf](https://github.com/cederom/LibSWD/releases/download/libswd-0.7/libswd-0.7.pdf)
 
 ### 2013-10-20: [libswd-0.6.tar.gz](https://github.com/cederom/LibSWD/releases/download/libswd-0.6/libswd-0.6.tar.gz) / [libswd-0.6.pdf](https://github.com/cederom/LibSWD/releases/download/libswd-0.6/libswd-0.6.pdf)
 
@@ -118,11 +119,14 @@ LibSWD is documented using Doxygen. Documentation body is included within the so
 
 ## History
 
-### Upcoming release improvements
-* ARM Cortex-M0 support.
+### 2017-02-15:
+* LibSWD 0.7 release.
+* ARM Cortex-M0 and Cortex-M4 support.
 * AP read fix (ABORT after READ).
 * MEMAP support for 16-bit non-packed writes.
-* LibSWD Application CLI improvements.
+* LibSWD Application CLI and CPUID improvements.
+* Fixed byte-laning and memory alignment issues.
+* Source code cleanup.
 * Special thanks to Andrew Parlane of [Carallon Ltd.](http://www.carallon.com/)! :-)
 
 ### 2015-04-10:

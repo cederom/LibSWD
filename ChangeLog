@@ -1,4 +1,13 @@
-LibSWD-0.6-devel:
+LibSWD-0.7 (2017-02-15):
+* ARM Cortex-M0 and Cortex-M4 support.
+* AP read fix (ABORT after READ).
+* MEMAP support for 16-bit non-packed writes.
+* LibSWD Application CLI and CPUID improvements.
+* Fixed byte-laning and memory alignment issues.
+* Source code cleanup.
+* Special thanks to Andrew Parlane of [Carallon Ltd.](http://www.carallon.com/)! :-)
+
+LibSWD-0.6 (2013-10-20):
  * Introducing CLI (Command Line Interface) parser framework. Updated error defines.
  * Major fixes in LOG functions. Introducing vprintf() like libswd_log_internal_va().
  * Added DEFAULT defines for LogLevel and AutoFixErrors libswdctx->config values.
