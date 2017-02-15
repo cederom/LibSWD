@@ -1,4 +1,4 @@
-AC_INIT([libswd], [GIT-][m4_esyscmd_s([git rev-parse --short HEAD])], [tomek@cedro.info])
+AC_INIT([libswd], [0.7], [tomek@cedro.info])
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_MACRO_DIR([m4])
 
