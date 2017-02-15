@@ -746,6 +746,7 @@ static const libswd_arm_register_t libswd_arm_debug_CPUID[] = {
  { .name="ARM Cortex-M3 r1p2",     .default_value=0x411FC231 },
  { .name="ARM Cortex-M3 r2p1",     .default_value=0x412FC231 },
  { .name="ARM Cortex-M0 r0p0",     .default_value=0x410CC200 },
+ { .name="ARM Cortex-M0+ r0p0",    .default_value=0x410CC600 },
  { .name="ARM Cortex-M4 r0p1",     .default_value=0x410FC241 },
 };
 
