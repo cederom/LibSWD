@@ -1,6 +1,6 @@
 # Serial Wire Debug Open Library
 
-Welcome to https://GitHub.com/CeDeROM/LibSWD :-)
+Welcome to http://libswd.com / https://GitHub.com/CeDeROM/LibSWD :-)
 
 ## Table of Contents
  * [About](#about)
@@ -118,6 +118,9 @@ LibSWD is documented using Doxygen. Documentation body is included within the so
 
 
 ## History
+
+### 2017-02-16:
+* LibSWD project gets dedicated internet domain so you can reach it quickly at http://libswd.com :-)
 
 ### 2017-02-15:
 * LibSWD 0.7 release.
@@ -385,5 +388,5 @@ LibSWD is equipped with optional automatic error handling in order to make error
   }
 ```
 
-*LibSWD (C) 2010-2015 [Tomasz Bolesław CEDRO](http://www.tomek.cedro.info)*
- 
+<hr/>
+<sup>LibSWD (C) 2010-2017 [CeDeROM Tomasz Bolesław CEDRO](http://www.tomek.cedro.info)</sup> 
