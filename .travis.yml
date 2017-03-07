@@ -1,0 +1,16 @@
+language: c
+os:
+  - linux
+  - osx
+addons:
+  apt:
+    packages:
+    - libftdi-dev
+compiler:
+  - gcc
+  - clang
+env:
+  - 
+  - CONFIG_OPTS=--enable-application
+install: if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install libftdi; fi
+script: ./autogen.sh && ./configure $CONFIG_OPTS && make

@@ -1,0 +1,16 @@
+build:
+  image: teaci/msys$$arch
+  shell: mingw$$arch
+  pull: true
+  commands:
+    - if [ $$arch = 32 ]; then target=i686; fi
+    - if [ $$arch = 64 ]; then target=x86_64; fi
+    - pacman -Sy --noconfirm mingw-w64-${target}-libftdi mingw-w64-${target}-glib2
+    - ./autogen.sh && ./configure $$config_opts && make
+matrix:
+  arch:
+    - 64
+    - 32
+  config_opts:
+    - 
+    - --enable-application

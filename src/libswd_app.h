@@ -38,7 +38,11 @@
 #define __LIBSWDAPP_H__
 
 #include <libswd.h>
+#if defined(__MINGW32__) || (defined(__APPLE__) && defined(__MACH__))
+#include <libftdi1/ftdi.h>
+#else
 #include <ftdi.h>
+#endif
 
 #define LIBSWDAPP_INTERFACE_SIGNAL_NAME_MINLEN    1
 #define LIBSWDAPP_INTERFACE_SIGNAL_NAME_MAXLEN    32
