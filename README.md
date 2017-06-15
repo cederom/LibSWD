@@ -1,4 +1,5 @@
 # Serial Wire Debug Open Library
+[![Build Status](https://travis-ci.org/cederom/LibSWD.svg?branch=master)](https://travis-ci.org/cederom/LibSWD)
 
 Welcome to http://libswd.com / https://GitHub.com/CeDeROM/LibSWD :-)
 
