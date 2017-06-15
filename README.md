@@ -59,8 +59,9 @@ Various parts of this research project were thankfully conducted, contributed an
 * Krzysztof Kajstura of [Kristech](http://kristech.eu/).
 * Andras Ketskes of [BodyTrace Inc](http://www.bodytrace.com/).
 * Andrew Parlane of [Carallon Ltd](http://www.carallon.com/).
+* [Stephen Groat](https://www.stephengroat.com/) of [Qualcomm Inc](https://www.qualcomm.com/).
 * Individuals from all around the world, including [Freddie Chopin](http://www.freddiechopin.info), [Akos Vandra](https://github.com/axos88), [Evan Foss](https://sites.google.com/site/evanfoss).
-* My so called "free" time :-)
+* My so called "free" time ;-)
 
 
 ## Releases
@@ -119,6 +120,9 @@ LibSWD is documented using Doxygen. Documentation body is included within the so
 
 
 ## History
+
+### LibSWD-0.8-DEVEL:
+ * Added Travis CI build test automation integrated with GitHub repository.
 
 ### 2017-02-16:
 * LibSWD project gets dedicated internet domain so you can reach it quickly at http://libswd.com :-)
