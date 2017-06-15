@@ -101,7 +101,8 @@ libswd_cmd_t* libswd_cmdq_find_exectail(libswd_cmd_t *cmdq){
  * \param *cmd pointer to the command to be appended
  * \return number of appended elements (one), LIBSWD_ERROR_CODE on failure
  */
-int libswd_cmdq_append(libswd_cmd_t *cmdq, libswd_cmd_t *cmd){
+int libswd_cmdq_append(libswd_stats_t *stats,libswd_cmd_t *cmdq, libswd_cmd_t *cmd){
+ if (stats==NULL) return LIBSWD_ERROR_NULLPOINTER;
  if (cmdq==NULL) return LIBSWD_ERROR_NULLQUEUE;
  if (cmd==NULL) return LIBSWD_ERROR_NULLPOINTER;
  if (cmdq->next != NULL){
@@ -113,10 +114,12 @@ int libswd_cmdq_append(libswd_cmd_t *cmdq, libswd_cmd_t *cmd){
   cmdq->next=cmd;
   cmd->prev=cmdq;
  }
+ stats->cmdqlen++;
  return 1;
 }
 
 /** Free queue pointed by *cmdq element.
+ * Warning! libswdctx->cmdq is no longer valid and usable
  * \param *cmdq pointer to any element on command queue
  * \return number of elements destroyed, LIBSWD_ERROR_CODE on failure
  */
@@ -134,11 +137,34 @@ int libswd_cmdq_free(libswd_cmd_t *cmdq){
  return cmdcnt;
 }
 
+/** Free one cmd from queue pointed by *cmd element.
+ * \param *cmd pointer to any element on command queue
+ * \return number of elements destroyed, LIBSWD_ERROR_CODE on failure
+ */
+int libswd_cmdq_free_one_element(libswd_stats_t *stats,libswd_cmd_t *cmd){
+ if (stats==NULL) return LIBSWD_ERROR_NULLPOINTER;
+ if (cmd==NULL) return LIBSWD_ERROR_NULLQUEUE;
+ libswd_cmd_t *prevcmd,*nextcmd;
+ prevcmd=cmd->prev;
+ nextcmd=cmd->next;
+ if ((prevcmd==NULL)&&(nextcmd==NULL)) return 0; //root cmd cannot be removed
+ if (prevcmd!=NULL){
+	 prevcmd->next=nextcmd;
+ }
+ if (nextcmd!=NULL){
+	 nextcmd->prev=prevcmd;
+ }
+ free(cmd);
+ stats->cmdqlen--;
+ return 1;
+}
+
 /** Free queue head up to *cmdq element.
  * \param *cmdq pointer to the element that becomes new queue root.
  * \return number of elements destroyed, or LIBSWD_ERROR_CODE on failure.
  */
-int libswd_cmdq_free_head(libswd_cmd_t *cmdq){
+int libswd_cmdq_free_head(libswd_stats_t *stats,libswd_cmd_t *cmdq){
+ if (stats==NULL) return LIBSWD_ERROR_NULLPOINTER;
  if (cmdq==NULL) return LIBSWD_ERROR_NULLQUEUE;
  int cmdcnt=0;
  libswd_cmd_t *cmdqroot, *nextcmd;
@@ -150,6 +176,7 @@ int libswd_cmdq_free_head(libswd_cmd_t *cmdq){
   cmdcnt++;
  }
  cmdqroot->prev=NULL;
+ stats->cmdqlen-=cmdcnt;
  return cmdcnt;
 }
 
@@ -157,7 +184,8 @@ int libswd_cmdq_free_head(libswd_cmd_t *cmdq){
  * \param *cmdq pointer to the last element on the new queue.
  * \return number of elements destroyed, or LIBSWD_ERROR_CODE on failure.
  */
-int libswd_cmdq_free_tail(libswd_cmd_t *cmdq){
+int libswd_cmdq_free_tail(libswd_stats_t *stats,libswd_cmd_t *cmdq){
+ if (stats==NULL) return LIBSWD_ERROR_NULLPOINTER;
  if (cmdq==NULL) return LIBSWD_ERROR_NULLQUEUE;
  int cmdcnt=0;
  libswd_cmd_t *cmdqend;
@@ -170,6 +198,7 @@ int libswd_cmdq_free_tail(libswd_cmd_t *cmdq){
   cmdcnt++;
  }
  cmdq->next=NULL;
+ stats->cmdqlen-=cmdcnt;
  return cmdcnt;
 }
 
@@ -240,7 +269,7 @@ int libswd_cmdq_flush(libswd_ctx_t *libswdctx, libswd_cmd_t **cmdq, libswd_opera
   }
   res=libswd_drv_transmit(libswdctx, cmd);
   if (res<0) return res;
-  cmdcnt=+res;
+  cmdcnt+=res;
   if (cmd==lastcmd) break;
  }
  *cmdq=cmd;

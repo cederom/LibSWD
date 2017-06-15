@@ -206,7 +206,7 @@ int libswd_dap_select(libswd_ctx_t *libswdctx, libswd_operation_t operation){
  {
   res=libswd_cmdq_flush(libswdctx, &libswdctx->cmdq, operation);
   if (res<0) return res;
-  tcmdcnt=+res;
+  tcmdcnt+=res;
   return qcmdcnt+tcmdcnt;
  } else return LIBSWD_ERROR_BADOPCODE;
 }
@@ -279,15 +279,15 @@ int libswd_dp_read_idcode(libswd_ctx_t *libswdctx, libswd_operation_t operation,
 
  res=libswd_bus_write_request(libswdctx, LIBSWD_OPERATION_ENQUEUE, &APnDP, &RnW, &addr);
  if (res<1) return res;
- cmdcnt=+res;
+ cmdcnt+=res;
 
  if (operation==LIBSWD_OPERATION_ENQUEUE){
   res=libswd_bus_read_ack(libswdctx, operation, (char**)&libswdctx->qlog.read.ack);
   if (res<1) return res;
-  cmdcnt=+res;
+  cmdcnt+=res;
   res=libswd_bus_read_data_p(libswdctx, operation, (int**)&libswdctx->qlog.read.data, (char**)&libswdctx->qlog.read.parity);
   if (res<1) return res;
-  cmdcnt=+res;
+  cmdcnt+=res;
   return cmdcnt;
 
  } else if (operation==LIBSWD_OPERATION_EXECUTE){
@@ -352,15 +352,15 @@ int libswd_dp_read(libswd_ctx_t *libswdctx, libswd_operation_t operation, char a
  if (res<0) return res;
  res=libswd_bus_write_request_raw(libswdctx, LIBSWD_OPERATION_ENQUEUE, &request);
  if (res<1) return res;
- cmdcnt=+res;
+ cmdcnt+=res;
 
  if (operation==LIBSWD_OPERATION_ENQUEUE){
   res=libswd_bus_read_ack(libswdctx, operation, (char**)&libswdctx->qlog.read.ack);
   if (res<1) return res;
-  cmdcnt=+res;
+  cmdcnt+=res;
   res=libswd_bus_read_data_p(libswdctx, operation, (int**)&data, (char**)&libswdctx->qlog.read.parity);
   if (res<1) return res;
-  cmdcnt=+res;
+  cmdcnt+=res;
   return cmdcnt;
 
  } else if (operation==LIBSWD_OPERATION_EXECUTE){
@@ -371,7 +371,7 @@ int libswd_dp_read(libswd_ctx_t *libswdctx, libswd_operation_t operation, char a
    res=libswd_bin32_parity_even(*data, &cparity);
    if (res<0) return res;
    if (cparity!=*parity) return LIBSWD_ERROR_PARITY;
-   cmdcnt=+res;
+   cmdcnt+=res;
   } else if (res==LIBSWD_ERROR_ACK_WAIT) {
    //We got ACK==WAIT, retry last transfer until success or failure.
    int retry, ctrlstat, abort;
@@ -437,17 +437,17 @@ int libswd_dp_write(libswd_ctx_t *libswdctx, libswd_operation_t operation, char 
  if (res<0) return res;
  res=libswd_bus_write_request_raw(libswdctx, LIBSWD_OPERATION_ENQUEUE, &request);
  if (res<1) return res;
- cmdcnt=+res;
+ cmdcnt+=res;
 
  libswd_bin32_parity_even(data, (char *)&libswdctx->qlog.write.parity);
 
  if (operation==LIBSWD_OPERATION_ENQUEUE){
   res=libswd_bus_read_ack(libswdctx, operation, (char**)&libswdctx->qlog.write.ack);
   if (res<1) return res;
-  cmdcnt=+res;
+  cmdcnt+=res;
   res=libswd_bus_write_data_ap(libswdctx, operation, data);
   if (res<1) return res;
-  cmdcnt=+res;
+  cmdcnt+=res;
   return cmdcnt;
 
  } else if (operation==LIBSWD_OPERATION_EXECUTE){
@@ -575,15 +575,15 @@ int libswd_ap_read(libswd_ctx_t *libswdctx, libswd_operation_t operation, char a
  if (res<0) return res;
  res=libswd_bus_write_request_raw(libswdctx, LIBSWD_OPERATION_ENQUEUE, &request);
  if (res<1) return res;
- cmdcnt=+res;
+ cmdcnt+=res;
 
  if (operation==LIBSWD_OPERATION_ENQUEUE){
   res=libswd_bus_read_ack(libswdctx, operation, (char**)&libswdctx->qlog.read.ack);
   if (res<1) return res;
-  cmdcnt=+res;
+  cmdcnt+=res;
   res=libswd_bus_read_data_p(libswdctx, operation, (int**)&libswdctx->qlog.read.data, (char**)&libswdctx->qlog.read.parity);
   if (res<1) return res;
-  cmdcnt=+res;
+  cmdcnt+=res;
   return cmdcnt;
 
  } else if (operation==LIBSWD_OPERATION_EXECUTE){
@@ -649,17 +649,17 @@ int libswd_ap_write(libswd_ctx_t *libswdctx, libswd_operation_t operation, char 
  if (res<0) return res;
  res=libswd_bus_write_request_raw(libswdctx, LIBSWD_OPERATION_ENQUEUE, &request);
  if (res<1) return res;
- cmdcnt=+res;
+ cmdcnt+=res;
  libswd_bin32_parity_even(data, (char *)&libswdctx->qlog.write.parity);
 
  if (operation==LIBSWD_OPERATION_ENQUEUE){
   res=libswd_bus_read_ack(libswdctx, operation, (char**)&libswdctx->qlog.write.ack);
   if (res<1) return res;
-  cmdcnt=+res;
+  cmdcnt+=res;
   libswdctx->qlog.write.data=*data;
   res=libswd_bus_write_data_ap(libswdctx, operation, &libswdctx->qlog.write.data);
   if (res<1) return res;
-  cmdcnt=+res;
+  cmdcnt+=res;
   return cmdcnt;
 
  } else if (operation==LIBSWD_OPERATION_EXECUTE){
