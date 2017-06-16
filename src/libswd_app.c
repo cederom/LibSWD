@@ -41,7 +41,11 @@
 #include <unistd.h>
 #include <string.h>
 #include <ctype.h>
+#if defined(__MINGW32__) || (defined(__APPLE__) && defined(__MACH__))
+#include <libftdi1/ftdi.h>
+#else
 #include <ftdi.h>
+#endif
 #include <readline/readline.h>
 #include <readline/history.h>
 #include <errno.h>
