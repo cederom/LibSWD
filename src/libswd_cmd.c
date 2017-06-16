@@ -50,6 +50,7 @@
 
 /** Append selected command to a context's command queue (libswdctx->cmdq).
  * This function does not update the libswdctx->cmdq pointer (its updated on flush).
+ * Function maintains maxcmdqlen from configuration.
  * \param *libswdctx swd context pointer containing the command queue.
  * \param *cmd command to be appended to the context's command queue.
  * \return number of elements appended or LIBSWD_ERROR_CODE on failure.
@@ -57,7 +58,20 @@
 int libswd_cmd_enqueue(libswd_ctx_t *libswdctx, libswd_cmd_t *cmd){
  if (libswdctx==NULL || cmd==NULL) return LIBSWD_ERROR_NULLPOINTER;
  int res;
- res=libswd_cmdq_append(libswdctx->cmdq, cmd);
+ if (libswdctx->config.maxcmdqlen!=0){
+	 while (libswdctx->stats.cmdqlen >= libswdctx->config.maxcmdqlen){
+		 libswd_cmd_t *cmd;
+		 cmd=libswd_cmdq_find_head(libswdctx->cmdq);
+		 if ((cmd->done!=1)||(cmd==libswdctx->cmdq)){
+			 //Need to release memory, but first CMD in queue is not yet handled, so we can`t remove it
+			 return LIBSWD_ERROR_OUTOFMEM;
+		 } else {
+			 res=libswd_cmdq_free_one_element(&libswdctx->stats,cmd);
+			 if (res<1) return LIBSWD_ERROR_QUEUE;
+		 }
+	 }
+ }
+ res=libswd_cmdq_append(&libswdctx->stats,libswdctx->cmdq, cmd);
  return res;
 }
 
@@ -149,7 +163,7 @@ int libswd_cmd_enqueue_miso_nbit(libswd_ctx_t *libswdctx, char **data, int count
  }
  //If there was problem enqueueing elements, rollback changes on queue.
  if (res<1) {
-  res2=libswd_cmdq_free_tail(oldcmdq);
+  res2=libswd_cmdq_free_tail(&libswdctx->stats,oldcmdq);
   if (res2<0) return res2;
   return res;
  } else return cmdcnt;
@@ -187,7 +201,7 @@ int i;
  }
  //If there was problem enqueueing elements, rollback changes on queue.
  if (res<1){
-  res2=libswd_cmdq_free_tail(oldcmdq);
+  res2=libswd_cmdq_free_tail(&libswdctx->stats,oldcmdq);
   if (res2<0) return res2;
   libswdctx->cmdq=oldcmdq;
   return res;
@@ -284,7 +298,7 @@ int libswd_cmd_enqueue_miso_n_data_p(libswd_ctx_t *libswdctx, int **data, char *
  for (i=0;i<=count;i++){
   res=libswd_cmd_enqueue_miso_data_p(libswdctx, &data[i], &parity[i]);
   if (res<2) return LIBSWD_ERROR_RESULT;
-  cmdcnt=+res;
+  cmdcnt+=res;
  }
  return cmdcnt;
 }
@@ -321,12 +335,12 @@ int libswd_cmd_enqueue_mosi_data_ap(libswd_ctx_t *libswdctx, int *data){
  char parity;
  res=libswd_cmd_enqueue_mosi_data(libswdctx, data);
  if (res<1) return res;
- cmdcnt=+res;
+ cmdcnt+=res;
  res=libswd_bin32_parity_even(data, &parity);
  if (res<0) return res;
  res=libswd_cmd_enqueue_mosi_parity(libswdctx, &parity);
  if (res<1) return res;
- cmdcnt=+res;
+ cmdcnt+=res;
  return cmdcnt; // should be 2 or 3 on success
 }
 
@@ -342,10 +356,10 @@ int libswd_cmd_enqueue_mosi_data_p(libswd_ctx_t *libswdctx, int *data, char *par
  int res, cmdcnt=0;
  res=libswd_cmd_enqueue_mosi_data(libswdctx, data);
  if (res<1) return res;
- cmdcnt=+res;
+ cmdcnt+=res;
  res=libswd_cmd_enqueue_mosi_parity(libswdctx, parity);
  if (res<1) return res;
- cmdcnt=+res;
+ cmdcnt+=res;
  return cmdcnt; // should be 2 or 3 on success
 }
 
@@ -363,7 +377,7 @@ int libswd_cmd_enqueue_mosi_n_data_ap(libswd_ctx_t *libswdctx, int **data, int c
  for (i=0;i<count;i++){
   res=libswd_cmd_enqueue_mosi_data(libswdctx, data[i]);
   if (res<1) return res;
-  cmdcnt=+res;
+  cmdcnt+=res;
  }
  return cmdcnt;
 }
@@ -383,7 +397,7 @@ int libswd_cmd_enqueue_mosi_n_data_p(libswd_ctx_t *libswdctx, int **data, char *
  for (i=0;i<count;i++){
   res=libswd_cmd_enqueue_mosi_data_p(libswdctx, data[i], parity[i]);
   if (res<1) return res;
-  cmdcnt=+res;
+  cmdcnt+=res;
  }
  return cmdcnt;
 }
@@ -432,11 +446,11 @@ int libswd_cmd_enqueue_mosi_control(libswd_ctx_t *libswdctx, char *ctlmsg, int l
   cmd->bits=sizeof(ctlmsg[elm])*LIBSWD_DATA_BYTESIZE;
   res=libswd_cmd_enqueue(libswdctx, cmd);
   if (res<1) break;
-  cmdcnt=+res;
+  cmdcnt+=res;
  }
  //If there was problem enqueueing elements, rollback changes on queue.
  if (res<1){
-  res2=libswd_cmdq_free_tail(oldcmdq);
+  res2=libswd_cmdq_free_tail(&libswdctx->stats,oldcmdq);
   if (res2<0) return res2;
   libswdctx->cmdq=oldcmdq;
   return res;

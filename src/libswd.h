@@ -538,8 +538,8 @@ typedef enum {
 #define LIBSWD_DATA_BYTESIZE      8
 /// How many bits are there in data payload.
 #define LIBSWD_DATA_BITLEN        32
-/// How long is the command queue by default.
-#define LIBSWD_CMDQLEN_DEFAULT  1024;
+/// How long is the command queue by default. BTW, 16 appears to be absolute minimum
+#define LIBSWD_CMDQLEN_DEFAULT  1024
 
 /** SWD Command Codes definitions.
  * Available values: MISO>0, MOSI<0, undefined=0. To check command direction
@@ -610,6 +610,11 @@ typedef struct libswd_cmd_t {
  struct libswd_cmd_t *prev; ///< Pointer to the previous command.
  struct libswd_cmd_t *next; ///< Pointer to the next command.
 } libswd_cmd_t;
+
+/** Lib statistics */
+typedef struct {
+	unsigned int cmdqlen;
+} libswd_stats_t;
 
 /** Context configuration structure */
 typedef struct {
@@ -804,6 +809,7 @@ typedef struct libswd_debug {
  */
 typedef struct {
  libswd_cmd_t *cmdq;             ///< Command queue, stores all bus operations.
+ libswd_stats_t stats;           ///< Holds all statistics runtime statistics
  libswd_context_config_t config; ///< Target specific configuration.
  libswd_driver_t *driver;        ///< Pointer to the interface driver structure.
  libswd_membuf_t membuf;         ///< Memory related scratchpad.
@@ -836,10 +842,11 @@ int libswd_cmdq_init(libswd_cmd_t *cmdq);
 libswd_cmd_t* libswd_cmdq_find_head(libswd_cmd_t *cmdq);
 libswd_cmd_t* libswd_cmdq_find_tail(libswd_cmd_t *cmdq);
 libswd_cmd_t* libswd_cmdq_find_exectail(libswd_cmd_t *cmdq);
-int libswd_cmdq_append(libswd_cmd_t *cmdq, libswd_cmd_t *cmd);
+int libswd_cmdq_append(libswd_stats_t *stats,libswd_cmd_t *cmdq, libswd_cmd_t *cmd);
 int libswd_cmdq_free(libswd_cmd_t *cmdq);
-int libswd_cmdq_free_head(libswd_cmd_t *cmdq);
-int libswd_cmdq_free_tail(libswd_cmd_t *cmdq);
+int libswd_cmdq_free_one_element(libswd_stats_t *stats,libswd_cmd_t *cmd);
+int libswd_cmdq_free_head(libswd_stats_t *stats,libswd_cmd_t *cmdq);
+int libswd_cmdq_free_tail(libswd_stats_t *stats,libswd_cmd_t *cmdq);
 int libswd_cmdq_flush(libswd_ctx_t *libswdctx, libswd_cmd_t **cmdq, libswd_operation_t operation);
 
 int libswd_cmd_enqueue(libswd_ctx_t *libswdctx, libswd_cmd_t *cmd);
@@ -888,6 +895,7 @@ extern int libswd_drv_mosi_trn(libswd_ctx_t *libswdctx, int clks);
 extern int libswd_drv_miso_trn(libswd_ctx_t *libswdctx, int clks);
 
 extern int libswd_log(libswd_ctx_t *libswdctx, libswd_loglevel_t loglevel, char *msg, ...);
+extern int libswd_log_flush(libswd_ctx_t *libswdctx, libswd_loglevel_t loglevel, char *msg, ...);
 int libswd_log_internal(libswd_ctx_t *libswdctx, libswd_loglevel_t loglevel, char *msg, ...);
 int libswd_log_internal_va(libswd_ctx_t *libswdctx, libswd_loglevel_t loglevel, char *msg, va_list ap);
 int libswd_log_level_set(libswd_ctx_t *libswdctx, libswd_loglevel_t loglevel);

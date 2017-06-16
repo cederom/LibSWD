@@ -157,6 +157,7 @@ static int libswdapp_interface_aftdi_transfer_bits(libswdapp_context_t *libswdap
 static int libswdapp_interface_aftdi_transfer_bytes(libswdapp_context_t *libswdappctx, int bytes, char *mosidata, char *misodata, int nLSBfirst);
 
 int libswd_log(libswd_ctx_t *libswdctx, libswd_loglevel_t loglevel, char *msg, ...);
+int libswd_log_flush(libswd_ctx_t *libswdctx, libswd_loglevel_t loglevel, char *msg, ...);
 
 static const libswdapp_interface_config_t libswdapp_interface_configs[] = {
  {
