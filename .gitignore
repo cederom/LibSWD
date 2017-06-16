@@ -80,6 +80,9 @@ Makefile.in
 /missing
 /stamp-h1
 /src/config.h
+/.settings/
+/.cproject
+/.project
 
 # https://www.gnu.org/software/libtool/
 
