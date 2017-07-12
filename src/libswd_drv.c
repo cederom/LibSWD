@@ -208,7 +208,7 @@ int libswd_drv_transmit(libswd_ctx_t *libswdctx, libswd_cmd_t *cmd){
    if (errcode==LIBSWD_ERROR_ACK_WAIT || errcode==LIBSWD_ERROR_ACK_FAULT)
     if (cmd->next) if(cmd->next->next) cmd=cmd->next->next;
    // Now free the queue tail.
-   if (libswd_cmdq_free_tail(cmd)<0) {
+   if (libswd_cmdq_free_tail(libswdctx, cmd)<0) {
     libswd_log(libswdctx, LIBSWD_LOGLEVEL_WARNING,
       "LIBSWD_W: libswd_drv_transmit(libswdctx=@%p, cmd=@%p): Cannot free cmdq tail in ACK error handling routine, Protocol Error Sequence imminent...\n",
       (void*)libswdctx, (void*)cmd );
@@ -265,7 +265,7 @@ int libswd_drv_transmit(libswd_ctx_t *libswdctx, libswd_cmd_t *cmd){
     libswd_log(libswdctx, LIBSWD_LOGLEVEL_WARNING,
       "LIBSWD_W: libswd_drv_transmit(libswdctx=@%p, cmd=@%p): Bad PARITY, clearing cmdq tail to preserve synchronization...\n",
       (void*)libswdctx, (void*)cmd );
-    if (libswd_cmdq_free_tail(cmd)<0) {
+    if (libswd_cmdq_free_tail(libswdctx, cmd)<0) {
      libswd_log(libswdctx, LIBSWD_LOGLEVEL_WARNING,
        "LIBSWD_W: libswd_drv_transmit(libswdctx=@%p, cmd=@%p): Cannot free cmdq tail in PARITY error hanlig routine!\n",
        (void*)libswdctx, (void*)cmd);

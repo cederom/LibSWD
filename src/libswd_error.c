@@ -170,8 +170,9 @@ int libswd_error_handle_ack_wait(libswd_ctx_t *libswdctx){
  char *ack, *rparity;
  char parity=0;
 
- // Remember original cmdq, restore on return.
+ // Remember original cmdq and cmdqlen, restore on return.
  libswd_cmd_t *mastercmdq = libswdctx->cmdq;
+ unsigned int mastercmdqlen = libswdctx->stats.cmdqlen;
 
  // Append dummy data phase, fix sticky flags and retry operation.
  int retval=0, *ctrlstat, *rdata, abort, retrycnt=50;
@@ -180,6 +181,7 @@ int libswd_error_handle_ack_wait(libswd_ctx_t *libswdctx){
  //retval = LIBSWD_ERROR_OUTOFMEM;
  if (libswdctx->cmdq->errors==NULL) goto libswd_error_handle_ack_wait_end;
  libswdctx->cmdq=libswdctx->cmdq->errors; // From now, this becomes out main cmdq for use with standard functions.
+ libswdctx->stats.cmdqlen=1; //Do not forget about memory management
  libswd_log(libswdctx, LIBSWD_LOGLEVEL_DEBUG, "LIBSWD_D: libswd_error_handle_ack_wait(libswdctx=@%p): Performing data phase after ACK={WAIT,FAULT}...\n", (void*)libswdctx);
  int data=0;
  retval=libswd_bus_write_data_p(libswdctx, LIBSWD_OPERATION_EXECUTE, &data, &parity);
@@ -221,7 +223,10 @@ int libswd_error_handle_ack_wait(libswd_ctx_t *libswdctx){
 
  //Make sure we have RDATA and PARITY elements after libswdctx->cmdq.
  //Should we check for this at the procedure start???
- libswdctx->cmdq=mastercmdq;
+ libswd_cmdq_free(libswdctx); //Well, as a first thing, release the memory
+ libswdctx->cmdq=mastercmdq; //Revert origal cmdq
+ libswdctx->cmdq->errors=NULL; //Delete a pointer which is probably no more valid
+ libswdctx->stats.cmdqlen=mastercmdqlen; //Do not forget about original cmdqlen
  if (libswdctx->cmdq->cmdtype==LIBSWD_CMDTYPE_MISO_ACK && libswdctx->cmdq->next->cmdtype==LIBSWD_CMDTYPE_MISO_DATA && libswdctx->cmdq->next->next->cmdtype==LIBSWD_CMDTYPE_MISO_PARITY){
   libswdctx->cmdq->ack=LIBSWD_ACK_OK_VAL;
   libswdctx->cmdq=libswdctx->cmdq->next;
@@ -236,7 +241,7 @@ int libswd_error_handle_ack_wait(libswd_ctx_t *libswdctx){
 
 
  // At this point we should have the read result from RDBUFF ready for MEM-AP read fix.
-
+ return LIBSWD_ERROR_BADOPCODE;
 
 libswd_error_handle_ack_wait_end:
  // Exit ACK WAIT handling routine, verify retval before return.
@@ -244,8 +249,11 @@ libswd_error_handle_ack_wait_end:
   libswd_log(libswdctx, LIBSWD_LOGLEVEL_ERROR, "LIBSWD_E: libswd_error_handle_ack_wait(libswdctx=@%p) ejecting: %s\n", (void*)libswdctx, libswd_error_string(retval));
  }
 
- libswdctx->cmdq=mastercmdq;
- while (1) {printf("ACK WAIT HANDLER\n");usleep(1000);}
+ libswd_cmdq_free(libswdctx); //Well, as a first thing, release the memory
+ libswdctx->cmdq=mastercmdq; //Revert origal cmdq
+ libswdctx->cmdq->errors=NULL; //Delete a pointer which is probably no more valid
+ libswdctx->stats.cmdqlen=mastercmdqlen; //Do not forget about original cmdqlen
+ while (1) {printf("ACK WAIT HANDLER\n");usleep(1000);} //TODO this is unacceptable!
  return retval;
 }
 /** @} */

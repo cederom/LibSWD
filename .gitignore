@@ -1,3 +1,5 @@
+/Debug/
+
 # C gitignore
 # Prerequisites
 *.d
@@ -77,6 +79,10 @@ Makefile.in
 /install-sh
 /missing
 /stamp-h1
+/src/config.h
+/.settings/
+/.cproject
+/.project
 
 # https://www.gnu.org/software/libtool/
 

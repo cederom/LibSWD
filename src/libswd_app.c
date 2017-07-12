@@ -1859,6 +1859,15 @@ int libswd_log(libswd_ctx_t *libswdctx, libswd_loglevel_t loglevel, char *msg, .
  return retval;
 };
 
+int libswd_log_flush(libswd_ctx_t *libswdctx, libswd_loglevel_t loglevel, char *msg, ...){
+ int retval;
+ va_list ap;
+ va_start(ap, msg);
+ retval=libswd_log_internal_va(libswdctx, loglevel, msg, ap);
+ va_end(ap);
+ fflush(stdout);
+ return retval;
+};
 
 /******************************************************************************
  * LIBUSB BASED ASYNCHRONOUS INTERFACE DRIVER FOR FTDI CHIPS                  *

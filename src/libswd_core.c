@@ -48,6 +48,7 @@
  * \return pointer to the initialized swd context.
  */
 libswd_ctx_t *libswd_init(void){
+ int res;
  libswd_ctx_t *libswdctx;
  libswdctx=(libswd_ctx_t *)calloc(1,sizeof(libswd_ctx_t));
  if (libswdctx==NULL) return NULL;
@@ -56,10 +57,10 @@ libswd_ctx_t *libswd_init(void){
   free(libswdctx);
   return NULL;
  }
- libswdctx->cmdq=(libswd_cmd_t *)calloc(1,sizeof(libswd_cmd_t));
- if (libswdctx->cmdq==NULL) {
-  libswd_deinit_ctx(libswdctx);
-  return NULL;
+ res=libswd_cmdq_init(libswdctx);
+ if (res<0) {
+	  libswd_deinit_ctx(libswdctx);
+	  return NULL;
  }
  libswdctx->config.initialized=LIBSWD_TRUE;
  libswdctx->config.trnlen=LIBSWD_TURNROUND_DEFAULT_VAL;
@@ -82,13 +83,14 @@ int libswd_deinit_ctx(libswd_ctx_t *libswdctx){
 }
 
 /** De-initialize command queue and free its memory on selected swd context.
+ * OBSOLETE FUNCTION, please use libswd_cmdq_free directly
  * \param *libswdctx swd context pointer.
  * \return number of commands freed, or LIBSWD_ERROR_CODE on failure.
  */
 int libswd_deinit_cmdq(libswd_ctx_t *libswdctx){
  if (libswdctx==NULL) return LIBSWD_ERROR_NULLPOINTER;
  int res;
- res=libswd_cmdq_free(libswdctx->cmdq);
+ res=libswd_cmdq_free(libswdctx);
  if (res<0) return res;
  return res;
 }
@@ -100,9 +102,10 @@ int libswd_deinit_cmdq(libswd_ctx_t *libswdctx){
 int libswd_deinit(libswd_ctx_t *libswdctx){
  int res, cmdcnt=0;
  if (libswdctx->membuf.data) free(libswdctx->membuf.data);
- res=libswd_deinit_cmdq(libswdctx);
+ res=libswd_cmdq_free(libswdctx);
  if (res<0) return res;
  cmdcnt=res;
+ //TODO what about libswdctx->driver? should be free-ed to!
  res=libswd_deinit_ctx(libswdctx);
  if (res<0) return res;
  return cmdcnt+res;

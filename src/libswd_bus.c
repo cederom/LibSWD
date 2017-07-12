@@ -63,7 +63,7 @@ int libswd_bus_setdir_mosi(libswd_ctx_t *libswdctx){
  if ( cmdqtail->prev==NULL || (cmdqtail->cmdtype*LIBSWD_CMDTYPE_MOSI<0) ) {
   res=libswd_cmd_enqueue_mosi_trn(libswdctx);
   if (res<1) return res;
-  cmdcnt=+res;
+  cmdcnt+=res;
  }
  return cmdcnt;
 }
@@ -80,7 +80,7 @@ int libswd_bus_setdir_miso(libswd_ctx_t *libswdctx){
  if (cmdqtail->prev==NULL || (cmdqtail->cmdtype*LIBSWD_CMDTYPE_MISO<0) ) {
   res=libswd_cmd_enqueue_miso_trn(libswdctx);
   if (res<0) return res;
-  cmdcnt=+res;
+  cmdcnt+=res;
  }
  return cmdcnt;
 }
@@ -104,7 +104,7 @@ int libswd_bus_write_request_raw
  /* Bus direction must be MOSI. */
  res=libswd_bus_setdir_mosi(libswdctx);
  if (res<0) return res;
- qcmdcnt=+res;
+ qcmdcnt+=res;
 
  /* Append request command to the queue. */
  res=libswd_cmd_enqueue_mosi_request(libswdctx, request);
@@ -116,7 +116,7 @@ int libswd_bus_write_request_raw
  } else if (operation==LIBSWD_OPERATION_EXECUTE){
   res=libswd_cmdq_flush(libswdctx, &libswdctx->cmdq, operation);
   if (res<0) return res;
-  tcmdcnt=+res;
+  tcmdcnt+=res;
   return qcmdcnt+tcmdcnt;
  } else return LIBSWD_ERROR_BADOPCODE;
 }
@@ -149,7 +149,7 @@ int libswd_bus_write_request
  /* Bus direction must be MOSI. */
  res=libswd_bus_setdir_mosi(libswdctx);
  if (res<0) return res;
- qcmdcnt=+res;
+ qcmdcnt+=res;
 
  /* Append request command to the queue. */
  res=libswd_cmd_enqueue_mosi_request(libswdctx, &request);
@@ -161,7 +161,7 @@ int libswd_bus_write_request
  } else if (operation==LIBSWD_OPERATION_EXECUTE){
   res=libswd_cmdq_flush(libswdctx, &libswdctx->cmdq, operation);
   if (res<0) return res;
-  tcmdcnt=+res;
+  tcmdcnt+=res;
   return qcmdcnt+tcmdcnt;
  } else return LIBSWD_ERROR_BADOPCODE;
 }
@@ -195,13 +195,13 @@ int libswd_bus_read_ack(libswd_ctx_t *libswdctx, libswd_operation_t operation, c
     /* TRN was found at queue tail, so we need to append TRN_MISO command. */
     res=libswd_bus_setdir_miso(libswdctx);
     if (res<0) return res;
-    qcmdcnt=+res;
+    qcmdcnt+=res;
    }
  }
 
  res=libswd_cmd_enqueue_miso_ack(libswdctx, ack);
  if (res<0) return res;
- qcmdcnt=+res;
+ qcmdcnt+=res;
 
  if (operation==LIBSWD_OPERATION_ENQUEUE){
   return qcmdcnt;
@@ -246,18 +246,18 @@ int libswd_bus_write_data_p
 
  res=libswd_bus_setdir_mosi(libswdctx);
  if (res<0) return res;
- qcmdcnt=+res;
+ qcmdcnt+=res;
 
  res=libswd_cmd_enqueue_mosi_data_p(libswdctx, data, parity);
  if (res<0) return res;
- qcmdcnt=+res;
+ qcmdcnt+=res;
 
  if (operation==LIBSWD_OPERATION_ENQUEUE){
   return qcmdcnt;
  } else if (operation==LIBSWD_OPERATION_EXECUTE){
   res=libswd_cmdq_flush(libswdctx, &libswdctx->cmdq, operation);
   if (res<0) return res;
-  tcmdcnt=+res;
+  tcmdcnt+=res;
   return qcmdcnt+tcmdcnt;
  } else return LIBSWD_ERROR_BADOPCODE;
 }
@@ -279,18 +279,18 @@ int libswd_bus_write_data_ap(libswd_ctx_t *libswdctx, libswd_operation_t operati
 
  res=libswd_bus_setdir_mosi(libswdctx);
  if (res<0) return res;
- qcmdcnt=+res;
+ qcmdcnt+=res;
 
  res=libswd_cmd_enqueue_mosi_data_ap(libswdctx, data);
  if (res<0) return res;
- qcmdcnt=+res;
+ qcmdcnt+=res;
 
  if (operation==LIBSWD_OPERATION_ENQUEUE){
   return qcmdcnt;
  } else if (operation==LIBSWD_OPERATION_EXECUTE) {
   res=libswd_cmdq_flush(libswdctx, &libswdctx->cmdq, operation);
   if (res<0) return res;
-  tcmdcnt=+res;
+  tcmdcnt+=res;
   return qcmdcnt+tcmdcnt;
  } else return LIBSWD_ERROR_BADOPCODE;
 }
@@ -312,11 +312,11 @@ int libswd_bus_read_data_p(libswd_ctx_t *libswdctx, libswd_operation_t operation
 
  res=libswd_bus_setdir_miso(libswdctx);
  if (res<0) return res;
- qcmdcnt=+res;
+ qcmdcnt+=res;
 
  res=libswd_cmd_enqueue_miso_data_p(libswdctx, data, parity);
  if (res<0) return res;
- qcmdcnt=+res;
+ qcmdcnt+=res;
 
  if (operation==LIBSWD_OPERATION_ENQUEUE){
   return qcmdcnt;
@@ -369,11 +369,11 @@ int libswd_bus_write_control(libswd_ctx_t *libswdctx, libswd_operation_t operati
  /* Make sure that bus is in MOSI state. */
  res=libswd_bus_setdir_mosi(libswdctx);
  if (res<0) return res;
- qcmdcnt=+res;
+ qcmdcnt+=res;
 
  res=libswd_cmd_enqueue_mosi_control(libswdctx, ctlmsg, len);
  if (res<0) return res;
- qcmdcnt=+res;
+ qcmdcnt+=res;
 
  if (operation==LIBSWD_OPERATION_ENQUEUE){
   return qcmdcnt;

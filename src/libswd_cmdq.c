@@ -42,14 +42,16 @@
  ******************************************************************************/
 
 /** Initialize new queue element in memory that becomes a queue root.
- * \param *cmdq pointer to the command queue element of type libswd_cmd_t
+ * \param *libswdctx swd context pointer containing empty command queue.
  * \return LIBSWD_OK on success, LIBSWD_ERROR_CODE code on failure
  */
-int libswd_cmdq_init(libswd_cmd_t *cmdq){
- cmdq=(libswd_cmd_t *)calloc(1,sizeof(libswd_cmd_t));
- if (cmdq==NULL) return LIBSWD_ERROR_OUTOFMEM;
- cmdq->prev=NULL;
- cmdq->next=NULL;
+int libswd_cmdq_init(libswd_ctx_t *libswdctx){
+	libswd_cmd_t * new_cmdq=(libswd_cmd_t *)calloc(1,sizeof(libswd_cmd_t));
+ if (new_cmdq==NULL) return LIBSWD_ERROR_OUTOFMEM;
+ new_cmdq->prev=NULL;
+ new_cmdq->next=NULL;
+ libswdctx->cmdq=new_cmdq;
+ libswdctx->stats.cmdqlen=1; //One cmd element is always present in cmdq, until libswd_cmdq_free is called
  return LIBSWD_OK;
 }
 
@@ -96,81 +98,116 @@ libswd_cmd_t* libswd_cmdq_find_exectail(libswd_cmd_t *cmdq){
 
 /** Append element pointed by *cmd at the end of the quque pointed by *cmdq.
  * After this operation queue will be pointed by appended element (ie. last
- * element added becomes actual quque pointer to show what was added recently).
- * \param *cmdq pointer to any element on command queue
+ * element added becomes actual queue pointer to show what was added recently).
+ * \param *libswdctx swd context pointer containing the command queue.
  * \param *cmd pointer to the command to be appended
  * \return number of appended elements (one), LIBSWD_ERROR_CODE on failure
  */
-int libswd_cmdq_append(libswd_cmd_t *cmdq, libswd_cmd_t *cmd){
- if (cmdq==NULL) return LIBSWD_ERROR_NULLQUEUE;
+int libswd_cmdq_append(libswd_ctx_t *libswdctx, libswd_cmd_t *cmd){
+ if (libswdctx==NULL) return LIBSWD_ERROR_NULLPOINTER;
+ if (libswdctx->cmdq==NULL) return LIBSWD_ERROR_NULLQUEUE; //XXX Create a start point automatically?
  if (cmd==NULL) return LIBSWD_ERROR_NULLPOINTER;
- if (cmdq->next != NULL){
+ if (libswdctx->cmdq->next != NULL){
   libswd_cmd_t *lastcmd;
-  lastcmd=libswd_cmdq_find_tail(cmdq);
+  lastcmd=libswd_cmdq_find_tail(libswdctx->cmdq);
   lastcmd->next=cmd;
   cmd->prev=lastcmd;
  } else {
-  cmdq->next=cmd;
-  cmd->prev=cmdq;
+	libswdctx->cmdq->next=cmd;
+  cmd->prev=libswdctx->cmdq;
  }
+ libswdctx->stats.cmdqlen++;
  return 1;
 }
 
-/** Free queue pointed by *cmdq element.
- * \param *cmdq pointer to any element on command queue
+/** Free whole queue pointed by *cmdq element in libswdctx.
+ * \param *libswdctx swd context pointer containing the command queue.
  * \return number of elements destroyed, LIBSWD_ERROR_CODE on failure
  */
-int libswd_cmdq_free(libswd_cmd_t *cmdq){
- if (cmdq==NULL) return LIBSWD_ERROR_NULLQUEUE;
+int libswd_cmdq_free(libswd_ctx_t *libswdctx){
+ if (libswdctx==NULL) return LIBSWD_ERROR_NULLPOINTER;
+ if (libswdctx->cmdq==NULL) return LIBSWD_ERROR_NULLQUEUE;
  int cmdcnt=0;
  libswd_cmd_t *cmd, *nextcmd;
- cmd=libswd_cmdq_find_head(cmdq);
+ cmd=libswd_cmdq_find_head(libswdctx->cmdq);
  while (cmd!=NULL) {
   nextcmd=cmd->next;
   free(cmd);
   cmd=nextcmd;
   cmdcnt++;
  }
+ libswdctx->cmdq=NULL;
+ libswdctx->stats.cmdqlen=0;
  return cmdcnt;
 }
 
-/** Free queue head up to *cmdq element.
- * \param *cmdq pointer to the element that becomes new queue root.
+/** Free queue head up to *cmd element.
+ * \param *libswdctx swd context pointer containing the command queue.
+ * \param *cmd pointer to the element that becomes new queue root.
  * \return number of elements destroyed, or LIBSWD_ERROR_CODE on failure.
  */
-int libswd_cmdq_free_head(libswd_cmd_t *cmdq){
- if (cmdq==NULL) return LIBSWD_ERROR_NULLQUEUE;
+int libswd_cmdq_free_head(libswd_ctx_t *libswdctx, libswd_cmd_t *cmd){
+ if (libswdctx==NULL) return LIBSWD_ERROR_NULLPOINTER;
+ if (cmd==NULL) return LIBSWD_ERROR_NULLPOINTER;
  int cmdcnt=0;
  libswd_cmd_t *cmdqroot, *nextcmd;
- cmdqroot=libswd_cmdq_find_head(cmdq);
- while(cmdqroot!=cmdq){
+ cmdqroot=libswd_cmdq_find_head(cmd);
+ while(cmdqroot!=cmd){
   nextcmd=cmdqroot->next;
   free(cmdqroot);
   cmdqroot=nextcmd;
   cmdcnt++;
  }
  cmdqroot->prev=NULL;
+ libswdctx->cmdq=cmdqroot;
+ libswdctx->stats.cmdqlen-=cmdcnt;
  return cmdcnt;
 }
 
-/** Free queue tail starting after *cmdq element.
- * \param *cmdq pointer to the last element on the new queue.
+/** Free queue tail starting after *cmd element.
+ * \param *libswdctx swd context pointer containing the command queue.
+ * \param *cmd pointer to the last element on the new queue.
  * \return number of elements destroyed, or LIBSWD_ERROR_CODE on failure.
  */
-int libswd_cmdq_free_tail(libswd_cmd_t *cmdq){
- if (cmdq==NULL) return LIBSWD_ERROR_NULLQUEUE;
+int libswd_cmdq_free_tail(libswd_ctx_t *libswdctx, libswd_cmd_t *cmd){
+ if (libswdctx==NULL) return LIBSWD_ERROR_NULLPOINTER;
+ if (cmd==NULL) return LIBSWD_ERROR_NULLPOINTER;
  int cmdcnt=0;
  libswd_cmd_t *cmdqend;
- if (cmdq->next==NULL) return 0;
- cmdqend=libswd_cmdq_find_tail(cmdq->next);
+ if (cmd->next==NULL) return 0;
+ cmdqend=libswd_cmdq_find_tail(cmd->next);
  if (cmdqend==NULL) return LIBSWD_ERROR_QUEUE;
- while(cmdqend!=cmdq){
+ while(cmdqend!=cmd){
   cmdqend=cmdqend->prev;
   free(cmdqend->next);
   cmdcnt++;
  }
- cmdq->next=NULL;
+ cmd->next=NULL;
+ libswdctx->stats.cmdqlen-=cmdcnt;
  return cmdcnt;
+}
+
+/** Free one cmd element from cmdq.
+ * \param *libswdctx swd context pointer containing the command queue.
+ * \param *cmd pointer to any element on command queue
+ * \return number of elements destroyed, LIBSWD_ERROR_CODE on failure
+ */
+int libswd_cmdq_free_one_element(libswd_ctx_t *libswdctx, libswd_cmd_t *cmd){
+ if (libswdctx==NULL) return LIBSWD_ERROR_NULLPOINTER;
+ if (cmd==NULL) return LIBSWD_ERROR_NULLQUEUE;
+ libswd_cmd_t *prevcmd,*nextcmd;
+ prevcmd=cmd->prev;
+ nextcmd=cmd->next;
+ if ((prevcmd==NULL)&&(nextcmd==NULL)) return 0; //root cmd cannot be removed
+ if (prevcmd!=NULL){
+	 prevcmd->next=nextcmd;
+ }
+ if (nextcmd!=NULL){
+	 nextcmd->prev=prevcmd;
+ }
+ free(cmd);
+ libswdctx->stats.cmdqlen--;
+ return 1;
 }
 
 /** Flush command queue contents into interface driver and update **cmdq.
@@ -240,7 +277,7 @@ int libswd_cmdq_flush(libswd_ctx_t *libswdctx, libswd_cmd_t **cmdq, libswd_opera
   }
   res=libswd_drv_transmit(libswdctx, cmd);
   if (res<0) return res;
-  cmdcnt=+res;
+  cmdcnt+=res;
   if (cmd==lastcmd) break;
  }
  *cmdq=cmd;

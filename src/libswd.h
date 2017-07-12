@@ -539,7 +539,9 @@ typedef enum {
 /// How many bits are there in data payload.
 #define LIBSWD_DATA_BITLEN        32
 /// How long is the command queue by default.
-#define LIBSWD_CMDQLEN_DEFAULT  1024;
+#define LIBSWD_CMDQLEN_DEFAULT  1024
+/// Minimum recommended command queue
+#define LIBSWD_CMDQLEN_MINIMUM    16
 
 /** SWD Command Codes definitions.
  * Available values: MISO>0, MOSI<0, undefined=0. To check command direction
@@ -610,6 +612,11 @@ typedef struct libswd_cmd_t {
  struct libswd_cmd_t *prev; ///< Pointer to the previous command.
  struct libswd_cmd_t *next; ///< Pointer to the next command.
 } libswd_cmd_t;
+
+/** Lib statistics */
+typedef struct {
+	unsigned int cmdqlen; ///< For memory management configured by maxcmdqlen
+} libswd_stats_t;
 
 /** Context configuration structure */
 typedef struct {
@@ -744,10 +751,15 @@ static const libswd_arm_register_t libswd_arm_debug_CortexM3_SCS_ComponentID[] =
 
 static const libswd_arm_register_t libswd_arm_debug_CPUID[] = {
  { .name="ARM Cortex-M3 r1p2",     .default_value=0x411FC231 },
+ { .name="ARM Cortex-M3 r2p0",     .default_value=0x412FC230 },
  { .name="ARM Cortex-M3 r2p1",     .default_value=0x412FC231 },
  { .name="ARM Cortex-M0 r0p0",     .default_value=0x410CC200 },
  { .name="ARM Cortex-M0+ r0p0",    .default_value=0x410CC600 },
  { .name="ARM Cortex-M4 r0p1",     .default_value=0x410FC241 },
+ { .name="ARM Cortex-M7 r0p1",     .default_value=0x410FC271 },
+ { .name="ARM Cortex-M7 r0p2",     .default_value=0x410FC272 },
+ { .name="ARM Cortex-M7 r1p0",     .default_value=0x411FC270 },
+ { .name="ARM Cortex-M7 r1p1",     .default_value=0x411FC271 },
 };
 
 #define LIBSWD_NUM_SUPPORTED_CPUIDS     (sizeof(libswd_arm_debug_CPUID) / sizeof(libswd_arm_debug_CPUID[0]))
@@ -804,6 +816,7 @@ typedef struct libswd_debug {
  */
 typedef struct {
  libswd_cmd_t *cmdq;             ///< Command queue, stores all bus operations.
+ libswd_stats_t stats;           ///< Holds all runtime statistics
  libswd_context_config_t config; ///< Target specific configuration.
  libswd_driver_t *driver;        ///< Pointer to the interface driver structure.
  libswd_membuf_t membuf;         ///< Memory related scratchpad.
@@ -832,14 +845,15 @@ char *libswd_bin32_string(int *data);
 int libswd_bin8_bitswap(unsigned char *buffer, unsigned int bitcount);
 int libswd_bin32_bitswap(unsigned int *buffer, unsigned int bitcount);
 
-int libswd_cmdq_init(libswd_cmd_t *cmdq);
+int libswd_cmdq_init(libswd_ctx_t *libswdctx);
 libswd_cmd_t* libswd_cmdq_find_head(libswd_cmd_t *cmdq);
 libswd_cmd_t* libswd_cmdq_find_tail(libswd_cmd_t *cmdq);
 libswd_cmd_t* libswd_cmdq_find_exectail(libswd_cmd_t *cmdq);
-int libswd_cmdq_append(libswd_cmd_t *cmdq, libswd_cmd_t *cmd);
-int libswd_cmdq_free(libswd_cmd_t *cmdq);
-int libswd_cmdq_free_head(libswd_cmd_t *cmdq);
-int libswd_cmdq_free_tail(libswd_cmd_t *cmdq);
+int libswd_cmdq_append(libswd_ctx_t *libswdctx, libswd_cmd_t *cmd);
+int libswd_cmdq_free(libswd_ctx_t *libswdctx);
+int libswd_cmdq_free_head(libswd_ctx_t *libswdctx, libswd_cmd_t *cmd);
+int libswd_cmdq_free_tail(libswd_ctx_t *libswdctx, libswd_cmd_t *cmd);
+int libswd_cmdq_free_one_element(libswd_ctx_t *libswdctx, libswd_cmd_t *cmd);
 int libswd_cmdq_flush(libswd_ctx_t *libswdctx, libswd_cmd_t **cmdq, libswd_operation_t operation);
 
 int libswd_cmd_enqueue(libswd_ctx_t *libswdctx, libswd_cmd_t *cmd);
@@ -888,6 +902,7 @@ extern int libswd_drv_mosi_trn(libswd_ctx_t *libswdctx, int clks);
 extern int libswd_drv_miso_trn(libswd_ctx_t *libswdctx, int clks);
 
 extern int libswd_log(libswd_ctx_t *libswdctx, libswd_loglevel_t loglevel, char *msg, ...);
+extern int libswd_log_flush(libswd_ctx_t *libswdctx, libswd_loglevel_t loglevel, char *msg, ...);
 int libswd_log_internal(libswd_ctx_t *libswdctx, libswd_loglevel_t loglevel, char *msg, ...);
 int libswd_log_internal_va(libswd_ctx_t *libswdctx, libswd_loglevel_t loglevel, char *msg, va_list ap);
 int libswd_log_level_set(libswd_ctx_t *libswdctx, libswd_loglevel_t loglevel);

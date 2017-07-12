@@ -264,10 +264,9 @@ int libswd_memap_read_char(libswd_ctx_t *libswdctx, libswd_operation_t operation
    // Measure transfer speed.
    gettimeofday(&tstop, NULL);
    tdeltam=fabsf((tstop.tv_sec-tstart.tv_sec)*1000+(tstop.tv_usec-tstart.tv_usec)/1000);
-   libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO,
+   libswd_log_flush(libswdctx, LIBSWD_LOGLEVEL_INFO,
               "LIBSWD_I: libswd_memap_read_char() reading address 0x%08X (speed %fKB/s)\r",
               loc, count/tdeltam );
-   fflush(0);
    // Pass address to TAR register.
    res=libswd_ap_write(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_TAR_ADDR, &loc);
    if (res<0) goto libswd_memap_read_char_error;
@@ -308,10 +307,9 @@ int libswd_memap_read_char(libswd_ctx_t *libswdctx, libswd_operation_t operation
     // Measure transfer speed.
     gettimeofday(&tstop, NULL);
     tdeltam=fabsf((tstop.tv_sec-tstart.tv_sec)*1000+(tstop.tv_usec-tstart.tv_usec)/1000);
-    libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO,
+    libswd_log_flush(libswdctx, LIBSWD_LOGLEVEL_INFO,
                "LIBSWD_I: libswd_memap_read_char() reading address 0x%08X (chunk 0x%X/0x%X, speed %fKB/s)\r",
                loc+i, chunk, chunks, count/tdeltam);
-    fflush(0);
     // Implode and Write data to DRW register.
     res=libswd_ap_read(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_DRW_ADDR, &memapdrw);
     if (res<0) goto libswd_memap_read_char_error;
@@ -464,10 +462,9 @@ int libswd_memap_read_int(libswd_ctx_t *libswdctx, libswd_operation_t operation,
    // Measure transfer speed.
    gettimeofday(&tstop, NULL);
    tdeltam=fabsf((tstop.tv_sec-tstart.tv_sec)*1000+(tstop.tv_usec-tstart.tv_usec)/1000);
-   libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO,
+   libswd_log_flush(libswdctx, LIBSWD_LOGLEVEL_INFO,
               "LIBSWD_I: libswd_memap_read_int() reading address 0x%08X (speed %fKB/s)\r",
               loc, count*4/tdeltam );
-   fflush(0);
    // Pass address to TAR register.
    res=libswd_ap_write(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_TAR_ADDR, &loc);
    if (res<0) goto libswd_memap_read_int_error;
@@ -499,10 +496,9 @@ int libswd_memap_read_int(libswd_ctx_t *libswdctx, libswd_operation_t operation,
     // Measure transfer speed.
     gettimeofday(&tstop, NULL);
     tdeltam=fabsf((tstop.tv_sec-tstart.tv_sec)*1000+(tstop.tv_usec-tstart.tv_usec)/1000);
-    libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO,
+    libswd_log_flush(libswdctx, LIBSWD_LOGLEVEL_INFO,
                "LIBSWD_I: libswd_memap_read_int() reading address 0x%08X (chunk 0x%X/0x%X, speed %fKB/s)\r",
                loc+(i*4), chunk, chunks, count*4/tdeltam );
-    fflush(0);
     // Write data to DRW register.
     res=libswd_ap_read(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_DRW_ADDR, &memapdrw);
     if (res<0) goto libswd_memap_read_int_error;
@@ -677,10 +673,9 @@ int libswd_memap_write_char(libswd_ctx_t *libswdctx, libswd_operation_t operatio
    // Measure transfer speed.
    gettimeofday(&tstop, NULL);
    tdeltam=fabsf((tstop.tv_sec-tstart.tv_sec)*1000+(tstop.tv_usec-tstart.tv_usec)/1000);
-   libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO,
+   libswd_log_flush(libswdctx, LIBSWD_LOGLEVEL_INFO,
               "LIBSWD_I: libswd_memap_write_char() writing address 0x%08X (speed %fKB/s)\r",
               loc, count/tdeltam );
-   fflush(0);
    // Pass address to TAR register.
    res=libswd_ap_write(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_TAR_ADDR, &loc);
    if (res<0) goto libswd_memap_write_char_error;
@@ -718,10 +713,9 @@ int libswd_memap_write_char(libswd_ctx_t *libswdctx, libswd_operation_t operatio
     // Measure transfer speed.
     gettimeofday(&tstop, NULL);
     tdeltam=fabsf((tstop.tv_sec-tstart.tv_sec)*1000+(tstop.tv_usec-tstart.tv_usec)/1000);
-    libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO,
+    libswd_log_flush(libswdctx, LIBSWD_LOGLEVEL_INFO,
                "LIBSWD_I: libswd_memap_write_char() writing address 0x%08X (chunk 0x%X/0x%X, speed %fKB/s)\r",
                loc+i, chunk, chunks, count/tdeltam );
-    fflush(0);
     // Implode and Write data to DRW register.
     memcpy((void*)&libswdctx->log.memap.drw, data+(chunk*chunksize)+i, accsize);
     // apply the data byte-laning shift
@@ -869,10 +863,9 @@ int libswd_memap_write_int(libswd_ctx_t *libswdctx, libswd_operation_t operation
    // Measure transfer speed.
    gettimeofday(&tstop, NULL);
    tdeltam=fabsf((tstop.tv_sec-tstart.tv_sec)*1000+(tstop.tv_usec-tstart.tv_usec)/1000);
-   libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO,
+   libswd_log_flush(libswdctx, LIBSWD_LOGLEVEL_INFO,
               "LIBSWD_I: libswd_memap_write_int() writing address 0x%08X (speed %fKB/s)\r",
               loc, count*4/tdeltam );
-   fflush(0);
    // Pass address to TAR register.
    res=libswd_ap_write(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_TAR_ADDR, &loc);
    if (res<0) goto libswd_memap_write_int_error;
@@ -903,10 +896,9 @@ int libswd_memap_write_int(libswd_ctx_t *libswdctx, libswd_operation_t operation
     // Measure transfer speed.
     gettimeofday(&tstop, NULL);
     tdeltam=fabsf((tstop.tv_sec-tstart.tv_sec)*1000+(tstop.tv_usec-tstart.tv_usec)/1000);
-    libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO,
+    libswd_log_flush(libswdctx, LIBSWD_LOGLEVEL_INFO,
                "LIBSWD_I: libswd_memap_write_int() writing address 0x%08X (chunk 0x%X/0x%X speed %fKB/s)\r",
                loc+(i*4), chunk, chunks, count*4/tdeltam );
-    fflush(0);
     // Implode and Write data to DRW register.
     libswdctx->log.memap.drw=data[chunk*chunksize+i];
     res=libswd_ap_write(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_DRW_ADDR, &libswdctx->log.memap.drw);
