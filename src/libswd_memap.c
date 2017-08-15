@@ -209,7 +209,6 @@ int libswd_memap_read_char(libswd_ctx_t *libswdctx, libswd_operation_t operation
   return LIBSWD_ERROR_BADOPCODE;
 
  int i, loc, res=0, accsize=0, *memapdrw;
- int chunk, chunks, chunksize=1024;
  float tdeltam;
  struct timeval tstart, tstop;
 
@@ -285,41 +284,54 @@ int libswd_memap_read_char(libswd_ctx_t *libswdctx, libswd_operation_t operation
  else
  {
   // Use TAR Auto Increment (faster).
-  // 2^10 chunks are used due to TAR Auto Increment limitations.
+  // TAR auto increment is only guaranteed to work on the bottom 10 bits
+  // of the TAR register. Above that it is implementation defined.
+  // We use 1024 byte chunks as it will work on every platform
+  // and one TAR write every 1024 bytes is not adding too much overhead.
+  const unsigned int BOUNDARY = 1024;
+  unsigned int i;
+
   // Check if packed transfer, if so use word access.
   if (libswdctx->log.memap.csw&LIBSWD_MEMAP_CSW_ADDRINC_PACKED) accsize=4;
-  chunks=count/chunksize;
-  for (chunk=0;chunk*chunksize<count;chunk++)
+
+  for (loc = addr, i = 0; loc < (addr + count); loc += accsize, i+= accsize)
   {
    int tmp;
    int drw_shift;
-   loc=addr+chunk*chunksize;
+
    // Calculate the offset in DRW where the data should be
    // see Data byte-laning in the ARM debug interface v5 documentation
    // note: this only works for little endian systems.
    drw_shift=8*(loc%4);
-   // Pass address to TAR register.
-   res=libswd_ap_write(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_TAR_ADDR, &loc);
-   if (res<0) goto libswd_memap_read_char_error;
-   libswdctx->log.memap.tar=loc;
-   for (i=0;i<chunksize;i+=accsize)
+
+   // only write the TAR register, if this is the first time through the loop.
+   // or if we've passed over the boundary where TAR auto inc isn't guaranteed
+   // to work anymore.
+   if (loc == addr ||
+       (loc % BOUNDARY) == 0)
    {
-    if ((chunk*chunksize)+i>=count) break;
-    // Measure transfer speed.
-    gettimeofday(&tstop, NULL);
-    tdeltam=fabsf((tstop.tv_sec-tstart.tv_sec)*1000+(tstop.tv_usec-tstart.tv_usec)/1000);
-    libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO,
-               "LIBSWD_I: libswd_memap_read_char() reading address 0x%08X (chunk 0x%X/0x%X, speed %fKB/s)\r",
-               loc+i, chunk, chunks, count/tdeltam);
-    fflush(0);
-    // Implode and Write data to DRW register.
-    res=libswd_ap_read(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_DRW_ADDR, &memapdrw);
+    // Pass address to TAR register.
+    res=libswd_ap_write(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_TAR_ADDR, &loc);
     if (res<0) goto libswd_memap_read_char_error;
-    libswdctx->log.memap.drw=*memapdrw;
-    // apply the data byte-laning shift
-    tmp=*memapdrw >>= drw_shift;
-    memcpy((void*)data+(chunk*chunksize)+i, &tmp, accsize);
+    libswdctx->log.memap.tar=loc;
    }
+
+   // Measure transfer speed.
+   gettimeofday(&tstop, NULL);
+   tdeltam=fabsf((tstop.tv_sec-tstart.tv_sec)*1000+(tstop.tv_usec-tstart.tv_usec)/1000);
+   libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO,
+              "LIBSWD_I: libswd_memap_read_char() reading address 0x%08X (speed %fKB/s)\r",
+              loc, count/tdeltam);
+   fflush(0);
+
+   // Read data from the DRW register.
+   res=libswd_ap_read(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_DRW_ADDR, &memapdrw);
+   if (res<0) goto libswd_memap_read_char_error;
+   libswdctx->log.memap.drw=*memapdrw;
+
+   // apply the data byte-laning shift
+   tmp=*memapdrw >>= drw_shift;
+   memcpy((void*)data + i, &tmp, accsize);
   }
   libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO, "\n");
  }
@@ -440,7 +452,6 @@ int libswd_memap_read_int(libswd_ctx_t *libswdctx, libswd_operation_t operation,
   return LIBSWD_ERROR_BADOPCODE;
 
  int i, loc, res, *memapdrw;
- int chunk, chunks, chunksize=1024;
  float tdeltam;
  struct timeval tstart, tstop;
 
@@ -483,32 +494,40 @@ int libswd_memap_read_int(libswd_ctx_t *libswdctx, libswd_operation_t operation,
  else
  {
   // Use TAR Auto Increment (faster).
-  // 2^10 chunks are used due to TAR Auto Increment limitations.
-  // Check if packed transfer, if so use word access.
-  chunks=count/chunksize;
-  for (chunk=0;chunk*chunksize<count;chunk++)
+  // TAR auto increment is only guaranteed to work on the bottom 10 bits
+  // of the TAR register. Above that it is implementation defined.
+  // We use 1024 byte chunks as it will work on every platform
+  // and one TAR write every 1024 bytes is not adding too much overhead.
+  const unsigned int BOUNDARY = 1024;
+  unsigned int i;
+
+  for (loc = addr, i = 0; loc < (addr + (count * 4)); loc += 4, i++)
   {
-   loc=addr+chunk*chunksize;
-   // Pass address to TAR register.
-   res=libswd_ap_write(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_TAR_ADDR, &loc);
-   if (res<0) goto libswd_memap_read_int_error;
-   libswdctx->log.memap.tar=loc;
-   for (i=0;i<chunksize;i++)
+   // only write the TAR register, if this is the first time through the loop.
+   // or if we've passed over the boundary where TAR auto inc isn't guaranteed
+   // to work anymore.
+   if (loc == addr ||
+       (loc % BOUNDARY) == 0)
    {
-    if ((chunk*chunksize)+(i*4)>=count) break;
-    // Measure transfer speed.
-    gettimeofday(&tstop, NULL);
-    tdeltam=fabsf((tstop.tv_sec-tstart.tv_sec)*1000+(tstop.tv_usec-tstart.tv_usec)/1000);
-    libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO,
-               "LIBSWD_I: libswd_memap_read_int() reading address 0x%08X (chunk 0x%X/0x%X, speed %fKB/s)\r",
-               loc+(i*4), chunk, chunks, count*4/tdeltam );
-    fflush(0);
-    // Write data to DRW register.
-    res=libswd_ap_read(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_DRW_ADDR, &memapdrw);
+    // Pass address to TAR register.
+    res=libswd_ap_write(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_TAR_ADDR, &loc);
     if (res<0) goto libswd_memap_read_int_error;
-    libswdctx->log.memap.drw=*memapdrw;
-    data[chunk*chunksize+i]=*memapdrw;
+    libswdctx->log.memap.tar=loc;
    }
+
+   // Measure transfer speed.
+   gettimeofday(&tstop, NULL);
+   tdeltam=fabsf((tstop.tv_sec-tstart.tv_sec)*1000+(tstop.tv_usec-tstart.tv_usec)/1000);
+   libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO,
+              "LIBSWD_I: libswd_memap_read_int() reading address 0x%08X (speed %fKB/s)\r",
+              loc, count*4/tdeltam );
+   fflush(0);
+
+   // Read data from the DRW register.
+   res=libswd_ap_read(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_DRW_ADDR, &memapdrw);
+   if (res<0) goto libswd_memap_read_int_error;
+   libswdctx->log.memap.drw=*memapdrw;
+   data[i]=*memapdrw;
   }
   libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO, "\n");
  }
@@ -622,7 +641,6 @@ int libswd_memap_write_char(libswd_ctx_t *libswdctx, libswd_operation_t operatio
   return LIBSWD_ERROR_BADOPCODE;
 
  int i, loc, res=0, accsize=0;
- int chunk, chunks, chunksize=1024;
  float tdeltam;
  struct timeval tstart, tstop;
 
@@ -696,39 +714,50 @@ int libswd_memap_write_char(libswd_ctx_t *libswdctx, libswd_operation_t operatio
  else
  {
   // Use TAR Auto Increment (faster).
-  // 2^10 chunks are used due to TAR Auto Increment limitations.
+  // TAR auto increment is only guaranteed to work on the bottom 10 bits
+  // of the TAR register. Above that it is implementation defined.
+  // We use 1024 byte chunks as it will work on every platform
+  // and one TAR write every 1024 bytes is not adding too much overhead.
+  const unsigned int BOUNDARY = 1024;
+  unsigned int i;
+
   // Check if packed transfer, if so use word access.
   if (libswdctx->log.memap.csw&LIBSWD_MEMAP_CSW_ADDRINC_PACKED) accsize=4;
-  chunks=count/chunksize;
-  for (chunk=0;chunk*chunksize<count;chunk++)
+
+  for (loc = addr, i = 0; loc < (addr + count); loc += accsize, i+= accsize)
   {
    int drw_shift;
-   loc=addr+chunk*chunksize;
+
    // Calculate the offset in DRW where the data should go
    // see Data byte-laning in the ARM debug interface v5 documentation
    // note: this only works for little endian systems.
    drw_shift=8*(loc%4);
-   // Pass address to TAR register.
-   res=libswd_ap_write(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_TAR_ADDR, &loc);
-   if (res<0) goto libswd_memap_write_char_error;
-   libswdctx->log.memap.tar=loc;
-   for (i=0;i<chunksize;i+=accsize)
+
+   // only write the TAR register, if this is the first time through the loop.
+   // or if we've passed over the boundary where TAR auto inc isn't guaranteed
+   // to work anymore.
+   if (loc == addr ||
+       (loc % BOUNDARY) == 0)
    {
-    if ((chunk*chunksize)+i>=count) break;
-    // Measure transfer speed.
-    gettimeofday(&tstop, NULL);
-    tdeltam=fabsf((tstop.tv_sec-tstart.tv_sec)*1000+(tstop.tv_usec-tstart.tv_usec)/1000);
-    libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO,
-               "LIBSWD_I: libswd_memap_write_char() writing address 0x%08X (chunk 0x%X/0x%X, speed %fKB/s)\r",
-               loc+i, chunk, chunks, count/tdeltam );
-    fflush(0);
-    // Implode and Write data to DRW register.
-    memcpy((void*)&libswdctx->log.memap.drw, data+(chunk*chunksize)+i, accsize);
-    // apply the data byte-laning shift
-    libswdctx->log.memap.drw <<= drw_shift;
-    res=libswd_ap_write(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_DRW_ADDR, &libswdctx->log.memap.drw);
+    // Pass address to TAR register.
+    res=libswd_ap_write(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_TAR_ADDR, &loc);
     if (res<0) goto libswd_memap_write_char_error;
+    libswdctx->log.memap.tar=loc;
    }
+
+   // Measure transfer speed.
+   gettimeofday(&tstop, NULL);
+   tdeltam=fabsf((tstop.tv_sec-tstart.tv_sec)*1000+(tstop.tv_usec-tstart.tv_usec)/1000);
+   libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO,
+              "LIBSWD_I: libswd_memap_write_char() writing address 0x%08X (speed %fKB/s)\r",
+              loc, count/tdeltam );
+   fflush(0);
+
+   // apply the data byte-laning shift and write to the DRW register
+   memcpy((void*)&libswdctx->log.memap.drw, data + i, accsize);
+   libswdctx->log.memap.drw <<= drw_shift;
+   res=libswd_ap_write(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_DRW_ADDR, &libswdctx->log.memap.drw);
+   if (res<0) goto libswd_memap_write_char_error;
   }
   libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO, "\n");
  }
@@ -845,7 +874,6 @@ int libswd_memap_write_int(libswd_ctx_t *libswdctx, libswd_operation_t operation
   return LIBSWD_ERROR_BADOPCODE;
 
  int i, loc, res=0;
- int chunk, chunks, chunksize=1024;
  float tdeltam;
  struct timeval tstart, tstop;
 
@@ -887,31 +915,39 @@ int libswd_memap_write_int(libswd_ctx_t *libswdctx, libswd_operation_t operation
  else
  {
   // Use TAR Auto Increment (faster).
-  // 2^10 chunks are used due to TAR Auto Increment limitations.
-  // Check if packed transfer, if so use word access.
-  chunks=count/chunksize;
-  for (chunk=0;chunk*chunksize<count;chunk++)
+  // TAR auto increment is only guaranteed to work on the bottom 10 bits
+  // of the TAR register. Above that it is implementation defined.
+  // We use 1024 byte chunks as it will work on every platform
+  // and one TAR write every 1024 bytes is not adding too much overhead.
+  const unsigned int BOUNDARY = 1024;
+  unsigned int i;
+
+  for (loc = addr, i = 0; loc < (addr + (count * 4)); loc += 4, i++)
   {
-   loc=addr+chunk*chunksize;
-   // Pass address to TAR register.
-   res=libswd_ap_write(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_TAR_ADDR, &loc);
-   if (res<0) goto libswd_memap_write_int_error;
-   libswdctx->log.memap.tar=loc;
-   for (i=0;i<chunksize;i++)
+   // only write the TAR register, if this is the first time through the loop.
+   // or if we've passed over the boundary where TAR auto inc isn't guaranteed
+   // to work anymore.
+   if (loc == addr ||
+       (loc % BOUNDARY) == 0)
    {
-    if ((chunk*chunksize)+(i*4)>=count) break;
-    // Measure transfer speed.
-    gettimeofday(&tstop, NULL);
-    tdeltam=fabsf((tstop.tv_sec-tstart.tv_sec)*1000+(tstop.tv_usec-tstart.tv_usec)/1000);
-    libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO,
-               "LIBSWD_I: libswd_memap_write_int() writing address 0x%08X (chunk 0x%X/0x%X speed %fKB/s)\r",
-               loc+(i*4), chunk, chunks, count*4/tdeltam );
-    fflush(0);
-    // Implode and Write data to DRW register.
-    libswdctx->log.memap.drw=data[chunk*chunksize+i];
-    res=libswd_ap_write(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_DRW_ADDR, &libswdctx->log.memap.drw);
+    // Pass address to TAR register.
+    res=libswd_ap_write(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_TAR_ADDR, &loc);
     if (res<0) goto libswd_memap_write_int_error;
+    libswdctx->log.memap.tar=loc;
    }
+
+   // Measure transfer speed.
+   gettimeofday(&tstop, NULL);
+   tdeltam=fabsf((tstop.tv_sec-tstart.tv_sec)*1000+(tstop.tv_usec-tstart.tv_usec)/1000);
+   libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO,
+              "LIBSWD_I: libswd_memap_write_int() writing address 0x%08X (speed %fKB/s)\r",
+              loc, count*4/tdeltam );
+   fflush(0);
+
+   // Write data to DRW register.
+   libswdctx->log.memap.drw=data[i];
+   res=libswd_ap_write(libswdctx, LIBSWD_OPERATION_EXECUTE, LIBSWD_MEMAP_DRW_ADDR, &libswdctx->log.memap.drw);
+   if (res<0) goto libswd_memap_write_int_error;
   }
   libswd_log(libswdctx, LIBSWD_LOGLEVEL_INFO, "\n");
  }
